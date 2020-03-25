@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using Everest.AspNetStartup.Models;
+using Newtonsoft.Json;
 
 namespace Examination.Entities
 {
@@ -16,6 +16,10 @@ namespace Examination.Entities
         [JsonIgnore]
         public virtual Examination Examination { get; set; }
         public long ExaminationId;
+        
+        [JsonIgnore]
+        public virtual Speciality Speciality { get; set; }
+        public long? GroupId;
 
         [JsonIgnore]
         public virtual List<Paper> Papers { get; set; }

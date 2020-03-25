@@ -15,7 +15,6 @@ namespace Examination.Entities
         
         [JsonIgnore] 
         public virtual List<Paper> Papers { get; set; }
-
         public int PaperCount { get; set; }
         public int CorrectedPaperCount { get; set; }
         

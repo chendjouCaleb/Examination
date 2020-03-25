@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "bootstrap.min.css";
+@import "variable";
+@import "~office-ui-fabric-core/dist/sass/Fabric";
+
+$font-family-sans-serif : Metropolis, sans-serif;
+@import "~fabric-docs/src/components/msf-core/Msf-Core";
+
+
+
+.ms-fontWeight-light {
+  font-weight: 200;
+}
