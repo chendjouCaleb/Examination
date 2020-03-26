@@ -3,8 +3,8 @@
     
     public static class PeriodState
     {
-        public static string FINISHED = "finished";
-        public static string PROGRESS = "progress";
-        public static string PENDING = "pending";
+        public static string FINISHED = "FINISHED";
+        public static string PROGRESS = " PROGRESS";
+        public static string PENDING = "PENDING";
     }
 }
