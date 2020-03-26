@@ -373,6 +373,7 @@
           <e p="Corrector.cs" t="Include" />
           <e p="Examination.cs" t="Include" />
           <e p="Group.cs" t="Include" />
+          <e p="IPeriod.cs" t="Include" />
           <e p="Paper.cs" t="Include" />
           <e p="PaperFile.cs" t="Include" />
           <e p="PeriodState.cs" t="Include" />
@@ -382,9 +383,14 @@
           <e p="Supervisor.cs" t="Include" />
           <e p="Test.cs" t="Include" />
         </e>
+        <e p="Filters" t="Include">
+          <e p="PeriodDontHaveStatecs.cs" t="Include" />
+          <e p="PeriodHaveState.cs" t="Include" />
+        </e>
         <e p="infrastructure" t="Include">
           <e p="Assert.cs" t="Include" />
           <e p="Authorization.cs" t="Include" />
+          <e p="InvalidStateException.cs" t="Include" />
         </e>
         <e p="Loaders" t="Include">
           <e p="ExaminationLoader.cs" t="Include" />

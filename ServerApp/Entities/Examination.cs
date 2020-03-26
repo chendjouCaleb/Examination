@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Exam.Entities
 {
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
-    public class Examination:Entity<long>
+    public class Examination:Entity<long>, IPeriod
     {
         public string UserId { get; set; }
 
@@ -18,9 +18,13 @@ namespace Exam.Entities
 
         public bool RequireSpeciality { get; set; }
         
-        public DateTime? StartDate { get; set; }
-
-        public DateTime? EndDate { get; set; }
+        public DateTime ExpectedStartDate { get; set; }
+        public DateTime ExpectedEndDate { get; set; }
+        
+        public DateTime? RealStartDate { get; set; }
+        public DateTime? RealEndDate { get; set; }
+        
+        public string State => this.GetState();
         
         [JsonIgnore]
         public virtual List<Student> Students { get; set; }

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Exam.Entities
 {
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
-    public class Test : Entity<long>
+    public class Test : Entity<long>, IPeriod
     {
         public string Name { get; set; }
 
@@ -21,8 +21,8 @@ namespace Exam.Entities
         public bool UseAnonymity { get; set; }
         
 
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime ExpectedStartDate { get; set; }
+        public DateTime ExpectedEndDate { get; set; }
 
         public DateTime? RealStartDate { get; set; }
         public DateTime? RealEndDate { get; set; }
@@ -48,22 +48,6 @@ namespace Exam.Entities
 
         public int PaperCount;
 
-        public string State
-        {
-            get
-            {
-                if (RealEndDate != null)
-                {
-                    return PeriodState.FINISHED;
-                }
-
-                if (RealStartDate != null)
-                {
-                    return PeriodState.PROGRESS;
-                }
-
-                return PeriodState.PENDING;
-            }
-        }
+        public string State => this.GetState();
     }
 }
