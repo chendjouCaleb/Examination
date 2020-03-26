@@ -1,0 +1,77 @@
+.app-sidebar{
+  overflow: hidden;
+  width: 250px;
+  transition: width .2s;
+  &.app-sidebar-collapse{
+    width: 45px;
+  }
+}
+
+.app-sidebar-item {
+  color: var(--textColor);
+  display: block;
+  height: 45px;
+  cursor: pointer;
+  position: relative;
+  transition: border-left-width .2s;
+
+
+  &:hover, &.active {
+    color: var(--textColor);
+    backdrop-filter: brightness(100%);
+    border-left: 3px solid var(--primaryColor);
+  }
+}
+
+.app-sidebar-collapse-button {
+  display: inline-block;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  color: var(--textColor);
+  font-size: 22px;
+  text-align: center;
+
+  cursor: pointer;
+
+  &:hover {
+    backdrop-filter: brightness(120%);
+  }
+}
+
+.app-sidenav-icon {
+  display: flex;
+  position: absolute;
+  left:0;
+  top:0;
+  height: 45px;
+  width: 45px;
+  font-size: 22px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  & .app-sidenav-icon-image{
+    height: 26px;
+    width: 26px;
+  }
+}
+
+.app-sidebar-item-label {
+  display: inline-block;
+  position: absolute;
+  left: 45px;
+  top:0;
+  right:0;
+  height: 45px;
+  line-height: 45px;
+
+  font-size: 16px;
+
+  transition: right .2s;
+
+  .app-sidebar-collapse &{
+    right: 210px;
+    overflow: hidden;
+  }
+}
+

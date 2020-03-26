@@ -1,0 +1,85 @@
+@import "~office-ui-fabric-core/src/sass/variables/Color.Variables";
+
+html {
+  --opacity: 1;
+  --blurSize: 10px;
+  --redColor: rgba(209, 52, 56, 1);
+  --pinkColor: rgba(227, 0, 140, var(--opacity));
+  --blueColor: rgba(16, 110, 190, var(--opacity));
+  --greenColor: rgba(16, 124, 16, var(--opacity));
+
+  --darkColor: rgba(32, 31, 30, var(--opacity));
+  --lightColor: rgba(247, 245, 243, 0.9);
+
+  --noneColor: transparent;
+
+
+  --textColor: #{$ms-color-gray190};
+  --navbarBackgroundColor: #{$ms-color-gray40};
+
+  --sidebarBackgroundColor: #{$ms-color-gray30};
+  --sidenavBorderColor: #{$ms-color-sharedRed10};
+
+  --bodyBackgroundColor: #{$ms-color-gray10};
+  --navbarBackgroundColorSecondary: #{$ms-color-gray50};
+  --navbarColor: #{$ms-color-gray190};
+  --badgeBackgroundColor: #{$ms-color-sharedRed10};
+  --badgeColor: #{$ms-color-gray10};
+
+  --panelBackgroundColor: #{$ms-color-gray30};
+
+  --primaryColor: var(--blueColor);
+}
+
+html[data-theme="light"] {
+  --textColor: #{$ms-color-gray190};
+
+
+
+  --bodyBackgroundColor:  rgba(227, 225, 223, calc(var(--opacity) - 0.3));
+
+  --sidebarBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.2));
+
+
+  --navbarBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.1));
+  --navbarBackgroundColorSecondary: #{$ms-color-gray160};
+  --navbarColor: #{$ms-color-gray190};
+
+  --panelBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.5));
+}
+
+html[data-theme="dark"] {
+  --textColor: #{$ms-color-gray10};
+  --bodyBackgroundColor:  rgba(11, 11, 10, calc(var(--opacity) - 0.3));
+
+  --sidebarBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.2));
+
+
+  --navbarBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.1));
+  --navbarBackgroundColorSecondary: #{$ms-color-gray160};
+  --navbarColor: #{$ms-color-gray10};
+
+  --panelBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.5));
+}
+
+
+html[data-theme-color="red"] {
+  --primaryColor: var(--redColor);
+  --backgroundColor: var(--redColor);
+
+}
+
+html[data-theme-color="green"] {
+  --primaryColor: var(--greenColor);
+  --backgroundColor: var(--greenColor);
+}
+
+html[data-theme-color="blue"] {
+  --primaryColor: var(--blueColor);
+  --backgroundColor: var(--blueColor);
+}
+
+html[data-theme-color="pink"] {
+  --primaryColor: var(--pinkColor);
+  --backgroundColor: var(--pinkColor);
+}

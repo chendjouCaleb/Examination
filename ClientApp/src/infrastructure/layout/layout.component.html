@@ -1,0 +1,20 @@
+<div id="layout-background"></div>
+<app-navbar class="layout-navbar" (buttonClick)="open($event)" ></app-navbar>
+
+<ng-content select="[app-sidebar], app-sidebar" ></ng-content>
+
+<div class="layout-main" #mainContent>
+  <ng-content></ng-content>
+</div>
+
+
+<app-panel title="Notification" name="notification"></app-panel>
+<app-panel title="Journée" name="calendar"></app-panel>
+<app-panel title="Message" name="message"></app-panel>
+<app-panel title="Paramètres" name="settings">
+  <app-layout-settings></app-layout-settings>
+</app-panel>
+<app-panel title="Mon compte" name="account"></app-panel>
+
+
+

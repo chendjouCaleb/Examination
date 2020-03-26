@@ -1,0 +1,69 @@
+:host {
+  width: 300px;
+  max-width: 100%;
+  background: var(--panelBackgroundColor);
+  color: var(--textColor);
+
+  position: fixed;
+  top: 55px;
+  right: -300px;
+  bottom: 0;
+
+  transition: right .3s;
+
+  backdrop-filter: blur(var(--blurSize));
+
+  &.panel-visible {
+    right: 0;
+  }
+}
+
+
+
+.panel-title {
+  color: var(--textColor);
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+
+  font-size: 24px;
+  user-select: none;
+
+  position: absolute;
+  top:0;
+  left: 0;
+  right:0;
+
+}
+
+.panel-title .panel-title-text {
+  height: 40px;
+  display: inline-block;
+  line-height: 40px;
+  padding-left: 10px;
+
+}
+
+.panel-close-button {
+  color: var(--textColor);
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  font-size: 26px;
+  text-align: center;
+}
+
+.panel-close-button:hover{
+  backdrop-filter: brightness(110%);
+}
+
+.panel-body {
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  left:0;
+  right: 0;
+  overflow: auto;
+  padding: 10px;
+}

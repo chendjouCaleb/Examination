@@ -1,8 +1,11 @@
-﻿using Everest.AspNetStartup.Models;
+﻿using Everest.AspNetStartup.Binding;
+using Everest.AspNetStartup.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace Examination.Entities
+namespace Exam.Entities
 {
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Supervisor:Entity<long>
     {
         public string UserId { get; set; }
@@ -12,6 +15,7 @@ namespace Examination.Entities
         public long ExaminationId { get; set; }
     }
 
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class TestSupervisor : Entity<long>
     {
         public bool IsPrincipal { get; set; }

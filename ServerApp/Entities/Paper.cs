@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Examination.Entities
+namespace Exam.Entities
 {
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Paper:Entity<long>
     {
         public decimal Score { get; set; }
@@ -36,7 +39,10 @@ namespace Examination.Entities
 
         [JsonIgnore]
         public virtual List<PaperReview> Reviews { get; set; }
-        
         public int ReviewCount { get; set; }
+        
+        [JsonIgnore]
+        public virtual List<PaperFile> PaperFiles { get; set; }
+        public int PaperFileCount { get; set; }
     }
 }

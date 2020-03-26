@@ -1,0 +1,37 @@
+<div style="height:100%; align-items: center; display: flex">
+  <div class="navbar-brand ms-fontSize-24 ms-fontWeight-light px-3">Examination</div>
+
+
+</div>
+
+<div [class.search-bar-active]="activeSearchBar" class="navbar-search-bar search-bar ms-hiddenLgDown" id="search-bar">
+  <span MsfIcon class="search-bar-icon" iconName="Search"></span>
+  <div class="search-bar-input-container">
+    <input (blur)="activeSearchBar = false" (focus)="activeSearchBar = true" autocomplete="off" class="search-bar-input"
+           type="text">
+  </div>
+</div>
+
+<div class="navbar-action" >
+
+<span (click)="buttonClick.emit('notification')" class="navbar-button" id="notification-panel-button">
+    <i MsfIcon iconName="Ringer"></i>
+    <span class="ringer-badge">1</span>
+  </span>
+
+
+  <span (click)="buttonClick.emit('calendar')" class="navbar-button" id="event-panel-button">
+      <i class="ms-Icon ms-Icon--CalendarDay"></i>
+      <span class="ringer-badge">2</span>
+    </span>
+
+  <span (click)="buttonClick.emit('settings')" class="navbar-button" id="settings-panel-button">
+      <i class="ms-Icon ms-Icon--Settings"></i>
+    </span>
+
+  <span (click)="buttonClick.emit('account')" class="navbar-button navbar-personna" id="account-panel-button">
+    <MsfPersona size="size40">
+      <MsfPersonaFigure [text]="'AB e'"></MsfPersonaFigure>
+    </MsfPersona>
+    </span>
+</div>

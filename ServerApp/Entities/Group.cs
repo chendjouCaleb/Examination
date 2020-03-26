@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Examination.Entities
+namespace Exam.Entities
 {
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Group:Entity<long>
     {
         public string Name { get; set; }

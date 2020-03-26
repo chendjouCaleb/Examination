@@ -1,0 +1,17 @@
+@import "~office-ui-fabric-core/dist/sass/Fabric";
+.color-label {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 1px;
+  margin-right: 10px;
+  position: relative;
+  border: 1px solid $ms-color-gray50;
+
+  & MsfRadio {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+  }
+}

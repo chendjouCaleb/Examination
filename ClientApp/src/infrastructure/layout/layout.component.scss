@@ -1,0 +1,45 @@
+@import "~office-ui-fabric-core/dist/sass/Fabric";
+.layout-navbar {
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+}
+
+.layout-sidebar {
+  position: fixed;
+  left:0;
+  top: 55px;
+  bottom: 0;
+  background-color: var(--sidebarBackgroundColor);
+  backdrop-filter: blur(var(--blurSize));
+}
+
+.layout-main {
+  position: fixed;
+  left: 0;
+  top: 55px;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  //backdrop-filter: blur(var(--blurSize));
+  background-color: var(--bodyBackgroundColor);
+
+  .app-layout-withSidebar & {
+    left: 250px;
+  }
+
+  .app-layout-withCollapsedSidebar &{
+    left: 45px;
+  }
+
+  transition: left .2s;
+}
+
+#layout-background {
+  position: fixed;
+  left:0;
+  right:0;
+  top:0;
+  bottom: 0;
+}

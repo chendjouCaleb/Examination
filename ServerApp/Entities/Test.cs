@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace Examination.Entities
+namespace Exam.Entities
 {
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Test : Entity<long>
     {
         public string Name { get; set; }
@@ -51,15 +54,15 @@ namespace Examination.Entities
             {
                 if (RealEndDate != null)
                 {
-                    return "finished";
+                    return PeriodState.FINISHED;
                 }
 
                 if (RealStartDate != null)
                 {
-                    return "progress";
+                    return PeriodState.PROGRESS;
                 }
 
-                return "pending";
+                return PeriodState.PENDING;
             }
         }
     }

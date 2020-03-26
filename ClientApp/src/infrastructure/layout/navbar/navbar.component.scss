@@ -1,0 +1,152 @@
+:host{
+  background-color: var(--navbarBackgroundColor);
+  color: var(--navbarColor);
+
+  height: 55px;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0;
+  backdrop-filter: blur(var(--blurSize));
+}
+
+.search-bar {
+  display: flex;
+  height: 25px;
+  backdrop-filter: contrast(200%);
+  align-items: center;
+  border-radius: 2px;
+  overflow: hidden;
+  width: 300px;
+
+  box-sizing: border-box;
+
+  position: relative;
+
+  transition: border-color .3s;
+}
+
+.search-bar-input-container {
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  left: 40px;
+  right: 0;
+
+  transition: left .3s;
+}
+
+
+
+
+.search-bar input{
+  border: 1px solid transparent;
+  height: 100%;
+  background: transparent;
+  color: var(--navbarColor);
+
+  width: 100%;
+  padding: 0 10px;
+
+
+  outline: none;
+}
+
+
+.search-bar input:focus{
+  border-color: var(--primaryColor);
+
+}
+
+
+.search-bar .search-bar-icon {
+  position: absolute;
+  left:0;
+  top:0;
+  bottom: 0;
+  width: 40px;
+  text-align: center;
+  line-height: 25px;
+  transition: left .3s;
+}
+
+.search-bar-active {
+  & .search-bar-input-container {
+    left: 0;
+  }
+  & .search-bar-icon {
+    left: -40px;
+  }
+}
+
+
+.navbar-action{
+  height: 100%;
+
+  display: flex;
+}
+
+.navbar-personna {
+
+  position: relative;
+}
+
+.navbar-personna-image {
+  height: 37px;
+  width: 37px;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+
+  position: absolute;
+  top: 9px;
+  left: 9px
+}
+
+
+.navbar-button {
+  position: relative;
+  display: inline-block;
+  height: 55px;
+  width: 55px;
+  line-height: 55px;
+
+  border: 1px solid transparent;
+  box-sizing: border-box;
+
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-button:hover {
+  background-color: var(--navbarBackgroundColorSecondary);
+  //border: 1px solid var(--navbarColor)
+}
+
+.ringer-badge {
+  display: inline-block;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--badgeBackgroundColor);
+  color: var(--badgeColor);
+  box-sizing: content-box;
+  padding: 4px;
+  height: 10px;
+  min-width: 10px;
+  line-height: 10px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+
