@@ -22,7 +22,7 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual Speciality Speciality { get; set; }
-        public long? GroupId;
+        public long? SpecialityId;
 
         [JsonIgnore]
         public virtual List<Paper> Papers { get; set; }

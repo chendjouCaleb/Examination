@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
+    <e p="C:\Users\Chendjou deGrace\.nuget\packages\microsoft.net.test.sdk\16.2.0\build\netcoreapp1.0" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="C:\Users\Chendjou deGrace\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\nunit.engine.api.dll" t="Include" />
+    <e p="C:\Users\Chendjou deGrace\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\nunit.engine.dll" t="Include" />
+    <e p="C:\Users\Chendjou deGrace\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\NUnit3.TestAdapter.dll" t="Include" />
+    <e p="C:\Users\Chendjou deGrace\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\NUnit3.TestAdapter.pdb" t="Include" />
     <e p="C:\Users\Chendjou deGrace\.Rider2019.2\config\scratches" t="IncludeRecursive" />
     <e p="C:\Users\Chendjou deGrace\.Rider2019.2\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Chendjou deGrace\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Examination.-722077248.00" t="ExcludeRecursive" />
@@ -249,6 +256,17 @@
               </e>
               <e p="examination.module.ts" t="Include" />
             </e>
+            <e p="test" t="Include">
+              <e p="test-layout" t="Include">
+                <e p="test-details" t="Include">
+                  <e p="test-details.component.html" t="Include" />
+                  <e p="test-details.component.scss" t="Include" />
+                  <e p="test-details.component.spec.ts" t="Include" />
+                  <e p="test-details.component.ts" t="Include" />
+                </e>
+                <e p="test-layout.module.ts" t="Include" />
+              </e>
+            </e>
           </e>
           <e p="assets" t="Include">
             <e p=".gitkeep" t="Include" />
@@ -314,9 +332,19 @@
               <e p="authorization.entity.ts" t="Include" />
               <e p="client.entity.ts" t="Include" />
               <e p="connection.ts" t="Include" />
+              <e p="contest.entity.ts" t="Include" />
+              <e p="corrector.entity.ts" t="Include" />
               <e p="entity.ts" t="Include" />
               <e p="examination.ts" t="Include" />
+              <e p="group.entity.ts" t="Include" />
+              <e p="paper.entity.ts" t="Include" />
+              <e p="period.entity.ts" t="Include" />
               <e p="public_api.ts" t="Include" />
+              <e p="review.entity.ts" t="Include" />
+              <e p="speciality.entity.ts" t="Include" />
+              <e p="student.entity.ts" t="Include" />
+              <e p="supervisor.entity.ts" t="Include" />
+              <e p="test.entity.ts" t="Include" />
               <e p="user.entity.ts" t="Include" />
             </e>
             <e p="form" t="Include">
@@ -366,6 +394,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="ExaminationController.cs" t="Include" />
+          <e p="TestController.cs" t="Include" />
         </e>
         <e p="Core.dll" t="Include" />
         <e p="Entities" t="Include">
@@ -390,10 +419,12 @@
         <e p="infrastructure" t="Include">
           <e p="Assert.cs" t="Include" />
           <e p="Authorization.cs" t="Include" />
+          <e p="DateTimeAssert.cs" t="Include" />
           <e p="InvalidStateException.cs" t="Include" />
         </e>
         <e p="Loaders" t="Include">
           <e p="ExaminationLoader.cs" t="Include" />
+          <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="models" t="Include">
           <e p="ExaminationForm.cs" t="Include" />
@@ -405,12 +436,37 @@
             </e>
           </e>
         </e>
+        <e p="Persistence" t="Include">
+          <e p="DesignTimeDbContextFactory.cs" t="Include" />
+          <e p="PersistenceContext.cs" t="Include" />
+          <e p="RepositoryServices.cs" t="Include" />
+        </e>
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="ServerApp.csproj" t="IncludeRecursive" />
         <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="ServerAppTest" t="IncludeRecursive">
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="ExaminationControllerTests.cs" t="Include" />
+        </e>
+        <e p="Core.dll" t="Include" />
+        <e p="Microsoft.AspNetCore.App" t="Include" />
+        <e p="Microsoft.NETCore.App" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="ServerAppTest.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="ServerAppTest.csproj" t="IncludeRecursive" />
+        <e p="ServiceConfiguration.cs" t="Include" />
+        <e p="UnitTest1.cs" t="Include" />
       </e>
     </e>
   </component>

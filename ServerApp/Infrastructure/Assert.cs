@@ -9,5 +9,7 @@ namespace Exam.Infrastructure
             if (arg == null)
                 throw new ArgumentNullException(paramName);
         }
+        
+        
     }
 }

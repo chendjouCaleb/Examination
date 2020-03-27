@@ -25,6 +25,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ClientApp", "ClientApp\", "
 		VWDPort = "54387"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAppTest", "ServerAppTest\ServerAppTest.csproj", "{030492A1-A812-4C16-BBD2-59FEBD713A2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,9 +38,12 @@ Global
 		{8F6B4BEF-FDAF-4962-919D-A37FD69DC792}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F6B4BEF-FDAF-4962-919D-A37FD69DC792}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8AE5C786-304A-49B0-937B-3BBFCC61DE59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AE5C786-304A-49B0-937B-3BBFCC61DE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AE5C786-304A-49B0-937B-3BBFCC61DE59}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{8AE5C786-304A-49B0-937B-3BBFCC61DE59}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{030492A1-A812-4C16-BBD2-59FEBD713A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{030492A1-A812-4C16-BBD2-59FEBD713A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{030492A1-A812-4C16-BBD2-59FEBD713A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{030492A1-A812-4C16-BBD2-59FEBD713A2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

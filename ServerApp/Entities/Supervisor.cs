@@ -26,7 +26,7 @@ namespace Exam.Entities
         public virtual Test Test { get; set; }
         public long? TestId { get; set; }
 
-        public Group Group { get; set; }
+        public virtual Group Group { get; set; }
         public long? GroupId { get; set; }
     }
 }

@@ -16,9 +16,16 @@ namespace Exam.Entities
         public virtual Examination Examination { get; set; }
         public long ExaminationId { get; set; }
         
+        /// <summary>
+        /// Assigned paper count.
+        /// </summary>
         [JsonIgnore] 
         public virtual List<Paper> Papers { get; set; }
         public int PaperCount { get; set; }
+        
+        /// <summary>
+        /// Corrected paper size.
+        /// </summary>
         public int CorrectedPaperCount { get; set; }
         
     }

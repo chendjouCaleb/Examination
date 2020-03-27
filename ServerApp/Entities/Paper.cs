@@ -31,10 +31,11 @@ namespace Exam.Entities
         public virtual Student Student { get; set; }
         public long StudentId { get; set; }
         
-        public virtual Supervisor Supervisor { get; set; }
-        public long SupervisorId { get; set; }
+        public virtual TestSupervisor TestSupervisor { get; set; }
+        public long TestSupervisorId { get; set; }
         
         public virtual List<Contest> Contests { get; set; }
+        public int  ContestCount { get; set; }
         
 
         [JsonIgnore]
