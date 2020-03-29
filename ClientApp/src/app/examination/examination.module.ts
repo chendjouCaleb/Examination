@@ -7,15 +7,11 @@ import {ExaminationAddComponent} from './examination-add/examination-add.compone
 import {ExaminationDeleteComponent} from './examination-delete/examination-delete.component';
 import {RouterModule, Routes} from "@angular/router";
 import {ExaminationLayoutModule} from "./examination-layout/examination-layout.module";
-
-;
-import {ExaminationStudentComponent} from './examination-student/examination-student.component'
-  ;
-import {ExaminationSettingsComponent} from './examination-settings/examination-settings.component'
-  ;
-import {ExaminationReviewsComponent} from './examination-reviews/examination-reviews.component'
-  ;
-import {ExaminationCalendarComponent} from './examination-calendar/examination-calendar.component'
+import {ExaminationStudentComponent} from './examination-student/examination-student.component';
+import {ExaminationSettingsComponent} from './examination-settings/examination-settings.component';
+import {ExaminationReviewsComponent} from './examination-reviews/examination-reviews.component';
+import {ExaminationCalendarComponent} from './examination-calendar/examination-calendar.component';
+import {TestLayoutModule} from "../test/test-layout/test-layout.module";
 
 export const routes: Routes = [
   {path: 'add', component: ExaminationAddComponent},
@@ -29,7 +25,8 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [MsfIconModule, MsfButtonModule, LayoutModule, ExaminationLayoutModule, RouterModule.forChild(routes)],
+  imports: [MsfIconModule, MsfButtonModule, LayoutModule, ExaminationLayoutModule, RouterModule.forChild(routes),
+    TestLayoutModule],
   declarations: [ExaminationListComponent, ExaminationHomeComponent, ExaminationAddComponent, ExaminationDeleteComponent,
     ExaminationCalendarComponent, ExaminationReviewsComponent, ExaminationSettingsComponent, ExaminationStudentComponent]
 })

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +12,18 @@ namespace Exam.Entities
     public class Student:Entity<long>
     {
         public string RegistrationId { get; set; }
+        public string FullName { get; set; }
+        public DateTime BirthDate { get; set; }
+        
+
+        [NotMapped]
+        public int Position { get; set; }
+        
         public string UserId { get; set; }
 
-        public string FullName { get; set; }
-
-        public int Position { get; set; }
+        [JsonIgnore] 
+        public virtual Application Application { get; set; }
+        
         
         [JsonIgnore]
         public virtual Examination Examination { get; set; }

@@ -1,1 +1,48 @@
-<p>test-details works!</p>
+<div class="app-test-details-testName">{{test.name}}</div>
+
+<div class="d-flex mt-2">
+
+  <div class="app-test-details-states">
+    <div class="app-test-details-state-item">
+      <span MsfIcon iconName="CheckMark" class="app-test-details-state-icon ms-bgColor-sharedGreenCyan10"></span>
+      <span class="app-test-details-state-icon-text"> Corrigée</span>
+    </div>
+
+    <div class="app-test-details-state-item mt-2">
+      <span MsfIcon iconName="StatusCircleExclamation"
+            class="app-test-details-state-icon ms-bgColor-sharedRedOrange10"></span>
+      <span class="app-test-details-state-icon-text"> Notes non publiées</span>
+    </div>
+
+  </div>
+
+  <div class="app-test-details-supervisors ml-2">
+    <MsfPersona size="size32" class="d-block">
+      <MsfPersonaFigure textInitial="ND" color="green"></MsfPersonaFigure>
+      <MsfPersonaText class="ms-fontWeight-semibold">Neil deGrasse </MsfPersonaText>
+    </MsfPersona>
+
+    <MsfPersona size="size32" class="d-block">
+      <MsfPersonaFigure textInitial="CC" ></MsfPersonaFigure>
+      <MsfPersonaText class="ms-fontWeight-semibold">Chendjou Caleb deGrace</MsfPersonaText>
+    </MsfPersona>
+  </div>
+
+  <div class="app-test-details-infos ml-5">
+    <div class="icon-label">
+      <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+      <span class="icon-label-text">18 Déc 2019</span>
+    </div>
+
+    <div class=" icon-label">
+      <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+      <span class="icon-label-text"> 12h 13 à 14h 00</span>
+    </div>
+
+    <div class=" icon-label">
+      <span class="icon-label-icon" MsfIcon iconName="Room"></span>
+      <span class="icon-label-text"> Amphi 25</span>
+    </div>
+  </div>
+
+</div>

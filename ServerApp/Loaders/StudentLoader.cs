@@ -9,12 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Exam.Loaders
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class LoadTest : Attribute, IResourceFilter
+    public class LoadStudent : Attribute, IResourceFilter
     {
-        public string ItemName { get; set; } = "test";
+        public string ItemName { get; set; } = "student";
         public string ExaminationItemName { get; set; }
 
-        public string ParameterName { get; set; } = "testId";
+        public string ParameterName { get; set; } = "studentId";
 
         public ParameterSource Source { get; set; } = ParameterSource.Route;
 
@@ -25,20 +25,20 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<Test, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<Test, long>>();
+            IRepository<Student, long> repository =
+                context.HttpContext.RequestServices.GetRequiredService<IRepository<Student, long>>();
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
                 return;
             }
-            Test test = repository.Find(long.Parse(id));
+            Student student = repository.Find(long.Parse(id));
 
-            context.HttpContext.Items[ItemName] = test;
+            context.HttpContext.Items[ItemName] = student;
 
             if (!string.IsNullOrWhiteSpace(ExaminationItemName))
             {
-                context.HttpContext.Items[ExaminationItemName] = test.Examination;
+                context.HttpContext.Items[ExaminationItemName] = student.Examination;
             }
         }
     }

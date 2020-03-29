@@ -1,0 +1,32 @@
+@import "~office-ui-fabric-core/dist/sass/Fabric";
+@import "~office-ui-fabric-core/dist/sass/variables/Font.Variables";
+.app-test-details, :host {
+  backdrop-filter: brightness(130%);
+  display: block;
+  padding: 10px;
+}
+
+.app-test-details-testName {
+  font-size: $ms-font-size-18;
+  font-weight: $ms-font-weight-semibold;
+  text-transform: capitalize;
+}
+
+.app-test-details-state-item{
+  display: flex;
+  align-items: center;
+}
+.app-test-details-state-icon{
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: $ms-color-white;
+}
+
+
+.app-test-details-state-icon-text{
+  margin-left: 5px;
+}

@@ -229,6 +229,7 @@
               </e>
               <e p="examination-home" t="Include">
                 <e p="examination-home.component.html" t="Include" />
+                <e p="examination-home.component.scss" t="Include" />
                 <e p="examination-home.component.ts" t="Include" />
               </e>
               <e p="examination-layout" t="Include">
@@ -371,6 +372,7 @@
           <e p="polyfills.ts" t="Include" />
           <e p="styles" t="Include">
             <e p="bootstrap.min.css" t="Include" />
+            <e p="ms-Icon-fix.scss" t="Include" />
             <e p="styles.scss" t="Include" />
             <e p="variable.scss" t="Include" />
           </e>
@@ -393,11 +395,15 @@
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="ApplicationController.cs" t="Include" />
           <e p="ExaminationController.cs" t="Include" />
+          <e p="SpecialityController.cs" t="Include" />
+          <e p="StudentController.cs" t="Include" />
           <e p="TestController.cs" t="Include" />
         </e>
         <e p="Core.dll" t="Include" />
         <e p="Entities" t="Include">
+          <e p="Application.cs" t="Include" />
           <e p="Contest.cs" t="Include" />
           <e p="Corrector.cs" t="Include" />
           <e p="Examination.cs" t="Include" />
@@ -424,10 +430,16 @@
         </e>
         <e p="Loaders" t="Include">
           <e p="ExaminationLoader.cs" t="Include" />
+          <e p="SpecialityController.cs" t="Include" />
+          <e p="SpecialityLoader.cs" t="Include" />
+          <e p="StudentLoader.cs" t="Include" />
           <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="models" t="Include">
           <e p="ExaminationForm.cs" t="Include" />
+          <e p="SpecialityForm.cs" t="Include" />
+          <e p="StudentForm.cs" t="Include" />
+          <e p="TestForm.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -453,6 +465,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="ExaminationControllerTests.cs" t="Include" />
+          <e p="SpecialityControllerTests.cs" t="Include" />
         </e>
         <e p="Core.dll" t="Include" />
         <e p="Microsoft.AspNetCore.App" t="Include" />

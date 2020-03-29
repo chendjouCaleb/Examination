@@ -1,4 +1,5 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import {Test} from "../../../../models/entities/test.entity";
 
 @Component({
   selector: 'app-test-details',
@@ -9,6 +10,9 @@ export class TestDetailsComponent implements OnInit {
 
   @HostBinding('class')
   className: string = 'app-test-details';
+
+  @Input()
+  test: Test;
 
   constructor() { }
 

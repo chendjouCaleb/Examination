@@ -22,5 +22,12 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<Test> Tests { get; set; }
         public int TestCount { get; set; }
+        
+        [JsonIgnore] 
+        public virtual List<Application> Applications { get; set; }
+
+        public int ApplicationCount { get; set; }
+        public int AcceptedApplicationCount { get; set; }
+        public int RejectedApplicationCount { get; set; }
     }
 }
