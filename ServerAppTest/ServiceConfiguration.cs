@@ -28,7 +28,8 @@ namespace ServerAppTest
 
             ServiceCollection.AddTransient<ExaminationController>();
             ServiceCollection.AddTransient<SpecialityController>();
-            
+            ServiceCollection.AddTransient<CorrectorController>();
+            ServiceCollection.AddTransient<SupervisorController>();
 
             IConfiguration configuration = new ConfigurationBuilder()
 

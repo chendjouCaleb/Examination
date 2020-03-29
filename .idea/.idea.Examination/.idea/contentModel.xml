@@ -396,9 +396,11 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="ApplicationController.cs" t="Include" />
+          <e p="CorrectorController.cs" t="Include" />
           <e p="ExaminationController.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
           <e p="StudentController.cs" t="Include" />
+          <e p="SupervisorController.cs" t="Include" />
           <e p="TestController.cs" t="Include" />
         </e>
         <e p="Core.dll" t="Include" />
@@ -429,10 +431,12 @@
           <e p="InvalidStateException.cs" t="Include" />
         </e>
         <e p="Loaders" t="Include">
+          <e p="CorrectorLoader.cs" t="Include" />
           <e p="ExaminationLoader.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
           <e p="SpecialityLoader.cs" t="Include" />
           <e p="StudentLoader.cs" t="Include" />
+          <e p="SupervisorLoader.cs" t="Include" />
           <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="models" t="Include">
@@ -464,8 +468,10 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="CorrectorControllerTests.cs" t="Include" />
           <e p="ExaminationControllerTests.cs" t="Include" />
           <e p="SpecialityControllerTests.cs" t="Include" />
+          <e p="SupervisorControllerTests.cs" t="Include" />
         </e>
         <e p="Core.dll" t="Include" />
         <e p="Microsoft.AspNetCore.App" t="Include" />

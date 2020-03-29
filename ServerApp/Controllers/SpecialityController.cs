@@ -5,6 +5,7 @@ using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
@@ -53,6 +54,8 @@ namespace Exam.Controllers
         [HttpPost]
         [LoadExamination(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
+        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
+            ErrorMessage = "{examination.requireNoState.finished")]
         public CreatedAtActionResult Add(Examination examination, [FromBody] SpecialityForm form)
         {
             if(_specialityRepository.Exists(s => examination.Equals( s.Examination) && s.Name == form.Name))
@@ -77,6 +80,8 @@ namespace Exam.Controllers
         [HttpPut("{specialityId}/name")]
         [LoadSpeciality(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
+        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
+            ErrorMessage = "{examination.requireNoState.finished")]
         public StatusCodeResult ChangeName(Speciality speciality, string name)
         {
             if (speciality == null)
@@ -98,6 +103,8 @@ namespace Exam.Controllers
         [HttpDelete("{specialityId")]
         [LoadSpeciality(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
+        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
+            ErrorMessage = "{examination.requireNoState.finished")]
         public NoContentResult Delete(Speciality speciality)
         {
             Assert.RequireNonNull(speciality, nameof(speciality));
