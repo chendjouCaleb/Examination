@@ -62,8 +62,6 @@ namespace ServerAppTest.Controllers
         }
         
         
-        
-        
         [Test]
         public void Delete()
         {
