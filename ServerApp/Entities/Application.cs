@@ -13,6 +13,7 @@ namespace Exam.Entities
         public DateTime BirthDate { get; set; }
 
         public bool Processed { get; set; }
+        public DateTime? ProcessDate { get; set; }
 
         [NotMapped]
         public bool Accepted => Processed && Student != null;

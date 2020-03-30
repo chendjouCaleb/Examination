@@ -391,6 +391,7 @@
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
         <e p="Authorizers" t="Include">
+          <e p="ApplicationAuthor.cs" t="Include" />
           <e p="ExaminationAdmin.cs" t="Include" />
         </e>
         <e p="bin" t="ExcludeRecursive" />
@@ -431,6 +432,7 @@
           <e p="InvalidStateException.cs" t="Include" />
         </e>
         <e p="Loaders" t="Include">
+          <e p="ApplicationLoader.cs" t="Include" />
           <e p="CorrectorLoader.cs" t="Include" />
           <e p="ExaminationLoader.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
@@ -440,6 +442,7 @@
           <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="models" t="Include">
+          <e p="ApplicationForm.cs" t="Include" />
           <e p="ExaminationForm.cs" t="Include" />
           <e p="SpecialityForm.cs" t="Include" />
           <e p="StudentForm.cs" t="Include" />

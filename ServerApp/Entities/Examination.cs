@@ -42,6 +42,13 @@ namespace Exam.Entities
         public virtual List<Speciality> Specialities { get; set; }
         public int SpecialityCount;
         
+        [JsonIgnore] 
+        public virtual List<Application> Applications { get; set; }
+
+        public int ApplicationCount { get; set; }
+        public int AcceptedApplicationCount { get; set; }
+        public int RejectedApplicationCount { get; set; }
+        
         
         [JsonIgnore]
         public virtual List<ExaminationReview> Reviews { get; set; }
