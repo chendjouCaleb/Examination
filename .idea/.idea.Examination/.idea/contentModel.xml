@@ -393,12 +393,15 @@
         <e p="Authorizers" t="Include">
           <e p="ApplicationAuthor.cs" t="Include" />
           <e p="ExaminationAdmin.cs" t="Include" />
+          <e p="OrganisationAdmin.cs" t="Include" />
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="ApplicationController.cs" t="Include" />
           <e p="CorrectorController.cs" t="Include" />
           <e p="ExaminationController.cs" t="Include" />
+          <e p="OrganisationController.cs" t="Include" />
+          <e p="RoomController.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
           <e p="StudentController.cs" t="Include" />
           <e p="SupervisorController.cs" t="Include" />
@@ -412,10 +415,12 @@
           <e p="Examination.cs" t="Include" />
           <e p="Group.cs" t="Include" />
           <e p="IPeriod.cs" t="Include" />
+          <e p="Organisation.cs" t="Include" />
           <e p="Paper.cs" t="Include" />
           <e p="PaperFile.cs" t="Include" />
           <e p="PeriodState.cs" t="Include" />
           <e p="Review.cs" t="Include" />
+          <e p="Room.cs" t="Include" />
           <e p="Speciality.cs" t="Include" />
           <e p="Student.cs" t="Include" />
           <e p="Supervisor.cs" t="Include" />
@@ -435,6 +440,8 @@
           <e p="ApplicationLoader.cs" t="Include" />
           <e p="CorrectorLoader.cs" t="Include" />
           <e p="ExaminationLoader.cs" t="Include" />
+          <e p="OrganisationLoader.cs" t="Include" />
+          <e p="RoomLoader.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
           <e p="SpecialityLoader.cs" t="Include" />
           <e p="StudentLoader.cs" t="Include" />
@@ -444,6 +451,8 @@
         <e p="models" t="Include">
           <e p="ApplicationForm.cs" t="Include" />
           <e p="ExaminationForm.cs" t="Include" />
+          <e p="OrganisationForm.cs" t="Include" />
+          <e p="RoomForm.cs" t="Include" />
           <e p="SpecialityForm.cs" t="Include" />
           <e p="StudentForm.cs" t="Include" />
           <e p="TestForm.cs" t="Include" />

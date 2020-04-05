@@ -163,7 +163,7 @@ namespace ServerAppTest.Controllers
             _examinationRepository.Refresh(examination);
             
             Assert.NotNull(examination);
-            Assert.True(DateTimeAssert.EqualsAtSecond(DateTime.Now, examination.RealStartDate.Value));
+            Assert.True(DateTimeAssert.EqualsAtSecond(DateTime.Now, examination.StartDate.Value));
         }
         
         
@@ -176,7 +176,7 @@ namespace ServerAppTest.Controllers
             _examinationRepository.Refresh(examination);
             
             Assert.NotNull(examination);
-            Assert.True(DateTimeAssert.EqualsAtSecond(DateTime.Now, examination.RealEndDate.Value));
+            Assert.True(DateTimeAssert.EqualsAtSecond(DateTime.Now, examination.EndDate.Value));
         }
 
 
@@ -190,7 +190,7 @@ namespace ServerAppTest.Controllers
             _examinationRepository.Refresh(examination);
 
             Assert.NotNull(examination);
-            Assert.Null(examination.RealEndDate);
+            Assert.Null(examination.EndDate);
         }
 
         [Test]

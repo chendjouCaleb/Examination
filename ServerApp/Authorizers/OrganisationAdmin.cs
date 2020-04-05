@@ -7,21 +7,21 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Exam.Authorizers
 {
-    public class AuthorizeExaminationAdmin: ActionFilterAttribute
+    public class AuthorizeOrganisationAdmin: ActionFilterAttribute
     {
-        public string ExaminationItemName { get; set; } = "examination";
+        public string OrganisationItemName { get; set; } = "organisation";
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             Authorization authorization = 
                 context.HttpContext.Items["Authorization"] as Authorization;
 
-            Examination examination = context.HttpContext.GetItem(ExaminationItemName)  as Examination;
+            Organisation organisation = context.HttpContext.GetItem("organisation") as Organisation;
             Assert.RequireNonNull(authorization, nameof(authorization));
-            Assert.RequireNonNull(examination, nameof(examination));
+            Assert.RequireNonNull(organisation, nameof(organisation));
 
-            if (examination.Organisation.AdminUserId != authorization.UserId)
+            if (organisation.AdminUserId != authorization.UserId)
             {
-                throw new UnauthorizedException("L'administrateur de cet examen est requis pour effectuer l'action.");
+                throw new UnauthorizedException("L'administrateur de cet organisation est requis pour effectuer l'action.");
             }
         }
     }

@@ -9,11 +9,11 @@ using Exam.Infrastructure;
 namespace Exam.Loaders
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class LoadExamination : Attribute, IResourceFilter
+    public class LoadRoom : Attribute, IResourceFilter
     {
-        public string ItemName { get; set; } = "examination";
+        public string ItemName { get; set; } = "room";
 
-        public string ParameterName { get; set; } = "examinationId";
+        public string ParameterName { get; set; } = "roomId";
 
         public string OrganisationItemName { get; set; }
 
@@ -26,20 +26,20 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<Examination, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<Examination, long>>();
+            IRepository<Room, long> repository =
+                context.HttpContext.RequestServices.GetRequiredService<IRepository<Room, long>>();
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
                 return;
             }
-            Examination examination = repository.Find(long.Parse(id));
+            Room room = repository.Find(long.Parse(id));
 
-            context.HttpContext.Items[ItemName] = examination;
+            context.HttpContext.Items[ItemName] = room;
 
             if (!string.IsNullOrWhiteSpace(OrganisationItemName))
             {
-                context.HttpContext.Items[OrganisationItemName] = examination.Organisation;
+                context.HttpContext.Items[OrganisationItemName] = room.Organisation;
             }
         }
     }

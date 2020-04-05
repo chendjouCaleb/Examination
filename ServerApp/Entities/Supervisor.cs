@@ -23,10 +23,8 @@ namespace Exam.Entities
         public virtual Supervisor Supervisor { get; set; }
         public long SupervisorId { get; set; }
         
-        public virtual Test Test { get; set; }
-        public long? TestId { get; set; }
 
         public virtual Group Group { get; set; }
-        public long? GroupId { get; set; }
+        public long GroupId { get; set; }
     }
 }

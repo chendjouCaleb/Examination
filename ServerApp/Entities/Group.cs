@@ -10,15 +10,13 @@ namespace Exam.Entities
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Group:Entity<long>, IPeriod
     {
-        public string Name { get; set; }
-
-        public string RoomName { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         
-        public DateTime ExpectedStartDate { get; set; }
-        public DateTime ExpectedEndDate { get; set; }
+        [JsonIgnore] 
+        public virtual Room Room { get; set; }
 
-        public DateTime? RealStartDate { get; set; }
-        public DateTime? RealEndDate { get; set; }
+        public long RoomId { get; set; }
         
         [JsonIgnore] 
         public virtual Test Test { get; set; }
@@ -28,11 +26,11 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<Paper> Papers { get; set; }
 
-        public int PaperCount { get; set; }
+        public uint PaperCount { get; set; }
 
         [JsonIgnore]
         public virtual List<TestSupervisor> TestSupervisors { get; set; }
-        public int TestSupervisorCount { get; set; }
+        public uint TestSupervisorCount { get; set; }
         
     }
 }

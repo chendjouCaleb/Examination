@@ -10,10 +10,6 @@ namespace Exam.Entities
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Examination:Entity<long>, IPeriod
     {
-        public string UserId { get; set; }
-
-        public string AdminUserId { get; set; }
-        
         public string Name { get; set; }
 
         public bool RequireSpeciality { get; set; }
@@ -21,8 +17,11 @@ namespace Exam.Entities
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
         
-        public DateTime? RealStartDate { get; set; }
-        public DateTime? RealEndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+        public virtual Organisation Organisation { get; set; }
+        public long OrganisationId { get; set; }
         
         public string State => this.GetState();
         

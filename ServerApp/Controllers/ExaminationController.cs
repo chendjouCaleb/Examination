@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Everest.AspNetStartup.Exceptions;
+using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
@@ -35,21 +36,37 @@ namespace Exam.Controllers
 
 
         [HttpGet]
-        public IEnumerable<Examination> List([FromQuery] int? start, [FromQuery] int? end)
+        [LoadOrganisation(Source = ParameterSource.Query)]
+        public IEnumerable<Examination> List(Organisation organisation,
+            [FromQuery] string state, [FromQuery] int? start, [FromQuery] int? end)
         {
-            if (start != null && end != null)
+            IQueryable<Examination> queryable = _examinationRepository.Set;
+
+            if (organisation != null)
             {
-                return _examinationRepository.Set.Skip(start.Value).Take(end.Value - start.Value);
+                queryable = queryable.Where(e => e.OrganisationId == organisation.Id);
+            }
+            if (!string.IsNullOrWhiteSpace(state))
+            {
+                queryable = queryable.Where(e => e.State == state);
             }
 
-            return _examinationRepository.List();
+            if (start != null && end != null)
+            {
+                queryable = queryable.Skip(start.Value).Take(end.Value - start.Value);
+            }
+
+            return queryable.ToList();
         }
 
 
         [HttpPost]
-        public CreatedAtActionResult Add([FromBody] ExaminationForm model, string userId)
+        [RequireQueryParameter("organisationId")]
+        [LoadOrganisation(Source = ParameterSource.Query)]
+        [AuthorizeOrganisationAdmin]
+        public CreatedAtActionResult Add([FromBody] ExaminationForm model, Organisation organisation)
         {
-            if (_examinationRepository.Exists(e => e.Name == model.Name))
+            if (_examinationRepository.Exists(e => e.Name == model.Name && organisation.Id == e.OrganisationId))
             {
                 throw new InvalidValueException("{examination.constraints.uniqueName}");
             }
@@ -61,8 +78,7 @@ namespace Exam.Controllers
 
             Examination examination = new Examination
             {
-                UserId = userId,
-                AdminUserId = userId,
+                Organisation = organisation,
                 Name = model.Name,
                 ExpectedStartDate = model.ExpectedStartDate,
                 ExpectedEndDate = model.ExpectedEndDate,
@@ -113,20 +129,6 @@ namespace Exam.Controllers
         }
 
 
-        [HttpPut("{examinationId}/admin")]
-        [LoadExamination]
-        [AuthorizeExaminationAdmin]
-        public StatusCodeResult ChangeAdminUserId(Examination examination, [FromQuery] string userId)
-        {
-            Assert.RequireNonNull(examination, nameof(examination));
-            Assert.RequireNonNull(userId, nameof(userId));
-
-            examination.AdminUserId = userId;
-            _examinationRepository.Update(examination);
-
-            return StatusCode(StatusCodes.Status202Accepted);
-        }
-
         [HttpPut("{examinationId}/name")]
         [LoadExamination]
         [AuthorizeExaminationAdmin]
@@ -138,7 +140,7 @@ namespace Exam.Controllers
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (_examinationRepository.Exists(e => e.Name == name))
+            if (_examinationRepository.Exists(e => e.Name == name && examination.OrganisationId == e.OrganisationId))
             {
                 throw new InvalidValueException("{examination.constraints.uniqueName}");
             }
@@ -172,7 +174,7 @@ namespace Exam.Controllers
         public StatusCodeResult Start(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));
-            examination.RealStartDate = DateTime.Now;
+            examination.StartDate = DateTime.Now;
             _examinationRepository.Update(examination);
 
             return StatusCode(StatusCodes.Status202Accepted);
@@ -186,7 +188,7 @@ namespace Exam.Controllers
         public StatusCodeResult End(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));
-            examination.RealEndDate = DateTime.Now;
+            examination.EndDate = DateTime.Now;
             _examinationRepository.Update(examination);
 
             return StatusCode(StatusCodes.Status202Accepted);
@@ -200,7 +202,7 @@ namespace Exam.Controllers
         public StatusCodeResult Relaunch(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));
-            examination.RealEndDate = null;
+            examination.EndDate = null;
             _examinationRepository.Update(examination);
 
             return StatusCode(StatusCodes.Status202Accepted);

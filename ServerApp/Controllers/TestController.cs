@@ -5,7 +5,9 @@ using System.Linq.Dynamic.Core;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Loaders;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Exam.Controllers
 {
@@ -40,8 +42,30 @@ namespace Exam.Controllers
 
 
         [HttpPost]
-        public CreatedAtActionResult Add(Examination examination, Speciality speciality, [FromQuery] long[] supervisorIds,
-            [FromQuery] long[] correctorIds)
+        public CreatedAtActionResult Add(Examination examination, Speciality speciality, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public StatusCodeResult ChangeCode(Examination examination, string code)
+        {
+            throw new NotImplementedException();
+        }
+        
+
+        public StatusCodeResult ChangeCoefficient(Examination examination, string coefficient)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public StatusCodeResult ChangePublicationState(Examination examination)
+        {
+            throw new NotImplementedException();
+        }
+
+        public StatusCodeResult ChangeCloseState(Examination examination)
         {
             throw new NotImplementedException();
         }

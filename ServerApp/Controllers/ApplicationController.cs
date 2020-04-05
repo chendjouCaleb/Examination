@@ -77,6 +77,11 @@ namespace Exam.Controllers
             {
                 throw new InvalidOperationException();
             }
+            
+            if (speciality == null && examination.RequireSpeciality)
+            {
+                throw new InvalidOperationException("{application.constraints.requireSpeciality}");
+            }
 
             Application application = new Application
             {

@@ -76,6 +76,11 @@ namespace Exam.Controllers
                 throw new InvalidOperationException();
             }
 
+            if (speciality == null && examination.RequireSpeciality)
+            {
+                throw new InvalidOperationException("{student.constraints.requireSpeciality}");
+            }
+
             if (_studentRepository.Exists(s =>
                 examination.Equals(s.Examination) && s.RegistrationId == form.RegistrationId))
             {
