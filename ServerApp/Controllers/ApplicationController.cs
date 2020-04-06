@@ -175,7 +175,7 @@ namespace Exam.Controllers
             };
 
             Student student = _studentController
-                .Add(form, application.UserId, application.Examination, application.Speciality)
+                .Add(application.Examination, application.Speciality, form, application.UserId )
                 .Value as Student;
 
             application.Processed = true;

@@ -25,7 +25,8 @@ namespace Exam.Controllers
         private ILogger<StudentController> _logger;
 
         public StudentController(IRepository<Examination, long> examinationRepository,
-            IRepository<Speciality, long> specialityRepository, IRepository<Student, long> studentRepository,
+            IRepository<Speciality, long> specialityRepository, 
+            IRepository<Student, long> studentRepository,
             ILogger<StudentController> logger)
         {
             _examinationRepository = examinationRepository;
@@ -65,8 +66,8 @@ namespace Exam.Controllers
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]
         [AuthorizeExaminationAdmin]
-        public CreatedAtActionResult Add([FromBody] StudentForm form, [FromQuery] string userId,
-            Examination examination, Speciality speciality)
+        public CreatedAtActionResult Add(Examination examination, Speciality speciality,
+            [FromBody] StudentForm form, [FromQuery] string userId )
         {
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(examination, nameof(examination));
@@ -90,15 +91,16 @@ namespace Exam.Controllers
             if (!string.IsNullOrWhiteSpace(userId) && _studentRepository.Exists(s =>
                     examination.Equals(s.Examination) && s.UserId == userId))
             {
-                throw new InvalidValueException("{student.constraints.uniqueUser}");
+                throw new InvalidValueException("{student.constraints.uniqueUserId}");
             }
 
             Student student = new Student
             {
-                FullName = form.RegistrationId,
+                FullName = form.FullName,
                 RegistrationId = form.RegistrationId,
                 BirthDate = form.BirthDate,
-                Examination = examination
+                Examination = examination,
+                Gender = form.Gender
             };
             if (speciality != null)
             {
@@ -126,10 +128,11 @@ namespace Exam.Controllers
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]
         [AuthorizeExaminationAdmin]
-        public Student Edit(Student student, [FromBody] StudentForm form)
+        public Student Update(Student student, [FromBody] StudentFormInfo form)
         {
             student.BirthDate = form.BirthDate;
             student.FullName = form.FullName;
+            student.Gender = form.Gender;
 
             _studentRepository.Update(student);
 
@@ -142,14 +145,26 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireNoState.finished")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
-        public StatusCodeResult ChangeSpeciality(Student student, Speciality speciality)
+        public StatusCodeResult ChangeSpeciality(Student student, Speciality speciality = null)
         {
             Assert.RequireNonNull(student, nameof(student));
-            Assert.RequireNonNull(speciality, nameof(speciality));
+            
 
-            if (student.ExaminationId != speciality.ExaminationId)
+            if (speciality != null && student.Examination.Id != speciality.Examination.Id)
             {
-                throw new InvalidProgramException();
+                throw new InvalidOperationException();
+            } 
+            
+            
+            if (
+                speciality == null
+                
+                && 
+                student
+                    .Examination
+                    .RequireSpeciality)
+            {
+                throw new InvalidOperationException("{student.constraints.requireSpeciality}");
             }
 
             if (student.Speciality != null)
@@ -160,8 +175,13 @@ namespace Exam.Controllers
 
             student.Speciality = speciality;
             _studentRepository.Update(student);
-            speciality.StudentCount += 1;
-            _specialityRepository.Update(speciality);
+
+            if (speciality != null)
+            {
+                speciality.StudentCount += 1;
+                _specialityRepository.Update(speciality);
+            }
+            
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
@@ -182,6 +202,28 @@ namespace Exam.Controllers
             }
 
             student.RegistrationId = registrationId;
+
+            _studentRepository.Update(student);
+
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
+        
+        
+        [HttpPut("{studentId}/userId")]
+        [LoadStudent(ExaminationItemName = "examination")]
+        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
+            ErrorMessage = "{examination.requireNoState.finished")]
+        [LoadSpeciality(Source = ParameterSource.Query)]
+        [AuthorizeExaminationAdmin]
+        public StatusCodeResult ChangeUserId(Student student, [FromQuery] string userId)
+        {
+            if (!string.IsNullOrWhiteSpace(userId) && _studentRepository.Exists(s =>
+                    student.Examination.Equals(s.Examination) && s.UserId == userId))
+            {
+                throw new InvalidValueException("{student.constraints.uniqueUserId}");
+            }
+
+            student.UserId = userId;
 
             _studentRepository.Update(student);
 
