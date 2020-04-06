@@ -483,6 +483,7 @@
           <e p="CorrectorControllerTests.cs" t="Include" />
           <e p="ExaminationControllerTests.cs" t="Include" />
           <e p="OrganisationControllerTests.cs" t="Include" />
+          <e p="RoomControllerTests.cs" t="Include" />
           <e p="SpecialityControllerTests.cs" t="Include" />
           <e p="SupervisorControllerTests.cs" t="Include" />
         </e>

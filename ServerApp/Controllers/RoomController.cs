@@ -59,7 +59,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("organisationId")]
         [LoadOrganisation(Source = ParameterSource.Query)]
         [AuthorizeOrganisationAdmin]
-        public CreatedAtActionResult Add(Organisation organisation, [FromBody] RoomForm form)
+        public CreatedAtActionResult Add([FromBody] RoomForm form, Organisation organisation)
         {
             if (_roomRepository.Exists(r => r.Name == form.Name && r.OrganisationId == organisation.Id))
             {
