@@ -434,6 +434,7 @@
           <e p="Assert.cs" t="Include" />
           <e p="Authorization.cs" t="Include" />
           <e p="DateTimeAssert.cs" t="Include" />
+          <e p="DateTimeExtensions.cs" t="Include" />
           <e p="InvalidStateException.cs" t="Include" />
         </e>
         <e p="Loaders" t="Include">
