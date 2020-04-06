@@ -21,12 +21,15 @@ namespace Exam.Controllers
     public class ExaminationController : Controller
     {
         private IRepository<Examination, long> _examinationRepository;
+        private IRepository<Organisation, long> _organisationRepository;
         private ILogger<ExaminationController> _logger;
 
         public ExaminationController(IRepository<Examination, long> examinationRepository,
+            IRepository<Organisation, long> organisationRepository,
             ILogger<ExaminationController> logger)
         {
             _examinationRepository = examinationRepository;
+            _organisationRepository = organisationRepository;
             _logger = logger;
         }
 
@@ -86,6 +89,8 @@ namespace Exam.Controllers
             };
 
             examination = _examinationRepository.Save(examination);
+            organisation.ExaminationCount += 1;
+            _organisationRepository.Update(organisation);
             _logger.LogInformation($"New examination: {examination}");
 
             return CreatedAtAction("Find", new {examination.Id}, examination);
@@ -213,6 +218,9 @@ namespace Exam.Controllers
         [AuthorizeExaminationAdmin]
         public NoContentResult Delete(Examination examination)
         {
+            examination.Organisation.ExaminationCount -= 1;
+            _organisationRepository.Update(examination.Organisation);
+            
             Assert.RequireNonNull(examination, nameof(examination));
             _examinationRepository.Delete(examination);
 

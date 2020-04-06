@@ -47,7 +47,7 @@ namespace Exam.Controllers
 
             if (_organisationRepository.Exists(o => o.Identifier == form.Identifier))
             {
-                throw new InvalidValueException("{organisation.constraints.UniqueIdentifier");
+                throw new InvalidValueException("{organisation.constraints.uniqueIdentifier}");
             }
 
             Organisation organisation = new Organisation
