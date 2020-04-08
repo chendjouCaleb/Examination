@@ -11,8 +11,13 @@ namespace Exam.Entities
         public string UserId { get; set; }
         public string FullName { get; set; }
         public DateTime BirthDate { get; set; }
+        
+        public char Gender { get; set; }
 
-        public bool Processed { get; set; }
+        public string ProcessUserId { get; set; }
+        
+        [NotMapped]
+        public bool Processed => ProcessDate != null;
         public DateTime? ProcessDate { get; set; }
 
         [NotMapped]

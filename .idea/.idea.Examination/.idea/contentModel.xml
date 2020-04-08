@@ -58,6 +58,7 @@
         <e p="node_modules\@ngtools\webpack" t="IncludeRecursive" />
         <e p="node_modules\@positon\collections" t="IncludeRecursive" />
         <e p="node_modules\@types" t="IncludeRecursive">
+          <e p="animejs" t="IncludeRecursive" />
           <e p="babel__generator" t="IncludeRecursive" />
           <e p="babel__template" t="IncludeRecursive" />
           <e p="babel__traverse" t="IncludeRecursive" />
@@ -73,6 +74,7 @@
           <e p="yargs-parser" t="IncludeRecursive" />
         </e>
         <e p="node_modules\ajv" t="IncludeRecursive" />
+        <e p="node_modules\animejs" t="IncludeRecursive" />
         <e p="node_modules\arg" t="IncludeRecursive" />
         <e p="node_modules\blocking-proxy" t="IncludeRecursive" />
         <e p="node_modules\bs-logger" t="IncludeRecursive" />
@@ -268,15 +270,32 @@
                 <e p="test-layout.module.ts" t="Include" />
               </e>
             </e>
+            <e p="toast" t="Include">
+              <e p="before-onDestroy.ts" t="Include" />
+              <e p="default-toast.html" t="Include" />
+              <e p="default-toast.scss" t="Include" />
+              <e p="default-toast.ts" t="Include" />
+              <e p="toast-directives.ts" t="Include" />
+              <e p="toast-options.ts" t="Include" />
+              <e p="toast-ref.ts" t="Include" />
+              <e p="toast.module.ts" t="Include" />
+              <e p="toast.ts" t="Include" />
+            </e>
+            <e p="toast-test" t="Include">
+              <e p="toast.test.component.html" t="Include" />
+              <e p="toast.test.component.ts" t="Include" />
+            </e>
           </e>
           <e p="assets" t="Include">
             <e p=".gitkeep" t="Include" />
+            <e p="heic0707a.jpg" t="Include" />
             <e p="icon" t="Include">
               <e p="calendar.png" t="Include" />
               <e p="gear.svg" t="Include" />
               <e p="result.svg" t="Include" />
               <e p="schedule.svg" t="Include" />
             </e>
+            <e p="maxresdefault_1.jpg" t="Include" />
           </e>
           <e p="environments" t="Include">
             <e p="environment.prod.ts" t="Include" />
@@ -481,6 +500,7 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="ApplicationControllerTests.cs" t="Include" />
           <e p="CorrectorControllerTests.cs" t="Include" />
           <e p="ExaminationControllerTests.cs" t="Include" />
           <e p="OrganisationControllerTests.cs" t="Include" />

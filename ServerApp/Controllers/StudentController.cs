@@ -67,7 +67,7 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireNoState.finished")]
         [AuthorizeExaminationAdmin]
         public CreatedAtActionResult Add(Examination examination, Speciality speciality,
-            [FromBody] StudentForm form, [FromQuery] string userId )
+            [FromBody] StudentForm form, [FromQuery] string userId, User user )
         {
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(examination, nameof(examination));
@@ -100,6 +100,7 @@ namespace Exam.Controllers
                 RegistrationId = form.RegistrationId,
                 BirthDate = form.BirthDate,
                 Examination = examination,
+                RegisterUserId = user.Id,
                 Gender = form.Gender
             };
             if (speciality != null)

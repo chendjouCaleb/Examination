@@ -8,6 +8,14 @@
 $font-family-sans-serif : Metropolis, sans-serif;
 @import "~fabric-docs/src/components/msf-core/Msf-Core";
 
+.ms-rounded {
+  border-radius: 50%;
+}
+
+.ms-rotate180 {
+  transform: rotate(180deg);
+}
+
 
 
 .ms-fontWeight-light {

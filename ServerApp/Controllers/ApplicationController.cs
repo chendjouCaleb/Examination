@@ -64,23 +64,27 @@ namespace Exam.Controllers
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]
         [AuthorizeApplicationAuthor]
-        public CreatedAtActionResult Add([FromBody] ApplicationForm form, [FromQuery] string userId,
-            Examination examination,
-            Speciality speciality)
+        public CreatedAtActionResult Add(Examination examination,
+            Speciality speciality, [FromBody] ApplicationForm form, User user)
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (user == null)
             {
-                throw new ArgumentNullException(nameof(userId));
+                throw new ArgumentNullException(nameof(user));
             }
 
             if (speciality != null && !examination.Equals(speciality.Examination))
             {
                 throw new InvalidOperationException();
             }
-            
+
             if (speciality == null && examination.RequireSpeciality)
             {
                 throw new InvalidOperationException("{application.constraints.requireSpeciality}");
+            }
+
+            if (_applicationRepository.Exists(a => a.ExaminationId == examination.Id && a.UserId == user.Id))
+            {
+                throw new InvalidOperationException("{application.constraints.userId}");
             }
 
             Application application = new Application
@@ -89,7 +93,7 @@ namespace Exam.Controllers
                 RegistrationId = form.RegistrationId,
                 BirthDate = form.BirthDate,
                 Examination = examination,
-                UserId = userId
+                UserId = user.Id
             };
 
             _applicationRepository.Save(application);
@@ -115,11 +119,12 @@ namespace Exam.Controllers
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]
         [AuthorizeApplicationAuthor]
-        public AcceptedResult Edit(Application application, [FromBody] ApplicationForm form)
+        public AcceptedResult Update(Application application, [FromBody] ApplicationForm form)
         {
             application.FullName = form.FullName;
             application.RegistrationId = form.RegistrationId;
             application.BirthDate = form.BirthDate;
+            application.Gender = form.Gender;
 
             _applicationRepository.Update(application);
 
@@ -136,6 +141,7 @@ namespace Exam.Controllers
         {
             Assert.RequireNonNull(application, nameof(application));
             Assert.RequireNonNull(speciality, nameof(speciality));
+            
 
             if (application.ExaminationId != speciality.ExaminationId)
             {
@@ -150,9 +156,38 @@ namespace Exam.Controllers
 
             application.Speciality = speciality;
             _applicationRepository.Update(application);
+
             speciality.ApplicationCount += 1;
             _specialityRepository.Update(speciality);
+            
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
+        
+        
+        [HttpPut("{applicationId}/removeSpeciality")]
+        [LoadApplication(ExaminationItemName = "examination")]
+        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
+            ErrorMessage = "{examination.requireNoState.finished")]
+        [AuthorizeApplicationAuthor]
+        public StatusCodeResult RemoveSpeciality(Application application )
+        {
+            Assert.RequireNonNull(application, nameof(application));
+            
+            if (application.Examination.RequireSpeciality)
+            {
+                throw new InvalidOperationException("{application.constraints.requireSpeciality}");
+            }
+            
+            if (application.Speciality == null)
+            {
+                throw new InvalidOperationException("The application should not have speciality");
+            }
 
+            application.Speciality.ApplicationCount -= 1;
+            _specialityRepository.Update(application.Speciality);
+
+            application.Speciality = null;
+            _applicationRepository.Update(application);
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -163,7 +198,7 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireNoState.finished")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeApplicationAuthor]
-        public AcceptedResult Accept(Application application)
+        public AcceptedResult Accept(Application application, User user)
         {
             Assert.RequireNonNull(application, nameof(application));
 
@@ -171,14 +206,16 @@ namespace Exam.Controllers
             {
                 FullName = application.FullName,
                 BirthDate = application.BirthDate,
+                Gender = application.Gender,
                 RegistrationId = application.RegistrationId
             };
 
             Student student = _studentController
-                .Add(application.Examination, application.Speciality, form, application.UserId )
+                .Add(application.Examination, application.Speciality, form, application.UserId, user)
                 .Value as Student;
 
-            application.Processed = true;
+            
+            application.ProcessUserId = user.Id;
             application.ProcessDate = DateTime.Now;
             application.Student = student;
             _applicationRepository.Update(application);
@@ -199,11 +236,11 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireNoState.finished")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeApplicationAuthor]
-        public AcceptedResult Reject(Application application)
+        public AcceptedResult Reject(Application application, User user)
         {
             Assert.RequireNonNull(application, nameof(application));
 
-            application.Processed = true;
+            application.ProcessUserId = user.Id;
             application.ProcessDate = DateTime.Now;
             _applicationRepository.Update(application);
 

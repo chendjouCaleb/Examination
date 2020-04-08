@@ -1,0 +1,50 @@
+<div #background class="ms-toast-background ms-bgColor-shared{{bgColor}}"></div>
+
+<div  class="ms-toast-iconLayout">
+  <img *ngIf="iconImage" [src]="iconImage" width="50" height="50"
+       style="margin-top: 5px"
+       alt="Icon image"
+       class="ms-rounded"/>
+
+  <i *ngIf="icon && !iconImage" class="ms-Icon ms-Icon--{{icon}}"></i>
+</div>
+
+<div class="ms-toast-layout">
+
+  <div *ngIf="title || closeButton" class="ms-toast-header">
+    <div class="ms-toast-title">
+      {{title}}
+    </div>
+
+    <button *ngIf="closeButton" class="ms-toast-button ms-toast-closeButton ">
+      <i class="ms-Icon ms-Icon--Cancel"></i>
+    </button>
+  </div>
+
+  <div #body class="ms-toast-body">
+    <div class="ms-toast-content">
+      {{message}}
+      <ng-content></ng-content>
+    </div>
+
+    <div *ngIf="actionButton" class="ms-toast-footer">
+      <button class="ms-toast-button ms-toast-cancelButton" style="padding: 5px 20px">Annuler</button>
+      <button class="ms-toast-button ms-toast-confirmButton" style="margin-left: 10px">{{confirmButtonText}}</button>
+    </div>
+
+  </div>
+
+
+  <div class="ms-toast-extras">
+    <div class="ms-toast-date">
+      <ng-container *ngIf="date">{{date | amCalendar}}</ng-container>
+    </div>
+
+    <button (click)="toggle()" *ngIf="expandable"
+            class="ms-toast-button ms-toast-iconButton ms-toast-expandButton ">
+      <i class="ms-Icon ms-Icon--ChevronDown" [class.ms-rotate180]="_expanded"></i>
+    </button>
+
+  </div>
+
+</div>

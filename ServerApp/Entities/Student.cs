@@ -23,6 +23,8 @@ namespace Exam.Entities
         
         public string UserId { get; set; }
 
+        public string RegisterUserId { get; set; }
+
         [JsonIgnore] 
         public virtual Application Application { get; set; }
         
