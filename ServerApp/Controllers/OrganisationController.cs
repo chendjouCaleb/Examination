@@ -68,7 +68,7 @@ namespace Exam.Controllers
 
         [HttpPut("{organisationId}/admin")]
         [LoadOrganisation]
-        [AuthorizeOrganisationAdmin]
+        [AuthorizePrincipalAdmin]
         public StatusCodeResult ChangeAdminUserId(Organisation organisation, [FromQuery] string userId)
         {
             Assert.RequireNonNull(organisation, nameof(organisation));
@@ -82,7 +82,7 @@ namespace Exam.Controllers
 
         [HttpPut("{organisationId}")]
         [LoadOrganisation]
-        [AuthorizeOrganisationAdmin]
+        [AuthorizePrincipalAdmin]
         public AcceptedResult Update(Organisation organisation, [FromBody] OrganisationInfoForm form)
         {
             Assert.RequireNonNull(organisation, nameof(organisation));
@@ -98,7 +98,7 @@ namespace Exam.Controllers
         
         [HttpPut("{organisationId}/identifier")]
         [LoadOrganisation]
-        [AuthorizeOrganisationAdmin]
+        [AuthorizePrincipalAdmin]
         public StatusCodeResult ChangeIdentifier(Organisation organisation, [FromQuery] string identifier)
         {
             Assert.RequireNonNull(organisation, nameof(organisation));
@@ -122,7 +122,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{organisationId}")]
         [LoadOrganisation]
-        [AuthorizeOrganisationAdmin]
+        [AuthorizePrincipalAdmin]
         public NoContentResult Delete(Organisation organisation)
         {
             _organisationRepository.Delete(organisation);

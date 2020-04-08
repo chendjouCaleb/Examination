@@ -58,7 +58,7 @@ namespace Exam.Controllers
         [HttpPost]
         [RequireQueryParameter("organisationId")]
         [LoadOrganisation(Source = ParameterSource.Query)]
-        [AuthorizeOrganisationAdmin]
+        [AuthorizePrincipalAdmin]
         public CreatedAtActionResult Add( Organisation organisation, User user, [FromBody] AdminForm form)
         {
             if (_adminRepository.Exists(a => a.UserId == form.UserId && organisation.Equals(a.Organisation)))
@@ -90,7 +90,7 @@ namespace Exam.Controllers
         
         [HttpPut("{adminId}")]
         [LoadAdmin(OrganisationItemName = "organisation")]
-        [AuthorizeOrganisationAdmin(OrganisationItemName = "organisation")]
+        [AuthorizePrincipalAdmin(OrganisationItemName = "organisation")]
         public AcceptedResult Update(Admin admin, [FromBody] AdminInfoForm form)
         {
             Assert.RequireNonNull(admin, nameof(admin));
@@ -103,7 +103,7 @@ namespace Exam.Controllers
         
         [HttpDelete("{adminId}")]
         [LoadAdmin(OrganisationItemName = "organisation")]
-        [AuthorizeOrganisationAdmin(OrganisationItemName = "organisation")]
+        [AuthorizePrincipalAdmin(OrganisationItemName = "organisation")]
         public NoContentResult Delete(Admin admin)
         {
             admin.Organisation.AdminCount -= 1;
