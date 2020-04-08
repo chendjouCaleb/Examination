@@ -6,6 +6,7 @@ namespace Exam.Persistence
     public class PersistenceContext:DbContext
     {
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Organisation> Organisations { get; set; }
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<Corrector> Correctors { get; set; }

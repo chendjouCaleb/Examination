@@ -9,6 +9,7 @@ namespace Exam.Persistence
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IRepository<Organisation, long>, Repository<Organisation, long>>();
+            services.AddTransient<IRepository<Admin, long>, Repository<Admin, long>>();
             services.AddTransient<IRepository<Room, long>, Repository<Room, long>>();
             services.AddTransient<IRepository<Examination, long>, Repository<Examination, long>>();
             services.AddTransient<IRepository<Contest, long>, Repository<Contest, long>>();

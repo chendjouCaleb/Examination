@@ -147,13 +147,7 @@ namespace Exam.Controllers
             } 
             
             
-            if (
-                speciality == null
-                
-                && 
-                student
-                    .Examination
-                    .RequireSpeciality)
+            if ( speciality == null &&  student.Examination.RequireSpeciality)
             {
                 throw new InvalidOperationException("{student.constraints.requireSpeciality}");
             }

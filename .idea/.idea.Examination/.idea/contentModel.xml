@@ -416,6 +416,7 @@
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="AdminController.cs" t="Include" />
           <e p="ApplicationController.cs" t="Include" />
           <e p="CorrectorController.cs" t="Include" />
           <e p="ExaminationController.cs" t="Include" />
@@ -428,6 +429,7 @@
         </e>
         <e p="Core.dll" t="Include" />
         <e p="Entities" t="Include">
+          <e p="Admin.cs" t="Include" />
           <e p="Application.cs" t="Include" />
           <e p="Contest.cs" t="Include" />
           <e p="Corrector.cs" t="Include" />
@@ -457,6 +459,7 @@
           <e p="InvalidStateException.cs" t="Include" />
         </e>
         <e p="Loaders" t="Include">
+          <e p="AdminLoader.cs" t="Include" />
           <e p="ApplicationLoader.cs" t="Include" />
           <e p="CorrectorLoader.cs" t="Include" />
           <e p="ExaminationLoader.cs" t="Include" />
@@ -469,6 +472,7 @@
           <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="models" t="Include">
+          <e p="AdminForm.cs" t="Include" />
           <e p="ApplicationForm.cs" t="Include" />
           <e p="ExaminationForm.cs" t="Include" />
           <e p="OrganisationForm.cs" t="Include" />

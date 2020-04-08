@@ -17,6 +17,9 @@ namespace Exam.Entities
         public string ImageName { get; set; }
         public Uri ImageUrl { get; set; }
         
+        [JsonIgnore]
+        public virtual List<Admin> Admins { get; set; }
+        public uint AdminCount { get; set; }
 
         [JsonIgnore]
         public virtual List<Examination> Examinations { get; set; }
