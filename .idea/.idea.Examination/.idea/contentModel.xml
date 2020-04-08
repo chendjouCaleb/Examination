@@ -504,6 +504,7 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="AdminControllerTests.cs" t="Include" />
           <e p="ApplicationControllerTests.cs" t="Include" />
           <e p="CorrectorControllerTests.cs" t="Include" />
           <e p="ExaminationControllerTests.cs" t="Include" />

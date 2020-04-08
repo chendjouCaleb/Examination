@@ -28,6 +28,7 @@ namespace ServerAppTest
 
             
             ServiceCollection.AddTransient<OrganisationController>();
+            ServiceCollection.AddTransient<AdminController>();
             ServiceCollection.AddTransient<RoomController>();
             ServiceCollection.AddTransient<ExaminationController>();
             ServiceCollection.AddTransient<SpecialityController>();

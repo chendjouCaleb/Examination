@@ -59,7 +59,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("organisationId")]
         [LoadOrganisation(Source = ParameterSource.Query)]
         [AuthorizeOrganisationAdmin]
-        public CreatedAtActionResult Add( Organisation organisation, [FromBody] AdminForm form)
+        public CreatedAtActionResult Add( Organisation organisation, User user, [FromBody] AdminForm form)
         {
             if (_adminRepository.Exists(a => a.UserId == form.UserId && organisation.Equals(a.Organisation)))
             {
@@ -70,7 +70,8 @@ namespace Exam.Controllers
             {
                 Organisation = organisation,
                 UserId = form.UserId,
-                Role = form.Role
+                Role = form.Role,
+                RegisterUserId = user.Id
             };
 
             _adminRepository.Save(admin);
