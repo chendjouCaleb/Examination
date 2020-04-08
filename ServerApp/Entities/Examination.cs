@@ -10,6 +10,7 @@ namespace Exam.Entities
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Examination:Entity<long>, IPeriod
     {
+        public string RegisterUserId { get; set; }
         public string Name { get; set; }
 
         public bool RequireSpeciality { get; set; } 

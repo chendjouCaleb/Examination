@@ -67,7 +67,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("organisationId")]
         [LoadOrganisation(Source = ParameterSource.Query)]
         [AuthorizeOrganisationAdmin]
-        public CreatedAtActionResult Add([FromBody] ExaminationForm model, Organisation organisation)
+        public CreatedAtActionResult Add([FromBody] ExaminationForm model, Organisation organisation, User user)
         {
             if (_examinationRepository.Exists(e => e.Name == model.Name && organisation.Id == e.OrganisationId))
             {
@@ -85,7 +85,8 @@ namespace Exam.Controllers
                 Name = model.Name,
                 ExpectedStartDate = model.ExpectedStartDate,
                 ExpectedEndDate = model.ExpectedEndDate,
-                RequireSpeciality = model.RequireSpeciality
+                RequireSpeciality = model.RequireSpeciality,
+                RegisterUserId = user.Id
             };
 
             examination = _examinationRepository.Save(examination);

@@ -26,11 +26,11 @@ namespace ServerAppTest
 
             ServiceCollection.AddLogging();
 
-            
             ServiceCollection.AddTransient<OrganisationController>();
             ServiceCollection.AddTransient<AdminController>();
             ServiceCollection.AddTransient<RoomController>();
             ServiceCollection.AddTransient<ExaminationController>();
+            ServiceCollection.AddTransient<PrincipalController>();
             ServiceCollection.AddTransient<SpecialityController>();
             ServiceCollection.AddTransient<CorrectorController>();
             ServiceCollection.AddTransient<SupervisorController>();
