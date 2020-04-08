@@ -72,6 +72,11 @@ namespace Exam.Controllers
                 throw new ArgumentNullException(nameof(user));
             }
 
+            if (_studentRepository.Exists(s => examination.Equals(s.Examination)  && user.Id == s.UserId))
+            {
+                throw new InvalidOperationException("{application.constraints.noStudentUserId}");
+            }
+
             if (speciality != null && !examination.Equals(speciality.Examination))
             {
                 throw new InvalidOperationException();
@@ -82,14 +87,15 @@ namespace Exam.Controllers
                 throw new InvalidOperationException("{application.constraints.requireSpeciality}");
             }
 
-            if (_applicationRepository.Exists(a => a.ExaminationId == examination.Id && a.UserId == user.Id))
+            if (_applicationRepository.Exists(a => examination.Equals(a.Examination)  && a.UserId == user.Id))
             {
-                throw new InvalidOperationException("{application.constraints.userId}");
+                throw new InvalidOperationException("{application.constraints.uniqueUserId}");
             }
 
             Application application = new Application
             {
                 FullName = form.FullName,
+                Gender = form.Gender,
                 RegistrationId = form.RegistrationId,
                 BirthDate = form.BirthDate,
                 Examination = examination,
@@ -143,7 +149,7 @@ namespace Exam.Controllers
             Assert.RequireNonNull(speciality, nameof(speciality));
             
 
-            if (application.ExaminationId != speciality.ExaminationId)
+            if (!application.Examination.Equals(speciality.Examination))
             {
                 throw new InvalidProgramException();
             }
@@ -211,8 +217,10 @@ namespace Exam.Controllers
             };
 
             Student student = _studentController
-                .Add(application.Examination, application.Speciality, form, application.UserId, user)
+                .Add(application.Examination, application.Speciality, form, user)
                 .Value as Student;
+
+            _studentController.ChangeUserId(student, application.UserId);
 
             
             application.ProcessUserId = user.Id;

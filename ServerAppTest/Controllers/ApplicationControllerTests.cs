@@ -102,7 +102,7 @@ namespace ServerAppTest.Controllers
 
             _model.RegistrationId = "14T2563";
 
-            Exception ex = Assert.Throws<InvalidValueException>(
+            Exception ex = Assert.Throws<InvalidOperationException>(
                 () => _controller.Add(_examination, _speciality, _model, _user)
             );
 
@@ -110,7 +110,22 @@ namespace ServerAppTest.Controllers
         }
         
         
-        
+        [Test]
+        public void TryAdd_WithUsedUserIdByStudent_ShouldThrow()
+        {
+            _studentRepository.Save(new Student
+            {
+                Examination = _examination,
+                UserId = _user.Id
+            });
+            
+            
+            Exception ex = Assert.Throws<InvalidOperationException>(
+                () => _controller.Add(_examination, _speciality, _model, _user)
+            );
+
+            Assert.AreEqual("{application.constraints.noStudentUserId}", ex.Message);
+        }
 
 
         [Test]
@@ -129,6 +144,7 @@ namespace ServerAppTest.Controllers
 
             _applicationRepository.Refresh(application);
 
+            Assert.NotNull(application);
             Assert.AreEqual(speciality, application.Speciality);
             Assert.AreEqual(0, _speciality.ApplicationCount);
             Assert.AreEqual(1, speciality.ApplicationCount);
@@ -151,7 +167,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryRemoveSpeciality_WhenExaminationRequireSpeciality_ShouldThrow()
         {
-            Application application = _controller.Add(_examination, _speciality, _model, null).Value as Application;
+            Application application = _controller.Add(_examination, _speciality, _model, _user).Value as Application;
 
             _examination.RequireSpeciality = true;
             _examinationRepository.Update(_examination);
@@ -211,12 +227,12 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(processUser.Id, application.ProcessUserId);
             Assert.NotNull(application.ProcessDate);
             Assert.True(application.Accepted);
-            Assert.True(DateTimeAssert.EqualsAtSecond(DateTime.Now, application.ProcessDate.Value));
+            Assert.True(DateTimeAssert.EqualsAtMinute(DateTime.Now, application.ProcessDate.Value));
 
             Student student = application.Student;
             Assert.NotNull(student);
             
-            Assert.AreEqual(_examination, student);
+            
             Assert.AreEqual(application.FullName, student.FullName);
             Assert.AreEqual(application.RegistrationId, student.RegistrationId);
             Assert.AreEqual(application.BirthDate, student.BirthDate);
@@ -225,6 +241,9 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(_examination, student.Examination);
             Assert.AreEqual(_speciality, student.Speciality);
             Assert.AreEqual(application.UserId, student.UserId);
+            
+            Assert.AreEqual(1, _speciality.AcceptedApplicationCount);
+            Assert.AreEqual(1, _examination.AcceptedApplicationCount);
         }
 
 
@@ -249,7 +268,10 @@ namespace ServerAppTest.Controllers
             Assert.True(application.Rejected);
             Assert.True(DateTimeAssert.EqualsAtSecond(DateTime.Now, application.ProcessDate.Value));
 
-            Assert.NotNull(application.Student);
+            Assert.Null(application.Student);
+            
+            Assert.AreEqual(1, _speciality.RejectedApplicationCount);
+            Assert.AreEqual(1, _examination.RejectedApplicationCount);
         }
 
         [Test]

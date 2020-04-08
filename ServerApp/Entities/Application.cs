@@ -12,7 +12,7 @@ namespace Exam.Entities
         public string FullName { get; set; }
         public DateTime BirthDate { get; set; }
         
-        public char Gender { get; set; }
+        public Char Gender { get; set; }
 
         public string ProcessUserId { get; set; }
         

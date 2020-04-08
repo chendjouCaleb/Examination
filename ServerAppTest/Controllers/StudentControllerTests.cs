@@ -24,6 +24,11 @@ namespace ServerAppTest.Controllers
         private Organisation _organisation;
         private StudentForm _model;
 
+        private User _user = new User
+        {
+            Id = Guid.NewGuid().ToString()
+        };
+
         [SetUp]
         public void BeforeEach()
         {
@@ -68,8 +73,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            string userId = Guid.NewGuid().ToString();
-            Student student = _controller.Add(_examination, _speciality, _model, userId).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
 
             _studentRepository.Refresh(student);
 
@@ -81,65 +85,54 @@ namespace ServerAppTest.Controllers
 
             Assert.AreEqual(_examination, student.Examination);
             Assert.AreEqual(_speciality, student.Speciality);
-            Assert.AreEqual(userId, student.UserId);
+            Assert.AreEqual(_user.Id, student.RegisterUserId);
 
             Assert.AreEqual(1, _speciality.StudentCount);
             Assert.AreEqual(1, _examination.StudentCount);
         }
 
-        [Test]
-        public void TryAdd_WithUsedUserId_ShouldThrow()
-        {
-            string userId = Guid.NewGuid().ToString();
-            _controller.Add(_examination, _speciality, _model, userId);
-
-            _model.RegistrationId = "14T2563";
-
-            Exception ex = Assert.Throws<InvalidValueException>(
-                () => _controller.Add(_examination, _speciality, _model, userId)
-            );
-
-            Assert.AreEqual("{student.constraints.uniqueUserId}", ex.Message);
-        }
         
         [Test]
         public void TryAdd_WithUsedRegistrationId_ShouldThrow()
         {
-            _controller.Add(_examination, _speciality, _model, null);
+            _controller.Add(_examination, _speciality, _model, _user);
 
             Exception ex = Assert.Throws<InvalidValueException>(
-                () => _controller.Add(_examination, _speciality, _model, null)
+                () => _controller.Add(_examination, _speciality, _model, _user)
             );
 
             Assert.AreEqual("{student.constraints.uniqueRegistrationId}", ex.Message);
         }
-        
+
         [Test]
         public void ChangeUserId()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
             string userId = Guid.NewGuid().ToString();
 
             _controller.ChangeUserId(student, userId);
 
             _studentRepository.Refresh(student);
 
+            Assert.NotNull(student);
             Assert.AreEqual(userId, student.UserId);
         }
-        
+
         [Test]
         public void TryChangeUserId_WithUsedUserId_ShouldThrow()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student1 = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
 
-            string userId = Guid.NewGuid().ToString();
 
             _model.RegistrationId = "125T523";
 
-            _controller.Add(_examination, _speciality, _model, userId);
+            Student student2 = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+
+            string userId = Guid.NewGuid().ToString();
+            _controller.ChangeUserId(student1, userId);
 
             Exception ex = Assert.Throws<InvalidValueException>(
-                () => _controller.ChangeUserId(student, userId)
+                () => _controller.ChangeUserId(student2, userId)
             );
 
             Assert.AreEqual("{student.constraints.uniqueUserId}", ex.Message);
@@ -148,25 +141,26 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeRegistrationId()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
             string registrationId = "14T5236";
 
             _controller.ChangeRegistrationId(student, registrationId);
 
             _studentRepository.Refresh(student);
 
+            Assert.NotNull(student);
             Assert.AreEqual(registrationId, student.RegistrationId);
         }
-        
+
         [Test]
         public void TryChangeRegistrationId_WithUsedRegistrationId_ShouldThrow()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
 
             string registrationId = "14T5236";
             _model.RegistrationId = registrationId;
 
-            _controller.Add(_examination, _speciality, _model, null);
+            _controller.Add(_examination, _speciality, _model, _user);
 
             Exception ex = Assert.Throws<InvalidValueException>(
                 () => _controller.ChangeRegistrationId(student, registrationId)
@@ -179,7 +173,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeSpeciality()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
 
             Speciality speciality = _specialityRepository.Save(new Speciality
             {
@@ -192,6 +186,7 @@ namespace ServerAppTest.Controllers
 
             _studentRepository.Refresh(student);
 
+            Assert.NotNull(student);
             Assert.AreEqual(speciality, student.Speciality);
             Assert.AreEqual(0, _speciality.StudentCount);
             Assert.AreEqual(1, speciality.StudentCount);
@@ -200,12 +195,13 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeWithNullValue()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
 
-            _controller.ChangeSpeciality(student );
+            _controller.ChangeSpeciality(student);
 
             _studentRepository.Refresh(student);
 
+            Assert.NotNull(student);
             Assert.Null(student.Speciality);
             Assert.AreEqual(0, _speciality.StudentCount);
         }
@@ -213,26 +209,27 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TrySetNullSpeciality_WhenExaminationRequireSpeciality_ShouldThrow()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
 
             _examination.RequireSpeciality = true;
             _examinationRepository.Update(_examination);
 
-            Exception ex = Assert.Throws<InvalidOperationException>(() => _controller.ChangeSpeciality(student, null));
-            
+            Exception ex = Assert.Throws<InvalidOperationException>(
+                () => _controller.ChangeSpeciality(student)
+            );
+
             _studentRepository.Refresh(student);
-            
+
+            Assert.NotNull(student);
             Assert.NotNull(student.Speciality);
             Assert.AreEqual("{student.constraints.requireSpeciality}", ex.Message);
-            
         }
 
-        
 
         [Test]
         public void UpdateInfo()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
 
             StudentFormInfo form = new StudentFormInfo
             {
@@ -255,7 +252,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, null).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
             _controller.Delete(student);
             _studentRepository.Refresh(student);
 

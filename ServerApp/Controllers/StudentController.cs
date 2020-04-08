@@ -67,8 +67,9 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireNoState.finished")]
         [AuthorizeExaminationAdmin]
         public CreatedAtActionResult Add(Examination examination, Speciality speciality,
-            [FromBody] StudentForm form, [FromQuery] string userId, User user )
+            [FromBody] StudentForm form, User user )
         {
+            Assert.RequireNonNull(user, nameof(user));
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(examination, nameof(examination));
 
@@ -87,13 +88,7 @@ namespace Exam.Controllers
             {
                 throw new InvalidValueException("{student.constraints.uniqueRegistrationId}");
             }
-
-            if (!string.IsNullOrWhiteSpace(userId) && _studentRepository.Exists(s =>
-                    examination.Equals(s.Examination) && s.UserId == userId))
-            {
-                throw new InvalidValueException("{student.constraints.uniqueUserId}");
-            }
-
+            
             Student student = new Student
             {
                 FullName = form.FullName,
@@ -109,12 +104,7 @@ namespace Exam.Controllers
                 speciality.StudentCount += 1;
                 _specialityRepository.Update(speciality);
             }
-
-            if (!string.IsNullOrWhiteSpace(userId))
-            {
-                student.UserId = userId;
-            }
-
+            
             _studentRepository.Save(student);
 
             _logger.LogInformation($"New Student: {student}");
