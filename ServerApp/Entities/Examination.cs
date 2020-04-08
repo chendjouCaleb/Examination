@@ -10,10 +10,9 @@ namespace Exam.Entities
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Examination:Entity<long>, IPeriod
     {
-        public string PrincipalUserId { get; set; }
         public string Name { get; set; }
 
-        public bool RequireSpeciality { get; set; } = false;
+        public bool RequireSpeciality { get; set; } 
         
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
@@ -25,6 +24,10 @@ namespace Exam.Entities
         public long OrganisationId { get; set; }
         
         public string State => this.GetState();
+        
+        [JsonIgnore]
+        public virtual List<Principal> Principals { get; set; }
+        public int PrincipalCount { get; set; }
         
         [JsonIgnore]
         public virtual List<Student> Students { get; set; }

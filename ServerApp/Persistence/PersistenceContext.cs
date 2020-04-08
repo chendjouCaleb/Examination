@@ -9,6 +9,7 @@ namespace Exam.Persistence
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Organisation> Organisations { get; set; }
         public DbSet<Examination> Examinations { get; set; }
+        public DbSet<Principal> Principals { get; set; }
         public DbSet<Corrector> Correctors { get; set; }
         public DbSet<Contest> Contests { get; set; }
         public DbSet<Group> Groups { get; set; }

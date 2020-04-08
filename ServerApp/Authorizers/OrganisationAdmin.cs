@@ -23,7 +23,7 @@ namespace Exam.Authorizers
             Authorization authorization = 
                 context.HttpContext.Items["Authorization"] as Authorization;
 
-            Organisation organisation = context.HttpContext.GetItem("organisation") as Organisation;
+            Organisation organisation = context.HttpContext.GetItem(OrganisationItemName) as Organisation;
             Assert.RequireNonNull(authorization, nameof(authorization));
             Assert.RequireNonNull(organisation, nameof(organisation));
             string userId = authorization.UserId;

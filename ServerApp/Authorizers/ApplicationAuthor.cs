@@ -16,7 +16,7 @@ namespace Exam.Authorizers
             Authorization authorization = context.HttpContext.Items["Authorization"] as Authorization ??
                                           throw new ArgumentNullException(nameof(authorization));
 
-            Application application = context.HttpContext.GetItem("application") as Application ??
+            Application application = context.HttpContext.GetItem(ApplicationItemName) as Application ??
                                       throw new ArgumentNullException(nameof(application));
 
 
