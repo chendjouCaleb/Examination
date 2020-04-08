@@ -21,6 +21,9 @@ namespace Exam.Entities
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        
+        public virtual PaperManager PaperManager{ get; set; }
+        public long PaperManagerId { get; set; }
 
         public virtual Corrector Corrector { get; set; }
         public long CorrectorId { get; set; }

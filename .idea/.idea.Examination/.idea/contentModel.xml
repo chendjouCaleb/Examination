@@ -442,6 +442,7 @@
           <e p="Organisation.cs" t="Include" />
           <e p="Paper.cs" t="Include" />
           <e p="PaperFile.cs" t="Include" />
+          <e p="PaperManager.cs" t="Include" />
           <e p="PeriodState.cs" t="Include" />
           <e p="Principal.cs" t="Include" />
           <e p="Review.cs" t="Include" />
