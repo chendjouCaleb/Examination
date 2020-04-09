@@ -7,8 +7,7 @@ namespace Exam.Models
         public string Name { get; set; }
 
         public string Code { get; set; }
-
-        public string Room { get; set; }
+        
 
         public uint Coefficient { get; set; }
 
@@ -16,10 +15,7 @@ namespace Exam.Models
         
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
-
-        public string UseGroup { get; set; }
         
-        public long[] correctorIds { get; set; }
     }
 
     public class TestEditForm

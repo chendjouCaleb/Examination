@@ -451,6 +451,7 @@
           <e p="Student.cs" t="Include" />
           <e p="Supervisor.cs" t="Include" />
           <e p="Test.cs" t="Include" />
+          <e p="TestGroup.cs" t="Include" />
         </e>
         <e p="Filters" t="Include">
           <e p="PeriodDontHaveStatecs.cs" t="Include" />

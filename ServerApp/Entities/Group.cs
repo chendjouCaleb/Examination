@@ -1,36 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using Everest.AspNetStartup.Binding;
+﻿using System.Collections.Generic;
 using Everest.AspNetStartup.Models;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Exam.Entities
 {
-    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
-    public class Group:Entity<long>, IPeriod
+    public class Group:Entity<long>
     {
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string RegisterUserId { get; set; }
+
+        public virtual List<Student> Students { get; set; }
         
-        [JsonIgnore] 
+        [JsonIgnore]
+        public virtual Examination Examination { get; set; }
+        public long ExaminationId;
+        
+        [JsonIgnore]
+        public virtual Speciality Speciality { get; set; }
+        public long? SpecialityId;
+
         public virtual Room Room { get; set; }
-
-        public long RoomId { get; set; }
-        
-        [JsonIgnore] 
-        public virtual Test Test { get; set; }
-
-        public long TestId { get; set; }
-        
-        [JsonIgnore]
-        public virtual List<Paper> Papers { get; set; }
-
-        public uint PaperCount { get; set; }
-
-        [JsonIgnore]
-        public virtual List<TestSupervisor> TestSupervisors { get; set; }
-        public uint TestSupervisorCount { get; set; }
-        
+        public long? RoomId { get; set; }
     }
 }

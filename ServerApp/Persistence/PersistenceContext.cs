@@ -13,6 +13,7 @@ namespace Exam.Persistence
         public DbSet<PaperManager> PaperManagers { get; set; }
         public DbSet<Corrector> Correctors { get; set; }
         public DbSet<Contest> Contests { get; set; }
+        public DbSet<TestGroup> TestGroups { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Paper> Papers { get; set; }
         public DbSet<PaperFile> PaperFiles { get; set; }

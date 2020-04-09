@@ -12,7 +12,7 @@ namespace Exam.Entities
         public virtual Organisation Organisation { get; set; }
         public long OrganisationId { get; set; }
 
-        public virtual List<Group> Groups { get; set; }
+        public virtual List<TestGroup> Groups { get; set; }
         public uint GroupCount { get; set; }
     }
 }

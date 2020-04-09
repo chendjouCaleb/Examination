@@ -28,7 +28,7 @@ namespace Exam.Entities
         public virtual Corrector Corrector { get; set; }
         public long CorrectorId { get; set; }
 
-        public virtual Group Group { get; set; }
+        public virtual TestGroup TestGroup { get; set; }
         public long GroupId { get; set; }
         
         public virtual Student Student { get; set; }

@@ -28,6 +28,9 @@ namespace Exam.Entities
         [JsonIgnore] 
         public virtual Application Application { get; set; }
         
+        [JsonIgnore]
+        public virtual Group Group { get; set; }
+        public long? GroupId;
         
         [JsonIgnore]
         public virtual Examination Examination { get; set; }

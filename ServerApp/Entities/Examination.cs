@@ -34,6 +34,11 @@ namespace Exam.Entities
         public virtual List<Student> Students { get; set; }
         public int StudentCount { get; set; }
         
+        
+        [JsonIgnore]
+        public virtual List<Test> Tests { get; set; }
+        public int TestCount { get; set; }
+        
         [JsonIgnore]
         public virtual List<Corrector> Correctors { get; set; }
         public int CorrectorCount { get; set; }

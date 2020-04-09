@@ -10,13 +10,13 @@ namespace Exam.Entities
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Test : Entity<long>, IPeriod
     {
-        public string PrincipalUserId { get; set; }
+        public string RegisterUserId { get; set; }
         
         public string Name { get; set; }
 
         public string Code { get; set; }
         
-        public int Coefficient { get; set; }
+        public uint Coefficient { get; set; }
 
         public bool IsPublished { get; set; }
         
@@ -52,7 +52,7 @@ namespace Exam.Entities
         
         
         [JsonIgnore]
-        public virtual List<Group> Groups { get; set; }
+        public virtual List<TestGroup> Groups { get; set; }
         public int GroupCount { get; set; }
         
         public int PaperCount;
