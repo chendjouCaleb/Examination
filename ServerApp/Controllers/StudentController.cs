@@ -66,16 +66,17 @@ namespace Exam.Controllers
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]
         [AuthorizeExaminationAdmin]
-        public CreatedAtActionResult Add(Examination examination, Speciality speciality,
+        public CreatedAtActionResult Add(Examination examination, Speciality speciality, Group group,
             [FromBody] StudentForm form, User user )
         {
+            Assert.RequireNonNull(group, nameof(group));
             Assert.RequireNonNull(user, nameof(user));
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(examination, nameof(examination));
 
             if (speciality != null && !examination.Equals(speciality.Examination))
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("{entity.constraints.incompatible}");
             }
 
             if (speciality == null && examination.RequireSpeciality)
@@ -96,7 +97,8 @@ namespace Exam.Controllers
                 BirthDate = form.BirthDate,
                 Examination = examination,
                 RegisterUserId = user.Id,
-                Gender = form.Gender
+                Gender = form.Gender, 
+                Group = group
             };
             if (speciality != null)
             {
@@ -129,6 +131,36 @@ namespace Exam.Controllers
 
             return student;
         }
+
+
+        [HttpPut("{studentId}/group")]
+        [LoadStudent(ExaminationItemName = "examination")]
+        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
+            ErrorMessage = "{examination.requireNoState.finished")]
+        [LoadGroup(Source = ParameterSource.Query)]
+        [AuthorizeExaminationAdmin]
+        public StatusCodeResult ChangeGroup(Student student, Group group)
+        {
+            CheckGroup(group, student.Examination);
+            student.Group = group;
+            
+            _studentRepository.Update(student);
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
+
+
+        public void CheckGroup(Group group, Examination examination)
+        {
+            if (group == null)
+            {
+                throw new ArgumentNullException(nameof(group));
+            }
+            if (examination.Equals(group.Examination))
+            {
+                throw new InvalidOperationException("{entity.constraints.incompatible}");
+            }
+        }
+        
 
         [HttpPut("{studentId}/speciality")]
         [LoadStudent(ExaminationItemName = "examination")]

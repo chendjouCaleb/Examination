@@ -1,5 +1,4 @@
 ﻿using System;
-using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
@@ -19,11 +18,14 @@ namespace ServerAppTest.Controllers
         private IRepository<Organisation, long> _organisationRepository;
         private IRepository<Examination, long> _examinationRepository;
         private IRepository<Speciality, long> _specialityRepository;
+        private IRepository<Group, long> _groupRepository;
 
         private User _user = new User
         {
             Id = Guid.NewGuid().ToString()
-        }; 
+        };
+
+        private Group _group;
         private Speciality _speciality;
         private Examination _examination;
         private Organisation _organisation;
@@ -38,6 +40,7 @@ namespace ServerAppTest.Controllers
 
             _controller = serviceProvider.GetRequiredService<ApplicationController>();
 
+            _groupRepository = serviceProvider.GetRequiredService<IRepository<Group, long>>();
             _organisationRepository = serviceProvider.GetRequiredService<IRepository<Organisation, long>>();
             _applicationRepository = serviceProvider.GetRequiredService<IRepository<Application, long>>();
             _examinationRepository = serviceProvider.GetRequiredService<IRepository<Examination, long>>();
@@ -55,6 +58,12 @@ namespace ServerAppTest.Controllers
                 Name = "Exam name",
                 ExpectedStartDate = DateTime.Now.AddMonths(1),
                 ExpectedEndDate = DateTime.Now.AddMonths(4)
+            });
+
+            _group = _groupRepository.Save(new Group
+            {
+                Examination = _examination,
+                Name = "1"
             });
 
             _speciality = _specialityRepository.Save(new Speciality
@@ -218,7 +227,7 @@ namespace ServerAppTest.Controllers
                 Id = Guid.NewGuid().ToString()
             }; 
             
-            _controller.Accept(application, processUser);
+            _controller.Accept(application, processUser, _group);
             
             _applicationRepository.Refresh(application);
             

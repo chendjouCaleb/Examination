@@ -17,8 +17,10 @@ namespace ServerAppTest.Controllers
         private IRepository<Student, long> _studentRepository;
         private IRepository<Organisation, long> _organisationRepository;
         private IRepository<Examination, long> _examinationRepository;
+        private IRepository<Group, long> _groupRepository;
         private IRepository<Speciality, long> _specialityRepository;
 
+        private Group _group;
         private Speciality _speciality;
         private Examination _examination;
         private Organisation _organisation;
@@ -42,6 +44,7 @@ namespace ServerAppTest.Controllers
             _studentRepository = serviceProvider.GetRequiredService<IRepository<Student, long>>();
             _examinationRepository = serviceProvider.GetRequiredService<IRepository<Examination, long>>();
             _specialityRepository = serviceProvider.GetRequiredService<IRepository<Speciality, long>>();
+            _groupRepository = serviceProvider.GetRequiredService<IRepository<Group, long>>();
 
             _organisation = _organisationRepository.Save(new Organisation
             {
@@ -54,6 +57,12 @@ namespace ServerAppTest.Controllers
                 Name = "Exam name",
                 ExpectedStartDate = DateTime.Now.AddMonths(1),
                 ExpectedEndDate = DateTime.Now.AddMonths(4)
+            });
+
+            _group = _groupRepository.Save(new Group
+            {
+                Examination = _examination,
+                Name = "0"
             });
 
             _speciality = _specialityRepository.Save(new Speciality
@@ -73,7 +82,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
 
             _studentRepository.Refresh(student);
 
@@ -95,10 +104,10 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryAdd_WithUsedRegistrationId_ShouldThrow()
         {
-            _controller.Add(_examination, _speciality, _model, _user);
+            _controller.Add(_examination, _speciality, _group, _model, _user);
 
             Exception ex = Assert.Throws<InvalidValueException>(
-                () => _controller.Add(_examination, _speciality, _model, _user)
+                () => _controller.Add(_examination, _speciality, _group, _model, _user)
             );
 
             Assert.AreEqual("{student.constraints.uniqueRegistrationId}", ex.Message);
@@ -107,7 +116,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeUserId()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
             string userId = Guid.NewGuid().ToString();
 
             _controller.ChangeUserId(student, userId);
@@ -121,12 +130,12 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryChangeUserId_WithUsedUserId_ShouldThrow()
         {
-            Student student1 = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student1 = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
 
 
             _model.RegistrationId = "125T523";
 
-            Student student2 = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student2 = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
 
             string userId = Guid.NewGuid().ToString();
             _controller.ChangeUserId(student1, userId);
@@ -141,7 +150,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeRegistrationId()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
             string registrationId = "14T5236";
 
             _controller.ChangeRegistrationId(student, registrationId);
@@ -155,12 +164,12 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryChangeRegistrationId_WithUsedRegistrationId_ShouldThrow()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
 
             string registrationId = "14T5236";
             _model.RegistrationId = registrationId;
 
-            _controller.Add(_examination, _speciality, _model, _user);
+            _controller.Add(_examination, _speciality, _group, _model, _user);
 
             Exception ex = Assert.Throws<InvalidValueException>(
                 () => _controller.ChangeRegistrationId(student, registrationId)
@@ -173,7 +182,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeSpeciality()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
 
             Speciality speciality = _specialityRepository.Save(new Speciality
             {
@@ -195,7 +204,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeWithNullValue()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
 
             _controller.ChangeSpeciality(student);
 
@@ -209,7 +218,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TrySetNullSpeciality_WhenExaminationRequireSpeciality_ShouldThrow()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
 
             _examination.RequireSpeciality = true;
             _examinationRepository.Update(_examination);
@@ -229,7 +238,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void UpdateInfo()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
 
             StudentFormInfo form = new StudentFormInfo
             {
@@ -252,7 +261,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            Student student = _controller.Add(_examination, _speciality, _model, _user).Value as Student;
+            Student student = _controller.Add(_examination, _speciality, _group, _model, _user).Value as Student;
             _controller.Delete(student);
             _studentRepository.Refresh(student);
 
