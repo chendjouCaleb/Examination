@@ -16,7 +16,6 @@ namespace Exam.Persistence
             services.AddTransient<IRepository<PaperManager, long>, Repository<PaperManager, long>>();
             services.AddTransient<IRepository<Contest, long>, Repository<Contest, long>>();
             services.AddTransient<IRepository<Corrector, long>, Repository<Corrector, long>>();
-            services.AddTransient<IRepository<TestGroup, long>, Repository<TestGroup, long>>();
             services.AddTransient<IRepository<Group, long>, Repository<Group, long>>();
             services.AddTransient<IRepository<Paper, long>, Repository<Paper, long>>();
             services.AddTransient<IRepository<PaperFile, long>, Repository<PaperFile, long>>();
@@ -28,6 +27,7 @@ namespace Exam.Persistence
             services.AddTransient<IRepository<Supervisor, long>, Repository<Supervisor, long>>();
             services.AddTransient<IRepository<TestSupervisor, long>, Repository<TestSupervisor, long>>();
             services.AddTransient<IRepository<Test, long>, Repository<Test, long>>();
+            services.AddTransient<IRepository<TestGroup, long>, Repository<TestGroup, long>>();
             services.AddTransient<IRepository<Application, long>, Repository<Application, long>>();
         }
     }

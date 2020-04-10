@@ -42,6 +42,10 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<Corrector> Correctors { get; set; }
         public int CorrectorCount { get; set; }
+
+        [JsonIgnore]
+        public virtual List<Group> Groups { get; set; }
+        public int GroupCount { get; set; }
         
         [JsonIgnore]
         public virtual List<Supervisor> Supervisors { get; set; }

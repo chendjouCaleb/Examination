@@ -20,6 +20,10 @@ namespace Exam.Entities
         public int StudentCount { get; set; }
         
         [JsonIgnore]
+        public virtual List<Group> Groups { get; set; }
+        public int GroupCount { get; set; }
+        
+        [JsonIgnore]
         public virtual List<Test> Tests { get; set; }
         public int TestCount { get; set; }
         

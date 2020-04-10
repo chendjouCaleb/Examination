@@ -29,6 +29,7 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<OrganisationController>();
             ServiceCollection.AddTransient<AdminController>();
             ServiceCollection.AddTransient<RoomController>();
+            ServiceCollection.AddTransient<GroupController>();
             ServiceCollection.AddTransient<ExaminationController>();
             ServiceCollection.AddTransient<PrincipalController>();
             ServiceCollection.AddTransient<SpecialityController>();
@@ -37,6 +38,7 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<StudentController>();
             ServiceCollection.AddTransient<TestController>();
             ServiceCollection.AddTransient<ApplicationController>();
+            ServiceCollection.AddTransient<GroupController>();
 
             IConfiguration configuration = new ConfigurationBuilder()
 

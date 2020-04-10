@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Models;
 using Newtonsoft.Json;
 
@@ -7,6 +8,10 @@ namespace Exam.Entities
     public class Group:Entity<long>
     {
         public string RegisterUserId { get; set; }
+
+        public string Name { get; set; }
+
+        [NotMapped] public uint Capacity => Room.Capacity;
 
         public virtual List<Student> Students { get; set; }
         
@@ -19,6 +24,6 @@ namespace Exam.Entities
         public long? SpecialityId;
 
         public virtual Room Room { get; set; }
-        public long? RoomId { get; set; }
+        public long RoomId { get; set; }
     }
 }

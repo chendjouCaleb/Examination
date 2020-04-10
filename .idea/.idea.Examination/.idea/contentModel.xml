@@ -422,6 +422,7 @@
           <e p="ApplicationController.cs" t="Include" />
           <e p="CorrectorController.cs" t="Include" />
           <e p="ExaminationController.cs" t="Include" />
+          <e p="GroupController.cs" t="Include" />
           <e p="OrganisationController.cs" t="Include" />
           <e p="PrincipalController.cs" t="Include" />
           <e p="RoomController.cs" t="Include" />
@@ -469,6 +470,7 @@
           <e p="ApplicationLoader.cs" t="Include" />
           <e p="CorrectorLoader.cs" t="Include" />
           <e p="ExaminationLoader.cs" t="Include" />
+          <e p="GroupLoader.cs" t="Include" />
           <e p="OrganisationLoader.cs" t="Include" />
           <e p="PrincipalLoader.cs" t="Include" />
           <e p="RoomLoader.cs" t="Include" />
@@ -482,6 +484,7 @@
           <e p="AdminForm.cs" t="Include" />
           <e p="ApplicationForm.cs" t="Include" />
           <e p="ExaminationForm.cs" t="Include" />
+          <e p="GroupForm.cs" t="Include" />
           <e p="OrganisationForm.cs" t="Include" />
           <e p="PrincipalForm.cs" t="Include" />
           <e p="RoomForm.cs" t="Include" />
@@ -516,6 +519,7 @@
           <e p="ApplicationControllerTests.cs" t="Include" />
           <e p="CorrectorControllerTests.cs" t="Include" />
           <e p="ExaminationControllerTests.cs" t="Include" />
+          <e p="GroupControllerTests.cs" t="Include" />
           <e p="OrganisationControllerTests.cs" t="Include" />
           <e p="PrincipalControllerTests.cs" t="Include" />
           <e p="RoomControllerTests.cs" t="Include" />
