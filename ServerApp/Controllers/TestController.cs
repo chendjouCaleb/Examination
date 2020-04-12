@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Infrastructure;
@@ -19,7 +20,8 @@ namespace Exam.Controllers
         private IRepository<Test, long> _testRepository;
         private IRepository<Examination, long> _examinationRepository;
 
-        public TestController(IRepository<Test, long> testRepository, IRepository<Examination, long> examinationRepository)
+        public TestController(IRepository<Test, long> testRepository,
+            IRepository<Examination, long> examinationRepository)
         {
             _testRepository = testRepository;
             _examinationRepository = examinationRepository;
@@ -53,10 +55,10 @@ namespace Exam.Controllers
         {
             return period.ExpectedOverlap(examination.Tests);
         }
-        
-        
+
+
         [HttpPost]
-        public CreatedAtActionResult Add(Examination examination, Speciality speciality, User user, TestForm form)
+        public CreatedAtActionResult Add(Examination examination, Speciality speciality, TestForm form, User user)
         {
             Assert.RequireNonNull(examination, nameof(examination));
             Assert.RequireNonNull(user, nameof(user));
@@ -64,27 +66,21 @@ namespace Exam.Controllers
 
             if (_testRepository.Exists(t => examination.Equals(t.Examination) && t.Code == form.Code))
             {
-                throw new InvalidOperationException("{test.constraints.uniqueCode}");
+                throw new InvalidValueException("{test.constraints.uniqueCode}");
+            }
+
+
+            if (speciality != null && !examination.Equals(speciality.Examination))
+            {
+                throw new IncompatibleEntityException<Examination, Speciality>(examination, speciality);
             }
             
-
-            if (speciality != null && examination.Equals(speciality.Examination))
-            {
-                throw new IncompatibleEntityException<Examination, Speciality> (examination, speciality);
-            }
-
-            if (examination.RequireSpeciality && speciality == null)
-            {
-                throw new InvalidOperationException("{test.constraints.requireSpeciality");
-            }
-
             Test overlap = form.ExpectedOverlap(examination.Tests);
-            if(overlap.Equals(default))
+            if (overlap != null)
             {
                 throw new OverlapPeriodException<Test, TestForm>(overlap, form);
             }
-            
-            
+
 
             Test test = new Test
             {
@@ -95,7 +91,6 @@ namespace Exam.Controllers
                 Code = form.Code,
                 Coefficient = form.Coefficient,
                 UseAnonymity = form.UseAnonymity,
-                IsPublished = form.IsPublished,
                 ExpectedStartDate = form.ExpectedStartDate,
                 ExpectedEndDate = form.ExpectedEndDate
             };
@@ -109,7 +104,7 @@ namespace Exam.Controllers
             return CreatedAtAction("Find", new {test.Id}, test);
         }
 
-        
+
         public StatusCodeResult ChangeDates(Test test, [FromBody] ExpectedPeriod form)
         {
             Assert.RequireNonNull(test, nameof(test));
@@ -117,11 +112,11 @@ namespace Exam.Controllers
 
             List<Test> otherTests = test.Examination.Tests;
             otherTests.RemoveAll(t => t.Equals(test));
-            
+
             Test overlap = form.ExpectedOverlap(otherTests);
-            if(overlap.Equals(default))
+            if (overlap != null)
             {
-                throw new OverlapPeriodException<Test,ExpectedPeriod>(overlap, form);
+                throw new OverlapPeriodException<Test, ExpectedPeriod>(overlap, form);
             }
 
             test.ExpectedStartDate = form.ExpectedStartDate;
@@ -133,13 +128,14 @@ namespace Exam.Controllers
 
         public StatusCodeResult ChangeCode(Test test, string code)
         {
-            if (!string.IsNullOrWhiteSpace(code))
+            if (string.IsNullOrWhiteSpace(code))
             {
                 throw new ArgumentNullException(nameof(code));
             }
+
             if (_testRepository.Exists(t => test.Examination.Equals(t.Examination) && t.Code == code))
             {
-                throw new InvalidOperationException("{test.constraints.uniqueCode}");
+                throw new InvalidValueException("{test.constraints.uniqueCode}");
             }
 
             test.Code = code;
@@ -147,25 +143,21 @@ namespace Exam.Controllers
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
-        
-        
+
+
         public StatusCodeResult ChangeName(Test test, string name)
         {
-            if (!string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (_testRepository.Exists(t => test.Examination.Equals(t.Examination) && t.Name == name))
-            {
-                throw new InvalidOperationException("{test.constraints.uniqueName}");
-            }
-
+            
             test.Name = name;
             _testRepository.Update(test);
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
-        
+
 
         public StatusCodeResult ChangeCoefficient(Test test, [FromQuery] uint coefficient)
         {
@@ -173,25 +165,24 @@ namespace Exam.Controllers
             {
                 coefficient = 1;
             }
+
             test.Coefficient = coefficient;
             _testRepository.Update(test);
-            
+
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
 
         public StatusCodeResult ChangeAnonymityState(Test test)
         {
-            test.UseAnonymity = test.UseAnonymity;
+            test.UseAnonymity = !test.UseAnonymity;
             _testRepository.Update(test);
             return StatusCode(StatusCodes.Status202Accepted);
         }
-        
+
         public StatusCodeResult ChangePublicationState(Test test)
         {
-            test.IsPublished = !test.IsPublished;
-
-            if (test.IsPublished)
+            if (!test.IsPublished)
             {
                 test.PublicationDate = DateTime.Now;
             }
@@ -199,19 +190,16 @@ namespace Exam.Controllers
             {
                 test.PublicationDate = null;
             }
-            
+
             _testRepository.Update(test);
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
-        
-        
+
         public StatusCodeResult ChangeCloseState(Test test)
         {
-            test.IsClosed = !test.IsClosed;
-
-            if (test.IsClosed)
+            if (!test.IsClosed)
             {
                 test.ClosingDate = DateTime.Now;
             }
@@ -219,10 +207,17 @@ namespace Exam.Controllers
             {
                 test.ClosingDate = null;
             }
-            
+
             _testRepository.Update(test);
 
             return StatusCode(StatusCodes.Status202Accepted);
+        }
+
+
+        public NoContentResult Delete(Test test)
+        {
+            _testRepository.Delete(test);
+            return NoContent();
         }
     }
 }

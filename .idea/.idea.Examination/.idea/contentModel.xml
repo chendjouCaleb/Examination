@@ -529,6 +529,7 @@
           <e p="SpecialityControllerTests.cs" t="Include" />
           <e p="StudentControllerTests.cs" t="Include" />
           <e p="SupervisorControllerTests.cs" t="Include" />
+          <e p="TestControllerTests.cs" t="Include" />
         </e>
         <e p="Core.dll" t="Include" />
         <e p="Microsoft.AspNetCore.App" t="Include" />

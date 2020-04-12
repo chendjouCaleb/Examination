@@ -119,7 +119,7 @@ namespace Exam.Entities
         {
             if (periods == null)
             {
-                throw new ArgumentNullException(nameof(periods));
+                return default;
             }
 
             foreach (var period in periods)

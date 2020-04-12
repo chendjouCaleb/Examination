@@ -9,12 +9,10 @@ namespace Exam.Models
 
         public string Code { get; set; }
         
-
         public uint Coefficient { get; set; }
 
         public bool UseAnonymity { get; set; }
         
-        public bool IsPublished { get; set; }
         
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
