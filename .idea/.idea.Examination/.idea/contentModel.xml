@@ -465,6 +465,7 @@
           <e p="DateTimeExtensions.cs" t="Include" />
           <e p="IncomptabileEntityException.cs" t="Include" />
           <e p="InvalidStateException.cs" t="Include" />
+          <e p="OverlapEntityException.cs" t="Include" />
         </e>
         <e p="Loaders" t="Include">
           <e p="AdminLoader.cs" t="Include" />
@@ -487,6 +488,7 @@
           <e p="ExaminationForm.cs" t="Include" />
           <e p="GroupForm.cs" t="Include" />
           <e p="OrganisationForm.cs" t="Include" />
+          <e p="PeriodForm.cs" t="Include" />
           <e p="PrincipalForm.cs" t="Include" />
           <e p="RoomForm.cs" t="Include" />
           <e p="SpecialityForm.cs" t="Include" />

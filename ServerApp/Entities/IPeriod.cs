@@ -9,7 +9,6 @@ namespace Exam.Entities
     {
         DateTime? StartDate { get; set; }
         DateTime? EndDate { get; set; }
-        
     }
 
     public class Period : IPeriod
@@ -18,10 +17,20 @@ namespace Exam.Entities
         public DateTime? EndDate { get; set; }
     }
 
-    public interface IExtendedPeriod : IPeriod
+    public interface IExpectedPeriod
     {
         DateTime ExpectedStartDate { get; set; }
         DateTime ExpectedEndDate { get; set; }
+    }
+
+    public class ExpectedPeriod : IExpectedPeriod
+    {
+        public DateTime ExpectedStartDate { get; set; }
+        public DateTime ExpectedEndDate { get; set; }
+    }
+
+    public interface IExtendedPeriod : IPeriod, IExpectedPeriod
+    {
     }
 
     public static class PeriodExtensions
@@ -50,8 +59,8 @@ namespace Exam.Entities
 
             period.StartDate = value;
         }
-        
-        
+
+
         public static void SetEndDate(this IPeriod period, DateTime value)
         {
             if (period.StartDate != null && value < period.StartDate)
@@ -75,8 +84,8 @@ namespace Exam.Entities
 
             period.ExpectedStartDate = value;
         }
-        
-        
+
+
         public static void SetExpectedEndDate(this IExtendedPeriod period, DateTime value)
         {
             if (period.ExpectedStartDate != null && value < period.ExpectedStartDate)
@@ -86,22 +95,27 @@ namespace Exam.Entities
 
             period.ExpectedStartDate = value;
         }
-        
-        
-        public static bool ExpectedOverlap(this IExtendedPeriod p , IExtendedPeriod period ) {
-            if(period == null){
+
+
+        public static bool ExpectedOverlap(this IExpectedPeriod p, IExpectedPeriod period)
+        {
+            if (period == null)
+            {
                 return false;
             }
-            
 
-            if(period.ExpectedStartDate.Equals(p.ExpectedStartDate) && period.ExpectedEndDate.Equals(p.ExpectedEndDate)){
+
+            if (period.ExpectedStartDate.Equals(p.ExpectedStartDate) &&
+                period.ExpectedEndDate.Equals(p.ExpectedEndDate))
+            {
                 return true;
             }
 
-            return p.ExpectedStartDate.IsBefore(period.ExpectedEndDate) && p.ExpectedStartDate.IsAfter(period.ExpectedStartDate);
+            return p.ExpectedStartDate.IsBefore(period.ExpectedEndDate) &&
+                   p.ExpectedStartDate.IsAfter(period.ExpectedStartDate);
         }
 
-        public static IExtendedPeriod ExpectedOverlap(this IExtendedPeriod p, IEnumerable<IExtendedPeriod> periods)
+        public static T ExpectedOverlap<T>(this IExpectedPeriod p, IEnumerable<T> periods) where T : IExpectedPeriod
         {
             if (periods == null)
             {
@@ -116,8 +130,7 @@ namespace Exam.Entities
                 }
             }
 
-            return null;
+            return default;
         }
     }
 }
-

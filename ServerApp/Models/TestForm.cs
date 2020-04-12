@@ -1,8 +1,9 @@
 ﻿using System;
+using Exam.Entities;
 
 namespace Exam.Models
 {
-    public class TestForm
+    public class TestForm:IExpectedPeriod
     {
         public string Name { get; set; }
 
@@ -12,6 +13,8 @@ namespace Exam.Models
         public uint Coefficient { get; set; }
 
         public bool UseAnonymity { get; set; }
+        
+        public bool IsPublished { get; set; }
         
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
@@ -27,5 +30,9 @@ namespace Exam.Models
         public string Room { get; set; }
 
         public uint Coefficient { get; set; }
+        
+        public bool? UseAnonymity { get; set; }
+        
+        public bool? IsPublished { get; set; }
     }
 }
