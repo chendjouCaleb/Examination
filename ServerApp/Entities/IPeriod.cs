@@ -114,8 +114,52 @@ namespace Exam.Entities
             return p.ExpectedStartDate.IsBefore(period.ExpectedEndDate) &&
                    p.ExpectedStartDate.IsAfter(period.ExpectedStartDate);
         }
+        
+        
+        
+        public static bool ExpectedOverlap(this IPeriod p, IExpectedPeriod period)
+        {
+            if (period == null)
+            {
+                return false;
+            }
+
+            if (p.StartDate == null || p.EndDate == null)
+            {
+                return false;
+            }
+
+
+            if (period.ExpectedStartDate.Equals(p.StartDate) &&
+                period.ExpectedEndDate.Equals(p.EndDate))
+            {
+                return true;
+            }
+
+            return p.StartDate.Value.IsBefore(period.ExpectedEndDate) &&
+                   p.StartDate.Value.IsAfter(period.ExpectedStartDate);
+        }
 
         public static T ExpectedOverlap<T>(this IExpectedPeriod p, IEnumerable<T> periods) where T : IExpectedPeriod, IExtendedPeriod
+        {
+            if (periods == null)
+            {
+                return default;
+            }
+
+            foreach (var period in periods)
+            {
+                if (p.ExpectedOverlap(period))
+                {
+                    return period;
+                }
+            }
+
+            return default;
+        }
+        
+        
+        public static T ExpectedOverlap<T>(this IPeriod p, IEnumerable<T> periods) where T : IExpectedPeriod, IExtendedPeriod
         {
             if (periods == null)
             {

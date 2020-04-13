@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace Exam.Entities
 {
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
-    public class Test : Entity<long>, IExpectedPeriod
+    public class Test : Entity<long>, IExtendedPeriod
     {
         public string RegisterUserId { get; set; }
         
@@ -33,6 +33,9 @@ namespace Exam.Entities
         
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
+        
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         
         
         [JsonIgnore]

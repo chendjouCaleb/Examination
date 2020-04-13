@@ -9,14 +9,16 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Exam.Loaders
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class LoadTestGroup : Attribute, IResourceFilter
+    public class LoadPaperManager : Attribute, IResourceFilter
     {
-        public string ItemName { get; set; } = "testGroup";
+        public string ItemName { get; set; } = "paperManager";
         public string ExaminationItemName { get; set; }
         
         public string TestItemName { get; set; }
+        
+        public string TestGroupItemName { get; set; }
 
-        public string ParameterName { get; set; } = "testGroupId";
+        public string ParameterName { get; set; } = "paperManagerId";
 
         public ParameterSource Source { get; set; } = ParameterSource.Route;
 
@@ -27,25 +29,30 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<TestGroup, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<TestGroup, long>>();
+            IRepository<PaperManager, long> repository =
+                context.HttpContext.RequestServices.GetRequiredService<IRepository<PaperManager, long>>();
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
                 return;
             }
-            TestGroup testGroup = repository.Find(long.Parse(id));
+            PaperManager paperManager = repository.Find(long.Parse(id));
 
-            context.HttpContext.Items[ItemName] = testGroup;
+            context.HttpContext.Items[ItemName] = paperManager;
+            
+            if (!string.IsNullOrWhiteSpace(TestGroupItemName))
+            {
+                context.HttpContext.Items[TestGroupItemName] = paperManager.TestGroup;
+            }
             
             if (!string.IsNullOrWhiteSpace(TestItemName))
             {
-                context.HttpContext.Items[TestItemName] = testGroup.Test;
+                context.HttpContext.Items[TestItemName] = paperManager.TestGroup.Test;
             }
 
             if (!string.IsNullOrWhiteSpace(ExaminationItemName))
             {
-                context.HttpContext.Items[ExaminationItemName] = testGroup.Test.Examination;
+                context.HttpContext.Items[ExaminationItemName] = paperManager.TestGroup.Test.Examination;
             }
         }
     }

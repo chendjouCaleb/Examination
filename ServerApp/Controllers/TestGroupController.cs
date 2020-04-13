@@ -16,6 +16,11 @@ namespace Exam.Controllers
     {
         private IRepository<TestGroup, long> _testGroupRepository;
 
+        public TestGroupController(IRepository<TestGroup, long> testGroupRepository)
+        {
+            _testGroupRepository = testGroupRepository;
+        }
+
 
         [HttpGet("{testGroupId}")]
         [LoadTestGroup]
