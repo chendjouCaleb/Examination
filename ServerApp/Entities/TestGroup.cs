@@ -37,5 +37,9 @@ namespace Exam.Entities
         public virtual List<TestSupervisor> TestSupervisors { get; set; }
         public uint TestSupervisorCount { get; set; }
         
+        [JsonIgnore]
+        public virtual List<PaperManager> PaperManagers { get; set; }
+        public int PaperManagerCount { get; set; }
+        
     }
 }

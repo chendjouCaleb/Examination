@@ -430,6 +430,7 @@
           <e p="StudentController.cs" t="Include" />
           <e p="SupervisorController.cs" t="Include" />
           <e p="TestController.cs" t="Include" />
+          <e p="TestGroupController.cs" t="Include" />
         </e>
         <e p="Core.dll" t="Include" />
         <e p="Entities" t="Include">
@@ -480,6 +481,7 @@
           <e p="SpecialityLoader.cs" t="Include" />
           <e p="StudentLoader.cs" t="Include" />
           <e p="SupervisorLoader.cs" t="Include" />
+          <e p="TestGroupLoader.cs" t="Include" />
           <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="models" t="Include">
@@ -494,6 +496,7 @@
           <e p="SpecialityForm.cs" t="Include" />
           <e p="StudentForm.cs" t="Include" />
           <e p="TestForm.cs" t="Include" />
+          <e p="TestGroupForm.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">

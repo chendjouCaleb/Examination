@@ -11,8 +11,8 @@ namespace Exam.Entities
         public string UserId { get; set; }
         
         [JsonIgnore]
-        public virtual Test Test { get; set; }
-        public long TestId { get; set; }
+        public virtual TestGroup TestGroup { get; set; }
+        public long TestGroupId { get; set; }
 
 
         [JsonIgnore]

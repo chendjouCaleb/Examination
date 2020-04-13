@@ -115,7 +115,7 @@ namespace Exam.Entities
                    p.ExpectedStartDate.IsAfter(period.ExpectedStartDate);
         }
 
-        public static T ExpectedOverlap<T>(this IExpectedPeriod p, IEnumerable<T> periods) where T : IExpectedPeriod
+        public static T ExpectedOverlap<T>(this IExpectedPeriod p, IEnumerable<T> periods) where T : IExpectedPeriod, IExtendedPeriod
         {
             if (periods == null)
             {

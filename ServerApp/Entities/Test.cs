@@ -48,10 +48,6 @@ namespace Exam.Entities
         public virtual List<TestReview> Reviews { get; set; }
         public int ReviewCount { get; set; }
         
-        [JsonIgnore]
-        public virtual List<PaperManager> PaperManagers { get; set; }
-        public int PaperManagerCount { get; set; }
-        
         
         [JsonIgnore]
         public virtual List<TestGroup> Groups { get; set; }
