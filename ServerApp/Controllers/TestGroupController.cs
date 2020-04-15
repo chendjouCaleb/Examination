@@ -15,6 +15,7 @@ namespace Exam.Controllers
     public class TestGroupController : Controller
     {
         private IRepository<TestGroup, long> _testGroupRepository;
+        private PaperController _paperController;
 
         public TestGroupController(IRepository<TestGroup, long> testGroupRepository)
         {
@@ -62,11 +63,18 @@ namespace Exam.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [LoadGroup(ParameterName = "groupId", Source = ParameterSource.Query)]
         [LoadRoom(ParameterName = "roomId", Source = ParameterSource.Query)]
         [LoadTest(ParameterName = "testId", Source = ParameterSource.Query)]
         public CreatedAtActionResult Add(Test test, Group group, Room room)
+        {
+            TestGroup testGroup = _Add(test, group, room);
+            _paperController.AddAll(testGroup);
+
+            return CreatedAtAction("Find", new {testGroup.Id}, testGroup);
+        }
+        public TestGroup _Add(Test test, Group group, Room room)
         {
             Assert.RequireNonNull(test, nameof(test));
             Assert.RequireNonNull(group, nameof(group));
@@ -91,8 +99,11 @@ namespace Exam.Controllers
 
             testGroup = _testGroupRepository.Save(testGroup);
 
-            return CreatedAtAction("Find", new {testGroup.Id}, testGroup);
+            return testGroup;
         }
+
+
+        
 
 
         [HttpPut("{testGroupId}/room")]
@@ -153,9 +164,22 @@ namespace Exam.Controllers
             {
                 throw new InvalidOperationException("{testGroup.constraints.restartAfterEnd}");
             }  
+            
             testGroup.EndDate = null;
             _testGroupRepository.Update(testGroup);
             return StatusCode(StatusCodes.Status202Accepted);
+        }
+
+
+        [LoadTestGroup]
+        [HttpDelete("{testGroupId}")]
+        public NoContentResult Delete(TestGroup testGroup)
+        {
+            _paperController.DeleteAll(testGroup);
+            
+            _testGroupRepository.Delete(testGroup);
+
+            return NoContent();
         }
 
     }

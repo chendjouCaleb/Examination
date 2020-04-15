@@ -424,6 +424,7 @@
           <e p="ExaminationController.cs" t="Include" />
           <e p="GroupController.cs" t="Include" />
           <e p="OrganisationController.cs" t="Include" />
+          <e p="PaperController.cs" t="Include" />
           <e p="PaperManagerController.cs" t="Include" />
           <e p="PrincipalController.cs" t="Include" />
           <e p="RoomController.cs" t="Include" />

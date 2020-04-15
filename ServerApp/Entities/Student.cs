@@ -17,6 +17,7 @@ namespace Exam.Entities
 
         public char Gender { get; set; }
         
+        
 
         [NotMapped]
         public int Position { get; set; }

@@ -97,7 +97,7 @@ namespace Exam.Controllers
                 BirthDate = form.BirthDate,
                 Examination = examination,
                 RegisterUserId = user.Id,
-                Gender = form.Gender, 
+                Gender = form.Gender,
                 Group = group
             };
             if (speciality != null)
@@ -157,7 +157,7 @@ namespace Exam.Controllers
             }
             if (examination.Equals(group.Examination))
             {
-                throw new InvalidOperationException("{entity.constraints.incompatible}");
+                throw new InvalidOperationException("");
             }
         }
         

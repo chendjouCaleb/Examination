@@ -9,6 +9,7 @@ namespace Exam.Models
         public DateTime BirthDate { get; set; }
         
         public char Gender { get; set; }
+        
     }
 
 

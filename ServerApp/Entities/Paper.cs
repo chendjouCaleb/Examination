@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
@@ -12,15 +13,14 @@ namespace Exam.Entities
     {
         public decimal Score { get; set; }
 
-        public bool IsPresent { get; set; }
+        [NotMapped] public bool IsPresent => StartDate != null;
 
         [JsonIgnore]
         public string Anonymity { get; set; }
 
-        public int TableNumber { get; set; }
-
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         
         public virtual PaperManager PaperManager{ get; set; }
         public long PaperManagerId { get; set; }
@@ -29,7 +29,7 @@ namespace Exam.Entities
         public long CorrectorId { get; set; }
 
         public virtual TestGroup TestGroup { get; set; }
-        public long GroupId { get; set; }
+        public long TestGroupId { get; set; }
         
         public virtual Student Student { get; set; }
         public long StudentId { get; set; }
