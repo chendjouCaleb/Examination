@@ -12,15 +12,21 @@ namespace Exam.Entities
     public class Paper:Entity<long>
     {
         public decimal Score { get; set; }
+        
+        public string RegisterUserId { get; set; }
 
-        [NotMapped] public bool IsPresent => StartDate != null;
+        
+        [NotMapped] public bool IsPresent => ArrivalDate != null;
+        public DateTime? ArrivalDate { get; set; }
 
+        public string ReportUserId { get; set; }
+        public string Comment { get; set; }
+        public DateTime? EndDate { get; set; }
+        
         [JsonIgnore]
         public string Anonymity { get; set; }
 
-        
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string PaperManagerUserId { get; set; }
         
         public virtual PaperManager PaperManager{ get; set; }
         public long PaperManagerId { get; set; }

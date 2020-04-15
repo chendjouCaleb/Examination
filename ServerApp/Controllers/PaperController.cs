@@ -4,6 +4,7 @@ using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Infrastructure;
+using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -114,6 +115,51 @@ namespace Exam.Controllers
         }
 
 
+        public StatusCodeResult Register(Paper paper, [FromQuery] DateTime date, User user)
+        {
+            paper.ArrivalDate = date;
+            paper.RegisterUserId = user.Id;
+            _paperRepository.Update(paper);
+
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
+
+
+        public StatusCodeResult Report(Paper paper, [FromBody] PaperReportForm form, User user)
+        {
+            Assert.RequireNonNull(paper, nameof(paper));
+            Assert.RequireNonNull(form, nameof(form));
+            Assert.RequireNonNull(user, nameof(user));
+            paper.EndDate = form.EndDate;
+            paper.Comment = form.Comment;
+            paper.ReportUserId = user.Id;
+            
+            _paperRepository.Update(paper);
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
+
+
+        public AcceptedResult Manage(Paper paper, PaperManager paperManager, PaperManageForm form)
+        {
+            Assert.RequireNonNull(paper, nameof(paper));
+            Assert.RequireNonNull(paperManager, nameof(paperManager));
+            Assert.RequireNonNull(form, nameof(form));
+
+            if (_paperRepository.Exists(p => p.Anonymity == form.Anonymity
+                                             && p.TestGroup.Equals(paper.TestGroup)
+                                             && !p.Equals(paper)))
+            {
+                throw new InvalidOperationException("{paper.constraints.uniqueAnonymity}");
+            }
+            
+            paper.PaperManager = paperManager;
+            paper.PaperManagerUserId = paperManager.UserId;
+            paper.Anonymity = form.Anonymity;
+            paper.Comment = form.Comment;
+            
+            _paperRepository.Update(paper);
+            return Accepted(paper);
+        }
 
         public NoContentResult Delete(Paper paper)
         {

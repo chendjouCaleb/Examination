@@ -493,6 +493,7 @@
           <e p="ExaminationForm.cs" t="Include" />
           <e p="GroupForm.cs" t="Include" />
           <e p="OrganisationForm.cs" t="Include" />
+          <e p="PaperForm.cs" t="Include" />
           <e p="PeriodForm.cs" t="Include" />
           <e p="PrincipalForm.cs" t="Include" />
           <e p="RoomForm.cs" t="Include" />
