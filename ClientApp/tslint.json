@@ -70,6 +70,7 @@
       "single"
     ],
     "trailing-comma": false,
+    "no-string-literal": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": false,
     "no-input-rename": true,

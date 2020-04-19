@@ -26,9 +26,11 @@
 </div>
 
 <div class="mt-3">
-  <label for="collapseSidebar">
-    <MsfCheckbox id="collapseSidebar" forLabel="collapseSidebar"
-                 [checked]="_collapseSidebar"
-                 (change)="sidebarCollapseState($event.checked)"></MsfCheckbox> Navigation réduite
-  </label>
+
+    <labelled text="Navigation réduite" for="collapseSidebar">
+      <MsfCheckbox id="collapseSidebar"
+                   [checked]="_collapseSidebar"
+                   (change)="sidebarCollapseState($event.checked)"></MsfCheckbox>
+    </labelled>
+
 </div>

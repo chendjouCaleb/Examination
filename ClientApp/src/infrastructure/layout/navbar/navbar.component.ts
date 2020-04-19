@@ -1,4 +1,5 @@
 import {Component, EventEmitter, HostBinding, Output} from '@angular/core';
+import {AuthorizationManager} from '../../../app/authorization/authorization-manager';
 
 @Component({
   templateUrl: 'navbar.component.html',
@@ -7,7 +8,6 @@ import {Component, EventEmitter, HostBinding, Output} from '@angular/core';
 
 })
 export class NavbarComponent {
-  constructor( ) { }
 
   @HostBinding('class')
   depthClassName = 'ms-depth-0';
@@ -15,4 +15,7 @@ export class NavbarComponent {
 
   @Output()
   buttonClick = new EventEmitter<string>();
+
+  constructor(public authManager: AuthorizationManager) {
+  }
 }

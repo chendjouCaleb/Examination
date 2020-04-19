@@ -7,13 +7,15 @@ import {LayoutModule, Preference} from 'src/infrastructure/public_api';
 import {MsfButtonModule} from 'fabric-docs';
 import {ToastTestComponent} from './toast-test/toast.test.component';
 import {MsToastModule} from './toast/toast.module';
+import {AuthorizationModule} from './authorization/authorization.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent, ToastTestComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, MsfButtonModule, LayoutModule, MsToastModule
+    BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule,  MsfButtonModule, LayoutModule, MsToastModule
   ],
   providers: [Preference],
   bootstrap: [AppComponent]

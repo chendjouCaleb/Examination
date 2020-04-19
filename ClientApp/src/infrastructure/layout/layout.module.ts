@@ -10,13 +10,14 @@ import {SidebarCollapseDirective} from './sidebar/sidebar-collapse';
 import {RouterModule} from '@angular/router';
 import {LayoutSettingsComponent} from './settings/settings.component';
 import {Theme} from '../preference/theme';
+import {Labelled} from './labelled';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MsfIconModule, MsfRadioModule, MsfCheckboxModule, MsfPersonaModule],
   declarations: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent,
-    SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent],
+    SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent, Labelled],
   exports: [NavbarComponent,  PanelComponent, LayoutComponent, SidebarComponent, SidebarItemComponent,
-    SidebarCollapseDirective],
+    SidebarCollapseDirective, Labelled],
   providers: [ Theme ]
 })
 export class LayoutModule {
