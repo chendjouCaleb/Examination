@@ -64,7 +64,7 @@ namespace Exam.Controllers
         [LoadExamination(Source = ParameterSource.Query)]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [AuthorizeExaminationAdmin]
         public CreatedAtActionResult Add(Examination examination, Speciality speciality, Group group,
             [FromBody] StudentForm form, User user )
@@ -119,7 +119,7 @@ namespace Exam.Controllers
         [HttpPut("{studentId}")]
         [LoadStudent(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [AuthorizeExaminationAdmin]
         public Student Update(Student student, [FromBody] StudentFormInfo form)
         {
@@ -136,7 +136,7 @@ namespace Exam.Controllers
         [HttpPut("{studentId}/group")]
         [LoadStudent(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadGroup(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public StatusCodeResult ChangeGroup(Student student, Group group)
@@ -165,7 +165,7 @@ namespace Exam.Controllers
         [HttpPut("{studentId}/speciality")]
         [LoadStudent(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public StatusCodeResult ChangeSpeciality(Student student, Speciality speciality = null)
@@ -207,7 +207,7 @@ namespace Exam.Controllers
         [HttpPut("{studentId}/registrationId")]
         [LoadStudent(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public StatusCodeResult ChangeRegistrationId(Student student, [FromQuery] string registrationId)
@@ -229,7 +229,7 @@ namespace Exam.Controllers
         [HttpPut("{studentId}/userId")]
         [LoadStudent(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public StatusCodeResult ChangeUserId(Student student, [FromQuery] string userId)
@@ -251,7 +251,7 @@ namespace Exam.Controllers
         [HttpPut("{studentId}")]
         [LoadStudent(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [AuthorizeExaminationAdmin]
         public NoContentResult Delete(Student student)
         {

@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<div class="navbar-action" >
+<div class="navbar-action" *ngIf="authManager.isAuthorized">
 
 <span (click)="buttonClick.emit('notification')" class="navbar-button" id="notification-panel-button">
     <i MsfIcon iconName="Ringer"></i>
@@ -31,7 +31,7 @@
 
   <span (click)="buttonClick.emit('account')" class="navbar-button navbar-personna" id="account-panel-button">
     <MsfPersona size="size40">
-      <MsfPersonaFigure [text]="'AB e'"></MsfPersonaFigure>
+      <MsfPersonaFigure [text]="authManager.user.fullName"></MsfPersonaFigure>
     </MsfPersona>
     </span>
 </div>

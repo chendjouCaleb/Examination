@@ -2,3 +2,4 @@
 export * from './httpClient';
 export * from './user.http.client';
 export * from './client.http.client';
+export * from './organisation.httpClient';

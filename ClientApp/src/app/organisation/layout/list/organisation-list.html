@@ -1,0 +1,25 @@
+﻿<div>
+  
+  <div class="ms-card" *ngFor="let item of organisations">
+
+    <div class="ms-card-persona ms-bgColor-sharedRed20">
+      <MsfPersona size="size100">
+        <MsfPersonaFigure [text]="item.name" style="font-size: 40px"></MsfPersonaFigure>
+      </MsfPersona>
+    </div>
+
+    <div class="ms-card-title">{{item.name}}</div>
+
+    <div class="ms-card-text">
+      <div>{{item.identifier}}</div>
+      <labelled-icon icon="POI" [text]="item.address"></labelled-icon>
+    </div>
+
+
+    <div class="ms-card-footer">
+      <MsfButton theme="primary" Icon="Add" (click)="onclick(item)">
+        Voir
+      </MsfButton>
+    </div>
+  </div>
+</div>

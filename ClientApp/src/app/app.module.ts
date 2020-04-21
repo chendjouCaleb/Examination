@@ -9,13 +9,15 @@ import {ToastTestComponent} from './toast-test/toast.test.component';
 import {MsToastModule} from './toast/toast.module';
 import {AuthorizationModule} from './authorization/authorization.module';
 import {HttpClientModule} from '@angular/common/http';
+import {AppHttpClientModule} from "../models";
 
 @NgModule({
   declarations: [
     AppComponent, ToastTestComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule,  MsfButtonModule, LayoutModule, MsToastModule
+    BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule,  MsfButtonModule, LayoutModule, MsToastModule,
+    AppHttpClientModule
   ],
   providers: [Preference],
   bootstrap: [AppComponent]

@@ -55,7 +55,7 @@ namespace Exam.Controllers
         [LoadExamination(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         public CreatedAtActionResult Add(Examination examination, [FromQuery] string userId)
         {
             if(_supervisorRepository.Exists(s => examination.Equals(s.Examination) && s.UserId == userId))
@@ -78,11 +78,11 @@ namespace Exam.Controllers
         
         
 
-        [HttpDelete("{supervisorId")]
+        [HttpDelete("{supervisorId}")]
         [LoadSupervisor(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         public NoContentResult Delete(Supervisor supervisor)
         {
             Assert.RequireNonNull(supervisor, nameof(supervisor));

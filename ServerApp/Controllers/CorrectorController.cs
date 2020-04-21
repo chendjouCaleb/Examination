@@ -78,7 +78,7 @@ namespace Exam.Controllers
         
         
 
-        [HttpDelete("{correctorId")]
+        [HttpDelete("{correctorId}")]
         [LoadCorrector(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",

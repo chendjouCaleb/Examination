@@ -114,4 +114,9 @@ export class AuthorizationManager {
   get connection(): Connection {
     return this._connection;
   }
+
+
+  get token(): ITokenModel {
+    return this._token;
+  }
 }

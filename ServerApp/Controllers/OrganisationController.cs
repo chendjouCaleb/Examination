@@ -15,12 +15,12 @@ using Microsoft.Extensions.Logging;
 namespace Exam.Controllers
 {
     [Route("api/organisations")]
-    public class OrganisationController:Controller
+    public class OrganisationController : Controller
     {
         private IRepository<Organisation, long> _organisationRepository;
         private ILogger<OrganisationController> _logger;
 
-        public OrganisationController(IRepository<Organisation, long> organisationRepository, 
+        public OrganisationController(IRepository<Organisation, long> organisationRepository,
             ILogger<OrganisationController> logger)
         {
             _organisationRepository = organisationRepository;
@@ -31,11 +31,14 @@ namespace Exam.Controllers
         [LoadOrganisation]
         public Organisation Find(Organisation organisation) => organisation;
 
+        [HttpGet("find/identifier/{identifier}")]
+        public Organisation FindByIdentifier(string identifier) =>
+            _organisationRepository.First(o => o.Identifier == identifier);
+
         [HttpGet]
         public IEnumerable<Organisation> List([FromQuery] int start = 0, [FromQuery] int take = 20)
         {
             IQueryable<Organisation> queryable = _organisationRepository.Set.Skip(start).Take(take);
-
             return queryable.ToList();
         }
 
@@ -44,6 +47,8 @@ namespace Exam.Controllers
         public CreatedAtActionResult Add([FromBody] OrganisationForm form, User user)
         {
             Assert.RequireNonNull(form, nameof(form));
+            Assert.RequireNonNull(user, nameof(user));
+
 
             if (_organisationRepository.Exists(o => o.Identifier == form.Identifier))
             {
@@ -64,7 +69,7 @@ namespace Exam.Controllers
             _logger.LogInformation($"New organisation: {organisation}");
             return CreatedAtAction("Find", new {organisation.Id}, organisation);
         }
-        
+
 
         [HttpPut("{organisationId}/admin")]
         [LoadOrganisation]
@@ -89,13 +94,13 @@ namespace Exam.Controllers
 
             organisation.Name = form.Name;
             organisation.Address = form.Address;
-            
+
             _organisationRepository.Update(organisation);
 
             return Accepted(organisation);
         }
-        
-        
+
+
         [HttpPut("{organisationId}/identifier")]
         [LoadOrganisation]
         [AuthorizePrincipalAdmin]

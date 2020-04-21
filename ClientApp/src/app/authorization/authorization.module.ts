@@ -7,6 +7,8 @@ import {AuthorizeCallbackComponent} from './authorize-callback.component';
 import {AuthorizeRequestComponent} from './authorize-request.component';
 import {LayoutModule} from '../../infrastructure/public_api';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthorizationInterceptor} from "./authorization-interceptor";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 
 const routes: Routes = [
@@ -17,7 +19,8 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, MsfButtonModule, LayoutModule, RouterModule.forChild(routes)],
   declarations: [AuthorizeCallbackComponent, AuthorizeRequestComponent],
-  providers: [AuthorizationManager, AuthorizedGuard, NoAuthorizedGuard]
+  providers: [AuthorizationManager, AuthorizedGuard, NoAuthorizedGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true}]
 })
 export class AuthorizationModule {
 }

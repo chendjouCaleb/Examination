@@ -1,0 +1,21 @@
+﻿:host {
+  background: var(--primaryColor);
+
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 30px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  border-radius: 50%;
+  color: #FFF;
+  opacity: 0.9;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+}

@@ -83,7 +83,7 @@ namespace Exam.Controllers
         [LoadSpeciality(Source = ParameterSource.Query)]
         [LoadRoom(Source = ParameterSource.Query)]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [AuthorizeExaminationAdmin]
         public CreatedAtActionResult Add(Examination examination, Speciality speciality, Room room,
             [FromBody] GroupForm form, User user)
@@ -129,7 +129,7 @@ namespace Exam.Controllers
         [HttpPut("{groupId}/speciality")]
         [LoadGroup(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public StatusCodeResult ChangeSpeciality(Group group, Speciality speciality = null)
@@ -150,7 +150,7 @@ namespace Exam.Controllers
         [HttpPut("{groupId}/room")]
         [LoadGroup(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadRoom(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public StatusCodeResult ChangeRoom(Group group, Room room)
@@ -172,7 +172,7 @@ namespace Exam.Controllers
         [HttpPut("{groupId}/name")]
         [LoadGroup(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public StatusCodeResult ChangeName(Group group, [FromQuery] string name)
@@ -194,7 +194,7 @@ namespace Exam.Controllers
         [HttpPut("{groupId}")]
         [LoadGroup(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [AuthorizeExaminationAdmin]
         public NoContentResult Delete(Group group)
         {

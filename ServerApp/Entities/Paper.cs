@@ -29,10 +29,10 @@ namespace Exam.Entities
         public string PaperManagerUserId { get; set; }
         
         public virtual PaperManager PaperManager{ get; set; }
-        public long PaperManagerId { get; set; }
+        public long? PaperManagerId { get; set; }
 
         public virtual Corrector Corrector { get; set; }
-        public long CorrectorId { get; set; }
+        public long? CorrectorId { get; set; }
 
         public virtual TestGroup TestGroup { get; set; }
         public long TestGroupId { get; set; }
@@ -41,7 +41,7 @@ namespace Exam.Entities
         public long StudentId { get; set; }
         
         public virtual TestSupervisor TestSupervisor { get; set; }
-        public long TestSupervisorId { get; set; }
+        public long? TestSupervisorId { get; set; }
         
         public virtual List<Contest> Contests { get; set; }
         public int  ContestCount { get; set; }

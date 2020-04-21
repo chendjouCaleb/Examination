@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Everest.AspNetStartup.ExceptionTransformers;
+using Exam.Infrastructure;
 using Exam.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,18 +44,30 @@ namespace ServerApp
             services.AddExceptionTransformerFactory();
             services.AddScoped<ExceptionTransformerAttribute>();
             
+            
             services.AddRepositories();
             services.AddSession();
             services.AddLogging();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("corsPolicy", policy =>
+                {
+                    policy.AllowAnyOrigin();
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.Build();
+                    
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseExceptionTransformer();
+            app.UseCors("corsPolicy");
             
-            app.UseSession();
-            
+            app.ParseAuthorization();
 
             app.UseRouting();
             
@@ -69,7 +82,7 @@ namespace ServerApp
 
                 if (strategy == "proxy")
                 {
-                    spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:4200");
+                    spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:9200");
                 }
                 else if (strategy == "managed")
                 {

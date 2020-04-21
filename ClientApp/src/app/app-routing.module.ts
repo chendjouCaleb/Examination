@@ -6,10 +6,13 @@ import {AuthorizedGuard} from './authorization/authorization-guard';
 
 const routes: Routes = [
   {
-    path: 'examinations', loadChildren: () => import('./examination/examination.module').then(m => m.ExaminationModule),
-
+    path: 'examinations', loadChildren: () => import('./examination/examination.module').then(m => m.ExaminationModule)
   },
-  {path: '', component: ToastTestComponent, canActivate: [AuthorizedGuard]}
+  {
+    path: 'organisations',
+    loadChildren: () => import('./organisation/organisation.module').then(m => m.OrganisationModule),
+  },
+  {path: '', redirectTo: 'organisations', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Exam.Entities
 {
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Organisation:Entity<long>
     {
         public string UserId { get; set; }
@@ -25,6 +28,7 @@ namespace Exam.Entities
         public virtual List<Examination> Examinations { get; set; }
         public uint ExaminationCount { get; set; }
 
+        [JsonIgnore]
         public virtual List<Room> Rooms { get; set; }
         public uint RoomCount { get; set; }
     }

@@ -24,4 +24,7 @@
 
         <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.18" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Home" />
+    </ItemGroup>
 </Project>

@@ -60,7 +60,7 @@ namespace Exam.Controllers
         [LoadExamination(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         public CreatedAtActionResult Add(TestGroup testGroup, User user, [FromQuery] string userId)
         {
             if (_paperManagerRepository.Exists(p => testGroup.Equals(p.TestGroup) && p.UserId == userId))
@@ -81,11 +81,11 @@ namespace Exam.Controllers
         }
 
 
-        [HttpDelete("{paperManagerId")]
+        [HttpDelete("{paperManagerId}")]
         [LoadPaperManager(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         public NoContentResult Delete(PaperManager paperManager)
         {
             Assert.RequireNonNull(paperManager, nameof(paperManager));

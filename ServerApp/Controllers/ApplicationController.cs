@@ -67,7 +67,7 @@ namespace Exam.Controllers
         [LoadExamination(Source = ParameterSource.Query)]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         [AuthorizeApplicationAuthor]
         public CreatedAtActionResult Add(Examination examination,
             Speciality speciality, [FromBody] ApplicationForm form, User user)

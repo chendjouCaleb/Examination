@@ -1,0 +1,24 @@
+﻿<div *ngIf="identity.isAuthorized">
+
+  <div class="d-flex">
+    <MsfPersona size="size100">
+      <MsfPersonaFigure [text]="identity.user.fullName" color="darkBlue"></MsfPersonaFigure>
+
+    </MsfPersona>
+
+    <div class="ml-2">
+      <div class="ms-fontSize-18 ms-fontWeight-semibold text-capitalize">{{identity.user.fullName}}</div>
+      <div class="ms-fontSize-14">
+        <div>{{identity.user.email}}</div>
+
+        <div class="mt-1">
+          <a href="http://www.google.com">Mon compte</a></div>
+        <div class="mt-2">
+          <MsfButton theme="primary" Icon="AccountActivity">Mon activité</MsfButton>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  </div>

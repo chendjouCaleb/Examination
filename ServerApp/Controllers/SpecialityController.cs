@@ -81,7 +81,7 @@ namespace Exam.Controllers
         [LoadSpeciality(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         public StatusCodeResult ChangeName(Speciality speciality, string name)
         {
             if (speciality == null)
@@ -100,11 +100,11 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
-        [HttpDelete("{specialityId")]
+        [HttpDelete("{specialityId}")]
         [LoadSpeciality(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         public NoContentResult Delete(Speciality speciality)
         {
             Assert.RequireNonNull(speciality, nameof(speciality));

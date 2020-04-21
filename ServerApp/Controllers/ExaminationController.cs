@@ -120,7 +120,7 @@ namespace Exam.Controllers
         [LoadExamination]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished")]
+            ErrorMessage = "{examination.requireNoState.finished}")]
         public StatusCodeResult ChangeEndDate(Examination examination, [FromQuery] DateTime endDate)
         {
             if (examination.ExpectedStartDate > endDate)
