@@ -1,5 +1,5 @@
 ﻿<div>
-  
+
   <div class="ms-card" *ngFor="let item of organisations">
 
     <div class="ms-card-persona ms-bgColor-sharedRed20">
@@ -11,7 +11,8 @@
     <div class="ms-card-title">{{item.name}}</div>
 
     <div class="ms-card-text">
-      <div>{{item.identifier}}</div>
+
+      <labelled-icon icon="Accounts" [text]="item.identifier"></labelled-icon>
       <labelled-icon icon="POI" [text]="item.address"></labelled-icon>
     </div>
 

@@ -11,7 +11,7 @@ export class OrganisationList implements OnInit{
   organisations = new List<Organisation>();
 
   @Input()
-  onclick = (item: Organisation) => this._router.navigateByUrl(`/organisations/${item.id}`);
+  onclick = (item: Organisation) => this._router.navigateByUrl(`/organisations/${item.id}/home`);
 
 
   constructor(private _httpClient: OrganisationHttpClient, private _router: Router) {}
