@@ -27,4 +27,7 @@ export class OrganisationHttpClient extends GenericHttpClient<Organisation, numb
     }
   }
 
+  async identifier(id: number, identifier: string) {
+    return this.httpClient.put(`${this.url}/${id}/identifier?identifier=${identifier}`, {}).toPromise();
+  }
 }

@@ -11164,6 +11164,10 @@
               <e p="organisation.module.ts" t="Include" />
               <e p="organisation.resolver.ts" t="Include" />
               <e p="settings" t="Include">
+                <e p="identifier" t="Include">
+                  <e p="organisation-identifier.component.html" t="Include" />
+                  <e p="organisation-identifier.component.ts" t="Include" />
+                </e>
                 <e p="info" t="Include">
                   <e p="organisation-info.component.html" t="Include" />
                   <e p="organisation-info.component.ts" t="Include" />

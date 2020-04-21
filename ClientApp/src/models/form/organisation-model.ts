@@ -30,3 +30,10 @@ export class OrganisationEditModel {
   @MinLength(3)
   address: string;
 }
+
+export class OrganisationIdentifierModel {
+  @IsNotEmpty()
+  @IsAlphanumeric()
+  @MinLength(3)
+  identifier: string;
+}

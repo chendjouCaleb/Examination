@@ -10,6 +10,7 @@ import {MsfButtonModule, MsfPersonaModule} from "fabric-docs";
 import {ControlModule} from "../../../controls/control.module";
 import {LayoutModule} from "../../../infrastructure/layout/layout.module";
 import {OrganisationInfoComponent} from "./info/organisation-info.component";
+import {OrganisationIdentifierComponent} from "./identifier/organisation-identifier.component";
 
 const routes: Routes = [
   {path: '', component: OrganisationSettingsPage, resolve: [ OrganisationResolver], canActivate: [ AuthorizedGuard ]}
@@ -19,7 +20,7 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes), OrganisationLayoutModule, FormsModule, ReactiveFormsModule,
     MsfPersonaModule, ControlModule, LayoutModule, MsfButtonModule],
 
-  declarations: [ OrganisationSettingsPage, OrganisationInfoComponent ]
+  declarations: [ OrganisationSettingsPage, OrganisationInfoComponent, OrganisationIdentifierComponent ]
 })
 export class OrganisationSettingsModule {
 

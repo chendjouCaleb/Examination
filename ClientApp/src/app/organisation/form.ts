@@ -1,4 +1,4 @@
-﻿import {OrganisationAddModel, OrganisationEditModel} from "../../models";
+﻿import {OrganisationAddModel, OrganisationEditModel, OrganisationIdentifierModel} from "../../models";
 import {EvFormControl, EvFormGroup} from "../../controls/form/forms";
 
 export class OrganisationAddForm extends EvFormGroup<OrganisationAddModel> {
@@ -29,10 +29,24 @@ export class OrganisationEditForm extends EvFormGroup<OrganisationEditModel> {
     });
   }
 
-  getModel(): OrganisationAddModel {
-    const model = new OrganisationAddModel();
+  getModel(): OrganisationEditModel {
+    const model = new OrganisationEditModel();
     model.name = this.controls.name.value;
     model.address = this.controls.address.value;
+    return model;
+  }
+}
+
+export class OrganisationIdentifierForm extends EvFormGroup<OrganisationIdentifierModel> {
+  constructor(value: any = {}) {
+    super({
+      identifier: new EvFormControl("identifier", value.identifier)
+    });
+  }
+
+  getModel(): OrganisationAddModel {
+    const model = new OrganisationAddModel();
+    model.identifier = this.controls.identifier.value;
     return model;
   }
 }
