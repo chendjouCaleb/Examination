@@ -1,10 +1,9 @@
 ﻿<app-organisation-layout [organisation]="organisation">
 
   <h3>Paramètres</h3>
-  <div class="ms-card-persona ms-bgColor-sharedRed20" style="width: 270px">
-    <MsfPersona size="size100">
-      <MsfPersonaFigure [text]="organisation.name" style="font-size: 40px"></MsfPersonaFigure>
-    </MsfPersona>
-  </div>
 
+
+  <app-organisation-info [organisation]="organisation">
+
+  </app-organisation-info>
 </app-organisation-layout>

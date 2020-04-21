@@ -22,10 +22,10 @@ export class OrganisationAddForm extends EvFormGroup<OrganisationAddModel> {
 
 
 export class OrganisationEditForm extends EvFormGroup<OrganisationEditModel> {
-  constructor() {
+  constructor(value: any = {}) {
     super({
-      name: new EvFormControl("name", ""),
-      address: new EvFormControl("address", "")
+      name: new EvFormControl("name", value.name),
+      address: new EvFormControl("address", value.address)
     });
   }
 
