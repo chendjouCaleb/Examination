@@ -1,0 +1,7 @@
+﻿<app-organisation-layout>
+
+  <div *ngIf="admins">
+    {{admins.length}}
+  </div>
+  <float-button (click)="openAddAdminDialog()"></float-button>
+</app-organisation-layout>

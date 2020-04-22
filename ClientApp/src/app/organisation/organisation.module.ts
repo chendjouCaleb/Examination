@@ -16,7 +16,9 @@ import {OrganisationSettingsPage} from "./settings/organisation-settings.page";
 export const routes: Routes = [
   {path: 'add', component: OrganisationAddPage, canActivate: [AuthorizedGuard]},
   {path: ':organisationId/home', component: OrganisationHomePage, resolve: [ OrganisationResolver ] },
-  {path: ':organisationId/settings',  loadChildren: () => import('./settings/organisation-settings.module').then(s => s.OrganisationSettingsModule)},
+  {path: ':organisationId/settings',  loadChildren: () => import('./settings/organisation-settings.module').then(s => s.OrganisationSettingsModule), resolve: [ OrganisationResolver ] },
+  {path: ':organisationId/admins',  loadChildren: () => import('./admin/organisation-admin.module').then(s => s.OrganisationAdminModule), resolve: [ OrganisationResolver ] },
+
   {path: '', component: OrganisationListPage},
 
 ];

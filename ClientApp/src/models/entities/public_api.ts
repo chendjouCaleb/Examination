@@ -3,4 +3,5 @@ export * from './client.entity';
 export * from './entity';
 export * from './authorization.entity';
 export * from './examination';
-export * from './organisation'
+export * from './organisation';
+export * from './admin.entity';

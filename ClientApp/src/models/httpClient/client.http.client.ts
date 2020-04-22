@@ -1,6 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {GenericHttpClient, SERVER_URL} from "./httpClient";
-import {Client} from "../entities/public_api";
+import {Client} from "../entities";
 import {Injectable} from "@angular/core";
 
 

@@ -6,7 +6,7 @@ import {Dictionary, IDictionary, List} from "@positon/collections";
 import {environment} from "src/environments/environment";
 
 import * as moment from "moment";
-import {Entity} from "../entities/public_api";
+import {Entity} from "../entities";
 
 export const SERVER_URL = environment.SERVER_URL;
 export const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
@@ -36,6 +37,15 @@ namespace Exam.Controllers
         [LoadAdmin]
         public Admin Find(Admin admin) => admin;
 
+        [HttpGet("find")]
+        [RequireQueryParameter("organisationId")]
+        [RequireQueryParameter("userId")]
+        [LoadOrganisation(Source = ParameterSource.Query)]
+        public Admin First(Organisation organisation, [FromQuery] string userId)
+        {
+            return _adminRepository.First(a => organisation.Equals(a.Organisation) && userId == a.UserId);
+        }
+
 
         [HttpGet]
         [RequireQueryParameter("organisationId")]
@@ -59,8 +69,12 @@ namespace Exam.Controllers
         [RequireQueryParameter("organisationId")]
         [LoadOrganisation(Source = ParameterSource.Query)]
         [AuthorizePrincipalAdmin]
+        [ValidModel]
         public CreatedAtActionResult Add( Organisation organisation, User user, [FromBody] AdminForm form)
         {
+            Assert.RequireNonNull(organisation, nameof(organisation));
+            Assert.RequireNonNull(user, nameof(user));
+            Assert.RequireNonNull(form, nameof(form));
             if (_adminRepository.Exists(a => a.UserId == form.UserId && organisation.Equals(a.Organisation)))
             {
                 throw new InvalidValueException("{admin.constraints.uniqueUserId}");
