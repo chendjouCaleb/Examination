@@ -8,6 +8,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ControlModule} from "../../../controls/control.module";
 import {MatDialogModule} from "@angular/material/dialog";
 import {AdminAddComponent} from "./add/admin-add.component";
+import {MomentModule} from "ngx-moment";
 
 
 const routes: Routes = [
@@ -15,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes),
+  imports: [CommonModule, RouterModule.forChild(routes), MomentModule,
     FormsModule, ReactiveFormsModule, ControlModule, MatDialogModule,
     OrganisationLayoutModule, MsfPersonaModule, MsfButtonModule],
   declarations: [AdminListPage, AdminAddComponent ]

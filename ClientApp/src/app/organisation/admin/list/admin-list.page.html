@@ -1,7 +1,21 @@
 ﻿<app-organisation-layout>
 
-  <div *ngIf="admins">
-    {{admins.length}}
+  <div *ngIf="admins" style="display: flex; flex-wrap: wrap">
+
+    <div class="d-flex p-2 m-2"
+         style="background-color: var(--cardBackgroundColor); width: 300px; max-width: 98%" *ngFor="let item of admins">
+      <MsfPersona size="size100">
+        <MsfPersonaFigure></MsfPersonaFigure>
+      </MsfPersona>
+
+      <div class="ml-2">
+        <div class="ms-fontSize-20" *ngIf="item.user">{{item.user.fullName}}</div>
+        <div class="ms-fontSize-14">{{item.role}}</div>
+        <div class="ms-fontSize-10 mt-3">{{item.registrationDate | amCalendar}}</div>
+      </div>
+    </div>
+
+
   </div>
   <float-button (click)="openAddAdminDialog()"></float-button>
 </app-organisation-layout>
