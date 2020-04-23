@@ -4,6 +4,7 @@ import {CurrentItems} from "src/app/current-items";
 import {List} from "@positon/collections";
 import {MatDialog} from "@angular/material/dialog";
 import {AdminAddComponent} from "../add/admin-add.component";
+import {AdminEditComponent} from "../edit/admin-edit.component";
 
 @Component({
   templateUrl: 'admin-list.page.html',
@@ -30,5 +31,10 @@ export class AdminListPage implements OnInit {
         this.admins.insert(0, result);
       }
     })
+  }
+
+  openEditDialog(admin: Admin) {
+    const modalRef = this._dialog.open(AdminEditComponent );
+    modalRef.componentInstance.admin = admin;
   }
 }

@@ -1,0 +1,19 @@
+﻿
+<form class="ms-form" [formGroup]="form" >
+      <div class="ms-form-header">Modifier l'administrateur</div>
+
+      <div class="ms-textField">
+        <label for="role" class="msf-label">Role de l'administrateur</label>
+        <input id="role" class="ms-textField-input" formControlName="role">
+        <app-control-error [control]="form.controls['role']"></app-control-error>
+      </div>
+
+
+
+      <div class="mt-4 text-right">
+        <MsfButton  mat-dialog-close class="mr-3">Annuler</MsfButton>
+        <button MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">Modifier</button>
+      </div>
+    </form>
+
+

@@ -15,6 +15,9 @@ $msf-button-backgroundColor: red;
 
 @import "card";
 
+.msf-menu {
+  background: var(--cardBackgroundColor);
+}
 
 .flex-center-cover {
   width: 100%;

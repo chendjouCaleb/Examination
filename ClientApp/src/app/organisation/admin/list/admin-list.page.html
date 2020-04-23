@@ -1,17 +1,25 @@
-﻿<app-organisation-layout>
+﻿<app-organisation-layout [organisation]="organisation">
+
+  <div class="ms-fontSize-24 ms-fontWeight-light py-2">Administrateurs</div>
 
   <div *ngIf="admins" style="display: flex; flex-wrap: wrap">
 
-    <div class="d-flex p-2 m-2"
-         style="background-color: var(--cardBackgroundColor); width: 300px; max-width: 98%" *ngFor="let item of admins">
+    <div *ngFor="let item of admins"
+         class="d-flex p-2 mr-2 mt-2" style="background-color: var(--cardBackgroundColor); width: 300px; max-width: 98%">
       <MsfPersona size="size100">
         <MsfPersonaFigure></MsfPersonaFigure>
       </MsfPersona>
 
       <div class="ml-2">
-        <div class="ms-fontSize-20" *ngIf="item.user">{{item.user.fullName}}</div>
+        <div *ngIf="item.user" class="ms-fontSize-20">{{item.user.fullName}}</div>
         <div class="ms-fontSize-14">{{item.role}}</div>
-        <div class="ms-fontSize-10 mt-3">{{item.registrationDate | amCalendar}}</div>
+        <div class="ms-fontSize-10 text-right mt-3">
+          <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+          <MsfMenu #more>
+            <MsfMenuItem icon="Edit" (click)="openEditDialog(item)">Modifier</MsfMenuItem>
+            <MsfMenuItem icon="Delete" theme="error">Supprimer</MsfMenuItem>
+          </MsfMenu>
+        </div>
       </div>
     </div>
 
