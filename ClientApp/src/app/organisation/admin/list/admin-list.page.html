@@ -17,7 +17,7 @@
           <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
           <MsfMenu #more>
             <MsfMenuItem icon="Edit" (click)="openEditDialog(item)">Modifier</MsfMenuItem>
-            <MsfMenuItem icon="Delete" theme="error">Supprimer</MsfMenuItem>
+            <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
           </MsfMenu>
         </div>
       </div>
