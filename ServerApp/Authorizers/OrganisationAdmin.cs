@@ -29,7 +29,7 @@ namespace Exam.Authorizers
             string userId = authorization.UserId;
 
             
-            if (!(organisation.AdminUserId == userId && repository.Exists(a => a.UserId==userId && organisation.Equals(a.Organisation))))
+            if (!(organisation.AdminUserId == userId || repository.Exists(a => a.UserId==userId && organisation.Equals(a.Organisation))))
             {
                 throw new UnauthorizedException(Message);
             }

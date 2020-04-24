@@ -19,6 +19,7 @@ namespace ServerAppTest.Controllers
 
         private Organisation _organisation;
         private RoomForm _model;
+        private User _user = new User {Id = Guid.NewGuid().ToString()};
 
         [SetUp]
         public void BeforeEach()
@@ -47,7 +48,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            Room room = _controller.Add(_model, _organisation).Value as Room;
+            Room room = _controller.Add(_model, _organisation, _user).Value as Room;
 
             _roomRepository.Refresh(room);
 
@@ -55,6 +56,7 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(_model.Name, room.Name);
             Assert.AreEqual(_model.Address, room.Address);
             Assert.AreEqual(_model.Capacity, room.Capacity);
+            Assert.AreEqual(_user.Id, room.RegisterUserId);
             
             Assert.AreEqual(_organisation, room.Organisation);
             Assert.AreEqual(1, _organisation.RoomCount);
@@ -63,8 +65,8 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryAdd_WithUsedName_ShouldThrow()
         {
-            _controller.Add(_model, _organisation);
-            Exception ex = Assert.Throws<InvalidValueException>(() => _controller.Add(_model, _organisation));
+            _controller.Add(_model, _organisation, _user);
+            Exception ex = Assert.Throws<InvalidValueException>(() => _controller.Add(_model, _organisation, _user));
 
             Assert.AreEqual("{room.constraints.uniqueName}", ex.Message);
         }
@@ -72,7 +74,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeName()
         {
-            Room room = _controller.Add(_model, _organisation).Value as Room;
+            Room room = _controller.Add(_model, _organisation, _user).Value as Room;
 
             string name = "roomName1";
             _controller.ChangeName(room, name);
@@ -86,10 +88,10 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryChangeName_WithUsedName_ShouldThrow()
         {
-            Room room = _controller.Add(_model, _organisation).Value as Room;
+            Room room = _controller.Add(_model, _organisation, _user).Value as Room;
 
             _model.Name = "new room name";
-            _controller.Add(_model, _organisation);
+            _controller.Add(_model, _organisation, _user);
 
             Exception ex = Assert.Throws<InvalidValueException>(
                 () => _controller.ChangeName(room, _model.Name)
@@ -106,7 +108,7 @@ namespace ServerAppTest.Controllers
                 Capacity = 20,
                 Address = "new address"
             };
-            Room room = _controller.Add(_model, _organisation).Value as Room;
+            Room room = _controller.Add(_model, _organisation, _user).Value as Room;
             _controller.Update(room, form);
 
             _organisationRepository.Update(_organisation);
@@ -115,13 +117,12 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(form.Capacity, room.Capacity);
         }
         
-
         
 
         [Test]
         public void Delete()
         {
-            Room room = _controller.Add(_model, _organisation).Value as Room;
+            Room room = _controller.Add(_model, _organisation, _user).Value as Room;
             _controller.Delete(room);
             _organisationRepository.Refresh(_organisation);
             

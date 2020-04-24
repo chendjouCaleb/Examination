@@ -5,3 +5,4 @@ export * from './authorization.entity';
 export * from './examination';
 export * from './organisation';
 export * from './admin.entity';
+export * from './room.entity';

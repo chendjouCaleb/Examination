@@ -4,10 +4,11 @@ import {ClientHttpClient} from "./client.http.client";
 import {OrganisationHttpClient} from "./organisation.httpClient";
 import {AdminHttpClient} from "./admin.httpClient";
 import {UserHttpClient} from "./user.httpClient";
+import {RoomHttpClient} from "./room.httpClient";
 
 @NgModule({
   imports: [ HttpClientModule],
-  providers: [ ClientHttpClient, OrganisationHttpClient, AdminHttpClient, UserHttpClient ]
+  providers: [ ClientHttpClient, OrganisationHttpClient, AdminHttpClient, UserHttpClient, RoomHttpClient ]
 })
 export class AppHttpClientModule {
 

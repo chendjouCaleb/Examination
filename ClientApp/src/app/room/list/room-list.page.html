@@ -1,23 +1,22 @@
 ﻿<app-organisation-layout [organisation]="organisation">
 
-  <div class="ms-fontSize-24 ms-fontWeight-light py-2">Administrateurs</div>
+  <div class="ms-fontSize-24 ms-fontWeight-light py-2">Salles</div>
 
-  <div *ngIf="admins" style="display: flex; flex-wrap: wrap">
+  <div *ngIf="rooms" style="display: flex; flex-wrap: wrap">
 
-    <div *ngFor="let item of admins"
+    <div *ngFor="let item of rooms"
          class="d-flex p-2 mr-2 mt-2" style="background-color: var(--cardBackgroundColor); width: 300px; max-width: 98%">
       <MsfPersona size="size100">
-        <MsfPersonaFigure></MsfPersonaFigure>
+        <MsfPersonaFigure  [text]="item.name"></MsfPersonaFigure>
       </MsfPersona>
 
       <div class="ml-2">
-        <div *ngIf="item.user" class="ms-fontSize-20">{{item.user.fullName}}</div>
-        <div class="ms-fontSize-12">{{item.user.email}}</div>
-        <div class="ms-fontSize-14 mt-2">{{item.role}}</div>
+        <div class="ms-fontSize-20">{{item.name}}</div>
+        <div class="ms-fontSize-12 mt-2">{{item.capacity}} Places</div>
+        <div class="ms-fontSize-12">{{item.address}}</div>
         <div class="ms-fontSize-10 text-right mt-3">
           <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
           <MsfMenu #more>
-            <MsfMenuItem icon="Edit" (click)="openEditDialog(item)">Modifier</MsfMenuItem>
             <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
           </MsfMenu>
         </div>
@@ -26,5 +25,5 @@
 
 
   </div>
-  <float-button (click)="openAddAdminDialog()"></float-button>
+  <float-button (click)="openAddRoomDialog()"></float-button>
 </app-organisation-layout>

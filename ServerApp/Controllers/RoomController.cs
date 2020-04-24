@@ -35,6 +35,15 @@ namespace Exam.Controllers
         [HttpGet("{roomId}")]
         [LoadRoom]
         public Room Find(Room room) => room;
+        
+        [HttpGet("find")]
+        [RequireQueryParameter("organisationId")]
+        [RequireQueryParameter("name")]
+        [LoadOrganisation(Source = ParameterSource.Query)]
+        public Room First(Organisation organisation, [FromQuery] string name)
+        {
+            return _roomRepository.First(a => organisation.Equals(a.Organisation) && name == a.Name);
+        }
 
 
         [HttpGet]
@@ -59,7 +68,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("organisationId")]
         [LoadOrganisation(Source = ParameterSource.Query)]
         [AuthorizeOrganisationAdmin]
-        public CreatedAtActionResult Add([FromBody] RoomForm form, Organisation organisation)
+        public CreatedAtActionResult Add([FromBody] RoomForm form, Organisation organisation, User user)
         {
             if (_roomRepository.Exists(r => r.Name == form.Name && r.OrganisationId == organisation.Id))
             {
@@ -71,7 +80,8 @@ namespace Exam.Controllers
                 Organisation = organisation,
                 Name = form.Name,
                 Capacity = form.Capacity,
-                Address = form.Address
+                Address = form.Address,
+                RegisterUserId = user.Id
             };
 
             _roomRepository.Save(room);

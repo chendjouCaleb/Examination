@@ -4,4 +4,4 @@ export * from './httpClient';
 export * from './user.httpClient';
 export * from './client.http.client';
 export * from './organisation.httpClient';
-
+export * from './room.httpClient';
