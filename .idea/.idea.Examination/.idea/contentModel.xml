@@ -511,6 +511,7 @@
               <e p="admin.httpClient.ts" t="Include" />
               <e p="AppHttpClient.module.ts" t="Include" />
               <e p="client.http.client.ts" t="Include" />
+              <e p="examination.httpClient.ts" t="Include" />
               <e p="httpClient.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="organisation.httpClient.ts" t="Include" />
