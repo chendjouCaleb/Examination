@@ -2,4 +2,6 @@
   <div class="ms-fontSize-24">{{room.name}}</div>
   <div>Capacité: <span class="ms-fontWeight-semibold">{{room.capacity}} places</span> </div>
   <div>Emplacement: <span class="ms-fontWeight-semibold">{{room.address}}</span></div>
+  <div>Ajoutée par: <span class="ms-fontWeight-semibold text-capitalize">{{room.registerUser.fullName}}</span></div>
+  <div>Ajoutéé {{room.registrationDate | amCalendar}}</div>
 </app-room-layout>

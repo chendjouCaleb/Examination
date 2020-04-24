@@ -485,7 +485,7 @@
               <e p="contest.entity.ts" t="Include" />
               <e p="corrector.entity.ts" t="Include" />
               <e p="entity.ts" t="Include" />
-              <e p="examination.ts" t="Include" />
+              <e p="examination.entity.ts" t="Include" />
               <e p="group.entity.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="organisation.ts" t="Include" />

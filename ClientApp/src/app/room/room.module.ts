@@ -8,19 +8,20 @@ import {RouterModule, Routes} from "@angular/router";
 import {MsfButtonModule, MsfIconModule, MsfMenuModule, MsfPersonaModule} from "fabric-docs";
 import {RoomResolver} from "./room.resolver";
 import {RoomHomePage} from "./home/room-home.page";
+import {MomentModule} from "ngx-moment";
 
 const routes: Routes = [
   {path: '', component: RoomListPage},
-  {path: ':roomId/home', component: RoomHomePage, resolve: [ RoomResolver ] }
+  {path: ':roomId/home', component: RoomHomePage, resolve: [RoomResolver]}
 ];
 
 @NgModule({
   imports: [CommonModule, ControlModule, RoomLayoutModule, OrganisationLayoutModule, MsfPersonaModule,
-    MsfButtonModule,
+    MsfButtonModule, MomentModule,
     MsfIconModule, MsfMenuModule,
     RouterModule.forChild(routes)],
   declarations: [RoomListPage, RoomHomePage],
-  providers: [ RoomResolver ]
+  providers: [RoomResolver]
 })
 export class RoomModule {
 
