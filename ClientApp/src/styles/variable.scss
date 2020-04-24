@@ -37,8 +37,7 @@ html[data-theme="light"] {
   --textColor: #{$ms-color-gray190};
 
 
-
-  --bodyBackgroundColor:  rgba(227, 225, 223, calc(var(--opacity) - 0.3));
+  --bodyBackgroundColor:  rgba(227, 225, 223, calc(var(--opacity) - 0.6));
 
   --cardBackgroundColor:  #{$ms-color-gray10};
 

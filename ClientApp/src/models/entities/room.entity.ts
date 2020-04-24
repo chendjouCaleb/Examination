@@ -31,4 +31,8 @@ export class Room extends Entity<number> {
 
   registerUserId: string;
   registerUser: User;
+
+  get url( ): string {
+    return `/organisations/${this.organisationId}/rooms/${this.id}`;
+  }
 }

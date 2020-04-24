@@ -340,6 +340,10 @@
             </e>
             <e p="room" t="Include">
               <e p="form.ts" t="Include" />
+              <e p="Home" t="Include">
+                <e p="room-home.page.html" t="Include" />
+                <e p="room-home.page.ts" t="Include" />
+              </e>
               <e p="layout" t="Include">
                 <e p="add" t="Include">
                   <e p="room-add.component.html" t="Include" />
@@ -354,6 +358,7 @@
                 <e p="room-list.page.ts" t="Include" />
               </e>
               <e p="room.module.ts" t="Include" />
+              <e p="room.resolver.ts" t="Include" />
             </e>
             <e p="test" t="Include">
               <e p="test-layout" t="Include">
@@ -636,6 +641,8 @@
         <e p="Migrations" t="Include">
           <e p="20200419173300_Initial.cs" t="Include" />
           <e p="20200419173300_Initial.Designer.cs" t="Include" />
+          <e p="20200424115140_RegisterUserIdOnRoom.cs" t="Include" />
+          <e p="20200424115140_RegisterUserIdOnRoom.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

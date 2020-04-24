@@ -10,13 +10,15 @@
         <MsfPersonaFigure  [text]="item.name"></MsfPersonaFigure>
       </MsfPersona>
 
-      <div class="ml-2">
+      <div class="ml-2" style="flex-grow: 1">
         <div class="ms-fontSize-20">{{item.name}}</div>
         <div class="ms-fontSize-12 mt-2">{{item.capacity}} Places</div>
         <div class="ms-fontSize-12">{{item.address}}</div>
-        <div class="ms-fontSize-10 text-right mt-3">
+        <div class="ms-fontSize-10 mt-3" >
+          <MsfButton theme="primary" class="mr-2" routerLink="{{item.url}}/home">Détails</MsfButton>
           <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
           <MsfMenu #more>
+            <MsfMenuItem icon="EditSolid12" >Changer le nom</MsfMenuItem>
             <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
           </MsfMenu>
         </div>
