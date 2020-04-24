@@ -36,6 +36,15 @@ namespace Exam.Controllers
         [HttpGet("{examinationId}")]
         [LoadExamination]
         public Examination Find(Examination examination) => examination;
+        
+        [HttpGet("find")]
+        [RequireQueryParameter("organisationId")]
+        [RequireQueryParameter("name")]
+        [LoadOrganisation(Source = ParameterSource.Query)]
+        public Examination First(Organisation organisation, [FromQuery] string name)
+        {
+            return _examinationRepository.First(a => organisation.Equals(a.Organisation) && name == a.Name);
+        }
 
 
         [HttpGet]

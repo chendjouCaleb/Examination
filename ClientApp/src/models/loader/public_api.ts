@@ -4,3 +4,4 @@ export * from './loader.module';
 export * from './organisation.loader';
 export * from './admin.loader';
 export * from './room.loader';
+export * from './examination.loader';

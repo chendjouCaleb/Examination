@@ -524,6 +524,7 @@
               <e p="admin.loader.ts" t="Include" />
               <e p="client.loader.ts" t="Include" />
               <e p="entity-loader.interface.ts" t="Include" />
+              <e p="examination.loader.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="loader.module.ts" t="Include" />
               <e p="organisation.loader.ts" t="Include" />
