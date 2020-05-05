@@ -1,33 +1,17 @@
-﻿import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {MsfButtonModule, MsfPersonaModule} from "fabric-docs";
-import {RouterModule, Routes} from "@angular/router";
-import {OrganisationListPage} from "./list/organisation-list.page";
-import {LayoutModule} from "../../infrastructure/public_api";
-import {OrganisationAddPage} from "./add/organisation-add.page";
-import {AuthorizedGuard} from "../authorization/authorization-guard";
-import {ControlModule} from "../../controls/control.module";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {OrganisationLayoutModule} from "./layout/organisation-layout.module";
-import {OrganisationHomePage} from "./home/organisation-home.page";
-import {OrganisationResolver} from "./organisation.resolver";
-import {OrganisationSettingsPage} from "./settings/organisation-settings.page";
-
-export const routes: Routes = [
-  {path: 'add', component: OrganisationAddPage, canActivate: [AuthorizedGuard]},
-  {path: ':organisationId/home', component: OrganisationHomePage, resolve: [ OrganisationResolver ] },
-  {path: ':organisationId/settings',  loadChildren: () => import('./settings/organisation-settings.module').then(s => s.OrganisationSettingsModule), resolve: [ OrganisationResolver ] },
-  {path: ':organisationId/admins',  loadChildren: () => import('./admin/organisation-admin.module').then(s => s.OrganisationAdminModule), resolve: [ OrganisationResolver ] },
-
-  {path: '', component: OrganisationListPage},
-
-];
+﻿import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MsfButtonModule, MsfIconModule, MsfPersonaModule} from 'fabric-docs';
+import {ControlModule} from '../../controls/control.module';
+import {OrganisationList} from './list/organisation-list';
+import {RouterModule} from '@angular/router';
+import {OrganisationLayout} from './layout/organisation-layout';
+import {LayoutModule} from '../../infrastructure/layout/layout.module';
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), FormsModule, ReactiveFormsModule, MsfPersonaModule,
-    ControlModule, LayoutModule, MsfButtonModule, OrganisationLayoutModule],
-  declarations: [OrganisationListPage, OrganisationAddPage, OrganisationHomePage ],
-  providers: [ OrganisationResolver ]
+  imports: [CommonModule, RouterModule, LayoutModule, ControlModule, MsfPersonaModule,
+    MsfButtonModule, MsfIconModule, MsfPersonaModule],
+  declarations: [OrganisationList, OrganisationLayout],
+  exports: [OrganisationList, OrganisationLayout]
 })
 export class OrganisationModule {
 

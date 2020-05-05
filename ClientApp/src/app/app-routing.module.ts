@@ -1,8 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {ToastTestComponent} from './toast-test/toast.test.component';
-import {AuthorizedGuard} from './authorization/authorization-guard';
-import {OrganisationResolver} from "./organisation/organisation.resolver";
+import {OrganisationResolver} from './organisation/organisation.resolver';
 
 
 const routes: Routes = [
@@ -11,11 +9,17 @@ const routes: Routes = [
   },
   {
     path: 'organisations',
-    loadChildren: () => import('./organisation/organisation.module').then(m => m.OrganisationModule),
+    loadChildren: () => import('./page/organisation/organisation-page.module').then(m => m.OrganisationPageModule),
   },
+
+  {
+    path: 'organisations/:organisationId/admins', resolve: [OrganisationResolver],
+    loadChildren: () => import('./page/admin/organisation-admin-page.module').then(m => m.OrganisationAdminPageModule),
+  },
+
   {
     path: 'organisations/:organisationId/rooms', resolve: [OrganisationResolver],
-    loadChildren: () => import('./room/room.module').then(m => m.RoomModule),
+    loadChildren: () => import('./page/room/room-page.module').then(m => m.RoomPageModule),
   },
   {path: '', redirectTo: 'organisations', pathMatch: 'full'}
 ];

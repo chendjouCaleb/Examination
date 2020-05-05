@@ -1,28 +1,17 @@
-﻿import {NgModule} from "@angular/core";
-import {OrganisationLayoutModule} from "../organisation/layout/organisation-layout.module";
-import {CommonModule} from "@angular/common";
-import {ControlModule} from "../../controls/control.module";
-import {RoomLayoutModule} from "./layout/room-layout.module";
-import {RoomListPage} from "./list/room-list.page";
-import {RouterModule, Routes} from "@angular/router";
-import {MsfButtonModule, MsfIconModule, MsfMenuModule, MsfPersonaModule} from "fabric-docs";
-import {RoomResolver} from "./room.resolver";
-import {RoomHomePage} from "./home/room-home.page";
-import {MomentModule} from "ngx-moment";
-
-const routes: Routes = [
-  {path: '', component: RoomListPage},
-  {path: ':roomId/home', component: RoomHomePage, resolve: [RoomResolver]}
-];
+﻿import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MsfButtonModule, MsfPivotModule} from 'fabric-docs';
+import {RoomLayoutComponent} from './layout/room-layout.component';
+import {RoomAddComponent} from './add/room-add.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ControlModule} from '../../controls/control.module';
+import {OrganisationModule} from '../organisation';
 
 @NgModule({
-  imports: [CommonModule, ControlModule, RoomLayoutModule, OrganisationLayoutModule, MsfPersonaModule,
-    MsfButtonModule, MomentModule,
-    MsfIconModule, MsfMenuModule,
-    RouterModule.forChild(routes)],
-  declarations: [RoomListPage, RoomHomePage],
-  providers: [RoomResolver]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule,
+    MsfPivotModule, OrganisationModule],
+  declarations: [RoomLayoutComponent, RoomAddComponent],
+  exports: [RoomLayoutComponent, RoomAddComponent]
 })
 export class RoomModule {
-
 }

@@ -503,6 +503,7 @@
             <e p="form" t="Include">
               <e p="admin.model.ts" t="Include" />
               <e p="authorization.model.ts" t="Include" />
+              <e p="examination.model.ts" t="Include" />
               <e p="organisation-model.ts" t="Include" />
               <e p="public_api.ts" t="Include" />
               <e p="room.model.ts" t="Include" />

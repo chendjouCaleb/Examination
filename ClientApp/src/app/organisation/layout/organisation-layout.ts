@@ -1,18 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Organisation} from "src/models/public_api";
+import {Component, Input} from '@angular/core';
+import {Organisation} from 'src/models';
 
 @Component({
   selector: 'app-organisation-layout',
   templateUrl: './organisation-layout.html',
   styles: []
 })
-export class OrganisationLayout implements OnInit {
+export class OrganisationLayout {
 
   @Input()
   organisation: Organisation = new Organisation();
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

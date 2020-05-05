@@ -1,12 +1,12 @@
-﻿import {OrganisationAddModel, OrganisationEditModel, OrganisationIdentifierModel} from "../../models";
-import {EvFormControl, EvFormGroup} from "../../controls/form/forms";
+﻿import {OrganisationAddModel, OrganisationEditModel, OrganisationIdentifierModel} from 'src/models';
+import {EvFormControl, EvFormGroup} from '../../controls/form/forms';
 
 export class OrganisationAddForm extends EvFormGroup<OrganisationAddModel> {
   constructor() {
     super({
-      name: new EvFormControl("name", ""),
-      identifier: new EvFormControl("identifier", ""),
-      address: new EvFormControl("address", "")
+      name: new EvFormControl('name', ''),
+      identifier: new EvFormControl('identifier', ''),
+      address: new EvFormControl('address', '')
     });
   }
 
@@ -20,12 +20,11 @@ export class OrganisationAddForm extends EvFormGroup<OrganisationAddModel> {
 }
 
 
-
 export class OrganisationEditForm extends EvFormGroup<OrganisationEditModel> {
   constructor(value: any = {}) {
     super({
-      name: new EvFormControl("name", value.name),
-      address: new EvFormControl("address", value.address)
+      name: new EvFormControl('name', value.name),
+      address: new EvFormControl('address', value.address)
     });
   }
 
@@ -40,7 +39,7 @@ export class OrganisationEditForm extends EvFormGroup<OrganisationEditModel> {
 export class OrganisationIdentifierForm extends EvFormGroup<OrganisationIdentifierModel> {
   constructor(value: any = {}) {
     super({
-      identifier: new EvFormControl("identifier", value.identifier)
+      identifier: new EvFormControl('identifier', value.identifier)
     });
   }
 
