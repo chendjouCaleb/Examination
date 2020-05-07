@@ -1,34 +1,16 @@
 ﻿import {NgModule} from "@angular/core";
 import {MsfButtonModule, MsfIconModule} from "fabric-docs";
-import {LayoutModule} from "src/infrastructure/public_api";
-import {ExaminationListComponent} from "./examination-list/examination-list.component";
-import {ExaminationHomeComponent} from './examination-home/examination-home.component';
-import {ExaminationAddComponent} from './examination-add/examination-add.component';
-import {ExaminationDeleteComponent} from './examination-delete/examination-delete.component';
-import {RouterModule, Routes} from "@angular/router";
-import {ExaminationLayoutModule} from "./examination-layout/examination-layout.module";
-import {ExaminationStudentComponent} from './examination-student/examination-student.component';
-import {ExaminationSettingsComponent} from './examination-settings/examination-settings.component';
-import {ExaminationReviewsComponent} from './examination-reviews/examination-reviews.component';
-import {ExaminationCalendarComponent} from './examination-calendar/examination-calendar.component';
-import {TestLayoutModule} from "../test/test-layout/test-layout.module";
-
-export const routes: Routes = [
-  {path: 'add', component: ExaminationAddComponent},
-  {path: '', component: ExaminationListComponent},
-  {path: 'list', redirectTo: '', pathMatch: 'full'},
-  {path: ':examinationId', component: ExaminationHomeComponent},
-  {path: ':examinationId/home', component: ExaminationHomeComponent},
-  {path: ':examinationId/students', component: ExaminationStudentComponent},
-  {path: ':examinationId/calendar', component: ExaminationCalendarComponent},
-  {path: ':examinationId/settings', component: ExaminationSettingsComponent}
-];
+import {OrganisationModule} from "../organisation";
+import {LayoutModule} from "examination/infrastructure";
+import {RouterModule} from "@angular/router";
+import {ExaminationListComponent} from "examination/app/examination/examination-list/examination-list.component";
+import {ExaminationAddComponent} from "examination/app/examination/examination-add/examination-add.component";
+import {ExaminationLayoutComponent} from "examination/app/examination/examination-layout/examination-layout.component";
 
 @NgModule({
-  imports: [MsfIconModule, MsfButtonModule, LayoutModule, ExaminationLayoutModule, RouterModule.forChild(routes),
-    TestLayoutModule],
-  declarations: [ExaminationListComponent, ExaminationHomeComponent, ExaminationAddComponent, ExaminationDeleteComponent,
-    ExaminationCalendarComponent, ExaminationReviewsComponent, ExaminationSettingsComponent, ExaminationStudentComponent]
+  imports: [RouterModule, MsfIconModule, MsfButtonModule, LayoutModule, OrganisationModule],
+  declarations: [ExaminationListComponent, ExaminationAddComponent, ExaminationLayoutComponent],
+  exports: [ExaminationListComponent, ExaminationAddComponent, ExaminationLayoutComponent ]
 })
 export class ExaminationModule {
 

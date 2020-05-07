@@ -1,4 +1,4 @@
-<app-layout>
+<app-organisation-layout>
   <div class="layout-sidebar" app-sidebar >
     <i MsfIcon appSidebarCollapse iconName="GlobalNavButton" ></i>
     <a app-sidebar-item icon="Home"  [routerLink]="['/examinations', examination.id]"> Home </a>
@@ -9,4 +9,4 @@
     <a app-sidebar-item iconImage="/assets/icon/gear.svg" [routerLink]="['/examinations', examination.id, 'settings']">Paramètres</a>
   </div>
   <ng-content></ng-content>
-</app-layout>
+</app-organisation-layout>

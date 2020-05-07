@@ -17,10 +17,17 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "examination/app/*": ["src/app/*"],
+      "examination/models": ["src/models"],
+      "examination/controls": ["src/controls"],
+      "examination/infrastructure": ["src/infrastructure"]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
+
   }
 }

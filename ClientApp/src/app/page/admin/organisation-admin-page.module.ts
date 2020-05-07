@@ -5,7 +5,7 @@ import {CommonModule} from '@angular/common';
 import {AdminListPage} from './list/admin-list.page';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ControlModule} from '../../../controls/control.module';
+import {ControlModule} from 'examination/controls';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MomentModule} from 'ngx-moment';
 import {OrganisationAdminModule} from 'src/app/admin';

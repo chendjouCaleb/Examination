@@ -12,4 +12,4 @@ import {MsfButtonModule, MsfIconModule, MsfPersonaModule} from "fabric-docs";
     CommonModule, MsfIconModule, MsfPersonaModule, MsfButtonModule
   ]
 })
-export class TestLayoutModule { }
+export class TestModule { }

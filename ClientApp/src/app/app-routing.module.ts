@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {OrganisationResolver} from './organisation/organisation.resolver';
+import {OrganisationResolver} from 'examination/app/organisation';
 
 
 const routes: Routes = [
@@ -21,6 +21,12 @@ const routes: Routes = [
     path: 'organisations/:organisationId/rooms', resolve: [OrganisationResolver],
     loadChildren: () => import('./page/room/room-page.module').then(m => m.RoomPageModule),
   },
+
+  {
+    path: 'organisations/:organisationId/examinations', resolve: [OrganisationResolver],
+    loadChildren: () => import('./page/examination/examination-page.module').then(m => m.ExaminationPageModule),
+  },
+
   {path: '', redirectTo: 'organisations', pathMatch: 'full'}
 ];
 

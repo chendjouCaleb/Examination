@@ -3,13 +3,13 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LayoutModule, Preference} from 'src/infrastructure/public_api';
+import {LayoutModule, Preference} from 'examination/infrastructure';
 import {MsfButtonModule} from 'fabric-docs';
 import {ToastTestComponent} from './toast-test/toast.test.component';
 import {MsToastModule} from './toast/toast.module';
-import {AuthorizationModule} from './authorization/authorization.module';
+import {AuthorizationModule} from 'examination/app/authorization';
 import {HttpClientModule} from '@angular/common/http';
-import {AppHttpClientModule} from "../models";
+import {AppHttpClientModule} from "examination/models";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CurrentItems} from "./current-items";
 

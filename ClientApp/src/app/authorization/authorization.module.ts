@@ -5,10 +5,10 @@ import {AuthorizationManager} from './authorization-manager';
 import {AuthorizedGuard, NoAuthorizedGuard} from './authorization-guard';
 import {AuthorizeCallbackComponent} from './authorize-callback.component';
 import {AuthorizeRequestComponent} from './authorize-request.component';
-import {LayoutModule} from '../../infrastructure/public_api';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthorizationInterceptor} from "./authorization-interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {LayoutModule} from "examination/infrastructure";
 
 
 const routes: Routes = [

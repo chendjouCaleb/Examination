@@ -6,11 +6,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {AdminAddComponent} from './add/admin-add.component';
 import {MomentModule} from 'ngx-moment';
 import {AdminEditComponent} from './edit/admin-edit.component';
-import {ControlModule} from '../../controls/control.module';
+import {ControlModule} from 'examination/controls';
+import {AppFormModule} from "examination/controls";
 
 
 @NgModule({
-  imports: [CommonModule, MomentModule,
+  imports: [CommonModule, MomentModule, AppFormModule,
     FormsModule, ReactiveFormsModule, ControlModule, MatDialogModule, MsfMenuModule, MsfPersonaModule, MsfButtonModule],
   declarations: [AdminAddComponent, AdminEditComponent],
   exports: [AdminAddComponent, AdminEditComponent],

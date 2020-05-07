@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Examination} from "src/models/public_api";
+import {Examination} from "examination/models";
 
 @Component({
   selector: 'app-examination-layout',

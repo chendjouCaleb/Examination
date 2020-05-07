@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Test} from "../../../models/entities/test.entity";
+import {Test} from "examination/models";
 
 @Component({
   selector: 'app-examination-home',

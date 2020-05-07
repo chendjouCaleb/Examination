@@ -214,6 +214,19 @@
         <e p="README.md" t="Include" />
         <e p="src" t="Include">
           <e p="app" t="Include">
+            <e p="admin" t="Include">
+              <e p="add" t="Include">
+                <e p="admin-add.component.html" t="Include" />
+                <e p="admin-add.component.ts" t="Include" />
+              </e>
+              <e p="edit" t="Include">
+                <e p="admin-edit.component.html" t="Include" />
+                <e p="admin-edit.component.ts" t="Include" />
+              </e>
+              <e p="form.ts" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="organisation-admin.module.ts" t="Include" />
+            </e>
             <e p="app-routing.module.ts" t="Include" />
             <e p="app.component.html" t="Include" />
             <e p="app.component.scss" t="Include" />
@@ -230,6 +243,7 @@
               <e p="authorize-request.component.html" t="Include" />
               <e p="authorize-request.component.ts" t="Include" />
               <e p="claims.ts" t="Include" />
+              <e p="index.ts" t="Include" />
               <e p="models" t="Include">
                 <e p="authorization.entity.ts" t="Include" />
                 <e p="client.entity.ts" t="Include" />
@@ -245,23 +259,9 @@
                 <e p="examination-add.component.html" t="Include" />
                 <e p="examination-add.component.ts" t="Include" />
               </e>
-              <e p="examination-calendar" t="Include">
-                <e p="examination-calendar.component.html" t="Include" />
-                <e p="examination-calendar.component.ts" t="Include" />
-              </e>
-              <e p="examination-delete" t="Include">
-                <e p="examination-delete.component.html" t="Include" />
-                <e p="examination-delete.component.ts" t="Include" />
-              </e>
-              <e p="examination-home" t="Include">
-                <e p="examination-home.component.html" t="Include" />
-                <e p="examination-home.component.scss" t="Include" />
-                <e p="examination-home.component.ts" t="Include" />
-              </e>
               <e p="examination-layout" t="Include">
                 <e p="examination-layout.component.html" t="Include" />
                 <e p="examination-layout.component.ts" t="Include" />
-                <e p="examination-layout.module.ts" t="Include" />
               </e>
               <e p="examination-list" t="Include">
                 <e p="examination-list.component.html" t="Include" />
@@ -269,107 +269,132 @@
                 <e p="examination-list.component.spec.ts" t="Include" />
                 <e p="examination-list.component.ts" t="Include" />
               </e>
-              <e p="examination-reviews" t="Include">
-                <e p="examination-reviews.component.html" t="Include" />
-                <e p="examination-reviews.component.ts" t="Include" />
-              </e>
-              <e p="examination-settings" t="Include">
-                <e p="examination-settings.component.html" t="Include" />
-                <e p="examination-settings.component.ts" t="Include" />
-              </e>
-              <e p="examination-student" t="Include">
-                <e p="examination-student.component.html" t="Include" />
-                <e p="examination-student.component.ts" t="Include" />
-              </e>
               <e p="examination.module.ts" t="Include" />
+              <e p="index.ts" t="Include" />
             </e>
             <e p="organisation" t="Include">
-              <e p="add" t="Include">
-                <e p="organisation-add.page.html" t="Include" />
-                <e p="organisation-add.page.ts" t="Include" />
+              <e p="form.ts" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="layout" t="Include">
+                <e p="organisation-layout.html" t="Include" />
+                <e p="organisation-layout.ts" t="Include" />
               </e>
+              <e p="list" t="Include">
+                <e p="organisation-list.html" t="Include" />
+                <e p="organisation-list.ts" t="Include" />
+              </e>
+              <e p="organisation.module.ts" t="Include" />
+              <e p="organisation.resolver.ts" t="Include" />
+            </e>
+            <e p="page" t="Include">
               <e p="admin" t="Include">
-                <e p="add" t="Include">
-                  <e p="admin-add.component.html" t="Include" />
-                  <e p="admin-add.component.ts" t="Include" />
-                </e>
-                <e p="edit" t="Include">
-                  <e p="admin-edit.component.html" t="Include" />
-                  <e p="admin-edit.component.ts" t="Include" />
-                </e>
-                <e p="form.ts" t="Include" />
                 <e p="list" t="Include">
                   <e p="admin-list.page.html" t="Include" />
                   <e p="admin-list.page.ts" t="Include" />
                 </e>
-                <e p="organisation-admin.module.ts" t="Include" />
+                <e p="organisation-admin-page.module.ts" t="Include" />
               </e>
-              <e p="form.ts" t="Include" />
-              <e p="Home" t="Include">
-                <e p="organisation-home.page.html" t="Include" />
-                <e p="organisation-home.page.ts" t="Include" />
+              <e p="Examination" t="Include">
+                <e p="examination-add" t="Include">
+                  <e p="examination-add.component.html" t="Include" />
+                  <e p="examination-add.component.ts" t="Include" />
+                </e>
+                <e p="examination-calendar" t="Include">
+                  <e p="examination-calendar.component.html" t="Include" />
+                  <e p="examination-calendar.component.ts" t="Include" />
+                </e>
+                <e p="examination-delete" t="Include">
+                  <e p="examination-delete.component.html" t="Include" />
+                  <e p="examination-delete.component.ts" t="Include" />
+                </e>
+                <e p="examination-home" t="Include">
+                  <e p="examination-home.component.html" t="Include" />
+                  <e p="examination-home.component.scss" t="Include" />
+                  <e p="examination-home.component.ts" t="Include" />
+                </e>
+                <e p="examination-list" t="Include">
+                  <e p="examination-list.component.html" t="Include" />
+                  <e p="examination-list.component.scss" t="Include" />
+                  <e p="examination-list.component.spec.ts" t="Include" />
+                  <e p="examination-list.component.ts" t="Include" />
+                </e>
+                <e p="examination-page.module.ts" t="Include" />
+                <e p="examination-reviews" t="Include">
+                  <e p="examination-reviews.component.html" t="Include" />
+                  <e p="examination-reviews.component.ts" t="Include" />
+                </e>
+                <e p="examination-settings" t="Include">
+                  <e p="examination-settings.component.html" t="Include" />
+                  <e p="examination-settings.component.ts" t="Include" />
+                </e>
+                <e p="examination-student" t="Include">
+                  <e p="examination-student.component.html" t="Include" />
+                  <e p="examination-student.component.ts" t="Include" />
+                </e>
               </e>
-              <e p="layout" t="Include">
+              <e p="organisation" t="Include">
+                <e p="add" t="Include">
+                  <e p="organisation-add.page.html" t="Include" />
+                  <e p="organisation-add.page.ts" t="Include" />
+                </e>
+                <e p="Home" t="Include">
+                  <e p="organisation-home.page.html" t="Include" />
+                  <e p="organisation-home.page.ts" t="Include" />
+                </e>
                 <e p="list" t="Include">
-                  <e p="organisation-list.html" t="Include" />
-                  <e p="organisation-list.ts" t="Include" />
+                  <e p="organisation-list.page.html" t="Include" />
+                  <e p="organisation-list.page.ts" t="Include" />
                 </e>
-                <e p="organisation-layout.html" t="Include" />
-                <e p="organisation-layout.module.ts" t="Include" />
-                <e p="organisation-layout.ts" t="Include" />
+                <e p="organisation-page.module.ts" t="Include" />
+                <e p="settings" t="Include">
+                  <e p="identifier" t="Include">
+                    <e p="organisation-identifier.component.html" t="Include" />
+                    <e p="organisation-identifier.component.ts" t="Include" />
+                  </e>
+                  <e p="info" t="Include">
+                    <e p="organisation-info.component.html" t="Include" />
+                    <e p="organisation-info.component.ts" t="Include" />
+                  </e>
+                  <e p="organisation-settings.module.ts" t="Include" />
+                  <e p="organisation-settings.page.html" t="Include" />
+                  <e p="organisation-settings.page.ts" t="Include" />
+                </e>
               </e>
-              <e p="list" t="Include">
-                <e p="organisation-list.page.html" t="Include" />
-                <e p="organisation-list.page.ts" t="Include" />
-              </e>
-              <e p="organisation.module.ts" t="Include" />
-              <e p="organisation.resolver.ts" t="Include" />
-              <e p="settings" t="Include">
-                <e p="identifier" t="Include">
-                  <e p="organisation-identifier.component.html" t="Include" />
-                  <e p="organisation-identifier.component.ts" t="Include" />
+              <e p="room" t="Include">
+                <e p="Home" t="Include">
+                  <e p="room-home.page.html" t="Include" />
+                  <e p="room-home.page.ts" t="Include" />
                 </e>
-                <e p="info" t="Include">
-                  <e p="organisation-info.component.html" t="Include" />
-                  <e p="organisation-info.component.ts" t="Include" />
+                <e p="list" t="Include">
+                  <e p="room-list.page.html" t="Include" />
+                  <e p="room-list.page.ts" t="Include" />
                 </e>
-                <e p="organisation-settings.module.ts" t="Include" />
-                <e p="organisation-settings.page.html" t="Include" />
-                <e p="organisation-settings.page.ts" t="Include" />
+                <e p="room-page.module.ts" t="Include" />
               </e>
             </e>
             <e p="room" t="Include">
-              <e p="form.ts" t="Include" />
-              <e p="Home" t="Include">
-                <e p="room-home.page.html" t="Include" />
-                <e p="room-home.page.ts" t="Include" />
+              <e p="add" t="Include">
+                <e p="room-add.component.html" t="Include" />
+                <e p="room-add.component.ts" t="Include" />
               </e>
+              <e p="form.ts" t="Include" />
+              <e p="index.ts" t="Include" />
               <e p="layout" t="Include">
-                <e p="add" t="Include">
-                  <e p="room-add.component.html" t="Include" />
-                  <e p="room-add.component.ts" t="Include" />
-                </e>
                 <e p="room-layout.component.html" t="Include" />
                 <e p="room-layout.component.ts" t="Include" />
-                <e p="room-layout.module.ts" t="Include" />
-              </e>
-              <e p="list" t="Include">
-                <e p="room-list.page.html" t="Include" />
-                <e p="room-list.page.ts" t="Include" />
               </e>
               <e p="room.module.ts" t="Include" />
               <e p="room.resolver.ts" t="Include" />
             </e>
             <e p="test" t="Include">
-              <e p="test-layout" t="Include">
-                <e p="test-details" t="Include">
-                  <e p="test-details.component.html" t="Include" />
-                  <e p="test-details.component.scss" t="Include" />
-                  <e p="test-details.component.spec.ts" t="Include" />
-                  <e p="test-details.component.ts" t="Include" />
-                </e>
-                <e p="test-layout.module.ts" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="test-details" t="Include">
+                <e p="test-details.component.html" t="Include" />
+                <e p="test-details.component.scss" t="Include" />
+                <e p="test-details.component.spec.ts" t="Include" />
+                <e p="test-details.component.ts" t="Include" />
               </e>
+              <e p="test.module.ts" t="Include" />
             </e>
             <e p="toast" t="Include">
               <e p="before-onDestroy.ts" t="Include" />
@@ -416,6 +441,7 @@
               <e p="forms.ts" t="Include" />
               <e p="validators.ts" t="Include" />
             </e>
+            <e p="index.ts" t="Include" />
             <e p="labelled" t="Include">
               <e p="labelled-icon.ts" t="Include" />
               <e p="labelled.ts" t="Include" />
@@ -429,6 +455,7 @@
           <e p="index.html" t="Include" />
           <e p="infrastructure" t="Include">
             <e p="dom-helpers.ts" t="Include" />
+            <e p="index.ts" t="Include" />
             <e p="layout" t="Include">
               <e p="labelled.ts" t="Include" />
               <e p="layout.component.html" t="Include" />
@@ -473,7 +500,6 @@
               <e p="public_api.ts" t="Include" />
               <e p="theme.ts" t="Include" />
             </e>
-            <e p="public_api.ts" t="Include" />
           </e>
           <e p="main.ts" t="Include" />
           <e p="models" t="Include">

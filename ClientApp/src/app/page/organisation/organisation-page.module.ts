@@ -3,13 +3,13 @@ import {CommonModule} from '@angular/common';
 import {MsfButtonModule, MsfPersonaModule} from 'fabric-docs';
 import {RouterModule, Routes} from '@angular/router';
 import {OrganisationListPage} from './list/organisation-list.page';
-import {LayoutModule} from '../../../infrastructure/public_api';
-import {AuthorizedGuard} from '../../authorization/authorization-guard';
-import {ControlModule} from '../../../controls/control.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {OrganisationHomePage} from './home/organisation-home.page';
 import {OrganisationAddPage} from './add/organisation-add.page';
-import {OrganisationModule, OrganisationResolver} from '../../organisation';
+import {AuthorizedGuard} from "examination/app/authorization";
+import {OrganisationModule, OrganisationResolver} from "examination/app/organisation";
+import {LayoutModule} from "examination/infrastructure";
+import {AppFormModule, ControlModule} from "examination/controls";
 
 export const routes: Routes = [
   {path: 'add', component: OrganisationAddPage, canActivate: [AuthorizedGuard]},
@@ -19,17 +19,13 @@ export const routes: Routes = [
     loadChildren: () => import('./settings/organisation-settings.module').then(s => s.OrganisationSettingsModule),
     resolve: [OrganisationResolver]
   },
-  {
-    path: ':organisationId/examinations',
-    loadChildren: () => import('../../examination/examination.module').then(s => s.ExaminationModule),
-    resolve: [OrganisationResolver]
-  },
+
   {path: '', component: OrganisationListPage},
 
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), FormsModule, ReactiveFormsModule, MsfPersonaModule,
+  imports: [CommonModule, RouterModule.forChild(routes), AppFormModule, FormsModule, ReactiveFormsModule, MsfPersonaModule,
     ControlModule, LayoutModule, MsfButtonModule, OrganisationModule],
   declarations: [OrganisationListPage, OrganisationAddPage, OrganisationHomePage],
   providers: [OrganisationResolver]
