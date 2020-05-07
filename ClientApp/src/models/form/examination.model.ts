@@ -15,16 +15,6 @@ export class ExaminationAddModel {
 
 }
 
-export class ExaminationEditModel {
-  @IsNotEmpty()
-  @IsNumber()
-  @IsPositive()
-  capacity: number;
-
-  @IsNotEmpty()
-  @MinLength(3)
-  address: string;
-}
 
 
 export class ExaminationNameModel {

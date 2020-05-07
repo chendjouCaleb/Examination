@@ -171,10 +171,10 @@ namespace Exam.Controllers
         [HttpPut("{examinationId}/specialityState")]
         [LoadExamination]
         [AuthorizeExaminationAdmin]
-        public StatusCodeResult ChangeRequireSpecialityState(Examination examination, [FromQuery] bool state)
+        public StatusCodeResult ChangeRequireSpecialityState(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));
-            examination.RequireSpeciality = state;
+            examination.RequireSpeciality = !examination.RequireSpeciality;
             _examinationRepository.Update(examination);
 
             return StatusCode(StatusCodes.Status202Accepted);
@@ -195,7 +195,7 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
-        [HttpPut("{examinationId}/start")]
+        [HttpPut("{examinationId}/close")]
         [LoadExamination]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(ItemName = "examination", State = "PROGRESS",
