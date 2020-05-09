@@ -1,4 +1,4 @@
-﻿import {IsNotEmpty, IsNumber, IsPositive, MinLength} from "class-validator";
+﻿import {IsDateString, IsNotEmpty, MinLength} from "class-validator";
 
 export class ExaminationAddModel {
   @IsNotEmpty()
@@ -8,17 +8,21 @@ export class ExaminationAddModel {
   requireSpeciality: boolean;
 
   @IsNotEmpty()
-  expectedStartDate: Date;
+  expectedStartDate: any;
 
   @IsNotEmpty()
-  expectedEndDate: Date;
+  expectedEndDate: any;
 
 }
-
 
 
 export class ExaminationNameModel {
   @IsNotEmpty()
   @MinLength(3)
   name: string;
+}
+
+export class ExaminationDateModel {
+  @IsNotEmpty()
+  date: string;
 }

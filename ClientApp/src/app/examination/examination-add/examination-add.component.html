@@ -1,1 +1,41 @@
-<p>examination-add works!</p>
+<form class="ms-form" [formGroup]="form">
+  <div class="ms-form-header">Ajouter une salle</div>
+
+
+  <div class="ms-textField">
+    <label for="name" class="msf-label">Nom de l'examen</label>
+    <input type="name" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
+    <div class="ms-fontSize-12"> Renseignez un nom unique parmi tous les examens de cette organisation</div>
+    <app-control-error [control]="form.controls['name']"></app-control-error>
+  </div>
+
+
+  <div class="ms-textField">
+    <label for="expectedStartDate" class="msf-label">Date de début</label>
+    <input id="expectedStartDate" (click)="startDatePicker.open()" [matDatepicker]="startDatePicker" class="ms-textField-input" formControlName="expectedStartDate">
+    <mat-datepicker #startDatePicker ></mat-datepicker>
+    <app-control-error [control]="form.controls['expectedStartDate']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="expectedEndDate" class="msf-label">Date de fin</label>
+    <input id="expectedEndDate" (click)="endDatePicker.open()" [matDatepicker]="endDatePicker" class="ms-textField-input" formControlName="expectedEndDate">
+    <mat-datepicker #endDatePicker ></mat-datepicker>
+    <app-control-error [control]="form.controls['expectedEndDate']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label labelled text="Spécialité obligatoire" for="requireSpeciality">
+      <MsfCheckbox id="requireSpeciality" formControlName="requireSpeciality"></MsfCheckbox>
+    </label>
+  </div>
+
+  <div class="mt-4 text-right">
+    <MsfButton mat-dialog-close class="mr-3">Annuler</MsfButton>
+    <button MsfButton theme="primary" mat-ripple Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">
+      Ajouter
+    </button>
+  </div>
+</form>
+
+

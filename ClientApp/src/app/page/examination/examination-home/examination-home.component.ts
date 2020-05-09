@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {Test} from "examination/models";
+import {Component, OnInit} from '@angular/core';
+import {Examination, Test} from "examination/models";
+import {CurrentItems} from "examination/app/current-items";
 
 @Component({
   selector: 'app-examination-home',
@@ -8,8 +9,14 @@ import {Test} from "examination/models";
 })
 export class ExaminationHomeComponent implements OnInit {
 
+  examination: Examination;
   test: Test;
-  constructor() {
+
+  constructor(currentItems: CurrentItems) {
+    this.examination = currentItems.get('examination');
+
+    console.log(this.examination);
+
     const test = new Test();
 
     test.name = "Physique quantique";

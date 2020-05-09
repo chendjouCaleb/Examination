@@ -105,7 +105,7 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
     return this.httpClient.delete(this.url + "/" + id).toPromise();
   }
 
-  formatDate(date: Date) {
+  static formatDate(date: Date) {
     if (!date) {
       return null;
     }

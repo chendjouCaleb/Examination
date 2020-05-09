@@ -1,4 +1,44 @@
 <app-organisation-layout [organisation]="organisation">
   <h4>Examen</h4>
-  <float-button mat-ripple></float-button>
+
+  <div class="d-flex">
+    <div class="ms-card" *ngFor="let item of examinations">
+
+
+      <div class="ms-card-title mt-2">{{item.name}}</div>
+
+      <div class="ms-card-text">
+        <div *ngIf="item.expectedStartDate && !item.startDate">
+          <div>Débutera le</div>
+          <div class="ms-fontSize-18">{{item.expectedStartDate | amCalendar}}</div>
+        </div>
+
+        <div *ngIf="!item.expectedStartDate &&  item.startDate">
+          <div>A débuté le</div>
+          <div class="ms-fontSize-18">{{item.startDate | amCalendar}}</div>
+        </div>
+
+        <div *ngIf="item.expectedEndDate && !item.endDate">
+          <div>S'achevera le</div>
+          <div class="ms-fontSize-18">{{item.expectedEndDate | amCalendar}}</div>
+        </div>
+
+        <div *ngIf="!item.expectedEndDate &&  item.endDate">
+          <div>S'est achevé le</div>
+          <div class="ms-fontSize-18">{{item.endDate | amLocal}}</div>
+        </div>
+
+      </div>
+
+
+      <div class="ms-card-footer">
+        <MsfButton theme="primary" [routerLink]="item.url">
+          Voir
+        </MsfButton>
+      </div>
+    </div>
+  </div>
+
+
+  <float-button mat-ripple (click)="openAddAdminDialog()"></float-button>
 </app-organisation-layout>

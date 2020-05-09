@@ -1,12 +1,12 @@
-<app-organisation-layout>
+<app-layout>
   <div class="layout-sidebar" app-sidebar >
     <i MsfIcon appSidebarCollapse iconName="GlobalNavButton" ></i>
-    <a app-sidebar-item icon="Home"  [routerLink]="['/examinations', examination.id]"> Home </a>
-    <a app-sidebar-item icon="Group" [routerLink]="['/examinations', examination.id, 'students']">étudiants</a>
+    <a app-sidebar-item icon="Home" [routerLink]="[examination.url, 'home']" routerLinkActive="active"> Home </a>
+    <a app-sidebar-item icon="Group" [routerLink]="[ examination.url, 'students']" routerLinkActive="active">étudiants</a>
 
-    <a app-sidebar-item iconImage="/assets/icon/schedule.svg" [routerLink]="['/examinations', examination.id, 'calendar']">Calendrier</a>
-    <a app-sidebar-item iconImage="/assets/icon/result.svg" [routerLink]="['/examinations', examination.id, 'reviews']">Appréciations</a>
-    <a app-sidebar-item iconImage="/assets/icon/gear.svg" [routerLink]="['/examinations', examination.id, 'settings']">Paramètres</a>
+    <a app-sidebar-item icon="Calendar" [routerLink]="[examination.url, 'calendar']" routerLinkActive="active">Calendrier</a>
+    <a app-sidebar-item iconImage="/assets/icon/result.svg" [routerLink]="[examination.url, 'reviews']" routerLinkActive="active">Appréciations</a>
+    <a app-sidebar-item icon="Settings" [routerLink]="[examination.url, 'settings']" routerLinkActive="active">Paramètres</a>
   </div>
   <ng-content></ng-content>
-</app-organisation-layout>
+</app-layout>

@@ -12,17 +12,25 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppHttpClientModule} from "examination/models";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CurrentItems} from "./current-items";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
+import {registerLocaleData} from "@angular/common";
+import * as moment from "moment";
+import localeFr from "@angular/common/locales/fr";
+import localeFrExtra from "@angular/common/locales/extra/fr";
+
+moment.locale("fr");
+
+registerLocaleData(localeFr, "fr-FR", localeFrExtra);
 
 @NgModule({
   declarations: [
     AppComponent, ToastTestComponent
   ],
-  imports: [
+  imports: [ MatNativeDateModule,
     BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule,  MsfButtonModule, LayoutModule, MsToastModule,
-    AppHttpClientModule,
-    BrowserAnimationsModule
+    AppHttpClientModule, BrowserAnimationsModule
   ],
-  providers: [Preference, CurrentItems],
+  providers: [Preference, CurrentItems, {provide: MAT_DATE_LOCALE, useValue: 'fr'} ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

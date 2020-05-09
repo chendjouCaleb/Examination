@@ -113,7 +113,13 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireState.pending")]
         public StatusCodeResult ChangeStartDate(Examination examination, [FromQuery] DateTime startDate)
         {
-            if (examination.ExpectedEndDate < startDate)
+            Console.WriteLine(startDate);
+            if ( startDate.IsBefore(DateTime.Now))
+            {
+                throw new InvalidValueException("{period.constraints.futureStartDate}");
+            }
+            
+            if (startDate.IsAfter(examination.ExpectedEndDate))
             {
                 throw new InvalidValueException("{period.constraints.startDate-before-endDate}");
             }
@@ -122,6 +128,7 @@ namespace Exam.Controllers
             _examinationRepository.Update(examination);
 
             return StatusCode(StatusCodes.Status202Accepted);
+            return null;
         }
 
 

@@ -30,9 +30,15 @@ namespace ServerApp
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc()
+                .AddMvc(options =>
+                {
+                    
+                })
                 .AddControllersAsServices()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson(options =>
+                    {
+                        options.SerializerSettings.DateFormatString = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
+                    });
 
             services.AddDbContext<DbContext, PersistenceContext>(options =>
             {

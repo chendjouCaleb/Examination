@@ -1,5 +1,5 @@
-﻿import {EvFormControl, EvFormGroup} from "../../controls/form/forms";
-import {AdminAddModel, AdminEditModel} from "../../models";
+﻿import {EvFormControl, EvFormGroup} from "examination/controls";
+import {AdminAddModel, AdminEditModel} from "examination/models";
 
 export class AdminAddForm extends EvFormGroup<AdminAddModel> {
   constructor() {

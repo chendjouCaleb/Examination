@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Organisation} from 'src/models';
+import {CurrentItems} from "examination/app/current-items";
 
 @Component({
   selector: 'app-organisation-layout',
@@ -7,6 +8,10 @@ import {Organisation} from 'src/models';
   styles: []
 })
 export class OrganisationLayout {
+
+  constructor(currentItems: CurrentItems) {
+    this.organisation = currentItems.get("organisation")
+  }
 
   @Input()
   organisation: Organisation = new Organisation();

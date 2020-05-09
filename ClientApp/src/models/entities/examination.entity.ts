@@ -1,6 +1,7 @@
 ﻿import {Entity} from "./entity";
 import {User} from "./user.entity";
 import {Organisation} from "./organisation";
+import * as moment from 'moment';
 
 export class Examination extends Entity<number>{
 
@@ -19,8 +20,8 @@ export class Examination extends Entity<number>{
       this.registerUserId = value.registerUserId;
       this.registerUser = value.registerUser;
 
-      this.expectedStartDate = value.expectedStartDate;
-      this.expectedEndDate = value.expectedEndDate;
+      this.expectedStartDate = moment(value.expectedStartDate).local(false).toDate();
+      this.expectedEndDate = moment(value.expectedEndDate).local(true).toDate();
 
       this.startDate = value.startDate;
       this.endDate = value.endDate;
