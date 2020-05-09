@@ -13,7 +13,6 @@ using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ServerApp.Filters;
 
 namespace Exam.Controllers
 {
@@ -110,7 +109,7 @@ namespace Exam.Controllers
         [LoadExamination]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(ItemName = "examination", State = "PENDING",
-            ErrorMessage = "{examination.requireState.pending")]
+            ErrorMessage = "{examination.requireState.pending}")]
         public StatusCodeResult ChangeStartDate(Examination examination, [FromQuery] DateTime startDate)
         {
             Console.WriteLine(startDate);
@@ -192,7 +191,7 @@ namespace Exam.Controllers
         [LoadExamination]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "PENDING",
-            ErrorMessage = "{examination.requireState.pending")]
+            ErrorMessage = "{examination.requireState.pending}")]
         public StatusCodeResult Start(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));
@@ -206,7 +205,7 @@ namespace Exam.Controllers
         [LoadExamination]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(ItemName = "examination", State = "PROGRESS",
-            ErrorMessage = "{examination.requireState.progress")]
+            ErrorMessage = "{examination.requireState.progress}")]
         public StatusCodeResult End(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));
@@ -220,7 +219,7 @@ namespace Exam.Controllers
         [LoadExamination]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireState.finished")]
+            ErrorMessage = "{examination.requireState.finished}")]
         public StatusCodeResult Relaunch(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));

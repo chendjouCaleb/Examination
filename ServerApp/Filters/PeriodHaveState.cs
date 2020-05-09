@@ -4,7 +4,7 @@ using Exam.Entities;
 using Exam.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ServerApp.Filters
+namespace Exam.Filters
 {
     public class PeriodHaveState : ActionFilterAttribute
     {

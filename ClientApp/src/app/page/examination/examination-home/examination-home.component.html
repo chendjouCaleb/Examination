@@ -1,7 +1,46 @@
 <app-examination-layout>
 
-  <div>{{examination.expectedStartDate | amCalendar  }}</div>
-  <div>{{examination.expectedEndDate | amCalendar  }}</div>
+  <div class="ms-card" >
+
+
+    <div class="ms-card-title mt-2">{{examination.name}}</div>
+
+    <div class="ms-card-text">
+      <div>
+        <div>Débutera le</div>
+        <div class="ms-fontSize-18">{{examination.expectedStartDate | amCalendar}}</div>
+      </div>
+
+      <div *ngIf="examination.startDate">
+        <div>A débuté le</div>
+        <div class="ms-fontSize-18">{{examination.startDate | amCalendar}}</div>
+      </div>
+
+      <div>
+        <div>S'achevera le</div>
+        <div class="ms-fontSize-18">{{examination.expectedEndDate | amCalendar}}</div>
+      </div>
+
+      <div *ngIf="examination.endDate">
+        <div>S'est achevé le</div>
+        <div class="ms-fontSize-18">{{examination.endDate | amCalendar}}</div>
+      </div>
+
+      <span>{{examination.state}}</span>
+    </div>
+
+
+    <div class="ms-card-footer">
+      <div>
+        <MsfButton theme="primary" Icon="Clock" *ngIf="examination.state === 'PENDING'" (click)="start()">Débuter</MsfButton>
+        <MsfButton theme="error" Icon="Lock" *ngIf="examination.state === 'PROGRESS'" (click)="end()">Fermer</MsfButton>
+        <MsfButton theme="primary" Icon="Rotate90Clockwise" *ngIf="examination.state === 'FINISHED'" (click)="relaunch()">Relancer</MsfButton>
+
+      </div>
+    </div>
+  </div>
+
+
   <div class="test-list">
     <h4 class="ms-fontWeight-light text-uppercase">Matières</h4>
 

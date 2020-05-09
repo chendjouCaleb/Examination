@@ -50,24 +50,24 @@ export class ExaminationHttpClient extends GenericHttpClient<Examination, number
       .toPromise();
   }
 
-  async changeStart(examination: Examination): Promise<void> {
+  async start(examination: Examination): Promise<void> {
     await this
       .httpClient
-      .put(`${this.url}/${examination.id}/start`, {}, {params: {name}})
+      .put(`${this.url}/${examination.id}/start`, {} )
       .toPromise();
   }
 
-  async changeClose(examination: Examination): Promise<void> {
+  async close(examination: Examination): Promise<void> {
     await this
       .httpClient
-      .put(`${this.url}/${examination.id}/close`, {}, {params: {name}})
+      .put(`${this.url}/${examination.id}/close`, {} )
       .toPromise();
   }
 
-  async changeRelaunch(examination: Examination): Promise<void> {
+  async relaunch(examination: Examination): Promise<void> {
     await this
       .httpClient
-      .put(`${this.url}/${examination.id}/relaunch`, {}, {params: {name}})
+      .put(`${this.url}/${examination.id}/relaunch`, {} )
       .toPromise();
   }
 
