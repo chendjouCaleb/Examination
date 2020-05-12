@@ -1,0 +1,10 @@
+<button (click)="back()" [disabled]="!canBack()" class="breadcrumb-back-button">
+  <i class="ms-Icon ms-Icon--ChevronLeftMed"></i>
+</button>
+
+<div class="breadcrumb-items">
+  <ng-container *ngFor="let item of items; let i=index">
+    <span [class.breadcrumb-link]="item.url" (click)="_itemClick(item)">{{item.name}}</span>
+    <ng-container *ngIf="i < items.length - 1"> / </ng-container>
+  </ng-container>
+</div>

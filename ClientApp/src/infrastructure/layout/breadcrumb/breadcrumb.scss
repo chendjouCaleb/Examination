@@ -1,0 +1,41 @@
+
+:host {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  height: 45px;
+  overflow: hidden;
+
+  .breadcrumb-back-button {
+    position: absolute;
+    left:0;
+    top:0;
+    height: 45px;
+    width: 45px;
+    line-height: 45px;
+    border: none;
+    font-size: 22px;
+    background: transparent;
+    text-align: center;
+    color: var(--primaryColor);
+    &:hover, &:active {
+      backdrop-filter: brightness(150%);
+    }
+  }
+
+  .breadcrumb-items {
+    position: absolute;
+    left:45px;
+    right: 0;
+    top:0;
+    height: 45px;
+    line-height: 45px;
+    color: inherit;
+    font-size: 18px;
+
+    & .breadcrumb-link {
+      color: var(--primaryColor);
+      cursor: pointer;
+    }
+  }
+}

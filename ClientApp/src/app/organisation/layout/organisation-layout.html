@@ -1,4 +1,4 @@
-<app-layout>
+<app-layout [breadcrumbItems]="breadCrumbItems">
   <div class="layout-sidebar" app-sidebar>
     <i MsfIcon appSidebarCollapse iconName="GlobalNavButton"></i>
     <a app-sidebar-item icon="Home" [routerLink]="['/organisations', organisation.id, 'home']" routerLinkActive="active">
@@ -11,7 +11,7 @@
        routerLinkActive="active">Salles</a>
 
     <a app-sidebar-item icon="KnowledgeArticle" routerLinkActive="active" [routerLink]="['/organisations', organisation.id, 'examinations' ]">Examens</a>
-    <a app-sidebar-item icon="Settings"  [routerLink]="['/organisations', organisation.id, 'settings']"
+    <a *ngIf="organisation.userPrincipal?.isPrincipal" app-sidebar-item icon="Settings"  [routerLink]="['/organisations', organisation.id, 'settings']"
        routerLinkActive="active">Paramètres</a>
   </div>
   <ng-content></ng-content>

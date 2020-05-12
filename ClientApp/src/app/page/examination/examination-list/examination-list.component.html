@@ -1,7 +1,23 @@
-<app-organisation-layout [organisation]="organisation">
-  <h4>Examen</h4>
-
+<app-organisation-layout [organisation]="organisation" title="Examens">
   <div class="d-flex">
+    <h4>Examen</h4>
+    <div>
+      <MsfButton [MsfMenuTrigger]="disposition">Disposition</MsfButton>
+      <MsfMenu #disposition>
+        <MsfMenuItem icon="Display">
+          <MsfCheckbox   [MsfMenuItemCheckbox]></MsfCheckbox>
+          Grille
+        </MsfMenuItem>
+        <MsfMenuItem icon="Table">
+          <MsfCheckbox [MsfMenuItemCheckbox]></MsfCheckbox>
+          Table
+        </MsfMenuItem>
+      </MsfMenu>
+    </div>
+  </div>
+
+
+  <div *ngIf="0" class="d-flex">
     <div class="ms-card" *ngFor="let item of examinations">
 
 
@@ -13,7 +29,7 @@
           <div class="ms-fontSize-18">{{item.expectedStartDate | amCalendar}}</div>
         </div>
 
-        <div *ngIf="!item.expectedStartDate &&  item.startDate">
+        <div *ngIf="item.startDate">
           <div>A débuté le</div>
           <div class="ms-fontSize-18">{{item.startDate | amCalendar}}</div>
         </div>
@@ -23,9 +39,9 @@
           <div class="ms-fontSize-18">{{item.expectedEndDate | amCalendar}}</div>
         </div>
 
-        <div *ngIf="!item.expectedEndDate &&  item.endDate">
+        <div *ngIf="item.endDate">
           <div>S'est achevé le</div>
-          <div class="ms-fontSize-18">{{item.endDate | amLocal}}</div>
+          <div class="ms-fontSize-18">{{item.endDate | amCalendar}}</div>
         </div>
 
       </div>
@@ -39,6 +55,38 @@
     </div>
   </div>
 
+  <MsfTable>
+    <MsfTableHead>
+      <MsfTableHeadCell>#</MsfTableHeadCell>
+      <MsfTableHeadCell>Nom</MsfTableHeadCell>
+      <MsfTableHeadCell>Date de début prévué</MsfTableHeadCell>
+      <MsfTableHeadCell>Date de début effective</MsfTableHeadCell>
+      <MsfTableHeadCell>Date de fin prévue</MsfTableHeadCell>
+      <MsfTableHeadCell>Date de fin effective</MsfTableHeadCell>
+      <MsfTableHeadCell></MsfTableHeadCell>
+    </MsfTableHead>
+
+    <MsfTableRow *ngFor="let item of examinations" [value]="item" #line>
+      <MsfTableCell>{{line.index}}</MsfTableCell>
+      <MsfTableCell>{{item.name}}</MsfTableCell>
+      <MsfTableCell>{{item.expectedStartDate | amCalendar}}</MsfTableCell>
+      <MsfTableCell>
+        <ng-container *ngIf="item.startDate">{{item.startDate | amCalendar}}  </ng-container>
+        <span *ngIf="!item.startDate" [appStateBadge]="item.state"> </span>
+      </MsfTableCell>
+      <MsfTableCell>{{item.expectedEndDate | amCalendar}}</MsfTableCell>
+      <MsfTableCell>
+        <ng-container *ngIf="item.endDate">
+          {{item.endDate | amCalendar}}
+        </ng-container>
+        <span *ngIf="!item.endDate" [appStateBadge]="item.state"> </span>
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <MsfButton theme="primary" [routerLink]="item.url"> Voir</MsfButton>
+      </MsfTableCell>
+    </MsfTableRow>
+  </MsfTable>
 
   <float-button mat-ripple (click)="openAddAdminDialog()"></float-button>
 </app-organisation-layout>

@@ -3,6 +3,10 @@
 
 <ng-content select="[app-sidebar], app-sidebar" ></ng-content>
 
+<div #breadcrumb class="layout-breadcrumb" *ngIf="breadcrumb">
+  <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+</div>
+
 <div class="layout-main" #mainContent>
   <ng-content></ng-content>
 </div>

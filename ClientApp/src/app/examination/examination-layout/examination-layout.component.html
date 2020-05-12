@@ -1,4 +1,4 @@
-<app-layout>
+<app-layout [breadcrumbItems]="breadCrumbItems">
   <div class="layout-sidebar" app-sidebar >
     <i MsfIcon appSidebarCollapse iconName="GlobalNavButton" ></i>
     <a app-sidebar-item icon="Home" [routerLink]="[examination.url, 'home']" routerLinkActive="active"> Home </a>

@@ -1,5 +1,5 @@
 ﻿import {NgModule} from "@angular/core";
-import {MsfButtonModule, MsfIconModule} from "fabric-docs";
+import {MsfButtonModule, MsfCheckboxModule, MsfIconModule, MsfMenuModule, MsfTableModule} from "fabric-docs";
 import {ExaminationListComponent} from "./examination-list/examination-list.component";
 import {ExaminationHomeComponent} from './examination-home/examination-home.component';
 import {ExaminationDeleteComponent} from './examination-delete/examination-delete.component';
@@ -32,10 +32,11 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfIconModule, MsfButtonModule, ExaminationModule, TestModule, LayoutModule, OrganisationModule,
-    ControlModule, MatDialogModule, MomentModule,
+    ControlModule, MatDialogModule, MomentModule, MsfTableModule, MsfMenuModule, MsfCheckboxModule,
     RouterModule.forChild(routes), MatRippleModule, MatDatepickerModule],
   declarations: [ExaminationListComponent, ExaminationHomeComponent, ExaminationDeleteComponent,
-    ExaminationCalendarComponent, ExaminationReviewsComponent, ExaminationSettingsComponent, ExaminationStudentComponent]
+    ExaminationCalendarComponent, ExaminationReviewsComponent, ExaminationSettingsComponent,
+    ExaminationStudentComponent]
 })
 export class ExaminationPageModule {
 

@@ -10,6 +10,7 @@ import {Injectable} from "@angular/core";
 export class OrganisationResolver {
 
   constructor(private _loader: OrganisationLoader,
+              private _httpClient: OrganisationHttpClient,
               private items: CurrentItems, private identity: AuthorizationManager ) {
   }
 
@@ -18,6 +19,12 @@ export class OrganisationResolver {
 
     const item = await this._loader.loadById(id);
     this.items.put("organisation", item);
+
+    if(this.identity.user) {
+      const organisationUser = await this._httpClient.organisationUser(id, this.identity.user.id);
+      this.items.put("organisationUser", organisationUser);
+      item.userPrincipal = organisationUser;
+    }
 
     return item;
 

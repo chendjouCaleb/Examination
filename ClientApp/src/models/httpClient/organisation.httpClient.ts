@@ -1,5 +1,5 @@
 import {GenericHttpClient, SERVER_URL} from "./httpClient";
-import {Organisation} from "../entities";
+import {Organisation, OrganisationUser} from "../entities";
 import {Injectable} from "@angular/core";
 
 
@@ -29,5 +29,11 @@ export class OrganisationHttpClient extends GenericHttpClient<Organisation, numb
 
   async identifier(id: number, identifier: string) {
     return this.httpClient.put(`${this.url}/${id}/identifier?identifier=${identifier}`, {}).toPromise();
+  }
+
+  async organisationUser(organisationId: number, userId: string) {
+    return this.httpClient
+      .get<OrganisationUser>(`${this.url}/users?organisationId=${organisationId}&userId=${userId}`)
+      .toPromise();
   }
 }

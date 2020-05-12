@@ -3,7 +3,10 @@ import {
   Component,
   ContentChild,
   ElementRef,
-  forwardRef, HostBinding, Optional,
+  forwardRef,
+  HostBinding,
+  Input,
+  Optional,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -12,6 +15,7 @@ import {
 import {PanelComponent} from './panel/panel.component';
 import {SidebarComponent} from './sidebar/sidebar.component';
 import {Preference} from '../preference/preference';
+import {BreadcrumbItem} from './breadcrumb/breadcrumb';
 
 @Component({
   templateUrl: 'layout.component.html',
@@ -20,10 +24,17 @@ import {Preference} from '../preference/preference';
   encapsulation: ViewEncapsulation.None
 })
 export class LayoutComponent implements AfterContentInit {
-  darkMode = false;
 
   @HostBinding('class')
   className = 'app-layout';
+
+  @Input()
+  breadcrumbItems: BreadcrumbItem[];
+
+  @HostBinding('class.app-layout-withBreadCrumb')
+  get breadcrumb(): boolean {
+    return !!this.breadcrumbItems;
+  }
 
   @HostBinding('class.app-layout-withSidebar')
   get hasSidebar(): boolean {

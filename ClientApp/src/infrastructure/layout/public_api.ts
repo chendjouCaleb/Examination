@@ -6,3 +6,4 @@ export * from './sidebar/sidebar.component';
 export * from './sidebar/sidebar-collapse';
 export * from './sidebar/sidebar-item';
 export * from './layout.component';
+export * from './breadcrumb/breadcrumb';

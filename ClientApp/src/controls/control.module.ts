@@ -1,19 +1,20 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {MsfButtonModule} from "fabric-docs";
-import {LabelledIcon} from "./labelled/labelled-icon";
-import {Labelled} from "./labelled/labelled";
-import {FloatButton} from "./float-button/float-button";
-import {AlertEmitter} from "./alert-emitter";
-import {ConfirmationComponent} from "./confirmation/confirmation.component";
-import {MatDialogModule} from "@angular/material/dialog";
-import {Confirmation} from "./confirmation/confirmation";
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MsfButtonModule} from 'fabric-docs';
+import {LabelledIcon} from './labelled/labelled-icon';
+import {Labelled} from './labelled/labelled';
+import {FloatButton} from './float-button/float-button';
+import {AlertEmitter} from './alert-emitter';
+import {ConfirmationComponent} from './confirmation/confirmation.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {Confirmation} from './confirmation/confirmation';
+import {StateBadgeDirective} from './state-badge.directive';
 
 @NgModule({
   imports: [CommonModule, MatDialogModule, MsfButtonModule],
   providers: [AlertEmitter, Confirmation],
-  declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent],
-  exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent],
+  declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective],
+  exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective],
 })
 export class ControlModule {
 

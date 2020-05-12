@@ -12,13 +12,14 @@ import {LayoutSettingsComponent} from './settings/settings.component';
 import {Theme} from '../preference/theme';
 import {Labelled} from './labelled';
 import {AuthPanelComponent} from './panel/auth-panel/auth-panel.component';
+import {Breadcrumb} from './breadcrumb/breadcrumb';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MsfIconModule, MsfButtonModule, MsfRadioModule, MsfCheckboxModule, MsfPersonaModule],
   declarations: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent, AuthPanelComponent,
-    SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent, Labelled],
+    SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent, Labelled, Breadcrumb],
   exports: [NavbarComponent,  PanelComponent, LayoutComponent, SidebarComponent, SidebarItemComponent,
-    SidebarCollapseDirective, Labelled],
+    SidebarCollapseDirective, Labelled, Breadcrumb],
   providers: [ Theme ]
 })
 export class LayoutModule {

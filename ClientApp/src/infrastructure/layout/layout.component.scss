@@ -6,6 +6,30 @@
   right: 0;
 }
 
+
+.layout-breadcrumb {
+  position: fixed;
+  left: 0;
+  top: 55px;
+  right: 0;
+  height: 45px;
+  border-bottom: 1px solid $ms-color-gray100;
+
+
+  //backdrop-filter: blur(var(--blurSize));
+  background-color: var(--bodyBackgroundColor);
+
+  .app-layout-withSidebar & {
+    left: 250px;
+  }
+
+  .app-layout-withCollapsedSidebar &{
+    left: 45px;
+  }
+
+  transition: left .2s;
+}
+
 .layout-sidebar {
   position: fixed;
   left:0;
@@ -32,6 +56,10 @@
 
   .app-layout-withCollapsedSidebar &{
     left: 45px;
+  }
+
+  .app-layout-withBreadCrumb &{
+    top: 100px;
   }
 
   transition: left .2s;

@@ -1,5 +1,5 @@
-﻿import {Entity} from "./entity";
-import {User} from "./user.entity";
+﻿import {Entity} from './entity';
+import {User} from './user.entity';
 
 export class Organisation extends Entity<number> {
 
@@ -30,5 +30,16 @@ export class Organisation extends Entity<number> {
 
   address: string;
 
+  userPrincipal: OrganisationUser = {};
 
+  get url(): string {
+    return `/organisations/${this.id}`;
+  }
+
+}
+
+export interface OrganisationUser {
+  isAdmin?: boolean;
+  isPrincipal?: boolean;
+  userId?: string;
 }
