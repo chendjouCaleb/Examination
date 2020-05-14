@@ -127,7 +127,7 @@ namespace Exam.Controllers
             _examinationRepository.Update(examination);
 
             return StatusCode(StatusCodes.Status202Accepted);
-            return null;
+            
         }
 
 

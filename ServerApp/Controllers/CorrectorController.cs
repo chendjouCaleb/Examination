@@ -57,7 +57,30 @@ namespace Exam.Controllers
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]
-        public CreatedAtActionResult Add(Examination examination, [FromQuery] string userId)
+        public ObjectResult Add(Examination examination, [FromQuery] string[] userId)
+        {
+            List<string> ids = new List<string>();
+
+            foreach (var id in userId)
+            {
+                if(!_correctorRepository.Exists(s => examination.Equals(s.Examination) && s.UserId == id))
+                {
+                    ids.Add(id);
+                }
+            }
+            
+            List<Corrector> correctors = new List<Corrector>();
+
+            foreach (var id in ids)
+            {
+                correctors.Add(_Add(examination, id));
+            }
+
+            return StatusCode(StatusCodes.Status201Created, correctors);
+        }
+
+
+        public Corrector _Add(Examination examination, [FromQuery] string userId)
         {
             if(_correctorRepository.Exists(s => examination.Equals(s.Examination) && s.UserId == userId))
             {
@@ -72,9 +95,7 @@ namespace Exam.Controllers
             corrector = _correctorRepository.Save(corrector);
 
             _logger.LogInformation($"New corrector: {corrector}");
-            examination.CorrectorCount += 1;
-            _examinationRepository.Update(examination);
-            return CreatedAtAction("Find", new { corrector.Id}, corrector);
+            return corrector;
         }
         
         

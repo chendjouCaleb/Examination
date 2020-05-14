@@ -34,6 +34,12 @@ const routes: Routes = [
     loadChildren: () => import('./page/principal/principal-page.module').then(m => m.PrincipalPageModule),
   },
 
+  {
+    path: 'organisations/:organisationId/examinations/:examinationId/correctors',
+    resolve: [OrganisationResolver, ExaminationResolver],
+    loadChildren: () => import('./page/corrector/corrector-page.module').then(m => m.CorrectorPageModule),
+  },
+
   {path: '', redirectTo: 'organisations', pathMatch: 'full'}
 ];
 

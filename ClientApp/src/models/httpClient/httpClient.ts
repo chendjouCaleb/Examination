@@ -95,6 +95,16 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
       .toPromise();
   }
 
+  async addRange(model: any, queryParams?: any): Promise<List<T>> {
+    const result = await this.httpClient.post<T[]>(this.url, model, {params: queryParams})
+      .toPromise();
+
+    const list = new List<T>();
+
+    result.forEach(value => list.add(this.createFromAny(value)));
+    return list;
+  }
+
   update(id: TID, model: any, queryParams?: any): Promise<T> {
     return this.httpClient.put<T>(this.url + "/" + id, model, {params: queryParams})
       .pipe(map(value => this.createFromAny(value)))
