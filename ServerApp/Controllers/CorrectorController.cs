@@ -52,6 +52,7 @@ namespace Exam.Controllers
 
 
         [HttpPost]
+        [RequireQueryParameter("examinationId")]
         [LoadExamination(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",

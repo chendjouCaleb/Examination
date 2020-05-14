@@ -7,3 +7,5 @@ export * from './organisation';
 export * from './admin.entity';
 export * from './room.entity';
 export * from './test.entity';
+export * from './principal.entity';
+export * from './corrector.entity';

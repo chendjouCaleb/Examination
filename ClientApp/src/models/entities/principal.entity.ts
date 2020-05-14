@@ -2,13 +2,13 @@
 import {User} from './user.entity';
 import {Examination} from './examination.entity';
 
-export class Corrector extends Entity<number> {
-
+export class Principal extends Entity<number> {
   constructor(value?: any) {
     super();
     if (value) {
       this.id = value.id;
       this.registrationDate = value.registrationDate;
+      this.role = value.role;
 
       this.paperCount = value.paperCount;
 
@@ -31,6 +31,8 @@ export class Corrector extends Entity<number> {
 
   examination: Examination;
   examinationId: number;
+
+  role: string;
 
   paperCount: number;
 }

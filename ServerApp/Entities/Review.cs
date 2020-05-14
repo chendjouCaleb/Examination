@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.Entities
 {
+    
     public class Review:Entity<long>
     {
         public string UserId { get; set; }

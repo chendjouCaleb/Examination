@@ -6,3 +6,5 @@ export * from './client.http.client';
 export * from './organisation.httpClient';
 export * from './room.httpClient';
 export * from './examination.httpClient';
+export * from './corrector.httpClient';
+export * from './principal.httpClient';

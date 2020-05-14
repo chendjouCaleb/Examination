@@ -1,0 +1,23 @@
+﻿<form [formGroup]="form" class="ms-form">
+  <div class="ms-form-header">Ajouter un délégué</div>
+
+  <div class="ms-textField">
+    <label class="msf-label" for="role">Role du délégué</label>
+    <input class="ms-textField-input" formControlName="role" id="role">
+    <app-control-error [control]="form.controls['role']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label class="msf-label" for="role">Choisir l'utilisateur</label>
+    <user-picker [maxSize]="1"></user-picker>
+  </div>
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton (click)="add()" Icon="Add" [class.msf-disabled]="form.invalid && !userId" theme="primary">Ajouter
+    </MsfButton>
+  </div>
+</form>
+
+

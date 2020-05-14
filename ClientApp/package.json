@@ -26,7 +26,7 @@
     "animejs": "^3.1.0",
     "class-validator": "^0.11.0",
     "core-js": "^3.6.5",
-    "fabric-docs": "0.0.5",
+    "fabric-docs": "^0.0.8",
     "ngx-moment": "^3.5.0",
     "office-ui-fabric-core": "^11.0.0",
     "rxjs": "~6.5.4",

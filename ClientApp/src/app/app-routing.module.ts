@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {OrganisationResolver} from 'examination/app/organisation';
+import {ExaminationResolver} from 'examination/app/examination';
 
 
 const routes: Routes = [
@@ -25,6 +26,12 @@ const routes: Routes = [
   {
     path: 'organisations/:organisationId/examinations', resolve: [OrganisationResolver],
     loadChildren: () => import('./page/examination/examination-page.module').then(m => m.ExaminationPageModule),
+  },
+
+  {
+    path: 'organisations/:organisationId/examinations/:examinationId/principals',
+    resolve: [OrganisationResolver, ExaminationResolver],
+    loadChildren: () => import('./page/principal/principal-page.module').then(m => m.PrincipalPageModule),
   },
 
   {path: '', redirectTo: 'organisations', pathMatch: 'full'}

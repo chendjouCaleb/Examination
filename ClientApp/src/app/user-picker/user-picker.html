@@ -1,0 +1,45 @@
+<div class="user-picker-layout" [class.user-picker-focus]="openPanel">
+  <span class="user-picker-value" *ngFor="let value of values" (click)="removeValue(value)">
+    <MsfPersona size="size24" >
+      <MsfPersonaFigure size="size24" [text]="value.fullName"></MsfPersonaFigure>
+      <span style="margin-left: 2px">{{value.fullName}}</span>
+
+      <button class="user-picker-value-button"><i class="ms-Icon ms-Icon--Cancel"></i></button>
+    </MsfPersona>
+
+  </span>
+<input type="text" class="user-picker-input" (focus)="_inputFocus()"
+       (keyup)="_keypress($event.target.value)"
+         #origin="cdkOverlayOrigin" cdk-overlay-origin>
+</div>
+
+<ng-template  cdk-connected-overlay
+              cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+              cdkConnectedOverlayHasBackdrop
+              cdkConnectedOverlayLockPosition
+              cdkConnectedOverlayPanelClass="picker-panel-overlay"
+              (backdropClick)="close()"
+              [cdkConnectedOverlayOpen]="openPanel"
+              [cdkConnectedOverlayOffsetX]="-10"
+              [cdkConnectedOverlayOffsetY]="-10"
+              [cdkConnectedOverlayOrigin]="origin">
+
+  <div class="user-picker-panel ms-depth-8" [@transformPanel] #panel>
+    <div class="user-picker-title">Suggested People</div>
+    <div class="user-picker-items">
+      <span *ngIf="!_items || _items.length === 0" style="padding: 10px">No results found</span>
+      <ng-container *ngIf="_items.length > 0">
+        <div *ngFor="let item of _items" class="user-picker-panel-item" (click)="select(item)">
+          <MsfPersona [size]="personaSize">
+            <MsfPersonaFigure [text]="item.fullName" ></MsfPersonaFigure>
+          </MsfPersona>
+          <div style="margin-left: 10px">
+            <div class="ms-fontWeight-semibold">{{item.fullName}}</div>
+            <div *ngIf="item.username" class="ms-fontSize-12">@{{item.username}}</div>
+          </div>
+
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

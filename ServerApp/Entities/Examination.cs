@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Exam.Entities
 {
@@ -21,6 +21,7 @@ namespace Exam.Entities
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
+        [JsonIgnore]
         public virtual Organisation Organisation { get; set; }
         public long OrganisationId { get; set; }
         

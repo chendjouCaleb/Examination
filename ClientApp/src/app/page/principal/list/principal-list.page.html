@@ -1,0 +1,34 @@
+﻿<app-examination-layout [examination]="examination" title="Délégués">
+
+  <div class="ms-fontSize-24 ms-fontWeight-light py-2">Délégués</div>
+
+  <div *ngIf="principals" style="display: flex; flex-wrap: wrap">
+
+    <div *ngFor="let item of principals"
+         class="d-flex p-2 mr-2 mt-2" style="background-color: var(--cardBackgroundColor); width: 300px; max-width: 98%">
+      <MsfPersona size="size100">
+        <MsfPersonaFigure></MsfPersonaFigure>
+      </MsfPersona>
+
+      <div class="ml-2">
+        <div *ngIf="item.user" class="ms-fontSize-20">{{item.user.fullName}}</div>
+        <div class="ms-fontSize-12">{{item.user.email}}</div>
+        <div class="ms-fontSize-14 mt-2">{{item.role}}</div>
+        <div class="ms-fontSize-10 text-right mt-3">
+          <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+          <MsfMenu #more>
+            <MsfMenuItem icon="Edit" (click)="openEditModal(item)">Modifier</MsfMenuItem>
+            <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
+          </MsfMenu>
+        </div>
+      </div>
+    </div>
+
+
+    <user-picker [searchFn]="userSearchFn" [(ngModel)]="selectedUser" [maxSize]="2" ></user-picker>
+
+    <span *ngFor="let item of selectedUser">{{item.fullName}}, </span>
+
+  </div>
+  <float-button (click)="openAddPrincipalModal()"></float-button>
+</app-examination-layout>

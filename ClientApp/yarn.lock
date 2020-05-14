@@ -4258,10 +4258,10 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-fabric-docs@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/fabric-docs/-/fabric-docs-0.0.5.tgz#495790cf2b7d9fc3b3e6feb42a6bf4b5174d75fb"
-  integrity sha512-VxGK8eU7pK69wfDnzkkbhugXxYCJ4Sa3NZWpUNoJwKAkGxItoENkFLOUg9iVSVsqFXAks9O9hXi+8SJsbKxAWw==
+fabric-docs@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/fabric-docs/-/fabric-docs-0.0.8.tgz#c7e21134703b232a25ce81f577982d7cd6832b03"
+  integrity sha512-3ZKNE5ARf/V5RHvna/Dtiy3bv8ea4KGcX4fj1zEGvEafPbPXtAGDuJRW2ZLtpIaolAuljvGE9ahBJIa69mtJag==
   dependencies:
     "@angular/animations" "~9.0.1"
     "@angular/cdk" "~8.0.1"

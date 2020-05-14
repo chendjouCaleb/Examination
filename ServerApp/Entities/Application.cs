@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Exam.Entities
 {
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Application:Entity<long>
     {
         public string RegistrationId { get; set; }

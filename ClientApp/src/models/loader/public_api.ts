@@ -5,3 +5,5 @@ export * from './organisation.loader';
 export * from './admin.loader';
 export * from './room.loader';
 export * from './examination.loader';
+export * from './principal.loader';
+export * from './corrector.loader';

@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.Entities
 {
+    
+    /// <summary>
+    /// Personne chargée d'effectuer les corrections des copies des étudiants.
+    /// /// Une copie pourra être corrigée par plusieurs correcteurs.
+    /// </summary>
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Corrector:Entity<long>
     {

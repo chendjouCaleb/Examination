@@ -1,6 +1,6 @@
-﻿import {Entity} from "./entity";
-import {Organisation} from "./organisation";
-import {User} from "./user.entity";
+﻿import {Entity} from './entity';
+import {Organisation} from './organisation';
+import {User} from './user.entity';
 
 export class Room extends Entity<number> {
 
@@ -32,7 +32,7 @@ export class Room extends Entity<number> {
   registerUserId: string;
   registerUser: User;
 
-  get url( ): string {
+  get url(): string {
     return `/organisations/${this.organisationId}/rooms/${this.id}`;
   }
 }

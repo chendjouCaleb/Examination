@@ -21,6 +21,8 @@ html {
   --sidenavBorderColor: #{$ms-color-sharedRed10};
 
   --bodyBackgroundColor: #{$ms-color-gray10};
+
+
   --navbarBackgroundColorSecondary: #{$ms-color-gray50};
   --navbarColor: #{$ms-color-gray190};
   --badgeBackgroundColor: #{$ms-color-sharedRed10};
@@ -37,7 +39,9 @@ html[data-theme="light"] {
   --textColor: #{$ms-color-gray190};
 
 
-  --bodyBackgroundColor:  rgba(227, 225, 223, calc(var(--opacity) - 0.6));
+  --bodyBackgroundColor:  #{$ms-color-gray10};
+  --secondaryBackgroundColor:  #{$ms-color-gray30};
+  --hoverBackgroundColor: #{$ms-color-gray40};
 
   --cardBackgroundColor:  #{$ms-color-gray10};
 
@@ -54,6 +58,8 @@ html[data-theme="light"] {
 html[data-theme="dark"] {
   --textColor: #{$ms-color-gray10};
   --bodyBackgroundColor:  rgba(11, 11, 10, calc(var(--opacity) - 0.15));
+  --secondaryBackgroundColor:  rgba(11, 11, 10, calc(var(--opacity) - 0.1));
+  --hoverBackgroundColor:  rgba(11, 11, 10, calc(var(--opacity) - 0.05));
 
   --cardBackgroundColor:  #{$ms-color-gray200};
 

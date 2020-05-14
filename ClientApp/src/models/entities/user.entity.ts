@@ -8,6 +8,7 @@ export class User extends Entity<string> {
   nationalId: string;
 
   username: string;
+  userName: string;
   email: string;
   phoneNumber: string;
 
@@ -46,7 +47,8 @@ export class User extends Entity<string> {
     account.gender = value.gender;
     account.nationalId = value.nationalId;
 
-    account.username = value.username;
+    account.username = value.userName;
+    account.userName = value.userName;
     account.email = value.email;
     account.phoneNumber = value.phoneNumber;
 

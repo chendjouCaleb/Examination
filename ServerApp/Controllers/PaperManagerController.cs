@@ -71,7 +71,8 @@ namespace Exam.Controllers
             PaperManager paperManager = new PaperManager
             {
                 UserId = userId,
-                TestGroup = testGroup
+                TestGroup = testGroup,
+                RegisterUserId = user.Id
             };
 
             paperManager = _paperManagerRepository.Save(paperManager);
