@@ -20,10 +20,9 @@ export class PrincipalLoader implements EntityLoader<Principal, number> {
     }
 
     if (item.registerUserId) {
-      item.registerUser = await this._userHttClient.findAsync(item.userId);
+      item.registerUser = await this._userHttClient.findAsync(item.registerUserId);
     }
 
-    item.registerUser = await this._userHttClient.findAsync(item.registerUserId);
     item.examination = await this._examinationLoader.loadById(item.examinationId);
     return item;
   }

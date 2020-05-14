@@ -121,7 +121,7 @@ export class UserPicker implements OnInit, ControlValueAccessor {
 
     this.values.push(item);
     this.change.emit(this.values);
-    this._controlValueAccessorChangeFn(this.values);
+    this._controlValueAccessorChangeFn(this.getValue());
     this._changeDetectorRef.markForCheck();
     this.close();
   }
@@ -129,7 +129,7 @@ export class UserPicker implements OnInit, ControlValueAccessor {
   removeValue(value: UserPickerItem) {
     this.values = this.values.filter(item => item !== value);
     this.change.emit(this.values);
-    this._controlValueAccessorChangeFn(this.values);
+    this._controlValueAccessorChangeFn(this.getValue());
     this._changeDetectorRef.markForCheck();
   }
 
@@ -165,5 +165,12 @@ export class UserPicker implements OnInit, ControlValueAccessor {
       return this.values[0];
     }
     return null;
+  }
+
+  getValue(): UserPickerItem | UserPickerItem[] | null {
+    if (this.maxSize === 1) {
+      return this.value;
+    }
+    return this.values;
   }
 }

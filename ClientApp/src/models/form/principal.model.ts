@@ -1,9 +1,12 @@
-﻿import { IsNotEmpty, MinLength } from 'class-validator';
+﻿import {IsNotEmpty, MinLength} from 'class-validator';
 
 export class PrincipalAddModel {
   @IsNotEmpty()
   @MinLength(3)
   role: string;
+
+  @IsNotEmpty()
+  user: any;
 }
 
 

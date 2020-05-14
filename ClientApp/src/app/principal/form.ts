@@ -4,13 +4,15 @@ import {PrincipalAddModel, PrincipalEditModel} from 'examination/models';
 export class PrincipalAddForm extends EvFormGroup<PrincipalAddModel> {
   constructor() {
     super({
-      role: new EvFormControl('role', '')
+      role: new EvFormControl('role', ''),
+      user: new EvFormControl('user', '')
     });
   }
 
   getModel(): PrincipalAddModel {
     const model = new PrincipalAddModel();
     model.role = this.controls.role.value;
+    model.user = this.controls.user.value;
     return model;
   }
 }

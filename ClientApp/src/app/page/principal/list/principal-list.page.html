@@ -2,33 +2,46 @@
 
   <div class="ms-fontSize-24 ms-fontWeight-light py-2">Délégués</div>
 
-  <div *ngIf="principals" style="display: flex; flex-wrap: wrap">
+  <MsfTable *ngIf="principals">
+    <MsfTableHead>
+      <MsfTableHeadCell>#</MsfTableHeadCell>
+      <MsfTableHeadCell>Utilisateur</MsfTableHeadCell>
+      <MsfTableHeadCell>Date d'ajout</MsfTableHeadCell>
+      <MsfTableHeadCell>Ajouté par</MsfTableHeadCell>
+      <MsfTableHeadCell>Role</MsfTableHeadCell>
+      <MsfTableHeadCell></MsfTableHeadCell>
+    </MsfTableHead>
+    <MsfTableRow #row *ngFor="let item of principals">
+      <MsfTableCell>{{row.index}}</MsfTableCell>
+      <MsfTableCell>
+        <MsfPersona size="size32">
+          <MsfPersonaFigure [text]="item.user?.fullName" size="size32"></MsfPersonaFigure>
+          <div class="ml-2">
+            <div class="ms-fontWeight-semibold">{{item.user?.fullName}}</div>
+            <div class="ms-fontSize-12" *ngIf="item.user?.username">@{{item.user?.username}}</div>
+          </div>
+        </MsfPersona>
+      </MsfTableCell>
+      <MsfTableCell class="ms-fontSize-12">{{item.registrationDate | amCalendar}}</MsfTableCell>
+      <MsfTableCell>
+        <MsfPersona size="size32">
+          <MsfPersonaFigure [text]="item.registerUser?.fullName" size="size32"></MsfPersonaFigure>
+          <div class="ml-2">
+            <div class="ms-fontWeight-semibold">{{item.registerUser?.fullName}}</div>
+            <div class="ms-fontSize-12" *ngIf="item.registerUser?.username">@{{item.registerUser?.username}}</div>
+          </div>
+        </MsfPersona>
+      </MsfTableCell>
+      <MsfTableCell>{{item.role}}</MsfTableCell>
+      <MsfTableCell>
+        <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+        <MsfMenu #more>
+          <MsfMenuItem (click)="openEditModal(item)" icon="Edit">Modifier</MsfMenuItem>
+          <MsfMenuItem (click)="delete(item)" icon="Delete" theme="error">Supprimer</MsfMenuItem>
+        </MsfMenu>
+      </MsfTableCell>
+    </MsfTableRow>
+  </MsfTable>
 
-    <div *ngFor="let item of principals"
-         class="d-flex p-2 mr-2 mt-2" style="background-color: var(--cardBackgroundColor); width: 300px; max-width: 98%">
-      <MsfPersona size="size100">
-        <MsfPersonaFigure></MsfPersonaFigure>
-      </MsfPersona>
-
-      <div class="ml-2">
-        <div *ngIf="item.user" class="ms-fontSize-20">{{item.user.fullName}}</div>
-        <div class="ms-fontSize-12">{{item.user.email}}</div>
-        <div class="ms-fontSize-14 mt-2">{{item.role}}</div>
-        <div class="ms-fontSize-10 text-right mt-3">
-          <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
-          <MsfMenu #more>
-            <MsfMenuItem icon="Edit" (click)="openEditModal(item)">Modifier</MsfMenuItem>
-            <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
-          </MsfMenu>
-        </div>
-      </div>
-    </div>
-
-
-    <user-picker [searchFn]="userSearchFn" [(ngModel)]="selectedUser" [maxSize]="2" ></user-picker>
-
-    <span *ngFor="let item of selectedUser">{{item.fullName}}, </span>
-
-  </div>
   <float-button (click)="openAddPrincipalModal()"></float-button>
 </app-examination-layout>
