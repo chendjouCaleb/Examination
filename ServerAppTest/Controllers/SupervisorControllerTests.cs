@@ -41,7 +41,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            Supervisor supervisor = _controller.Add(_examination, _userId).Value as Supervisor;
+            Supervisor supervisor = _controller._Add(_examination, _userId);
 
             _supervisorRepository.Refresh(supervisor);
             _examinationRepository.Refresh(_examination);
@@ -55,8 +55,8 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryAdd_WithUsedUser_ShouldThrow()
         {
-            _controller.Add(_examination, _userId);
-            Exception ex = Assert.Throws<InvalidValueException>(() => _controller.Add(_examination, _userId));
+            _controller._Add(_examination, _userId);
+            Exception ex = Assert.Throws<InvalidValueException>(() => _controller._Add(_examination, _userId));
 
             Assert.AreEqual("{supervisor.constraints.uniqueUserByExamination}", ex.Message);
         }
@@ -65,7 +65,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            Supervisor supervisor = _controller.Add(_examination, _userId).Value as Supervisor;
+            Supervisor supervisor = _controller._Add(_examination, _userId);
             _controller.Delete(supervisor);
             
             _examinationRepository.Refresh(_examination);

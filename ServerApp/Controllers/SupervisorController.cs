@@ -56,7 +56,30 @@ namespace Exam.Controllers
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]
-        public CreatedAtActionResult Add(Examination examination, [FromQuery] string userId)
+        public ObjectResult Add(Examination examination, [FromQuery] string[] userId)
+        {
+            List<string> ids = new List<string>();
+
+            foreach (var id in userId)
+            {
+                if(!_supervisorRepository.Exists(s => examination.Equals(s.Examination) && s.UserId == id))
+                {
+                    ids.Add(id);
+                }
+            }
+            
+            List<Supervisor> supervisors = new List<Supervisor>();
+
+            foreach (var id in ids)
+            {
+                supervisors.Add(_Add(examination, id));
+            }
+
+            return StatusCode(StatusCodes.Status201Created, supervisors);
+        }
+        
+        
+        public Supervisor _Add(Examination examination, string userId)
         {
             if(_supervisorRepository.Exists(s => examination.Equals(s.Examination) && s.UserId == userId))
             {
@@ -71,11 +94,8 @@ namespace Exam.Controllers
             supervisor = _supervisorRepository.Save(supervisor);
 
             _logger.LogInformation($"New supervisor: {supervisor}");
-            examination.SupervisorCount += 1;
-            _examinationRepository.Update(examination);
-            return CreatedAtAction("Find", new { supervisor.Id}, supervisor);
+            return supervisor;
         }
-        
         
 
         [HttpDelete("{supervisorId}")]

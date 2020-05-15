@@ -1,16 +1,15 @@
-﻿import {Entity} from "./entity";
-import {User} from "./user.entity";
-import {Examination} from "./examination.entity";
-import {Test} from "./test.entity";
-import {Group} from "./group.entity";
+﻿import {Entity} from './entity';
+import {User} from './user.entity';
+import {Examination} from './examination.entity';
 
-export class Supervisor extends Entity<number> {
+export class Principal extends Entity<number> {
   constructor(value?: any) {
     super();
     if (value) {
       this.id = value.id;
       this.registrationDate = value.registrationDate;
 
+      this.paperCount = value.paperCount;
 
       this.examination = value.examination;
       this.examinationId = value.examinationId;
@@ -23,25 +22,16 @@ export class Supervisor extends Entity<number> {
     }
   }
 
-  user: User;
   userId: string;
+  user: User;
 
   registerUserId: string;
   registerUser: User;
 
   examination: Examination;
   examinationId: number;
-}
 
+  role: string;
 
-export class TestSupervisor extends Entity<number> {
-  isPrincipal: boolean;
-  supervisor: Supervisor;
-  supervisorId: number;
-
-  test: Test;
-  testId: number;
-
-  group: Group;
-  groupId: number;
+  paperCount: number;
 }

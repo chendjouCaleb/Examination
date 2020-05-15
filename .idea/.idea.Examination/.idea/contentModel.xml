@@ -454,6 +454,13 @@
                 </e>
                 <e p="room-page.module.ts" t="Include" />
               </e>
+              <e p="supervisor" t="Include">
+                <e p="list" t="Include">
+                  <e p="supervisor-list.page.html" t="Include" />
+                  <e p="supervisor-list.page.ts" t="Include" />
+                </e>
+                <e p="supervisor-page.module.ts" t="Include" />
+              </e>
             </e>
             <e p="principal" t="Include">
               <e p="add" t="Include">
@@ -481,6 +488,14 @@
               </e>
               <e p="room.module.ts" t="Include" />
               <e p="room.resolver.ts" t="Include" />
+            </e>
+            <e p="supervisor" t="Include">
+              <e p="add" t="Include">
+                <e p="supervisor-add.component.html" t="Include" />
+                <e p="supervisor-add.component.ts" t="Include" />
+              </e>
+              <e p="index.ts" t="Include" />
+              <e p="supervisor.module.ts" t="Include" />
             </e>
             <e p="test" t="Include">
               <e p="index.ts" t="Include" />
@@ -625,6 +640,7 @@
               <e p="group.entity.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="organisation.ts" t="Include" />
+              <e p="paper-manager.entity.ts" t="Include" />
               <e p="paper.entity.ts" t="Include" />
               <e p="period.entity.ts" t="Include" />
               <e p="principal.entity.ts" t="Include" />
@@ -658,6 +674,7 @@
               <e p="principal.httpClient.ts" t="Include" />
               <e p="public_api.ts" t="Include" />
               <e p="room.httpClient.ts" t="Include" />
+              <e p="supervisor.httpClient.ts" t="Include" />
               <e p="user.httpClient.ts" t="Include" />
             </e>
             <e p="index.ts" t="Include" />
@@ -671,8 +688,8 @@
               <e p="loader.module.ts" t="Include" />
               <e p="organisation.loader.ts" t="Include" />
               <e p="principal.loader.ts" t="Include" />
-              <e p="public_api.ts" t="Include" />
               <e p="room.loader.ts" t="Include" />
+              <e p="supervisor.loader.ts" t="Include" />
             </e>
             <e p="paging.ts" t="Include" />
           </e>

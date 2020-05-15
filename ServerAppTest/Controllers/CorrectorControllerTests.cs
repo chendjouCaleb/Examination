@@ -41,7 +41,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            Corrector corrector = _controller.Add(_examination, _userId).Value as Corrector;
+            Corrector corrector = _controller._Add(_examination, _userId);
 
             _correctorRepository.Refresh(corrector);
             _examinationRepository.Refresh(_examination);
@@ -55,8 +55,8 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryAdd_WithUsedUser_ShouldThrow()
         {
-            _controller.Add(_examination, _userId);
-            Exception ex = Assert.Throws<InvalidValueException>(() => _controller.Add(_examination, _userId));
+            _controller._Add(_examination, _userId);
+            Exception ex = Assert.Throws<InvalidValueException>(() => _controller._Add(_examination, _userId));
 
             Assert.AreEqual("{corrector.constraints.uniqueUserByExamination}", ex.Message);
         }
@@ -67,7 +67,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            Corrector corrector = _controller.Add(_examination, _userId).Value as Corrector;
+            Corrector corrector = _controller._Add(_examination, _userId);
             _controller.Delete(corrector);
             
             _examinationRepository.Refresh(_examination);

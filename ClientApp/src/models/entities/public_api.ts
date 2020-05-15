@@ -9,3 +9,4 @@ export * from './room.entity';
 export * from './test.entity';
 export * from './principal.entity';
 export * from './corrector.entity';
+export * from './supervisor.entity';
