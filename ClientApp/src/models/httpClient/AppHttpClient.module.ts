@@ -9,12 +9,15 @@ import {ExaminationHttpClient} from './examination.httpClient';
 import {CorrectorHttpClient} from './corrector.httpClient';
 import {PrincipalHttpClient} from './principal.httpClient';
 import {SupervisorHttpClient} from "./supervisor.httpClient";
+import {SecretaryHttpClient} from "./secretary.httpClient";
+import {SpecialityHttpClient} from "./speciality.httpClient";
 
 @NgModule({
   imports: [HttpClientModule],
   providers: [
     ClientHttpClient, OrganisationHttpClient, AdminHttpClient, UserHttpClient, RoomHttpClient,
-    ExaminationHttpClient, CorrectorHttpClient, PrincipalHttpClient, SupervisorHttpClient
+    ExaminationHttpClient, CorrectorHttpClient, PrincipalHttpClient, SupervisorHttpClient, SecretaryHttpClient,
+    SpecialityHttpClient
   ]
 })
 export class AppHttpClientModule { }

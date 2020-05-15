@@ -6,14 +6,14 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MomentModule} from 'ngx-moment';
 import {AppFormModule, ControlModule} from 'examination/controls';
 import {UserPickerModule} from 'examination/app/user-picker';
-import {CorrectorAddComponent} from './add/corrector-add.component';
+import {SecretaryAddComponent} from './add/secretary-add.component';
 
 
 @NgModule({
   imports: [CommonModule, MomentModule, AppFormModule, MsfModalModule, UserPickerModule,
     FormsModule, ReactiveFormsModule, ControlModule, MatDialogModule, MsfMenuModule, MsfPersonaModule, MsfButtonModule],
-  declarations: [CorrectorAddComponent],
-  exports: [CorrectorAddComponent],
+  declarations: [SecretaryAddComponent],
+  exports: [SecretaryAddComponent],
 })
-export class CorrectorModule {
+export class SecretaryModule {
 }

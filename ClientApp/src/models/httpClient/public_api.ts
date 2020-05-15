@@ -9,3 +9,5 @@ export * from './examination.httpClient';
 export * from './corrector.httpClient';
 export * from './principal.httpClient';
 export * from './supervisor.httpClient';
+export * from './secretary.httpClient';
+export * from './speciality.httpClient';

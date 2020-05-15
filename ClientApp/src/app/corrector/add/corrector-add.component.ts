@@ -1,6 +1,6 @@
 ﻿import {Component, Input} from '@angular/core';
 import {AlertEmitter} from 'src/controls/alert-emitter';
-import {Corrector, CorrectorHttpClient, CorrectorLoader, Examination, User, UserHttpClient} from 'examination/models';
+import {CorrectorHttpClient, CorrectorLoader, Examination, User, UserHttpClient} from 'examination/models';
 import {MsfModalRef} from 'fabric-docs';
 
 
@@ -18,6 +18,7 @@ export class CorrectorAddComponent {
               private _dialogRef: MsfModalRef<CorrectorAddComponent>,
               private _alertEmitter: AlertEmitter) {
   }
+
   async addAll() {
     const ids = this.users.map(user => user.id);
     const correctors = await this._httpClient.addRange({}, {
@@ -25,7 +26,7 @@ export class CorrectorAddComponent {
       userId: ids
     });
 
-    for (const corrector of  correctors) {
+    for (const corrector of correctors) {
       await this._loader.load(corrector);
     }
 

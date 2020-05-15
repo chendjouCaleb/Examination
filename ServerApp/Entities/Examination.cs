@@ -56,6 +56,10 @@ namespace Exam.Entities
         public virtual List<Speciality> Specialities { get; set; }
         public int SpecialityCount;
         
+        [JsonIgnore]
+        public virtual List<Secretary> Secretaries { get; set; }
+        public int SecretaryCount;
+        
         [JsonIgnore] 
         public virtual List<Application> Applications { get; set; }
 

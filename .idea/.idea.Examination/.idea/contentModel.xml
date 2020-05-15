@@ -454,6 +454,13 @@
                 </e>
                 <e p="room-page.module.ts" t="Include" />
               </e>
+              <e p="secretary" t="Include">
+                <e p="list" t="Include">
+                  <e p="secretary-list.page.html" t="Include" />
+                  <e p="secretary-list.page.ts" t="Include" />
+                </e>
+                <e p="secretary-page.module.ts" t="Include" />
+              </e>
               <e p="supervisor" t="Include">
                 <e p="list" t="Include">
                   <e p="supervisor-list.page.html" t="Include" />
@@ -488,6 +495,14 @@
               </e>
               <e p="room.module.ts" t="Include" />
               <e p="room.resolver.ts" t="Include" />
+            </e>
+            <e p="secretary" t="Include">
+              <e p="add" t="Include">
+                <e p="secretary-add.component.html" t="Include" />
+                <e p="secretary-add.component.ts" t="Include" />
+              </e>
+              <e p="index.ts" t="Include" />
+              <e p="secretary.module.ts" t="Include" />
             </e>
             <e p="supervisor" t="Include">
               <e p="add" t="Include">
@@ -647,6 +662,7 @@
               <e p="public_api.ts" t="Include" />
               <e p="review.entity.ts" t="Include" />
               <e p="room.entity.ts" t="Include" />
+              <e p="secretary.entity.ts" t="Include" />
               <e p="speciality.entity.ts" t="Include" />
               <e p="student.entity.ts" t="Include" />
               <e p="supervisor.entity.ts" t="Include" />
@@ -661,6 +677,7 @@
               <e p="principal.model.ts" t="Include" />
               <e p="public_api.ts" t="Include" />
               <e p="room.model.ts" t="Include" />
+              <e p="speciality.model.ts" t="Include" />
             </e>
             <e p="httpClient" t="Include">
               <e p="admin.httpClient.ts" t="Include" />
@@ -674,6 +691,8 @@
               <e p="principal.httpClient.ts" t="Include" />
               <e p="public_api.ts" t="Include" />
               <e p="room.httpClient.ts" t="Include" />
+              <e p="secretary.httpClient.ts" t="Include" />
+              <e p="speciality.httpClient.ts" t="Include" />
               <e p="supervisor.httpClient.ts" t="Include" />
               <e p="user.httpClient.ts" t="Include" />
             </e>
@@ -689,6 +708,8 @@
               <e p="organisation.loader.ts" t="Include" />
               <e p="principal.loader.ts" t="Include" />
               <e p="room.loader.ts" t="Include" />
+              <e p="secretary.loader.ts" t="Include" />
+              <e p="speciality.loader.ts" t="Include" />
               <e p="supervisor.loader.ts" t="Include" />
             </e>
             <e p="paging.ts" t="Include" />
@@ -737,6 +758,7 @@
           <e p="PaperManagerController.cs" t="Include" />
           <e p="PrincipalController.cs" t="Include" />
           <e p="RoomController.cs" t="Include" />
+          <e p="SecretaryController.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
           <e p="StudentController.cs" t="Include" />
           <e p="SupervisorController.cs" t="Include" />
@@ -761,6 +783,7 @@
           <e p="Principal.cs" t="Include" />
           <e p="Review.cs" t="Include" />
           <e p="Room.cs" t="Include" />
+          <e p="Secretary.cs" t="Include" />
           <e p="Speciality.cs" t="Include" />
           <e p="Student.cs" t="Include" />
           <e p="Supervisor.cs" t="Include" />
@@ -794,6 +817,7 @@
           <e p="PaperManagerLoader.cs" t="Include" />
           <e p="PrincipalLoader.cs" t="Include" />
           <e p="RoomLoader.cs" t="Include" />
+          <e p="SecretaryLoader.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
           <e p="SpecialityLoader.cs" t="Include" />
           <e p="StudentLoader.cs" t="Include" />
@@ -806,6 +830,8 @@
           <e p="20200419173300_Initial.Designer.cs" t="Include" />
           <e p="20200424115140_RegisterUserIdOnRoom.cs" t="Include" />
           <e p="20200424115140_RegisterUserIdOnRoom.Designer.cs" t="Include" />
+          <e p="20200515095418_WithSecretary.cs" t="Include" />
+          <e p="20200515095418_WithSecretary.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

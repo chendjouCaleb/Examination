@@ -8,3 +8,5 @@ export * from './examination.loader';
 export * from './principal.loader';
 export * from './corrector.loader';
 export * from './supervisor.loader';
+export * from './secretary.loader';
+export * from './speciality.loader';

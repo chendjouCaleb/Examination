@@ -84,6 +84,10 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireNoState.finished}")]
         public StatusCodeResult ChangeName(Speciality speciality, string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             if (speciality == null)
             {
                 throw new ArgumentNullException(nameof(speciality));

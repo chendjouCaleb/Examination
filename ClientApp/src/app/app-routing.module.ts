@@ -46,6 +46,12 @@ const routes: Routes = [
     loadChildren: () => import('./page/supervisor/supervisor-page.module').then(m => m.SupervisorPageModule),
   },
 
+  {
+    path: 'organisations/:organisationId/examinations/:examinationId/secretaries',
+    resolve: [OrganisationResolver, ExaminationResolver],
+    loadChildren: () => import('./page/secretary/secretary-page.module').then(m => m.SecretaryPageModule),
+  },
+
   {path: '', redirectTo: 'organisations', pathMatch: 'full'}
 ];
 
