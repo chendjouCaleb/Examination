@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AlertEmitter} from '../../../../controls/alert-emitter';
 import {Confirmation} from '../../../../controls/confirmation/confirmation';
 import {RoomAddComponent} from 'src/app/room';
+import {MsfModal} from "fabric-docs";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class RoomListPage implements OnInit {
               private _httpClient: RoomHttpClient,
               private _alertEmitter: AlertEmitter,
               private _confirmation: Confirmation,
-              private _dialog: MatDialog) {
+              private _dialog: MsfModal) {
     this.organisation = currentItems.get('organisation');
   }
 
@@ -30,7 +31,7 @@ export class RoomListPage implements OnInit {
   }
 
   openAddRoomDialog() {
-    const modalRef = this._dialog.open(RoomAddComponent, {data: {organisation: Organisation}});
+    const modalRef = this._dialog.open(RoomAddComponent );
     modalRef.componentInstance.organisation = this.organisation;
     modalRef.afterClosed().subscribe(result => {
       if (result) {

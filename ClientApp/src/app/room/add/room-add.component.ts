@@ -2,8 +2,8 @@
 
 import {AlertEmitter} from "src/controls/alert-emitter";
 import {Organisation, RoomHttpClient, RoomLoader} from "src/models";
-import {MatDialogRef} from "@angular/material/dialog";
 import {RoomAddForm} from "../form";
+import {MsfModalRef} from "fabric-docs";
 
 
 @Component({
@@ -17,7 +17,7 @@ export class RoomAddComponent {
   organisation: Organisation;
 
   constructor(private _httpClient: RoomHttpClient, private _loader: RoomLoader,
-              private _dialogRef: MatDialogRef<RoomAddComponent>,
+              private _dialogRef: MsfModalRef<RoomAddComponent>,
               private _alertEmitter: AlertEmitter) {
 
   }
