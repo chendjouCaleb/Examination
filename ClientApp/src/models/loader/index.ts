@@ -10,3 +10,4 @@ export * from './corrector.loader';
 export * from './supervisor.loader';
 export * from './secretary.loader';
 export * from './speciality.loader';
+export * from './group.loader';

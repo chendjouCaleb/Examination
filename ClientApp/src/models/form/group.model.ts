@@ -1,29 +1,16 @@
 ﻿import {IsEmail, IsNotEmpty, IsNumber, IsPositive, MinLength} from "class-validator";
+import {Room, Speciality} from "examination/models";
 
 export class GroupAddModel {
   @IsNotEmpty()
-  @MinLength(3)
+  @MinLength(2)
   name: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  @IsPositive()
-  capacity: number;
+  room: Room;
 
   @IsNotEmpty()
-  @MinLength(3)
-  address: string;
-}
-
-export class GroupEditModel {
-  @IsNotEmpty()
-  @IsNumber()
-  @IsPositive()
-  capacity: number;
-
-  @IsNotEmpty()
-  @MinLength(3)
-  address: string;
+  speciality: Speciality;
 }
 
 

@@ -698,11 +698,11 @@
               <e p="client.http.client.ts" t="Include" />
               <e p="corrector.httpClient.ts" t="Include" />
               <e p="examination.httpClient.ts" t="Include" />
+              <e p="group.httpClient.ts" t="Include" />
               <e p="httpClient.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="organisation.httpClient.ts" t="Include" />
               <e p="principal.httpClient.ts" t="Include" />
-              <e p="public_api.ts" t="Include" />
               <e p="room.httpClient.ts" t="Include" />
               <e p="secretary.httpClient.ts" t="Include" />
               <e p="speciality.httpClient.ts" t="Include" />
@@ -716,6 +716,7 @@
               <e p="corrector.loader.ts" t="Include" />
               <e p="entity-loader.interface.ts" t="Include" />
               <e p="examination.loader.ts" t="Include" />
+              <e p="group.loader.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="loader.module.ts" t="Include" />
               <e p="organisation.loader.ts" t="Include" />
