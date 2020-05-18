@@ -12,7 +12,6 @@ $ms-select-option-paddingY: 7px !default;
 .ms-select {
   display: inline-block;
   border: 1px solid var(--textFieldBorderColor);
-  border-radius: 2px;
   box-sizing: border-box;
   transition: border-width .2s;
   min-width: $ms-select-width;
@@ -21,6 +20,7 @@ $ms-select-option-paddingY: 7px !default;
 
 
   &:focus {
+    outline: 1px solid var(--primaryColor);
     border-color: var(--primaryColor);
   }
 }
