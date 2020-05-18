@@ -27,19 +27,41 @@
         </e>
         <e p="karma.conf.js" t="Include" />
         <e p="node_modules" t="Include">
-          <e p="@angular\animations" t="IncludeRecursive" />
-          <e p="@angular\cdk" t="IncludeRecursive" />
-          <e p="@angular\cli" t="IncludeRecursive" />
-          <e p="@angular\common" t="IncludeRecursive" />
-          <e p="@angular\compiler" t="IncludeRecursive" />
-          <e p="@angular\compiler-cli" t="IncludeRecursive" />
-          <e p="@angular\core" t="IncludeRecursive" />
-          <e p="@angular\forms" t="IncludeRecursive" />
-          <e p="@angular\material" t="IncludeRecursive" />
-          <e p="@angular\material-moment-adapter" t="IncludeRecursive" />
-          <e p="@angular\platform-browser" t="IncludeRecursive" />
-          <e p="@angular\platform-browser-dynamic" t="IncludeRecursive" />
-          <e p="@angular\router" t="IncludeRecursive" />
+          <e p="@angular" t="Include">
+            <e p="animations" t="IncludeRecursive" />
+            <e p="cdk" t="IncludeRecursive" />
+            <e p="cli" t="IncludeRecursive" />
+            <e p="common" t="IncludeRecursive">
+              <e p="__ivy_ngcc__" t="Include">
+                <e p="fesm2015" t="Include">
+                  <e p="testing.js" t="Include" />
+                  <e p="testing.js.map" t="Include" />
+                </e>
+              </e>
+              <e p="testing" t="Include">
+                <e p="testing.d.ts.__ivy_ngcc_bak" t="Include" />
+              </e>
+            </e>
+            <e p="compiler" t="IncludeRecursive" />
+            <e p="compiler-cli" t="IncludeRecursive" />
+            <e p="core" t="IncludeRecursive" />
+            <e p="forms" t="IncludeRecursive" />
+            <e p="material" t="IncludeRecursive" />
+            <e p="material-moment-adapter" t="IncludeRecursive" />
+            <e p="platform-browser" t="IncludeRecursive" />
+            <e p="platform-browser-dynamic" t="IncludeRecursive" />
+            <e p="router" t="IncludeRecursive">
+              <e p="__ivy_ngcc__" t="Include">
+                <e p="fesm2015" t="Include">
+                  <e p="testing.js" t="Include" />
+                  <e p="testing.js.map" t="Include" />
+                </e>
+              </e>
+              <e p="testing" t="Include">
+                <e p="testing.d.ts.__ivy_ngcc_bak" t="Include" />
+              </e>
+            </e>
+          </e>
           <e p="@angular-devkit\architect" t="IncludeRecursive" />
           <e p="@angular-devkit\build-angular" t="IncludeRecursive" />
           <e p="@angular-devkit\build-optimizer" t="IncludeRecursive" />
@@ -94,67 +116,7 @@
           <e p="dependency-graph" t="IncludeRecursive" />
           <e p="diff-sequences" t="IncludeRecursive" />
           <e p="expect" t="IncludeRecursive" />
-          <e p="fabric-docs" t="IncludeRecursive">
-            <e p="esm2015" t="Include">
-              <e p="modal" t="Include">
-                <e p="modal-animations.js" t="Include" />
-                <e p="modal-default-options.js" t="Include" />
-                <e p="modal-directives.js" t="Include" />
-                <e p="modal-options.js" t="Include" />
-                <e p="modal-portal.js" t="Include" />
-                <e p="modal-position.js" t="Include" />
-                <e p="modal-ref.js" t="Include" />
-                <e p="modal-scrool-strategy.js" t="Include" />
-                <e p="modal.js" t="Include" />
-                <e p="modal.module.js" t="Include" />
-                <e p="public_api.js" t="Include" />
-              </e>
-            </e>
-            <e p="esm5" t="Include">
-              <e p="modal" t="Include">
-                <e p="modal-animations.js" t="Include" />
-                <e p="modal-default-options.js" t="Include" />
-                <e p="modal-directives.js" t="Include" />
-                <e p="modal-options.js" t="Include" />
-                <e p="modal-portal.js" t="Include" />
-                <e p="modal-position.js" t="Include" />
-                <e p="modal-ref.js" t="Include" />
-                <e p="modal-scrool-strategy.js" t="Include" />
-                <e p="modal.js" t="Include" />
-                <e p="modal.module.js" t="Include" />
-                <e p="public_api.js" t="Include" />
-              </e>
-            </e>
-            <e p="modal" t="Include">
-              <e p="modal-animations.d.ts" t="Include" />
-              <e p="modal-default-options.d.ts" t="Include" />
-              <e p="modal-directives.d.ts" t="Include" />
-              <e p="modal-directives.d.ts.__ivy_ngcc_bak" t="Include" />
-              <e p="modal-options.d.ts" t="Include" />
-              <e p="modal-portal.d.ts" t="Include" />
-              <e p="modal-portal.d.ts.__ivy_ngcc_bak" t="Include" />
-              <e p="modal-position.d.ts" t="Include" />
-              <e p="modal-ref.d.ts" t="Include" />
-              <e p="modal-scrool-strategy.d.ts" t="Include" />
-              <e p="modal.d.ts" t="Include" />
-              <e p="modal.d.ts.__ivy_ngcc_bak" t="Include" />
-              <e p="modal.module.d.ts" t="Include" />
-              <e p="modal.module.d.ts.__ivy_ngcc_bak" t="Include" />
-              <e p="public_api.d.ts" t="Include" />
-            </e>
-            <e p="src" t="Include">
-              <e p="components" t="Include">
-                <e p="msf-core" t="Include">
-                  <e p="controls" t="Include">
-                    <e p="_msf-modal.scss" t="Include" />
-                  </e>
-                  <e p="variables" t="Include">
-                    <e p="_msf-modal.scss" t="Include" />
-                  </e>
-                </e>
-              </e>
-            </e>
-          </e>
+          <e p="fabric-docs" t="IncludeRecursive" />
           <e p="fast-deep-equal" t="IncludeRecursive" />
           <e p="fast-json-stable-stringify" t="IncludeRecursive" />
           <e p="hash.js" t="IncludeRecursive" />
@@ -325,6 +287,7 @@
               <e p="index.ts" t="Include" />
             </e>
             <e p="current-items.ts" t="Include" />
+            <e p="element.ts" t="Include" />
             <e p="Examination" t="Include">
               <e p="examination-add" t="Include">
                 <e p="examination-add.component.html" t="Include" />
@@ -461,6 +424,17 @@
                 </e>
                 <e p="secretary-page.module.ts" t="Include" />
               </e>
+              <e p="speciality" t="Include">
+                <e p="Home" t="Include">
+                  <e p="speciality-home.page.html" t="Include" />
+                  <e p="speciality-home.page.ts" t="Include" />
+                </e>
+                <e p="list" t="Include">
+                  <e p="speciality-list.page.html" t="Include" />
+                  <e p="speciality-list.page.ts" t="Include" />
+                </e>
+                <e p="speciality-page.module.ts" t="Include" />
+              </e>
               <e p="supervisor" t="Include">
                 <e p="list" t="Include">
                   <e p="supervisor-list.page.html" t="Include" />
@@ -503,6 +477,20 @@
               </e>
               <e p="index.ts" t="Include" />
               <e p="secretary.module.ts" t="Include" />
+            </e>
+            <e p="speciality" t="Include">
+              <e p="add" t="Include">
+                <e p="speciality-add.component.html" t="Include" />
+                <e p="speciality-add.component.ts" t="Include" />
+              </e>
+              <e p="form.ts" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="layout" t="Include">
+                <e p="speciality-layout.component.html" t="Include" />
+                <e p="speciality-layout.component.ts" t="Include" />
+              </e>
+              <e p="speciality.module.ts" t="Include" />
+              <e p="speciality.resolver.ts" t="Include" />
             </e>
             <e p="supervisor" t="Include">
               <e p="add" t="Include">
@@ -559,6 +547,7 @@
           </e>
           <e p="controls" t="Include">
             <e p="alert-emitter.ts" t="Include" />
+            <e p="array.ts" t="Include" />
             <e p="confirmation" t="Include">
               <e p="confirmation.component.ts" t="Include" />
               <e p="confirmation.ts" t="Include" />
@@ -580,7 +569,30 @@
               <e p="labelled-icon.ts" t="Include" />
               <e p="labelled.ts" t="Include" />
             </e>
+            <e p="select" t="Include">
+              <e p="index.ts" t="Include" />
+              <e p="select-animations.ts" t="Include" />
+              <e p="select-errors.ts" t="Include" />
+              <e p="select-option-checkbox.ts" t="Include" />
+              <e p="select-option-group.ts" t="Include" />
+              <e p="select-option.html" t="Include" />
+              <e p="select-option.ts" t="Include" />
+              <e p="select-scroll-strategy.ts" t="Include" />
+              <e p="select-template.ts" t="Include" />
+              <e p="select.html" t="Include" />
+              <e p="select.module.ts" t="Include" />
+              <e p="select.scss" t="Include" />
+              <e p="select.ts" t="Include" />
+            </e>
             <e p="state-badge.directive.ts" t="Include" />
+            <e p="tabs" t="Include">
+              <e p="index.ts" t="Include" />
+              <e p="tab-label.html" t="Include" />
+              <e p="tab-label.ts" t="Include" />
+              <e p="tab.module.ts" t="Include" />
+              <e p="tab.scss" t="Include" />
+              <e p="tab.ts" t="Include" />
+            </e>
           </e>
           <e p="environments" t="Include">
             <e p="environment.prod.ts" t="Include" />
@@ -673,6 +685,7 @@
               <e p="admin.model.ts" t="Include" />
               <e p="authorization.model.ts" t="Include" />
               <e p="examination.model.ts" t="Include" />
+              <e p="group.model.ts" t="Include" />
               <e p="organisation-model.ts" t="Include" />
               <e p="principal.model.ts" t="Include" />
               <e p="public_api.ts" t="Include" />
@@ -832,6 +845,8 @@
           <e p="20200424115140_RegisterUserIdOnRoom.Designer.cs" t="Include" />
           <e p="20200515095418_WithSecretary.cs" t="Include" />
           <e p="20200515095418_WithSecretary.Designer.cs" t="Include" />
+          <e p="20200518051153_WithIndexOnGroup.cs" t="Include" />
+          <e p="20200518051153_WithIndexOnGroup.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

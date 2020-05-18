@@ -1,22 +1,45 @@
 ﻿import {Entity} from "./entity";
-import {Test} from "./test.entity";
+import {User} from "./user.entity";
+import {Room} from "./room.entity";
+import {Speciality} from "./speciality.entity";
+import {Examination} from "./examination.entity";
 
 export class Group extends Entity<number> {
+
+  constructor(value?: any) {
+    super();
+    if (value) {
+      this.id = value.id;
+      this.registrationDate = value.registrationDate;
+
+      this.name = value.name;
+      this.capacity = value.capacity;
+      this.index = value.index;
+
+      this.examination = value.examination;
+      this.examinationId = value.examinationId;
+
+      this.specialityId = value.specialityId;
+      this.speciality = value.speciality;
+
+      this.registerUserId = value.registerUserId;
+      this.registerUser = value.registerUser;
+    }
+  }
+
   name: string;
-  roomName: string;
+  capacity: number;
+  index: number;
 
-  expectedStartDate: Date;
-  expectedEndDate: Date;
+  registerUserId: string;
+  registerUser: User;
 
-  realStartDate: Date;
-  realEndDate: Date;
+  room: Room;
+  roomId: number;
 
-  state: string;
+  speciality: Speciality;
+  specialityId: number;
 
-  test: Test;
-  testId: number;
-
-  paperCount: number;
-
-  testSupervisorCount: number;
+  examination: Examination;
+  examinationId: number;
 }

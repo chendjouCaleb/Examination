@@ -1,0 +1,7 @@
+﻿<app-examination-layout [examination]="speciality.examination" [paths]="paths">
+  <MsfTab>
+    <a MsfTabLabel routerLinkActive="active"  [routerLink]="[speciality.url, 'home']" icon="Home">Accueil</a>
+    <a MsfTabLabel [routerLink]="[speciality.url, 'settings']" icon="Settings">Paramètres</a>
+  </MsfTab>
+  <ng-content></ng-content>
+</app-examination-layout>

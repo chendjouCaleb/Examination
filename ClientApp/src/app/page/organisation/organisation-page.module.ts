@@ -6,10 +6,10 @@ import {OrganisationListPage} from './list/organisation-list.page';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {OrganisationHomePage} from './home/organisation-home.page';
 import {OrganisationAddPage} from './add/organisation-add.page';
-import {AuthorizedGuard} from "examination/app/authorization";
-import {OrganisationModule, OrganisationResolver} from "examination/app/organisation";
-import {LayoutModule} from "examination/infrastructure";
-import {AppFormModule, ControlModule} from "examination/controls";
+import {AuthorizedGuard} from 'examination/app/authorization';
+import {OrganisationModule, OrganisationResolver} from 'examination/app/organisation';
+import {LayoutModule} from 'examination/infrastructure';
+import {AppFormModule, ControlModule, MsfSelectModule} from 'examination/controls';
 
 export const routes: Routes = [
   {path: 'add', component: OrganisationAddPage, canActivate: [AuthorizedGuard]},
@@ -26,7 +26,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), AppFormModule, FormsModule, ReactiveFormsModule, MsfPersonaModule,
-    ControlModule, LayoutModule, MsfButtonModule, OrganisationModule],
+    ControlModule, LayoutModule, MsfButtonModule, OrganisationModule, MsfSelectModule],
   declarations: [OrganisationListPage, OrganisationAddPage, OrganisationHomePage],
   providers: [OrganisationResolver]
 })

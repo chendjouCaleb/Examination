@@ -1,0 +1,74 @@
+
+@import '~office-ui-fabric-core/src/sass/variables/Font.Variables';
+@import '~office-ui-fabric-core/src/sass/variables/Color.Variables';
+
+.msf-tab {
+  display: block;
+  position: relative;
+  border-bottom: 1px solid var(--secondaryBackgroundColor);
+}
+
+
+.msf-tab-label {
+  font-family: inherit;
+  color: inherit;
+  font-size: inherit;
+  height: 42px;
+
+  padding: 10px;
+
+  position: relative;
+  vertical-align: top;
+  display: inline-block;
+
+  cursor: pointer;
+  user-select: none;
+  outline: transparent;
+
+  background-color: transparent;
+  box-sizing: border-box;
+
+  &:disabled, &[disabled], &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: var(--hoverBackgroundColor);
+    text-decoration: none;
+    color: var(--primaryColor);
+  }
+  &:focus {
+    outline: 1px dashed var(--textColor);
+  }
+
+  &.active {
+    border-bottom: 3px solid var(--primaryColor);
+    color: var(--primaryColor);
+    font-weight: bold;
+  }
+}
+
+
+.msf-tabLabel-layout{
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.msf-tabLabel-label{
+  text-align: left;
+  vertical-align: middle;
+  margin: 0 5px;
+  display: inline-block;
+  flex-grow: 1;
+}
+
+
+.msf-tabLabel-icon{
+  font-size: 18px;
+  text-align: center;
+  margin: 0 5px;
+}
+
+

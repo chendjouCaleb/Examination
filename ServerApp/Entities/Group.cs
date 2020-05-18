@@ -11,6 +11,8 @@ namespace Exam.Entities
 
         public string Name { get; set; }
 
+        public int Index { get; set; }
+
         [NotMapped] public uint Capacity => Room.Capacity;
 
         public virtual List<Student> Students { get; set; }

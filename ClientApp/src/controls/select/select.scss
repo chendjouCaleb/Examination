@@ -1,0 +1,131 @@
+@import "~office-ui-fabric-core/dist/sass/Fabric";
+
+$ms-select-border-color: $ms-color-gray140 !default;
+$ms-select-optionGroup-borderColor: $ms-color-gray50 !default;
+$ms-select-width: 240px !default;
+$ms-select-height: 32px !default;
+$ms-select-option-panel-bgColor: #FFF !default;
+
+$ms-select-option-paddingY: 7px !default;
+
+
+.ms-select {
+  display: inline-block;
+  border: 1px solid var(--textFieldBorderColor);
+  border-radius: 2px;
+  box-sizing: border-box;
+  transition: border-width .2s;
+  width: $ms-select-width;
+  height: $ms-select-height;
+
+  &:focus {
+    border-color: var(--primaryColor);
+  }
+}
+
+.ms-select-panel-overlay {
+  overflow: hidden;
+}
+
+.ms-select-wrapper {
+  cursor: pointer;
+
+}
+
+.ms-select-contentLayout {
+  position: relative;
+  height: 32px;
+}
+
+.ms-select-trigger {
+  font-size: 18px;
+  height: $ms-select-height;
+  line-height: $ms-select-height;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 32px;
+}
+
+.ms-select-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 32px;
+  left: 0;
+  height: $ms-select-height;
+  line-height: $ms-select-height;
+  user-select: none;
+  margin-left: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ms-select-placeholder {
+  opacity: 0.8;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ms-select-panel {
+  background-color: var(--bodyBackgroundColor);
+  backdrop-filter: blur(20px);
+  min-width: $ms-select-width;
+
+  max-height: 300px;
+  overflow-y: auto;
+
+  border: 1px solid $ms-color-gray50
+}
+
+.ms-select-optionGroup {
+  display: block;
+
+  border-bottom: 1px solid $ms-select-optionGroup-borderColor;
+}
+
+.ms-select-optionGroup-label {
+  font-weight: 600;
+  color: var(--primaryColor);
+  padding: $ms-select-option-paddingY 10px;
+  display: block;
+  margin: 0;
+}
+
+.ms-select-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  cursor: pointer;
+  margin: 0;
+
+  &:hover {
+    background-color: var(--secondaryBackgroundColor)
+  }
+
+  &.ms-selected {
+    background-color: var(--hoverBackgroundColor);
+  }
+}
+
+.ms-selectOption-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 32px;
+  width: 32px;
+}
+
+.ms-selectOption-content {
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.hidden {
+  display: none;
+}

@@ -12,4 +12,4 @@ export * from './corrector.entity';
 export * from './supervisor.entity';
 export * from './secretary.entity';
 export * from './speciality.entity';
-
+export * from './group.entity';

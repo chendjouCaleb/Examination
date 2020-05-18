@@ -1,6 +1,6 @@
-﻿import {Entity} from "./entity";
-import {Examination} from "./examination.entity";
-import {User} from "./user.entity";
+﻿import {Entity} from './entity';
+import {Examination} from './examination.entity';
+import {User} from './user.entity';
 
 export class Speciality extends Entity<number> {
 
@@ -28,4 +28,8 @@ export class Speciality extends Entity<number> {
 
   studentCount: number;
   testCount: number;
+
+  get url(): string {
+    return `/organisations/${this.examination.organisationId}/examinations/${this.examinationId}/specialities/${this.id}`;
+  }
 }

@@ -115,10 +115,11 @@ namespace Exam.Controllers
                 Name = form.Name,
                 Speciality = speciality,
                 Examination = examination,
+                Room = room,
                 RegisterUserId = user.Id
             };
-
             group = _groupRepository.Save(group);
+            _UpdateGroupIndex(examination);
 
             _logger.LogInformation($"New Group: {group}");
 
@@ -198,8 +199,23 @@ namespace Exam.Controllers
         [AuthorizeExaminationAdmin]
         public NoContentResult Delete(Group group)
         {
+            Examination examination = group.Examination;
             _groupRepository.Delete(group);
+            _UpdateGroupIndex(examination);
             return NoContent();
+        }
+
+        public void _UpdateGroupIndex(Examination examination)
+        {
+            var groups = _groupRepository.List(g => g.ExaminationId == examination.Id);
+            for (int i = 0; i < groups.Count; i++)
+            {
+                if (groups[i].Index != i + 1)
+                {
+                    groups[i].Index = i + 1;
+                    _groupRepository.Update(groups[i]);
+                }
+            }
         }
     }
 }

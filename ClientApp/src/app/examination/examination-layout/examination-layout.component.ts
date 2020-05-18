@@ -11,6 +11,10 @@ import {Title} from '@angular/platform-browser';
 })
 export class ExaminationLayoutComponent implements OnInit {
 
+  @Input()
+  paths: BreadcrumbItem[] = [];
+
+  @Input()
   breadCrumbItems: BreadcrumbItem[] = [];
 
   @Input()
@@ -31,6 +35,8 @@ export class ExaminationLayoutComponent implements OnInit {
       {name: 'Examens', url: `${this.examination.organisation.url}/examinations`},
       {name: this.examination.name, url: `${this.examination.url}/home`}
     ];
+
+    this.breadCrumbItems.push(...this.paths);
 
     if (this.title) {
       this.breadCrumbItems.push({name: this.title});

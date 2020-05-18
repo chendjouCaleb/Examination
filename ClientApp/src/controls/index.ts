@@ -10,3 +10,5 @@ export * from './labelled/labelled';
 export * from './alert-emitter';
 export * from './control.module';
 export * from './state-badge.directive';
+export * from './tabs/index';
+export * from './select/index';

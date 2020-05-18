@@ -15,6 +15,10 @@ $msf-button-backgroundColor: red;
 
 @import "card";
 
+*[tabindex]:focus {
+  outline: none;
+}
+
 .msf-menu {
   background: var(--cardBackgroundColor);
 }

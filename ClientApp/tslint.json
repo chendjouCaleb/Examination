@@ -1,6 +1,8 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "ordered-imports": false,
+    "semicolon": false,
     "array-type": false,
     "arrow-parens": false,
     "variable-name": false,
@@ -31,7 +33,7 @@
     ],
     "member-access": false,
     "member-ordering": [
-      true,
+      false,
       {
         "order": [
           "static-field",
@@ -60,22 +62,23 @@
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [
-      true,
+      false,
       "as-needed"
     ],
     "object-literal-sort-keys": false,
-    "ordered-imports": false,
+
     "quotemark": [
       true,
       "single"
     ],
+    "no-trailing-whitespace": false,
     "trailing-comma": false,
     "no-string-literal": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": false,
     "no-input-rename": true,
     "no-inputs-metadata-property": true,
-    "no-output-native": true,
+    "no-output-native": false,
     "no-output-on-prefix": true,
     "no-output-rename": true,
     "no-outputs-metadata-property": true,

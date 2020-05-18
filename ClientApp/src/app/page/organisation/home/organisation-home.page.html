@@ -15,4 +15,34 @@
     </MsfPersonaText>
   </MsfPersona>
 
+  {{values}}
+  <MsfSelect>
+    <ng-template MsfSelectTemplate let-value="value">{{value}}</ng-template>
+    <MsfSelectOption *ngFor="let item of items" [value]="item.name">{{item.name}}</MsfSelectOption>
+  </MsfSelect>
+
+  <MsfSelect [multiple]="true" [(ngModel)]="values" [value]="'Hydrogen'">
+
+    <MsfSelectOptionGroup *ngFor="let g of groups" [label]="g">
+      <MsfSelectOption *ngFor="let item of itemMap[g]" [value]="item.name">{{item.name}}</MsfSelectOption>
+    </MsfSelectOptionGroup>
+
+    <MsfSelectOptionGroup [label]="'Other'" disabled="true">
+      <MsfSelectOption value="Plutonium">Plutonium</MsfSelectOption>
+    </MsfSelectOptionGroup>
+
+
+  </MsfSelect>
+
+  <MsfSelect [multiple]="true" placeholder="Choisir un utilisateur ddddddddddddddddddddddddd">
+
+    <MsfSelectOption *ngFor="let user of users" [value]="user" [viewValue]="user.fullName">
+      <MsfPersona size="size24">
+        <MsfPersonaFigure [text]="user.fullName"></MsfPersonaFigure>
+        <div class="pl-2">{{user.fullName}}</div>
+      </MsfPersona>
+    </MsfSelectOption>
+  </MsfSelect>
+
+
 </app-organisation-layout>

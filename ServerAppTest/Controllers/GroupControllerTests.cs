@@ -90,7 +90,9 @@ namespace ServerAppTest.Controllers
 
             Assert.AreEqual(_examination, group.Examination);
             Assert.AreEqual(_speciality, group.Speciality);
+            Assert.AreEqual(_room, group.Room);
             Assert.AreEqual(_user.Id, group.RegisterUserId);
+            Assert.AreEqual(1, group.Index);
         }
 
 
