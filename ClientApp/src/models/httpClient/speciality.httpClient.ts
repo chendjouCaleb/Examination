@@ -1,6 +1,7 @@
 import {GenericHttpClient, SERVER_URL} from "./httpClient";
-import {Speciality, Examination} from "../entities";
+import {Examination, Speciality} from "../entities";
 import {Injectable} from "@angular/core";
+import {List} from "@positon/collections";
 
 
 @Injectable()
@@ -18,5 +19,9 @@ export class SpecialityHttpClient extends GenericHttpClient<Speciality, number> 
       return new Speciality(result);
     }
     return null;
+  }
+
+  listByExamination(examination: Examination): Promise<List<Speciality>> {
+    return this.listAsync({examinationId: examination.id});
   }
 }

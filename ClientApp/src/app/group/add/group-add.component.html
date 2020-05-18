@@ -1,0 +1,42 @@
+﻿<form class="ms-form" [formGroup]="form">
+  <div class="ms-form-header">Ajouter un groupe</div>
+
+
+  <div class="ms-textField">
+    <label for="name" class="msf-label">Nom du group</label>
+    <input type="text" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
+    <app-control-error [control]="form.controls['name']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="speciality" class="msf-label">Spécialité du groupe</label>
+
+    <div class="ms-fontWeight-semibold ms-fontColor-sharedGreenCyan10 ms-fontSize-16" *ngIf="speciality">{{speciality.name}}</div>
+    <MsfSelect *ngIf="!speciality" id="speciality" formControlName="speciality" class="ms-textField-input"  placeholder="Choisir une specialité">
+      <MsfSelectOption *ngFor="let item of specialities"  [value]="item">{{item.name}}</MsfSelectOption>
+    </MsfSelect>
+    <app-control-error [control]="form.controls['speciality']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="room" class="msf-label">Salle du groupe</label>
+    <MsfSelect id="room" formControlName="room" class="ms-textField-input" >
+      <MsfSelectOption *ngFor="let item of rooms" [value]="item">{{item.name}}</MsfSelectOption>
+    </MsfSelect>
+    <app-control-error [control]="form.controls['room']"></app-control-error>
+    <div class="mt-2 ms-fontSize-12">
+      Pour chaque épreuve de ce groupe,
+      vous pourrez toujours choisir une  autre salle.
+    </div>
+  </div>
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid"  (click)="add()">
+      Ajouter
+    </MsfButton>
+  </div>
+</form>
+
+

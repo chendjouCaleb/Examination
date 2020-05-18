@@ -1,6 +1,7 @@
 import {GenericHttpClient, SERVER_URL} from "./httpClient";
 import {Room, Organisation} from "../entities";
 import {Injectable} from "@angular/core";
+import {List} from "@positon/collections";
 
 
 @Injectable()
@@ -20,5 +21,8 @@ export class RoomHttpClient extends GenericHttpClient<Room, number> {
     return null;
   }
 
+  listByOrganisation(organisation: Organisation): Promise<List<Room>> {
+    return this.listAsync({organisationId: organisation.id});
+  }
 
 }

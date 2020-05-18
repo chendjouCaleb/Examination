@@ -308,6 +308,24 @@
               <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
             </e>
+            <e p="group" t="Include">
+              <e p="add" t="Include">
+                <e p="group-add.component.html" t="Include" />
+                <e p="group-add.component.ts" t="Include" />
+              </e>
+              <e p="form.ts" t="Include" />
+              <e p="group.module.ts" t="Include" />
+              <e p="group.resolver.ts" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="layout" t="Include">
+                <e p="group-layout.component.html" t="Include" />
+                <e p="group-layout.component.ts" t="Include" />
+              </e>
+              <e p="list" t="Include">
+                <e p="group-list.html" t="Include" />
+                <e p="group-list.ts" t="Include" />
+              </e>
+            </e>
             <e p="organisation" t="Include">
               <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
@@ -371,6 +389,17 @@
                   <e p="examination-student.component.ts" t="Include" />
                 </e>
               </e>
+              <e p="group" t="Include">
+                <e p="group-page.module.ts" t="Include" />
+                <e p="Home" t="Include">
+                  <e p="group-home.page.html" t="Include" />
+                  <e p="group-home.page.ts" t="Include" />
+                </e>
+                <e p="list" t="Include">
+                  <e p="group-list.page.html" t="Include" />
+                  <e p="group-list.page.ts" t="Include" />
+                </e>
+              </e>
               <e p="organisation" t="Include">
                 <e p="add" t="Include">
                   <e p="organisation-add.page.html" t="Include" />
@@ -425,6 +454,10 @@
                 <e p="secretary-page.module.ts" t="Include" />
               </e>
               <e p="speciality" t="Include">
+                <e p="groups" t="Include">
+                  <e p="speciality-group-list.page.html" t="Include" />
+                  <e p="speciality-group-list.page.ts" t="Include" />
+                </e>
                 <e p="Home" t="Include">
                   <e p="speciality-home.page.html" t="Include" />
                   <e p="speciality-home.page.ts" t="Include" />

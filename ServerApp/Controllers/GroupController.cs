@@ -34,6 +34,15 @@ namespace Exam.Controllers
             _groupRepository = groupRepository;
             _logger = logger;
         }
+        
+        [HttpGet("find")]
+        [RequireQueryParameter("examinationId")]
+        [RequireQueryParameter("name")]
+        [LoadExamination(Source = ParameterSource.Query)]
+        public Group First(Examination examination, [FromQuery] string name)
+        {
+            return _groupRepository.First(a => examination.Equals(a.Examination) && name == a.Name);
+        }
 
 
         [HttpGet("{groupId}")]
@@ -43,6 +52,7 @@ namespace Exam.Controllers
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
+        
         public IEnumerable<Group> List(Examination examination, Speciality speciality, Room room,
             [FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
@@ -79,6 +89,8 @@ namespace Exam.Controllers
 
 
         [HttpPost]
+        [RequireQueryParameter("examinationId")]
+        [RequireQueryParameter("roomId")]
         [LoadExamination(Source = ParameterSource.Query)]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [LoadRoom(Source = ParameterSource.Query)]
@@ -192,7 +204,7 @@ namespace Exam.Controllers
         }
         
         
-        [HttpPut("{groupId}")]
+        [HttpDelete("{groupId}")]
         [LoadGroup(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]

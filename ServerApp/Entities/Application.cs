@@ -39,6 +39,6 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual Examination Examination { get; set; }
-        public long ExaminationId;
+        public long ExaminationId { get; set; }
     }
 }

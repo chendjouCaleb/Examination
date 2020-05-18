@@ -1,5 +1,5 @@
 import {GenericHttpClient, SERVER_URL} from "./httpClient";
-import {Group, Organisation, Examination, Speciality} from "../entities";
+import {Examination, Group, Speciality} from "../entities";
 import {Injectable} from "@angular/core";
 import {List} from "@positon/collections";
 

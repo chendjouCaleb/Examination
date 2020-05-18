@@ -18,6 +18,8 @@
 <ng-template (backdropClick)="close()"
              [cdkConnectedOverlayOpen]="openPanel"
              [cdkConnectedOverlayOrigin]="origin"
+             [cdkConnectedOverlayOffsetX]="-10"
+
 
              cdk-connected-overlay
              cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
@@ -28,7 +30,7 @@
 >
 
 
-  <div #panel [@transformPanel] class="ms-select-panel">
+  <div #panel [@transformPanel] class="ms-select-panel ms-depth-8" [style.width.px]="_elementWidth">
 
     <ng-content></ng-content>
   </div>

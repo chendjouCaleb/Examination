@@ -40,12 +40,12 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual Speciality Speciality { get; set; }
-        public long? SpecialityId;
+        public long? SpecialityId{ get; set; } 
         
         
         [JsonIgnore]
         public virtual Examination Examination { get; set; }
-        public long? ExaminationId;
+        public long? ExaminationId{ get; set; } 
         
         [JsonIgnore]
         public virtual List<TestReview> Reviews { get; set; }

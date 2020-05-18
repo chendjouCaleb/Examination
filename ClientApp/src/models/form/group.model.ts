@@ -9,7 +9,6 @@ export class GroupAddModel {
   @IsNotEmpty()
   room: Room;
 
-  @IsNotEmpty()
   speciality: Speciality;
 }
 

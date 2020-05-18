@@ -242,16 +242,16 @@ namespace Exam.Migrations
                     RegistrationDate = table.Column<DateTime>(nullable: false),
                     RegisterUserId = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    ExaminationId1 = table.Column<long>(nullable: true),
-                    SpecialityId1 = table.Column<long>(nullable: true),
+                    ExaminationId = table.Column<long>(nullable: true),
+                    SpecialityId = table.Column<long>(nullable: true),
                     RoomId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Groups_Examinations_ExaminationId1",
-                        column: x => x.ExaminationId1,
+                        name: "FK_Groups_Examinations_ExaminationId",
+                        column: x => x.ExaminationId,
                         principalTable: "Examinations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -262,8 +262,8 @@ namespace Exam.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Groups_Specialities_SpecialityId1",
-                        column: x => x.SpecialityId1,
+                        name: "FK_Groups_Specialities_SpecialityId",
+                        column: x => x.SpecialityId,
                         principalTable: "Specialities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -287,8 +287,8 @@ namespace Exam.Migrations
                     ExpectedEndDate = table.Column<DateTime>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true),
-                    SpecialityId1 = table.Column<long>(nullable: true),
-                    ExaminationId1 = table.Column<long>(nullable: true),
+                    SpecialityId = table.Column<long>(nullable: true),
+                    ExaminationId = table.Column<long>(nullable: true),
                     ReviewCount = table.Column<int>(nullable: false),
                     GroupCount = table.Column<int>(nullable: false)
                 },
@@ -296,14 +296,14 @@ namespace Exam.Migrations
                 {
                     table.PrimaryKey("PK_Tests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tests_Examinations_ExaminationId1",
-                        column: x => x.ExaminationId1,
+                        name: "FK_Tests_Examinations_ExaminationId",
+                        column: x => x.ExaminationId,
                         principalTable: "Examinations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Tests_Specialities_SpecialityId1",
-                        column: x => x.SpecialityId1,
+                        name: "FK_Tests_Specialities_SpecialityId",
+                        column: x => x.SpecialityId,
                         principalTable: "Specialities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -322,29 +322,29 @@ namespace Exam.Migrations
                     Gender = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     RegisterUserId = table.Column<string>(nullable: true),
-                    GroupId1 = table.Column<long>(nullable: true),
-                    ExaminationId1 = table.Column<long>(nullable: true),
-                    SpecialityId1 = table.Column<long>(nullable: true),
+                    GroupId = table.Column<long>(nullable: true),
+                    ExaminationId = table.Column<long>(nullable: true),
+                    SpecialityId = table.Column<long>(nullable: true),
                     PaperCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Examinations_ExaminationId1",
-                        column: x => x.ExaminationId1,
+                        name: "FK_Students_Examinations_ExaminationId",
+                        column: x => x.ExaminationId,
                         principalTable: "Examinations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Students_Groups_GroupId1",
-                        column: x => x.GroupId1,
+                        name: "FK_Students_Groups_GroupId",
+                        column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Students_Specialities_SpecialityId1",
-                        column: x => x.SpecialityId1,
+                        name: "FK_Students_Specialities_SpecialityId",
+                        column: x => x.SpecialityId,
                         principalTable: "Specialities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -428,14 +428,14 @@ namespace Exam.Migrations
                     ProcessDate = table.Column<DateTime>(nullable: true),
                     StudentId = table.Column<long>(nullable: true),
                     SpecialityId = table.Column<long>(nullable: true),
-                    ExaminationId1 = table.Column<long>(nullable: true)
+                    ExaminationId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Applications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Applications_Examinations_ExaminationId1",
-                        column: x => x.ExaminationId1,
+                        name: "FK_Applications_Examinations_ExaminationId",
+                        column: x => x.ExaminationId,
                         principalTable: "Examinations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -639,9 +639,9 @@ namespace Exam.Migrations
                 column: "OrganisationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Applications_ExaminationId1",
+                name: "IX_Applications_ExaminationId",
                 table: "Applications",
-                column: "ExaminationId1");
+                column: "ExaminationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_SpecialityId",
@@ -676,9 +676,9 @@ namespace Exam.Migrations
                 column: "OrganisationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Groups_ExaminationId1",
+                name: "IX_Groups_ExaminationId",
                 table: "Groups",
-                column: "ExaminationId1");
+                column: "ExaminationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_RoomId",
@@ -686,9 +686,9 @@ namespace Exam.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Groups_SpecialityId1",
+                name: "IX_Groups_SpecialityId",
                 table: "Groups",
-                column: "SpecialityId1");
+                column: "SpecialityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PaperFiles_PaperId",
@@ -746,19 +746,19 @@ namespace Exam.Migrations
                 column: "ExaminationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_ExaminationId1",
+                name: "IX_Students_ExaminationId",
                 table: "Students",
-                column: "ExaminationId1");
+                column: "ExaminationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_GroupId1",
+                name: "IX_Students_GroupId",
                 table: "Students",
-                column: "GroupId1");
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_SpecialityId1",
+                name: "IX_Students_SpecialityId",
                 table: "Students",
-                column: "SpecialityId1");
+                column: "SpecialityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Supervisors_ExaminationId",
@@ -786,14 +786,14 @@ namespace Exam.Migrations
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tests_ExaminationId1",
+                name: "IX_Tests_ExaminationId",
                 table: "Tests",
-                column: "ExaminationId1");
+                column: "ExaminationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tests_SpecialityId1",
+                name: "IX_Tests_SpecialityId",
                 table: "Tests",
-                column: "SpecialityId1");
+                column: "SpecialityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TestSupervisors_SupervisorId",

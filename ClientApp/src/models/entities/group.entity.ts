@@ -19,6 +19,9 @@ export class Group extends Entity<number> {
       this.examination = value.examination;
       this.examinationId = value.examinationId;
 
+      this.room = value.room;
+      this.roomId = value.roomId;
+
       this.specialityId = value.specialityId;
       this.speciality = value.speciality;
 
@@ -42,4 +45,12 @@ export class Group extends Entity<number> {
 
   examination: Examination;
   examinationId: number;
+
+  get url(): string {
+    return `/organisations/${this.examination.organisationId}/examinations/${this.examinationId}/groups/${this.id}`;
+  }
+
+  get apiUrl(): string {
+    return `groups/${this.id}`
+  }
 }

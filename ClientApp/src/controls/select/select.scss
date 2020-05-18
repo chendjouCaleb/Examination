@@ -15,8 +15,10 @@ $ms-select-option-paddingY: 7px !default;
   border-radius: 2px;
   box-sizing: border-box;
   transition: border-width .2s;
-  width: $ms-select-width;
+  min-width: $ms-select-width;
   height: $ms-select-height;
+  padding: 0;
+
 
   &:focus {
     border-color: var(--primaryColor);
@@ -25,11 +27,12 @@ $ms-select-option-paddingY: 7px !default;
 
 .ms-select-panel-overlay {
   overflow: hidden;
+
 }
 
 .ms-select-wrapper {
   cursor: pointer;
-
+  height: $ms-select-height;
 }
 
 .ms-select-contentLayout {
@@ -76,10 +79,10 @@ $ms-select-option-paddingY: 7px !default;
   backdrop-filter: blur(20px);
   min-width: $ms-select-width;
 
+  margin: 0 10px 10px;
+
   max-height: 300px;
   overflow-y: auto;
-
-  border: 1px solid $ms-color-gray50
 }
 
 .ms-select-optionGroup {

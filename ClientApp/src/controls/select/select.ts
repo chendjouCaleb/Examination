@@ -94,6 +94,8 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
 
   public readonly _uid = `msf-select-${uniqueId++}`;
 
+  _elementWidth: number;
+
 
   /** `View -> model callback called when value changes` */
   _onChange: (value: any) => void = () => {
@@ -230,7 +232,10 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
     this._isInitialized = true;
     this._selectionModel = new SelectionModel<MsfSelectOption>(this.multiple);
 
-    this._onChange(this.value);
+    if(!this.empty){
+      this._onChange(this.value);
+    }
+
 
     Promise.resolve().then(() => {
       this._onTouched();
@@ -281,6 +286,7 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
 
   ngAfterViewInit(): void {
     this._initializedView = true;
+    this._elementWidth = this._elementRef.nativeElement.offsetWidth;
     this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
       this._selectValue(this._valueOnInit);
       this._emitChangeValue();
@@ -475,7 +481,7 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
 
   /** Whether the select has a value. */
   get empty(): boolean {
-    return this.selection.length === 0;
+    return this._selectionModel.isEmpty();
   }
 
   get selection(): MsfSelectOption[] {
