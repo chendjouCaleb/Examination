@@ -6,3 +6,4 @@ export * from './examination.model';
 export * from './principal.model';
 export * from './speciality.model';
 export * from './group.model';
+export * from './student.model';

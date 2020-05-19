@@ -1,4 +1,4 @@
-import {Entity} from "../entities/entity";
+import {Entity} from "../entities";
 
 export interface EntityLoader<T extends Entity<TID>, TID> {
   load(item: T): Promise<T>;

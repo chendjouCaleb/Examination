@@ -11,12 +11,13 @@ import {SupervisorLoader} from "./supervisor.loader";
 import {SecretaryLoader} from "./secretary.loader";
 import {SpecialityLoader} from "./speciality.loader";
 import {GroupLoader} from "./group.loader";
+import {StudentLoader} from "./student.loader";
 
 
 @NgModule({
   imports: [CommonModule],
   providers: [ClientLoader, OrganisationLoader, AdminLoader, RoomLoader, SecretaryLoader,
-    SpecialityLoader, GroupLoader,
+    SpecialityLoader, GroupLoader, StudentLoader,
     ExaminationLoader, PrincipalLoader, CorrectorLoader, SupervisorLoader]
 })
 export class LoaderModule {

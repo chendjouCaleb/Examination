@@ -695,11 +695,12 @@
               <e p="authorization.model.ts" t="Include" />
               <e p="examination.model.ts" t="Include" />
               <e p="group.model.ts" t="Include" />
+              <e p="index.ts" t="Include" />
               <e p="organisation-model.ts" t="Include" />
               <e p="principal.model.ts" t="Include" />
-              <e p="public_api.ts" t="Include" />
               <e p="room.model.ts" t="Include" />
               <e p="speciality.model.ts" t="Include" />
+              <e p="student.model.ts" t="Include" />
             </e>
             <e p="httpClient" t="Include">
               <e p="admin.httpClient.ts" t="Include" />
@@ -715,6 +716,7 @@
               <e p="room.httpClient.ts" t="Include" />
               <e p="secretary.httpClient.ts" t="Include" />
               <e p="speciality.httpClient.ts" t="Include" />
+              <e p="student.httpClient.ts" t="Include" />
               <e p="supervisor.httpClient.ts" t="Include" />
               <e p="user.httpClient.ts" t="Include" />
             </e>
@@ -728,11 +730,13 @@
               <e p="group.loader.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="loader.module.ts" t="Include" />
+              <e p="loader.ts" t="Include" />
               <e p="organisation.loader.ts" t="Include" />
               <e p="principal.loader.ts" t="Include" />
               <e p="room.loader.ts" t="Include" />
               <e p="secretary.loader.ts" t="Include" />
               <e p="speciality.loader.ts" t="Include" />
+              <e p="student.loader.ts" t="Include" />
               <e p="supervisor.loader.ts" t="Include" />
             </e>
             <e p="paging.ts" t="Include" />
