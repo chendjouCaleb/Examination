@@ -68,3 +68,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .msf-modal-portal {
   padding:0;
 }
+
+.msf-button.msf-theme-primary {
+  background-color: var(--primaryColor);
+}
+
+.msf-button:hover{
+  text-decoration: none;
+}

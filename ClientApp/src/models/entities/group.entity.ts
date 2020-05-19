@@ -10,7 +10,7 @@ export class Group extends Entity<number> {
     super();
     if (value) {
       this.id = value.id;
-      this.registrationDate = value.registrationDate;
+      this.registrationDate = new Date(value.registrationDate);
 
       this.name = value.name;
       this.capacity = value.capacity;

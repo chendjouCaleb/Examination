@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace Exam.Entities
 {
     /// <summary>
-    /// Personne chargée de l'organisation et de l'administration d'un examen.
+    /// Personne chargée des inscriptions d'étudiants pour un examen.
     /// 
     /// </summary>
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
