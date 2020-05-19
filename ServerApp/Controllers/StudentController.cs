@@ -39,16 +39,31 @@ namespace Exam.Controllers
         [HttpGet("{studentId}")]
         [LoadStudent]
         public Student Find(Student student) => student;
+        
+        [HttpGet("find")]
+        [RequireQueryParameter("examinationId")]
+        [RequireQueryParameter("registrationId")]
+        [LoadExamination(Source = ParameterSource.Query)]
+        public Student First(Examination examination, [FromQuery] string registrationId)
+        {
+            return _studentRepository.First(a => examination.Equals(a.Examination) && registrationId == a.RegistrationId);
+        }
 
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
-        public IEnumerable<Student> List(Examination examination, [FromQuery] string userId)
+        [LoadSpeciality(Source = ParameterSource.Query)]
+        public IEnumerable<Student> List(Examination examination, Speciality speciality, [FromQuery] string userId)
         {
             IQueryable<Student> set = _studentRepository.Set;
             if (examination != null)
             {
                 set = set.Where(s => s.Examination.Id == examination.Id);
+            }
+            
+            if (speciality != null)
+            {
+                set = set.Where(s => s.Speciality.Id == speciality.Id);
             }
 
             if (!string.IsNullOrWhiteSpace(userId))
@@ -63,13 +78,14 @@ namespace Exam.Controllers
         [HttpPost]
         [LoadExamination(Source = ParameterSource.Query)]
         [LoadSpeciality(Source = ParameterSource.Query)]
+        [RequireQueryParameter("examinationId")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]
         [AuthorizePrincipal]
-        public CreatedAtActionResult Add(Examination examination, Speciality speciality, Group group,
+        public CreatedAtActionResult Add(Examination examination, Speciality speciality, 
             [FromBody] StudentForm form, User user )
         {
-            Assert.RequireNonNull(group, nameof(group));
+            
             Assert.RequireNonNull(user, nameof(user));
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(examination, nameof(examination));
@@ -97,8 +113,7 @@ namespace Exam.Controllers
                 BirthDate = form.BirthDate,
                 Examination = examination,
                 RegisterUserId = user.Id,
-                Gender = form.Gender,
-                Group = group
+                Gender = form.Gender
             };
             if (speciality != null)
             {

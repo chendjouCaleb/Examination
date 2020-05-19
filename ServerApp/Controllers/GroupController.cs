@@ -19,18 +19,14 @@ namespace Exam.Controllers
     [Route("api/groups")]
     public class GroupController : Controller
     {
-        private IRepository<Examination, long> _examinationRepository;
-        private IRepository<Speciality, long> _specialityRepository;
         private IRepository<Group, long> _groupRepository;
         private ILogger<GroupController> _logger;
 
-        public GroupController(IRepository<Examination, long> examinationRepository,
-            IRepository<Speciality, long> specialityRepository,
+        public GroupController(
             IRepository<Group, long> groupRepository,
             ILogger<GroupController> logger)
         {
-            _examinationRepository = examinationRepository;
-            _specialityRepository = specialityRepository;
+            
             _groupRepository = groupRepository;
             _logger = logger;
         }

@@ -11,19 +11,22 @@ import {ExaminationModule} from 'examination/app/examination';
 import {MatRippleModule} from '@angular/material/core';
 import {SpecialityGroupListPage} from "examination/app/page/speciality/groups/speciality-group-list.page";
 import {GroupModule} from "examination/app/group";
+import {SpecialityStudentsPage} from "examination/app/page/speciality/students/speciality-students.page";
+import {StudentModule} from "examination/app/student";
 
 const routes: Routes = [
   {path: '', component: SpecialityListPage},
   {path: ':specialityId/groups', component: SpecialityGroupListPage, resolve: [SpecialityResolver]},
+  {path: ':specialityId/students', component: SpecialityStudentsPage, resolve: [SpecialityResolver]},
   {path: ':specialityId/home', component: SpecialityHomePage, resolve: [SpecialityResolver]}
 ];
 
 @NgModule({
   imports: [CommonModule, ControlModule, SpecialityModule, ExaminationModule, MsfPersonaModule,
-    MsfButtonModule, MomentModule, MatRippleModule, MsfTableModule,
+    MsfButtonModule, MomentModule, MatRippleModule, MsfTableModule, StudentModule,
     MsfIconModule, MsfMenuModule, MsfModalModule, GroupModule,
     RouterModule.forChild(routes)],
-  declarations: [SpecialityListPage, SpecialityHomePage, SpecialityGroupListPage],
+  declarations: [SpecialityListPage, SpecialityHomePage, SpecialityGroupListPage, SpecialityStudentsPage],
   providers: [SpecialityResolver]
 })
 export class SpecialityPageModule {

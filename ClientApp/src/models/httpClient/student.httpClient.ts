@@ -6,7 +6,7 @@ import {List} from "@positon/collections";
 
 @Injectable()
 export class StudentHttpClient extends GenericHttpClient<Student, number> {
-  url: string = SERVER_URL + "/Students";
+  url: string = SERVER_URL + "/students";
 
 
   createFromAny(value: any): Student {

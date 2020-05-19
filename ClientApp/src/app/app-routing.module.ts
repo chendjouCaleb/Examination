@@ -64,6 +64,12 @@ const routes: Routes = [
     loadChildren: () => import('./page/group/group-page.module').then(m => m.GroupPageModule),
   },
 
+  {
+    path: 'organisations/:organisationId/examinations/:examinationId/students',
+    resolve: [OrganisationResolver, ExaminationResolver],
+    loadChildren: () => import('./page/student/student-page.module').then(m => m.StudentPageModule),
+  },
+
   {path: '', redirectTo: 'organisations', pathMatch: 'full'}
 ];
 

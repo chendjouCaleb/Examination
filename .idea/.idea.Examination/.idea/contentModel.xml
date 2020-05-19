@@ -443,6 +443,21 @@
                   <e p="speciality-list.page.ts" t="Include" />
                 </e>
                 <e p="speciality-page.module.ts" t="Include" />
+                <e p="students" t="Include">
+                  <e p="speciality-students.page.html" t="Include" />
+                  <e p="speciality-students.page.ts" t="Include" />
+                </e>
+              </e>
+              <e p="student" t="Include">
+                <e p="Home" t="Include">
+                  <e p="student-home.page.html" t="Include" />
+                  <e p="student-home.page.ts" t="Include" />
+                </e>
+                <e p="list" t="Include">
+                  <e p="student-list.page.html" t="Include" />
+                  <e p="student-list.page.ts" t="Include" />
+                </e>
+                <e p="student-page.module.ts" t="Include" />
               </e>
               <e p="supervisor" t="Include">
                 <e p="list" t="Include">

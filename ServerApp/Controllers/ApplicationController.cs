@@ -23,7 +23,6 @@ namespace Exam.Controllers
         private IRepository<Speciality, long> _specialityRepository;
         private IRepository<Application, long> _applicationRepository;
         private IRepository<Student, long> _studentRepository;
-        private IRepository<Group, long> _groupRepository;
         private ILogger<ApplicationController> _logger;
 
         public ApplicationController(StudentController studentController,
@@ -31,7 +30,6 @@ namespace Exam.Controllers
             IRepository<Speciality, long> specialityRepository,
             IRepository<Application, long> applicationRepository, 
             IRepository<Student, long> studentRepository,
-            IRepository<Group, long> groupRepository,
             ILogger<ApplicationController> logger)
         {
             _studentController = studentController;
@@ -39,7 +37,6 @@ namespace Exam.Controllers
             _specialityRepository = specialityRepository;
             _applicationRepository = applicationRepository;
             _studentRepository = studentRepository;
-            _groupRepository = groupRepository;
             _logger = logger;
         }
 
@@ -209,17 +206,11 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireNoState.finished")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeApplicationAuthor]
-        public AcceptedResult Accept(Application application, User user, Group group)
+        public AcceptedResult Accept(Application application, User user)
         {
             Assert.RequireNonNull(application, nameof(application));
             Assert.RequireNonNull(user, nameof(user));
-            Assert.RequireNonNull(group, nameof(group));
-
-            if (!group.Examination.Equals(application.Examination))
-            {
-                throw new IncompatibleEntityException<Application, Group>(application, group);
-            }
-
+            
             StudentForm form = new StudentForm
             {
                 FullName = application.FullName,
@@ -229,7 +220,7 @@ namespace Exam.Controllers
             };
 
             Student student = _studentController
-                .Add(application.Examination, application.Speciality, group, form, user)
+                .Add(application.Examination, application.Speciality, form, user)
                 .Value as Student;
 
             _studentController.ChangeUserId(student, application.UserId);

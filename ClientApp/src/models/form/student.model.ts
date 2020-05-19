@@ -9,9 +9,7 @@ export interface StudentAddBody {
 }
 
 export interface StudentAddParams {
-  groupId: number;
-
-  specialityId: number;
+  specialityId?: number;
 }
 
 export class StudentAddModel {
@@ -21,7 +19,7 @@ export class StudentAddModel {
   registrationId: number;
 
   @IsNotEmpty()
-  @IsAlpha("fr-FR")
+
   @MinLength(3)
   fullName: string;
 
@@ -47,9 +45,11 @@ export class StudentAddModel {
   }
 
   get params(): StudentAddParams {
+    if(!this.speciality) {
+      return {};
+    }
     return {
-      groupId: this.group.id,
-      specialityId: this.speciality.id
+      specialityId: this.speciality?.id
     }
   }
 }

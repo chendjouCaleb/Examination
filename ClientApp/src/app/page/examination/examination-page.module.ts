@@ -25,13 +25,13 @@ export const routes: Routes = [
   {path: 'list', redirectTo: '', pathMatch: 'full'},
   {path: ':examinationId', redirectTo: ':examinationId/home'},
   {path: ':examinationId/home', component: ExaminationHomeComponent, resolve: [ ExaminationResolver]},
-  {path: ':examinationId/students', component: ExaminationStudentComponent, resolve: [ ExaminationResolver]},
   {path: ':examinationId/calendar', component: ExaminationCalendarComponent, resolve: [ ExaminationResolver]},
   {path: ':examinationId/settings', component: ExaminationSettingsComponent, resolve: [ ExaminationResolver]}
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfIconModule, MsfButtonModule, ExaminationModule, TestModule, LayoutModule, OrganisationModule,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfIconModule, MsfButtonModule,
+    ExaminationModule, TestModule, LayoutModule, OrganisationModule,
     ControlModule, MatDialogModule, MomentModule, MsfTableModule, MsfMenuModule, MsfCheckboxModule,
     RouterModule.forChild(routes), MatRippleModule, MatDatepickerModule],
   declarations: [ExaminationListComponent, ExaminationHomeComponent, ExaminationDeleteComponent,

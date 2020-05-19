@@ -8,8 +8,7 @@ import {CurrentItems} from "examination/app/current-items";
 })
 export class StudentResolver {
 
-  constructor(private _loader: StudentLoader, private items: CurrentItems) {
-  }
+  constructor(private _loader: StudentLoader, private items: CurrentItems) { }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Student> {
     const id = +route.paramMap.get("studentId");
@@ -18,6 +17,5 @@ export class StudentResolver {
     this.items.put("student", item);
 
     return item;
-
   }
 }

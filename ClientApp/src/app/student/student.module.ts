@@ -28,5 +28,5 @@ import {StudentLayoutComponent} from "examination/app/student/layout/student-lay
   declarations: [StudentLayoutComponent, StudentAddComponent, StudentList],
   exports: [StudentLayoutComponent, StudentAddComponent, StudentList]
 })
-export class GroupModule {
+export class StudentModule {
 }
