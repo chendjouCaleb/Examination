@@ -1,6 +1,18 @@
 ﻿import {IsAlpha, IsAlphanumeric, IsIn, IsNotEmpty, MinLength} from "class-validator";
 import {Group, Speciality} from "../entities";
 
+export interface StudentAddBody {
+  registrationId: number;
+  fullName: string;
+  birthDate: Date;
+  gender: string;
+}
+
+export interface StudentAddParams {
+  groupId: number;
+
+  specialityId: number;
+}
 
 export class StudentAddModel {
   @IsNotEmpty()
@@ -23,6 +35,23 @@ export class StudentAddModel {
   group: Group;
 
   speciality: Speciality;
+
+
+  get body(): StudentAddBody {
+    return {
+      fullName: this.fullName,
+      birthDate: this.birthDate,
+      gender: this.gender,
+      registrationId: this.registrationId
+    }
+  }
+
+  get params(): StudentAddParams {
+    return {
+      groupId: this.group.id,
+      specialityId: this.speciality.id
+    }
+  }
 }
 
 
@@ -38,14 +67,10 @@ export class StudentInfoModel {
   @IsNotEmpty()
   @IsIn(["F", "M", 'f', 'm'])
   gender: string;
-
-  group: Group;
-
-  speciality: Speciality;
 }
 
 
-export class RegistrationIdModel {
+export class StudentRegistrationIdModel {
   @IsNotEmpty()
   @IsAlphanumeric()
   @MinLength(3)

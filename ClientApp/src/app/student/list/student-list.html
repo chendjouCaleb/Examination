@@ -1,0 +1,59 @@
+﻿
+<div class="ms-fontSize-24 ms-fontWeight-light py-2 text-capitalize">étudiants</div>
+
+  <MsfTable style="width: 100%" *ngIf="students">
+    <MsfTableHead>
+      <MsfTableHeadCell>#</MsfTableHeadCell>
+      <MsfTableHeadCell>Nom</MsfTableHeadCell>
+      <MsfTableHeadCell>Matricule</MsfTableHeadCell>
+      <MsfTableHeadCell>Utilisateur</MsfTableHeadCell>
+      <MsfTableHeadCell>Spécialité</MsfTableHeadCell>
+
+      <MsfTableHeadCell>Groupe</MsfTableHeadCell>
+
+
+      <MsfTableHeadCell>Ajouté par</MsfTableHeadCell>
+      <MsfTableHeadCell>Date d'ajout</MsfTableHeadCell>
+      <MsfTableHeadCell> </MsfTableHeadCell>
+    </MsfTableHead>
+    <MsfTableRow #row *ngFor="let item of students">
+      <MsfTableCell>{{item.index}}</MsfTableCell>
+      <MsfTableCell class="ms-fontWeight-semibold">{{item.fullName}}</MsfTableCell>
+      <MsfTableCell class="ms-fontWeight-semibold">{{item.registrationId}}</MsfTableCell>
+      <MsfTableCell>
+        <MsfPersona size="size32" *ngIf="item.user">
+          <MsfPersonaFigure [text]="item.user?.fullName" size="size32"></MsfPersonaFigure>
+          <div class="ml-2">
+            <div class="ms-fontWeight-semibold">{{item.user?.fullName}}</div>
+            <div class="ms-fontSize-12" *ngIf="item.user?.username">@{{item.user?.username}}</div>
+          </div>
+        </MsfPersona>
+      </MsfTableCell>
+      <MsfTableCell class="ms-fontWeight-semibold">{{item.speciality?.name}}</MsfTableCell>
+      <MsfTableCell>{{item.group?.name}}</MsfTableCell>
+
+      <MsfTableCell>
+        <MsfPersona size="size32">
+          <MsfPersonaFigure [text]="item.registerUser?.fullName" size="size32"></MsfPersonaFigure>
+          <div class="ml-2">
+            <div class="ms-fontWeight-semibold">{{item.registerUser?.fullName}}</div>
+            <div class="ms-fontSize-12" *ngIf="item.registerUser?.username">@{{item.registerUser?.username}}</div>
+          </div>
+        </MsfPersona>
+      </MsfTableCell>
+      <MsfTableCell class="ms-fontSize-12">
+        {{item.registrationDate | amCalendar}}
+      </MsfTableCell>
+
+      <MsfTableCell style="text-align: right">
+        <a MsfButton theme="primary" class="mr-2" routerLink="/{{item.url}}/home">Détails</a>
+        <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+        <MsfMenu #more>
+          <MsfMenuItem icon="EditSolid12" >Changer le nom</MsfMenuItem>
+          <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
+        </MsfMenu>
+      </MsfTableCell>
+    </MsfTableRow>
+  </MsfTable>
+
+  <float-button *ngIf="speciality || examination" mat-ripple (click)="openAddStudentDialog()"></float-button>
