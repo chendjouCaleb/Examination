@@ -59,6 +59,15 @@
 
     </form>
 
+    <div class="ms-textField">
+      <div class="ms-textField">
+        <label labelled text="Spécialité obligatoire" for="requireSpeciality">
+          <MsfCheckbox (change)="requireSpeciality($event)" id="requireSpeciality"  [checked]="examination.requireSpeciality"></MsfCheckbox>
+        </label>
+      </div>
+    </div>
+
   </div>
+
 
 </app-examination-layout>
