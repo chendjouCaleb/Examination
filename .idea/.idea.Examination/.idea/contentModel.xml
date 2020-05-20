@@ -729,7 +729,6 @@
               <e p="paper.entity.ts" t="Include" />
               <e p="period.entity.ts" t="Include" />
               <e p="principal.entity.ts" t="Include" />
-              <e p="public_api.ts" t="Include" />
               <e p="review.entity.ts" t="Include" />
               <e p="room.entity.ts" t="Include" />
               <e p="secretary.entity.ts" t="Include" />

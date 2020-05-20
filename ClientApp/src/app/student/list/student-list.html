@@ -146,7 +146,7 @@
 
       <MsfTableCell *ngIf="canShow('action')" style="text-align: right">
         <a MsfButton theme="primary" class="mr-2" routerLink="/{{item.url}}/home">Détails</a>
-        <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+        <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical" *ngIf="_examination.userPrincipal.isPrincipal"></MsfIconButton>
         <MsfMenu #more>
           <MsfMenuItem icon="Contact" (click)="edit(item)">Modifier les informations</MsfMenuItem>
           <MsfMenuItem icon="ContactAdd" *ngIf="!item.user" (click)="link(item)">Lier à un utilisateur</MsfMenuItem>

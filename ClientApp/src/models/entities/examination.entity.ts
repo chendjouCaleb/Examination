@@ -2,6 +2,7 @@
 import {User} from "./user.entity";
 import {Organisation} from "./organisation";
 import * as moment from 'moment';
+import {ExaminationUser} from "./user-examination";
 
 export class Examination extends Entity<number>{
 
@@ -59,6 +60,8 @@ export class Examination extends Entity<number>{
   endDate: Date;
 
   state: string;
+
+  userPrincipal: ExaminationUser;
 
   studentCount: number;
 

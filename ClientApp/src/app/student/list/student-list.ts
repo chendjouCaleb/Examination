@@ -62,6 +62,13 @@ export class StudentList implements OnInit, AfterViewInit {
     });
   }
 
+  get _examination(): Examination{
+    if(this.examination){
+      return this.examination;
+    }
+    return this.speciality.examination;
+  }
+
 
   delete(student: Student) {
     const result = this._confirmation.open('Voulez-vous Supprimer cet étudiant?');

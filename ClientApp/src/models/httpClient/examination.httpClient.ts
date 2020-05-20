@@ -1,6 +1,7 @@
 import {GenericHttpClient, SERVER_URL} from "./httpClient";
-import {Examination, Organisation} from "../entities";
+import {Examination, Organisation, OrganisationUser} from "../entities";
 import {Injectable} from "@angular/core";
+import {ExaminationUser} from "../entities/user-examination";
 
 
 @Injectable()
@@ -68,6 +69,12 @@ export class ExaminationHttpClient extends GenericHttpClient<Examination, number
     await this
       .httpClient
       .put(`${this.url}/${examination.id}/relaunch`, {} )
+      .toPromise();
+  }
+
+  async examinationUser(examinationId: number, userId: string) {
+    return this.httpClient
+      .get<ExaminationUser>(`${this.url}/users?examinationId=${examinationId}&userId=${userId}`)
       .toPromise();
   }
 

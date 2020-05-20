@@ -1,4 +1,4 @@
-﻿export class UserExamination {
+﻿export class ExaminationUser {
   userId: string;
 
   isCorrector: boolean;
