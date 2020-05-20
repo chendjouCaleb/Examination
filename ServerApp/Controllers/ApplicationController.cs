@@ -265,7 +265,7 @@ namespace Exam.Controllers
         }
 
 
-        [HttpPut("{applicationId}/reject")]
+        [HttpPut("{applicationId}/cancel")]
         [LoadApplication(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]

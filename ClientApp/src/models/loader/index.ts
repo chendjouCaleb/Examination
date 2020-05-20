@@ -13,3 +13,5 @@ export * from './secretary.loader';
 export * from './speciality.loader';
 export * from './group.loader';
 export * from './student.loader';
+export * from './application.loader';
+

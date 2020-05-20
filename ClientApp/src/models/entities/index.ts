@@ -15,3 +15,4 @@ export * from './speciality.entity';
 export * from './group.entity';
 export * from './student.entity';
 export * from './user-examination';
+export * from './application.entity';

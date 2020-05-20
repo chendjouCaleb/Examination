@@ -716,6 +716,7 @@
           <e p="models" t="Include">
             <e p="Entities" t="Include">
               <e p="admin.entity.ts" t="Include" />
+              <e p="application.entity.ts" t="Include" />
               <e p="authorization.entity.ts" t="Include" />
               <e p="client.entity.ts" t="Include" />
               <e p="connection.ts" t="Include" />
@@ -755,6 +756,7 @@
             <e p="httpClient" t="Include">
               <e p="admin.httpClient.ts" t="Include" />
               <e p="AppHttpClient.module.ts" t="Include" />
+              <e p="application.httpClient.ts" t="Include" />
               <e p="client.http.client.ts" t="Include" />
               <e p="corrector.httpClient.ts" t="Include" />
               <e p="examination.httpClient.ts" t="Include" />
@@ -773,6 +775,7 @@
             <e p="index.ts" t="Include" />
             <e p="loader" t="Include">
               <e p="admin.loader.ts" t="Include" />
+              <e p="application.loader.ts" t="Include" />
               <e p="client.loader.ts" t="Include" />
               <e p="corrector.loader.ts" t="Include" />
               <e p="entity-loader.interface.ts" t="Include" />
