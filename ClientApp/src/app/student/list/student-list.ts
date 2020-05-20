@@ -125,4 +125,14 @@ export class StudentList implements OnInit, AfterViewInit {
     const modal = this._dialog.open(StudentUserLink, {disableClose: false});
     modal.componentInstance.student = student;
   }
+
+  removeUser(student: Student) {
+    const result = this._confirmation.open( "Voulez-vous supprimer la liasion entre l'étudiant et l'utilisateur");
+    result.accept.subscribe(async () => {
+      await this._httpClient.changeUserId(student, '');
+      student.user = null;
+      student.userId = null;
+      this._alertEmitter.info('La liaison a été supprimée!');
+    });
+  }
 }

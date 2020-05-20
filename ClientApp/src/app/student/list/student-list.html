@@ -151,7 +151,7 @@
           <MsfMenuItem icon="Contact" (click)="edit(item)">Modifier les informations</MsfMenuItem>
           <MsfMenuItem icon="ContactAdd" *ngIf="!item.user" (click)="link(item)">Lier à un utilisateur</MsfMenuItem>
           <MsfMenuItem icon="ContactEdit" *ngIf="item.user" (click)="link(item)">Changer l'utilisateur</MsfMenuItem>
-          <MsfMenuItem icon="ContactMinus" *ngIf="item.user">Enlever l'utilisateur</MsfMenuItem>
+          <MsfMenuItem icon="ContactMinus" *ngIf="item.user" (click)="removeUser(item)">Enlever l'utilisateur</MsfMenuItem>
           <MsfMenuItem icon="EditSolid12">Changer le matricule</MsfMenuItem>
           <MsfMenuItem>Changer la spécialité</MsfMenuItem>
           <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
