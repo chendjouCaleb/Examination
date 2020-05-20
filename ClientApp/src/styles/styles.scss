@@ -32,6 +32,11 @@ $msf-button-backgroundColor: red;
   width: 100%
 }
 
+.ms-table-container{
+  width: 100%;
+  overflow-x: auto;
+}
+
 .msf-table-row {
   &:hover {
     background-color: var(--hoverBackgroundColor);

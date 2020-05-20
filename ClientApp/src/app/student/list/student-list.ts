@@ -31,7 +31,6 @@ export class StudentList implements OnInit, AfterViewInit {
               private _httpClient: StudentHttpClient,
               private _alertEmitter: AlertEmitter,
               private _confirmation: Confirmation,
-              private _ngZone: NgZone,
               private _dialog: MsfModal) {
 
   }
@@ -71,7 +70,7 @@ export class StudentList implements OnInit, AfterViewInit {
     });
   }
 
-  columns = List.fromArray(["#", 'index', 'name', 'registrationId', 'speciality', 'gender', 'group', 'action']);
+  columns = new List<string>();
 
   @ViewChildren(MsfMenuItemCheckbox, {read: MsfCheckbox})
   menuCheckbox: QueryList<MsfCheckbox>;
@@ -90,9 +89,11 @@ export class StudentList implements OnInit, AfterViewInit {
     if(!state && this.columns.contains(column)) {
       this.columns.remove(column);
     }
+    localStorage.setItem("userListColumns", JSON.stringify(this.columns.toArray()) );
   }
 
   ngAfterViewInit(): void {
+    this.loadColumn();
     this.columnCheckbox = this.menuCheckbox.filter(item => item.name === 'column');
     Promise.resolve().then(() => {
       this.columnCheckbox.forEach(item => {
@@ -101,6 +102,17 @@ export class StudentList implements OnInit, AfterViewInit {
       });
 
     })
+  }
+
+  loadColumn() {
+    const defaultColumns = ["#", 'index', 'name', 'registrationId', 'speciality', 'gender', 'group', 'action'];
+    const columns = localStorage.getItem("userListColumns");
+    if(columns) {
+      this.columns= List.fromArray(JSON.parse(columns))
+    }else{
+      localStorage.setItem("userListColumns", JSON.stringify(defaultColumns) );
+      this.columns= List.fromArray(defaultColumns)
+    }
   }
 
 

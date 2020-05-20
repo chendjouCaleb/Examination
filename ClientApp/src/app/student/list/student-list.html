@@ -5,7 +5,10 @@
     Colonne
   </MsfButton>
   <MsfMenu #columnMenu>
-    <MsfMenuItem> <MsfCheckbox MsfMenuItemCheckbox name="column" value="#"></MsfCheckbox> # </MsfMenuItem>
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="#"></MsfCheckbox>
+      #
+    </MsfMenuItem>
 
     <MsfMenuItem>
       <MsfCheckbox MsfMenuItemCheckbox name="column" value="index"></MsfCheckbox>
@@ -23,10 +26,14 @@
     </MsfMenuItem>
 
     <MsfMenuItem>
-      <MsfCheckbox MsfMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox> Date de naissance
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox>
+      Date de naissance
     </MsfMenuItem>
 
-    <MsfMenuItem> <MsfCheckbox MsfMenuItemCheckbox name="column" value="gender"></MsfCheckbox> Genre </MsfMenuItem>
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="gender"></MsfCheckbox>
+      Genre
+    </MsfMenuItem>
 
     <MsfMenuItem>
       <MsfCheckbox MsfMenuItemCheckbox name="column" value="speciality"></MsfCheckbox>
@@ -63,10 +70,11 @@
   </MsfMenu>
 </div>
 
+<div class="ms-table-container">
   <MsfTable *ngIf="students">
     <MsfTableHead>
       <MsfTableHeadCell *ngIf="canShow('#')">#</MsfTableHeadCell>
-      <MsfTableHeadCell  sortBy="index" *ngIf="canShow('index')">N°(DeGroupe)</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="index" *ngIf="canShow('index')">N°(DeGroupe)</MsfTableHeadCell>
       <MsfTableHeadCell sortBy="fullName" *ngIf="canShow('name')">Nom</MsfTableHeadCell>
       <MsfTableHeadCell *ngIf="canShow('registrationId')">Matricule</MsfTableHeadCell>
       <MsfTableHeadCell sortBy="birthDate" *ngIf="canShow('birthDate')">Date de naissance</MsfTableHeadCell>
@@ -141,8 +149,9 @@
         <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
         <MsfMenu #more>
           <MsfMenuItem icon="Contact" (click)="edit(item)">Modifier les informations</MsfMenuItem>
-          <MsfMenuItem icon="ContactAdd" (click)="link(item)">Lier à un utilisateur</MsfMenuItem>
-          <MsfMenuItem icon="ContactMinus">Enlever l'utilisateur</MsfMenuItem>
+          <MsfMenuItem icon="ContactAdd" *ngIf="!item.user" (click)="link(item)">Lier à un utilisateur</MsfMenuItem>
+          <MsfMenuItem icon="ContactEdit" *ngIf="item.user" (click)="link(item)">Changer l'utilisateur</MsfMenuItem>
+          <MsfMenuItem icon="ContactMinus" *ngIf="item.user">Enlever l'utilisateur</MsfMenuItem>
           <MsfMenuItem icon="EditSolid12">Changer le matricule</MsfMenuItem>
           <MsfMenuItem>Changer la spécialité</MsfMenuItem>
           <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
@@ -151,4 +160,5 @@
     </MsfTableRow>
   </MsfTable>
 
-<float-button *ngIf="speciality || examination" mat-ripple (click)="openAddStudentDialog()"></float-button>
+  <float-button *ngIf="speciality || examination" mat-ripple (click)="openAddStudentDialog()"></float-button>
+</div>

@@ -28,6 +28,9 @@ export class Student extends Entity<number> {
       this.specialityId = value.specialityId;
       this.speciality = value.speciality;
 
+      this.userId = value.userId;
+      this.user = value.user;
+
       this.registerUserId = value.registerUserId;
       this.registerUser = value.registerUser;
     }
