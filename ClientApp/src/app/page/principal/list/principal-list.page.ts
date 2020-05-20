@@ -48,7 +48,7 @@ export class PrincipalListPage implements OnInit {
   }
 
   openAddPrincipalModal() {
-    const modalRef = this._modal.open(PrincipalAddComponent);
+    const modalRef = this._modal.open(PrincipalAddComponent, {autoFocus: false, disableClose: true});
     modalRef.componentInstance.examination = this.examination;
     modalRef.afterClosed().subscribe(result => {
       if (result) {

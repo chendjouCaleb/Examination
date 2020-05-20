@@ -148,14 +148,14 @@
         <a MsfButton theme="primary" class="mr-2" routerLink="/{{item.url}}/home">Détails</a>
         <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical" *ngIf="_examination.userPrincipal.isPrincipal"></MsfIconButton>
         <MsfMenu #more>
-          <MsfMenuItem icon="Contact" (click)="edit(item)">Modifier les informations</MsfMenuItem>
-          <MsfMenuItem icon="ContactAdd" *ngIf="!item.user" (click)="link(item)">Lier à un utilisateur</MsfMenuItem>
-          <MsfMenuItem icon="ContactEdit" *ngIf="item.user" (click)="link(item)">Changer l'utilisateur</MsfMenuItem>
-          <MsfMenuItem icon="ContactMinus" *ngIf="item.user" (click)="removeUser(item)">Enlever l'utilisateur</MsfMenuItem>
-          <MsfMenuItem icon="EditSolid12" (click)="changeRegistrationId(item)">Changer le matricule</MsfMenuItem>
-          <MsfMenuItem (click)="changeSpeciality(item)" *ngIf="item.speciality">Changer la spécialité</MsfMenuItem>
-          <MsfMenuItem (click)="changeSpeciality(item)" *ngIf="!item.speciality">Assigner une spécialité</MsfMenuItem>
-          <MsfMenuItem (click)="removeSpeciality(item)" *ngIf="item.speciality">Enlever la spécialité</MsfMenuItem>
+          <MsfMenuItem icon="Contact" (click)="_studentService.edit(item)">Modifier les informations</MsfMenuItem>
+          <MsfMenuItem icon="ContactAdd" *ngIf="!item.user" (click)="_studentService.link(item)">Lier à un utilisateur</MsfMenuItem>
+          <MsfMenuItem icon="ContactEdit" *ngIf="item.user" (click)="_studentService.link(item)">Changer l'utilisateur</MsfMenuItem>
+          <MsfMenuItem icon="ContactMinus" *ngIf="item.user" (click)="_studentService.removeUser(item)">Enlever l'utilisateur</MsfMenuItem>
+          <MsfMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(item)">Changer le matricule</MsfMenuItem>
+          <MsfMenuItem (click)="_studentService.changeSpeciality(item)" *ngIf="item.speciality">Changer la spécialité</MsfMenuItem>
+          <MsfMenuItem (click)="_studentService.changeSpeciality(item)" *ngIf="!item.speciality">Assigner une spécialité</MsfMenuItem>
+          <MsfMenuItem (click)="_studentService.removeSpeciality(item)" *ngIf="item.speciality">Enlever la spécialité</MsfMenuItem>
           <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
         </MsfMenu>
       </MsfTableCell>

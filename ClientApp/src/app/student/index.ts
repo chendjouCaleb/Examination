@@ -5,3 +5,5 @@ export * from './list/student-list';
 export * from './layout/student-layout.component';
 export * from "./edit/student-edit.component";
 export * from './user-link/student-user-link';
+export * from './student.service';
+export * from './registrationId/student-registrationId'

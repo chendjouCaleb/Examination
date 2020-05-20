@@ -24,6 +24,7 @@ import {UserPickerModule} from "examination/app/user-picker";
 import {StudentUserLink} from "examination/app/student/user-link/student-user-link";
 import {StudentSpeciality} from "examination/app/student/speciality/student-speciality";
 import {StudentRegistrationId} from "examination/app/student/registrationId/student-registrationId";
+import {StudentService} from "examination/app/student/student.service";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
@@ -33,7 +34,9 @@ import {StudentRegistrationId} from "examination/app/student/registrationId/stud
   declarations: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
     StudentSpeciality, StudentRegistrationId, StudentList],
   exports: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
-    StudentSpeciality, StudentRegistrationId,  StudentList]
+    StudentSpeciality, StudentRegistrationId,  StudentList],
+
+  providers: [ StudentService ]
 })
 export class StudentModule {
 }
