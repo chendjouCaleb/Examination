@@ -52,4 +52,8 @@ export class StudentHttpClient extends GenericHttpClient<Student, number> {
     )
       .toPromise();
   }
+
+  async removeSpeciality(student: Student) {
+    return this.httpClient.put(`${this.url}/${student.id}/speciality`, {} ).toPromise();
+  }
 }

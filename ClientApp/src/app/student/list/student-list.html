@@ -155,6 +155,7 @@
           <MsfMenuItem icon="EditSolid12" (click)="changeRegistrationId(item)">Changer le matricule</MsfMenuItem>
           <MsfMenuItem (click)="changeSpeciality(item)" *ngIf="item.speciality">Changer la spécialité</MsfMenuItem>
           <MsfMenuItem (click)="changeSpeciality(item)" *ngIf="!item.speciality">Assigner une spécialité</MsfMenuItem>
+          <MsfMenuItem (click)="removeSpeciality(item)" *ngIf="item.speciality">Enlever la spécialité</MsfMenuItem>
           <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
         </MsfMenu>
       </MsfTableCell>

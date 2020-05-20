@@ -129,12 +129,23 @@ export class StudentList implements OnInit, AfterViewInit {
   }
 
   removeUser(student: Student) {
-    const result = this._confirmation.open( "Voulez-vous supprimer la liasion entre l'étudiant et l'utilisateur");
+    const result = this._confirmation.open( "Voulez-vous supprimer la liaison entre l'étudiant et l'utilisateur");
     result.accept.subscribe(async () => {
       await this._httpClient.changeUserId(student, '');
       student.user = null;
       student.userId = null;
       this._alertEmitter.info('La liaison a été supprimée!');
+    });
+  }
+
+  removeSpeciality(student: Student) {
+    const result = this._confirmation
+      .open(`Voulez-vous enlever l'étudiant ${student.fullName} de la spécialité ${student.speciality?.name}` );
+    result.accept.subscribe(async () => {
+      await this._httpClient.removeSpeciality(student);
+      this._alertEmitter.info(`L'étudiant ${student.fullName} a été enlevé de la spécialité ${student.speciality?.name}`);
+      student.speciality = null;
+      student.specialityId = null;
     });
   }
 
