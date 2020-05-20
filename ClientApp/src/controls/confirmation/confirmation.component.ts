@@ -1,21 +1,22 @@
-﻿import {Component, Inject} from "@angular/core";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+﻿import {Component, Input} from "@angular/core";
+import {MsfModalRef} from "fabric-docs";
 
 @Component({
   template: `
-      <div mat-dialog-content class="ms-fontSize-20 font-weight-light">  {{message}} </div>
-      <div mat-dialog-actions>
-          <button MsfButton (click)="close(false)">Non</button>
+    <div class="ms-form p-3">
+      <div class="ms-fontSize-20 ">  {{message}} </div>
+      <div class="mt-3 text-center">
+          <button MsfButton theme="standard" (click)="close(false)">Non</button>
           <button MsfButton theme="primary" class="ml-2" (click)="close(true)" >Oui</button>
       </div>
+    </div>
   `
 })
 export class ConfirmationComponent {
+  @Input()
   message: string = "";
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: any, private dialogRef: MatDialogRef<ConfirmationComponent>) {
-    this.message = data.message;
-  }
+  constructor(private dialogRef: MsfModalRef<ConfirmationComponent>) {  }
 
   close(value: boolean) {
     this.dialogRef.close(value);
