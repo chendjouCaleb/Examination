@@ -737,6 +737,7 @@
               <e p="student.entity.ts" t="Include" />
               <e p="supervisor.entity.ts" t="Include" />
               <e p="test.entity.ts" t="Include" />
+              <e p="user-examination.ts" t="Include" />
               <e p="user.entity.ts" t="Include" />
             </e>
             <e p="form" t="Include">
@@ -840,6 +841,7 @@
           <e p="SupervisorController.cs" t="Include" />
           <e p="TestController.cs" t="Include" />
           <e p="TestGroupController.cs" t="Include" />
+          <e p="UserExaminationController.cs" t="Include" />
           <e p="UserOrganisationController.cs" t="Include" />
         </e>
         <e p="Core.dll" t="Include" />
@@ -865,6 +867,7 @@
           <e p="Supervisor.cs" t="Include" />
           <e p="Test.cs" t="Include" />
           <e p="TestGroup.cs" t="Include" />
+          <e p="UserExamination.cs" t="Include" />
           <e p="UserOrganisation.cs" t="Include" />
         </e>
         <e p="Filters" t="Include">
