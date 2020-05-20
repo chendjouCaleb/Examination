@@ -19,14 +19,15 @@ import {StudentAddComponent} from "examination/app/student/add/student-add.compo
 import {StudentList} from "examination/app/student/list/student-list";
 import {MatRippleModule} from "@angular/material/core";
 import {StudentLayoutComponent} from "examination/app/student/layout/student-layout.component";
+import {StudentEditComponent} from "examination/app/student/edit/student-edit.component";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
     AppFormModule, MsfTableModule, MsfPersonaModule, MsfMenuModule, MomentModule, MsfRadioModule,
     MatDatepickerModule, MatRippleModule, MsfCheckboxModule,
     MsfPivotModule, MsfModalModule, MsfTabModule, ExaminationModule, RouterModule],
-  declarations: [StudentLayoutComponent, StudentAddComponent, StudentList],
-  exports: [StudentLayoutComponent, StudentAddComponent, StudentList]
+  declarations: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentList],
+  exports: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentList]
 })
 export class StudentModule {
 }

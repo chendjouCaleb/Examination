@@ -521,6 +521,10 @@
                 <e p="student-add.component.html" t="Include" />
                 <e p="student-add.component.ts" t="Include" />
               </e>
+              <e p="edit" t="Include">
+                <e p="student-edit.component.html" t="Include" />
+                <e p="student-edit.component.ts" t="Include" />
+              </e>
               <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="layout" t="Include">

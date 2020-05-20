@@ -62,15 +62,15 @@
 
   </MsfMenu>
 </div>
-<div>
+
   <MsfTable *ngIf="students">
     <MsfTableHead>
       <MsfTableHeadCell *ngIf="canShow('#')">#</MsfTableHeadCell>
-      <MsfTableHeadCell *ngIf="canShow('index')">N°(DeGroupe)</MsfTableHeadCell>
-      <MsfTableHeadCell *ngIf="canShow('name')">Nom</MsfTableHeadCell>
+      <MsfTableHeadCell  sortBy="index" *ngIf="canShow('index')">N°(DeGroupe)</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="fullName" *ngIf="canShow('name')">Nom</MsfTableHeadCell>
       <MsfTableHeadCell *ngIf="canShow('registrationId')">Matricule</MsfTableHeadCell>
-      <MsfTableHeadCell *ngIf="canShow('birthDate')">Date de naissance</MsfTableHeadCell>
-      <MsfTableHeadCell *ngIf="canShow('gender')">Genre</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="birthDate" *ngIf="canShow('birthDate')">Date de naissance</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="gender" *ngIf="canShow('gender')">Genre</MsfTableHeadCell>
 
       <MsfTableHeadCell *ngIf="canShow('speciality')">Spécialité</MsfTableHeadCell>
 
@@ -78,20 +78,27 @@
 
       <MsfTableHeadCell *ngIf="canShow('user')">Utilisateur</MsfTableHeadCell>
 
-      <MsfTableHeadCell *ngIf="canShow('registrationDate')">Date d'ajout</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="registrationDate" *ngIf="canShow('registrationDate')">Date d'ajout</MsfTableHeadCell>
       <MsfTableHeadCell *ngIf="canShow('registerUser')">Ajouté par</MsfTableHeadCell>
 
       <MsfTableHeadCell *ngIf="canShow('action')">Actions</MsfTableHeadCell>
     </MsfTableHead>
-    <MsfTableRow #row *ngFor="let item of students">
+
+    <MsfTableRow #row *ngFor="let item of students" [value]="item">
       <MsfTableCell *ngIf="canShow('#')">{{row.index}}</MsfTableCell>
-      <MsfTableCell *ngIf="canShow('index')">{{item.index}} ({{item.groupIndex}})</MsfTableCell>
+
+      <MsfTableCell class="ms-fontColor-sharedBlue10" *ngIf="canShow('index')">
+        {{item.index}} ({{item.groupIndex}})
+      </MsfTableCell>
+
       <MsfTableCell *ngIf="canShow('name')">
         <div class="ms-fontWeight-semibold text-capitalize">{{item.fullName}}</div>
       </MsfTableCell>
-      <MsfTableCell class="ms-fontWeight-semibold" *ngIf="canShow('registrationId')">
+
+      <MsfTableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10" *ngIf="canShow('registrationId')">
         {{item.registrationId}}
       </MsfTableCell>
+
       <MsfTableCell *ngIf="canShow('birthDate')">
         {{item.birthDate | amCalendar}}
       </MsfTableCell>
@@ -133,7 +140,8 @@
         <a MsfButton theme="primary" class="mr-2" routerLink="/{{item.url}}/home">Détails</a>
         <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
         <MsfMenu #more>
-          <MsfMenuItem icon="Contact">Modifier les informations</MsfMenuItem>
+          <MsfMenuItem icon="Contact" (click)="edit(item)">Modifier les informations</MsfMenuItem>
+          <MsfMenuItem icon="ContactAdd">Lier à un utilisateur</MsfMenuItem>
           <MsfMenuItem icon="EditSolid12">Changer le matricule</MsfMenuItem>
           <MsfMenuItem>Changer la spécialité</MsfMenuItem>
           <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
@@ -141,5 +149,5 @@
       </MsfTableCell>
     </MsfTableRow>
   </MsfTable>
-</div>
+
 <float-button *ngIf="speciality || examination" mat-ripple (click)="openAddStudentDialog()"></float-button>

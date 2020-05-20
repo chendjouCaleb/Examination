@@ -265,7 +265,7 @@ namespace Exam.Controllers
         }
 
 
-        [HttpPut("{studentId}")]
+        [HttpDelete("{studentId}")]
         [LoadStudent(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]

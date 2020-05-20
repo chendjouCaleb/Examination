@@ -57,7 +57,6 @@ export class StudentAddModel {
 
 export class StudentInfoModel {
   @IsNotEmpty()
-  @IsAlpha("fr-FR")
   @MinLength(3)
   fullName: string;
 

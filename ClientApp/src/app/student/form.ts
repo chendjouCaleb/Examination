@@ -29,11 +29,11 @@ export class StudentAddForm extends EvFormGroup<StudentAddModel> {
 
 
 export class StudentInfoForm extends EvFormGroup<StudentInfoModel> {
-  constructor() {
+  constructor(value: any = {}) {
     super({
-      fullName: new EvFormControl("fullName", ""),
-      gender: new EvFormControl("gender", ""),
-      birthDate: new EvFormControl("birthDate", "")
+      fullName: new EvFormControl("fullName", value.fullName),
+      gender: new EvFormControl("gender", value.gender),
+      birthDate: new EvFormControl("birthDate", value.birthDate)
     });
   }
 

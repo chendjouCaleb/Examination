@@ -5,6 +5,7 @@ import {Examination, Student, StudentHttpClient, StudentLoader, Speciality, Grou
 import {AlertEmitter, Confirmation} from "examination/controls";
 import {MsfCheckbox, MsfMenuItemCheckbox, MsfModal} from "fabric-docs";
 import {StudentAddComponent} from '../add/student-add.component';
+import {StudentEditComponent} from "examination/app/student/edit/student-edit.component";
 
 
 @Component({
@@ -69,7 +70,7 @@ export class StudentList implements OnInit, AfterViewInit {
     });
   }
 
-  columns = List.fromArray(["#", 'index', 'name', 'registrationId', 'speciality', 'group', 'action']);
+  columns = List.fromArray(["#", 'index', 'name', 'registrationId', 'speciality', 'gender', 'group', 'action']);
 
   @ViewChildren(MsfMenuItemCheckbox, {read: MsfCheckbox})
   menuCheckbox: QueryList<MsfCheckbox>;
@@ -99,5 +100,11 @@ export class StudentList implements OnInit, AfterViewInit {
       });
 
     })
+  }
+
+
+  edit(student: Student) {
+    const modal = this._dialog.open(StudentEditComponent, {disableClose: false});
+    modal.componentInstance.student = student;
   }
 }
