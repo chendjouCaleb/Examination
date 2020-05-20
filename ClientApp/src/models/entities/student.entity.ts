@@ -16,8 +16,8 @@ export class Student extends Entity<number> {
       this.registrationId = value.registrationId;
       this.birthDate = new Date(value.birthDate);
       this.gender = value.gender;
-      this.index = value.index;
-      this.groupIndex = value.groupIndex;
+      this.index = value.index ? value.index : 0;
+      this.groupIndex = value.groupIndex ? value.groupIndex : 0;
 
       this.examination = value.examination;
       this.examinationId = value.examinationId;
@@ -38,8 +38,8 @@ export class Student extends Entity<number> {
   birthDate: Date;
   gender: string;
 
-  index: number;
-  groupIndex: number;
+  index: number = 0;
+  groupIndex: number = 0;
 
 
   userId: string;

@@ -1,9 +1,9 @@
-﻿import {Component, Input, OnInit} from '@angular/core';
+﻿import {AfterViewInit, Component, Input, NgZone, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {CurrentItems} from 'src/app/current-items';
 import {List} from '@positon/collections';
 import {Examination, Student, StudentHttpClient, StudentLoader, Speciality, Group} from "examination/models";
 import {AlertEmitter, Confirmation} from "examination/controls";
-import {MsfModal} from "fabric-docs";
+import {MsfCheckbox, MsfMenuItemCheckbox, MsfModal} from "fabric-docs";
 import {StudentAddComponent} from '../add/student-add.component';
 
 
@@ -11,7 +11,8 @@ import {StudentAddComponent} from '../add/student-add.component';
   templateUrl: 'student-list.html',
   selector: 'app-student-list'
 })
-export class StudentList implements OnInit {
+export class StudentList implements OnInit, AfterViewInit {
+
 
   @Input()
   examination: Examination;
@@ -28,6 +29,7 @@ export class StudentList implements OnInit {
               private _httpClient: StudentHttpClient,
               private _alertEmitter: AlertEmitter,
               private _confirmation: Confirmation,
+              private _ngZone: NgZone,
               private _dialog: MsfModal) {
 
   }
@@ -65,5 +67,37 @@ export class StudentList implements OnInit {
       this.students.remove(student);
       this._alertEmitter.info('L\'étudiant a été supprimé!');
     });
+  }
+
+  columns = List.fromArray(["#", 'index', 'name', 'registrationId', 'speciality', 'group', 'action']);
+
+  @ViewChildren(MsfMenuItemCheckbox, {read: MsfCheckbox})
+  menuCheckbox: QueryList<MsfCheckbox>;
+
+  columnCheckbox: MsfCheckbox[] = [];
+
+  canShow(column: string): boolean {
+    return this.columns.contains(column);
+  }
+
+  columnState(column: string, state: boolean){
+    if(state && !this.columns.contains(column)) {
+      this.columns.add(column);
+    }
+
+    if(!state && this.columns.contains(column)) {
+      this.columns.remove(column);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.columnCheckbox = this.menuCheckbox.filter(item => item.name === 'column');
+    Promise.resolve().then(() => {
+      this.columnCheckbox.forEach(item => {
+        item.checked = this.canShow(item.value);
+        item.change.subscribe(() => this.columnState(item.value, item.checked));
+      });
+
+    })
   }
 }

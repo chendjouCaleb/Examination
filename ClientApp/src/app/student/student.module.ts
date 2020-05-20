@@ -1,7 +1,7 @@
 ﻿import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
-  MsfButtonModule,
+  MsfButtonModule, MsfCheckboxModule,
   MsfMenuModule,
   MsfModalModule,
   MsfPersonaModule,
@@ -23,7 +23,7 @@ import {StudentLayoutComponent} from "examination/app/student/layout/student-lay
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
     AppFormModule, MsfTableModule, MsfPersonaModule, MsfMenuModule, MomentModule, MsfRadioModule,
-    MatDatepickerModule, MatRippleModule,
+    MatDatepickerModule, MatRippleModule, MsfCheckboxModule,
     MsfPivotModule, MsfModalModule, MsfTabModule, ExaminationModule, RouterModule],
   declarations: [StudentLayoutComponent, StudentAddComponent, StudentList],
   exports: [StudentLayoutComponent, StudentAddComponent, StudentList]

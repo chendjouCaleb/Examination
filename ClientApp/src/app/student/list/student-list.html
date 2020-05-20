@@ -1,29 +1,111 @@
-﻿
-<div class="ms-fontSize-24 ms-fontWeight-light py-2 text-capitalize">étudiants</div>
+﻿<div class="ms-fontSize-24 ms-fontWeight-light py-2 text-capitalize">étudiants</div>
 
-  <MsfTable style="width: 100%" *ngIf="students">
+<div>
+  <MsfButton theme="primary" [MsfMenuTrigger]="columnMenu" xPosition="ltl" LeftIcon="ChevronDown" [outline]="true">
+    Colonne
+  </MsfButton>
+  <MsfMenu #columnMenu>
+    <MsfMenuItem> <MsfCheckbox MsfMenuItemCheckbox name="column" value="#"></MsfCheckbox> # </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="index"></MsfCheckbox>
+      N°
+    </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="name"></MsfCheckbox>
+      Nom & prénom
+    </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationId"></MsfCheckbox>
+      Matricule
+    </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox> Date de naissance
+    </MsfMenuItem>
+
+    <MsfMenuItem> <MsfCheckbox MsfMenuItemCheckbox name="column" value="gender"></MsfCheckbox> Genre </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="speciality"></MsfCheckbox>
+      Spécialité
+    </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="group"></MsfCheckbox>
+      Groupe
+    </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="user"></MsfCheckbox>
+      Utilisateur
+    </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationDate"></MsfCheckbox>
+      Date d'ajout
+    </MsfMenuItem>
+
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="registerUser"></MsfCheckbox>
+      Ajouté par
+    </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="action"></MsfCheckbox>
+      Action
+    </MsfMenuItem>
+
+
+  </MsfMenu>
+</div>
+<div>
+  <MsfTable *ngIf="students">
     <MsfTableHead>
-      <MsfTableHeadCell>#</MsfTableHeadCell>
-      <MsfTableHeadCell>Nom</MsfTableHeadCell>
-      <MsfTableHeadCell>Matricule</MsfTableHeadCell>
-      <MsfTableHeadCell>Utilisateur</MsfTableHeadCell>
-      <MsfTableHeadCell>Spécialité</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('#')">#</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('index')">N°(DeGroupe)</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('name')">Nom</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('registrationId')">Matricule</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('birthDate')">Date de naissance</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('gender')">Genre</MsfTableHeadCell>
 
-      <MsfTableHeadCell>Groupe</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('speciality')">Spécialité</MsfTableHeadCell>
 
+      <MsfTableHeadCell *ngIf="canShow('group')">Groupe</MsfTableHeadCell>
 
-      <MsfTableHeadCell>Ajouté par</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('user')">Utilisateur</MsfTableHeadCell>
 
-      <MsfTableHeadCell> </MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('registrationDate')">Date d'ajout</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('registerUser')">Ajouté par</MsfTableHeadCell>
+
+      <MsfTableHeadCell *ngIf="canShow('action')">Actions</MsfTableHeadCell>
     </MsfTableHead>
     <MsfTableRow #row *ngFor="let item of students">
-      <MsfTableCell>{{row.index}}</MsfTableCell>
-      <MsfTableCell >
-        <div class="ms-fontWeight-semibold">{{item.fullName}}</div>
-        <div class="ms-fontSize-12"> {{item.registrationDate | amCalendar}}</div>
+      <MsfTableCell *ngIf="canShow('#')">{{row.index}}</MsfTableCell>
+      <MsfTableCell *ngIf="canShow('index')">{{item.index}} ({{item.groupIndex}})</MsfTableCell>
+      <MsfTableCell *ngIf="canShow('name')">
+        <div class="ms-fontWeight-semibold text-capitalize">{{item.fullName}}</div>
       </MsfTableCell>
-      <MsfTableCell class="ms-fontWeight-semibold">{{item.registrationId}}</MsfTableCell>
-      <MsfTableCell>
+      <MsfTableCell class="ms-fontWeight-semibold" *ngIf="canShow('registrationId')">
+        {{item.registrationId}}
+      </MsfTableCell>
+      <MsfTableCell *ngIf="canShow('birthDate')">
+        {{item.birthDate | amCalendar}}
+      </MsfTableCell>
+
+      <MsfTableCell *ngIf="canShow('gender')">
+        {{item.gender}}
+      </MsfTableCell>
+
+      <MsfTableCell *ngIf="canShow('speciality')" class="ms-fontWeight-semibold">
+        {{item.speciality?.name}}
+      </MsfTableCell>
+      <MsfTableCell *ngIf="canShow('group')">{{item.group?.name}}</MsfTableCell>
+
+      <MsfTableCell *ngIf="canShow('user')">
         <MsfPersona size="size32" *ngIf="item.user">
           <MsfPersonaFigure [text]="item.user?.fullName" size="size32"></MsfPersonaFigure>
           <div class="ml-2">
@@ -32,10 +114,11 @@
           </div>
         </MsfPersona>
       </MsfTableCell>
-      <MsfTableCell class="ms-fontWeight-semibold">{{item.speciality?.name}}</MsfTableCell>
-      <MsfTableCell>{{item.group?.name}}</MsfTableCell>
 
-      <MsfTableCell>
+      <MsfTableCell *ngIf="canShow('registrationDate')"
+                    class="ms-fontSize-12"> {{item.registrationDate | amCalendar}}</MsfTableCell>
+
+      <MsfTableCell *ngIf="canShow('registerUser')">
         <MsfPersona size="size32">
           <MsfPersonaFigure [text]="item.registerUser?.fullName" size="size32"></MsfPersonaFigure>
           <div class="ml-2">
@@ -46,15 +129,17 @@
       </MsfTableCell>
 
 
-      <MsfTableCell style="text-align: right">
+      <MsfTableCell *ngIf="canShow('action')" style="text-align: right">
         <a MsfButton theme="primary" class="mr-2" routerLink="/{{item.url}}/home">Détails</a>
         <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
         <MsfMenu #more>
-          <MsfMenuItem icon="EditSolid12" >Changer le nom</MsfMenuItem>
+          <MsfMenuItem icon="Contact">Modifier les informations</MsfMenuItem>
+          <MsfMenuItem icon="EditSolid12">Changer le matricule</MsfMenuItem>
+          <MsfMenuItem>Changer la spécialité</MsfMenuItem>
           <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
         </MsfMenu>
       </MsfTableCell>
     </MsfTableRow>
   </MsfTable>
-
-  <float-button *ngIf="speciality || examination" mat-ripple (click)="openAddStudentDialog()"></float-button>
+</div>
+<float-button *ngIf="speciality || examination" mat-ripple (click)="openAddStudentDialog()"></float-button>
