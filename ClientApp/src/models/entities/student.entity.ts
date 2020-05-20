@@ -36,7 +36,7 @@ export class Student extends Entity<number> {
     }
   }
 
-  registrationId: number;
+  registrationId: string;
   fullName: string;
   birthDate: Date;
   gender: string;

@@ -535,6 +535,10 @@
                 <e p="student-list.html" t="Include" />
                 <e p="student-list.ts" t="Include" />
               </e>
+              <e p="registrationId" t="Include">
+                <e p="student-registrationId.html" t="Include" />
+                <e p="student-registrationId.ts" t="Include" />
+              </e>
               <e p="speciality" t="Include">
                 <e p="student-speciality.html" t="Include" />
                 <e p="student-speciality.ts" t="Include" />

@@ -23,14 +23,17 @@ import {StudentEditComponent} from "examination/app/student/edit/student-edit.co
 import {UserPickerModule} from "examination/app/user-picker";
 import {StudentUserLink} from "examination/app/student/user-link/student-user-link";
 import {StudentSpeciality} from "examination/app/student/speciality/student-speciality";
+import {StudentRegistrationId} from "examination/app/student/registrationId/student-registrationId";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
     AppFormModule, MsfTableModule, MsfPersonaModule, MsfMenuModule, MomentModule, MsfRadioModule,
     MatDatepickerModule, MatRippleModule, MsfCheckboxModule, UserPickerModule,
     MsfPivotModule, MsfModalModule, MsfTabModule, ExaminationModule, RouterModule],
-  declarations: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink, StudentSpeciality, StudentList],
-  exports: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink, StudentSpeciality, StudentList]
+  declarations: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
+    StudentSpeciality, StudentRegistrationId, StudentList],
+  exports: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
+    StudentSpeciality, StudentRegistrationId,  StudentList]
 })
 export class StudentModule {
 }

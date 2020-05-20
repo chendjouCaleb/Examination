@@ -8,6 +8,7 @@ import {StudentAddComponent} from '../add/student-add.component';
 import {StudentEditComponent} from "examination/app/student/edit/student-edit.component";
 import {StudentUserLink} from "examination/app/student/user-link/student-user-link";
 import {StudentSpeciality} from "examination/app/student/speciality/student-speciality";
+import {StudentRegistrationId} from "examination/app/student/registrationId/student-registrationId";
 
 
 @Component({
@@ -139,6 +140,11 @@ export class StudentList implements OnInit, AfterViewInit {
 
   changeSpeciality(student: Student) {
     const modal = this._dialog.open(StudentSpeciality, {disableClose: true});
+    modal.componentInstance.student = student;
+  }
+
+  changeRegistrationId(student: Student) {
+    const modal = this._dialog.open(StudentRegistrationId, {disableClose: true});
     modal.componentInstance.student = student;
   }
 }
