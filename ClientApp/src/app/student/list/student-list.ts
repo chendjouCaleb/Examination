@@ -6,6 +6,7 @@ import {AlertEmitter, Confirmation} from "examination/controls";
 import {MsfCheckbox, MsfMenuItemCheckbox, MsfModal} from "fabric-docs";
 import {StudentAddComponent} from '../add/student-add.component';
 import {StudentEditComponent} from "examination/app/student/edit/student-edit.component";
+import {StudentUserLink} from "examination/app/student/user-link/student-user-link";
 
 
 @Component({
@@ -105,6 +106,11 @@ export class StudentList implements OnInit, AfterViewInit {
 
   edit(student: Student) {
     const modal = this._dialog.open(StudentEditComponent, {disableClose: false});
+    modal.componentInstance.student = student;
+  }
+
+  link(student: Student) {
+    const modal = this._dialog.open(StudentUserLink, {disableClose: false});
     modal.componentInstance.student = student;
   }
 }

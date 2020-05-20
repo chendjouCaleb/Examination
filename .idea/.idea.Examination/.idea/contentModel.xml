@@ -537,6 +537,10 @@
               </e>
               <e p="student.module.ts" t="Include" />
               <e p="student.resolver.ts" t="Include" />
+              <e p="user-link" t="Include">
+                <e p="student-user-link.html" t="Include" />
+                <e p="student-user-link.ts" t="Include" />
+              </e>
             </e>
             <e p="supervisor" t="Include">
               <e p="add" t="Include">

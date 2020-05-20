@@ -16,7 +16,7 @@ export class StudentHttpClient extends GenericHttpClient<Student, number> {
   async findByRegistrationId(examination: Examination, registrationId: string): Promise<Student> {
     const result = this.httpClient
       .get(`${this.url}/find?examinationId=${examination.id}&registrationId=${registrationId}`).toPromise();
-    if(result) {
+    if (result) {
       return new Student(result);
     }
     return null;
@@ -33,5 +33,23 @@ export class StudentHttpClient extends GenericHttpClient<Student, number> {
 
   listByGroup(group: Group): Promise<List<Student>> {
     return this.listAsync({groupId: group.id});
+  }
+
+  async changeUserId(student: Student, userId: string) {
+    return this.httpClient.put(`${this.url}/${student.id}/userId`, {}, {params: {userId}})
+      .toPromise();
+  }
+
+  async changeRegistrationId(student: Student, registrationId: string) {
+    return this.httpClient.put(`${this.url}/${student.id}/registrationId`, {}, {params: {registrationId}})
+      .toPromise();
+  }
+
+
+  async changeSpeciality(student: Student, speciality: Speciality) {
+    return this.httpClient.put(`${this.url}/${student.id}/speciality`, {},
+      {params: {specialityId: speciality.id.toString()}}
+    )
+      .toPromise();
   }
 }

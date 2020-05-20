@@ -251,6 +251,7 @@ namespace Exam.Controllers
         [AuthorizePrincipal]
         public StatusCodeResult ChangeUserId(Student student, [FromQuery] string userId)
         {
+            
             if (!string.IsNullOrWhiteSpace(userId) && _studentRepository.Exists(s =>
                     student.Examination.Equals(s.Examination) && s.UserId == userId))
             {
