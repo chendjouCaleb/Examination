@@ -89,7 +89,7 @@
       <MsfTableHeadCell sortBy="registrationDate" *ngIf="canShow('registrationDate')">Date d'ajout</MsfTableHeadCell>
       <MsfTableHeadCell *ngIf="canShow('registerUser')">Ajouté par</MsfTableHeadCell>
 
-      <MsfTableHeadCell *ngIf="canShow('action')">Actions</MsfTableHeadCell>
+      <MsfTableHeadCell style="text-align: right" *ngIf="canShow('action')">Actions</MsfTableHeadCell>
     </MsfTableHead>
 
     <MsfTableRow #row *ngFor="let item of students" [value]="item">
@@ -153,7 +153,8 @@
           <MsfMenuItem icon="ContactEdit" *ngIf="item.user" (click)="link(item)">Changer l'utilisateur</MsfMenuItem>
           <MsfMenuItem icon="ContactMinus" *ngIf="item.user" (click)="removeUser(item)">Enlever l'utilisateur</MsfMenuItem>
           <MsfMenuItem icon="EditSolid12">Changer le matricule</MsfMenuItem>
-          <MsfMenuItem>Changer la spécialité</MsfMenuItem>
+          <MsfMenuItem (click)="changeSpeciality(item)" *ngIf="item.speciality">Changer la spécialité</MsfMenuItem>
+          <MsfMenuItem (click)="changeSpeciality(item)" *ngIf="!item.speciality">Assigner une spécialité</MsfMenuItem>
           <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
         </MsfMenu>
       </MsfTableCell>

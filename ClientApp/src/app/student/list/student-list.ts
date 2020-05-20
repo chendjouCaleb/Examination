@@ -7,6 +7,7 @@ import {MsfCheckbox, MsfMenuItemCheckbox, MsfModal} from "fabric-docs";
 import {StudentAddComponent} from '../add/student-add.component';
 import {StudentEditComponent} from "examination/app/student/edit/student-edit.component";
 import {StudentUserLink} from "examination/app/student/user-link/student-user-link";
+import {StudentSpeciality} from "examination/app/student/speciality/student-speciality";
 
 
 @Component({
@@ -134,5 +135,10 @@ export class StudentList implements OnInit, AfterViewInit {
       student.userId = null;
       this._alertEmitter.info('La liaison a été supprimée!');
     });
+  }
+
+  changeSpeciality(student: Student) {
+    const modal = this._dialog.open(StudentSpeciality, {disableClose: true});
+    modal.componentInstance.student = student;
   }
 }
