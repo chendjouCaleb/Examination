@@ -234,6 +234,41 @@
             <e p="app.component.spec.ts" t="Include" />
             <e p="app.component.ts" t="Include" />
             <e p="app.module.ts" t="Include" />
+            <e p="application" t="Include">
+              <e p="add" t="Include">
+                <e p="application-add.component.html" t="Include" />
+                <e p="application-add.component.ts" t="Include" />
+              </e>
+              <e p="application.module.ts" t="Include" />
+              <e p="application.resolver.ts" t="Include" />
+              <e p="application.service.ts" t="Include" />
+              <e p="edit" t="Include">
+                <e p="application-edit.component.html" t="Include" />
+                <e p="application-edit.component.ts" t="Include" />
+              </e>
+              <e p="form.ts" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="layout" t="Include">
+                <e p="application-layout.component.html" t="Include" />
+                <e p="application-layout.component.ts" t="Include" />
+              </e>
+              <e p="list" t="Include">
+                <e p="application-list.html" t="Include" />
+                <e p="application-list.ts" t="Include" />
+              </e>
+              <e p="registrationId" t="Include">
+                <e p="application-registrationId.html" t="Include" />
+                <e p="application-registrationId.ts" t="Include" />
+              </e>
+              <e p="speciality" t="Include">
+                <e p="application-speciality.html" t="Include" />
+                <e p="application-speciality.ts" t="Include" />
+              </e>
+              <e p="user-link" t="Include">
+                <e p="application-user-link.html" t="Include" />
+                <e p="application-user-link.ts" t="Include" />
+              </e>
+            </e>
             <e p="authorization" t="Include">
               <e p="authorization-guard.ts" t="Include" />
               <e p="authorization-interceptor.ts" t="Include" />
@@ -743,6 +778,7 @@
             </e>
             <e p="form" t="Include">
               <e p="admin.model.ts" t="Include" />
+              <e p="application.model.ts" t="Include" />
               <e p="authorization.model.ts" t="Include" />
               <e p="examination.model.ts" t="Include" />
               <e p="group.model.ts" t="Include" />

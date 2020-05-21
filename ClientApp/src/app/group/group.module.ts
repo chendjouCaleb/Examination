@@ -17,10 +17,11 @@ import {GroupAddComponent} from './add/group-add.component';
 import {RouterModule} from '@angular/router';
 import {GroupList} from "./list/group-list";
 import {MomentModule} from "ngx-moment";
+import { MatRippleModule} from "@angular/material/core";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
-    AppFormModule, MsfTableModule, MsfPersonaModule, MsfMenuModule, MomentModule,
+    AppFormModule, MsfTableModule, MsfPersonaModule, MsfMenuModule, MomentModule, MatRippleModule,
     MsfPivotModule, MsfModalModule, MsfTabModule, ExaminationModule, RouterModule],
   declarations: [GroupLayoutComponent, GroupAddComponent, GroupList],
   exports: [GroupLayoutComponent, GroupAddComponent, GroupList]

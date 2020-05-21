@@ -1,0 +1,19 @@
+﻿<form class="ms-form" >
+  <div class="ms-form-header">Lier à un utilisateur</div>
+
+
+  <div class="ms-textField">
+    <label class="msf-label" for="user">Choisir un utilisateur</label>
+    <user-picker  id="user" name="user" [maxSize]="1" [(ngModel)]="user"></user-picker>
+  </div>
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" [class.msf-disabled]="!user"  (click)="link()">
+      Lier
+    </MsfButton>
+  </div>
+</form>
+
+
