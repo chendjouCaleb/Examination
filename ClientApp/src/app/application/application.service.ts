@@ -37,7 +37,7 @@ export class ApplicationService {
   }
 
   details(application: Application) {
-    const modal = this._dialog.open(ApplicationHome, {width: '700px'});
+    const modal = this._dialog.open(ApplicationHome, {minWidth: '750px'});
     modal.componentInstance.application = application;
   }
 

@@ -50,6 +50,16 @@
       Etat
     </MsfMenuItem>
 
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="processDate"></MsfCheckbox>
+      Date de traitement
+    </MsfMenuItem>
+
+    <MsfMenuItem>
+      <MsfCheckbox MsfMenuItemCheckbox name="column" value="processUser"></MsfCheckbox>
+      Traitée par
+    </MsfMenuItem>
+
 
     <MsfMenuItem>
       <MsfCheckbox MsfMenuItemCheckbox name="column" value="action"></MsfCheckbox>
@@ -78,6 +88,9 @@
       <MsfTableHeadCell sortBy="registrationDate" *ngIf="canShow('registrationDate')">Date d'ajout</MsfTableHeadCell>
 
       <MsfTableHeadCell *ngIf="canShow('state')">Etat</MsfTableHeadCell>
+
+      <MsfTableHeadCell *ngIf="canShow('processDate')">Date de traitement</MsfTableHeadCell>
+      <MsfTableHeadCell *ngIf="canShow('processUser')">Traitée par</MsfTableHeadCell>
 
       <MsfTableHeadCell style="text-align: right" *ngIf="canShow('action')">Actions</MsfTableHeadCell>
     </MsfTableHead>
@@ -124,13 +137,28 @@
         <span [appStateBadge]="item.state"></span>
       </MsfTableCell>
 
+      <MsfTableCell *ngIf="canShow('processDate')" class="ms-fontSize-12">
+        {{item.processDate | amCalendar}}
+      </MsfTableCell>
+
+      <MsfTableCell *ngIf="canShow('processUser')">
+        <MsfPersona size="size32" *ngIf="item.processUser">
+          <MsfPersonaFigure [text]="item.processUser?.fullName" size="size32"></MsfPersonaFigure>
+          <div class="ml-2">
+            <div class="ms-fontWeight-semibold">{{item.processUser?.fullName}}</div>
+            <div class="ms-fontSize-12" *ngIf="item.processUser?.username">@{{item.processUser?.username}}</div>
+          </div>
+        </MsfPersona>
+      </MsfTableCell>
+
 
       <MsfTableCell *ngIf="canShow('action')" style="text-align: right">
         <a MsfButton theme="primary" (click)="_applicationService.details(item)">Détails</a>
         <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical" class="ml-2"
                        *ngIf="_examination.userPrincipal?.isPrincipal || item.isAuthor"></MsfIconButton>
         <MsfMenu #more>
-          <MsfMenuItemGroup *ngIf="item.isAuthor">
+          <MsfMenuItemGroup *ngIf="item.isAuthor && item.waiting" title="Modifier">
+
             <MsfMenuItem icon="Contact" (click)="_applicationService.edit(item)">Modifier les informations</MsfMenuItem>
 
             <MsfMenuItem icon="D365TalentLearn" (click)="_applicationService.changeSpeciality(item)"
@@ -142,8 +170,12 @@
             <MsfMenuItem icon="Cancel" theme="error" (click)="_applicationService.removeSpeciality(item)"
                          *ngIf="item.speciality">Enlever la spécialité
             </MsfMenuItem>
-            <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
+
           </MsfMenuItemGroup>
+
+          <ng-container *ngIf="item.isAuthor">
+            <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
+          </ng-container>
 
 
           <MsfMenuItemGroup *ngIf="_examination.userPrincipal?.isPrincipal && item.waiting">

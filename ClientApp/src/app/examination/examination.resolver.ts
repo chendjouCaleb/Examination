@@ -20,12 +20,6 @@ export class ExaminationResolver {
     const item = await this._loader.loadById(id);
     this.items.put("examination", item);
 
-    if (this.identity.user) {
-      const examinationUser = await this._httpClient.examinationUser(id, this.identity.user.id);
-      this.items.put("examinationUser", examinationUser);
-      item.userPrincipal = examinationUser;
-    }
-
     return item;
   }
 }
