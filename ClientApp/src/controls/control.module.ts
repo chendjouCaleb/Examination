@@ -8,12 +8,13 @@ import {AlertEmitter} from './alert-emitter';
 import {ConfirmationComponent} from './confirmation/confirmation.component';
 import {Confirmation} from './confirmation/confirmation';
 import {StateBadgeDirective} from './state-badge.directive';
+import {Icon} from "./icon/icon";
 
 @NgModule({
   imports: [CommonModule, MsfModalModule, MsfButtonModule],
   providers: [AlertEmitter, Confirmation],
-  declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective],
-  exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective],
+  declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon],
+  exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon],
 })
 export class ControlModule {
 

@@ -12,7 +12,7 @@
 
   <div class="mt-4 text-right">
     <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" [class.msf-disabled]="!speciality"  (click)="change()">
+    <MsfButton theme="primary" [class.msf-disabled]="speciality?.id === application.specialityId"  (click)="change()">
       Changer
     </MsfButton>
   </div>

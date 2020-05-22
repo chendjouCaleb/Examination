@@ -65,7 +65,7 @@ namespace Exam.Controllers
         [LoadSpeciality(Source = ParameterSource.Query)]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]
-        [AuthorizeApplicationAuthor]
+        
         public CreatedAtActionResult Add(Examination examination,
             Speciality speciality, [FromBody] ApplicationForm form, User user)
         {
@@ -265,7 +265,7 @@ namespace Exam.Controllers
         }
 
 
-        [HttpPut("{applicationId}/cancel")]
+        [HttpDelete("{applicationId}/cancel")]
         [LoadApplication(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]
@@ -273,11 +273,12 @@ namespace Exam.Controllers
         [AuthorizeApplicationAuthor]
         public NoContentResult Cancel(Application application)
         {
-            return _Delete(application);
+            _applicationRepository.Delete(application);
+            return NoContent();
         }
 
 
-        [HttpPut("{applicationId}")]
+        [HttpDelete("{applicationId}")]
         [LoadApplication(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished")]
@@ -285,23 +286,10 @@ namespace Exam.Controllers
         [AuthorizeExaminationAdmin]
         public NoContentResult Delete(Application application)
         {
-            return _Delete(application);
-        }
-
-
-        private NoContentResult _Delete(Application application)
-        {
-            if (application.Speciality != null)
-            {
-                application.Speciality.ApplicationCount -= 1;
-                _specialityRepository.Update(application.Speciality);
-            }
-
-            application.Examination.ApplicationCount -= 1;
-            _examinationRepository.Update(application.Examination);
-
             _applicationRepository.Delete(application);
             return NoContent();
         }
+
+        
     }
 }

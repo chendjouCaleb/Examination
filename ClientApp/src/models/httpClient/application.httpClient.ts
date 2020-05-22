@@ -43,8 +43,9 @@ export class ApplicationHttpClient extends GenericHttpClient<Application, number
     return this.httpClient.put(`${this.url}/${application.id}/removeSpeciality`, {}).toPromise();
   }
 
-  async accept(application: Application) {
-    return this.httpClient.put(`${this.url}/${application.id}/accept`, {}).toPromise();
+  async accept(application: Application): Promise<Application> {
+    const result = await this.httpClient.put(`${this.url}/${application.id}/accept`, {}).toPromise();
+    return new Application(result);
   }
 
   async reject(application: Application) {

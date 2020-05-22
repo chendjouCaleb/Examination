@@ -9,7 +9,7 @@ export class Confirmation {
 
     open(message: string): ConfirmationInstance {
       const result= new ConfirmationInstance();
-      const dialogRef = this.dialog.open(ConfirmationComponent, {width: '350px'});
+      const dialogRef = this.dialog.open(ConfirmationComponent, {minWidth: '300px'});
       dialogRef.componentInstance.message = message;
       dialogRef.afterClosed().subscribe(r => r ? result.accept.next() : result.reject.next());
 

@@ -15,28 +15,25 @@ import {ExaminationModule} from '../examination';
 import {RouterModule} from '@angular/router';
 import {MomentModule} from "ngx-moment";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {StudentAddComponent} from "examination/app/student/add/student-add.component";
-import {StudentList} from "examination/app/student/list/student-list";
+import {ApplicationAddComponent} from "examination/app/application/add/application-add.component";
 import {MatRippleModule} from "@angular/material/core";
-import {StudentLayoutComponent} from "examination/app/student/layout/student-layout.component";
-import {StudentEditComponent} from "examination/app/student/edit/student-edit.component";
-import {UserPickerModule} from "examination/app/user-picker";
-import {StudentUserLink} from "examination/app/student/user-link/student-user-link";
-import {StudentSpeciality} from "examination/app/student/speciality/student-speciality";
-import {StudentRegistrationId} from "examination/app/student/registrationId/student-registrationId";
-import {StudentService} from "examination/app/student/student.service";
+import {ApplicationEditComponent} from "examination/app/application/edit/application-edit.component";
+import {ApplicationSpeciality} from "examination/app/application/speciality/application-speciality";
+import {ApplicationService} from "examination/app/application/application.service";
+import {ApplicationList} from "examination/app/application/list/application-list";
+import {ApplicationHome} from "examination/app/application/home/application-home";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
     AppFormModule, MsfTableModule, MsfPersonaModule, MsfMenuModule, MomentModule, MsfRadioModule,
-    MatDatepickerModule, MatRippleModule, MsfCheckboxModule, UserPickerModule,
+    MatDatepickerModule, MatRippleModule, MsfCheckboxModule,
     MsfPivotModule, MsfModalModule, MsfTabModule, ExaminationModule, RouterModule],
-  declarations: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
-    StudentSpeciality, StudentRegistrationId, StudentList],
-  exports: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
-    StudentSpeciality, StudentRegistrationId,  StudentList],
+  declarations: [ApplicationAddComponent, ApplicationEditComponent, ApplicationSpeciality,
+    ApplicationList, ApplicationHome],
+  exports: [ApplicationAddComponent, ApplicationEditComponent, ApplicationSpeciality, ApplicationList,
+    ApplicationHome],
 
-  providers: [ StudentService ]
+  providers: [ApplicationService]
 })
-export class StudentModule {
+export class ApplicationModule {
 }

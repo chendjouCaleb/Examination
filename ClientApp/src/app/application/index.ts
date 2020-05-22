@@ -1,9 +1,7 @@
-export * from './student.module';
-export * from './student.resolver';
-export * from './add/student-add.component';
-export * from './list/student-list';
-export * from './layout/student-layout.component';
-export * from "./edit/student-edit.component";
-export * from './user-link/student-user-link';
-export * from './student.service';
-export * from './registrationId/student-registrationId'
+export * from './application.module';
+export * from './application.resolver';
+export * from './add/application-add.component';
+export * from './list/application-list';
+export * from "./edit/application-edit.component";
+export * from './application.service';
+

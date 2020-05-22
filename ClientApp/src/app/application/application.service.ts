@@ -1,58 +1,69 @@
-﻿import {Student, StudentHttpClient} from "examination/models";
-import {StudentEditComponent} from "examination/app/student/edit/student-edit.component";
-import {StudentUserLink} from "examination/app/student/user-link/student-user-link";
-import {StudentSpeciality} from "examination/app/student/speciality/student-speciality";
-import {StudentRegistrationId} from "examination/app/student/registrationId/student-registrationId";
+﻿import {Application, ApplicationHttpClient, ApplicationLoader} from "examination/models";
+import {ApplicationEditComponent} from "examination/app/application/edit/application-edit.component";
+import {ApplicationSpeciality} from "examination/app/application/speciality/application-speciality";
 import {Injectable} from "@angular/core";
 import {MsfModal} from "fabric-docs";
 import {AlertEmitter, Confirmation} from "examination/controls";
+import {ApplicationHome} from "examination/app/application/home/application-home";
 
 @Injectable({providedIn: 'root'})
-export class StudentService {
+export class ApplicationService {
 
   constructor(private _dialog: MsfModal, private _confirmation: Confirmation,
-              private _httpClient: StudentHttpClient, private _alertEmitter: AlertEmitter) {
+              private _loader: ApplicationLoader,
+              private _httpClient: ApplicationHttpClient, private _alertEmitter: AlertEmitter) {
   }
 
-  edit(student: Student) {
-    const modal = this._dialog.open(StudentEditComponent, {disableClose: false});
-    modal.componentInstance.student = student;
+  edit(application: Application) {
+    const modal = this._dialog.open(ApplicationEditComponent, {disableClose: false});
+    modal.componentInstance.application = application;
   }
 
-  link(student: Student) {
-    const modal = this._dialog.open(StudentUserLink, {disableClose: false});
-    modal.componentInstance.student = student;
-  }
 
-  removeUser(student: Student) {
-    const result = this._confirmation.open("Voulez-vous supprimer la liaison entre l'étudiant et l'utilisateur");
-    result.accept.subscribe(async () => {
-      await this._httpClient.changeUserId(student, '');
-      student.user = null;
-      student.userId = null;
-      this._alertEmitter.info('La liaison a été supprimée!');
-    });
-  }
-
-  removeSpeciality(student: Student) {
+  removeSpeciality(application: Application) {
     const result = this._confirmation
-      .open(`Voulez-vous enlever l'étudiant ${student.fullName} de la spécialité ${student.speciality?.name}`);
+      .open(`Voulez-vous enlever la spécialité de votre demande?`);
     result.accept.subscribe(async () => {
-      await this._httpClient.removeSpeciality(student);
-      this._alertEmitter.info(`L'étudiant ${student.fullName} a été enlevé de la spécialité ${student.speciality?.name}`);
-      student.speciality = null;
-      student.specialityId = null;
+      await this._httpClient.removeSpeciality(application);
+      this._alertEmitter.info(`La specialité a été enlevé de votre demande.`);
+      application.speciality = null;
+      application.specialityId = null;
     });
   }
 
-  changeSpeciality(student: Student) {
-    const modal = this._dialog.open(StudentSpeciality, {disableClose: true});
-    modal.componentInstance.student = student;
+  changeSpeciality(application: Application) {
+    const modal = this._dialog.open(ApplicationSpeciality, {disableClose: true});
+    modal.componentInstance.application = application;
   }
 
-  changeRegistrationId(student: Student) {
-    const modal = this._dialog.open(StudentRegistrationId, {disableClose: true});
-    modal.componentInstance.student = student;
+  details(application: Application) {
+    const modal = this._dialog.open(ApplicationHome, {width: '700px'});
+    modal.componentInstance.application = application;
+  }
+
+  reject(application: Application) {
+    const result = this._confirmation
+      .open(`Voulez-vous rejeter cette demande?`);
+    result.accept.subscribe(async () => {
+      await this._httpClient.reject(application);
+      this._alertEmitter.info(`La demande a été rejetée.`);
+      application.state = 'REJECTED';
+      application.processDate = new Date();
+    });
+  }
+
+  accept(application: Application) {
+    const result = this._confirmation
+      .open(`Accepter cette demande?`);
+    result.accept.subscribe(async () => {
+      const app = await this._httpClient.accept(application);
+      await this._loader.load(app);
+
+      this._alertEmitter.info(`La demande a été acceptée et l'étudiant ajouté.`);
+      application.state = app.state;
+      application.processDate = app.processDate;
+      application.student = app.student;
+    });
   }
 
 }

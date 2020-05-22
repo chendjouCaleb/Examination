@@ -5,12 +5,14 @@ import {ExaminationLoader} from "./examination.loader";
 import {SpecialityLoader} from "./speciality.loader";
 import {Loader} from "./loader";
 import {StudentLoader} from "./student.loader";
+import {AuthorizationManager} from "examination/app/authorization";
 
 
 @Injectable({providedIn: "root"})
 export class ApplicationLoader extends Loader<Application, number> {
 
-  constructor(private applicationRepository: ApplicationHttpClient,
+  constructor(private _authorization: AuthorizationManager,
+              private applicationRepository: ApplicationHttpClient,
               private _userHttClient: UserHttpClient,
               private _studentLoader: StudentLoader,
               private _specialityLoader: SpecialityLoader,
@@ -33,6 +35,10 @@ export class ApplicationLoader extends Loader<Application, number> {
 
     if (item.studentId) {
       item.student = await this._studentLoader.loadById(item.studentId);
+    }
+
+    if(this._authorization.user && this._authorization.user.id === item.userId) {
+      item.isAuthor = true;
     }
 
     item.examination = await this._examinationLoader.loadById(item.examinationId);

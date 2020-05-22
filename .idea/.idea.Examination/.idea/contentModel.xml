@@ -247,26 +247,18 @@
                 <e p="application-edit.component.ts" t="Include" />
               </e>
               <e p="form.ts" t="Include" />
-              <e p="index.ts" t="Include" />
-              <e p="layout" t="Include">
-                <e p="application-layout.component.html" t="Include" />
-                <e p="application-layout.component.ts" t="Include" />
+              <e p="Home" t="Include">
+                <e p="application-home.html" t="Include" />
+                <e p="application-home.ts" t="Include" />
               </e>
+              <e p="index.ts" t="Include" />
               <e p="list" t="Include">
                 <e p="application-list.html" t="Include" />
                 <e p="application-list.ts" t="Include" />
               </e>
-              <e p="registrationId" t="Include">
-                <e p="application-registrationId.html" t="Include" />
-                <e p="application-registrationId.ts" t="Include" />
-              </e>
               <e p="speciality" t="Include">
                 <e p="application-speciality.html" t="Include" />
                 <e p="application-speciality.ts" t="Include" />
-              </e>
-              <e p="user-link" t="Include">
-                <e p="application-user-link.html" t="Include" />
-                <e p="application-user-link.ts" t="Include" />
               </e>
             </e>
             <e p="authorization" t="Include">
@@ -358,6 +350,13 @@
                   <e p="admin-list.page.ts" t="Include" />
                 </e>
                 <e p="organisation-admin-page.module.ts" t="Include" />
+              </e>
+              <e p="application" t="Include">
+                <e p="application-page.module.ts" t="Include" />
+                <e p="list" t="Include">
+                  <e p="application-list.page.html" t="Include" />
+                  <e p="application-list.page.ts" t="Include" />
+                </e>
               </e>
               <e p="corrector" t="Include">
                 <e p="corrector-page.module.ts" t="Include" />
@@ -658,6 +657,10 @@
               <e p="forms.ts" t="Include" />
               <e p="validators.ts" t="Include" />
             </e>
+            <e p="icon" t="Include">
+              <e p="icon.scss" t="Include" />
+              <e p="icon.ts" t="Include" />
+            </e>
             <e p="index.ts" t="Include" />
             <e p="labelled" t="Include">
               <e p="labelled-icon.ts" t="Include" />
@@ -900,6 +903,7 @@
           <e p="Principal.cs" t="Include" />
           <e p="Review.cs" t="Include" />
           <e p="Room.cs" t="Include" />
+          <e p="Score.cs" t="Include" />
           <e p="Secretary.cs" t="Include" />
           <e p="Speciality.cs" t="Include" />
           <e p="Student.cs" t="Include" />

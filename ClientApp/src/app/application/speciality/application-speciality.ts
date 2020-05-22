@@ -1,36 +1,36 @@
 ﻿import {Component, Input, OnInit} from "@angular/core";
 
 import {AlertEmitter} from "src/controls/alert-emitter";
-import {Speciality, SpecialityHttpClient, Student, StudentHttpClient, User} from "src/models";
+import {Speciality, SpecialityHttpClient, Application, ApplicationHttpClient, User} from "src/models";
 import {MsfModalRef} from "fabric-docs";
 import {List} from "@positon/collections";
 
 
 @Component({
-  templateUrl: 'student-speciality.html'
+  templateUrl: 'application-speciality.html'
 })
-export class StudentSpeciality implements OnInit{
+export class ApplicationSpeciality implements OnInit{
   @Input()
-  student: Student;
+  application: Application;
 
   specialities = new List<Speciality>();
   speciality: Speciality;
 
-  constructor(private _httpClient: StudentHttpClient,
+  constructor(private _httpClient: ApplicationHttpClient,
               private _specialityHttpClient: SpecialityHttpClient,
-              private _dialogRef: MsfModalRef<StudentSpeciality>,
+              private _dialogRef: MsfModalRef<ApplicationSpeciality>,
               private _alertEmitter: AlertEmitter) {
   }
 
-  async ngOnInit()  {
-    this.specialities = await this._specialityHttpClient.listByExamination(this.student.examination);
+  async ngOnInit() {
+    this.specialities = await this._specialityHttpClient.listByExamination(this.application.examination);
+    this.speciality = this.specialities.find(s => s.id === this.application.specialityId);
   }
 
-
   async change() {
-    await this._httpClient.changeSpeciality(this.student, this.speciality);
-    this.student.speciality = this.speciality;
-    this._alertEmitter.info(`L'étudiant ${this.student.fullName} a migré vers la spécialité ${this.speciality?.name}.`);
+    await this._httpClient.changeSpeciality(this.application, this.speciality);
+    this.application.speciality = this.speciality;
+    this._alertEmitter.info(`La demande a migrée vers la spécialité ${this.speciality?.name}.`);
     this._dialogRef.close();
   }
 }

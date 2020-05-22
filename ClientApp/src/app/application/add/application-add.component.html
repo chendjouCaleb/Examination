@@ -1,5 +1,5 @@
 ﻿<form class="ms-form" [formGroup]="form">
-  <div class="ms-form-header">Ajouter un étudiant</div>
+  <div class="ms-form-header">Envoyer une demande</div>
 
 
   <div class="ms-textField">
@@ -10,7 +10,7 @@
 
   <div class="ms-textField">
     <label for="registrationId" class="msf-label">Matricule de l'étudiant</label>
-    <input id="registrationId" class="ms-textField-input" formControlName="registrationId" (blur)="checkRegistrationId()">
+    <input id="registrationId" class="ms-textField-input" formControlName="registrationId" >
     <app-control-error [control]="form.controls['registrationId']"></app-control-error>
   </div>
 

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+﻿﻿import {Component} from '@angular/core';
 import {Student} from "examination/models";
 import {CurrentItems} from "examination/app/current-items";
 

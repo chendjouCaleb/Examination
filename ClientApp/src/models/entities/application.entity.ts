@@ -17,13 +17,10 @@ export class Application extends Entity<number> {
       this.birthDate = new Date(value.birthDate);
       this.gender = value.gender;
       this.processDate = new Date(value.processDate);
-      this.accepted = value.accepted;
+      this.state = value.state;
 
       this.examination = value.examination;
       this.examinationId = value.examinationId;
-
-      this.rejected = value.rejected;
-
       this.specialityId = value.specialityId;
       this.speciality = value.speciality;
 
@@ -49,9 +46,6 @@ export class Application extends Entity<number> {
 
   processDate: Date;
 
-  accepted: boolean;
-
-  rejected: boolean;
 
   student: Student;
   studentId: number;
@@ -61,6 +55,26 @@ export class Application extends Entity<number> {
 
   speciality: Speciality;
   specialityId: number;
+
+  state: string;
+
+
+  get waiting(): boolean {
+    return this.state === 'WAITING';
+  }
+
+  get accepted(): boolean {
+    return this.state === 'ACCEPTED';
+  }
+
+  get rejected(): boolean {
+    return this.state === 'REJECTED';
+  }
+
+  /**
+   * Whether the current user is the author of the application.
+   */
+  isAuthor: boolean;
 
   get url(): string {
     return `/organisations/${this.examination.organisationId}/examinations/${this.examinationId}/applications/${this.id}`;

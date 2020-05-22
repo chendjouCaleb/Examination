@@ -28,7 +28,25 @@ namespace Exam.Entities
 
         [NotMapped]
         public bool Rejected => Processed && Student == null;
-        
+
+        public string State
+        {
+            get
+            {
+                if (Accepted)
+                {
+                    return "ACCEPTED";
+                }
+
+                if (Rejected)
+                {
+                    return "REJECTED";
+                }
+
+                return "WAITING";
+            }
+        }
+
         [JsonIgnore]
         public virtual Student Student { get; set; }
         public long? StudentId { get; set; }

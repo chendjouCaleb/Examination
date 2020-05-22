@@ -70,6 +70,12 @@ const routes: Routes = [
     loadChildren: () => import('./page/student/student-page.module').then(m => m.StudentPageModule),
   },
 
+  {
+    path: 'organisations/:organisationId/examinations/:examinationId/applications',
+    resolve: [OrganisationResolver, ExaminationResolver],
+    loadChildren: () => import('./page/application/application-page.module').then(m => m.ApplicationPageModule),
+  },
+
   {path: '', redirectTo: 'organisations', pathMatch: 'full'}
 ];
 
