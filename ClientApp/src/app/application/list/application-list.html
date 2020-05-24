@@ -153,7 +153,7 @@
 
 
       <MsfTableCell *ngIf="canShow('action')" style="text-align: right">
-        <a MsfButton theme="primary" (click)="_applicationService.details(item)">Détails</a>
+        <a matRipple MsfButton theme="primary" (click)="_applicationService.details(item)">Détails</a>
         <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical" class="ml-2"
                        *ngIf="_examination.userPrincipal?.isPrincipal || item.isAuthor"></MsfIconButton>
         <MsfMenu #more>

@@ -49,7 +49,6 @@ namespace ServerAppTest.Controllers
             Assert.NotNull(supervisor);
             Assert.AreEqual(_userId, supervisor.UserId);
             Assert.AreEqual(_examination, supervisor.Examination);
-            Assert.AreEqual(1, _examination.SupervisorCount);
         }
 
         [Test]
@@ -67,9 +66,8 @@ namespace ServerAppTest.Controllers
         {
             Supervisor supervisor = _controller._Add(_examination, _userId);
             _controller.Delete(supervisor);
-            
+
             _examinationRepository.Refresh(_examination);
-            Assert.AreEqual(0, _examination.SupervisorCount);
             
             Assert.False(_supervisorRepository.Exists(supervisor));
         }

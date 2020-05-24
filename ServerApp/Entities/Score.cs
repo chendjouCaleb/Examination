@@ -1,4 +1,8 @@
-﻿namespace Exam.Entities
+﻿using Everest.AspNetStartup.Binding;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+
+namespace Exam.Entities
 {
     /// <summary>
     /// Represente une décomposition de la note d'une épreuve.
@@ -6,8 +10,15 @@
     /// détaillée sur les différentes performances de l'étudiant.
     /// C'est le cas en rédaction ou en dissertation.
     /// </summary>
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Score
     {
         public string Name { get; set; }
+        public string Description { get; set; }
+        public int Radical { get; set; }
+
+        [JsonIgnore]
+        public virtual Test Test { get; set; }
+        public long? TestId { get; set; }
     }
 }

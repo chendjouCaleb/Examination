@@ -17,9 +17,11 @@ namespace Exam.Controllers
         private IRepository<TestGroup, long> _testGroupRepository;
         private PaperController _paperController;
 
-        public TestGroupController(IRepository<TestGroup, long> testGroupRepository)
+
+        public TestGroupController(IRepository<TestGroup, long> testGroupRepository, PaperController paperController)
         {
             _testGroupRepository = testGroupRepository;
+            _paperController = paperController;
         }
 
 

@@ -106,7 +106,6 @@ namespace Exam.Controllers
         public NoContentResult Delete(Supervisor supervisor)
         {
             Assert.RequireNonNull(supervisor, nameof(supervisor));
-            supervisor.Examination.SupervisorCount -= 1;
             _examinationRepository.Update(supervisor.Examination);
             
             _supervisorRepository.Delete(supervisor);

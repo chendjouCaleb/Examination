@@ -55,9 +55,8 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(_model.Role, principal.Role);
             Assert.AreEqual(_model.UserId, principal.UserId);
             Assert.AreEqual(_user.Id, principal.RegisterUserId);
-            
+
             Assert.AreEqual(_examination, principal.Examination);
-            Assert.AreEqual(1, _examination.PrincipalCount);
         }
 
         [Test]
@@ -94,7 +93,6 @@ namespace ServerAppTest.Controllers
             _controller.Delete(principal);
             _examinationRepository.Refresh(_examination);
             
-            Assert.AreEqual(0, _examination.PrincipalCount);
             Assert.False(_principalRepository.Exists(principal));
         }
     }

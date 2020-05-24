@@ -19,6 +19,11 @@ namespace Exam.Entities
         
         public uint Coefficient { get; set; }
 
+        /// <summary>
+        /// La note maximale pouvant être obtenue.
+        /// </summary>
+        public int Radical { get; set; }
+
         [NotMapped] public bool IsPublished => PublicationDate != null;
         
         public DateTime? PublicationDate { get; set; }
@@ -50,6 +55,11 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<TestReview> Reviews { get; set; }
         public int ReviewCount { get; set; }
+        
+        [JsonIgnore] 
+        public virtual List<Score> Scores { get; set; }
+        
+        
         
         
         [JsonIgnore]

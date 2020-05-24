@@ -13,7 +13,6 @@ namespace Exam.Models
 
         public bool UseAnonymity { get; set; }
         
-        
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
         

@@ -64,22 +64,22 @@
 
   <div class="mt-4">
     <div>Nom & prénom</div>
-    <div class="ms-fontSize-16">{{application.fullName}}</div>
+    <div class="ms-fontSize-18">{{application.fullName}}</div>
   </div>
 
   <div class="mt-4">
     <div>Matricule</div>
-    <div class="ms-fontSize-16">{{application.registrationId}}</div>
+    <div class="ms-fontSize-18">{{application.registrationId}}</div>
   </div>
 
   <div class="mt-3">
     <div>Date de naissance</div>
-    <div class="ms-fontSize-16">{{application.birthDate | amCalendar}}</div>
+    <div class="ms-fontSize-18">{{application.birthDate | amCalendar}}</div>
   </div>
 
   <div class="mt-3">
     <div>Genre</div>
-    <div class="ms-fontSize-16">
+    <div class="ms-fontSize-18">
       <ng-container *ngIf="application.gender == 'M' || application.gender == 'm'">Masculin</ng-container>
       <ng-container *ngIf="application.gender == 'F' || application.gender == 'f'">Féminin</ng-container>
     </div>
@@ -89,8 +89,8 @@
 
   <div class="mt-3">
     <div>Spécialité</div>
-    <div class="ms-fontSize-16">{{application.speciality.name}}</div>
-    <div class="ms-fontSize-16 ms-fontColor-sharedOrange10" *ngIf="!application.speciality">Aucune</div>
+    <div class="ms-fontSize-18">{{application.speciality.name}}</div>
+    <div class="ms-fontSize-18 ms-fontColor-sharedOrange10" *ngIf="!application.speciality">Aucune</div>
 
   </div>
 

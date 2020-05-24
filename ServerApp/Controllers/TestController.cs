@@ -96,8 +96,7 @@ namespace Exam.Controllers
             };
 
             _testRepository.Save(test);
-
-            examination.TestCount += 1;
+            
             _examinationRepository.Update(examination);
 
 

@@ -55,9 +55,8 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(_model.Role, admin.Role);
             Assert.AreEqual(_model.UserId, admin.UserId);
             Assert.AreEqual(_user.Id, admin.RegisterUserId);
-            
+
             Assert.AreEqual(_organisation, admin.Organisation);
-            Assert.AreEqual(1, _organisation.AdminCount);
         }
 
         [Test]
@@ -94,7 +93,6 @@ namespace ServerAppTest.Controllers
             _controller.Delete(admin);
             _organisationRepository.Refresh(_organisation);
             
-            Assert.AreEqual(0, _organisation.AdminCount);
             Assert.False(_adminRepository.Exists(admin));
         }
     }

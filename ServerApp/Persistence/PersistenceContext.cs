@@ -27,6 +27,7 @@ namespace Exam.Persistence
         public DbSet<Test> Tests { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Secretary> Secretaries { get; set; }
+        public DbSet<Score> Scores { get; set; }
         
         public PersistenceContext(DbContextOptions<PersistenceContext> options):base(options)
         {
@@ -37,5 +38,6 @@ namespace Exam.Persistence
         {
 
         }
+        
     }
 }
