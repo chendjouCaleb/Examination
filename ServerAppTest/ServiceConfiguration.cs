@@ -39,16 +39,13 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<TestController>();
             ServiceCollection.AddTransient<ApplicationController>();
             ServiceCollection.AddTransient<GroupController>();
-
+            ServiceCollection.AddTransient<ScoreController>();
+            
             IConfiguration configuration = new ConfigurationBuilder()
-
                 .AddJsonFile("appsettings.json")
-
                 .Build();
 
             ServiceCollection.AddSingleton<IConfiguration>(configuration);
-
-
             return ServiceCollection;
         }
 

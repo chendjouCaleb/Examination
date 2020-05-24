@@ -877,6 +877,7 @@
           <e p="PaperManagerController.cs" t="Include" />
           <e p="PrincipalController.cs" t="Include" />
           <e p="RoomController.cs" t="Include" />
+          <e p="ScoreController.cs" t="Include" />
           <e p="SecretaryController.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
           <e p="StudentController.cs" t="Include" />
@@ -1017,6 +1018,7 @@
           <e p="OrganisationControllerTests.cs" t="Include" />
           <e p="PrincipalControllerTests.cs" t="Include" />
           <e p="RoomControllerTests.cs" t="Include" />
+          <e p="ScoreControllerTests.cs" t="Include" />
           <e p="SpecialityControllerTests.cs" t="Include" />
           <e p="StudentControllerTests.cs" t="Include" />
           <e p="SupervisorControllerTests.cs" t="Include" />

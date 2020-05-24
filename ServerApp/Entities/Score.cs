@@ -1,4 +1,5 @@
 ﻿using Everest.AspNetStartup.Binding;
+using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -11,10 +12,10 @@ namespace Exam.Entities
     /// C'est le cas en rédaction ou en dissertation.
     /// </summary>
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
-    public class Score
+    public class Score:Entity<long>
     {
         public string Name { get; set; }
-        public string Description { get; set; }
+        
         public int Radical { get; set; }
 
         [JsonIgnore]
