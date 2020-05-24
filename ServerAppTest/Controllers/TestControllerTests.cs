@@ -67,6 +67,7 @@ namespace ServerAppTest.Controllers
                 Name = "test name",
                 Code = "ABC 32",
                 Coefficient = 5,
+                Radical = 20,
                 UseAnonymity = false,
                 ExpectedStartDate= DateTime.Now.AddHours(1),
                 ExpectedEndDate = DateTime.Now.AddHours(3)
@@ -85,6 +86,7 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(_model.Code, test.Code);
             Assert.AreEqual(_model.Coefficient, test.Coefficient);
             Assert.AreEqual(_model.UseAnonymity, test.UseAnonymity);
+            Assert.AreEqual(_model.Radical, test.Radical);
             Assert.AreEqual(_model.ExpectedEndDate, test.ExpectedEndDate);
 
             Assert.False(test.IsClosed);

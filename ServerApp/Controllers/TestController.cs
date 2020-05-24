@@ -89,6 +89,7 @@ namespace Exam.Controllers
                 Speciality = speciality,
                 Name = form.Name,
                 Code = form.Code,
+                Radical = form.Radical,
                 Coefficient = form.Coefficient,
                 UseAnonymity = form.UseAnonymity,
                 ExpectedStartDate = form.ExpectedStartDate,
@@ -96,10 +97,8 @@ namespace Exam.Controllers
             };
 
             _testRepository.Save(test);
-            
             _examinationRepository.Update(examination);
-
-
+            
             return CreatedAtAction("Find", new {test.Id}, test);
         }
 
