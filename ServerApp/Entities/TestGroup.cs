@@ -29,17 +29,24 @@ namespace Exam.Entities
         public long TestId { get; set; }
         
         [JsonIgnore]
+        public virtual TestGroupSupervisor PrincipalTestGroupSupervisor { get; set; }
+        public long? PrincipalTestGroupSupervisorId { get; set; }
+        
+        [JsonIgnore]
         public virtual List<Paper> Papers { get; set; }
 
         public uint PaperCount { get; set; }
 
         [JsonIgnore]
-        public virtual List<TestSupervisor> TestSupervisors { get; set; }
-        public uint TestSupervisorCount { get; set; }
+        public virtual List<TestGroupSupervisor> TestGroupSupervisors { get; set; }
         
         [JsonIgnore]
-        public virtual List<PaperManager> PaperManagers { get; set; }
-        public int PaperManagerCount { get; set; }
+        public virtual List<TestGroupSecretary> TestGroupSecretaries { get; set; }
+        
+        [JsonIgnore] public virtual List<TestGroupCorrector> TestGroupCorrectors { get; set; }
+        
+        
+        
         
     }
 }

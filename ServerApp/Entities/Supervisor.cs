@@ -1,4 +1,5 @@
-﻿using Everest.AspNetStartup.Binding;
+﻿using System.Collections.Generic;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,18 +14,10 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual Examination Examination { get; set; }
         public long ExaminationId { get; set; }
-    }
-
-    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
-    public class TestSupervisor : Entity<long>
-    {
-        public bool IsPrincipal { get; set; }
-
-        public virtual Supervisor Supervisor { get; set; }
-        public long SupervisorId { get; set; }
         
-
-        public virtual TestGroup TestGroup { get; set; }
-        public long GroupId { get; set; }
+        [JsonIgnore] 
+        public virtual List<TestGroupSupervisor> TestGroupSupervisors { get; set; }
     }
+
+    
 }

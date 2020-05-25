@@ -13,13 +13,6 @@ namespace Exam.Entities
 
         public string UserId { get; set; }
         
-        [JsonIgnore]
-        public virtual TestGroup TestGroup { get; set; }
-        public long TestGroupId { get; set; }
-
-
-        [JsonIgnore]
-        public virtual List<Paper> Papers { get; set; }
-        public int PaperCount { get; set; }
+        
     }
 }

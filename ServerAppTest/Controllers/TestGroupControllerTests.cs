@@ -145,7 +145,6 @@ namespace ServerAppTest.Controllers
             TestGroup testGroup = _controller._Add(_test, _group, _room);
             _testController.Start(testGroup.Test);
             _controller.Start(testGroup);
-            _controller.Close(testGroup);
             _testGroupRepository.Refresh(testGroup);
             
             Assert.NotNull(testGroup.StartDate);

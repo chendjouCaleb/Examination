@@ -23,7 +23,10 @@ namespace Exam.Persistence
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Supervisor> Supervisors { get; set; }
-        public DbSet<TestSupervisor> TestSupervisors { get; set; }
+        public DbSet<TestGroupSupervisor> TestGroupSupervisors { get; set; }
+        public DbSet<TestGroupCorrector> TestGroupCorrectors { get; set; }
+        public DbSet<TestGroupSecretary> TestGroupSecretaries { get; set; }
+        
         public DbSet<Test> Tests { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Secretary> Secretaries { get; set; }

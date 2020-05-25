@@ -25,23 +25,25 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public string Anonymity { get; set; }
-
-        public string PaperManagerUserId { get; set; }
         
-        public virtual PaperManager PaperManager{ get; set; }
-        public long? PaperManagerId { get; set; }
-
-        public virtual Corrector Corrector { get; set; }
-        public long? CorrectorId { get; set; }
-
+        
         public virtual TestGroup TestGroup { get; set; }
         public long TestGroupId { get; set; }
         
         public virtual Student Student { get; set; }
         public long StudentId { get; set; }
         
-        public virtual TestSupervisor TestSupervisor { get; set; }
-        public long? TestSupervisorId { get; set; }
+        [JsonIgnore]
+        public virtual TestGroupSupervisor TestGroupSupervisor { get; set; }
+        public long? TestGroupSupervisorId { get; set; }
+        
+        [JsonIgnore]
+        public virtual TestGroupCorrector TestGroupCorrector{ get; set; }
+        public long? TestGroupCorrectorId { get; set; }
+        
+        [JsonIgnore]
+        public virtual TestGroupSecretary TestGroupSecretary{ get; set; }
+        public long? TestGroupSecretaryId { get; set; }
         
         public virtual List<Contest> Contests { get; set; }
         public int  ContestCount { get; set; }

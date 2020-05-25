@@ -21,16 +21,18 @@ namespace Exam.Entities
         public long ExaminationId { get; set; }
         
         /// <summary>
-        /// Assigned paper count.
+        /// Assigned testGroupCorrector count.
         /// </summary>
         [JsonIgnore] 
-        public virtual List<Paper> Papers { get; set; }
-        public int PaperCount { get; set; }
+        public virtual List<TestGroupCorrector> TestGroupCorrectors { get; set; }
+        public int TestGroupCorrectorCount { get; set; }
         
         /// <summary>
-        /// Corrected paper size.
+        /// Corrected testGroupCorrector size.
         /// </summary>
-        public int CorrectedPaperCount { get; set; }
+        public int PaperCount { get; set; }
+        
+        
         
     }
 }

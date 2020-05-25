@@ -26,18 +26,20 @@ namespace Exam.Controllers
 
         [HttpGet]
         public IEnumerable<Paper> List(
-            [FromQuery] long? paperManagerId,
+            [FromQuery] long? secretaryId,
             [FromQuery] long? testGroupId,
             [FromQuery] long? correctorId,
             [FromQuery] long? studentId,
-            [FromQuery] long? testSupervisorId,
+            [FromQuery] long? supervisorId,
             [FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
             IQueryable<Paper> queryable = _paperRepository.Set;
 
-            if (paperManagerId != null)
+            if (secretaryId != null)
             {
-                queryable = queryable.Where(p => p.PaperManagerId == paperManagerId.Value);
+                queryable = queryable.Where(p =>
+                    p.TestGroupSecretary != null && p.TestGroupSecretary.SecretaryId == secretaryId.Value
+                );
             }
 
             if (testGroupId != null)
@@ -47,7 +49,9 @@ namespace Exam.Controllers
 
             if (correctorId != null)
             {
-                queryable = queryable.Where(p => p.CorrectorId == correctorId.Value);
+                queryable = queryable.Where(p =>
+                    p.TestGroupCorrector != null && p.TestGroupCorrector.CorrectorId == correctorId.Value
+                );
             }
 
             if (studentId != null)
@@ -55,9 +59,11 @@ namespace Exam.Controllers
                 queryable = queryable.Where(p => p.StudentId == studentId.Value);
             }
 
-            if (testSupervisorId != null)
+            if (supervisorId != null)
             {
-                queryable = queryable.Where(p => p.TestSupervisorId == testSupervisorId.Value);
+                queryable = queryable.Where(p =>
+                    p.TestGroupSupervisor != null && p.TestGroupSupervisor.SupervisorId == supervisorId.Value
+                );
             }
 
             queryable = queryable.Skip(skip).Take(take);
@@ -133,16 +139,16 @@ namespace Exam.Controllers
             paper.EndDate = form.EndDate;
             paper.Comment = form.Comment;
             paper.ReportUserId = user.Id;
-            
+
             _paperRepository.Update(paper);
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
 
-        public AcceptedResult Manage(Paper paper, PaperManager paperManager, PaperManageForm form)
+        public AcceptedResult Manage(Paper paper, TestGroupSecretary testGroupSecretary, PaperManageForm form)
         {
             Assert.RequireNonNull(paper, nameof(paper));
-            Assert.RequireNonNull(paperManager, nameof(paperManager));
+            Assert.RequireNonNull(testGroupSecretary, nameof(testGroupSecretary));
             Assert.RequireNonNull(form, nameof(form));
 
             if (_paperRepository.Exists(p => p.Anonymity == form.Anonymity
@@ -151,12 +157,11 @@ namespace Exam.Controllers
             {
                 throw new InvalidOperationException("{paper.constraints.uniqueAnonymity}");
             }
-            
-            paper.PaperManager = paperManager;
-            paper.PaperManagerUserId = paperManager.UserId;
+
+            paper.TestGroupSecretary = testGroupSecretary;
             paper.Anonymity = form.Anonymity;
             paper.Comment = form.Comment;
-            
+
             _paperRepository.Update(paper);
             return Accepted(paper);
         }
@@ -166,16 +171,17 @@ namespace Exam.Controllers
             _paperRepository.Delete(paper);
             return NoContent();
         }
-        
-        
+
+
         public NoContentResult DeleteAll(TestGroup testGroup)
         {
             IEnumerable<Paper> papers = _paperRepository.List(p => testGroup.Equals(p.TestGroup));
-            
+
             foreach (var paper in papers)
             {
                 _paperRepository.Delete(paper);
             }
+
             return NoContent();
         }
     }

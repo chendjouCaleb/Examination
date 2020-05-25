@@ -874,7 +874,6 @@
           <e p="HomeController.cs" t="Include" />
           <e p="OrganisationController.cs" t="Include" />
           <e p="PaperController.cs" t="Include" />
-          <e p="PaperManagerController.cs" t="Include" />
           <e p="PrincipalController.cs" t="Include" />
           <e p="RoomController.cs" t="Include" />
           <e p="ScoreController.cs" t="Include" />
@@ -884,6 +883,9 @@
           <e p="SupervisorController.cs" t="Include" />
           <e p="TestController.cs" t="Include" />
           <e p="TestGroupController.cs" t="Include" />
+          <e p="TestGroupCorrectorController.cs" t="Include" />
+          <e p="TestGroupSecretaryController.cs" t="Include" />
+          <e p="TestGroupSupervisorController.cs" t="Include" />
           <e p="UserExaminationController.cs" t="Include" />
           <e p="UserOrganisationController.cs" t="Include" />
         </e>
@@ -911,6 +913,9 @@
           <e p="Supervisor.cs" t="Include" />
           <e p="Test.cs" t="Include" />
           <e p="TestGroup.cs" t="Include" />
+          <e p="TestGroupCorrector.cs" t="Include" />
+          <e p="TestGroupSecretary.cs" t="Include" />
+          <e p="TestGroupSupervisor.cs" t="Include" />
           <e p="UserExamination.cs" t="Include" />
           <e p="UserOrganisation.cs" t="Include" />
         </e>
@@ -937,7 +942,6 @@
           <e p="ExaminationLoader.cs" t="Include" />
           <e p="GroupLoader.cs" t="Include" />
           <e p="OrganisationLoader.cs" t="Include" />
-          <e p="PaperManagerLoader.cs" t="Include" />
           <e p="PrincipalLoader.cs" t="Include" />
           <e p="RoomLoader.cs" t="Include" />
           <e p="ScoreLoader.cs" t="Include" />
@@ -946,7 +950,10 @@
           <e p="SpecialityLoader.cs" t="Include" />
           <e p="StudentLoader.cs" t="Include" />
           <e p="SupervisorLoader.cs" t="Include" />
+          <e p="TestGroupCorrectorLoader.cs" t="Include" />
           <e p="TestGroupLoader.cs" t="Include" />
+          <e p="TestGroupSecretaryLoader.cs" t="Include" />
+          <e p="TestGroupSupervisorLoader.cs" t="Include" />
           <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
