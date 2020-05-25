@@ -863,6 +863,9 @@
           <e p="ExaminationPrincipal.cs" t="Include" />
           <e p="OrganisationAdmin.cs" t="Include" />
           <e p="OrganisationPrincipal.cs" t="Include" />
+          <e p="TestGroupCorrector.cs" t="Include" />
+          <e p="TestGroupSecretary.cs" t="Include" />
+          <e p="TestGroupSupervisor.cs" t="Include" />
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
