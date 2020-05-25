@@ -1,4 +1,5 @@
-﻿using Everest.AspNetStartup.Binding;
+﻿using System.Collections.Generic;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -21,5 +22,23 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual Test Test { get; set; }
         public long? TestId { get; set; }
+        
+        [JsonIgnore] public virtual List<ScorePaper> ScorePapers { get; set; }
+    }
+
+
+
+
+    public class ScorePaper : Entity<long>
+    {
+        [JsonIgnore]
+        public virtual Score Score { get; set; }
+        public long ScoreId { get; set; }
+        
+        [JsonIgnore]
+        public virtual Paper Paper { get; set; }
+        public long PaperId { get; set; }
+
+        public int Value { get; set; }
     }
 }

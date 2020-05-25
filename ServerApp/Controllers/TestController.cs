@@ -123,6 +123,51 @@ namespace Exam.Controllers
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
+        
+        
+        [HttpPut("{testId}/start")]
+        public StatusCodeResult Start(Test test)
+        {
+            Assert.RequireNonNull(test, nameof(test));
+
+            if (test.Examination.State != PeriodState.PROGRESS)
+            {
+                throw new InvalidOperationException("{test.constraints.startAfterExamination}");
+            }
+            
+            test.StartDate = DateTime.Now;
+            _testRepository.Update(test);
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
+
+        [HttpPut("{testId}/close")]
+        public StatusCodeResult Close(Test test)
+        {
+            Assert.RequireNonNull(test, nameof(test));
+
+            if (test.GetState() != PeriodState.PROGRESS)
+            {
+                throw new InvalidOperationException("{test.constraints.endAfterStart}");
+            }  
+            test.EndDate = DateTime.Now;
+            _testRepository.Update(test);
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
+        
+        [HttpPut("{testId}/restart")]
+        public StatusCodeResult Restart(Test test)
+        {
+            Assert.RequireNonNull(test, nameof(test));
+
+            if (test.GetState() != PeriodState.FINISHED)
+            {
+                throw new InvalidOperationException("{test.constraints.restartAfterEnd}");
+            }  
+            
+            test.EndDate = null;
+            _testRepository.Update(test);
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
 
         public StatusCodeResult ChangeCode(Test test, string code)
         {

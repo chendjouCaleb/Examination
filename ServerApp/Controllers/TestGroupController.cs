@@ -14,8 +14,8 @@ namespace Exam.Controllers
     [Route("api/testGroups")]
     public class TestGroupController : Controller
     {
-        private IRepository<TestGroup, long> _testGroupRepository;
-        private PaperController _paperController;
+        private readonly IRepository<TestGroup, long> _testGroupRepository;
+        private readonly PaperController _paperController;
 
 
         public TestGroupController(IRepository<TestGroup, long> testGroupRepository, PaperController paperController)
@@ -66,6 +66,9 @@ namespace Exam.Controllers
 
 
         [HttpPost]
+        [RequireQueryParameter("groupId")]
+        [RequireQueryParameter("roomId")]
+        [RequireQueryParameter("testId")]
         [LoadGroup(ParameterName = "groupId", Source = ParameterSource.Query)]
         [LoadRoom(ParameterName = "roomId", Source = ParameterSource.Query)]
         [LoadTest(ParameterName = "testId", Source = ParameterSource.Query)]
@@ -119,8 +122,6 @@ namespace Exam.Controllers
             {
                 throw new IncompatibleEntityException<TestGroup, Room>(testGroup, room);
             }
-            
-
             testGroup.Room = room;
             
             _testGroupRepository.Update(testGroup);
@@ -133,6 +134,8 @@ namespace Exam.Controllers
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
 
+            Console.WriteLine(testGroup.Test.State);
+
             if (testGroup.Test.State != PeriodState.PROGRESS)
             {
                 throw new InvalidOperationException("{testGroup.constraints.startAfterTest}");
@@ -143,8 +146,8 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
-        [HttpPut("{testGroupId}/end")]
-        public StatusCodeResult End(TestGroup testGroup)
+        [HttpPut("{testGroupId}/close")]
+        public StatusCodeResult Close(TestGroup testGroup)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
 

@@ -68,7 +68,8 @@ namespace Exam.Entities
         
         public int PaperCount;
 
-        public string State
+        public string State => this.GetState();
+        public string GroupsState
         {
             get
             {

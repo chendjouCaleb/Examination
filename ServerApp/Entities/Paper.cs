@@ -46,6 +46,7 @@ namespace Exam.Entities
         public virtual List<Contest> Contests { get; set; }
         public int  ContestCount { get; set; }
         
+        [JsonIgnore] public virtual List<ScorePaper> ScorePapers { get; set; }
 
         [JsonIgnore]
         public virtual List<PaperReview> Reviews { get; set; }

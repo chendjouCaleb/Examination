@@ -170,7 +170,7 @@ namespace Exam.Controllers
         
         public NoContentResult DeleteAll(TestGroup testGroup)
         {
-            IEnumerable<Paper> papers = testGroup.Papers;
+            IEnumerable<Paper> papers = _paperRepository.List(p => testGroup.Equals(p.TestGroup));
             
             foreach (var paper in papers)
             {
