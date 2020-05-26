@@ -42,7 +42,7 @@ namespace Exam.Authorizers
                 throw new UnauthorizedException("{authorization.constraints.requireTestGroupSupervisor}");
             }
 
-            if (Principal && !supervisor.Equals(testGroup.PrincipalTestGroupSupervisor))
+            if (Principal && !supervisor.IsPrincipal)
             {
                 throw new UnauthorizedException("{authorization.constraints.requirePrincipalTestGroupSupervisor}");
             }

@@ -93,27 +93,17 @@ namespace Exam.Controllers
         }
 
 
-        [HttpPost]
-        [RequireQueryParameter("testGroupId")]
-        [RequireQueryParameter("testGroupSupervisorId")]
-        [LoadTestGroup(TestItemName = "test", ExaminationItemName = "examination", Source = ParameterSource.Query)]
-        [LoadTestGroupSupervisor(Source = ParameterSource.Query)]
+        [HttpPut("{testGroupSupervisorId}/principal")]
+        [LoadTestGroupSupervisor(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]
-        [LoadSupervisor(Source = ParameterSource.Query)]
-        public StatusCodeResult SetPrincipalSupervisor(TestGroup testGroup, TestGroupSupervisor testGroupSupervisor)
+        
+        public StatusCodeResult SetPrincipalSupervisor(TestGroupSupervisor testGroupSupervisor)
         {
-            Assert.RequireNonNull(testGroup, nameof(testGroup));
             Assert.RequireNonNull(testGroupSupervisor, nameof(testGroupSupervisor));
-            
-            if (testGroup.Equals(testGroupSupervisor.TestGroup))
-            {
-                throw new IncompatibleEntityException<TestGroup, TestGroupSupervisor>(testGroup, testGroupSupervisor);
-            }
-
-            testGroup.PrincipalTestGroupSupervisor = testGroupSupervisor;
-            _testGroupRepository.Update(testGroup);
+            testGroupSupervisor.IsPrincipal = !testGroupSupervisor.IsPrincipal;
+            _testGroupSupervisorRepository.Update(testGroupSupervisor);
 
             return StatusCode(StatusCodes.Status202Accepted);
         }

@@ -60,7 +60,7 @@ namespace Exam.Controllers
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadSecretary(Source = ParameterSource.Query)]
-        public CreatedAtActionResult Add(TestGroup testGroup, User user, Secretary secretary)
+        public CreatedAtActionResult Add(TestGroup testGroup, Secretary secretary)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             Assert.RequireNonNull(secretary, nameof(secretary));

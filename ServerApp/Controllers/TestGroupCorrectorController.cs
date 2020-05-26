@@ -60,7 +60,7 @@ namespace Exam.Controllers
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadCorrector(Source = ParameterSource.Query)]
-        public CreatedAtActionResult Add(TestGroup testGroup, User user, Corrector corrector)
+        public CreatedAtActionResult Add(TestGroup testGroup,  Corrector corrector)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             Assert.RequireNonNull(corrector, nameof(corrector));
