@@ -49,7 +49,7 @@ namespace ServerAppTest.Controllers
             Assert.NotNull(corrector);
             Assert.AreEqual(_userId, corrector.UserId);
             Assert.AreEqual(_examination, corrector.Examination);
-            Assert.AreEqual(1, _examination.CorrectorCount);
+            
         }
 
         [Test]
@@ -71,7 +71,6 @@ namespace ServerAppTest.Controllers
             _controller.Delete(corrector);
             
             _examinationRepository.Refresh(_examination);
-            Assert.AreEqual(0, _examination.CorrectorCount);
             
             Assert.False(_correctorRepository.Exists(corrector));
         }

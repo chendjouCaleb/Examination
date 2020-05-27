@@ -6,5 +6,6 @@
         public static string FINISHED = "FINISHED";
         public static string PROGRESS = "PROGRESS";
         public static string PENDING = "PENDING";
+        public static string CLOSED = "CLOSED";
     }
 }

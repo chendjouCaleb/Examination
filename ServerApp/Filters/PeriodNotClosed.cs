@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Exam.Filters
 {
-    public class PeriodHaveState : ActionFilterAttribute
+    public class PeriodNotClosed : ActionFilterAttribute
     {
-        public string ItemName { get; set; }  
+        public string ItemName { get; set; }
+        public string ErrorMessage { get; set; } = "{operation.constraints.isNotClosed}";
         public string State { get; set; }
-        public string ErrorMessage { get; set; } 
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
@@ -24,10 +24,8 @@ namespace Exam.Filters
             {
                 throw new ArgumentNullException($"Il n'existe pas de periode avec la clé {ItemName} dans les attributs de requêtes");
             }
-
-            ErrorMessage = ErrorMessage ?? $"{ItemName}.constraints.state.{State}";
             
-            if(period.GetState() != State )
+            if(period.IsClosed )
             {
                 throw new InvalidStateException(ErrorMessage);
             }

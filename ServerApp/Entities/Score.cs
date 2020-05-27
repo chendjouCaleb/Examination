@@ -39,6 +39,6 @@ namespace Exam.Entities
         public virtual Paper Paper { get; set; }
         public long PaperId { get; set; }
 
-        public int Value { get; set; }
+        public decimal Value { get; set; }
     }
 }

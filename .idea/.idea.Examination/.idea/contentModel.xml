@@ -925,6 +925,7 @@
         <e p="Filters" t="Include">
           <e p="PeriodDontHaveStatecs.cs" t="Include" />
           <e p="PeriodHaveState.cs" t="Include" />
+          <e p="PeriodNotClosed.cs" t="Include" />
         </e>
         <e p="Home" t="Include" />
         <e p="infrastructure" t="Include">
@@ -945,6 +946,7 @@
           <e p="ExaminationLoader.cs" t="Include" />
           <e p="GroupLoader.cs" t="Include" />
           <e p="OrganisationLoader.cs" t="Include" />
+          <e p="PaperLoader.cs" t="Include" />
           <e p="PrincipalLoader.cs" t="Include" />
           <e p="RoomLoader.cs" t="Include" />
           <e p="ScoreLoader.cs" t="Include" />
@@ -974,10 +976,10 @@
           <e p="AdminForm.cs" t="Include" />
           <e p="ApplicationForm.cs" t="Include" />
           <e p="ExaminationForm.cs" t="Include" />
+          <e p="ExpectedPeriodForm.cs" t="Include" />
           <e p="GroupForm.cs" t="Include" />
           <e p="OrganisationForm.cs" t="Include" />
           <e p="PaperForm.cs" t="Include" />
-          <e p="PeriodForm.cs" t="Include" />
           <e p="PrincipalForm.cs" t="Include" />
           <e p="RoomForm.cs" t="Include" />
           <e p="ScoreForm.cs" t="Include" />

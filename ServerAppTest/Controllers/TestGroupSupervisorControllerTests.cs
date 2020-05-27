@@ -4,7 +4,6 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
 using Exam.Infrastructure;
-using Exam.Models;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;

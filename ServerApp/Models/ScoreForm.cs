@@ -12,4 +12,10 @@
         public string Name { get; set; }
         public string Description { get; set; }
     }
+    
+    public class ScorePaperForm 
+    {
+        public long ScoreId { get; set; }
+        public decimal Value { get; set; }
+    }
 }

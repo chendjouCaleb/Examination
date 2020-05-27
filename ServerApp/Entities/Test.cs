@@ -34,8 +34,6 @@ namespace Exam.Entities
 
         public bool UseAnonymity { get; set; }
         
-        
-        
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
         
@@ -59,14 +57,14 @@ namespace Exam.Entities
         [JsonIgnore] 
         public virtual List<Score> Scores { get; set; }
         
-        
-        
-        
         [JsonIgnore]
         public virtual List<TestGroup> Groups { get; set; }
         public int GroupCount { get; set; }
         
         public int PaperCount;
+
+
+        [NotMapped] public bool MultipleScore => Scores != null && Scores.Count > 0; 
 
         public string State => this.GetState();
         public string GroupsState

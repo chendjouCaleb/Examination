@@ -205,7 +205,6 @@ namespace ServerAppTest.Controllers
 
             Assert.NotNull(student);
             Assert.Null(student.Speciality);
-            Assert.AreEqual(0, _speciality.StudentCount);
         }
 
         [Test]

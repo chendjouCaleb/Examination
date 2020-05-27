@@ -13,7 +13,9 @@ namespace Exam.Entities
         public string RegisterUserId { get; set; }
         public string Name { get; set; }
 
-        public bool RequireSpeciality { get; set; } 
+        public bool RequireSpeciality { get; set; }
+
+        public bool IsClosed { get; set; }
         
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }

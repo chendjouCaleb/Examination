@@ -11,7 +11,7 @@ namespace Exam.Infrastructure
         
         public static bool IsAfter(this DateTime time, DateTime other)
         {
-            return time < other;
+            return time > other;
         }
     }
 }

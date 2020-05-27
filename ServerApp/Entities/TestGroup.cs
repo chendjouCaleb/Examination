@@ -12,6 +12,8 @@ namespace Exam.Entities
     {
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+
+        public bool IsClosed { get; set; }
         
         [JsonIgnore] 
         public virtual Group Group { get; set; }

@@ -281,9 +281,6 @@ namespace ServerAppTest.Controllers
             Application application = _controller.Add(_examination, _speciality, _model, _user).Value as Application;
             _controller.Delete(application);
             _applicationRepository.Refresh(application);
-
-            Assert.AreEqual(0, _examination.ApplicationCount);
-            Assert.AreEqual(0, _speciality.ApplicationCount);
             Assert.False(_applicationRepository.Exists(application));
         }
     }

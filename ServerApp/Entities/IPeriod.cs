@@ -7,12 +7,15 @@ namespace Exam.Entities
 {
     public interface IPeriod
     {
+        bool IsClosed { get; }
         DateTime? StartDate { get; set; }
         DateTime? EndDate { get; set; }
     }
 
     public class Period : IPeriod
     {
+        public bool IsClosed { get; }
+        
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
@@ -37,6 +40,10 @@ namespace Exam.Entities
     {
         public static string GetState(this IPeriod period)
         {
+            if (period.IsClosed)
+            {
+                return PeriodState.CLOSED;
+            }
             if (period.EndDate != null)
             {
                 return PeriodState.FINISHED;

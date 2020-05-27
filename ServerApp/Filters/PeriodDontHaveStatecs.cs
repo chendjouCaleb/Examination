@@ -25,6 +25,8 @@ namespace Exam.Filters
                 throw new ArgumentNullException($"Il n'existe pas de periode avec la clé {ItemName} dans les attributs de requêtes");
             }
             
+            ErrorMessage = ErrorMessage ?? $"{ItemName}.constraints.noState.{State}";
+            
             if(period.GetState() == State)
             {
                 throw new InvalidStateException(ErrorMessage);

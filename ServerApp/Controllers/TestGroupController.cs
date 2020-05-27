@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
+using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Microsoft.AspNetCore.Http;
@@ -71,12 +73,13 @@ namespace Exam.Controllers
         [RequireQueryParameter("testId")]
         [LoadGroup(ParameterName = "groupId", Source = ParameterSource.Query)]
         [LoadRoom(ParameterName = "roomId", Source = ParameterSource.Query)]
-        [LoadTest(ParameterName = "testId", Source = ParameterSource.Query)]
+        [LoadTest(ParameterName = "testId", ExaminationItemName = "examination", Source = ParameterSource.Query)]
+        
+        [AuthorizeExaminationAdmin]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         public CreatedAtActionResult Add(Test test, Group group, Room room)
         {
             TestGroup testGroup = _Add(test, group, room);
-            _paperController.AddAll(testGroup);
-
             return CreatedAtAction("Find", new {testGroup.Id}, testGroup);
         }
         public TestGroup _Add(Test test, Group group, Room room)
@@ -114,6 +117,10 @@ namespace Exam.Controllers
         [HttpPut("{testGroupId}/room")]
         [RequireQueryParameter("roomId")]
         [LoadRoom(ParameterName = "roomId", Source = ParameterSource.Query)]
+        
+        [LoadTestGroup(TestItemName = "test", ExaminationItemName = "examination")]
+        [AuthorizeExaminationAdmin]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         public StatusCodeResult ChangeRoom(TestGroup testGroup, Room room)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
@@ -130,12 +137,13 @@ namespace Exam.Controllers
 
 
         [HttpPut("{testGroupId}/start")]
+        [LoadTestGroup(TestItemName = "test")]
+        [AuthorizeTestGroupSupervisor(Principal = true)]
+        [PeriodHaveState(ItemName = "test", State = "PROGRESS")]
         public StatusCodeResult Start(TestGroup testGroup)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
-
-            Console.WriteLine(testGroup.Test.State);
-
+            
             if (testGroup.Test.State != PeriodState.PROGRESS)
             {
                 throw new InvalidOperationException("{testGroup.constraints.startAfterTest}");
@@ -147,6 +155,9 @@ namespace Exam.Controllers
         }
 
         [HttpPut("{testGroupId}/close")]
+        [LoadTestGroup(TestItemName = "test")]
+        [AuthorizeTestGroupSupervisor(Principal = true)]
+        [PeriodHaveState(ItemName = "test", State = "PROGRESS")]
         public StatusCodeResult Close(TestGroup testGroup)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
@@ -161,6 +172,9 @@ namespace Exam.Controllers
         }
         
         [HttpPut("{testGroupId}/restart")]
+        [LoadTestGroup(TestItemName = "test")]
+        [AuthorizeTestGroupSupervisor(Principal = true)]
+        [PeriodHaveState(ItemName = "test", State = "PROGRESS")]
         public StatusCodeResult Restart(TestGroup testGroup)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
@@ -176,16 +190,17 @@ namespace Exam.Controllers
         }
 
 
-        [LoadTestGroup]
         [HttpDelete("{testGroupId}")]
+        [LoadTestGroup(ExaminationItemName = "examination")]
+        [AuthorizeExaminationAdmin]
         public NoContentResult Delete(TestGroup testGroup)
         {
             _paperController.DeleteAll(testGroup);
-            
             _testGroupRepository.Delete(testGroup);
-
             return NoContent();
         }
+        
+        
 
     }
 }
