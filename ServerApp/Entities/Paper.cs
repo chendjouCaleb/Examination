@@ -12,7 +12,7 @@ namespace Exam.Entities
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class Paper:Entity<long>
     {
-        public decimal? Score { get; set; }
+        public double? Score { get; set; }
         
         [JsonIgnore]
         public string Anonymity { get; set; }
@@ -20,7 +20,7 @@ namespace Exam.Entities
         public virtual List<ScorePaper> ScorePapers { get; set; }
         
         [NotMapped]
-        public decimal FinalScore {
+        public double FinalScore {
             get
             {
                 if (ScorePapers != null && ScorePapers.Count > 0)
@@ -37,8 +37,6 @@ namespace Exam.Entities
         public DateTime? EndDate { get; set; }
         
         
-        
-        
         public virtual TestGroup TestGroup { get; set; }
         public long TestGroupId { get; set; }
         
@@ -52,7 +50,6 @@ namespace Exam.Entities
         public string SupervisorComment { get; set; }
         public string SupervisorUserId { get; set; }
         public string CollectorUserId { get; set; }
-        
         
         
         [JsonIgnore]

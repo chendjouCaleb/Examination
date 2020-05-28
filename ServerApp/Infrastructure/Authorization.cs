@@ -15,7 +15,7 @@ namespace Exam.Infrastructure
     [ModelBinder(BinderType = typeof(UserModelBinder))]
     public class User
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
     }
     
     public class AuthorizationModelBinder : IModelBinder

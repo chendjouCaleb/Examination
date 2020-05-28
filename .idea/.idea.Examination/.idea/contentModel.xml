@@ -1028,6 +1028,7 @@
           <e p="ExaminationControllerTests.cs" t="Include" />
           <e p="GroupControllerTests.cs" t="Include" />
           <e p="OrganisationControllerTests.cs" t="Include" />
+          <e p="PaperControllerTests.cs" t="Include" />
           <e p="PrincipalControllerTests.cs" t="Include" />
           <e p="RoomControllerTests.cs" t="Include" />
           <e p="ScoreControllerTests.cs" t="Include" />

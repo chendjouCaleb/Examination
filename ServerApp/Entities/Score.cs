@@ -17,7 +17,7 @@ namespace Exam.Entities
     {
         public string Name { get; set; }
         
-        public int Radical { get; set; }
+        public double Radical { get; set; }
 
         [JsonIgnore]
         public virtual Test Test { get; set; }
@@ -39,6 +39,6 @@ namespace Exam.Entities
         public virtual Paper Paper { get; set; }
         public long PaperId { get; set; }
 
-        public decimal Value { get; set; }
+        public double Value { get; set; }
     }
 }

@@ -41,9 +41,10 @@ namespace Exam.Controllers
         public IEnumerable<Paper> List(
             [FromQuery] long? secretaryId,
             [FromQuery] long? testGroupId,
+            [FromQuery] long? supervisorId,
             [FromQuery] long? correctorId,
             [FromQuery] long? studentId,
-            [FromQuery] long? supervisorId,
+            
             [FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
             IQueryable<Paper> queryable = _paperRepository.Set;
@@ -89,21 +90,23 @@ namespace Exam.Controllers
         [RequireQueryParameter("studentId")]
         [RequireQueryParameter("testGroupId")]
         [LoadStudent(Source = ParameterSource.Query)]
-        [LoadTestGroup(Source = ParameterSource.Query)]
+        [LoadTestGroup(Source = ParameterSource.Query, TestItemName = "test")]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         [AuthorizeTestGroupSupervisor]
-        public CreatedAtActionResult Add(TestGroup testGroup, Student student, User user)
+        public CreatedAtActionResult Add(TestGroup testGroup, Student student, TestGroupSupervisor testGroupSupervisor)
         {
             Assert.RequireNonNull(student, nameof(student));
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             
-            if (testGroup.Test.State == PeriodState.FINISHED)
-            {
-                throw new InvalidOperationException("{paper.constraints.addBeforeFinish}");
-            }
 
             if (!testGroup.Group.Equals(student.Group))
             {
                 throw new IncompatibleEntityException<Student, TestGroup>(student, testGroup);
+            }
+
+            if (_paperRepository.Exists(p => student.Equals(p.Student) && testGroup.Equals(p.TestGroup)))
+            {
+                throw new InvalidOperationException("{paper.constraints.uniqueStudent}");
             }
             
 
@@ -111,7 +114,8 @@ namespace Exam.Controllers
             {
                 Student = student,
                 TestGroup = testGroup,
-                SupervisorUserId = user.Id,
+                TestGroupSupervisor = testGroupSupervisor,
+                SupervisorUserId = testGroupSupervisor.Supervisor.UserId,
                 StartDate = DateTime.Now
             };
 
@@ -159,17 +163,33 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
+        [HttpPut("{paperId}/supervisorComment")]
+        [LoadPaper(TestGroupItemName = "testGroup")]
+        [PeriodHaveState(ItemName = "testGroup", State = "PROGRESS")]
+        [AuthorizeTestGroupSupervisor]
+        public StatusCodeResult SupervisorComment(Paper paper, [FromQuery] string comment)
+        {
+            Assert.RequireNonNull(paper, nameof(paper));
+            paper.SupervisorComment = comment;
+
+            _paperRepository.Update(paper);
+            return StatusCode(StatusCodes.Status202Accepted);
+        }
 
         [HttpPut("{paperId}/collect")]
         [LoadPaper(TestGroupItemName = "testGroup")]
+        [PeriodHaveState(ItemName = "testGroup", State = "PROGRESS")]
         [AuthorizeTestGroupSupervisor]
-        public StatusCodeResult Collect(Paper paper, [FromBody] PaperCollectForm form, User user)
+        public StatusCodeResult Collect(Paper paper, User user, [FromQuery] DateTime? endDate = null)
         {
+            if (endDate == null)
+            {
+                endDate = DateTime.Now;
+            }
+
             Assert.RequireNonNull(paper, nameof(paper));
-            Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(user, nameof(user));
-            paper.EndDate = form.EndDate;
-            paper.SupervisorComment = form.Comment;
+            paper.EndDate = endDate;
             paper.CollectorUserId = user.Id;
 
             _paperRepository.Update(paper);
@@ -179,8 +199,10 @@ namespace Exam.Controllers
 
         [HttpPut("{paperId}/report")]
         [LoadPaper(TestGroupItemName = "testGroup")]
+        [PeriodHaveState(ItemName = "testGroup", State = "FINISHED")]
+        [PeriodNotClosed(ItemName = "testGroup")]
         [AuthorizeTestGroupSecretary]
-        public AcceptedResult Report(Paper paper, TestGroupSecretary testGroupSecretary, User user, PaperReportForm form)
+        public AcceptedResult Report(Paper paper, TestGroupSecretary testGroupSecretary, PaperReportForm form)
         {
             Assert.RequireNonNull(paper, nameof(paper));
             Assert.RequireNonNull(testGroupSecretary, nameof(testGroupSecretary));
@@ -195,7 +217,7 @@ namespace Exam.Controllers
             }
 
             paper.TestGroupSecretary = testGroupSecretary;
-            paper.SecretaryUserId = user.Id;
+            paper.SecretaryUserId = testGroupSecretary.Secretary.UserId;
             paper.Anonymity = form.Anonymity;
             paper.SecretaryComment = form.Comment;
 
@@ -207,7 +229,8 @@ namespace Exam.Controllers
         [LoadPaper(TestItemName = "test", TestGroupItemName = "testGroup")]
         [PeriodNotClosed(ItemName = "test")]
         [AuthorizeTestGroupCorrector]
-        public StatusCodeResult Score(Paper paper, [FromQuery] decimal value)
+        public StatusCodeResult Score(Paper paper, TestGroupCorrector testGroupCorrector,
+            [FromQuery] double value)
         {
             Assert.RequireNonNull(paper, nameof(paper));
 
@@ -221,6 +244,8 @@ namespace Exam.Controllers
                 throw new InvalidValueException("{paper.constraints.scoreLowerOrEqualThanTestRadical}");
             }
 
+            paper.TestGroupCorrector = testGroupCorrector;
+            paper.CorrectorUserId = testGroupCorrector.Corrector.UserId;
             paper.Score = value;
             _paperRepository.Update(paper);
 
@@ -232,7 +257,7 @@ namespace Exam.Controllers
         [LoadPaper(TestItemName = "test", TestGroupItemName = "testGroup")]
         [PeriodNotClosed(ItemName = "test")]
         [AuthorizeTestGroupCorrector]
-        public StatusCodeResult Scores(Paper paper, [FromBody] List<ScorePaperForm> form)
+        public OkObjectResult Scores(Paper paper, TestGroupCorrector testGroupCorrector, [FromBody] List<ScorePaperForm> form)
         {
             Assert.RequireNonNull(paper, nameof(paper));
             Assert.RequireNonNull(form, nameof(form));
@@ -241,34 +266,66 @@ namespace Exam.Controllers
             {
                 throw new InvalidOperationException("{paper.constraints.singleScore}");
             }
-            if (paper.TestGroup.Test.Radical < form.Sum(i => i.Value))
-            {
-                throw new InvalidValueException("{paper.constraints.scoresLowerOrEqualThanTestRadical}");
-            }
+            
             
             List<ScorePaper> scorePapers = new List<ScorePaper>(form.Count);
 
-            foreach (var paperForm in form)
+            foreach (var item in form)
             {
-                Score score = _scoreRepository.Find(paperForm.ScoreId);
-                if (!score.Test.Equals(paper.TestGroup.Test))
-                {
-                    throw new IncompatibleEntityException<Score, Paper>(score, paper);
-                }
+                scorePapers.Add(AddOrUpdatePaperScore(paper, _scoreRepository.Find(item.ScoreId), item.Value));
+            }
+            
+            paper.TestGroupCorrector = testGroupCorrector;
+            paper.CorrectorUserId = testGroupCorrector.Corrector.UserId;
+            _paperRepository.Update(paper);
 
-                ScorePaper scorePaper = new ScorePaper
+            return Ok(scorePapers);
+        }
+
+        public ScorePaper AddOrUpdatePaperScore(Paper paper, Score score, double value)
+        {
+            if (!score.Test.Equals(paper.TestGroup.Test))
+            {
+                throw new IncompatibleEntityException<Score, Paper>(score, paper);
+            }
+
+            if (value > score.Radical)
+            {
+                throw new InvalidValueException("{paperScore.constraints.valueLowerOrEqualThanRadical}");
+            }
+            
+            ScorePaper paperScore = _scorePaperRepository.First(s => paper.Equals(s.Paper) && score.Equals(s.Score));
+
+            if (paperScore == null)
+            {
+                paperScore = _scorePaperRepository.Save(new ScorePaper
                 {
                     Score = score,
                     Paper = paper,
-                    Value = paperForm.Value
-                };
-                scorePapers.Add(scorePaper);
+                    Value = value
+                });
             }
-            
-            scorePapers.ForEach(s => _scorePaperRepository.Save(s));
-            
+            else
+            {
+                paperScore.Value = value;
+                _scorePaperRepository.Update(paperScore);
+            }
+
+            return paperScore;
+        }
+        
+        [HttpPut("{paperId}/correctorComment")]
+        [LoadPaper(TestGroupItemName = "testGroup")]
+        [PeriodHaveState(ItemName = "testGroup", State = "PROGRESS")]
+        [AuthorizeTestGroupCorrector]
+        public StatusCodeResult CorrectorComment(Paper paper, [FromQuery] string comment)
+        {
+            Assert.RequireNonNull(paper, nameof(paper));
+            paper.CorrectorComment = comment;
+
+            _paperRepository.Update(paper);
             return StatusCode(StatusCodes.Status202Accepted);
-        } 
+        }
 
         [HttpDelete("{paperId}")]
         [LoadPaper(ExaminationItemName = "examinationId")]

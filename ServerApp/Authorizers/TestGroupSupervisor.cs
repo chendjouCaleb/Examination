@@ -12,6 +12,8 @@ namespace Exam.Authorizers
     public class AuthorizeTestGroupSupervisor: ActionFilterAttribute
     {
         public string TestGroupItemName { get; set; } = "testGroup";
+
+        public string ItemName { get; set; } = "testGroupSupervisor";
         public bool Principal { get; set; } = false;
         
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -46,6 +48,8 @@ namespace Exam.Authorizers
             {
                 throw new UnauthorizedException("{authorization.constraints.requirePrincipalTestGroupSupervisor}");
             }
+
+            context.HttpContext.Items[ItemName] = supervisor;
         }
     }
 }

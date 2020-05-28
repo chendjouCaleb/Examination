@@ -48,11 +48,12 @@ namespace ServerAppTest.Controllers
                 Examination = _examination,
                 Name = "Mathematics",
                 ExpectedStartDate = DateTime.Now.AddMonths(1),
-                ExpectedEndDate = DateTime.Now.AddMonths(3)
+                ExpectedEndDate = DateTime.Now.AddMonths(3),
+                Radical = 20
             });
             
 
-            _model = new ScoreForm {Name = "Excercice1" };
+            _model = new ScoreForm {Name = "Exercise1", Radical = 8};
         }
 
         [Test]
@@ -83,7 +84,7 @@ namespace ServerAppTest.Controllers
         {
             Score score = _controller.Add(_test, _model).Value as Score;
 
-            string name = "Exercice-1";
+            string name = "Exercise-1";
             _controller.ChangeName(score, name);
             _scoreRepository.Refresh(score);
             
@@ -106,7 +107,20 @@ namespace ServerAppTest.Controllers
 
             Assert.AreEqual("{test.score.constraints.uniqueName}", ex.Message);
         }
-        
+
+        [Test]
+        public void TryAddScore_SuchAsTotalScore_IsUpperThanTestRadical_ShouldThrowError()
+        {
+            _controller.Add(_test, _model);
+            
+            ScoreForm model2 = new ScoreForm {Name = "Exercise2", Radical = 15};
+            
+            Exception ex = Assert.Throws<InvalidValueException>(
+                () =>  _controller.Add(_test, model2) 
+            );
+
+            Assert.AreEqual("{test.score.constraints.totalLowerOrEqualsThanRadical}", ex.Message);
+        }
         
         [Test]
         public void Delete()

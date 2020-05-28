@@ -9,15 +9,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Exam.Authorizers
 {
-    public class AuthorizeTestGroupCorrector: ActionFilterAttribute
+    public class AuthorizeTestGroupCorrector : ActionFilterAttribute
     {
         public string TestGroupItemName { get; set; } = "testGroup";
+        public string ItemName { get; set; } = "testGroupCorrector";
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             IRepository<TestGroupCorrector, long> repository =
                 context.HttpContext.RequestServices.GetRequiredService<IRepository<TestGroupCorrector, long>>();
-            
-            Authorization authorization = 
+
+            Authorization authorization =
                 context.HttpContext.Items["Authorization"] as Authorization;
 
             TestGroup testGroup = context.HttpContext.GetItem(TestGroupItemName) as TestGroup;
@@ -32,10 +34,14 @@ namespace Exam.Authorizers
                 throw new ArgumentNullException(nameof(testGroup));
             }
 
-            if (!repository.Exists(p => testGroup.Equals(p.TestGroup) && p.Corrector.UserId == authorization.UserId))
+            TestGroupCorrector corrector = repository.First(p =>
+                testGroup.Equals(p.TestGroup) && p.Corrector.UserId == authorization.UserId);
+            if (corrector == null)
             {
                 throw new UnauthorizedException("{authorization.constraints.requireTestGroupCorrector}");
             }
+
+            context.HttpContext.Items[ItemName] = corrector;
         }
     }
 }

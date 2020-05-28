@@ -31,16 +31,13 @@ namespace Exam.Persistence
         public DbSet<Application> Applications { get; set; }
         public DbSet<Secretary> Secretaries { get; set; }
         public DbSet<Score> Scores { get; set; }
+        public DbSet<ScorePaper> ScorePapers{ get; set; }
         
         public PersistenceContext(DbContextOptions<PersistenceContext> options):base(options)
-        {
-
-        }
+        { }
 
         public PersistenceContext()
-        {
-
-        }
+        { }
         
     }
 }

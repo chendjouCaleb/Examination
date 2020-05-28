@@ -1,12 +1,5 @@
-﻿using System;
-
-namespace Exam.Models
+﻿namespace Exam.Models
 {
-    public class PaperCollectForm
-    {
-        public string Comment { get; set; }
-        public DateTime EndDate { get; set; }
-    }
     
     
     public class PaperReportForm

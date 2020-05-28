@@ -12,6 +12,7 @@ namespace Exam.Authorizers
     public class AuthorizeTestGroupSecretary: ActionFilterAttribute
     {
         public string TestGroupItemName { get; set; } = "testGroup";
+        public string ItemName { get; set; } = "testGroupSecretary";
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             IRepository<TestGroupSecretary, long> repository =
@@ -32,10 +33,15 @@ namespace Exam.Authorizers
                 throw new ArgumentNullException(nameof(testGroup));
             }
 
-            if (!repository.Exists(p => testGroup.Equals(p.TestGroup) && p.Secretary.UserId == authorization.UserId))
+            TestGroupSecretary secretary = repository.First(p =>
+                testGroup.Equals(p.TestGroup) && p.Secretary.UserId == authorization.UserId);
+
+            if (secretary == null)
             {
                 throw new UnauthorizedException("{authorization.constraints.requireTestGroupSecretary}");
             }
+
+            context.HttpContext.Items[ItemName] = secretary;
         }
     }
 }

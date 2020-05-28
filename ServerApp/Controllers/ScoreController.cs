@@ -44,7 +44,7 @@ namespace Exam.Controllers
             Assert.RequireNonNull(test, nameof(test));
             Assert.RequireNonNull(form, nameof(form));
 
-            int totalRadical = _scoreRepository.List(g => test.Equals(g.Test))
+            double totalRadical = _scoreRepository.List(g => test.Equals(g.Test))
                                    .Sum(e => e.Radical)
                                + form.Radical;
 
@@ -55,7 +55,7 @@ namespace Exam.Controllers
 
             if (totalRadical > test.Radical)
             {
-                throw new InvalidValueException("${test.score.constraints.noUpperRadical}");
+                throw new InvalidValueException("{test.score.constraints.totalLowerOrEqualsThanRadical}");
             }
 
             Score score = new Score

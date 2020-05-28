@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
         
-        public int Radical { get; set; }
+        public double Radical { get; set; }
     }
 
     public class ScoreEditForm
@@ -16,6 +16,6 @@
     public class ScorePaperForm 
     {
         public long ScoreId { get; set; }
-        public decimal Value { get; set; }
+        public double Value { get; set; }
     }
 }
