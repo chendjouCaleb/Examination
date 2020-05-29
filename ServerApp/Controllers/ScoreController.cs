@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Everest.AspNetStartup.Exceptions;
+using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
+using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
@@ -12,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.Controllers
 {
-    [Route("api/tests/{testId}/scores")]
+    [Route("api/scores")]
     public class ScoreController : Controller
     {
         private readonly IRepository<Score, long> _scoreRepository;
@@ -30,7 +33,8 @@ namespace Exam.Controllers
 
 
         [HttpGet]
-        [LoadTest(ParameterName = "testId")]
+        [LoadTest(ParameterName = "testId", Source = ParameterSource.Query)]
+        [RequireQueryParameter("testId")]
         public IEnumerable<Score> List(Test test)
         {
             return _scoreRepository.Set.Where(g => test.Equals(g.Test)).ToList();
@@ -38,15 +42,18 @@ namespace Exam.Controllers
 
 
         [HttpPost]
-        [LoadTest(ParameterName = "testId")]
+        [LoadTest(ParameterName = "testId", ExaminationItemName = "examination", Source = ParameterSource.Query)]
+        [RequireQueryParameter("testId")]
+        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
+        [AuthorizeExaminationAdmin]
         public CreatedAtActionResult Add(Test test, [FromBody] ScoreForm form)
         {
             Assert.RequireNonNull(test, nameof(test));
             Assert.RequireNonNull(form, nameof(form));
 
             double totalRadical = _scoreRepository.List(g => test.Equals(g.Test))
-                                   .Sum(e => e.Radical)
-                               + form.Radical;
+                                      .Sum(e => e.Radical)
+                                  + form.Radical;
 
             if (_scoreRepository.Exists(t => test.Equals(t.Test) && t.Name == form.Name))
             {
@@ -71,7 +78,12 @@ namespace Exam.Controllers
         }
 
 
-        public StatusCodeResult ChangeName(Score score, string name)
+        [HttpPost]
+        [LoadScore(ExaminationItemName = "examination", TestItemName = "test")]
+        [RequireQueryParameter("name")]
+        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
+        [AuthorizeExaminationAdmin]
+        public StatusCodeResult ChangeName(Score score, [FromQuery]string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -90,8 +102,10 @@ namespace Exam.Controllers
         }
 
 
-        [LoadScore]
-        [HttpDelete("{scoreId}")]
+        
+        [LoadScore(ExaminationItemName = "examination", TestItemName = "test")]
+        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
+        [AuthorizeExaminationAdmin]
         public NoContentResult Delete(Score score)
         {
             _scoreRepository.Delete(score);

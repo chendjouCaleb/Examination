@@ -10,3 +10,4 @@ export * from './student.model';
 export * from './application.model';
 export * from './test.model';
 export * from './period.model';
+export * from './score.model';

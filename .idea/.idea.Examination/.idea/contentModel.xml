@@ -796,6 +796,7 @@
               <e p="period.model.ts" t="Include" />
               <e p="principal.model.ts" t="Include" />
               <e p="room.model.ts" t="Include" />
+              <e p="score.model.ts" t="Include" />
               <e p="speciality.model.ts" t="Include" />
               <e p="student.model.ts" t="Include" />
               <e p="test.model.ts" t="Include" />
@@ -813,6 +814,7 @@
               <e p="organisation.httpClient.ts" t="Include" />
               <e p="principal.httpClient.ts" t="Include" />
               <e p="room.httpClient.ts" t="Include" />
+              <e p="score.httpClient.ts" t="Include" />
               <e p="secretary.httpClient.ts" t="Include" />
               <e p="speciality.httpClient.ts" t="Include" />
               <e p="student.httpClient.ts" t="Include" />
@@ -840,6 +842,7 @@
               <e p="speciality.loader.ts" t="Include" />
               <e p="student.loader.ts" t="Include" />
               <e p="supervisor.loader.ts" t="Include" />
+              <e p="test-group.loader.ts" t="Include" />
               <e p="test.loader.ts" t="Include" />
             </e>
             <e p="paging.ts" t="Include" />
