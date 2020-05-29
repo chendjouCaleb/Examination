@@ -20,3 +20,4 @@ export * from './score.loader';
 export * from './test-group-supervisor.loader';
 export * from './test-group-corrector.loader';
 export * from './test-group-secretary.loader';
+export * from './paper.loader';

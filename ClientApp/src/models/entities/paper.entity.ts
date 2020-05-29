@@ -8,6 +8,7 @@ import {TestGroupSupervisor} from './test-group-supervisor.entity';
 import {TestGroupSecretary} from './test-group-secretary.entity';
 import {TestGroupCorrector} from './test-group-corrector.entity';
 import {ScorePaper} from './score-paper.entity';
+import {User} from './user.entity';
 
 export class Paper extends Entity<number> {
 
@@ -62,17 +63,22 @@ export class Paper extends Entity<number> {
   testGroupSupervisor: TestGroupSupervisor;
   testGroupSupervisorId: number;
   supervisorUserId: string;
+  supervisorUser: User;
+
   collectorUserId: string;
+  collectorUser: User;
   supervisorComment: string;
 
   testGroupSecretary: TestGroupSecretary;
   testGroupSecretaryId: number;
   secretaryUserId: string;
+  secretaryUser: User;
   secretaryComment: string;
 
   testGroupCorrector: TestGroupCorrector;
   testGroupCorrectorId: number;
   correctorUserId: string;
+  correctorUser: User;
   correctorComment: string;
 
   scorePapers = new List<ScorePaper>();

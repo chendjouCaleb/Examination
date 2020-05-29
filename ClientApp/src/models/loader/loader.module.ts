@@ -18,6 +18,7 @@ import {ScoreLoader} from './score.loader';
 import {TestGroupSecretaryLoader} from './test-group-secretary.loader';
 import {TestGroupSupervisorLoader} from './test-group-supervisor.loader';
 import {TestGroupCorrectorLoader} from './test-group-corrector.loader';
+import {PaperLoader} from './paper.loader';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import {TestGroupCorrectorLoader} from './test-group-corrector.loader';
     SpecialityLoader, GroupLoader, StudentLoader, ApplicationLoader, TestLoader,
     ExaminationLoader, PrincipalLoader, CorrectorLoader, SupervisorLoader,
     TestGroupSecretaryLoader, TestGroupSupervisorLoader, TestGroupCorrectorLoader,
-    ScoreLoader]
+    ScoreLoader, PaperLoader]
 })
 export class LoaderModule {
 }
