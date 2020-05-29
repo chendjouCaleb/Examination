@@ -25,13 +25,12 @@ namespace Exam.Models
         public string Name { get; set; }
 
         public string Code { get; set; }
-
-        public string Room { get; set; }
-
+        
         public uint Coefficient { get; set; }
+
+        public uint Radical { get; set; }
         
         public bool? UseAnonymity { get; set; }
         
-        public bool? IsPublished { get; set; }
     }
 }
