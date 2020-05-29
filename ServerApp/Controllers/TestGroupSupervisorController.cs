@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Exam.Controllers
 {
-    [Route("api/testGroup/secretaries")]
+    [Route("api/testGroupSupervisors")]
     public class TestGroupSupervisorController : Controller
     {
         private readonly IRepository<TestGroupSupervisor, long> _testGroupSupervisorRepository;
@@ -37,7 +37,7 @@ namespace Exam.Controllers
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
-        public IEnumerable<TestGroupSupervisor> List(Test test, TestGroup testGroup, int skip = 0, int take = 20)
+        public IEnumerable<TestGroupSupervisor> List(Test test, TestGroup testGroup, Supervisor supervisor, int skip = 0, int take = 20)
         {
             IQueryable<TestGroupSupervisor> queryable = _testGroupSupervisorRepository.Set;
             
@@ -50,6 +50,11 @@ namespace Exam.Controllers
                 queryable = queryable.Where(p => testGroup.Equals(p.TestGroup));
             }
 
+            if (supervisor != null)
+            {
+                queryable = queryable.Where(p => supervisor.Equals(p.Supervisor));
+            }
+
             queryable = queryable.Skip(skip).Take(take);
             return queryable.ToList();
         }
@@ -60,9 +65,8 @@ namespace Exam.Controllers
         [RequireQueryParameter("supervisorId")]
         [LoadTestGroup(TestItemName = "test", ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished}")]
         [LoadSupervisor(Source = ParameterSource.Query)]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         public CreatedAtActionResult Add(TestGroup testGroup, Supervisor supervisor)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
@@ -94,10 +98,9 @@ namespace Exam.Controllers
 
 
         [HttpPut("{testGroupSupervisorId}/principal")]
-        [LoadTestGroupSupervisor(ExaminationItemName = "examination")]
+        [LoadTestGroupSupervisor(ExaminationItemName = "examination", TestItemName = "test")]
         [AuthorizeExaminationAdmin]
-        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished}")]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         
         public StatusCodeResult SetPrincipalSupervisor(TestGroupSupervisor testGroupSupervisor)
         {
@@ -109,10 +112,9 @@ namespace Exam.Controllers
         }
 
         [HttpDelete("{testGroupSupervisorId}")]
-        [LoadTestGroupSupervisor(ExaminationItemName = "examination")]
+        [LoadTestGroupSupervisor(ExaminationItemName = "examination", TestItemName = "test")]
         [AuthorizeExaminationAdmin]
-        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished}")]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         public NoContentResult Delete(TestGroupSupervisor testGroupSupervisor)
         {
             Assert.RequireNonNull(testGroupSupervisor, nameof(testGroupSupervisor));

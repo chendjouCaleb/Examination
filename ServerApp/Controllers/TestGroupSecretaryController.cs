@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Exam.Controllers
 {
-    [Route("api/testGroup/secretaries")]
+    [Route("api/testGroupSecretaries")]
     public class TestGroupSecretaryController : Controller
     {
         private readonly IRepository<TestGroupSecretary, long> _testGroupSecretaryRepository;
@@ -34,7 +34,7 @@ namespace Exam.Controllers
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
-        public IEnumerable<TestGroupSecretary> List(Test test, TestGroup testGroup, int skip = 0, int take = 20)
+        public IEnumerable<TestGroupSecretary> List(Test test, TestGroup testGroup, Secretary secretary, int skip = 0, int take = 20)
         {
             IQueryable<TestGroupSecretary> queryable = _testGroupSecretaryRepository.Set;
             
@@ -45,6 +45,11 @@ namespace Exam.Controllers
             if (testGroup != null)
             {
                 queryable = queryable.Where(p => testGroup.Equals(p.TestGroup));
+            }
+            
+            if (secretary != null)
+            {
+                queryable = queryable.Where(p => secretary.Equals(p.Secretary));
             }
 
             queryable = queryable.Skip(skip).Take(take);
@@ -57,8 +62,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("secretaryId")]
         [LoadTestGroup(TestItemName = "test", ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished}")]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         [LoadSecretary(Source = ParameterSource.Query)]
         public CreatedAtActionResult Add(TestGroup testGroup, Secretary secretary)
         {
@@ -93,8 +97,7 @@ namespace Exam.Controllers
         [HttpDelete("{testGroupSecretaryId}")]
         [LoadTestGroupSecretary(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished}")]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         public NoContentResult Delete(TestGroupSecretary testGroupSecretary)
         {
             Assert.RequireNonNull(testGroupSecretary, nameof(testGroupSecretary));

@@ -1,5 +1,5 @@
 import {GenericHttpClient, SERVER_URL} from './httpClient';
-import {Corrector, Test, TestGroup, TestGroupCorrector} from '../entities';
+import {Corrector, Secretary, Test, TestGroup, TestGroupCorrector, TestGroupSecretary} from '../entities';
 import {Injectable} from '@angular/core';
 import {List} from '@positon/collections';
 
@@ -20,6 +20,10 @@ export class TestGroupCorrectorHttpClient extends GenericHttpClient<TestGroupCor
 
   listByTestGroup(testGroup: TestGroup): Promise<List<TestGroupCorrector>> {
     return this.listAsync({testGroupId: testGroup.id});
+  }
+
+  listByCorrector(corrector: Corrector): Promise<List<TestGroupCorrector>> {
+    return this.listAsync({correctorId: corrector.id});
   }
 
 

@@ -17,6 +17,7 @@ import {ApplicationHttpClient} from './application.httpClient';
 import {TestHttpClient} from './test.httpClient';
 import {TestGroupHttpClient} from './test-group.httpClient';
 import {ScoreHttpClient} from './score.httpClient';
+import {TestGroupCorrectorHttpClient} from './test-group-corrector.httpClient';
 
 @NgModule({
   imports: [HttpClientModule],
@@ -24,7 +25,7 @@ import {ScoreHttpClient} from './score.httpClient';
     ClientHttpClient, OrganisationHttpClient, AdminHttpClient, UserHttpClient, RoomHttpClient, GroupHttpClient,
     ExaminationHttpClient, CorrectorHttpClient, PrincipalHttpClient, SupervisorHttpClient, SecretaryHttpClient,
     SpecialityHttpClient, StudentHttpClient, ApplicationHttpClient, TestHttpClient, TestGroupHttpClient,
-    ScoreHttpClient
+    ScoreHttpClient, TestGroupCorrectorHttpClient
   ]
 })
 export class AppHttpClientModule {

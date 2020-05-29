@@ -34,7 +34,7 @@ namespace Exam.Controllers
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
-        public IEnumerable<TestGroupCorrector> List(Test test, TestGroup testGroup, int skip = 0, int take = 20)
+        public IEnumerable<TestGroupCorrector> List(Test test, TestGroup testGroup, Corrector corrector, int skip = 0, int take = 20)
         {
             IQueryable<TestGroupCorrector> queryable = _testGroupCorrectorRepository.Set;
 
@@ -47,6 +47,11 @@ namespace Exam.Controllers
             {
                 queryable = queryable.Where(p => testGroup.Equals(p.TestGroup));
             }
+            
+            if (corrector != null)
+            {
+                queryable = queryable.Where(p => corrector.Equals(p.Corrector));
+            }
 
             queryable = queryable.Skip(skip).Take(take);
             return queryable.ToList();
@@ -56,10 +61,11 @@ namespace Exam.Controllers
         [HttpPost]
         [RequireQueryParameter("testGroupId")]
         [RequireQueryParameter("correctorId")]
-        [LoadTestGroup(TestItemName = "test" )]
+        [LoadTestGroup(TestItemName = "test", ExaminationItemName = "examination")]
+        [LoadCorrector(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(ItemName = "test", State = "PENDING")]
-        [LoadCorrector(Source = ParameterSource.Query)]
+        
         public CreatedAtActionResult Add(TestGroup testGroup, Corrector corrector)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
@@ -91,7 +97,7 @@ namespace Exam.Controllers
 
 
         [HttpDelete("{testGroupCorrectorId}")]
-        [LoadTestGroupCorrector(TestItemName = "test")]
+        [LoadTestGroupCorrector(TestItemName = "test", ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(ItemName = "test", State = "PENDING")]
         public NoContentResult Delete(TestGroupCorrector testGroupCorrector)
