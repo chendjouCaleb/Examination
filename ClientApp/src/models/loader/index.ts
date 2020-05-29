@@ -14,4 +14,4 @@ export * from './speciality.loader';
 export * from './group.loader';
 export * from './student.loader';
 export * from './application.loader';
-
+export * from './test.loader';

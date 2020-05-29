@@ -14,3 +14,4 @@ export * from './speciality.httpClient';
 export * from './group.httpClient';
 export * from './student.httpClient';
 export * from './application.httpClient';
+export * from './test.httpClient';
