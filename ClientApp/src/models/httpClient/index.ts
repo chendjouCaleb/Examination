@@ -16,3 +16,4 @@ export * from './student.httpClient';
 export * from './application.httpClient';
 export * from './test.httpClient';
 export * from './test-group.httpClient';
+export * from './score.httpClient';
