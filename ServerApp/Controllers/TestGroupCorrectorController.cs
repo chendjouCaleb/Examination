@@ -13,14 +13,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Exam.Controllers
 {
-    [Route("api/testGroup/secretaries")]
+    [Route("api/testGroupCorrectors")]
     public class TestGroupCorrectorController : Controller
     {
         private readonly IRepository<TestGroupCorrector, long> _testGroupCorrectorRepository;
         private readonly ILogger<TestGroupCorrectorController> _logger;
 
 
-        public TestGroupCorrectorController(IRepository<TestGroupCorrector, long> testGroupCorrectorRepository, 
+        public TestGroupCorrectorController(IRepository<TestGroupCorrector, long> testGroupCorrectorRepository,
             ILogger<TestGroupCorrectorController> logger)
         {
             _testGroupCorrectorRepository = testGroupCorrectorRepository;
@@ -37,11 +37,12 @@ namespace Exam.Controllers
         public IEnumerable<TestGroupCorrector> List(Test test, TestGroup testGroup, int skip = 0, int take = 20)
         {
             IQueryable<TestGroupCorrector> queryable = _testGroupCorrectorRepository.Set;
-            
+
             if (test != null)
             {
                 queryable = queryable.Where(p => test.Equals(p.TestGroup.Test));
             }
+
             if (testGroup != null)
             {
                 queryable = queryable.Where(p => testGroup.Equals(p.TestGroup));
@@ -55,12 +56,11 @@ namespace Exam.Controllers
         [HttpPost]
         [RequireQueryParameter("testGroupId")]
         [RequireQueryParameter("correctorId")]
-        [LoadTestGroup(TestItemName = "test", ExaminationItemName = "examination")]
+        [LoadTestGroup(TestItemName = "test" )]
         [AuthorizeExaminationAdmin]
-        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished}")]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         [LoadCorrector(Source = ParameterSource.Query)]
-        public CreatedAtActionResult Add(TestGroup testGroup,  Corrector corrector)
+        public CreatedAtActionResult Add(TestGroup testGroup, Corrector corrector)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             Assert.RequireNonNull(corrector, nameof(corrector));
@@ -69,9 +69,10 @@ namespace Exam.Controllers
             {
                 throw new IncompatibleEntityException<TestGroup, Corrector>(testGroup, corrector);
             }
-            
-            
-            if (_testGroupCorrectorRepository.Exists(p => testGroup.Equals(p.TestGroup) && corrector.Equals(p.Corrector)))
+
+
+            if (_testGroupCorrectorRepository.Exists(
+                p => testGroup.Equals(p.TestGroup) && corrector.Equals(p.Corrector)))
             {
                 throw new InvalidValueException("{testGroupCorrector.constraints.uniqueCorrector}");
             }
@@ -80,7 +81,6 @@ namespace Exam.Controllers
             {
                 Corrector = corrector,
                 TestGroup = testGroup
-                
             };
 
             testGroupCorrector = _testGroupCorrectorRepository.Save(testGroupCorrector);
@@ -91,10 +91,9 @@ namespace Exam.Controllers
 
 
         [HttpDelete("{testGroupCorrectorId}")]
-        [LoadTestGroupCorrector(ExaminationItemName = "examination")]
+        [LoadTestGroupCorrector(TestItemName = "test")]
         [AuthorizeExaminationAdmin]
-        [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
-            ErrorMessage = "{examination.requireNoState.finished}")]
+        [PeriodHaveState(ItemName = "test", State = "PENDING")]
         public NoContentResult Delete(TestGroupCorrector testGroupCorrector)
         {
             Assert.RequireNonNull(testGroupCorrector, nameof(testGroupCorrector));

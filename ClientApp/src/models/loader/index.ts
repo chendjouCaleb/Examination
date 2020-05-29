@@ -16,3 +16,5 @@ export * from './student.loader';
 export * from './application.loader';
 export * from './test.loader';
 export * from './test-group.loader';
+export * from './score.loader';
+

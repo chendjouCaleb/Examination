@@ -819,6 +819,7 @@
               <e p="speciality.httpClient.ts" t="Include" />
               <e p="student.httpClient.ts" t="Include" />
               <e p="supervisor.httpClient.ts" t="Include" />
+              <e p="test-group-corrector.httpClient.ts" t="Include" />
               <e p="test-group.httpClient.ts" t="Include" />
               <e p="test.httpClient.ts" t="Include" />
               <e p="user.httpClient.ts" t="Include" />
@@ -838,6 +839,7 @@
               <e p="organisation.loader.ts" t="Include" />
               <e p="principal.loader.ts" t="Include" />
               <e p="room.loader.ts" t="Include" />
+              <e p="score.loader.ts" t="Include" />
               <e p="secretary.loader.ts" t="Include" />
               <e p="speciality.loader.ts" t="Include" />
               <e p="student.loader.ts" t="Include" />

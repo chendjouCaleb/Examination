@@ -14,13 +14,15 @@ import {GroupLoader} from './group.loader';
 import {StudentLoader} from './student.loader';
 import {ApplicationLoader} from './application.loader';
 import {TestLoader} from './test.loader';
+import {ScoreLoader} from './score.loader';
 
 
 @NgModule({
   imports: [CommonModule],
   providers: [ClientLoader, OrganisationLoader, AdminLoader, RoomLoader, SecretaryLoader,
     SpecialityLoader, GroupLoader, StudentLoader, ApplicationLoader, TestLoader,
-    ExaminationLoader, PrincipalLoader, CorrectorLoader, SupervisorLoader]
+    ExaminationLoader, PrincipalLoader, CorrectorLoader, SupervisorLoader,
+    ScoreLoader]
 })
 export class LoaderModule {
 }
