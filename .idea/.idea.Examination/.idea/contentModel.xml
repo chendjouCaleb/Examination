@@ -821,6 +821,7 @@
               <e p="supervisor.httpClient.ts" t="Include" />
               <e p="test-group-corrector.httpClient.ts" t="Include" />
               <e p="test-group-secretary.httpClient.ts" t="Include" />
+              <e p="test-group-supervisor.httpClient.ts" t="Include" />
               <e p="test-group.httpClient.ts" t="Include" />
               <e p="test.httpClient.ts" t="Include" />
               <e p="user.httpClient.ts" t="Include" />

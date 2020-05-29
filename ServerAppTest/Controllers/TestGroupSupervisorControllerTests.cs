@@ -116,13 +116,14 @@ namespace ServerAppTest.Controllers
         public void Add()
         {
             TestGroupSupervisor testGroupSupervisor =
-                _controller.Add(_testGroup, _supervisor).Value as TestGroupSupervisor;
+                _controller.Add(_testGroup, _supervisor, true).Value as TestGroupSupervisor;
 
             _testGroupSupervisorRepository.Refresh(testGroupSupervisor);
 
             Assert.NotNull(testGroupSupervisor);
             Assert.AreEqual(_testGroup, testGroupSupervisor.TestGroup);
             Assert.AreEqual(_supervisor, testGroupSupervisor.Supervisor);
+            Assert.True(testGroupSupervisor.IsPrincipal);
         }
 
         [Test]

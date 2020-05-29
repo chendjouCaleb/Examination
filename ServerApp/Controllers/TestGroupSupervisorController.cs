@@ -67,7 +67,7 @@ namespace Exam.Controllers
         [AuthorizeExaminationAdmin]
         [LoadSupervisor(Source = ParameterSource.Query)]
         [PeriodHaveState(ItemName = "test", State = "PENDING")]
-        public CreatedAtActionResult Add(TestGroup testGroup, Supervisor supervisor)
+        public CreatedAtActionResult Add(TestGroup testGroup, Supervisor supervisor, [FromQuery] bool isPrincipal = false)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             Assert.RequireNonNull(supervisor, nameof(supervisor));
@@ -86,7 +86,8 @@ namespace Exam.Controllers
             TestGroupSupervisor testGroupSupervisor = new TestGroupSupervisor
             {
                 Supervisor = supervisor,
-                TestGroup = testGroup
+                TestGroup = testGroup,
+                IsPrincipal = isPrincipal
                 
             };
 
