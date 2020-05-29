@@ -1,24 +1,24 @@
 import {Injectable} from '@angular/core';
 import {EntityLoader} from './entity-loader.interface';
-import {List} from '@positon/collections';
 import {TestLoader} from './test.loader';
-import {CorrectorLoader} from './corrector.loader';
-import {Examination, TestGroupCorrector, TestGroupCorrectorHttpClient, TestGroupLoader} from 'examination/models';
+import {SupervisorLoader} from './supervisor.loader';
+import {TestGroupLoader, TestGroupSupervisor} from 'examination/models';
+import {TestGroupSupervisorHttpClient} from '../httpClient/test-group-supervisor.httpClient';
 
 
 @Injectable({providedIn: 'root'})
-export class TestGroupCorrectorLoader implements EntityLoader<TestGroupCorrector, number> {
+export class TestGroupSupervisorLoader implements EntityLoader<TestGroupSupervisor, number> {
 
-  constructor(private testGroupCorrectorRepository: TestGroupCorrectorHttpClient,
+  constructor(private testGroupSupervisorRepository: TestGroupSupervisorHttpClient,
               private _testGroupLoader: TestGroupLoader,
               private _testLoader: TestLoader,
-              private _correctorLoader: CorrectorLoader) {
+              private _supervisorLoader: SupervisorLoader) {
   }
 
-  async load(item: TestGroupCorrector): Promise<TestGroupCorrector> {
+  async load(item: TestGroupSupervisor): Promise<TestGroupSupervisor> {
 
-    if (item.correctorId) {
-      item.corrector = await this._correctorLoader.loadById(item.correctorId);
+    if (item.supervisorId) {
+      item.supervisor = await this._supervisorLoader.loadById(item.supervisorId);
     }
 
     if (item.testGroupId) {
@@ -28,19 +28,12 @@ export class TestGroupCorrectorLoader implements EntityLoader<TestGroupCorrector
     return item;
   }
 
-  async loadById(id: number): Promise<TestGroupCorrector> {
-    const item = await this.testGroupCorrectorRepository.findAsync(id);
+  async loadById(id: number): Promise<TestGroupSupervisor> {
+    const item = await this.testGroupSupervisorRepository.findAsync(id);
     await this.load(item);
     return item;
   }
 
-  async loadByExamination(examination: Examination): Promise<List<TestGroupCorrector>> {
-    const testGroupCorrectors = await this.testGroupCorrectorRepository.listAsync({examinationId: examination.id});
-    for (const testGroupCorrector of testGroupCorrectors) {
-      await this.load(testGroupCorrector);
-    }
 
-    return testGroupCorrectors;
-  }
 
 }

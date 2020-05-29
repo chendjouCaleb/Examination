@@ -1,24 +1,24 @@
 import {Injectable} from '@angular/core';
 import {EntityLoader} from './entity-loader.interface';
 import {TestLoader} from './test.loader';
-import {SupervisorLoader} from './supervisor.loader';
-import {TestGroupLoader, TestGroupSupervisor} from 'examination/models';
-import {TestGroupSupervisorHttpClient} from '../httpClient/test-group-supervisor.httpClient';
+import {SecretaryLoader} from './secretary.loader';
+import {TestGroupLoader, TestGroupSecretary} from 'examination/models';
+import {TestGroupSecretaryHttpClient} from '../httpClient/test-group-secretary.httpClient';
 
 
 @Injectable({providedIn: 'root'})
-export class TestGroupSupervisorLoader implements EntityLoader<TestGroupSupervisor, number> {
+export class TestGroupSecretaryLoader implements EntityLoader<TestGroupSecretary, number> {
 
-  constructor(private testGroupSupervisorRepository: TestGroupSupervisorHttpClient,
+  constructor(private testGroupSecretaryRepository: TestGroupSecretaryHttpClient,
               private _testGroupLoader: TestGroupLoader,
               private _testLoader: TestLoader,
-              private _supervisorLoader: SupervisorLoader) {
+              private _secretaryLoader: SecretaryLoader) {
   }
 
-  async load(item: TestGroupSupervisor): Promise<TestGroupSupervisor> {
+  async load(item: TestGroupSecretary): Promise<TestGroupSecretary> {
 
-    if (item.supervisorId) {
-      item.supervisor = await this._supervisorLoader.loadById(item.supervisorId);
+    if (item.secretaryId) {
+      item.secretary = await this._secretaryLoader.loadById(item.secretaryId);
     }
 
     if (item.testGroupId) {
@@ -28,8 +28,8 @@ export class TestGroupSupervisorLoader implements EntityLoader<TestGroupSupervis
     return item;
   }
 
-  async loadById(id: number): Promise<TestGroupSupervisor> {
-    const item = await this.testGroupSupervisorRepository.findAsync(id);
+  async loadById(id: number): Promise<TestGroupSecretary> {
+    const item = await this.testGroupSecretaryRepository.findAsync(id);
     await this.load(item);
     return item;
   }

@@ -793,6 +793,7 @@
               <e p="group.model.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="organisation-model.ts" t="Include" />
+              <e p="paper.model.ts" t="Include" />
               <e p="period.model.ts" t="Include" />
               <e p="principal.model.ts" t="Include" />
               <e p="room.model.ts" t="Include" />
@@ -812,6 +813,7 @@
               <e p="httpClient.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="organisation.httpClient.ts" t="Include" />
+              <e p="paper.httpClient.ts" t="Include" />
               <e p="principal.httpClient.ts" t="Include" />
               <e p="room.httpClient.ts" t="Include" />
               <e p="score.httpClient.ts" t="Include" />
@@ -846,6 +848,9 @@
               <e p="speciality.loader.ts" t="Include" />
               <e p="student.loader.ts" t="Include" />
               <e p="supervisor.loader.ts" t="Include" />
+              <e p="test-group-corrector.loader.ts" t="Include" />
+              <e p="test-group-secretary.loader.ts" t="Include" />
+              <e p="test-group-supervisor.loader.ts" t="Include" />
               <e p="test-group.loader.ts" t="Include" />
               <e p="test.loader.ts" t="Include" />
             </e>

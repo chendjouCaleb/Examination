@@ -39,48 +39,66 @@ namespace Exam.Controllers
 
         [HttpGet]
         public IEnumerable<Paper> List(
-            [FromQuery] long? secretaryId,
             [FromQuery] long? testGroupId,
+            [FromQuery] long? secretaryId,
             [FromQuery] long? supervisorId,
             [FromQuery] long? correctorId,
-            [FromQuery] long? studentId,
             
-            [FromQuery] int skip = 0, [FromQuery] int take = 20)
+            [FromQuery] long? testGroupSecretaryId,
+            [FromQuery] long? testGroupSupervisorId,
+            [FromQuery] long? testGroupCorrectorId,
+            
+            [FromQuery] long? studentId )
         {
             IQueryable<Paper> queryable = _paperRepository.Set;
 
+            if (testGroupId != null)
+            {
+                queryable = queryable.Where(p => p.TestGroupId == testGroupId.Value);
+            }
+            
             if (secretaryId != null)
             {
                 queryable = queryable.Where(p =>
                     p.TestGroupSecretary != null && p.TestGroupSecretary.SecretaryId == secretaryId.Value
                 );
             }
-
-            if (testGroupId != null)
-            {
-                queryable = queryable.Where(p => p.TestGroupId == testGroupId.Value);
-            }
-
+            
             if (correctorId != null)
             {
                 queryable = queryable.Where(p =>
                     p.TestGroupCorrector != null && p.TestGroupCorrector.CorrectorId == correctorId.Value
                 );
             }
-
-            if (studentId != null)
-            {
-                queryable = queryable.Where(p => p.StudentId == studentId.Value);
-            }
-
+            
             if (supervisorId != null)
             {
                 queryable = queryable.Where(p =>
                     p.TestGroupSupervisor != null && p.TestGroupSupervisor.SupervisorId == supervisorId.Value
                 );
             }
+            
+            
+            if (testGroupSecretaryId != null)
+            {
+                queryable = queryable.Where(p => p.TestGroupSecretaryId == testGroupSecretaryId.Value );
+            }
+            
+            if (testGroupCorrectorId != null)
+            {
+                queryable = queryable.Where(p => p.TestGroupCorrectorId == testGroupCorrectorId.Value );
+            }
+            
+            if (testGroupSupervisorId != null)
+            {
+                queryable = queryable.Where(p => p.TestGroupSupervisorId == testGroupSupervisorId.Value );
+            }
 
-            queryable = queryable.Skip(skip).Take(take);
+            if (studentId != null)
+            {
+                queryable = queryable.Where(p => p.StudentId == studentId.Value);
+            }
+            
 
             return queryable.ToList();
         }
@@ -91,12 +109,13 @@ namespace Exam.Controllers
         [RequireQueryParameter("testGroupId")]
         [LoadStudent(Source = ParameterSource.Query)]
         [LoadTestGroup(Source = ParameterSource.Query, TestItemName = "test")]
-        [PeriodHaveState(ItemName = "test", State = "PENDING")]
+        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
         [AuthorizeTestGroupSupervisor]
         public CreatedAtActionResult Add(TestGroup testGroup, Student student, TestGroupSupervisor testGroupSupervisor)
         {
             Assert.RequireNonNull(student, nameof(student));
             Assert.RequireNonNull(testGroup, nameof(testGroup));
+            Assert.RequireNonNull(testGroupSupervisor, nameof(testGroupSupervisor));
             
 
             if (!testGroup.Group.Equals(student.Group))
@@ -149,8 +168,10 @@ namespace Exam.Controllers
 
 
         [HttpPut("{paperId}/dates")]
-        [LoadPaper(TestGroupItemName = "testGroup")]
+        [LoadPaper(TestGroupItemName = "testGroup", TestItemName = "test")]
+        [PeriodNotClosed(ItemName = "test")]
         [AuthorizeTestGroupSupervisor]
+        
         public StatusCodeResult ChangeDate(Paper paper,[FromBody] PeriodForm form)
         {
             Assert.RequireNonNull(paper, nameof(paper));
@@ -230,7 +251,7 @@ namespace Exam.Controllers
         [PeriodNotClosed(ItemName = "test")]
         [AuthorizeTestGroupCorrector]
         public StatusCodeResult Score(Paper paper, TestGroupCorrector testGroupCorrector,
-            [FromQuery] double value)
+            [FromQuery] double score)
         {
             Assert.RequireNonNull(paper, nameof(paper));
 
@@ -239,14 +260,14 @@ namespace Exam.Controllers
                 throw new InvalidOperationException("{paper.constraints.multipleScore}");
             }
 
-            if (paper.TestGroup.Test.Radical < value)
+            if (paper.TestGroup.Test.Radical < score)
             {
                 throw new InvalidValueException("{paper.constraints.scoreLowerOrEqualThanTestRadical}");
             }
 
             paper.TestGroupCorrector = testGroupCorrector;
             paper.CorrectorUserId = testGroupCorrector.Corrector.UserId;
-            paper.Score = value;
+            paper.Score = score;
             _paperRepository.Update(paper);
 
             return StatusCode(StatusCodes.Status202Accepted);
