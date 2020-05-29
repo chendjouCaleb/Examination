@@ -793,10 +793,12 @@
               <e p="group.model.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="organisation-model.ts" t="Include" />
+              <e p="period.model.ts" t="Include" />
               <e p="principal.model.ts" t="Include" />
               <e p="room.model.ts" t="Include" />
               <e p="speciality.model.ts" t="Include" />
               <e p="student.model.ts" t="Include" />
+              <e p="test.model.ts" t="Include" />
             </e>
             <e p="httpClient" t="Include">
               <e p="admin.httpClient.ts" t="Include" />
@@ -815,6 +817,7 @@
               <e p="speciality.httpClient.ts" t="Include" />
               <e p="student.httpClient.ts" t="Include" />
               <e p="supervisor.httpClient.ts" t="Include" />
+              <e p="test.httpClient.ts" t="Include" />
               <e p="user.httpClient.ts" t="Include" />
             </e>
             <e p="index.ts" t="Include" />
