@@ -52,3 +52,22 @@ export class TestAddForm {
     };
   }
 }
+
+export class TestEditForm {
+  @IsNotEmpty()
+  name: string;
+
+  @IsNotEmpty()
+  code: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  radical: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  coefficient: boolean;
+
+  useAnonymity: boolean = false;
+
+}

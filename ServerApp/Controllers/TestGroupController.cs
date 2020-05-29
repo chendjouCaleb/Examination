@@ -154,11 +154,11 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
-        [HttpPut("{testGroupId}/close")]
+        [HttpPut("{testGroupId}/end")]
         [LoadTestGroup(TestItemName = "test")]
         [AuthorizeTestGroupSupervisor(Principal = true)]
         [PeriodHaveState(ItemName = "test", State = "PROGRESS")]
-        public StatusCodeResult Close(TestGroup testGroup)
+        public StatusCodeResult ENd(TestGroup testGroup)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
 

@@ -15,13 +15,14 @@ import {GroupHttpClient} from './group.httpClient';
 import {StudentHttpClient} from './student.httpClient';
 import {ApplicationHttpClient} from './application.httpClient';
 import {TestHttpClient} from './test.httpClient';
+import {TestGroupHttpClient} from './test-group.httpClient';
 
 @NgModule({
   imports: [HttpClientModule],
   providers: [
     ClientHttpClient, OrganisationHttpClient, AdminHttpClient, UserHttpClient, RoomHttpClient, GroupHttpClient,
     ExaminationHttpClient, CorrectorHttpClient, PrincipalHttpClient, SupervisorHttpClient, SecretaryHttpClient,
-    SpecialityHttpClient, StudentHttpClient, ApplicationHttpClient, TestHttpClient
+    SpecialityHttpClient, StudentHttpClient, ApplicationHttpClient, TestHttpClient, TestGroupHttpClient
   ]
 })
 export class AppHttpClientModule {

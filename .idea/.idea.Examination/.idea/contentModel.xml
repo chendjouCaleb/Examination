@@ -817,6 +817,7 @@
               <e p="speciality.httpClient.ts" t="Include" />
               <e p="student.httpClient.ts" t="Include" />
               <e p="supervisor.httpClient.ts" t="Include" />
+              <e p="test-group.httpClient.ts" t="Include" />
               <e p="test.httpClient.ts" t="Include" />
               <e p="user.httpClient.ts" t="Include" />
             </e>
@@ -839,6 +840,7 @@
               <e p="speciality.loader.ts" t="Include" />
               <e p="student.loader.ts" t="Include" />
               <e p="supervisor.loader.ts" t="Include" />
+              <e p="test.loader.ts" t="Include" />
             </e>
             <e p="paging.ts" t="Include" />
           </e>
