@@ -271,8 +271,14 @@ namespace Exam.Controllers
             _paperRepository.Update(paper);
 
             return StatusCode(StatusCodes.Status202Accepted);
-        } 
-        
+        }
+
+        [HttpGet("{paperId}/scores")]
+        [LoadPaper]
+        public IList<ScorePaper> scores(Paper paper)
+        {
+            return _scorePaperRepository.List(s => paper.Equals(s.Paper) );
+        }
         
         [HttpPut("{paperId}/scores")]
         [LoadPaper(TestItemName = "test", TestGroupItemName = "testGroup")]

@@ -1,7 +1,7 @@
 import {GenericHttpClient, SERVER_URL} from './httpClient';
 import {
   Corrector,
-  Paper,
+  Paper, ScorePaper,
   Secretary,
   Student,
   Supervisor,
@@ -104,6 +104,13 @@ export class PaperHttpClient extends GenericHttpClient<Paper, number> {
 
   scores(paper: Paper, scores: ScorePaperModel[]): Promise<void> {
     return this.httpClient.put<void>(`${this.url}/${paper.id}/scores`, scores).toPromise();
+  }
+
+  async getScores(paper: Paper): Promise<List<ScorePaper>> {
+    const result = await this.httpClient.get<any[]>(`${this.url}/${paper.id}/scores` ).toPromise();
+    const list = new List<ScorePaper>();
+    result.forEach(item => list.add(new ScorePaper(item)));
+    return list;
   }
 
 }

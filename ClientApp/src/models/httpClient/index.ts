@@ -18,3 +18,4 @@ export * from './test.httpClient';
 export * from './test-group.httpClient';
 export * from './score.httpClient';
 export * from './test-group-corrector.httpClient';
+export * from './paper.httpClient';

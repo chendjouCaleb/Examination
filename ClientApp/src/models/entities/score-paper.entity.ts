@@ -9,8 +9,8 @@ export class ScorePaper extends Entity<number> {
     this.id = value.id;
     this.registrationDate = new Date(value.registrationDate);
 
-    this.name = value.name;
-    this.radical = value.radical;
+    this.value = value.value;
+    this.scoreName = value.scoreName;
 
     this.score = value.score;
     this.scoreId = value.scoreId;
@@ -19,8 +19,8 @@ export class ScorePaper extends Entity<number> {
     this.paper = value.paper;
   }
 
-  name: string;
-  radical: number;
+  value: number;
+  scoreName: string;
 
   score: Score;
   scoreId: number;

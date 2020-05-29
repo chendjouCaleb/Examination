@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -40,5 +41,7 @@ namespace Exam.Entities
         public long PaperId { get; set; }
 
         public double Value { get; set; }
+
+        [NotMapped] public string ScoreName => Score.Name;
     }
 }
