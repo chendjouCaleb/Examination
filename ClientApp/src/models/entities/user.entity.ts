@@ -1,4 +1,4 @@
-import {Entity} from "./entity";
+import {Entity} from './entity';
 
 export class User extends Entity<string> {
   name: string;
@@ -28,12 +28,12 @@ export class User extends Entity<string> {
   website: string;
 
   get fullName() {
-    return this.name + " " + this.surname;
+    return this.name + ' ' + this.surname;
   }
 
 
   static createFromAny(value: any): User {
-    if (!value || value === "null") {
+    if (!value || value === 'null') {
       return null;
     }
 
@@ -68,7 +68,7 @@ export class User extends Entity<string> {
     account.website = value.website;
 
     if (!account.imageURL) {
-      account.imageURL = "assets/default-account.png";
+      account.imageURL = 'assets/default-account.png';
     }
 
     return account;

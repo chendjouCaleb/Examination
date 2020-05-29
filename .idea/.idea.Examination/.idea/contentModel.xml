@@ -771,10 +771,16 @@
               <e p="principal.entity.ts" t="Include" />
               <e p="review.entity.ts" t="Include" />
               <e p="room.entity.ts" t="Include" />
+              <e p="score-paper.entity.ts" t="Include" />
+              <e p="score.entity.ts" t="Include" />
               <e p="secretary.entity.ts" t="Include" />
               <e p="speciality.entity.ts" t="Include" />
               <e p="student.entity.ts" t="Include" />
               <e p="supervisor.entity.ts" t="Include" />
+              <e p="test-group-corrector.entity.ts" t="Include" />
+              <e p="test-group-secretary.entity.ts" t="Include" />
+              <e p="test-group-supervisor.entity.ts" t="Include" />
+              <e p="test-group.entity.ts" t="Include" />
               <e p="test.entity.ts" t="Include" />
               <e p="user-examination.ts" t="Include" />
               <e p="user.entity.ts" t="Include" />

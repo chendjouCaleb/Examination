@@ -66,7 +66,10 @@ namespace Exam.Entities
 
         [NotMapped] public bool MultipleScore => Scores != null && Scores.Count > 0; 
 
+        [NotMapped]
         public string State => this.GetState();
+        
+        [NotMapped]
         public string GroupsState
         {
             get

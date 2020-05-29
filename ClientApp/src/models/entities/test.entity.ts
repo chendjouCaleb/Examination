@@ -1,26 +1,100 @@
-﻿import {Entity} from "./entity";
-import {Supervisor, TestSupervisor} from "./supervisor.entity";
-import {List} from "@positon/collections";
+﻿import {Entity} from './entity';
+import {User} from './user.entity';
+import {Speciality} from './speciality.entity';
+import {Examination} from './examination.entity';
+import {Room} from './room.entity';
 
-export class Test extends Entity<string>{
+export class Test extends Entity<number> {
+  constructor(value: any = {}) {
+    super();
+
+    this.id = value.id;
+    this.registrationDate = new Date(value.registrationDate);
+
+    this.name = value.name;
+    this.code = value.code;
+    this.coefficient = value.coefficient;
+    this.radical = value.radical;
+
+    this.isPublished = value.isPublished;
+    this.publicationDate = new Date(value.publicationDate);
+
+    this.isClosed = value.isClosed;
+    this.closingDate = new Date(value.closingDate);
+
+    this.useAnonymity = value.useAnonymity;
+
+    this.roomId = value.roomId;
+    this.room = value.room;
+
+    this.expectedStartDate = new Date(value.expectedStartDate);
+    this.expectedEndDate = new Date(value.expectedEndDate);
+
+    this.startDate = new Date(value.startDate);
+    this.endDate = new Date(value.endDate);
+
+    this.multipleScore = value.multipleScore;
+
+    this.state = value.state;
+    this.groupsState = value.groupsState;
+
+    this.isCorrected = value.isCorrected;
+    this.isDone = value.isDone;
+
+    this.specialityId = value.specialityId;
+    this.speciality = value.speciality;
+
+    this.examination = value.examination;
+    this.examinationId = value.examinationId;
+
+    this.registerUserId = value.registerUserId;
+    this.registerUser = value.registerUser;
+  }
+
+  registerUserId: string;
+  registerUser: User;
+
+
   name: string;
   code: string;
-  room: string;
   coefficient: number;
+
+  radical: number;
+
+  isPublished: boolean;
+  publicationDate: Date;
+
+  isClosed: boolean;
+  closingDate: Date;
+
+  useAnonymity: boolean;
+
+  roomId: number;
+  room: Room;
+
   expectedStartDate: Date;
   expectedEndDate: Date;
 
- realStartDate: Date;
- realEndDate: Date;
+  startDate: Date;
+  endDate: Date;
 
- isDone: boolean;
- isCorrected: boolean;
+  speciality: Speciality;
+  specialityId: number;
 
+  examination: Examination;
+  examinationId: number;
 
- testsSupervisors: List<TestSupervisor> = new List<TestSupervisor>();
+  multipleScore: boolean;
 
- get supervisors(): List<Supervisor> {
-   return this.testsSupervisors.convertAll<Supervisor>(ts => ts.supervisor);
- }
+  state: string;
+
+  groupsState: string;
+
+  isDone: boolean;
+  isCorrected: boolean;
+
+  get singleScore(): boolean {
+    return !this.multipleScore;
+  }
 
 }
