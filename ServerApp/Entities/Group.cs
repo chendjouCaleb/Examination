@@ -32,5 +32,6 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual Room Room { get; set; }
         public long RoomId { get; set; }
+        
     }
 }

@@ -841,6 +841,7 @@
               <e p="loader.module.ts" t="Include" />
               <e p="loader.ts" t="Include" />
               <e p="organisation.loader.ts" t="Include" />
+              <e p="paper.loader.ts" t="Include" />
               <e p="principal.loader.ts" t="Include" />
               <e p="room.loader.ts" t="Include" />
               <e p="score.loader.ts" t="Include" />
@@ -927,7 +928,6 @@
           <e p="Organisation.cs" t="Include" />
           <e p="Paper.cs" t="Include" />
           <e p="PaperFile.cs" t="Include" />
-          <e p="PaperManager.cs" t="Include" />
           <e p="PeriodState.cs" t="Include" />
           <e p="Principal.cs" t="Include" />
           <e p="Review.cs" t="Include" />
@@ -985,14 +985,8 @@
           <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
-          <e p="20200419173300_Initial.cs" t="Include" />
-          <e p="20200419173300_Initial.Designer.cs" t="Include" />
-          <e p="20200424115140_RegisterUserIdOnRoom.cs" t="Include" />
-          <e p="20200424115140_RegisterUserIdOnRoom.Designer.cs" t="Include" />
-          <e p="20200515095418_WithSecretary.cs" t="Include" />
-          <e p="20200515095418_WithSecretary.Designer.cs" t="Include" />
-          <e p="20200518051153_WithIndexOnGroup.cs" t="Include" />
-          <e p="20200518051153_WithIndexOnGroup.Designer.cs" t="Include" />
+          <e p="20200530122242_Initial.cs" t="Include" />
+          <e p="20200530122242_Initial.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">
@@ -1057,6 +1051,7 @@
           <e p="ScoreControllerTests.cs" t="Include" />
           <e p="SpecialityControllerTests.cs" t="Include" />
           <e p="StudentControllerTests.cs" t="Include" />
+          <e p="StudentGroupingControllerTests.cs" t="Include" />
           <e p="SupervisorControllerTests.cs" t="Include" />
           <e p="TestControllerTests.cs" t="Include" />
           <e p="TestGroupControllerTests.cs" t="Include" />

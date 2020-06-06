@@ -13,7 +13,6 @@ namespace Exam.Persistence
             services.AddTransient<IRepository<Room, long>, Repository<Room, long>>();
             services.AddTransient<IRepository<Examination, long>, Repository<Examination, long>>();
             services.AddTransient<IRepository<Principal, long>, Repository<Principal, long>>();
-            services.AddTransient<IRepository<PaperManager, long>, Repository<PaperManager, long>>();
             services.AddTransient<IRepository<Contest, long>, Repository<Contest, long>>();
             services.AddTransient<IRepository<Corrector, long>, Repository<Corrector, long>>();
             services.AddTransient<IRepository<Group, long>, Repository<Group, long>>();

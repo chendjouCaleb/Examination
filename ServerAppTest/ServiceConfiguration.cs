@@ -19,6 +19,7 @@ namespace ServerAppTest
 
             ServiceCollection.AddDbContext<DbContext, PersistenceContext>(options => {
                 options.UseLazyLoadingProxies();
+                options.EnableSensitiveDataLogging();
                 options.UseInMemoryDatabase(Guid.NewGuid().ToString());
             });
 

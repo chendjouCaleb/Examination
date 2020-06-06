@@ -16,11 +16,9 @@ namespace Exam.Entities
         public DateTime BirthDate { get; set; }
 
         public char Gender { get; set; }
-        
-        
 
-        [NotMapped]
-        public int Position { get; set; }
+        public int Index { get; set; }
+        public int GroupIndex { get; set; }
         
         public string UserId { get; set; }
 

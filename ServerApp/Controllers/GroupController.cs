@@ -20,17 +20,19 @@ namespace Exam.Controllers
     public class GroupController : Controller
     {
         private IRepository<Group, long> _groupRepository;
+        private IRepository<Student, long> _studentRepository;
         private ILogger<GroupController> _logger;
 
         public GroupController(
+            IRepository<Student, long> studentRepository,
             IRepository<Group, long> groupRepository,
             ILogger<GroupController> logger)
         {
-            
+            _studentRepository = studentRepository;
             _groupRepository = groupRepository;
             _logger = logger;
         }
-        
+
         [HttpGet("find")]
         [RequireQueryParameter("examinationId")]
         [RequireQueryParameter("name")]
@@ -48,7 +50,6 @@ namespace Exam.Controllers
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
-        
         public IEnumerable<Group> List(Examination examination, Speciality speciality, Room room,
             [FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
@@ -155,7 +156,7 @@ namespace Exam.Controllers
             _groupRepository.Update(group);
             return StatusCode(StatusCodes.Status202Accepted);
         }
-        
+
         [HttpPut("{groupId}/room")]
         [LoadGroup(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
@@ -166,7 +167,7 @@ namespace Exam.Controllers
         {
             Assert.RequireNonNull(group, nameof(group));
             Assert.RequireNonNull(room, nameof(room));
-            
+
             if (!group.Examination.Organisation.Equals(room.Organisation))
             {
                 throw new InvalidOperationException();
@@ -198,8 +199,126 @@ namespace Exam.Controllers
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
+
+        public long CountNonGroupedStudents(Examination examination) => _studentRepository
+            .Count(s => examination.Equals(s.Examination) && s.Group == null);
+
+        [HttpPut("groupStudents")]
+        [LoadExamination]
+        [AuthorizeExaminationAdmin]
+        public void GroupStudents(Examination examination)
+        {
+            GroupStudentWithoutSpeciality(examination);
+            examination.Specialities?.ForEach(GroupStudentOfSpeciality);
+        }
+
+        public void GroupStudentWithoutSpeciality(Examination examination)
+        {
+            if (CanGroupStudentWithoutSpeciality(examination) < 0)
+            {
+                return;
+            }
+
+            List<Student> students = _studentRepository.Set
+                .Where(s => examination.Equals(s.Examination) && s.Speciality == null)
+                .OrderBy(s => s.FullName).ToList();
+            
+            List<Group> groups = _groupRepository.Set
+                .Where(s => examination.Equals(s.Examination) && s.Speciality == null)
+                .OrderBy(s => s.Index).ToList();
+
+            GroupStudents(groups, students);
+
+            
+        }
         
         
+        public void GroupStudentOfSpeciality(Speciality speciality)
+        {
+            if (CanGroupStudentOfSpeciality(speciality) < 0)
+            {
+                return;
+            }
+
+            List<Student> students = _studentRepository.Set
+                .Where(s => speciality.Equals(s.Speciality) )
+                .OrderBy(s => s.FullName).ToList();
+            
+            List<Group> groups = _groupRepository.Set
+                .Where(s => speciality.Equals(s.Speciality) )
+                .OrderBy(s => s.Index).ToList();
+
+            GroupStudents(groups, students);
+        }
+
+        public void GroupStudents(IEnumerable<Group> groups, List<Student> students)
+        {
+            int index = 0;
+            foreach(Group group in groups)
+            {
+                int capacity = (int) group.Capacity;
+                if (capacity > students.Count - index)
+                {
+                    capacity = students.Count - index;
+                }
+                
+                List<Student> groupStudents = students.GetRange(index, capacity);
+                for(int i = 0; i< groupStudents.Count; i++)
+                {
+                    Student student = groupStudents[i];
+                    
+                    student.Group = group;
+                    student.GroupIndex = i;
+                    _studentRepository.Update(student);
+                } 
+                index += (int)group.Capacity;
+                if (index >= students.Count)
+                {
+                    break;
+                }
+            }  
+        }
+
+        [HttpPut("canGroupStudents")]
+        [LoadExamination]
+        [AuthorizeExaminationAdmin]
+        public int CanGroupStudents(Examination examination)
+        {
+            int examinationCapacity = CanGroupStudentWithoutSpeciality(examination);
+
+
+            if (examination.Specialities == null || examination.Specialities.Count == 0)
+            {
+                return examinationCapacity;
+            }
+
+            return examinationCapacity + examination.Specialities.Sum(CanGroupStudentOfSpeciality);
+
+        }
+
+
+        public int CanGroupStudentWithoutSpeciality(Examination examination)
+        {
+            int capacity = _groupRepository.List(g => examination.Equals(g.Examination) && null == g.Speciality)
+                .Sum(g => (int) g.Capacity);
+
+            long studentCount =
+                _studentRepository.Count(s => examination.Equals(s.Examination) && s.Speciality == null);
+
+            return capacity - (int) studentCount;
+        }
+
+        public int CanGroupStudentOfSpeciality(Speciality speciality)
+        {
+            int capacity = _groupRepository.List(g => speciality.Equals(g.Speciality))
+                .Sum(g => (int) g.Capacity);
+
+            long studentCount = _studentRepository.Count(s => speciality.Equals(s.Speciality));
+
+            return capacity - (int) studentCount;
+        }
+
+
         [HttpDelete("{groupId}")]
         [LoadGroup(ExaminationItemName = "examination")]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",

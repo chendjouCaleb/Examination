@@ -22,7 +22,7 @@ namespace Exam.Entities
 
         [JsonIgnore]
         public virtual Test Test { get; set; }
-        public long? TestId { get; set; }
+        public long TestId { get; set; }
         
         [JsonIgnore] public virtual List<ScorePaper> ScorePapers { get; set; }
     }
@@ -38,7 +38,7 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual Paper Paper { get; set; }
-        public long PaperId { get; set; }
+        public long? PaperId { get; set; }
 
         public double Value { get; set; }
 

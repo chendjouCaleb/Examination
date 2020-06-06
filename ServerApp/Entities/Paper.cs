@@ -41,7 +41,7 @@ namespace Exam.Entities
         public long TestGroupId { get; set; }
         
         public virtual Student Student { get; set; }
-        public long StudentId { get; set; }
+        public long? StudentId { get; set; }
         
         [JsonIgnore]
         public virtual TestGroupSupervisor TestGroupSupervisor { get; set; }

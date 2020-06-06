@@ -10,7 +10,7 @@ namespace Exam.Persistence
         public DbSet<Organisation> Organisations { get; set; }
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<Principal> Principals { get; set; }
-        public DbSet<PaperManager> PaperManagers { get; set; }
+        
         public DbSet<Corrector> Correctors { get; set; }
         public DbSet<Contest> Contests { get; set; }
         public DbSet<TestGroup> TestGroups { get; set; }

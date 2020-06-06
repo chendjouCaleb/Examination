@@ -10,7 +10,7 @@ namespace Exam.Entities
     public class TestGroupSecretary:Entity<long>
     {
         public virtual Secretary Secretary { get; set; }
-        public long SecretaryId { get; set; }
+        public long? SecretaryId { get; set; }
         
 
         public virtual TestGroup TestGroup { get; set; }

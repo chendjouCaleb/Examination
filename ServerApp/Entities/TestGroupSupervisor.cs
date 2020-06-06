@@ -12,7 +12,7 @@ namespace Exam.Entities
          */
         public bool IsPrincipal { get; set; }
         public virtual Supervisor Supervisor { get; set; }
-        public long SupervisorId { get; set; }
+        public long? SupervisorId { get; set; }
         
 
         public virtual TestGroup TestGroup { get; set; }

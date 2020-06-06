@@ -10,7 +10,7 @@ namespace Exam.Entities
     public class TestGroupCorrector : Entity<long>
     {
         public virtual Corrector Corrector { get; set; }
-        public long CorrectorId { get; set; }
+        public long? CorrectorId { get; set; }
         
 
         public virtual TestGroup TestGroup { get; set; }

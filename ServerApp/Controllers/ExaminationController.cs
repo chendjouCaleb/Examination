@@ -21,6 +21,7 @@ namespace Exam.Controllers
     {
         private IRepository<Examination, long> _examinationRepository;
         private IRepository<Organisation, long> _organisationRepository;
+        
         private ILogger<ExaminationController> _logger;
 
         public ExaminationController(IRepository<Examination, long> examinationRepository,
@@ -229,14 +230,13 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
+        
+
         [HttpDelete("{examinationId}")]
         [LoadExamination]
         [AuthorizeExaminationAdmin]
         public NoContentResult Delete(Examination examination)
         {
-            examination.Organisation.ExaminationCount -= 1;
-            _organisationRepository.Update(examination.Organisation);
-            
             Assert.RequireNonNull(examination, nameof(examination));
             _examinationRepository.Delete(examination);
 

@@ -23,6 +23,8 @@ namespace Exam.Entities
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
+        public DateTime? LastGroupingDate { get; set; }
+
         [JsonIgnore]
         public virtual Organisation Organisation { get; set; }
         public long OrganisationId { get; set; }
