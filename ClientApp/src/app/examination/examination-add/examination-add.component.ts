@@ -1,9 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {ExaminationAddForm} from "examination/app/examination/form";
-import {Organisation, ExaminationHttpClient, ExaminationLoader, GenericHttpClient} from "examination/models";
-import {MatDialogRef} from "@angular/material/dialog";
+import {ExaminationHttpClient, ExaminationLoader, Organisation} from "examination/models";
 import {AlertEmitter} from "examination/controls";
-import * as moment from "moment";
+import {MsfModalRef} from "fabric-docs";
 
 @Component({
   selector: 'app-examination-add',
@@ -17,7 +16,7 @@ export class ExaminationAddComponent {
   organisation: Organisation;
 
   constructor(private _httpClient: ExaminationHttpClient, private _loader: ExaminationLoader,
-              private _dialogRef: MatDialogRef<ExaminationAddComponent>,
+              private _dialogRef: MsfModalRef<ExaminationAddComponent>,
               private _alertEmitter: AlertEmitter) {
 
   }
@@ -34,11 +33,11 @@ export class ExaminationAddComponent {
 
 
   async add() {
-    const model = this.form.getModel();
-
     let examination = await this._httpClient.add(this.form.getModel(), {organisationId: this.organisation.id});
     await this._loader.load(examination);
     this._alertEmitter.info(`L'examen' ${examination.name} a été ajoutée.`);
+    this.organisation.statistics.examinationCount++;
+    this.organisation.statistics.waitingExaminationCount++;
     this._dialogRef.close(examination);
   }
 

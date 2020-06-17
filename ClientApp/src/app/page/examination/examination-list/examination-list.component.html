@@ -55,38 +55,66 @@
     </div>
   </div>
 
-  <MsfTable>
-    <MsfTableHead>
-      <MsfTableHeadCell>#</MsfTableHeadCell>
-      <MsfTableHeadCell>Nom</MsfTableHeadCell>
-      <MsfTableHeadCell>Date de début prévué</MsfTableHeadCell>
-      <MsfTableHeadCell>Date de début effective</MsfTableHeadCell>
-      <MsfTableHeadCell>Date de fin prévue</MsfTableHeadCell>
-      <MsfTableHeadCell>Date de fin effective</MsfTableHeadCell>
-      <MsfTableHeadCell></MsfTableHeadCell>
-    </MsfTableHead>
 
-    <MsfTableRow *ngFor="let item of examinations" [value]="item" #line>
-      <MsfTableCell>{{line.index}}</MsfTableCell>
-      <MsfTableCell>{{item.name}}</MsfTableCell>
-      <MsfTableCell>{{item.expectedStartDate | amCalendar}}</MsfTableCell>
-      <MsfTableCell>
-        <ng-container *ngIf="item.startDate">{{item.startDate | amCalendar}}  </ng-container>
-        <span *ngIf="!item.startDate" [appStateBadge]="item.state"> </span>
-      </MsfTableCell>
-      <MsfTableCell>{{item.expectedEndDate | amCalendar}}</MsfTableCell>
-      <MsfTableCell>
-        <ng-container *ngIf="item.endDate">
-          {{item.endDate | amCalendar}}
-        </ng-container>
-        <span *ngIf="!item.endDate" [appStateBadge]="item.state"> </span>
-      </MsfTableCell>
+  <div class="d-flex mt-3">
+    <div statsItem name="Examens" [value]="organisation.statistics.examinationCount"></div>
+    <div class="ml-2" statsItem color="RedOrange10" name="examen en attente"
+         [value]="organisation.statistics.waitingExaminationCount"></div>
+    <div class="ml-2" statsItem color="Blue10" name="examen en cours"
+         [value]="organisation.statistics.progressExaminationCount"></div>
+    <div class="ml-2" color="Red10" statsItem name="examen terminé(s)"
+         [value]="organisation.statistics.closedExaminationCount"></div>
+  </div>
 
-      <MsfTableCell>
-        <MsfButton theme="primary" [routerLink]="item.url"> Voir</MsfButton>
-      </MsfTableCell>
-    </MsfTableRow>
-  </MsfTable>
+  <div class="ms-table-container">
+    <MsfTable>
+      <MsfTableHead>
+        <MsfTableHeadCell>#</MsfTableHeadCell>
+        <MsfTableHeadCell>Nom</MsfTableHeadCell>
+        <MsfTableHeadCell>Date de début prévué</MsfTableHeadCell>
+        <MsfTableHeadCell>Date de début effective</MsfTableHeadCell>
+        <MsfTableHeadCell>Date de fin prévue</MsfTableHeadCell>
+        <MsfTableHeadCell>Date de fin effective</MsfTableHeadCell>
+        <MsfTableHeadCell></MsfTableHeadCell>
+      </MsfTableHead>
 
+      <MsfTableRow *ngFor="let item of examinations" [value]="item" #line>
+        <MsfTableCell>{{line.index}}</MsfTableCell>
+        <MsfTableCell>{{item.name}}</MsfTableCell>
+        <MsfTableCell>{{item.expectedStartDate | amCalendar}}</MsfTableCell>
+        <MsfTableCell>
+          <ng-container *ngIf="item.startDate">{{item.startDate | amCalendar}}  </ng-container>
+          <span *ngIf="!item.startDate" [appStateBadge]="item.state"> </span>
+        </MsfTableCell>
+        <MsfTableCell>{{item.expectedEndDate | amCalendar}}</MsfTableCell>
+        <MsfTableCell>
+          <ng-container *ngIf="item.endDate">
+            {{item.endDate | amCalendar}}
+          </ng-container>
+          <span *ngIf="!item.endDate" [appStateBadge]="item.state"> </span>
+        </MsfTableCell>
+
+        <MsfTableCell>
+          <MsfButton theme="primary" [routerLink]="item.url"> Voir</MsfButton>
+
+          <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+          <MsfMenu #more>
+            <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
+            <MsfMenuItem theme="primary" icon="Clock" *ngIf="item.state === 'PENDING'" (click)="service.start(item)">
+              Débuter
+            </MsfMenuItem>
+            <MsfMenuItem theme="warning" icon="Lock" *ngIf="item.state === 'PROGRESS'" (click)="service.end(item)">
+              Fermer
+            </MsfMenuItem>
+            <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="item.state === 'FINISHED'"
+                         (click)="service.relaunch(item)">Relancer
+            </MsfMenuItem>
+
+            <MsfMenuItem icon="Delete" theme="error">Supprimer</MsfMenuItem>
+          </MsfMenu>
+        </MsfTableCell>
+      </MsfTableRow>
+    </MsfTable>
+  </div>
   <float-button mat-ripple (click)="openAddAdminDialog()"></float-button>
 </app-organisation-layout>

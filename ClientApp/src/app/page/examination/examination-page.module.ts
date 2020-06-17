@@ -1,5 +1,12 @@
 ﻿import {NgModule} from "@angular/core";
-import {MsfButtonModule, MsfCheckboxModule, MsfIconModule, MsfMenuModule, MsfTableModule} from "fabric-docs";
+import {
+  MsfButtonModule,
+  MsfCheckboxModule,
+  MsfIconModule,
+  MsfMenuModule,
+  MsfModalModule,
+  MsfTableModule
+} from "fabric-docs";
 import {ExaminationListComponent} from "./examination-list/examination-list.component";
 import {ExaminationHomeComponent} from './examination-home/examination-home.component';
 import {ExaminationDeleteComponent} from './examination-delete/examination-delete.component';
@@ -14,7 +21,6 @@ import {LayoutModule} from "examination/infrastructure";
 import {OrganisationModule} from "examination/app/organisation";
 import {AppFormModule, ControlModule} from "examination/controls";
 import {MatRippleModule} from "@angular/material/core";
-import {MatDialogModule} from "@angular/material/dialog";
 import {MomentModule} from "ngx-moment";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -32,7 +38,7 @@ export const routes: Routes = [
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfIconModule, MsfButtonModule,
     ExaminationModule, TestModule, LayoutModule, OrganisationModule,
-    ControlModule, MatDialogModule, MomentModule, MsfTableModule, MsfMenuModule, MsfCheckboxModule,
+    ControlModule, MsfModalModule, MomentModule, MsfTableModule, MsfMenuModule, MsfCheckboxModule,
     RouterModule.forChild(routes), MatRippleModule, MatDatepickerModule],
   declarations: [ExaminationListComponent, ExaminationHomeComponent, ExaminationDeleteComponent,
     ExaminationCalendarComponent, ExaminationReviewsComponent, ExaminationSettingsComponent,

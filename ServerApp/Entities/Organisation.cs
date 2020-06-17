@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Models.Statistics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -32,5 +34,7 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<Room> Rooms { get; set; }
         public uint RoomCount { get; set; }
+        
+        [NotMapped] public OrganisationStatistics Statistics { get; set; }
     }
 }

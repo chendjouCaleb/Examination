@@ -31,7 +31,11 @@ namespace Exam.Controllers
 
         [HttpGet("{organisationId}")]
         [LoadOrganisation]
-        public Organisation Find(Organisation organisation) => organisation;
+        public Organisation Find(Organisation organisation)
+        {
+            organisation.Statistics = Statistics(organisation);
+            return organisation;
+        }
 
         [HttpGet("find/identifier/{identifier}")]
         public Organisation FindByIdentifier(string identifier) =>

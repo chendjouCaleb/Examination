@@ -13,7 +13,6 @@ export class OrganisationLoader implements EntityLoader<Organisation, number> {
   async load(item: Organisation): Promise<Organisation> {
     item.user = await this._userHttClient.findAsync(item.userId);
     item.adminUser = await this._userHttClient.findAsync(item.adminUserId);
-    item.statistics = await this._httpClient.getStatistics(item);
     return item;
   }
 

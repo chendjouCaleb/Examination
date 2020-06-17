@@ -190,7 +190,7 @@ namespace Exam.Controllers
         [HttpPut("{examinationId}/start")]
         [LoadExamination]
         [AuthorizeExaminationAdmin]
-        [PeriodDontHaveState(ItemName = "examination", State = "PENDING",
+        [PeriodHaveState(ItemName = "examination", State = "PENDING",
             ErrorMessage = "{examination.requireState.pending}")]
         public StatusCodeResult Start(Examination examination)
         {

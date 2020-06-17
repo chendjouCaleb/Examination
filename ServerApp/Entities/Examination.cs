@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -58,11 +59,11 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual List<Speciality> Specialities { get; set; }
-        public int SpecialityCount;
+        public int SpecialityCount{ get; set; } 
         
         [JsonIgnore]
         public virtual List<Secretary> Secretaries { get; set; }
-        public int SecretaryCount;
+        public int SecretaryCount{ get; set; } 
         
         [JsonIgnore] 
         public virtual List<Application> Applications { get; set; }
@@ -70,6 +71,11 @@ namespace Exam.Entities
         public int ApplicationCount { get; set; }
         public int AcceptedApplicationCount { get; set; }
         public int RejectedApplicationCount { get; set; }
+        
+        public int WaitingTestCount { get; set; }
+        public int ProgressTestCount { get; set; }
+        public int ClosedTestCount { get; set; }
+        
         
         
         [JsonIgnore]

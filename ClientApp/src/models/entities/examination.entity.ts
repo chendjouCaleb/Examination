@@ -4,7 +4,7 @@ import {Organisation} from "./organisation";
 import * as moment from 'moment';
 import {ExaminationUser} from "./user-examination";
 
-export class Examination extends Entity<number>{
+export class Examination extends Entity<number> {
 
   constructor(value?: any) {
     super();
@@ -18,7 +18,6 @@ export class Examination extends Entity<number>{
     this.registrationDate = value.registrationDate;
     this.name = value.name;
     this.requireSpeciality = value.requireSpeciality;
-    this.state = value.state;
 
     this.organisationId = value.organisationId;
 
@@ -29,18 +28,24 @@ export class Examination extends Entity<number>{
 
     this.startDate = value.startDate;
     this.endDate = value.endDate;
-
+    this.isClosed = value.isClosed;
 
     this.testCount = value.testCount;
     this.correctorCount = value.correctorCount;
     this.groupCount = value.groupCount;
-    this.specialityCount  = value.specialityCount;
-    this.supervisorCount  = value.supervisorCount;
+    this.specialityCount = value.specialityCount;
+    this.supervisorCount = value.supervisorCount;
+    this.secretaryCount = value.secretaryCount;
     this.studentCount = value.studentCount;
     this.principalCount = value.principalCount;
-    this.reviewCount  = value.reviewCount;
-    this.reviewAverage  = value.reviewAverage;
-    this.applicationCount  = value.applicationCount;
+
+    this.waitingTestCount = value.waitingTestCount;
+    this.progressTestCount = value.progressTestCount;
+    this.closedTestCount = value.closedTestCount;
+
+    this.reviewCount = value.reviewCount;
+    this.reviewAverage = value.reviewAverage;
+    this.applicationCount = value.applicationCount;
     this.acceptedApplicationCount = value.acceptedApplicationCount;
     this.rejectedApplicationCount = value.rejectedApplicationCount;
   }
@@ -62,24 +67,23 @@ export class Examination extends Entity<number>{
   startDate: Date;
   endDate: Date;
 
-  state: string;
+  isClosed: boolean;
 
   userPrincipal: ExaminationUser;
 
+  testCount: number;
+  groupCount: number;
+  specialityCount: number;
   studentCount: number;
 
-  principalCount: number;
-
-  testCount: number;
-
   correctorCount: number;
-
-  groupCount: number;
-
-  specialityCount: number;
-
+  principalCount: number;
   supervisorCount: number;
+  secretaryCount: number;
 
+  waitingTestCount: number = 0;
+  progressTestCount: number = 0;
+  closedTestCount: number = 0;
 
   reviewCount: number;
   reviewAverage: number;
@@ -88,7 +92,22 @@ export class Examination extends Entity<number>{
   acceptedApplicationCount: number;
   rejectedApplicationCount: number;
 
-  get url( ): string {
+  get url(): string {
     return `/organisations/${this.organisationId}/examinations/${this.id}`;
+  }
+
+
+  get state(): string {
+    if (this.isClosed) {
+      return 'CLOSED';
+    }
+    if (this.endDate) {
+      return 'FINISHED';
+    }
+    if (this.startDate) {
+      return 'PROGRESS';
+    }
+
+    return 'PENDING';
   }
 }

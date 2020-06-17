@@ -4,14 +4,16 @@ using Exam.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Exam.Migrations
 {
     [DbContext(typeof(PersistenceContext))]
-    partial class PersistenceContextModelSnapshot : ModelSnapshot
+    [Migration("20200617190636_TestCountgOnExamination")]
+    partial class TestCountgOnExamination
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,12 +224,6 @@ namespace Exam.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ReviewCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SecretaryCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialityCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("StartDate")

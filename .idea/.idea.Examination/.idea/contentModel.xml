@@ -309,6 +309,7 @@
               </e>
               <e p="examination.module.ts" t="Include" />
               <e p="examination.resolver.ts" t="Include" />
+              <e p="examination.service.ts" t="Include" />
               <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
             </e>
@@ -994,6 +995,10 @@
         <e p="Migrations" t="Include">
           <e p="20200607154523_Initial.cs" t="Include" />
           <e p="20200607154523_Initial.Designer.cs" t="Include" />
+          <e p="20200617190636_TestCountgOnExamination.cs" t="Include" />
+          <e p="20200617190636_TestCountgOnExamination.Designer.cs" t="Include" />
+          <e p="20200617191845_UpdateExamination.cs" t="Include" />
+          <e p="20200617191845_UpdateExamination.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

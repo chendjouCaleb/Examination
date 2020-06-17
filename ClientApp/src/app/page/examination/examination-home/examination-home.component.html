@@ -1,47 +1,76 @@
 <app-examination-layout>
 
   <MsfButton theme="primary" (click)="reload()">Recharger</MsfButton>
-  <div class="ms-card p-3" >
+  <div class="d-flex">
+    <div style="min-width: 250px" class="ms-card p-3">
+      <div class="ms-card-title">{{examination.name}}</div>
 
+      <div class="ms-card-text">
+        <div>
+          <div>Débutera le</div>
+          <div class="ms-fontSize-18">{{examination.expectedStartDate | amCalendar}}</div>
+        </div>
 
-    <div class="ms-card-title">{{examination.name}}</div>
+        <div *ngIf="examination.startDate" class="mt-2">
+          <div>A débuté le</div>
+          <div class="ms-fontSize-18">{{examination.startDate | amCalendar}}</div>
+        </div>
 
-    <div class="ms-card-text">
-      <div>
-        <div>Débutera le</div>
-        <div class="ms-fontSize-18">{{examination.expectedStartDate | amCalendar}}</div>
+        <div class="mt-2">
+          <div>S'achevera le</div>
+          <div class="ms-fontSize-18">{{examination.expectedEndDate | amCalendar}}</div>
+        </div>
+
+        <div *ngIf="examination.endDate" class="mt-2">
+          <div>S'est achevé le</div>
+          <div class="ms-fontSize-18">{{examination.endDate | amCalendar}}</div>
+        </div>
+
+        <span class="mt-3" [appStateBadge]="examination.state"> </span>
       </div>
-
-      <div *ngIf="examination.startDate" class="mt-2">
-        <div>A débuté le</div>
-        <div class="ms-fontSize-18">{{examination.startDate | amCalendar}}</div>
-      </div>
-
-      <div class="mt-2">
-        <div>S'achevera le</div>
-        <div class="ms-fontSize-18">{{examination.expectedEndDate | amCalendar}}</div>
-      </div>
-
-      <div *ngIf="examination.endDate" class="mt-2">
-        <div>S'est achevé le</div>
-        <div class="ms-fontSize-18">{{examination.endDate | amCalendar}}</div>
-      </div>
-
-      <span class="mt-3" [appStateBadge]="examination.state"> </span>
-    </div>
 
 
     <div class="ms-card-footer">
       <div>
-        <MsfButton theme="primary" Icon="Clock" *ngIf="examination.state === 'PENDING'" (click)="start()">Débuter</MsfButton>
+        <MsfButton theme="primary" Icon="Clock" *ngIf="examination.state === 'PENDING'" (click)="start()">Débuter
+        </MsfButton>
         <MsfButton theme="error" Icon="Lock" *ngIf="examination.state === 'PROGRESS'" (click)="end()">Fermer</MsfButton>
-        <MsfButton theme="primary" Icon="Rotate90Clockwise" *ngIf="examination.state === 'FINISHED'" (click)="relaunch()">Relancer</MsfButton>
-
+        <MsfButton theme="primary" Icon="Rotate90Clockwise" *ngIf="examination.state === 'FINISHED'"
+                   (click)="relaunch()">Relancer
+        </MsfButton>
       </div>
+    </div>
+    </div>
+
+    <div>
+      <div class="d-flex  ">
+        <div  statsItem name="Délégués" [value]="examination.principalCount"></div>
+        <div class="ml-2" statsItem name="Sécrétaires" [value]="examination.secretaryCount"></div>
+        <div class="ml-2" statsItem name="Superviseurs" [value]="examination.supervisorCount"></div>
+        <div class="ml-2" statsItem name="Correcteurs" [value]="examination.correctorCount"></div>
+      </div>
+
+      <div class="d-flex mt-3">
+        <div  color="GreenCyan10" statsItem name="Groupes" [value]="examination.groupCount"></div>
+        <div class="ml-2" color="GreenCyan10" statsItem name="Spécialités" [value]="examination.specialityCount"></div>
+        <div class="ml-2" color="GreenCyan10" statsItem name="étudiants" [value]="examination.studentCount"></div>
+      </div>
+
+      <div class="d-flex mt-3">
+        <div  color="Blue10" statsItem name="Demandes" [value]="examination.applicationCount"></div>
+        <div class="ml-2" color="Green20" statsItem name="Demandes acceptées" [value]="examination.acceptedApplicationCount"></div>
+        <div class="ml-2" color="Red10" statsItem name="Demandes rejectées" [value]="examination.rejectedApplicationCount"></div>
+      </div>
+
+      <div class="d-flex mt-3">
+        <div statsItem  color="RedOrange10" name="épreuves en attente" [value]="examination.waitingTestCount"></div>
+        <div class="ml-2" statsItem color="Blue10" name="épreuves en cours" [value]="examination.progressTestCount"></div>
+        <div class="ml-2" color="Red10" statsItem name="épreuves terminés" [value]="examination.closedTestCount"></div>
+      </div>
+
     </div>
   </div>
 
-  <div>Délégués: {{examination.principalCount}}</div>
 
   <div class="test-list">
     <h4 class="ms-fontWeight-light text-uppercase">Matières</h4>

@@ -11,6 +11,8 @@ export class Organisation extends Entity<number> {
       this.address = value.address;
       this.identifier = value.identifier;
 
+      this.statistics = value.statistics;
+
       this.userId = value.userId;
       this.user = value.user;
 

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Examination, ExaminationHttpClient, Test} from 'examination/models';
 import {CurrentItems} from 'examination/app/current-items';
 import {AlertEmitter, Confirmation} from 'examination/controls';
+import {ExaminationService} from "examination/app/examination/examination.service";
 
 @Component({
   selector: 'app-examination-home',
@@ -14,9 +15,7 @@ export class ExaminationHomeComponent implements OnInit {
   test: Test;
 
   constructor(currentItems: CurrentItems,
-              private _alertEmitter: AlertEmitter,
-              private _confirmation: Confirmation,
-              private _httpClient: ExaminationHttpClient) {
+              private _examinationService: ExaminationService) {
     this.examination = currentItems.get('examination');
 
     const test = new Test();
@@ -31,42 +30,21 @@ export class ExaminationHomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async reload() {
-    await this._httpClient.refreshStatistics(this.examination);
-    await this._httpClient.refresh(this.examination);
-  }
 
   start() {
-    const confirmation = this._confirmation.open('Voulez-vous commencer cet examen?');
-
-    confirmation.accept.subscribe(async () => {
-      await this._httpClient.start(this.examination);
-      this.examination.startDate = new Date();
-      this._alertEmitter.info('L\'examen a débuté.');
-    });
-  }
-
-
-  end() {
-    const confirmation = this._confirmation.open('Voulez-vous fermer cet examen?');
-
-    confirmation.accept.subscribe(async () => {
-      await this._httpClient.close(this.examination);
-      this.examination.endDate = new Date();
-      this.examination.state = 'FINISHED';
-      this._alertEmitter.info('L\'examen a été fermé.');
-    });
+    this._examinationService.start(this.examination);
   }
 
   relaunch() {
-    const confirmation = this._confirmation.open('Voulez-vous relancer cet examen?');
+    this._examinationService.relaunch(this.examination);
+  }
 
-    confirmation.accept.subscribe(async () => {
-      await this._httpClient.relaunch(this.examination);
-      this.examination.endDate = null;
-      this.examination.state = 'PROGRESS';
-      this._alertEmitter.info('L\'examen a été relancé.');
-    });
+  end() {
+    this._examinationService.end(this.examination);
+  }
+
+  reload() {
+    this._examinationService.reload(this.examination);
   }
 
 }

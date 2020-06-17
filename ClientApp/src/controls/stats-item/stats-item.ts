@@ -13,7 +13,7 @@ import {sharedColor, sharedColors} from "../colors";
 export class StatsItem {
 
   @Input()
-  color: sharedColor = sharedColors[Math.floor(Math.random() * sharedColors.length)];
+  color: sharedColor = 'Cyan20';
 
   @Input()
   value: any;
