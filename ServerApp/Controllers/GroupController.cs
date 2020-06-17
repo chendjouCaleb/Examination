@@ -50,9 +50,12 @@ namespace Exam.Controllers
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
+        [LoadSpeciality(Source = ParameterSource.Query)]
+        [LoadRoom(Source = ParameterSource.Query)]
         public IEnumerable<Group> List(Examination examination, Speciality speciality, Room room,
             [FromQuery] int skip = 0, [FromQuery] int take = 20)
         {
+        
             IQueryable<Group> set = _groupRepository.Set;
             if (examination != null && speciality != null)
             {
@@ -66,6 +69,7 @@ namespace Exam.Controllers
 
             if (examination != null)
             {
+                
                 set = set.Where(s => examination.Equals(s.Examination));
             }
 

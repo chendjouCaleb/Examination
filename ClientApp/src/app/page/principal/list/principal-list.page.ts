@@ -67,6 +67,7 @@ export class PrincipalListPage implements OnInit {
     result.accept.subscribe(async () => {
       await this._httpClient.delete(principal.id);
       this.principals.remove(principal);
+      this.examination.principalCount--;
       this._alertEmitter.info('Le délégué a été supprimé!');
     });
   }

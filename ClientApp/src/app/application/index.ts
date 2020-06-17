@@ -6,4 +6,4 @@ export * from "./edit/application-edit.component";
 export * from './home/application-home';
 export * from './speciality/application-speciality';
 export * from './application.service';
-
+export * from './application.service.interface';

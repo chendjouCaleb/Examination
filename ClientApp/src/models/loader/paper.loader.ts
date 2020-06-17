@@ -5,14 +5,11 @@ import {PaperHttpClient, UserHttpClient} from '../httpClient';
 import {RoomLoader} from './room.loader';
 import {TestLoader} from './test.loader';
 import {GroupLoader} from './group.loader';
-import {
-  StudentLoader,
-  TestGroupCorrectorLoader,
-  TestGroupLoader,
-  TestGroupSecretaryLoader,
-  TestGroupSupervisorLoader
-} from 'examination/models';
-
+import {TestGroupLoader} from "./test-group.loader";
+import {TestGroupCorrectorLoader} from "./test-group-corrector.loader";
+import {TestGroupSupervisorLoader} from "./test-group-supervisor.loader";
+import {TestGroupSecretaryLoader} from "./test-group-secretary.loader";
+import {StudentLoader} from "./student.loader";
 
 @Injectable({providedIn: 'root'})
 export class PaperLoader implements EntityLoader<Paper, number> {

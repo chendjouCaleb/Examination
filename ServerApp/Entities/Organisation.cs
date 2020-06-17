@@ -27,6 +27,7 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<Examination> Examinations { get; set; }
         public uint ExaminationCount { get; set; }
+        
 
         [JsonIgnore]
         public virtual List<Room> Rooms { get; set; }

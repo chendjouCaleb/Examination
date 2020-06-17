@@ -28,6 +28,7 @@ export class PrincipalAddComponent {
       userId: formModel.user.id
     });
     await this._loader.load(principal);
+    this.examination.principalCount++;
     this._alertEmitter.info(`Le délégué ${principal.user.fullName} a été ajouté.`);
     this._dialogRef.close(principal);
   }

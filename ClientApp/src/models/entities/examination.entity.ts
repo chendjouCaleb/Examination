@@ -9,37 +9,40 @@ export class Examination extends Entity<number>{
   constructor(value?: any) {
     super();
     if (value) {
-      this.id = value.id;
-      this.registrationDate = value.registrationDate;
-      this.name = value.name;
-      this.requireSpeciality = value.requireSpeciality;
-      this.state = value.state;
-
-      this.organisation = value.organisation;
-      this.organisationId = value.organisationId;
-
-      this.registerUserId = value.registerUserId;
-      this.registerUser = value.registerUser;
-
-      this.expectedStartDate = moment(value.expectedStartDate).local(false).toDate();
-      this.expectedEndDate = moment(value.expectedEndDate).local(true).toDate();
-
-      this.startDate = value.startDate;
-      this.endDate = value.endDate;
-
-      this.studentCount = value.studentCount;
-      this.principalCount = value.principalCount;
-      this.testCount = value.testCount;
-      this.correctorCount = value.correctorCount;
-      this.groupCount = value.groupCount;
-      this.specialityCount  = value.specialityCount;
-      this.supervisorCount  = value.supervisorCount;
-      this.reviewCount  = value.reviewCount;
-      this.reviewAverage  = value.reviewAverage;
-      this.applicationCount  = value.applicationCount;
-      this.acceptedApplicationCount = value.acceptedApplicationCount;
-      this.rejectedApplicationCount = value.rejectedApplicationCount;
+      this.apply(value);
     }
+  }
+
+  apply(value: any = {}) {
+    this.id = value.id;
+    this.registrationDate = value.registrationDate;
+    this.name = value.name;
+    this.requireSpeciality = value.requireSpeciality;
+    this.state = value.state;
+
+    this.organisationId = value.organisationId;
+
+    this.registerUserId = value.registerUserId;
+
+    this.expectedStartDate = moment(value.expectedStartDate).local(false).toDate();
+    this.expectedEndDate = moment(value.expectedEndDate).local(true).toDate();
+
+    this.startDate = value.startDate;
+    this.endDate = value.endDate;
+
+
+    this.testCount = value.testCount;
+    this.correctorCount = value.correctorCount;
+    this.groupCount = value.groupCount;
+    this.specialityCount  = value.specialityCount;
+    this.supervisorCount  = value.supervisorCount;
+    this.studentCount = value.studentCount;
+    this.principalCount = value.principalCount;
+    this.reviewCount  = value.reviewCount;
+    this.reviewAverage  = value.reviewAverage;
+    this.applicationCount  = value.applicationCount;
+    this.acceptedApplicationCount = value.acceptedApplicationCount;
+    this.rejectedApplicationCount = value.rejectedApplicationCount;
   }
 
 

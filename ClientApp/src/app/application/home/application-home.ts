@@ -1,10 +1,9 @@
-﻿
-import {Component, Input} from '@angular/core';
+﻿import {Component, Inject, Input} from '@angular/core';
 import {Application, ApplicationHttpClient} from "examination/models";
 import {AlertEmitter, Confirmation} from "examination/controls";
 import {MsfModalRef} from "fabric-docs";
 import {List} from "@positon/collections";
-import {ApplicationService} from "../application.service";
+import {IApplicationService, STUDENT_APPLICATION_SERVICE_TOKEN} from "../application.service.interface";
 
 @Component({
   templateUrl: 'application-home.html',
@@ -17,13 +16,14 @@ export class ApplicationHome {
   @Input()
   applications = new List();
 
-  constructor(public _applicationService: ApplicationService,
+  constructor(@Inject(STUDENT_APPLICATION_SERVICE_TOKEN) public _applicationService: IApplicationService,
               private _confirmation: Confirmation,
               private _httpClient: ApplicationHttpClient,
               private _alertEmitter: AlertEmitter,
-              private _modalRef: MsfModalRef<ApplicationHome>) {}
+              private _modalRef: MsfModalRef<ApplicationHome>) {
+  }
 
-  delete( ) {
+  delete() {
     const result = this._confirmation.open('Voulez-vous Supprimer cette demande?');
     result.accept.subscribe(async () => {
       await this._httpClient.delete(this.application.id);

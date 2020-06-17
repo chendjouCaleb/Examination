@@ -24,3 +24,4 @@ export * from './score-paper.entity';
 export * from './test-group-corrector.entity';
 export * from './test-group-supervisor.entity';
 export * from './test-group-secretary.entity';
+export * from './review.entity';

@@ -112,6 +112,8 @@ export class MsfSelectOption implements AfterViewChecked, OnDestroy {
   readonly _stateChanges = new Subject<void>();
 
 
+
+
   constructor(
     private _element: ElementRef<HTMLElement>,
     private _changeDetectorRef: ChangeDetectorRef,

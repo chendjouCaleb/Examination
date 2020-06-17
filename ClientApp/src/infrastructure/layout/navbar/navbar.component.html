@@ -35,3 +35,7 @@
     </MsfPersona>
     </span>
 </div>
+
+<div *ngIf="!authManager.isAuthorized" class="px-3">
+  <a MsfButton Icon="Contact" theme="standard" routerLink="/authorize/request">Connexion</a>
+</div>

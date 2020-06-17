@@ -1,0 +1,20 @@
+﻿.ms-statsItem {
+  border: 1px solid;
+  border-left: 4px solid;
+  background-color: var(--cardBackgroundColor);
+
+  min-width: 130px;
+  width: 190px;
+  overflow: auto;
+  padding: 5px 10px;
+  text-transform: uppercase;
+}
+
+.ms-statItem-name {
+  font-size: 16px;
+}
+
+.ms-statItem-value {
+  font-size: 24px;
+  margin-top: 5px;
+}

@@ -62,6 +62,20 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
     return item;
   }
 
+  async refresh(item: T): Promise<void> {
+    const value = await this.httpClient.get<T>(`${this.url}/${item.id}`).toPromise();
+    item.apply(value);
+  }
+
+  getStatistics<TS>(item: T): Promise<TS> {
+    return this.httpClient.get<TS>( `${this.url}/${item.id}/statistics` ).toPromise();
+  }
+
+
+  async refreshStatistics(item: T): Promise<void> {
+    await this.httpClient.put( `${this.url}/${item.id}/statistics`, {}).toPromise();
+  }
+
   async addAsync(model: any, queryParams?: any): Promise<T> {
     let result = await this.httpClient.post<T>(this.url, model, {params: queryParams}).toPromise();
     result = this.createFromAny(result);

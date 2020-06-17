@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam.Migrations
 {
     [DbContext(typeof(PersistenceContext))]
-    [Migration("20200530122242_Initial")]
+    [Migration("20200607154523_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -705,6 +705,12 @@ namespace Exam.Migrations
 
                     b.Property<long?>("GroupId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("GroupIndex")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
 
                     b.Property<int>("PaperCount")
                         .HasColumnType("int");

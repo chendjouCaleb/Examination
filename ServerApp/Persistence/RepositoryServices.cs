@@ -1,5 +1,6 @@
 ﻿using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
+using Exam.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Exam.Persistence
@@ -8,11 +9,13 @@ namespace Exam.Persistence
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IRepository<Organisation, long>, Repository<Organisation, long>>();
+            services.AddTransient<IRepository<Organisation, long>, OrganisationRepository>();
+            services.AddTransient<IOrganisationRepository, OrganisationRepository>();
             services.AddTransient<IRepository<Admin, long>, Repository<Admin, long>>();
             services.AddTransient<IRepository<Room, long>, Repository<Room, long>>();
-            services.AddTransient<IRepository<Examination, long>, Repository<Examination, long>>();
-            services.AddTransient<IRepository<Principal, long>, Repository<Principal, long>>();
+            services.AddTransient<IRepository<Examination, long>, ExaminationRepository>();
+            services.AddTransient<IExaminationRepository, ExaminationRepository>();
+            services.AddTransient<IRepository<Principal, long>, PrincipalRepository>();
             services.AddTransient<IRepository<Contest, long>, Repository<Contest, long>>();
             services.AddTransient<IRepository<Corrector, long>, Repository<Corrector, long>>();
             services.AddTransient<IRepository<Group, long>, Repository<Group, long>>();

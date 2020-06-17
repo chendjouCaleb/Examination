@@ -9,12 +9,13 @@ import {ConfirmationComponent} from './confirmation/confirmation.component';
 import {Confirmation} from './confirmation/confirmation';
 import {StateBadgeDirective} from './state-badge.directive';
 import {Icon} from "./icon/icon";
+import {StatsItem} from "./stats-item/stats-item";
 
 @NgModule({
   imports: [CommonModule, MsfModalModule, MsfButtonModule],
   providers: [AlertEmitter, Confirmation],
-  declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon],
-  exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon],
+  declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem],
+  exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem],
 })
 export class ControlModule {
 

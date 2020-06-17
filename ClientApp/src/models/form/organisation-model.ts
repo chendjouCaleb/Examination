@@ -2,7 +2,7 @@
 
 export class OrganisationAddModel {
   @IsNotEmpty()
-  @IsAlpha("fr-FR")
+
   @MinLength(3)
   name: string;
 
@@ -20,7 +20,7 @@ export class OrganisationAddModel {
 
 export class OrganisationEditModel {
   @IsNotEmpty()
-  @IsAlpha("fr-FR")
+
   @MinLength(3)
   name: string;
 

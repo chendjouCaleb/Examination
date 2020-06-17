@@ -1,6 +1,6 @@
 ﻿import {Entity} from "./entity";
 import {User} from "./user.entity";
-import {Examination} from "./examination";
+import {Examination} from "./examination.entity";
 import {Paper} from "./paper.entity";
 import {Test} from "./test.entity";
 

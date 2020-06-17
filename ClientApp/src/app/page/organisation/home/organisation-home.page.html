@@ -7,7 +7,7 @@
   </div>
 
   <MsfPersona size="size40">
-    <MsfPersonaFigure  [text]="organisation.adminUser.fullName"></MsfPersonaFigure>
+    <MsfPersonaFigure [text]="organisation.adminUser.fullName"></MsfPersonaFigure>
 
     <MsfPersonaText>
       <div class="ms-fontSize-18 text-capitalize">{{organisation.adminUser.fullName}}</div>
@@ -15,34 +15,17 @@
     </MsfPersonaText>
   </MsfPersona>
 
-  {{values}}
-  <MsfSelect>
-    <ng-template MsfSelectTemplate let-value="value">{{value}}</ng-template>
-    <MsfSelectOption *ngFor="let item of items" [value]="item.name">{{item.name}}</MsfSelectOption>
-  </MsfSelect>
+  <div class="d-flex">
+    <div statsItem name="Administrateurs" [value]="organisation.statistics.adminCount"></div>
+    <div class="ml-2" statsItem name="Salles" [value]="organisation.statistics.roomCount"></div>
+    <div class="ml-2" statsItem name="Capacité" [value]="organisation.statistics.capacity"></div>
+    <div class="ml-2" statsItem name="Examens" [value]="organisation.statistics.examinationCount"></div>
 
-  <MsfSelect [multiple]="true" [(ngModel)]="values" [value]="'Hydrogen'">
+  </div>
 
-    <MsfSelectOptionGroup *ngFor="let g of groups" [label]="g">
-      <MsfSelectOption *ngFor="let item of itemMap[g]" [value]="item.name">{{item.name}}</MsfSelectOption>
-    </MsfSelectOptionGroup>
-
-    <MsfSelectOptionGroup [label]="'Other'" disabled="true">
-      <MsfSelectOption value="Plutonium">Plutonium</MsfSelectOption>
-    </MsfSelectOptionGroup>
-
-
-  </MsfSelect>
-
-  <MsfSelect [multiple]="true" placeholder="Choisir un utilisateur ddddddddddddddddddddddddd">
-
-    <MsfSelectOption *ngFor="let user of users" [value]="user" [viewValue]="user.fullName">
-      <MsfPersona size="size24">
-        <MsfPersonaFigure [text]="user.fullName"></MsfPersonaFigure>
-        <div class="pl-2">{{user.fullName}}</div>
-      </MsfPersona>
-    </MsfSelectOption>
-  </MsfSelect>
-
-
+  <div class="d-flex mt-3">
+    <div statsItem  color="RedOrange10" name="examen en attente" [value]="organisation.statistics.waitingExaminationCount"></div>
+    <div class="ml-2" statsItem color="Blue10" name="examen en cours" [value]="organisation.statistics.progressExaminationCount"></div>
+    <div class="ml-2" color="Red10" statsItem name="examen terminé(s)" [value]="organisation.statistics.closedExaminationCount"></div>
+  </div>
 </app-organisation-layout>

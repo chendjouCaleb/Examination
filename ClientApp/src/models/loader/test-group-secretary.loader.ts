@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {EntityLoader} from './entity-loader.interface';
 import {TestLoader} from './test.loader';
 import {SecretaryLoader} from './secretary.loader';
-import {TestGroupLoader, TestGroupSecretary} from 'examination/models';
 import {TestGroupSecretaryHttpClient} from '../httpClient/test-group-secretary.httpClient';
+import {TestGroupSecretary} from "../entities";
+import {TestGroupLoader} from "./test-group.loader";
 
 
 @Injectable({providedIn: 'root'})

@@ -1,5 +1,5 @@
 <div #checkboxRef *ngIf="multiple" class="ms-selectOption-checkbox" >
-   <MsfCheckbox MsfSelectOptionCheckbox [checked]="selected"></MsfCheckbox>
+   <MsfCheckbox MsfSelectOptionCheckbox [checked]="selected" (change)="tog"></MsfCheckbox>
 </div>
 <div class="ms-selectOption-content">
   <ng-content></ng-content>

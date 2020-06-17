@@ -8,6 +8,8 @@ using Exam.Entities;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
+using Exam.Models.Statistics;
+using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,10 +19,10 @@ namespace Exam.Controllers
     [Route("api/organisations")]
     public class OrganisationController : Controller
     {
-        private IRepository<Organisation, long> _organisationRepository;
+        private IOrganisationRepository _organisationRepository;
         private ILogger<OrganisationController> _logger;
 
-        public OrganisationController(IRepository<Organisation, long> organisationRepository,
+        public OrganisationController(IOrganisationRepository organisationRepository,
             ILogger<OrganisationController> logger)
         {
             _organisationRepository = organisationRepository;
@@ -40,6 +42,13 @@ namespace Exam.Controllers
         {
             IQueryable<Organisation> queryable = _organisationRepository.Set.Skip(start).Take(take);
             return queryable.ToList();
+        }
+
+        [HttpGet("{organisationId}/statistics")]
+        [LoadOrganisation]
+        public OrganisationStatistics Statistics(Organisation organisation)
+        {
+            return _organisationRepository.Statistics(organisation);
         }
 
 

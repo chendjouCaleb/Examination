@@ -241,6 +241,7 @@
               </e>
               <e p="application.module.ts" t="Include" />
               <e p="application.resolver.ts" t="Include" />
+              <e p="application.service.interface.ts" t="Include" />
               <e p="application.service.ts" t="Include" />
               <e p="edit" t="Include">
                 <e p="application-edit.component.html" t="Include" />
@@ -641,6 +642,7 @@
           <e p="controls" t="Include">
             <e p="alert-emitter.ts" t="Include" />
             <e p="array.ts" t="Include" />
+            <e p="colors.ts" t="Include" />
             <e p="confirmation" t="Include">
               <e p="confirmation.component.ts" t="Include" />
               <e p="confirmation.ts" t="Include" />
@@ -682,6 +684,11 @@
               <e p="select.ts" t="Include" />
             </e>
             <e p="state-badge.directive.ts" t="Include" />
+            <e p="stats-item" t="Include">
+              <e p="stats-item.html" t="Include" />
+              <e p="stats-item.scss" t="Include" />
+              <e p="stats-item.ts" t="Include" />
+            </e>
             <e p="tabs" t="Include">
               <e p="index.ts" t="Include" />
               <e p="tab-label.html" t="Include" />
@@ -985,8 +992,8 @@
           <e p="TestLoader.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
-          <e p="20200530122242_Initial.cs" t="Include" />
-          <e p="20200530122242_Initial.Designer.cs" t="Include" />
+          <e p="20200607154523_Initial.cs" t="Include" />
+          <e p="20200607154523_Initial.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">
@@ -1001,6 +1008,9 @@
           <e p="RoomForm.cs" t="Include" />
           <e p="ScoreForm.cs" t="Include" />
           <e p="SpecialityForm.cs" t="Include" />
+          <e p="Statistics" t="Include">
+            <e p="OrganisationStatistics.cs" t="Include" />
+          </e>
           <e p="StudentForm.cs" t="Include" />
           <e p="TestForm.cs" t="Include" />
           <e p="TestGroupForm.cs" t="Include" />
@@ -1015,6 +1025,11 @@
         <e p="Persistence" t="Include">
           <e p="DesignTimeDbContextFactory.cs" t="Include" />
           <e p="PersistenceContext.cs" t="Include" />
+          <e p="Repositories" t="Include">
+            <e p="ExaminationRepository.cs" t="Include" />
+            <e p="OrganisationRepository.cs" t="Include" />
+            <e p="PrincipalRepository.cs" t="Include" />
+          </e>
           <e p="RepositoryServices.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />

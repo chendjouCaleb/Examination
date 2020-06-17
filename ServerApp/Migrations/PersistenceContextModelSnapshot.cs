@@ -704,6 +704,12 @@ namespace Exam.Migrations
                     b.Property<long?>("GroupId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("GroupIndex")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
                     b.Property<int>("PaperCount")
                         .HasColumnType("int");
 

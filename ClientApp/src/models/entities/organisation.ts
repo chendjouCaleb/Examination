@@ -32,10 +32,23 @@ export class Organisation extends Entity<number> {
 
   userPrincipal: OrganisationUser = {};
 
+  statistics: OrganisationStatistics = {};
+
   get url(): string {
     return `/organisations/${this.id}`;
   }
 
+}
+
+
+export class OrganisationStatistics {
+  adminCount?: number = 0;
+  examinationCount?: number = 0;
+  waitingExaminationCount?: number = 0;
+  progressExaminationCount?: number = 0;
+  closedExaminationCount?: number = 0;
+  roomCount?: number = 0;
+  capacity?: number = 0;
 }
 
 export interface OrganisationUser {

@@ -31,6 +31,11 @@ export class ExaminationHomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  async reload() {
+    await this._httpClient.refreshStatistics(this.examination);
+    await this._httpClient.refresh(this.examination);
+  }
+
   start() {
     const confirmation = this._confirmation.open('Voulez-vous commencer cet examen?');
 

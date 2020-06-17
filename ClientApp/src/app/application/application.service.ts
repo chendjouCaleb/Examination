@@ -5,9 +5,12 @@ import {Injectable} from "@angular/core";
 import {MsfModal} from "fabric-docs";
 import {AlertEmitter, Confirmation} from "examination/controls";
 import {ApplicationHome} from "examination/app/application/home/application-home";
+import {IApplicationService} from "./application.service.interface";
+
+
 
 @Injectable({providedIn: 'root'})
-export class ApplicationService {
+export class ApplicationService implements IApplicationService {
 
   constructor(private _dialog: MsfModal, private _confirmation: Confirmation,
               private _loader: ApplicationLoader,

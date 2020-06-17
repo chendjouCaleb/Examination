@@ -99,6 +99,17 @@ namespace Exam.Controllers
             _principalRepository.Update(principal);
             return Accepted(principal);
         }
+
+        [HttpPut("{principalId}/statistics")]
+        [LoadPrincipal]
+        public OkResult Statistics(Examination examination)
+        {
+            examination.PrincipalCount = (int)_principalRepository.Count(p => examination.Equals(p.Examination));
+
+            _examinationRepository.Update(examination);
+            return Ok();
+        }
+        
         
         
         [HttpDelete("{principalId}")]

@@ -1,5 +1,6 @@
 <app-examination-layout>
 
+  <MsfButton theme="primary" (click)="reload()">Recharger</MsfButton>
   <div class="ms-card p-3" >
 
 
@@ -40,6 +41,7 @@
     </div>
   </div>
 
+  <div>Délégués: {{examination.principalCount}}</div>
 
   <div class="test-list">
     <h4 class="ms-fontWeight-light text-uppercase">Matières</h4>

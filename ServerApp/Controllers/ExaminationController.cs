@@ -10,6 +10,7 @@ using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
+using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,12 +20,11 @@ namespace Exam.Controllers
     [Route("api/examinations")]
     public class ExaminationController : Controller
     {
-        private IRepository<Examination, long> _examinationRepository;
+        private IExaminationRepository _examinationRepository;
         private IRepository<Organisation, long> _organisationRepository;
-        
         private ILogger<ExaminationController> _logger;
 
-        public ExaminationController(IRepository<Examination, long> examinationRepository,
+        public ExaminationController(IExaminationRepository examinationRepository,
             IRepository<Organisation, long> organisationRepository,
             ILogger<ExaminationController> logger)
         {
@@ -113,7 +113,6 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireState.pending}")]
         public StatusCodeResult ChangeStartDate(Examination examination, [FromQuery] DateTime startDate)
         {
-            Console.WriteLine(startDate);
             if ( startDate.IsBefore(DateTime.Now))
             {
                 throw new InvalidValueException("{period.constraints.futureStartDate}");
@@ -228,6 +227,15 @@ namespace Exam.Controllers
             _examinationRepository.Update(examination);
 
             return StatusCode(StatusCodes.Status202Accepted);
+        }
+
+        [HttpPut("{examinationId}/statistics")]
+        [LoadExamination]
+        public OkResult UpdateStatistics(Examination examination)
+        {
+            Assert.RequireNonNull(examination, nameof(examination));
+            _examinationRepository.UpdateStatistics(examination);
+            return Ok();
         }
 
         

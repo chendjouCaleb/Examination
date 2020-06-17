@@ -2,7 +2,10 @@ import {Injectable} from '@angular/core';
 import {EntityLoader} from './entity-loader.interface';
 import {TestLoader} from './test.loader';
 import {CorrectorLoader} from './corrector.loader';
-import {TestGroupCorrector, TestGroupCorrectorHttpClient, TestGroupLoader} from 'examination/models';
+import {TestGroupCorrectorHttpClient} from "../httpClient";
+import {TestGroupCorrector} from "../entities";
+import {TestGroupLoader} from "./test-group.loader";
+
 
 
 @Injectable({providedIn: 'root'})

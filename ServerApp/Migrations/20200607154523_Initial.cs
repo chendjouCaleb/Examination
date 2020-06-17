@@ -347,6 +347,8 @@ namespace Exam.Migrations
                     FullName = table.Column<string>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<string>(nullable: false),
+                    Index = table.Column<int>(nullable: false),
+                    GroupIndex = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     RegisterUserId = table.Column<string>(nullable: true),
                     GroupId = table.Column<long>(nullable: true),
