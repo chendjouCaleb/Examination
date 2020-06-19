@@ -13,6 +13,7 @@ import {
 import {StudentAddForm} from "../form";
 import {MsfModalRef} from "fabric-docs";
 import {List} from "@positon/collections";
+import {StudentHub} from "examination/app/student/student-hub";
 
 
 @Component({
@@ -67,8 +68,8 @@ export class StudentAddComponent implements OnInit{
     const model = this.form.getModel();
 
     let student = await this._httpClient.add(model.body, {...model.params, examinationId: this.examination.id});
-    await this._loader.load(student);
-    this._alertEmitter.info(`L'étudiant  ${student.fullName} a été ajouté.`);
+
+    
     this._dialogRef.close(student);
   }
 }

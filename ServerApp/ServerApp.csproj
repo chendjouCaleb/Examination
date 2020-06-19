@@ -11,6 +11,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="3.1.5" />
         <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />

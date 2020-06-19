@@ -6,6 +6,10 @@ import {AlertEmitter, Confirmation} from "examination/controls";
 import {MsfCheckbox, MsfMenuItemCheckbox, MsfModal} from "fabric-docs";
 import {StudentAddComponent} from '../add/student-add.component';
 import {StudentService} from "examination/app/student/student.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {NewStudent} from "examination/app/student/new-student";
+import {StudentHub} from "examination/app/student/student-hub";
+import {PartialObserver} from "rxjs";
 
 
 @Component({
@@ -31,6 +35,8 @@ export class StudentList implements OnInit, AfterViewInit {
               public _studentService: StudentService,
               private _alertEmitter: AlertEmitter,
               private _confirmation: Confirmation,
+              private _snackbar: MatSnackBar,
+              private _hub: StudentHub,
               private _dialog: MsfModal) {
 
   }
@@ -47,21 +53,42 @@ export class StudentList implements OnInit, AfterViewInit {
     await this._studentLoader.loadAll(students);
     this.students = students;
 
+    this._hub.studentDeleted.subscribe(student => {
+      this.students.removeIf(s => s.id === student.id);
+      if(student.examinationId === this.examination.id) {
+        this._alertEmitter.error(`L'étudiant ${student.fullName} a été supprimé!`);
+      }
+    });
+
+    this._hub.studentCreated.subscribe(this.onStudentCreated);
   }
+
+  onStudentCreated  = async student => {
+    if(student.examinationId === this.examination.id) {
+      await this._studentLoader.load(student);
+      this._alertEmitter.error(`L'étudiant ${student.fullName} a été supprimé!`);
+      this._snackbar.openFromComponent(NewStudent, {
+        panelClass: ['mat-snackbar-panel'],
+        data: { 'student': student },
+        horizontalPosition: "right", verticalPosition: "bottom"
+      });
+    }
+
+    if(this.speciality && student.specialityId === this.speciality.id) {
+      this.students.insert(0, student);
+    }else if(student.examinationId === this.examination.id) {
+      this.students.insert(0, student);
+    }
+  };
 
   openAddStudentDialog() {
     const modalRef = this._dialog.open(StudentAddComponent);
     modalRef.componentInstance.examination = this.examination;
     modalRef.componentInstance.speciality = this.speciality;
-    modalRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.students.insert(0, result);
-      }
-    });
   }
 
-  get _examination(): Examination{
-    if(this.examination){
+  get _examination(): Examination {
+    if (this.examination) {
       return this.examination;
     }
     return this.speciality.examination;
@@ -88,15 +115,15 @@ export class StudentList implements OnInit, AfterViewInit {
     return this.columns.contains(column);
   }
 
-  columnState(column: string, state: boolean){
-    if(state && !this.columns.contains(column)) {
+  columnState(column: string, state: boolean) {
+    if (state && !this.columns.contains(column)) {
       this.columns.add(column);
     }
 
-    if(!state && this.columns.contains(column)) {
+    if (!state && this.columns.contains(column)) {
       this.columns.remove(column);
     }
-    localStorage.setItem("userListColumns", JSON.stringify(this.columns.toArray()) );
+    localStorage.setItem("userListColumns", JSON.stringify(this.columns.toArray()));
   }
 
   ngAfterViewInit(): void {
@@ -114,11 +141,11 @@ export class StudentList implements OnInit, AfterViewInit {
   loadColumn() {
     const defaultColumns = ["#", 'index', 'name', 'registrationId', 'speciality', 'gender', 'group', 'action'];
     const columns = localStorage.getItem("userListColumns");
-    if(columns) {
-      this.columns= List.fromArray(JSON.parse(columns))
-    }else{
-      localStorage.setItem("userListColumns", JSON.stringify(defaultColumns) );
-      this.columns= List.fromArray(defaultColumns)
+    if (columns) {
+      this.columns = List.fromArray(JSON.parse(columns))
+    } else {
+      localStorage.setItem("userListColumns", JSON.stringify(defaultColumns));
+      this.columns = List.fromArray(defaultColumns)
     }
   }
 

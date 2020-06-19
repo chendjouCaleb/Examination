@@ -22,7 +22,6 @@ export class ExaminationService {
     confirmation.accept.subscribe(async () => {
       await this._httpClient.relaunch(examination);
       examination.endDate = null;
-      examination.state = 'PROGRESS';
       examination.organisation.statistics.progressExaminationCount++;
       examination.organisation.statistics.closedExaminationCount--;
       this._alertEmitter.info('L\'examen a été relancé.');
@@ -46,7 +45,6 @@ export class ExaminationService {
     confirmation.accept.subscribe(async () => {
       await this._httpClient.close(examination);
        examination.endDate = new Date();
-       examination.state = 'FINISHED';
        examination.organisation.statistics.progressExaminationCount--;
        examination.organisation.statistics.closedExaminationCount++;
       this._alertEmitter.info('L\'examen a été fermé.');

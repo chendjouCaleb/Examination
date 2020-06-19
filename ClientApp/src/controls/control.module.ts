@@ -10,9 +10,10 @@ import {Confirmation} from './confirmation/confirmation';
 import {StateBadgeDirective} from './state-badge.directive';
 import {Icon} from "./icon/icon";
 import {StatsItem} from "./stats-item/stats-item";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
-  imports: [CommonModule, MsfModalModule, MsfButtonModule],
+  imports: [CommonModule, MatSnackBarModule, MsfModalModule, MsfButtonModule],
   providers: [AlertEmitter, Confirmation],
   declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem],
   exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem],

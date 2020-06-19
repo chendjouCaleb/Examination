@@ -12,7 +12,9 @@ using Exam.Loaders;
 using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using ServerApp.Hubs;
 
 namespace Exam.Controllers
 {
@@ -23,16 +25,19 @@ namespace Exam.Controllers
         private IRepository<Speciality, long> _specialityRepository;
         private IRepository<Student, long> _studentRepository;
         private ILogger<StudentController> _logger;
+        private IHubContext<StudentHub, IStudentHub>  _hub;
 
         public StudentController(IRepository<Examination, long> examinationRepository,
             IRepository<Speciality, long> specialityRepository, 
             IRepository<Student, long> studentRepository,
+            IHubContext<StudentHub, IStudentHub>  hub,
             ILogger<StudentController> logger)
         {
             _examinationRepository = examinationRepository;
             _specialityRepository = specialityRepository;
             _studentRepository = studentRepository;
             _logger = logger;
+            _hub = hub;
         }
 
 
@@ -55,6 +60,7 @@ namespace Exam.Controllers
         [LoadSpeciality(Source = ParameterSource.Query)]
         public IEnumerable<Student> List(Examination examination, Speciality speciality, [FromQuery] string userId)
         {
+            
             IQueryable<Student> set = _studentRepository.Set;
             if (examination != null)
             {
@@ -70,7 +76,6 @@ namespace Exam.Controllers
             {
                 set = set.Where(s => s.UserId == userId);
             }
-
             return set.ToList();
         }
 
@@ -122,9 +127,10 @@ namespace Exam.Controllers
                 _specialityRepository.Update(speciality);
             }
             
-            _studentRepository.Save(student);
+            student = _studentRepository.Save(student);
 
             _logger.LogInformation($"New Student: {student}");
+            _hub.Clients.All.StudentCreated(student);
 
             examination.StudentCount += 1;
             _examinationRepository.Update(examination);
@@ -282,7 +288,9 @@ namespace Exam.Controllers
             student.Examination.StudentCount -= 1;
             _examinationRepository.Update(student.Examination);
 
+            _hub.Clients.All.StudentDeleted(student );
             _studentRepository.Delete(student);
+            
             return NoContent();
         }
     }

@@ -4,6 +4,7 @@ import {List} from '@positon/collections';
 import {Examination, Student, StudentHttpClient, StudentLoader} from "examination/models";
 import {AlertEmitter, Confirmation} from "examination/controls";
 import {MsfModal} from "fabric-docs";
+import {StudentHub} from "examination/app/student/student-hub";
 
 
 @Component({
@@ -18,9 +19,8 @@ export class StudentListPage {
   constructor(private currentItems: CurrentItems,
               private _studentLoader: StudentLoader,
               private _httpClient: StudentHttpClient,
-              private _alertEmitter: AlertEmitter,
-              private _confirmation: Confirmation,
-              private _dialog: MsfModal) {
+              private _hub: StudentHub,
+              ) {
     this.examination = currentItems.get('examination');
   }
 

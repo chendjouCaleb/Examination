@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/purple-green.css";
 @import "bootstrap.min.css";
 @import "variable";
 @import "ms-Icon-fix";
 @import "~office-ui-fabric-core/dist/sass/Fabric";
+
 
 $font-family-sans-serif: Metropolis, sans-serif;
 $msf-button-backgroundColor: red;
@@ -130,3 +132,9 @@ body {
 }
 
 
+.mat-snackbar-panel {
+  background-color: transparent !important;
+  border-radius: 0 !important; ;
+  padding: 0 !important;
+  color: #FFF;
+}

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ServerApp.Hubs;
 
 namespace ServerApp
 {
@@ -30,15 +31,12 @@ namespace ServerApp
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc(options =>
-                {
-                    
-                })
+                .AddMvc(options => { })
                 .AddControllersAsServices()
                 .AddNewtonsoftJson(options =>
-                    {
-                        options.SerializerSettings.DateFormatString = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
-                    });
+                {
+                    options.SerializerSettings.DateFormatString = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
+                });
 
             services.AddDbContext<DbContext, PersistenceContext>(options =>
             {
@@ -46,23 +44,26 @@ namespace ServerApp
                 options.EnableSensitiveDataLogging();
                 options.UseSqlServer(_configuration["Data:ConnectionStrings:Database"]);
             });
-            
+
             services.AddExceptionTransformerFactory();
             services.AddScoped<ExceptionTransformerAttribute>();
-            
-            
+
+
             services.AddRepositories();
             services.AddSession();
             services.AddLogging();
+            services.AddSignalR()
+                .AddNewtonsoftJsonProtocol();
             services.AddCors(options =>
             {
                 options.AddPolicy("corsPolicy", policy =>
                 {
-                    policy.AllowAnyOrigin();
+                    policy.WithOrigins("http://localhost:9200", "http://localhost:9000");
+                    //policy.AllowAnyOrigin();
                     policy.AllowAnyHeader();
                     policy.AllowAnyMethod();
+                    policy.AllowCredentials();
                     policy.Build();
-                    
                 });
             });
         }
@@ -72,13 +73,15 @@ namespace ServerApp
         {
             app.UseExceptionTransformer();
             app.UseCors("corsPolicy");
-            
+
             app.ParseAuthorization();
 
             app.UseRouting();
-            
+
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<StudentHub>("/hubs/students");
                 endpoints.MapDefaultControllerRoute();
             });
 
@@ -92,7 +95,6 @@ namespace ServerApp
                 }
                 else if (strategy == "managed")
                 {
-
                     spa.Options.SourcePath = "../ClientApp";
                     spa.UseAngularCliServer("start");
                 }

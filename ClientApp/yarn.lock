@@ -1264,6 +1264,15 @@
   resolved "https://registry.yarnpkg.com/@mdi/font/-/font-4.9.95.tgz#00ed2ffe289c9230f146e74559c07542d3f4475a"
   integrity sha512-m2sbAs+SMwRnWpkMriBxEulwuhmqRyh6X+hdOZlqSxYZUM2C2TaDnQ4gcilzdoAgru2XYnWViZ/xPuSDGgRXVw==
 
+"@microsoft/signalr@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@microsoft/signalr/-/signalr-3.1.5.tgz#9160da8ff2d07c6088f542569b9b7e6b6d4d47f6"
+  integrity sha512-S2Y7HhnClipySDwnUVTIKAP5dwMsJrk2fbTVedLn88wcag4q6kb4yzUH44qejJcl6xFmbzU++3KHaH6rvblIrQ==
+  dependencies:
+    eventsource "^1.0.7"
+    request "^2.88.0"
+    ws "^6.0.0"
+
 "@ngtools/webpack@9.0.7":
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-9.0.7.tgz#2d9397544afcf503530eafc764c64d40a99fa070"
@@ -11217,7 +11226,7 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^6.2.1:
+ws@^6.0.0, ws@^6.2.1:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
   integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==

@@ -1,11 +1,13 @@
 ﻿import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
-  MsfButtonModule, MsfCheckboxModule,
+  MsfButtonModule,
+  MsfCheckboxModule,
   MsfMenuModule,
   MsfModalModule,
   MsfPersonaModule,
-  MsfPivotModule, MsfRadioModule,
+  MsfPivotModule,
+  MsfRadioModule,
   MsfTableModule
 } from 'fabric-docs';
 
@@ -25,18 +27,22 @@ import {StudentUserLink} from "examination/app/student/user-link/student-user-li
 import {StudentSpeciality} from "examination/app/student/speciality/student-speciality";
 import {StudentRegistrationId} from "examination/app/student/registrationId/student-registrationId";
 import {StudentService} from "examination/app/student/student.service";
+import {StudentHub} from "examination/app/student/student-hub";
+import {NewStudent} from "examination/app/student/new-student";
+import {StudentDetails} from "examination/app/student/details/student-details";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
     AppFormModule, MsfTableModule, MsfPersonaModule, MsfMenuModule, MomentModule, MsfRadioModule,
-    MatDatepickerModule, MatRippleModule, MsfCheckboxModule, UserPickerModule,
+    MatDatepickerModule, MatRippleModule, MsfCheckboxModule, UserPickerModule, MatSnackBarModule,
     MsfPivotModule, MsfModalModule, MsfTabModule, ExaminationModule, RouterModule],
   declarations: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
-    StudentSpeciality, StudentRegistrationId, StudentList],
+    StudentSpeciality, StudentRegistrationId, StudentList, StudentDetails, NewStudent],
   exports: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
-    StudentSpeciality, StudentRegistrationId,  StudentList],
+    StudentSpeciality, StudentRegistrationId,  StudentList, StudentDetails, NewStudent],
 
-  providers: [ StudentService ]
+  providers: [ StudentService, StudentHub ]
 })
 export class StudentModule {
 }
