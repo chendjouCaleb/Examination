@@ -11,6 +11,7 @@ import {NewStudent} from "examination/app/student/new-student";
 import {StudentHub} from "examination/app/student/student-hub";
 import {PartialObserver} from "rxjs";
 import {SpecialityService} from "examination/app/speciality";
+import {ExaminationService} from "examination/app/examination/examination.service";
 
 
 @Component({
@@ -45,6 +46,7 @@ export class StudentList implements OnInit, AfterViewInit {
               private _confirmation: Confirmation,
               private _snackbar: MatSnackBar,
               private _specialityService: SpecialityService,
+              private _examinationService: ExaminationService,
               private _hub: StudentHub,
               private _dialog: MsfModal) {
   }
@@ -85,7 +87,7 @@ export class StudentList implements OnInit, AfterViewInit {
 
     if (this.speciality && student.specialityId === this.speciality.id) {
       this.students.insert(0, student);
-    } else if (student.examinationId === this.examination.id) {
+    } else if (this.examination && student.examinationId === this.examination.id) {
       this.students.insert(0, student);
     }
   };
@@ -102,6 +104,25 @@ export class StudentList implements OnInit, AfterViewInit {
     this._specialityService.ungroup(this.speciality).then(async () => {
       this.students.forEach(student => {
         student.groupIndex = 0;
+        student.groupId = null;
+        student.group = null;
+      })
+    })
+  }
+
+  groupExaminationStudents() {
+    this._examinationService.group(this.examination).then(async () => {
+      const students = await this._httpClient.listByExamination(this.examination);
+      await this._studentLoader.loadAll(students);
+      this.students = students;
+    })
+  }
+
+  ungroupExaminationStudents() {
+    this._examinationService.ungroup(this.examination).then(async () => {
+      this.students.forEach(student => {
+        student.groupIndex = 0;
+        student.index = 0;
         student.groupId = null;
         student.group = null;
       })

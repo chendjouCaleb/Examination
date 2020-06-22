@@ -87,6 +87,7 @@ namespace Exam.Controllers
             
             foreach (var student in set.ToList())
             {
+                student.GroupId = null;
                 student.Group = null;
                 student.GroupIndex = 0;
                 _studentRepository.Update(student);
@@ -119,6 +120,10 @@ namespace Exam.Controllers
             speciality.LastGroupingDate = DateTime.Now;
             speciality.Grouped = true;
             _specialityRepository.Update(speciality);
+            
+            speciality.Examination.LastGroupingDate = DateTime.Now;
+            speciality.Examination.Grouped = true;
+            _examinationRepository.Update(speciality.Examination);
         }
 
 

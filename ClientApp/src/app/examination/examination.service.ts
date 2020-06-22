@@ -1,5 +1,5 @@
 ﻿import {Injectable} from "@angular/core";
-import {Examination, ExaminationHttpClient} from "examination/models";
+import {Examination, ExaminationHttpClient, Speciality} from "examination/models";
 import {AlertEmitter, Confirmation} from "examination/controls";
 
 @Injectable({
@@ -49,5 +49,32 @@ export class ExaminationService {
        examination.organisation.statistics.closedExaminationCount++;
       this._alertEmitter.info('L\'examen a été fermé.');
     });
+  }
+
+
+  group(examination: Examination): Promise<void> {
+    return new Promise<void>((resolve, error) => {
+      const confirm = this._confirmation.open(`Grouper tous les étudiants de cette examen?`);
+      confirm.accept.subscribe(async () => {
+        await this._httpClient.group(examination, true);
+        examination.grouped = true;
+        examination.lastGroupingDate = new Date();
+        this._alertEmitter.info("Le groupement a été effectué!");
+        resolve();
+      }, err  => error(err));
+    })
+  }
+
+  ungroup(examination: Examination): Promise<void> {
+    return new Promise<void>((resolve, error) => {
+      const confirm = this._confirmation.open(`Annuler le groupement de cet examen?`);
+      confirm.accept.subscribe(async () => {
+        await this._httpClient.ungroup(examination, true);
+        examination.grouped = false;
+        this._alertEmitter.error("Le groupement a été annulée!");
+        resolve();
+      }, err  => error(err));
+    })
+
   }
 }

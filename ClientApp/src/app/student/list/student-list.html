@@ -1,4 +1,8 @@
-﻿<div class="d-flex py-1 justify-content-between align-items-center">
+﻿<app-canGroupSpecialityAlert *ngIf="speciality" [speciality]="speciality"></app-canGroupSpecialityAlert>
+<app-canGroupExaminationAlert *ngIf="examination" [examination]="examination"></app-canGroupExaminationAlert>
+
+
+<div class="d-flex py-1 justify-content-between align-items-center">
 <div class="ms-fontSize-24 ms-fontWeight-light text-capitalize">étudiants</div>
 
   <div *ngIf="isSpeciality">
@@ -7,10 +11,9 @@
   </div>
 
   <div *ngIf="isExamination">
-    <MsfButton theme="primary" Icon="ReminderGroup" title="Grouper tous les étudiants">Grouper tous </MsfButton>
-    <MsfButton theme="primary" Icon="ReminderGroup" class="ml-2"  title="Grouper les étudiants sans spécialités">Grouper sans spécialités</MsfButton>
+    <MsfButton theme="primary" Icon="ReminderGroup" title="Grouper tous les étudiants" (click)="groupExaminationStudents()">Grouper</MsfButton>
 
-    <MsfButton *ngIf="examination.grouped" theme="error" Icon="Cancel" class="ml-2" title="Enlever les étudiants des groupes">Annuler les groupements </MsfButton>
+    <MsfButton *ngIf="examination.grouped" theme="error" Icon="Cancel" class="ml-2" title="Enlever les étudiants des groupes" (click)="ungroupExaminationStudents()">Annuler les groupements </MsfButton>
   </div>
 
 </div>

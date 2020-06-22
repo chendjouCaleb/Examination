@@ -31,11 +31,12 @@ import {StudentHub} from "examination/app/student/student-hub";
 import {NewStudent} from "examination/app/student/new-student";
 import {StudentDetails} from "examination/app/student/details/student-details";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {SpecialityModule} from "examination/app/speciality";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
     AppFormModule, MsfTableModule, MsfPersonaModule, MsfMenuModule, MomentModule, MsfRadioModule,
-    MatDatepickerModule, MatRippleModule, MsfCheckboxModule, UserPickerModule, MatSnackBarModule,
+    MatDatepickerModule, MatRippleModule, MsfCheckboxModule, UserPickerModule, MatSnackBarModule, SpecialityModule,
     MsfPivotModule, MsfModalModule, MsfTabModule, ExaminationModule, RouterModule],
   declarations: [StudentLayoutComponent, StudentAddComponent, StudentEditComponent, StudentUserLink,
     StudentSpeciality, StudentRegistrationId, StudentList, StudentDetails, NewStudent],

@@ -10,7 +10,7 @@ export class SpecialityService {
 
   group(speciality: Speciality): Promise<void> {
     return new Promise<void>((resolve, error) => {
-      const confirm = this._confirm.open(`Grouper tous les étudiants de la spécialité ${speciality.name}`);
+      const confirm = this._confirm.open(`Grouper tous les étudiants de la spécialité ${speciality.name}?`);
       confirm.accept.subscribe(async () => {
         await this._httpClient.group(speciality);
         speciality.grouped = true;
@@ -19,12 +19,11 @@ export class SpecialityService {
         resolve();
       }, err  => error(err));
     })
-
   }
 
   ungroup(speciality: Speciality): Promise<void> {
     return new Promise<void>((resolve, error) => {
-      const confirm = this._confirm.open(`Annuler le groupement de la spécialité ${speciality.name}`);
+      const confirm = this._confirm.open(`Annuler le groupement de la spécialité ${speciality.name}?`);
       confirm.accept.subscribe(async () => {
         await this._httpClient.ungroup(speciality);
         speciality.grouped = false;
