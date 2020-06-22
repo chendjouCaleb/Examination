@@ -48,6 +48,7 @@ namespace ServerAppTest
             
             ServiceCollection.AddTransient<ScoreController>();
             ServiceCollection.AddTransient<PaperController>();
+            ServiceCollection.AddTransient<GroupStudentController>();
             
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")

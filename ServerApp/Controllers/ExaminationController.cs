@@ -22,6 +22,7 @@ namespace Exam.Controllers
     {
         private IExaminationRepository _examinationRepository;
         private IRepository<Organisation, long> _organisationRepository;
+        
         private ILogger<ExaminationController> _logger;
 
         public ExaminationController(IExaminationRepository examinationRepository,
@@ -36,7 +37,7 @@ namespace Exam.Controllers
         [HttpGet("{examinationId}")]
         [LoadExamination]
         public Examination Find(Examination examination) => examination;
-        
+
         [HttpGet("find")]
         [RequireQueryParameter("organisationId")]
         [RequireQueryParameter("name")]
@@ -58,6 +59,7 @@ namespace Exam.Controllers
             {
                 queryable = queryable.Where(e => e.OrganisationId == organisation.Id);
             }
+
             if (!string.IsNullOrWhiteSpace(state))
             {
                 queryable = queryable.Where(e => e.State == state);
@@ -113,11 +115,11 @@ namespace Exam.Controllers
             ErrorMessage = "{examination.requireState.pending}")]
         public StatusCodeResult ChangeStartDate(Examination examination, [FromQuery] DateTime startDate)
         {
-            if ( startDate.IsBefore(DateTime.Now))
+            if (startDate.IsBefore(DateTime.Now))
             {
                 throw new InvalidValueException("{period.constraints.futureStartDate}");
             }
-            
+
             if (startDate.IsAfter(examination.ExpectedEndDate))
             {
                 throw new InvalidValueException("{period.constraints.startDate-before-endDate}");
@@ -127,7 +129,6 @@ namespace Exam.Controllers
             _examinationRepository.Update(examination);
 
             return StatusCode(StatusCodes.Status202Accepted);
-            
         }
 
 
@@ -238,7 +239,6 @@ namespace Exam.Controllers
             return Ok();
         }
 
-        
 
         [HttpDelete("{examinationId}")]
         [LoadExamination]

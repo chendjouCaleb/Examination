@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,10 @@ namespace Exam.Entities
     public class Speciality:Entity<long>
     {
         public string Name { get; set; }
+        
+        public DateTime? LastGroupingDate { get; set; }
+
+        public bool Grouped { get; set; }
 
         [JsonIgnore]
         public virtual Examination Examination { get; set; }
@@ -22,6 +27,7 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<Group> Groups { get; set; }
         public int GroupCount { get; set; }
+        
         
         [JsonIgnore]
         public virtual List<Test> Tests { get; set; }

@@ -1,4 +1,13 @@
-﻿import {Component, Directive, ElementRef, HostBinding, Input, OnInit, ViewEncapsulation} from "@angular/core";
+﻿import {
+  Component,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnInit, Output,
+  ViewEncapsulation
+} from "@angular/core";
 
 
 export type msAlertTheme = 'info' | 'success' | 'severeWarning' | 'error';
@@ -6,7 +15,8 @@ export type msAlertDisplay = 'inline-block' | 'inline' | 'block';
 
 
 @Directive({
-  selector: '[msAlertFooter]'
+  selector: '[msAlertFooter]',
+  host: { 'class': 'ms-alert-footer'}
 })
 export class MsAlertFooter {}
 
@@ -48,6 +58,13 @@ export class MsAlert implements OnInit{
 
   @HostBinding('class')
   className: string;
+
+  @Input()
+  icon: boolean = true;
+
+  @Input()
+  closeButton: boolean = true;
+
 
   get visible(): boolean { return this._visible}
   private _visible: boolean = false;

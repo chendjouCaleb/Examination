@@ -26,6 +26,8 @@ namespace Exam.Entities
 
         public DateTime? LastGroupingDate { get; set; }
 
+        public bool Grouped { get; set; }
+
         [JsonIgnore]
         public virtual Organisation Organisation { get; set; }
         public long OrganisationId { get; set; }

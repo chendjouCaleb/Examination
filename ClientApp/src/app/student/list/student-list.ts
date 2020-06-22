@@ -10,6 +10,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {NewStudent} from "examination/app/student/new-student";
 import {StudentHub} from "examination/app/student/student-hub";
 import {PartialObserver} from "rxjs";
+import {SpecialityService} from "examination/app/speciality";
 
 
 @Component({
@@ -28,6 +29,13 @@ export class StudentList implements OnInit, AfterViewInit {
   @Input()
   group: Group;
 
+  /** Indique si la propriété examination a été renseignée */
+  isExamination: boolean = false;
+
+  get isSpeciality(): boolean {
+    return !this.isExamination;
+  }
+
   students: List<Student>;
 
   constructor(private currentItems: CurrentItems, private _studentLoader: StudentLoader,
@@ -36,14 +44,15 @@ export class StudentList implements OnInit, AfterViewInit {
               private _alertEmitter: AlertEmitter,
               private _confirmation: Confirmation,
               private _snackbar: MatSnackBar,
+              private _specialityService: SpecialityService,
               private _hub: StudentHub,
               private _dialog: MsfModal) {
-
   }
 
   async ngOnInit() {
     let students: List<Student>;
     if (this.examination) {
+      this.isExamination = true;
       students = await this._httpClient.listByExamination(this.examination);
     } else if (this.speciality) {
       students = await this._httpClient.listBySpeciality(this.speciality);
@@ -55,7 +64,7 @@ export class StudentList implements OnInit, AfterViewInit {
 
     this._hub.studentDeleted.subscribe(student => {
       this.students.removeIf(s => s.id === student.id);
-      if(student.examinationId === this.examination.id) {
+      if (student.examinationId === this.examination.id) {
         this._alertEmitter.error(`L'étudiant ${student.fullName} a été supprimé!`);
       }
     });
@@ -63,26 +72,46 @@ export class StudentList implements OnInit, AfterViewInit {
     this._hub.studentCreated.subscribe(this.onStudentCreated);
   }
 
-  onStudentCreated  = async student => {
-    if(student.examinationId === this.examination.id) {
+  onStudentCreated = async student => {
+    if (student.examinationId === this.getExamination().id) {
       await this._studentLoader.load(student);
       this._alertEmitter.error(`L'étudiant ${student.fullName} a été supprimé!`);
       this._snackbar.openFromComponent(NewStudent, {
         panelClass: ['mat-snackbar-panel'],
-        data: { 'student': student },
+        data: {'student': student},
         horizontalPosition: "right", verticalPosition: "bottom"
       });
     }
 
-    if(this.speciality && student.specialityId === this.speciality.id) {
+    if (this.speciality && student.specialityId === this.speciality.id) {
       this.students.insert(0, student);
-    }else if(student.examinationId === this.examination.id) {
+    } else if (student.examinationId === this.examination.id) {
       this.students.insert(0, student);
     }
   };
 
+  groupSpecialityStudents() {
+    this._specialityService.group(this.speciality).then(async () => {
+      const students = await this._httpClient.listBySpeciality(this.speciality);
+      await this._studentLoader.loadAll(students);
+      this.students = students;
+    })
+  }
+
+  ungroupSpecialityStudents() {
+    this._specialityService.ungroup(this.speciality).then(async () => {
+      this.students.forEach(student => {
+        student.groupIndex = 0;
+        student.groupId = null;
+        student.group = null;
+      })
+    })
+  }
+
+
+
   openAddStudentDialog() {
-    const modalRef = this._dialog.open(StudentAddComponent);
+    const modalRef = this._dialog.open<StudentAddComponent, Student>(StudentAddComponent);
     modalRef.componentInstance.examination = this.examination;
     modalRef.componentInstance.speciality = this.speciality;
   }
@@ -147,6 +176,13 @@ export class StudentList implements OnInit, AfterViewInit {
       localStorage.setItem("userListColumns", JSON.stringify(defaultColumns));
       this.columns = List.fromArray(defaultColumns)
     }
+  }
+
+  getExamination(): Examination {
+    if (this.examination) {
+      return this.examination;
+    }
+    return this.speciality.examination;
   }
 
 }

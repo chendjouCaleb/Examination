@@ -25,9 +25,21 @@ export class SpecialityHttpClient extends GenericHttpClient<Speciality, number> 
     return this.listAsync({examinationId: examination.id});
   }
 
-  async canGroupSpecialityStudents(speciality: Speciality): Promise<number> {
+  async group(speciality: Speciality): Promise<void> {
     return this.httpClient
-      .get<number>(`${this.url}/canGroupNonSpecialityStudents?specialityId=${speciality.id}`)
+      .put<void>(`${this.url}/${speciality.id}/group`, {} )
+      .toPromise();
+  }
+
+  async ungroup(speciality: Speciality): Promise<void> {
+    return this.httpClient
+      .put<void>(`${this.url}/${speciality.id}/ungroup`, {} )
+      .toPromise();
+  }
+
+  async canGroup(speciality: Speciality): Promise<number> {
+    return this.httpClient
+      .get<number>(`${this.url}/${speciality.id}/canGroupStudents`)
       .toPromise();
   }
 }

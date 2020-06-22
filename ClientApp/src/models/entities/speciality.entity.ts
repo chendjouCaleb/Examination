@@ -11,6 +11,9 @@ export class Speciality extends Entity<number> {
       this.registrationDate = value.registrationDate;
       this.name = value.name;
 
+      this.grouped = value.grouped;
+      this.lastGroupingDate = value.lastGroupingDate;
+
       this.examination = value.examination;
       this.examinationId = value.examinationId;
 
@@ -20,6 +23,9 @@ export class Speciality extends Entity<number> {
   }
 
   name: string;
+  grouped: boolean;
+  lastGroupingDate: Date;
+
   examination: Examination;
   examinationId: number;
 

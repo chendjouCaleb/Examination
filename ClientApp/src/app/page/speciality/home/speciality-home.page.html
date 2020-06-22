@@ -1,5 +1,8 @@
 ﻿<app-speciality-layout [speciality]="speciality">
+   <app-canGroupSpecialityAlert [speciality]="speciality"></app-canGroupSpecialityAlert>
   <div class="ms-fontSize-24">{{speciality.name}}</div>
+
+
 
   <div>Ajoutéé {{speciality.registrationDate | amCalendar}}</div>
 </app-speciality-layout>

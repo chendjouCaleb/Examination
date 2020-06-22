@@ -1,26 +1,27 @@
 ﻿import {Component, Input, OnInit} from "@angular/core";
-import {Speciality, SpecialityHttpClient} from "examination/models";
+import {Examination, ExaminationHttpClient} from "examination/models";
 
 @Component({
-  selector: 'app-canGroupSpecialityAlert',
+  selector: 'app-canGroupExaminationAlert',
 
   template: `
       <msAlert *ngIf="countRemainingPlace < 0" theme="error" display="block">
-          Il manque <b>{{-countRemainingPlace}}  places</b> dans les groupes de la specialité <b> {{speciality.name}}</b>.
-          Veuillez ajouter des groupes supplémentaires.
+          Il manque <b>{{-countRemainingPlace}}  places</b> pour les groupes sans spécialités.
+          Veuillez ajouter des groupes supplémentaires sans spécialité.
       </msAlert>
   `
 
 })
-export class CanGroupSpecialityAlert implements OnInit{
+export class CanGroupExaminationAlert implements OnInit{
   @Input()
-  speciality: Speciality;
+  examination: Examination;
 
   countRemainingPlace: number = 0;
 
-  constructor(private _httpClient: SpecialityHttpClient) {}
+  constructor(private _httpClient: ExaminationHttpClient) {}
 
   async ngOnInit(): Promise<void> {
-    this.countRemainingPlace = await this._httpClient.canGroup(this.speciality);
+    this.countRemainingPlace = await this._httpClient.canGroupNonSpecialityStudents(this.examination);
+    
   }
 }

@@ -312,6 +312,7 @@
               <e p="examination.module.ts" t="Include" />
               <e p="examination.resolver.ts" t="Include" />
               <e p="examination.service.ts" t="Include" />
+              <e p="ExaminationCanGroupAlert.ts" t="Include" />
               <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
             </e>
@@ -545,12 +546,14 @@
                 <e p="speciality-add.component.html" t="Include" />
                 <e p="speciality-add.component.ts" t="Include" />
               </e>
+              <e p="CanGroupAlert.ts" t="Include" />
               <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="layout" t="Include">
                 <e p="speciality-layout.component.html" t="Include" />
                 <e p="speciality-layout.component.ts" t="Include" />
               </e>
+              <e p="speciality-service.ts" t="Include" />
               <e p="speciality.module.ts" t="Include" />
               <e p="speciality.resolver.ts" t="Include" />
             </e>
@@ -919,6 +922,7 @@
           <e p="CorrectorController.cs" t="Include" />
           <e p="ExaminationController.cs" t="Include" />
           <e p="GroupController.cs" t="Include" />
+          <e p="GroupStudentController.cs" t="Include" />
           <e p="HomeController.cs" t="Include" />
           <e p="OrganisationController.cs" t="Include" />
           <e p="PaperController.cs" t="Include" />
@@ -1017,6 +1021,8 @@
           <e p="20200617191845_UpdateExamination.Designer.cs" t="Include" />
           <e p="20200621122420_UpdateExamination1.cs" t="Include" />
           <e p="20200621122420_UpdateExamination1.Designer.cs" t="Include" />
+          <e p="20200622075756_Examination_Speciality_Update.cs" t="Include" />
+          <e p="20200622075756_Examination_Speciality_Update.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

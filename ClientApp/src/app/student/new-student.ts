@@ -7,26 +7,26 @@ import {StudentDetails} from "examination/app/student/details/student-details";
 
 @Component({
   template: `
-      <div class="new-student-layout">
+      <msAlert [icon]="false" [closeButton]="false" theme="info">
           <div class="ms-fontWeight-semibold ms-fontSize-16">Nouvel étudiant</div>
-          <div class="mt-2">
+          <div class="mt-2 d-flex">
               <MsfPersona size="size72">
                   <MsfPersonaFigure [text]="student.fullName" ></MsfPersonaFigure>
-                  <MsfPersonaText>
-                      <div class="ms-fontWeight-semibold">{{student.fullName}}</div>
-                      <div>Matricule: {{student.registrationId}}</div>
-                      <div *ngIf="student.speciality">Specialité: {{student.speciality.name}}</div>
-                      
-                      
-                      <div class="mt-2">
-                          <MsfButton theme="primary" (click)="details()">Voir</MsfButton>
-                          <MsfButton class="ml-3" (click)="snackbar.dismiss()">Fermer</MsfButton>
-                      </div>
-                  </MsfPersonaText>
               </MsfPersona>
+              <div class="ml-2">
+                  <div class="ms-fontWeight-semibold">{{student.fullName}}</div>
+                  <div>Matricule: {{student.registrationId}}</div>
+                  <div *ngIf="student.speciality">Specialité: {{student.speciality.name}}</div>
+
+
+                  <div class="mt-3">
+                      <button msAlertButton action="true" (click)="details()">Voir</button>
+                      <button msAlertButton class="ml-3" (click)="snackbar.dismiss()">Fermer</button>
+                  </div>
+              </div>
           </div>
           
-      </div>
+      </msAlert>
   `,
   encapsulation: ViewEncapsulation.None,
   host: {'class': 'new-student'},

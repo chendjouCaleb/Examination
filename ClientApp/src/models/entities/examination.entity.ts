@@ -30,6 +30,9 @@ export class Examination extends Entity<number> {
     this.endDate = value.endDate;
     this.isClosed = value.isClosed;
 
+    this.grouped = value.grouped;
+    this.lastGroupingDate = value.lastGroupingDate;
+
     this.testCount = value.testCount;
     this.correctorCount = value.correctorCount;
     this.groupCount = value.groupCount;
@@ -61,6 +64,9 @@ export class Examination extends Entity<number> {
 
   name: string;
   requireSpeciality: boolean;
+
+  grouped: boolean;
+  lastGroupingDate: Date;
 
 
   expectedStartDate: Date;

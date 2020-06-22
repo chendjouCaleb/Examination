@@ -1,5 +1,19 @@
-﻿<div class="ms-fontSize-24 ms-fontWeight-light py-2 text-capitalize">étudiants</div>
+﻿<div class="d-flex py-1 justify-content-between align-items-center">
+<div class="ms-fontSize-24 ms-fontWeight-light text-capitalize">étudiants</div>
 
+  <div *ngIf="isSpeciality">
+    <MsfButton theme="primary" Icon="ReminderGroup" title="Grouper tous les étudiants" (click)="groupSpecialityStudents()">Grouper</MsfButton>
+    <MsfButton *ngIf="speciality.grouped" theme="error" Icon="Cancel" class="ml-2" (click)="ungroupSpecialityStudents()" title="Enlever les étudiants des groupes">Annuler les groupements</MsfButton>
+  </div>
+
+  <div *ngIf="isExamination">
+    <MsfButton theme="primary" Icon="ReminderGroup" title="Grouper tous les étudiants">Grouper tous </MsfButton>
+    <MsfButton theme="primary" Icon="ReminderGroup" class="ml-2"  title="Grouper les étudiants sans spécialités">Grouper sans spécialités</MsfButton>
+
+    <MsfButton *ngIf="examination.grouped" theme="error" Icon="Cancel" class="ml-2" title="Enlever les étudiants des groupes">Annuler les groupements </MsfButton>
+  </div>
+
+</div>
 <div>
   <MsfButton theme="primary" [MsfMenuTrigger]="columnMenu" xPosition="ltl" LeftIcon="ChevronDown" [outline]="true">
     Colonne
@@ -74,7 +88,7 @@
   <MsfTable *ngIf="students">
     <MsfTableHead>
       <MsfTableHeadCell *ngIf="canShow('#')">#</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="index" *ngIf="canShow('index')">N°(DeGroupe)</MsfTableHeadCell>
+      <MsfTableHeadCell   sortBy="index" *ngIf="canShow('index')">N°(DeGroupe)</MsfTableHeadCell>
       <MsfTableHeadCell sortBy="fullName" *ngIf="canShow('name')">Nom</MsfTableHeadCell>
       <MsfTableHeadCell *ngIf="canShow('registrationId')">Matricule</MsfTableHeadCell>
       <MsfTableHeadCell sortBy="birthDate" *ngIf="canShow('birthDate')">Date de naissance</MsfTableHeadCell>

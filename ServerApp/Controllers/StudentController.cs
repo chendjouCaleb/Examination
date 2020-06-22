@@ -76,6 +76,7 @@ namespace Exam.Controllers
             {
                 set = set.Where(s => s.UserId == userId);
             }
+            
             return set.ToList();
         }
 

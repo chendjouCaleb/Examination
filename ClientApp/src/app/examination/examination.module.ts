@@ -11,13 +11,15 @@ import {AppFormModule, ControlModule} from "examination/controls";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ExaminationResolver} from "examination/app/examination/examination.resolver";
 import {ExaminationService} from "examination/app/examination/examination.service";
+import {CanGroupExaminationAlert} from "examination/app/examination/ExaminationCanGroupAlert";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
-  imports: [RouterModule, MatRippleModule, MsfModalModule, MatDatepickerModule,
+  imports: [CommonModule, RouterModule, MatRippleModule, MsfModalModule, MatDatepickerModule,
     MsfCheckboxModule, AppFormModule, ControlModule,
     MsfIconModule, MsfButtonModule, LayoutModule, OrganisationModule],
-  declarations: [ExaminationListComponent, ExaminationAddComponent, ExaminationLayoutComponent],
-  exports: [ExaminationListComponent, ExaminationAddComponent, ExaminationLayoutComponent],
+  declarations: [ExaminationListComponent, ExaminationAddComponent, ExaminationLayoutComponent, CanGroupExaminationAlert],
+  exports: [ExaminationListComponent, ExaminationAddComponent, ExaminationLayoutComponent, CanGroupExaminationAlert],
   providers: [ ExaminationResolver, ExaminationService ]
 })
 export class ExaminationModule {

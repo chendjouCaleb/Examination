@@ -1,5 +1,5 @@
 ﻿<app-examination-layout [examination]="examination" title="Groupes">
-  <msAlert theme="warning" #alert>
+  <msAlert theme="warning" #alert [icon]="false">
     {{examination.nonGroupedStudentsCount}} étudiant n'ont pas de groupe. Veuillez faire un regroupement.
     <div msAlertFooter>
       <button msAlertButton>Grouper</button>

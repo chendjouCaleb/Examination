@@ -15,7 +15,7 @@ namespace ServerAppTest.Controllers
 {
     public class StudentGroupingControllerTests
     {
-        private GroupController _controller;
+        private GroupStudentController _controller;
         private IRepository<Group, long> _groupRepository;
         private IRepository<Organisation, long> _organisationRepository;
         private IRepository<Room, long> _roomRepository;
@@ -63,7 +63,7 @@ namespace ServerAppTest.Controllers
             IServiceProvider serviceProvider = ServiceConfiguration.BuildServiceProvider();
 
 
-            _controller = serviceProvider.GetRequiredService<GroupController>();
+            _controller = serviceProvider.GetRequiredService<GroupStudentController>();
 
             _organisationRepository = serviceProvider.GetRequiredService<IRepository<Organisation, long>>();
             _groupRepository = serviceProvider.GetRequiredService<IRepository<Group, long>>();
@@ -261,7 +261,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void GroupStudentWithSpeciality()
         {
-            _controller.GroupStudentOfSpeciality(_speciality1);
+            _controller.Group(_speciality1);
 
             
             List <Student> students = _speciality1Students.OrderBy(u => u.FullName).ToList();
@@ -284,7 +284,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void GroupStudentWithSpeciality2()
         {
-            _controller.GroupStudentOfSpeciality(_speciality2);
+            _controller.Group(_speciality2);
 
             
             List <Student> students = _speciality2Students.OrderBy(u => u.FullName).ToList();

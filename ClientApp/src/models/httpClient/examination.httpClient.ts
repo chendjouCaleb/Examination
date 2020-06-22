@@ -78,16 +78,28 @@ export class ExaminationHttpClient extends GenericHttpClient<Examination, number
       .toPromise();
   }
 
+  async group(examination: Examination, all=false): Promise<void> {
+    return this.httpClient
+      .put<void>(`${this.url}/${examination.id}/group?all=${all}`, {} )
+      .toPromise();
+  }
+
+  async ungroup(examination: Examination, all=false): Promise<void> {
+    return this.httpClient
+      .put<void>(`${this.url}/${examination.id}/ungroup?all=${all}`, {} )
+      .toPromise();
+  }
+
   async canGroup(examination: Examination): Promise<number> {
     return this.httpClient
-      .get<number>(`${this.url}/canGroupStudents?examinationId=${examination.id}`)
+      .get<number>(`${this.url}/${examination.id}/canGroupStudents`)
       .toPromise();
   }
 
 
   async canGroupNonSpecialityStudents(examination: Examination): Promise<number> {
     return this.httpClient
-      .get<number>(`${this.url}/canGroupNonSpecialityStudents?examinationId=${examination.id}`)
+      .get<number>(`${this.url}/${examination.id}/canGroupNonSpecialityStudents`)
       .toPromise();
   }
 
