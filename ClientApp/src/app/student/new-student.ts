@@ -41,7 +41,7 @@ export class NewStudent {
   @Input()
   student: Student;
 
-  constructor(@Optional() private snackbar: MatSnackBarRef<NewStudent>,
+  constructor(@Optional() public snackbar: MatSnackBarRef<NewStudent>,
                 private modal: MsfModal,
                 @Inject(MAT_SNACK_BAR_DATA) data)
   {

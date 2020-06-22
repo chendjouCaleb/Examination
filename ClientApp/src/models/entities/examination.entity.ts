@@ -48,6 +48,8 @@ export class Examination extends Entity<number> {
     this.applicationCount = value.applicationCount;
     this.acceptedApplicationCount = value.acceptedApplicationCount;
     this.rejectedApplicationCount = value.rejectedApplicationCount;
+
+    this.nonGroupedStudentsCount = value.nonGroupedStudentsCount;
   }
 
 
@@ -91,6 +93,8 @@ export class Examination extends Entity<number> {
   applicationCount: number;
   acceptedApplicationCount: number;
   rejectedApplicationCount: number;
+
+  nonGroupedStudentsCount: number;
 
   get url(): string {
     return `/organisations/${this.organisationId}/examinations/${this.id}`;

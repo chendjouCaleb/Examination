@@ -11,12 +11,15 @@ import {StateBadgeDirective} from './state-badge.directive';
 import {Icon} from "./icon/icon";
 import {StatsItem} from "./stats-item/stats-item";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MsAlert, MsAlertButton, MsAlertFooter} from "./alert/alert";
 
 @NgModule({
   imports: [CommonModule, MatSnackBarModule, MsfModalModule, MsfButtonModule],
   providers: [AlertEmitter, Confirmation],
-  declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem],
-  exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem],
+  declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
+    MsAlert, MsAlertFooter, MsAlertButton],
+  exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
+    MsAlert, MsAlertFooter, MsAlertButton],
 })
 export class ControlModule {
 

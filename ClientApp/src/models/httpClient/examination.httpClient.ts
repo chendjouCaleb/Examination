@@ -1,5 +1,5 @@
 import {GenericHttpClient, SERVER_URL} from "./httpClient";
-import {Examination, Organisation, OrganisationUser} from "../entities";
+import {Examination, Organisation, Speciality} from "../entities";
 import {Injectable} from "@angular/core";
 import {ExaminationUser} from "../entities/user-examination";
 
@@ -54,21 +54,21 @@ export class ExaminationHttpClient extends GenericHttpClient<Examination, number
   async start(examination: Examination): Promise<void> {
     await this
       .httpClient
-      .put(`${this.url}/${examination.id}/start`, {} )
+      .put(`${this.url}/${examination.id}/start`, {})
       .toPromise();
   }
 
   async close(examination: Examination): Promise<void> {
     await this
       .httpClient
-      .put(`${this.url}/${examination.id}/close`, {} )
+      .put(`${this.url}/${examination.id}/close`, {})
       .toPromise();
   }
 
   async relaunch(examination: Examination): Promise<void> {
     await this
       .httpClient
-      .put(`${this.url}/${examination.id}/relaunch`, {} )
+      .put(`${this.url}/${examination.id}/relaunch`, {})
       .toPromise();
   }
 
@@ -77,5 +77,25 @@ export class ExaminationHttpClient extends GenericHttpClient<Examination, number
       .get<ExaminationUser>(`${this.url}/users?examinationId=${examinationId}&userId=${userId}`)
       .toPromise();
   }
+
+  async canGroup(examination: Examination): Promise<number> {
+    return this.httpClient
+      .get<number>(`${this.url}/canGroupStudents?examinationId=${examination.id}`)
+      .toPromise();
+  }
+
+
+  async canGroupNonSpecialityStudents(examination: Examination): Promise<number> {
+    return this.httpClient
+      .get<number>(`${this.url}/canGroupNonSpecialityStudents?examinationId=${examination.id}`)
+      .toPromise();
+  }
+
+  async canGroupSpecialityStudents(speciality: Speciality): Promise<number> {
+    return this.httpClient
+      .get<number>(`${this.url}/canGroupNonSpecialityStudents?specialityId=${speciality.id}`)
+      .toPromise();
+  }
+
 
 }

@@ -69,7 +69,7 @@ export class StudentAddComponent implements OnInit{
 
     let student = await this._httpClient.add(model.body, {...model.params, examinationId: this.examination.id});
 
-    
+
     this._dialogRef.close(student);
   }
 }

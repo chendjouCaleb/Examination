@@ -204,11 +204,15 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
+        [HttpGet("countNonGroupedStudents")]
+        [RequireQueryParameter("examinationId")]
+        [LoadExamination(Source = ParameterSource.Query)]
         public long CountNonGroupedStudents(Examination examination) => _studentRepository
             .Count(s => examination.Equals(s.Examination) && s.Group == null);
 
         [HttpPut("groupStudents")]
-        [LoadExamination]
+        [RequireQueryParameter("examinationId")]
+        [LoadExamination(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public void GroupStudents(Examination examination)
         {
@@ -216,6 +220,10 @@ namespace Exam.Controllers
             examination.Specialities?.ForEach(GroupStudentOfSpeciality);
         }
 
+        [HttpPut("groupNonSpecialityStudents")]
+        [RequireQueryParameter("examinationId")]
+        [LoadExamination(Source = ParameterSource.Query)]
+        [AuthorizeExaminationAdmin]
         public void GroupStudentWithoutSpeciality(Examination examination)
         {
             if (CanGroupStudentWithoutSpeciality(examination) < 0)
@@ -232,11 +240,13 @@ namespace Exam.Controllers
                 .OrderBy(s => s.Index).ToList();
 
             GroupStudents(groups, students);
-
             
         }
         
-        
+        [HttpPut("groupSpecialityStudents")]
+        [RequireQueryParameter("specialityId")]
+        [LoadSpeciality(Source = ParameterSource.Query, ExaminationItemName = "examination")]
+        [AuthorizeExaminationAdmin]
         public void GroupStudentOfSpeciality(Speciality speciality)
         {
             if (CanGroupStudentOfSpeciality(speciality) < 0)
@@ -255,6 +265,7 @@ namespace Exam.Controllers
             GroupStudents(groups, students);
         }
 
+        
         public void GroupStudents(IEnumerable<Group> groups, List<Student> students)
         {
             int index = 0;
@@ -283,8 +294,9 @@ namespace Exam.Controllers
             }  
         }
 
-        [HttpPut("canGroupStudents")]
-        [LoadExamination]
+        [HttpGet("canGroupStudents")]
+        [RequireQueryParameter("examinationId")]
+        [LoadExamination(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         public int CanGroupStudents(Examination examination)
         {
@@ -301,6 +313,10 @@ namespace Exam.Controllers
         }
 
 
+        [HttpGet("canGroupNonSpecialityStudents")]
+        [RequireQueryParameter("examinationId")]
+        [LoadExamination(Source = ParameterSource.Query)]
+        [AuthorizeExaminationAdmin]
         public int CanGroupStudentWithoutSpeciality(Examination examination)
         {
             int capacity = _groupRepository.List(g => examination.Equals(g.Examination) && null == g.Speciality)
@@ -312,6 +328,10 @@ namespace Exam.Controllers
             return capacity - (int) studentCount;
         }
 
+        [HttpGet("canGroupSpecialityStudents")]
+        [RequireQueryParameter("specialityId")]
+        [LoadSpeciality(ExaminationItemName = "examination", Source = ParameterSource.Query)]
+        [AuthorizeExaminationAdmin]
         public int CanGroupStudentOfSpeciality(Speciality speciality)
         {
             int capacity = _groupRepository.List(g => speciality.Equals(g.Speciality))

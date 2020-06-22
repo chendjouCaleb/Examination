@@ -24,4 +24,10 @@ export class SpecialityHttpClient extends GenericHttpClient<Speciality, number> 
   listByExamination(examination: Examination): Promise<List<Speciality>> {
     return this.listAsync({examinationId: examination.id});
   }
+
+  async canGroupSpecialityStudents(speciality: Speciality): Promise<number> {
+    return this.httpClient
+      .get<number>(`${this.url}/canGroupNonSpecialityStudents?specialityId=${speciality.id}`)
+      .toPromise();
+  }
 }

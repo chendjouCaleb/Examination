@@ -28,6 +28,8 @@ namespace Exam.Persistence.Repositories
             examination.SecretaryCount = context.Set<Secretary>().Count(s => examination.Equals(s.Examination));
             examination.SpecialityCount = context.Set<Speciality>().Count(s => examination.Equals(s.Examination));
             examination.SupervisorCount = context.Set<Supervisor>().Count(s => examination.Equals(s.Examination));
+            examination.NonGroupedStudentsCount = context.Set<Student>()
+                .Count(s => examination.Equals(s.Examination) && s.Group == null);
 
             context.Update(examination);
             context.SaveChanges();

@@ -32,4 +32,12 @@ export class ApplicationHome {
       this._modalRef.close();
     });
   }
+
+  accept() {
+    this._applicationService.accept(this.application);
+  }
+
+  reject() {
+    this._applicationService.reject(this.application);
+  }
 }

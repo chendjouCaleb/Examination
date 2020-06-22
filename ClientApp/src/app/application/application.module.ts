@@ -22,6 +22,7 @@ import {ApplicationSpeciality} from "examination/app/application/speciality/appl
 import {ApplicationService} from "examination/app/application/application.service";
 import {ApplicationList} from "examination/app/application/list/application-list";
 import {ApplicationHome} from "examination/app/application/home/application-home";
+import {STUDENT_APPLICATION_SERVICE_TOKEN} from "examination/app/application/application.service.interface";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfButtonModule, MsfSelectModule,
@@ -33,7 +34,7 @@ import {ApplicationHome} from "examination/app/application/home/application-home
   exports: [ApplicationAddComponent, ApplicationEditComponent, ApplicationSpeciality, ApplicationList,
     ApplicationHome],
 
-  providers: [ApplicationService]
+  providers: [ApplicationService, {useExisting: ApplicationService, provide: STUDENT_APPLICATION_SERVICE_TOKEN}]
 })
 export class ApplicationModule {
 }

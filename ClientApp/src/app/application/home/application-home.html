@@ -12,8 +12,8 @@
 
     <div class="text-right ml-5">
       <ng-container *ngIf="application.examination.userPrincipal?.isPrincipal && application.waiting">
-        <MsfButton Icon="CheckMark" theme="success">Accepter</MsfButton>
-        <MsfButton Icon="UserRemove" theme="error" class="ml-2">Rejeter</MsfButton>
+        <MsfButton Icon="CheckMark" theme="success" (click)="accept()">Accepter</MsfButton>
+        <MsfButton Icon="UserRemove" theme="error" class="ml-2" (click)="reject()">Rejeter</MsfButton>
       </ng-container>
 
       <ng-container *ngIf="application.isAuthor && application.waiting">

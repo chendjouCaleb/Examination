@@ -76,6 +76,8 @@ namespace Exam.Entities
         public int ProgressTestCount { get; set; }
         public int ClosedTestCount { get; set; }
         
+        public int NonGroupedStudentsCount { get; set; }
+        
         
         
         [JsonIgnore]

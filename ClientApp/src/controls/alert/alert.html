@@ -1,0 +1,20 @@
+﻿<div class="ms-alert-layout">
+  <div class="ms-alert-icon">
+    <i class="ms-Icon ms-Icon--{{iconName}}"></i>
+  </div>
+  <div class="ms-alert-body">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="ms-alert-close">
+    <button class="ms-alert-closeButton" (click)="hide()">
+<i class="ms-Icon ms-Icon--Cancel"></i>
+    </button>
+  </div>
+
+
+</div>
+
+<div class="ms-alert-footer">
+  <ng-content select="[msAlertFooter]"></ng-content>
+</div>
