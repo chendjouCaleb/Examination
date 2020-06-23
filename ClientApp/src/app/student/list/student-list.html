@@ -16,6 +16,10 @@
     <MsfButton *ngIf="examination?.grouped" theme="error" Icon="Cancel" class="ml-2" title="Enlever les étudiants des groupes" (click)="ungroupExaminationStudents()">Annuler les groupements </MsfButton>
   </div>
 
+  <div *ngIf="group && students?.length > 0">
+    <MsfButton theme="error" Icon="Cancel" class="ml-2"  (click)="ungroupGroupStudents()">Vider ce groupe</MsfButton>
+  </div>
+
 </div>
 <div>
   <MsfButton theme="primary" [MsfMenuTrigger]="columnMenu" xPosition="ltl" LeftIcon="ChevronDown" [outline]="true">

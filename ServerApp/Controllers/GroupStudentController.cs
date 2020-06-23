@@ -148,6 +148,24 @@ namespace Exam.Controllers
         }
 
 
+        [HttpPut("groups/{groupId}/ungroup")]
+        [LoadGroup(ExaminationItemName = "examination")]
+        [AuthorizeExaminationAdmin]
+        public void UnGroup(Group group)
+        {
+            Assert.RequireNonNull(group, nameof(group));
+            IList<Student> students = _studentRepository.List(s => group.Equals(s.Group));
+
+            foreach (var student in students)
+            {
+                student.Group = null;
+                student.GroupId = null;
+                student.GroupIndex = 0;
+                _studentRepository.Update(student);
+            }
+        }
+
+
         public void GroupStudents(IEnumerable<Group> groups, List<Student> students)
         {
             int index = 0;

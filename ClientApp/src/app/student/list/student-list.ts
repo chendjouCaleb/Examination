@@ -12,6 +12,7 @@ import {StudentHub} from "examination/app/student/student-hub";
 import {PartialObserver} from "rxjs";
 import {SpecialityService} from "examination/app/speciality";
 import {ExaminationService} from "examination/app/examination/examination.service";
+import { GroupService } from 'examination/app/group';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class StudentList implements OnInit, AfterViewInit {
               private _snackbar: MatSnackBar,
               private _specialityService: SpecialityService,
               private _examinationService: ExaminationService,
+              private _groupService: GroupService,
               private _hub: StudentHub,
               private _dialog: MsfModal) {
   }
@@ -75,7 +77,7 @@ export class StudentList implements OnInit, AfterViewInit {
   }
 
   onStudentCreated = async student => {
-    if (student.examinationId === this.getExamination().id) {
+    if (student.examinationId === this._examination.id) {
       await this._studentLoader.load(student);
       this._alertEmitter.error(`L'étudiant ${student.fullName} a été supprimé!`);
       this._snackbar.openFromComponent(NewStudent, {
@@ -106,6 +108,15 @@ export class StudentList implements OnInit, AfterViewInit {
         student.groupIndex = 0;
         student.groupId = null;
         student.group = null;
+      })
+    })
+  }
+
+
+  ungroupGroupStudents() {
+    this._groupService.ungroup(this.group).then(async () => {
+      this.students.forEach(student => {
+        this.students = new List();
       })
     })
   }
@@ -202,12 +213,5 @@ export class StudentList implements OnInit, AfterViewInit {
       this.columns = List.fromArray(defaultColumns)
     }
   }
-
-  getExamination(): Examination {
-    if (this.examination) {
-      return this.examination;
-    }
-    return this.speciality.examination;
-  }
-
+  
 }

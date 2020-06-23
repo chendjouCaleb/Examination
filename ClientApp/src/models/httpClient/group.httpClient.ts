@@ -21,6 +21,12 @@ export class GroupHttpClient extends GenericHttpClient<Group, number> {
     return null;
   }
 
+  async ungroup(group: Group): Promise<void> {
+    return this.httpClient
+      .put<void>(`${this.url}/${group.id}/ungroup`, {} )
+      .toPromise();
+  }
+
   listByExamination(examination: Examination): Promise<List<Group>> {
     return this.listAsync({examinationId: examination.id});
   }
