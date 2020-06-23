@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Models.Statistics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -87,5 +88,8 @@ namespace Exam.Entities
         
         public int ReviewCount { get; set; }
         public int ReviewAverage { get; set; }
+        
+        [NotMapped] 
+        public ExaminationStatistics Statistics { get; set; }
     }
 }

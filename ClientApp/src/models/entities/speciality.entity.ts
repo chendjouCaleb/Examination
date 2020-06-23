@@ -21,7 +21,7 @@ export class Speciality extends Entity<number> {
       this.registerUser = value.registerUser;
     }
 
-    if(this.statistics?.nonGroupedStudent > 0) {
+    if(this.statistics?.nonGroupedStudentsCount > 0) {
       this.requireGrouping = true;
     }
   }
@@ -50,14 +50,15 @@ export class Speciality extends Entity<number> {
 }
 
 
-export class SpecialityStatistics {
+export interface SpecialityStatistics {
   studentCount: number;
-  nonGroupedStudent: number;
+  nonGroupedStudentsCount: number;
   groupCount: number;
 
   testCount: number;
   waitingTestCount: number;
-  effectiveTestCount: number;
+  progressTestCount: number;
+  closedTestCount: number;
 
   applicationCount: number;
   waitingApplicationCount: number;

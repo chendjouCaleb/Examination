@@ -324,6 +324,7 @@
               <e p="form.ts" t="Include" />
               <e p="group.module.ts" t="Include" />
               <e p="group.resolver.ts" t="Include" />
+              <e p="group.service.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="layout" t="Include">
                 <e p="group-layout.component.html" t="Include" />
@@ -413,6 +414,10 @@
                 <e p="list" t="Include">
                   <e p="group-list.page.html" t="Include" />
                   <e p="group-list.page.ts" t="Include" />
+                </e>
+                <e p="students" t="Include">
+                  <e p="group-students.page.html" t="Include" />
+                  <e p="group-students.page.ts" t="Include" />
                 </e>
               </e>
               <e p="organisation" t="Include">
@@ -1038,7 +1043,10 @@
           <e p="ScoreForm.cs" t="Include" />
           <e p="SpecialityForm.cs" t="Include" />
           <e p="Statistics" t="Include">
+            <e p="ExaminationStatistics.cs" t="Include" />
+            <e p="GroupStatistics.cs" t="Include" />
             <e p="OrganisationStatistics.cs" t="Include" />
+            <e p="SpecialityStatistics.cs" t="Include" />
           </e>
           <e p="StudentForm.cs" t="Include" />
           <e p="TestForm.cs" t="Include" />
@@ -1056,8 +1064,10 @@
           <e p="PersistenceContext.cs" t="Include" />
           <e p="Repositories" t="Include">
             <e p="ExaminationRepository.cs" t="Include" />
+            <e p="GroupRepository.cs" t="Include" />
             <e p="OrganisationRepository.cs" t="Include" />
             <e p="PrincipalRepository.cs" t="Include" />
+            <e p="SpecialityRepository.cs" t="Include" />
           </e>
           <e p="RepositoryServices.cs" t="Include" />
         </e>

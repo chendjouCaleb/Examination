@@ -46,6 +46,8 @@ export class Group extends Entity<number> {
   examination: Examination;
   examinationId: number;
 
+  statistics: IGroupStatistics;
+
   get url(): string {
     return `/organisations/${this.examination.organisationId}/examinations/${this.examinationId}/groups/${this.id}`;
   }
@@ -56,6 +58,11 @@ export class Group extends Entity<number> {
 }
 
 
-export class GroupStatistics {
-
+export interface IGroupStatistics {
+  studentCount: number;
+  remainingCapacity: number;
+  testCount: number;
+  waitingTestCount: number;
+  progressTestCount: number;
+  closedTestCount: number;
 }

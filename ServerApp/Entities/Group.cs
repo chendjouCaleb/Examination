@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Models.Statistics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -32,6 +33,11 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual Room Room { get; set; }
         public long RoomId { get; set; }
-        
+
+        public virtual List<TestGroup> TestGroups { get; set; }
+
+        [NotMapped]
+        public GroupStatistics Statistics { get; set; }
+
     }
 }

@@ -35,8 +35,14 @@ namespace Exam.Controllers
         }
 
         [HttpGet("{examinationId}")]
-        [LoadExamination]
-        public Examination Find(Examination examination) => examination;
+        
+        public Examination Find(long examinationId)
+
+        {
+            Examination examination = _examinationRepository.Find(examinationId);
+            examination.Statistics = _examinationRepository.Statistics(examination);
+            return examination;
+        }
 
         [HttpGet("find")]
         [RequireQueryParameter("organisationId")]

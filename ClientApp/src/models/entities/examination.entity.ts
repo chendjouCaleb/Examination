@@ -53,6 +53,10 @@ export class Examination extends Entity<number> {
     this.rejectedApplicationCount = value.rejectedApplicationCount;
 
     this.nonGroupedStudentsCount = value.nonGroupedStudentsCount;
+
+    if(this.statistics?.nonGroupedStudentsCount > 0) {
+      this.requireGrouping = true;
+    }
   }
 
 
@@ -67,6 +71,8 @@ export class Examination extends Entity<number> {
 
   grouped: boolean;
   lastGroupingDate: Date;
+
+  requireGrouping: boolean;
 
 
   expectedStartDate: Date;
@@ -100,7 +106,10 @@ export class Examination extends Entity<number> {
   acceptedApplicationCount: number;
   rejectedApplicationCount: number;
 
+
   nonGroupedStudentsCount: number;
+
+  statistics: ExaminationStatistics;
 
   get url(): string {
     return `/organisations/${this.organisationId}/examinations/${this.id}`;
@@ -120,4 +129,32 @@ export class Examination extends Entity<number> {
 
     return 'PENDING';
   }
+}
+
+
+
+export interface ExaminationStatistics {
+
+  groupCount: number;
+  specialityCount: number;
+
+  nonGroupedStudentsCount: number;
+  studentCount: number;
+
+  correctorCount: number;
+  principalCount: number;
+  supervisorCount: number;
+  secretaryCount: number;
+
+  testCount: number;
+  waitingTestCount: number;
+  progressTestCount: number;
+  closedTestCount: number;
+
+  reviewCount: number;
+  reviewAverage: number;
+
+  applicationCount: number;
+  acceptedApplicationCount: number;
+  rejectedApplicationCount: number;
 }
