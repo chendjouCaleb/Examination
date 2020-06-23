@@ -54,3 +54,8 @@ export class Group extends Entity<number> {
     return `groups/${this.id}`
   }
 }
+
+
+export class GroupStatistics {
+
+}

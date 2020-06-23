@@ -9,18 +9,22 @@ import {GroupModule, GroupResolver} from 'src/app/group';
 import {ControlModule} from 'examination/controls';
 import {ExaminationModule} from 'examination/app/examination';
 import {MatRippleModule} from '@angular/material/core';
+import { GroupStudentsPage } from './students/group-students.page';
+import { StudentModule } from 'examination/app/student';
 
 const routes: Routes = [
   {path: '', component: GroupListPage},
-  {path: ':groupId/home', component: GroupHomePage, resolve: [GroupResolver]}
+  {path: ':groupId/home', component: GroupHomePage, resolve: [GroupResolver]},
+  {path: ':groupId/students', component: GroupStudentsPage, resolve: [GroupResolver]}
 ];
 
 @NgModule({
-  imports: [CommonModule, ControlModule, GroupModule, ExaminationModule, MsfPersonaModule,
+  imports: [CommonModule, ControlModule, GroupModule, ExaminationModule, StudentModule,
+     MsfPersonaModule,
     MsfButtonModule, MomentModule, MatRippleModule, MsfTableModule,
     MsfIconModule, MsfMenuModule, MsfModalModule,
     RouterModule.forChild(routes)],
-  declarations: [GroupListPage, GroupHomePage],
+  declarations: [GroupListPage, GroupHomePage, GroupStudentsPage],
   providers: [GroupResolver]
 })
 export class GroupPageModule {

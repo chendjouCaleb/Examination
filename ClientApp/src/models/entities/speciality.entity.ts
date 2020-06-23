@@ -20,6 +20,10 @@ export class Speciality extends Entity<number> {
       this.registerUserId = value.registerUserId;
       this.registerUser = value.registerUser;
     }
+
+    if(this.statistics?.nonGroupedStudent > 0) {
+      this.requireGrouping = true;
+    }
   }
 
   name: string;
@@ -35,7 +39,28 @@ export class Speciality extends Entity<number> {
   studentCount: number;
   testCount: number;
 
+/** Indique si le groupe doit etre groupé */
+  requireGrouping: boolean = false;
+
+  statistics: SpecialityStatistics;
+
   get url(): string {
     return `/organisations/${this.examination.organisationId}/examinations/${this.examinationId}/specialities/${this.id}`;
   }
+}
+
+
+export class SpecialityStatistics {
+  studentCount: number;
+  nonGroupedStudent: number;
+  groupCount: number;
+
+  testCount: number;
+  waitingTestCount: number;
+  effectiveTestCount: number;
+
+  applicationCount: number;
+  waitingApplicationCount: number;
+  acceptedApplicationCount: number;
+  rejectedApplicationCount: number;
 }

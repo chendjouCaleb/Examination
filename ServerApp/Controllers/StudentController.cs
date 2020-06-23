@@ -58,7 +58,8 @@ namespace Exam.Controllers
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
         [LoadSpeciality(Source = ParameterSource.Query)]
-        public IEnumerable<Student> List(Examination examination, Speciality speciality, [FromQuery] string userId)
+		[LoadGroup(Source = ParameterSource.Query)]
+        public IEnumerable<Student> List(Examination examination, Speciality speciality, Group group, [FromQuery] string userId)
         {
             
             IQueryable<Student> set = _studentRepository.Set;
@@ -70,6 +71,11 @@ namespace Exam.Controllers
             if (speciality != null)
             {
                 set = set.Where(s => s.Speciality.Id == speciality.Id);
+            }
+			
+			if (group != null)
+            {
+                set = set.Where(s => s.Group.Id == group.Id);
             }
 
             if (!string.IsNullOrWhiteSpace(userId))

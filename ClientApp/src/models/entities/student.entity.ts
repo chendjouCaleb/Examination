@@ -60,6 +60,12 @@ export class Student extends Entity<number> {
   group: Group;
   groupId: number;
 
+  get groupName(): string {
+    return this.group?.name;
+  }
+  get specialityName(): string {
+    return this.speciality?.name;
+  }
 
   get url(): string {
     return `/organisations/${this.examination.organisationId}/examinations/${this.examinationId}/students/${this.id}`;

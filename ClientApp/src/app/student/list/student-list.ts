@@ -66,7 +66,7 @@ export class StudentList implements OnInit, AfterViewInit {
 
     this._hub.studentDeleted.subscribe(student => {
       this.students.removeIf(s => s.id === student.id);
-      if (student.examinationId === this.examination.id) {
+      if (student.examinationId === this.examination?.id) {
         this._alertEmitter.error(`L'étudiant ${student.fullName} a été supprimé!`);
       }
     });
@@ -141,7 +141,11 @@ export class StudentList implements OnInit, AfterViewInit {
     if (this.examination) {
       return this.examination;
     }
-    return this.speciality.examination;
+    if(this.speciality) {
+      return this.speciality.examination;
+    }
+    
+    return this.group?.speciality?.examination;
   }
 
 
