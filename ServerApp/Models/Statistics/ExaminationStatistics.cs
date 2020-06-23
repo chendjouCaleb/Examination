@@ -9,9 +9,13 @@
         public int StudentCount { get; set; }
         
         public int TestCount { get; set; }
-        public int WaitingTestCount => TestCount - ProgressTestCount - ClosedTestCount;
+        public int WaitingTestCount => TestCount - ProgressTestCount - CompletedTestCount;
         public int ProgressTestCount { get; set; }
         public int ClosedTestCount { get; set; }
+        
+        public int CompletedTestCount { get; set; }
+
+        public int PublishedTestCount { get; set; }
 
         public int NonGroupedStudentsCount { get; set; }
         public int GroupCount { get; set; }

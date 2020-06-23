@@ -10,6 +10,7 @@ using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
+using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,16 +20,12 @@ namespace Exam.Controllers
     [Route("api/groups")]
     public class GroupController : Controller
     {
-        private IRepository<Group, long> _groupRepository;
-        private IRepository<Student, long> _studentRepository;
+        private IGroupRepository _groupRepository;
         private ILogger<GroupController> _logger;
 
-        public GroupController(
-            IRepository<Student, long> studentRepository,
-            IRepository<Group, long> groupRepository,
-            ILogger<GroupController> logger)
+
+        public GroupController(IGroupRepository groupRepository, ILogger<GroupController> logger)
         {
-            _studentRepository = studentRepository;
             _groupRepository = groupRepository;
             _logger = logger;
         }
@@ -45,7 +42,11 @@ namespace Exam.Controllers
 
         [HttpGet("{groupId}")]
         [LoadGroup]
-        public Group Find(Group group) => group;
+        public Group Find(Group group)
+        {
+            group.Statistics = _groupRepository.Statistics(group);
+            return group;
+        }
 
 
         [HttpGet]

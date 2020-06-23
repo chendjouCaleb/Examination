@@ -2,6 +2,7 @@
 using Exam.Entities;
 using Exam.Models.Statistics;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Exam.Persistence.Repositories
 {
@@ -18,9 +19,12 @@ namespace Exam.Persistence.Repositories
 
         public GroupStatistics Statistics(Group group)
         {
+            int studentCount = context.Set<Student>().Count(s => group.Equals(s.Group));
+                
             return new GroupStatistics
             {
-            
+                StudentCount = studentCount, 
+                RemainingCapacity = (int)group.Capacity - studentCount
             };
         }
     }

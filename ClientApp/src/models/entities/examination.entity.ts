@@ -150,6 +150,8 @@ export interface ExaminationStatistics {
   waitingTestCount: number;
   progressTestCount: number;
   closedTestCount: number;
+  publishedTestCount: number;
+  completedTestCount: number;
 
   reviewCount: number;
   reviewAverage: number;

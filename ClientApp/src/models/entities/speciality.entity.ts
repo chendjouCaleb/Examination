@@ -59,6 +59,8 @@ export interface SpecialityStatistics {
   waitingTestCount: number;
   progressTestCount: number;
   closedTestCount: number;
+  publishedTestCount: number;
+  completedTestCount: number;
 
   applicationCount: number;
   waitingApplicationCount: number;

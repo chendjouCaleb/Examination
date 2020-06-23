@@ -6,8 +6,10 @@
 
         public int RemainingCapacity { get; set; }
         public int TestCount { get; set; }
-        public int WaitingTestCount => TestCount - ProgressTestCount - ClosedTestCount;
-        public int ProgressTestCount { get; set; }
+        public int WaitingTestCount { get; set; }
+        public int ProgressTestCount => TestCount - WaitingTestCount - CompletedTestCount;
         public int ClosedTestCount { get; set; }
+        public int CompletedTestCount { get; set; }
+        public int PublishedTestCount { get; set; }
     }
 }

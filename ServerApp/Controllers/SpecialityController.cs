@@ -9,6 +9,7 @@ using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
+using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,12 +19,12 @@ namespace Exam.Controllers
     [Route("api/specialities")]
     public class SpecialityController:Controller
     {
-        private readonly IRepository<Speciality, long> _specialityRepository;
+        private readonly ISpecialityRepository _specialityRepository;
         private readonly IRepository<Examination, long> _examinationRepository;
         private readonly ILogger<SpecialityController> _logger;
 
 
-        public SpecialityController(IRepository<Speciality, long> specialityRepository,
+        public SpecialityController(ISpecialityRepository specialityRepository,
             IRepository<Examination, long> examinationRepository, ILogger<SpecialityController> logger)
         {
             _specialityRepository =
@@ -36,7 +37,11 @@ namespace Exam.Controllers
 
         [HttpGet("{specialityId}")]
         [LoadSpeciality]
-        public Speciality Find(Speciality speciality) => speciality;
+        public Speciality Find(Speciality speciality)
+        {
+            speciality.Statistics = _specialityRepository.Statistics(speciality);
+            return speciality;
+        }
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]
