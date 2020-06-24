@@ -24,8 +24,6 @@ export class Test extends Entity<number> {
 
     this.useAnonymity = value.useAnonymity;
 
-    this.roomId = value.roomId;
-    this.room = value.room;
 
     this.expectedStartDate = new Date(value.expectedStartDate);
     this.expectedEndDate = new Date(value.expectedEndDate);
@@ -42,13 +40,10 @@ export class Test extends Entity<number> {
     this.isDone = value.isDone;
 
     this.specialityId = value.specialityId;
-    this.speciality = value.speciality;
 
     this.examination = value.examination;
-    this.examinationId = value.examinationId;
 
     this.registerUserId = value.registerUserId;
-    this.registerUser = value.registerUser;
   }
 
   registerUserId: string;
@@ -68,9 +63,6 @@ export class Test extends Entity<number> {
   closingDate: Date;
 
   useAnonymity: boolean;
-
-  roomId: number;
-  room: Room;
 
   expectedStartDate: Date;
   expectedEndDate: Date;

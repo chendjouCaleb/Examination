@@ -13,7 +13,6 @@ export class TestLoader implements EntityLoader<Test, number> {
 
   constructor(private testRepository: TestHttpClient,
               private _userHttClient: UserHttpClient,
-              private _roomLoader: RoomLoader,
               private _specialityLoader: SpecialityLoader,
               private _examinationLoader: ExaminationLoader) {
   }
@@ -27,9 +26,6 @@ export class TestLoader implements EntityLoader<Test, number> {
       item.speciality = await this._specialityLoader.loadById(item.specialityId);
     }
 
-    if (item.roomId) {
-      item.room = await this._roomLoader.loadById(item.roomId);
-    }
 
     item.examination = await this._examinationLoader.loadById(item.examinationId);
     return item;

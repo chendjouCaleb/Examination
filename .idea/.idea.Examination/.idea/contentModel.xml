@@ -612,6 +612,11 @@
               <e p="supervisor.module.ts" t="Include" />
             </e>
             <e p="test" t="Include">
+              <e p="add" t="Include">
+                <e p="test-add.component.html" t="Include" />
+                <e p="test-add.component.ts" t="Include" />
+              </e>
+              <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="test-details" t="Include">
                 <e p="test-details.component.html" t="Include" />
@@ -620,6 +625,7 @@
                 <e p="test-details.component.ts" t="Include" />
               </e>
               <e p="test.module.ts" t="Include" />
+              <e p="test.resolver.ts" t="Include" />
             </e>
             <e p="toast" t="Include">
               <e p="before-onDestroy.ts" t="Include" />

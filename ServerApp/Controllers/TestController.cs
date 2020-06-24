@@ -42,6 +42,28 @@ namespace Exam.Controllers
         [LoadTest]
         public Test Find(Test test) => test;
 
+        [HttpGet("find")]
+        [LoadExamination(Source = ParameterSource.Query)]
+        public Test Find(Examination examination, [FromQuery] string code, [FromQuery] string name)
+        {
+            IQueryable<Test> tests = _testRepository.Set;
+            if (examination != null)
+            {
+                tests = tests.Where(t => t.Examination.Id == examination.Id);
+            }
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                tests = tests.Where(t => t.Name == name);
+            }
+
+            if (!string.IsNullOrWhiteSpace(code))
+            {
+                tests = tests.Where(t => t.Code == code);
+            }
+
+            return tests.FirstOrDefault();
+        }
+
 
         [HttpGet]
         [LoadExamination(Source = ParameterSource.Query)]

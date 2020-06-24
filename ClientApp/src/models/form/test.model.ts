@@ -1,18 +1,22 @@
 import {IsNotEmpty, IsNumber} from 'class-validator';
 import {Speciality} from '../entities';
 
-export interface TestAddModel {
+export interface TestAddBodyModel {
   name: string;
   code: string;
   radical: number;
-  coefficient: boolean;
+  coefficient: number;
   useAnonymity: boolean;
 
   expectedStartDate: Date;
   expectedEndDate: Date;
 }
 
-export class TestAddForm {
+export interface TestAddParams {
+  specialityId: number;
+}
+
+export class TestAddModel {
   @IsNotEmpty()
   name: string;
 
@@ -25,21 +29,28 @@ export class TestAddForm {
 
   @IsNotEmpty()
   @IsNumber()
-  coefficient: boolean;
+  coefficient: number;
 
 
   useAnonymity: boolean = false;
 
   @IsNotEmpty()
-
-  expectedStartDate: Date;
+  day: Date;
 
   @IsNotEmpty()
-  expectedEndDate: Date;
+  startHour: string;
+
+  @IsNotEmpty()
+  endHour: string;
 
   speciality: Speciality;
 
-  get model(): TestAddModel {
+  get body(): TestAddBodyModel {
+    const startHour = this.startHour.replace(" ", "").split(":");
+    const endHour = this.endHour.replace(" ", "").split(":");
+
+    const startDate = new Date(this.day); startDate.setHours(+startHour[0], +startHour[1]);
+    const endDate = new Date(this.day); endDate.setHours(+endHour[0], +endHour[1]);
     return {
       name: this.name,
       code: this.code,
@@ -47,9 +58,15 @@ export class TestAddForm {
       coefficient: this.coefficient,
       useAnonymity: this.useAnonymity,
 
-      expectedStartDate: this.expectedStartDate,
-      expectedEndDate: this.expectedEndDate,
+      expectedStartDate: startDate,
+      expectedEndDate: endDate
     };
+  }
+
+  get params(): TestAddParams {
+    return {
+      specialityId: this.speciality.id
+    }
   }
 }
 
