@@ -77,7 +77,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
 
             _testRepository.Refresh(test);
 
@@ -104,10 +104,10 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryAdd_WithUsedCode_ShouldThrow()
         {
-            _controller.Add(_examination, _speciality, _model, _user);
+            _controller._Add(_examination, _speciality, _model, _user);
 
             Exception ex = Assert.Throws<InvalidValueException>(
-                () => _controller.Add(_examination, _speciality, _model, _user)
+                () => _controller._Add(_examination, _speciality, _model, _user)
             );
 
             Assert.AreEqual("{test.constraints.uniqueCode}", ex.Message);
@@ -116,7 +116,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeDates()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
 
             ExpectedPeriod period = new ExpectedPeriod
             {
@@ -136,7 +136,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeName()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
             string name = "new name";
 
             _controller.ChangeName(test, name);
@@ -150,7 +150,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeCode()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
             string code = "500";
 
             _controller.ChangeCode(test, code);
@@ -164,14 +164,14 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryChangeCode_WithUsedCode_ShouldThrow()
         {
-            Test test1 = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test1 = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
 
 
             _model.Code = "0123";
             _model.ExpectedStartDate = DateTime.Now.AddHours(5);
             _model.ExpectedEndDate = DateTime.Now.AddHours(7);
 
-            Test test2 = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test2 = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
 
             string code = "1523";
             _controller.ChangeCode(test1, code);
@@ -186,7 +186,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeCoefficient()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
             uint coefficient = 10;
 
             _controller.ChangeCoefficient(test, coefficient);
@@ -200,7 +200,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeAnonymity_WhenIsFalse_ShouldBeTrue()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
             _controller.ChangeAnonymityState(test);
 
             _testRepository.Refresh(test);
@@ -213,7 +213,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangeAnonymity_WhenIsTrue_ShouldBeFalse()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
             
             //Set it to true
             _controller.ChangeAnonymityState(test);
@@ -230,7 +230,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Publish()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
 
             _controller.ChangePublicationState(test);
             _testRepository.Refresh(test);
@@ -245,7 +245,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void CancelPublish()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
 
             _controller.ChangePublicationState(test);
             _controller.ChangePublicationState(test);
@@ -261,7 +261,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Close()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
 
             _controller.ChangeCloseState(test);
             _testRepository.Refresh(test);
@@ -276,7 +276,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void CancelClose()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
 
             _controller.ChangeCloseState(test);
             _controller.ChangeCloseState(test);
@@ -293,7 +293,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            Test test = _controller.Add(_examination, _speciality, _model, _user).Value as Test;
+            Test test = _controller._Add(_examination, _speciality, _model, _user).Value as Test;
             _controller.Delete(test);
             _testRepository.Refresh(test);
             Assert.False(_testRepository.Exists(test));

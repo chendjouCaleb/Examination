@@ -61,7 +61,7 @@ export class Group extends Entity<number> {
 export interface IGroupStatistics {
   studentCount: number;
   remainingCapacity: number;
-  
+
   testCount: number;
   waitingTestCount: number;
   progressTestCount: number;

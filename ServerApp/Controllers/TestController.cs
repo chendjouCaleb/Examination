@@ -22,10 +22,17 @@ namespace Exam.Controllers
     {
         private IRepository<Test, long> _testRepository;
         private IRepository<Examination, long> _examinationRepository;
+        private IRepository<Student, long> _studentRepository;
+        private TestGroupController _testGroupController;
+
 
         public TestController(IRepository<Test, long> testRepository,
+            IRepository<Student, long> studentRepository,
+            TestGroupController testGroupController,
             IRepository<Examination, long> examinationRepository)
         {
+            _studentRepository = studentRepository;
+            _testGroupController = testGroupController;
             _testRepository = testRepository;
             _examinationRepository = examinationRepository;
         }
@@ -46,7 +53,7 @@ namespace Exam.Controllers
             {
                 tests = tests.Where(t => t.Examination.Id == examination.Id);
             }
-            
+
             if (speciality != null)
             {
                 tests = tests.Where(t => t.Speciality.Id == speciality.Id);
@@ -74,6 +81,32 @@ namespace Exam.Controllers
         [PeriodDontHaveState(State = "FINISHED", ItemName = "examination")]
         public CreatedAtActionResult Add(Examination examination, Speciality speciality, TestForm form, User user)
         {
+            if (_studentRepository.Exists(s => examination.Equals(s.Examination) && s.Group == null))
+            {
+                throw new InvalidOperationException("{test.constraints.groupedStudents}");
+            }
+            Test test = _Add(examination, speciality, form, user).Value as Test;
+            if (test == null)
+            {
+                throw new ArgumentNullException(nameof(test));
+            }
+
+            foreach (Group  group in examination.Groups)
+            {
+                _testGroupController._Add(test,  group, group.Room);
+            }
+            return CreatedAtAction("Find", new {test.Id}, test);
+        }
+
+
+        [HttpPost("add")]
+        [RequireQueryParameter("examinationId")]
+        [LoadExamination(Source = ParameterSource.Query)]
+        [LoadSpeciality(Source = ParameterSource.Query)]
+        [AuthorizeExaminationAdmin]
+        [PeriodDontHaveState(State = "FINISHED", ItemName = "examination")]
+        public CreatedAtActionResult _Add(Examination examination, Speciality speciality, TestForm form, User user)
+        {
             Assert.RequireNonNull(examination, nameof(examination));
             Assert.RequireNonNull(user, nameof(user));
             Assert.RequireNonNull(form, nameof(form));
@@ -88,7 +121,7 @@ namespace Exam.Controllers
             {
                 throw new IncompatibleEntityException<Examination, Speciality>(examination, speciality);
             }
-            
+
             Test overlap = form.ExpectedOverlap(examination.Tests);
             if (overlap != null)
             {
@@ -112,7 +145,7 @@ namespace Exam.Controllers
 
             _testRepository.Save(test);
             _examinationRepository.Update(examination);
-            
+
             return CreatedAtAction("Find", new {test.Id}, test);
         }
 
@@ -121,7 +154,6 @@ namespace Exam.Controllers
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(State = "PENDING", ItemName = "test")]
-        
         public StatusCodeResult ChangeDates(Test test, [FromBody] ExpectedPeriod form)
         {
             Assert.RequireNonNull(test, nameof(test));
@@ -142,13 +174,12 @@ namespace Exam.Controllers
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
-        
-        
+
+
         [HttpPut("{testId}/start")]
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(State = "PENDING", ItemName = "test")]
-        
         public StatusCodeResult Start(Test test)
         {
             Assert.RequireNonNull(test, nameof(test));
@@ -157,7 +188,7 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
-        
+
         [HttpPut("{testId}/end")]
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
@@ -169,13 +200,14 @@ namespace Exam.Controllers
             if (test.GetState() != PeriodState.PROGRESS)
             {
                 throw new InvalidOperationException("{test.constraints.endAfterStart}");
-            }  
+            }
+
             test.EndDate = DateTime.Now;
             _testRepository.Update(test);
             return StatusCode(StatusCodes.Status202Accepted);
         }
-        
-        
+
+
         [HttpPut("{testId}/start")]
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
@@ -188,8 +220,8 @@ namespace Exam.Controllers
             if (test.GetState() != PeriodState.FINISHED)
             {
                 throw new InvalidOperationException("{test.constraints.restartAfterEnd}");
-            }  
-            
+            }
+
             test.EndDate = null;
             _testRepository.Update(test);
             return StatusCode(StatusCodes.Status202Accepted);
@@ -228,7 +260,7 @@ namespace Exam.Controllers
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            
+
             test.Name = name;
             _testRepository.Update(test);
 
@@ -267,7 +299,7 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
-        
+
         [HttpPut("{testId}/published")]
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
