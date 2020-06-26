@@ -168,7 +168,6 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
     } else {
       this._valueOnInit = newValue;
     }
-
   }
 
   get value(): any {

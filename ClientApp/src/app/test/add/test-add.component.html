@@ -1,15 +1,61 @@
-﻿<form class="ms-form" [formGroup]="form">
-  <div class="ms-form-header">Ajouter un groupe</div>
+﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
+  <div class="ms-form-header">Ajouter une épreuve</div>
 
 
   <div class="ms-textField">
-    <label for="name" class="msf-label">Nom du group</label>
-    <input type="text" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
-    <app-control-error [control]="form.controls['name']"></app-control-error>
+    <label for="name" class="msf-label">Nom de la matière</label>
+    <input type="text" id="name" class="ms-textField-input" formControlName="name" >
+    <app-control-error controlName="name"></app-control-error>
   </div>
 
   <div class="ms-textField">
-    <label for="speciality" class="msf-label">Spécialité du groupe</label>
+    <label for="code" class="msf-label">Code de la matière</label>
+    <input type="text" id="code" class="ms-textField-input" formControlName="code" (blur)="checkCode()">
+    <app-control-error controlName="code"></app-control-error>
+  </div>
+
+  <div class="ms-textFieldGroup">
+    <div class="ms-textField">
+      <label for="radical" class="msf-label">Note maximale</label>
+      <input type="text" id="radical" class="ms-textField-input" formControlName="radical" >
+      <app-control-error controlName="radical"></app-control-error>
+    </div>
+
+    <div class="ms-textField">
+      <label for="coefficient" class="msf-label">Coefficient</label>
+      <input id="coefficient" class="ms-textField-input" formControlName="coefficient" >
+      <app-control-error controlName="coefficient"></app-control-error>
+    </div>
+  </div>
+
+  <div class="ms-textField" >
+    <label for="day" class="msf-label">Date</label>
+    <input type="text" id="day" name="day" class="ms-textField-input" DateInput formControlName="day">
+    <app-control-error controlName="day"></app-control-error>
+  </div>
+
+  <div class="ms-textFieldGroup">
+    <div class="ms-textField" >
+      <label for="startHour" class="msf-label">Heure de début</label>
+      <input type="text" id="startHour" name="startHour" class="ms-textField-input" autocomplete="off" LocalTimeInput formControlName="startHour">
+      <app-control-error controlName="startHour"></app-control-error>
+    </div>
+
+    <div class="ms-textField ml-2" >
+      <label for="endHour" class="msf-label">Heure de fin</label>
+      <input type="text" id="endHour" name="endHour" class="ms-textField-input" autocomplete="off" formControlName="endHour" LocalTimeInput>
+      <app-control-error controlName="endHour"></app-control-error>
+    </div>
+  </div>
+
+  <div class="ms-textField">
+    <label labelled text="Utiliser des anonymats" for="useAnonymity">
+      <MsfCheckbox id="useAnonymity" formControlName="useAnonymity"></MsfCheckbox>
+    </label>
+  </div>
+
+  <div class="ms-textField">
+    <label for="speciality" class="msf-label">Spécialité</label>
 
     <div class="ms-fontWeight-semibold ms-fontColor-sharedGreenCyan10 ms-fontSize-16" *ngIf="speciality">{{speciality.name}}</div>
     <MsfSelect *ngIf="!speciality" id="speciality" formControlName="speciality" class="ms-textField-input"  placeholder="Choisir une specialité">
@@ -18,17 +64,6 @@
     <app-control-error [control]="form.controls['speciality']"></app-control-error>
   </div>
 
-  <div class="ms-textField">
-    <label for="room" class="msf-label">Salle du groupe</label>
-    <MsfSelect id="room" formControlName="room" class="ms-textField-input" >
-      <MsfSelectOption *ngFor="let item of rooms" [value]="item">{{item.name}}</MsfSelectOption>
-    </MsfSelect>
-    <app-control-error [control]="form.controls['room']"></app-control-error>
-    <div class="mt-2 ms-fontSize-12">
-      Pour chaque épreuve de ce groupe,
-      vous pourrez toujours choisir une  autre salle.
-    </div>
-  </div>
 
 
   <div class="mt-4 text-right">

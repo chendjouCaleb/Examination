@@ -1,5 +1,6 @@
-import {IsNotEmpty, IsNumber} from 'class-validator';
+import {IsNotEmpty, IsNumber, MinLength} from 'class-validator';
 import {Speciality} from '../entities';
+import {LocalTime} from "@js-joda/core";
 
 export interface TestAddBodyModel {
   name: string;
@@ -13,11 +14,12 @@ export interface TestAddBodyModel {
 }
 
 export interface TestAddParams {
-  specialityId: number;
+  specialityId?: number;
 }
 
 export class TestAddModel {
   @IsNotEmpty()
+  @MinLength(3)
   name: string;
 
   @IsNotEmpty()
@@ -38,19 +40,16 @@ export class TestAddModel {
   day: Date;
 
   @IsNotEmpty()
-  startHour: string;
+  startHour: LocalTime;
 
   @IsNotEmpty()
-  endHour: string;
+  endHour: LocalTime;
 
   speciality: Speciality;
 
   get body(): TestAddBodyModel {
-    const startHour = this.startHour.replace(" ", "").split(":");
-    const endHour = this.endHour.replace(" ", "").split(":");
-
-    const startDate = new Date(this.day); startDate.setHours(+startHour[0], +startHour[1]);
-    const endDate = new Date(this.day); endDate.setHours(+endHour[0], +endHour[1]);
+    const startDate = new Date(this.day); startDate.setHours(this.startHour.hour(), this.startHour.minute());
+    const endDate = new Date(this.day); endDate.setHours(this.endHour.hour(), this.endHour.minute());
     return {
       name: this.name,
       code: this.code,
@@ -64,8 +63,11 @@ export class TestAddModel {
   }
 
   get params(): TestAddParams {
+    if(!this.speciality){
+      return {};
+    }
     return {
-      specialityId: this.speciality.id
+      specialityId: this.speciality?.id
     }
   }
 }

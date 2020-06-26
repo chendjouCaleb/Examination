@@ -1,7 +1,6 @@
-@import "~office-ui-fabric-core/dist/sass/Fabric";
 
-$ms-select-border-color: $ms-color-gray140 !default;
-$ms-select-optionGroup-borderColor: $ms-color-gray50 !default;
+
+
 $ms-select-width: 240px !default;
 $ms-select-height: 32px !default;
 $ms-select-option-panel-bgColor: #FFF !default;
@@ -88,7 +87,7 @@ $ms-select-option-paddingY: 7px !default;
 .ms-select-optionGroup {
   display: block;
 
-  border-bottom: 1px solid $ms-select-optionGroup-borderColor;
+  border-bottom: 1px solid var(--cardBackgroundColor);
 }
 
 .ms-select-optionGroup-label {

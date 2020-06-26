@@ -1,4 +1,15 @@
-<div class="app-test-details-testName">{{test.name}}</div>
+<div class="d-flex justify-content-between">
+  <div class="app-test-details-testName">{{test.name}} ({{test.code}})
+  </div>
+  <div class="text-right">
+    <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical" *ngIf="test.examination?.userPrincipal?.isPrincipal"></MsfIconButton>
+    <MsfMenu #more>
+      <MsfMenuItem icon="Edit">Modifier les informations</MsfMenuItem>
+      <MsfMenuItem icon="Delete" (click)="service.delete(test)" theme="error">Supprimer</MsfMenuItem>
+    </MsfMenu>
+  </div>
+</div>
+
 
 <div class="d-flex mt-2">
 
@@ -31,12 +42,12 @@
   <div class="app-test-details-infos ml-5">
     <div class="icon-label">
       <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
-      <span class="icon-label-text">18 Déc 2019</span>
+      <span class="icon-label-text">{{test.expectedStartDate | amCalendar}}</span>
     </div>
 
     <div class=" icon-label">
       <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
-      <span class="icon-label-text"> 12h 13 à 14h 00</span>
+      <span class="icon-label-text"> {{test.expectedStartHour}} à {{test.expectedEndHour}}</span>
     </div>
 
     <div class=" icon-label">

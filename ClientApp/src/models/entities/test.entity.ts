@@ -2,7 +2,7 @@
 import {User} from './user.entity';
 import {Speciality} from './speciality.entity';
 import {Examination} from './examination.entity';
-import {Room} from './room.entity';
+import {LocalTime} from "@js-joda/core";
 
 export class Test extends Entity<number> {
   constructor(value: any = {}) {
@@ -41,7 +41,7 @@ export class Test extends Entity<number> {
 
     this.specialityId = value.specialityId;
 
-    this.examination = value.examination;
+    this.examinationId = value.examinationId;
 
     this.registerUserId = value.registerUserId;
   }
@@ -84,6 +84,15 @@ export class Test extends Entity<number> {
 
   isDone: boolean;
   isCorrected: boolean;
+
+
+  get expectedStartHour(): LocalTime {
+    return LocalTime.of(this.expectedStartDate.getHours(), this.expectedStartDate.getMinutes())
+  }
+
+  get expectedEndHour(): LocalTime {
+    return LocalTime.of(this.expectedEndDate.getHours(), this.expectedEndDate.getMinutes())
+  }
 
   get singleScore(): boolean {
     return !this.multipleScore;

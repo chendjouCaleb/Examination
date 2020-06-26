@@ -24,6 +24,9 @@ export class TestAddForm extends EvFormGroup<TestAddModel> {
     model.radical = this.controls.radical.value;
     model.coefficient = +this.controls.coefficient.value;
     model.useAnonymity = !!this.controls.code.value;
+    model.day = this.controls.day.value;
+    model.startHour = this.controls.startHour.value;
+    model.endHour = this.controls.endHour.value;
     model.speciality = this.controls.speciality.value;
     return model;
   }

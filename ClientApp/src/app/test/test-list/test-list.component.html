@@ -1,0 +1,6 @@
+﻿<div class="text-right">
+  <MsfButton theme="primary" Icon="Add" (click)="add()">Ajouter</MsfButton>
+</div>
+<div *ngIf="tests">
+  <app-test-details  class="mt-2" *ngFor="let item of tests" [test]="item"></app-test-details>
+</div>

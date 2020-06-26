@@ -25,6 +25,7 @@ import {MomentModule} from "ngx-moment";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {ExaminationTestComponent} from "examination/app/page/examination/examination-tests/examination-tests.component";
 
 export const routes: Routes = [
   {path: '', component: ExaminationListComponent},
@@ -32,7 +33,8 @@ export const routes: Routes = [
   {path: ':examinationId', redirectTo: ':examinationId/home'},
   {path: ':examinationId/home', component: ExaminationHomeComponent, resolve: [ ExaminationResolver]},
   {path: ':examinationId/calendar', component: ExaminationCalendarComponent, resolve: [ ExaminationResolver]},
-  {path: ':examinationId/settings', component: ExaminationSettingsComponent, resolve: [ ExaminationResolver]}
+  {path: ':examinationId/settings', component: ExaminationSettingsComponent, resolve: [ ExaminationResolver]},
+  {path: ':examinationId/tests', component: ExaminationTestComponent, resolve: [ ExaminationResolver]}
 ];
 
 @NgModule({
@@ -42,7 +44,7 @@ export const routes: Routes = [
     RouterModule.forChild(routes), MatRippleModule, MatDatepickerModule],
   declarations: [ExaminationListComponent, ExaminationHomeComponent, ExaminationDeleteComponent,
     ExaminationCalendarComponent, ExaminationReviewsComponent, ExaminationSettingsComponent,
-    ExaminationStudentComponent]
+    ExaminationStudentComponent, ExaminationTestComponent]
 })
 export class ExaminationPageModule {
 

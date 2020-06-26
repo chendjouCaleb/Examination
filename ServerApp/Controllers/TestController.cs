@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
@@ -101,11 +102,16 @@ namespace Exam.Controllers
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(State = "FINISHED", ItemName = "examination")]
-        public CreatedAtActionResult Add(Examination examination, Speciality speciality, TestForm form, User user)
+        [ValidModel]
+        public CreatedAtActionResult Add(Examination examination, Speciality speciality, [FromBody] TestForm form, User user)
         {
+            Assert.RequireNonNull(examination, nameof(examination));
+            Assert.RequireNonNull(speciality, nameof(speciality));
+            Assert.RequireNonNull(form, nameof(form));
+            Assert.RequireNonNull(user, nameof(user));
             if (_studentRepository.Exists(s => examination.Equals(s.Examination) && s.Group == null))
             {
-                throw new InvalidOperationException("{test.constraints.groupedStudents}");
+                //throw new InvalidOperationException("{test.constraints.groupedStudents}");
             }
             Test test = _Add(examination, speciality, form, user).Value as Test;
             if (test == null)
@@ -127,6 +133,7 @@ namespace Exam.Controllers
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(State = "FINISHED", ItemName = "examination")]
+        
         public CreatedAtActionResult _Add(Examination examination, Speciality speciality, TestForm form, User user)
         {
             Assert.RequireNonNull(examination, nameof(examination));

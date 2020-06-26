@@ -14,9 +14,12 @@ namespace Exam.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            Assert.RequireNonNull(ItemName,  nameof(ItemName));
-            Assert.RequireNonNull(ErrorMessage,  nameof(ErrorMessage));
+            Assert.RequireNonNull(ItemName, nameof(ItemName));
             Assert.RequireNonNull(State,  nameof(State));
+            if (string.IsNullOrWhiteSpace(ErrorMessage))
+            {
+                ErrorMessage = $"{{{ItemName}.requireNoState.{State.ToLower()}}}";
+            }
 
             IPeriod period = context.HttpContext.GetItem<IPeriod>(ItemName);
 

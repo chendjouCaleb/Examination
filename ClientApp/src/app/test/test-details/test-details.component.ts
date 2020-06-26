@@ -1,20 +1,19 @@
-import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
 import {Test} from "examination/models";
+import {TestService} from "../test.service";
 
 @Component({
   selector: 'app-test-details',
   templateUrl: './test-details.component.html',
-  styleUrls: ['./test-details.component.scss']
+  styleUrls: ['./test-details.component.scss'],
+  host: {
+    'class': 'app-test-details'
+  }
 })
 export class TestDetailsComponent implements OnInit {
-
-  @HostBinding('class')
-  className: string = 'app-test-details';
-
   @Input()
   test: Test;
-
-  constructor() { }
+  constructor(public service: TestService) { }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,5 @@
 ﻿import {Component, Input, OnInit} from "@angular/core";
-
+import {LocalTime} from "@js-joda/core";
 import {AlertEmitter} from "src/controls/alert-emitter";
 import {
   Examination,
@@ -49,7 +49,7 @@ export class TestAddComponent implements OnInit{
 
   async checkCode() {
     const code = this.form.getControl("code");
-    if (code.value.match(/^[a-zA-Z0-9 ]+$/)) {
+    if (code.value && code.value.match(/^[a-zA-Z0-9 ]+$/)) {
       const test = await this._httpClient.findByCode(this.examination, code.value);
       if (test && test.id) {
         code.addError("Ce code est déjà utilisé par une autre épreuve");
@@ -60,12 +60,11 @@ export class TestAddComponent implements OnInit{
 
   async add() {
     const formModel = this.form.getModel();
-    const model = {name: formModel.name};
     let params: any = {
       ...formModel.params,
       examinationId: this.examination.id
     };
-    let test = await this._httpClient.add(model, params);
+    let test = await this._httpClient.add(formModel.body, params);
     await this._loader.load(test);
     this._alertEmitter.info(`L'épreuve ${test.name} a été ajouté.`);
     this._dialogRef.close(test);
