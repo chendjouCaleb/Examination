@@ -10,14 +10,12 @@ namespace Exam.Filters
     {
         public string ItemName { get; set; }
         public string ErrorMessage { get; set; } = "{operation.constraints.isNotClosed}";
-        public string State { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             Assert.RequireNonNull(ItemName,  nameof(ItemName));
-            Assert.RequireNonNull(ErrorMessage,  nameof(ErrorMessage));
-            Assert.RequireNonNull(State,  nameof(State));
-
+            Assert.RequireNonNull(ErrorMessage, nameof(ErrorMessage));
+            
             IPeriod period = context.HttpContext.GetItem<IPeriod>(ItemName);
 
             if (period == null)

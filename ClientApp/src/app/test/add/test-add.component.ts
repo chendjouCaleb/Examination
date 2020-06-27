@@ -43,7 +43,7 @@ export class TestAddComponent implements OnInit{
       this.specialities = await this._specialityHttpClient.listByExamination(this.examination);
     }
 
-    this.form = new TestAddForm({speciality: this.speciality, radical: 20, coefficient: 1,})
+    this.form = new TestAddForm({speciality: this.speciality, radical: 20, coefficient: 1, useAnonymity: true})
 
   }
 
@@ -60,6 +60,7 @@ export class TestAddComponent implements OnInit{
 
   async add() {
     const formModel = this.form.getModel();
+    console.log(formModel)
     let params: any = {
       ...formModel.params,
       examinationId: this.examination.id

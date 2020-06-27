@@ -5,7 +5,7 @@ import {Injectable} from "@angular/core";
 import {Dictionary, IDictionary, List} from "@positon/collections";
 import {environment} from "src/environments/environment";
 
-import * as moment from "moment";
+import  moment from "moment";
 import {Entity} from "../entities";
 
 export const SERVER_URL = environment.SERVER_URL;

@@ -2,7 +2,7 @@ import {GenericHttpClient, SERVER_URL} from './httpClient';
 import {Examination, Speciality, Test} from '../entities';
 import {Injectable} from '@angular/core';
 import {List} from '@positon/collections';
-import {ExpectedPeriodModel, TestAddModel} from 'examination/models';
+import {ExpectedPeriodModel, TestAddModel, TestEditDateBody} from 'examination/models';
 
 
 @Injectable()
@@ -40,7 +40,7 @@ export class TestHttpClient extends GenericHttpClient<Test, number> {
     return this.add(model, params);
   }
 
-  changeDates(test: Test, model: ExpectedPeriodModel): Promise<void> {
+  changeDates(test: Test, model: TestEditDateBody): Promise<void> {
     return this.httpClient.put<void>(`${this.url}/${test.id}/dates`, model).toPromise();
   }
 

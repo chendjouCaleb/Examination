@@ -13,5 +13,15 @@ namespace Exam.Infrastructure
         {
             return time > other;
         }
+        
+        public static bool IsBeforeOrEqual(this DateTime time, DateTime other)
+        {
+            return DateTime.Compare(time, other) <= 0;
+        }
+        
+        public static bool IsAfterOrEqual(this DateTime time, DateTime other)
+        {
+            return time >= other;
+        }
     }
 }

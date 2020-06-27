@@ -12,7 +12,6 @@ export class ExaminationAddModel {
 
   @IsNotEmpty()
   expectedEndDate: any;
-
 }
 
 

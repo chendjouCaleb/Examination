@@ -2,7 +2,7 @@
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 
-import * as JwtDecode from 'jwt-decode';
+import JwtDecode from 'jwt-decode';
 import {Claims} from './claims';
 import {User} from './models/user.entity';
 import {Authorization} from './models/authorization.entity';

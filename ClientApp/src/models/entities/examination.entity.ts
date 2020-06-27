@@ -1,7 +1,7 @@
 ﻿import {Entity} from "./entity";
 import {User} from "./user.entity";
 import {Organisation} from "./organisation";
-import * as moment from 'moment';
+import  moment from 'moment';
 import {ExaminationUser} from "./user-examination";
 
 export class Examination extends Entity<number> {

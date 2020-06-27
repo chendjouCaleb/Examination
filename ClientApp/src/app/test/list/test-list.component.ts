@@ -20,7 +20,9 @@ export class TestListComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const tests = await this._httpClient.listByExamination(this.examination);
-    tests.forEach(async test => await this._loader.load(test));
+    for (const test of tests) {
+      await this._loader.load(test);
+    }
 
     this.tests = tests;
 

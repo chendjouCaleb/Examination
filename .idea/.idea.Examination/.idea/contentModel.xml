@@ -1822,6 +1822,21 @@
                 </e>
                 <e p="supervisor-page.module.ts" t="Include" />
               </e>
+              <e p="tests" t="Include">
+                <e p="Home" t="Include">
+                  <e p="test-home.page.html" t="Include" />
+                  <e p="test-home.page.ts" t="Include" />
+                </e>
+                <e p="list" t="Include">
+                  <e p="test-list.page.html" t="Include" />
+                  <e p="test-list.page.ts" t="Include" />
+                </e>
+                <e p="settings" t="Include">
+                  <e p="test-settings.page.html" t="Include" />
+                  <e p="test-settings.page.ts" t="Include" />
+                </e>
+                <e p="test-page.module.ts" t="Include" />
+              </e>
             </e>
             <e p="principal" t="Include">
               <e p="add" t="Include">
@@ -1928,15 +1943,23 @@
                 <e p="test-add.component.html" t="Include" />
                 <e p="test-add.component.ts" t="Include" />
               </e>
-              <e p="form.ts" t="Include" />
-              <e p="index.ts" t="Include" />
-              <e p="test-details" t="Include">
+              <e p="date" t="Include">
+                <e p="test-edit-date.component.html" t="Include" />
+                <e p="test-edit-date.component.ts" t="Include" />
+              </e>
+              <e p="details" t="Include">
                 <e p="test-details.component.html" t="Include" />
                 <e p="test-details.component.scss" t="Include" />
                 <e p="test-details.component.spec.ts" t="Include" />
                 <e p="test-details.component.ts" t="Include" />
               </e>
-              <e p="test-list" t="Include">
+              <e p="form.ts" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="layout" t="Include">
+                <e p="test-layout.component.html" t="Include" />
+                <e p="test-layout.component.ts" t="Include" />
+              </e>
+              <e p="list" t="Include">
                 <e p="test-list.component.html" t="Include" />
                 <e p="test-list.component.ts" t="Include" />
               </e>

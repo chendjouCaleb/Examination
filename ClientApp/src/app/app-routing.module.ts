@@ -71,6 +71,12 @@ const routes: Routes = [
   },
 
   {
+    path: 'organisations/:organisationId/examinations/:examinationId/tests',
+    resolve: [OrganisationResolver, ExaminationResolver],
+    loadChildren: () => import('./page/tests/test-page.module').then(m => m.TestPageModule),
+  },
+
+  {
     path: 'organisations/:organisationId/examinations/:examinationId/applications',
     resolve: [OrganisationResolver, ExaminationResolver],
     loadChildren: () => import('./page/application/application-page.module').then(m => m.ApplicationPageModule),

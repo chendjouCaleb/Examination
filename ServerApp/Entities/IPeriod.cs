@@ -118,8 +118,8 @@ namespace Exam.Entities
                 return true;
             }
 
-            return p.ExpectedStartDate.IsBefore(period.ExpectedEndDate) &&
-                   p.ExpectedStartDate.IsAfter(period.ExpectedStartDate);
+            return p.ExpectedStartDate.IsBeforeOrEqual(period.ExpectedEndDate) &&
+                   p.ExpectedStartDate.IsAfterOrEqual(period.ExpectedStartDate);
         }
         
         
@@ -143,8 +143,8 @@ namespace Exam.Entities
                 return true;
             }
 
-            return p.StartDate.Value.IsBefore(period.ExpectedEndDate) &&
-                   p.StartDate.Value.IsAfter(period.ExpectedStartDate);
+            return p.StartDate.Value.IsBeforeOrEqual(period.ExpectedEndDate) &&
+                   p.StartDate.Value.IsAfterOrEqual(period.ExpectedStartDate);
         }
 
         public static T ExpectedOverlap<T>(this IExpectedPeriod p, IEnumerable<T> periods) where T : IExpectedPeriod, IExtendedPeriod

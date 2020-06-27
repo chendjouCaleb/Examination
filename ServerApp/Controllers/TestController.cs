@@ -106,7 +106,6 @@ namespace Exam.Controllers
         public CreatedAtActionResult Add(Examination examination, Speciality speciality, [FromBody] TestForm form, User user)
         {
             Assert.RequireNonNull(examination, nameof(examination));
-            Assert.RequireNonNull(speciality, nameof(speciality));
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(user, nameof(user));
             if (_studentRepository.Exists(s => examination.Equals(s.Examination) && s.Group == null))
@@ -186,10 +185,12 @@ namespace Exam.Controllers
         public StatusCodeResult ChangeDates(Test test, [FromBody] ExpectedPeriod form)
         {
             Assert.RequireNonNull(test, nameof(test));
+            Assert.RequireNonNull(test.Examination, nameof(test.Examination));
             Assert.RequireNonNull(form, nameof(form));
 
-            List<Test> otherTests = test.Examination.Tests;
-            otherTests.RemoveAll(t => t.Equals(test));
+            IList<Test> otherTests = _testRepository.List(t => test.Examination.Equals(t.Examination) && !t.Equals(test));
+
+            Console.WriteLine(otherTests.Count);
 
             Test overlap = form.ExpectedOverlap(otherTests);
             if (overlap != null)
@@ -200,7 +201,6 @@ namespace Exam.Controllers
             test.ExpectedStartDate = form.ExpectedStartDate;
             test.ExpectedEndDate = form.ExpectedEndDate;
             _testRepository.Update(test);
-
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -256,18 +256,43 @@ namespace Exam.Controllers
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
+        [HttpPut("{testId}")]
+        [LoadTest(ExaminationItemName = "examination")]
+        [AuthorizeExaminationAdmin]
+        [ValidModel]
+        public Test Edit(Test test, [FromBody]TestEditForm form)
+        {
+            if (_testRepository.Exists(t => test.Examination.Equals(t.Examination) && t.Code == form.Code && !t.Equals(test)))
+            {
+                throw new InvalidValueException("{test.constraints.uniqueCode}");
+            }
+            if (form.Coefficient == 0)
+            {
+                form.Coefficient = 1;
+            }
+
+            test.Coefficient = form.Coefficient;
+            test.Name = form.Name;
+            test.Radical = form.Radical;
+            test.Code = form.Code;
+            
+            _testRepository.Update(test);
+
+            return test;
+        }
+
         [HttpPut("{testId}/code")]
         [RequireQueryParameter("code")]
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        public StatusCodeResult ChangeCode(Test test, string code)
+        public StatusCodeResult ChangeCode(Test test,[FromQuery] string code)
         {
             if (string.IsNullOrWhiteSpace(code))
             {
                 throw new ArgumentNullException(nameof(code));
             }
 
-            if (_testRepository.Exists(t => test.Examination.Equals(t.Examination) && t.Code == code))
+            if (_testRepository.Exists(t => test.Examination.Equals(t.Examination) && t.Code == code && !t.Equals(test)))
             {
                 throw new InvalidValueException("{test.constraints.uniqueCode}");
             }
@@ -283,7 +308,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("name")]
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        public StatusCodeResult ChangeName(Test test, string name)
+        public StatusCodeResult ChangeName(Test test, [FromQuery] string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -301,7 +326,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("coefficient")]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(State = "FINISHED", ItemName = "test")]
-        [PeriodNotClosed]
+        [PeriodNotClosed(ItemName = "test")]
         public StatusCodeResult ChangeCoefficient(Test test, [FromQuery] uint coefficient)
         {
             if (coefficient == 0)
@@ -320,7 +345,7 @@ namespace Exam.Controllers
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodDontHaveState(State = "FINISHED", ItemName = "test")]
-        [PeriodNotClosed]
+        [PeriodNotClosed(ItemName = "test")]
         public StatusCodeResult ChangeAnonymityState(Test test)
         {
             test.UseAnonymity = !test.UseAnonymity;

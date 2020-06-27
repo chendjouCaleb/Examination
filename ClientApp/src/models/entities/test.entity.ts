@@ -98,4 +98,12 @@ export class Test extends Entity<number> {
     return !this.multipleScore;
   }
 
+  get url(): string {
+    return `/organisations/${this.examination.organisationId}/examinations/${this.examinationId}/tests/${this.id}`;
+  }
+
+  get apiUrl(): string {
+    return `tests/${this.id}`
+  }
+
 }

@@ -13,6 +13,11 @@ export interface TestAddBodyModel {
   expectedEndDate: Date;
 }
 
+export interface TestEditDateBody {
+  expectedStartDate: Date;
+  expectedEndDate: Date;
+}
+
 export interface TestAddParams {
   specialityId?: number;
 }
@@ -34,7 +39,7 @@ export class TestAddModel {
   coefficient: number;
 
 
-  useAnonymity: boolean = false;
+  useAnonymity: boolean;
 
   @IsNotEmpty()
   day: Date;
@@ -48,8 +53,10 @@ export class TestAddModel {
   speciality: Speciality;
 
   get body(): TestAddBodyModel {
-    const startDate = new Date(this.day); startDate.setHours(this.startHour.hour(), this.startHour.minute());
-    const endDate = new Date(this.day); endDate.setHours(this.endHour.hour(), this.endHour.minute());
+    const startDate = new Date(this.day);
+    startDate.setHours(this.startHour.hour(), this.startHour.minute());
+    const endDate = new Date(this.day);
+    endDate.setHours(this.endHour.hour(), this.endHour.minute());
     return {
       name: this.name,
       code: this.code,
@@ -63,7 +70,7 @@ export class TestAddModel {
   }
 
   get params(): TestAddParams {
-    if(!this.speciality){
+    if (!this.speciality) {
       return {};
     }
     return {
@@ -72,21 +79,25 @@ export class TestAddModel {
   }
 }
 
-export class TestEditForm {
+export class TestEditDateModel {
   @IsNotEmpty()
-  name: string;
-
-  @IsNotEmpty()
-  code: string;
+  day: Date;
 
   @IsNotEmpty()
-  @IsNumber()
-  radical: number;
+  startHour: LocalTime;
 
   @IsNotEmpty()
-  @IsNumber()
-  coefficient: boolean;
+  endHour: LocalTime;
 
-  useAnonymity: boolean = false;
+  get body(): TestEditDateBody {
+    const startDate = new Date(this.day);
+    startDate.setHours(this.startHour.hour(), this.startHour.minute());
 
+    const endDate = new Date(this.day);
+    endDate.setHours(this.endHour.hour(), this.endHour.minute());
+    return {
+      expectedStartDate: startDate,
+      expectedEndDate: endDate
+    };
+  }
 }

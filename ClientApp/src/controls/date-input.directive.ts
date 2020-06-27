@@ -1,6 +1,7 @@
 ﻿import {Directive, ElementRef, forwardRef, OnDestroy, OnInit} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import Cleave from "cleave.js";
+import moment from 'moment';
 
 export const LOCALTIME_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -31,7 +32,8 @@ export class DateInputDirective implements ControlValueAccessor, OnInit, OnDestr
 
       onValueChanged: (event: any): void => {
         let time: string = event.target.value;
-        this._onChange(new Date(time))
+        const date = moment(time, 'DD-MM-YYYY');
+        this._onChange(date.toDate());
       }
     });
   }
@@ -41,12 +43,10 @@ export class DateInputDirective implements ControlValueAccessor, OnInit, OnDestr
   }
 
   /** `View -> model callback called when value changes` */
-  _onChange: (value: any) => void = () => {
-  };
+  _onChange: (value: any) => void = () => { };
 
   /** `View -> model callback called when select has been touched` */
-  _onTouched = () => {
-  };
+  _onTouched = () => { };
 
   registerOnChange(fn: any): void {
     this._onChange = fn;
@@ -56,7 +56,10 @@ export class DateInputDirective implements ControlValueAccessor, OnInit, OnDestr
     this._onTouched = fn;
   }
 
-  writeValue(obj: any): void {
-    this._mask.setRawValue(obj)
+  writeValue(obj: Date): void {
+    if(obj) {
+      const value = obj.toLocaleDateString();
+      this._mask.setRawValue(value);
+    }
   }
 }

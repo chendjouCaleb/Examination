@@ -1,5 +1,5 @@
 ﻿import {EvFormControl, EvFormGroup} from "examination/controls";
-import {TestAddModel} from "examination/models";
+import {TestAddModel, TestEditDateModel} from "examination/models";
 
 
 export class TestAddForm extends EvFormGroup<TestAddModel> {
@@ -9,7 +9,7 @@ export class TestAddForm extends EvFormGroup<TestAddModel> {
       code: new EvFormControl("code", value.code),
       radical: new EvFormControl("radical", value.radical),
       coefficient: new EvFormControl("coefficient", value.coefficient),
-      useAnonymity: new EvFormControl("useAnonymity",  value.useAnonymity),
+      useAnonymity: new EvFormControl("useAnonymity",  false  ),
       day: new EvFormControl("day",  value.day),
       startHour: new EvFormControl("startHour",  value.startHour),
       endHour: new EvFormControl("endHour",  value.endHour),
@@ -23,7 +23,7 @@ export class TestAddForm extends EvFormGroup<TestAddModel> {
     model.code = this.controls.code.value;
     model.radical = this.controls.radical.value;
     model.coefficient = +this.controls.coefficient.value;
-    model.useAnonymity = !!this.controls.code.value;
+    model.useAnonymity = !!this.controls.useAnonymity.value;
     model.day = this.controls.day.value;
     model.startHour = this.controls.startHour.value;
     model.endHour = this.controls.endHour.value;
@@ -33,3 +33,20 @@ export class TestAddForm extends EvFormGroup<TestAddModel> {
 }
 
 
+export class TestEditDateForm extends EvFormGroup<TestEditDateModel> {
+  constructor(value:any = {}) {
+    super({
+      day: new EvFormControl("day",  value.day),
+      startHour: new EvFormControl("startHour",  value.startHour),
+      endHour: new EvFormControl("endHour",  value.endHour)
+    });
+  }
+
+  getModel(): TestAddModel {
+    const model = new TestAddModel();
+    model.day = this.controls.day.value;
+    model.startHour = this.controls.startHour.value;
+    model.endHour = this.controls.endHour.value;
+    return model;
+  }
+}

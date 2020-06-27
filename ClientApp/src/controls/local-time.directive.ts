@@ -61,6 +61,6 @@ export class LocalTimeDirective implements ControlValueAccessor, OnInit, OnDestr
   }
 
   writeValue(obj: LocalTime): void {
-    this._mask.setRawValue(obj);
+    this._mask.setRawValue(obj.toString());
   }
 }
