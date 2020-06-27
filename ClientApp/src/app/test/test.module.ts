@@ -21,12 +21,13 @@ import {TestLayoutComponent} from "./layout/test-layout.component";
 import {RouterModule} from "@angular/router";
 import {TestEditDateComponent} from "./date/test-edit-date.component";
 import {TestListComponent} from "./list/test-list.component";
+import {TestEditComponent} from "examination/app/test/edit/test-edit.component";
 
 
 
 @NgModule({
-  declarations: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent],
-  exports: [ TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent],
+  declarations: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent, TestEditComponent],
+  exports: [ TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent, TestEditComponent],
   providers: [ TestResolver, TestService ],
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfCheckboxModule,

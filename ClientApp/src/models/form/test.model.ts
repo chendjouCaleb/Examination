@@ -13,6 +13,13 @@ export interface TestAddBodyModel {
   expectedEndDate: Date;
 }
 
+export interface TestEditBodyModel {
+  name: string;
+  code: string;
+  radical: number;
+  coefficient: number;
+}
+
 export interface TestEditDateBody {
   expectedStartDate: Date;
   expectedEndDate: Date;
@@ -77,6 +84,33 @@ export class TestAddModel {
       specialityId: this.speciality?.id
     }
   }
+}
+
+export class TestEditModel {
+  @IsNotEmpty()
+  @MinLength(3)
+  name: string;
+
+  @IsNotEmpty()
+  code: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  radical: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  coefficient: number;
+
+  get body(): TestEditBodyModel {
+    return {
+      name: this.name,
+      code: this.code,
+      radical: this.radical,
+      coefficient: this.coefficient
+    };
+  }
+
 }
 
 export class TestEditDateModel {

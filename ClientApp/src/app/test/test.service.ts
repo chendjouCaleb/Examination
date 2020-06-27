@@ -5,6 +5,7 @@ import {MsfModal} from "fabric-docs";
 import {TestAddComponent} from "examination/app/test/add/test-add.component";
 import {Observable, of, ReplaySubject} from "rxjs";
 import {TestEditDateComponent} from "examination/app/test/date/test-edit-date.component";
+import {TestEditComponent} from "examination/app/test/edit/test-edit.component";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,13 @@ export class TestService {
       modalRef.componentInstance.speciality = speciality;
     }
 
+    return modalRef.afterClosed();
+  }
+
+
+  edit(test: Test): Observable<Test> {
+    const modalRef = this._modal.open(TestEditComponent, {disableClose: true});
+    modalRef.componentInstance.test = test;
     return modalRef.afterClosed();
   }
 

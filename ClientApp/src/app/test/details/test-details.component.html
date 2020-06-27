@@ -5,7 +5,7 @@
     <MsfButton theme="primary" [routerLink]="[test.url, 'home']">Détails</MsfButton>
     <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical" *ngIf="test.examination?.userPrincipal?.isPrincipal"></MsfIconButton>
     <MsfMenu #more>
-      <MsfMenuItem icon="Edit">Modifier les informations</MsfMenuItem>
+      <MsfMenuItem icon="Edit" (click)="service.edit(test)">Modifier les informations</MsfMenuItem>
       <MsfMenuItem *ngIf="test.useAnonymity" icon="RedEye" (click)="service.unsetAnonymous(test)">Enlever l'anonymat</MsfMenuItem>
       <MsfMenuItem *ngIf="!test.useAnonymity" theme="error" icon="Hide3" (click)="service.setAnonymous(test)">Utiliser l'anonymat</MsfMenuItem>
       <MsfMenuItem icon="CalendarSettings" (click)="service.editDate(test)">Modifier la date</MsfMenuItem>
@@ -57,6 +57,11 @@
     <div class=" icon-label">
       <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
       <span class="icon-label-text"> {{test.expectedStartHour}} à {{test.expectedEndHour}}</span>
+    </div>
+
+    <div class=" icon-label">
+      <span class="icon-label-icon" MsfIcon iconName="CalculatorMultiply"></span>
+      <span class="icon-label-text"> {{test.coefficient}}</span>
     </div>
 
   </div>

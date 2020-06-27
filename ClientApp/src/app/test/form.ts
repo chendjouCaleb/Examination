@@ -1,5 +1,5 @@
 ﻿import {EvFormControl, EvFormGroup} from "examination/controls";
-import {TestAddModel, TestEditDateModel} from "examination/models";
+import {TestAddModel, TestEditDateModel, TestEditModel} from "examination/models";
 
 
 export class TestAddForm extends EvFormGroup<TestAddModel> {
@@ -31,6 +31,29 @@ export class TestAddForm extends EvFormGroup<TestAddModel> {
     return model;
   }
 }
+
+export class TestEditForm extends EvFormGroup<TestEditModel> {
+  constructor(value:any = {}) {
+    super({
+      name: new EvFormControl("name", value.name),
+      code: new EvFormControl("code", value.code),
+      radical: new EvFormControl("radical", value.radical),
+      coefficient: new EvFormControl("coefficient", value.coefficient)
+    });
+  }
+
+  getModel(): TestEditModel {
+    const model = new TestEditModel();
+    model.name = this.controls.name.value;
+    model.code = this.controls.code.value;
+    model.radical = this.controls.radical.value;
+    model.coefficient = +this.controls.coefficient.value;
+    return model;
+  }
+}
+
+
+
 
 
 export class TestEditDateForm extends EvFormGroup<TestEditDateModel> {

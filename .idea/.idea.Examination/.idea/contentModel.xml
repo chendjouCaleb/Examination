@@ -1953,6 +1953,10 @@
                 <e p="test-details.component.spec.ts" t="Include" />
                 <e p="test-details.component.ts" t="Include" />
               </e>
+              <e p="edit" t="Include">
+                <e p="test-edit.component.html" t="Include" />
+                <e p="test-edit.component.ts" t="Include" />
+              </e>
               <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="layout" t="Include">
