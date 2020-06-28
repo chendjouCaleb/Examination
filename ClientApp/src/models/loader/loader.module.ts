@@ -20,13 +20,14 @@ import {TestGroupSupervisorLoader} from './test-group-supervisor.loader';
 import {TestGroupCorrectorLoader} from './test-group-corrector.loader';
 import {PaperLoader} from './paper.loader';
 import {ScorePaperLoader} from "./score-paper.loader";
+import {TestGroupLoader} from "./test-group.loader";
 
 
 @NgModule({
   imports: [CommonModule],
   providers: [ClientLoader, OrganisationLoader, AdminLoader, RoomLoader, SecretaryLoader,
     SpecialityLoader, GroupLoader, StudentLoader, ApplicationLoader, TestLoader,
-    ExaminationLoader, PrincipalLoader, CorrectorLoader, SupervisorLoader,
+    ExaminationLoader, PrincipalLoader, CorrectorLoader, SupervisorLoader, TestGroupLoader,
     TestGroupSecretaryLoader, TestGroupSupervisorLoader, TestGroupCorrectorLoader,
     ScoreLoader, PaperLoader, ScorePaperLoader]
 })

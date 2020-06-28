@@ -3,6 +3,8 @@ import {User} from './user.entity';
 import {Speciality} from './speciality.entity';
 import {Examination} from './examination.entity';
 import {LocalTime} from "@js-joda/core";
+import {List} from "@positon/collections";
+import {TestGroup} from "./test-group.entity";
 
 export class Test extends Entity<number> {
   constructor(value: any = {}) {
@@ -84,6 +86,8 @@ export class Test extends Entity<number> {
 
   isDone: boolean;
   isCorrected: boolean;
+
+  testGroups: List<TestGroup> = new List<TestGroup>();
 
 
   get expectedStartHour(): LocalTime {

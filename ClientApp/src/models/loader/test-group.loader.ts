@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {EntityLoader} from './entity-loader.interface';
-import {Examination, TestGroup} from '../entities';
+import {Test, TestGroup} from '../entities';
 import {TestGroupHttpClient, UserHttpClient} from '../httpClient';
 import {List} from '@positon/collections';
 import {RoomLoader} from './room.loader';
@@ -38,12 +38,13 @@ export class TestGroupLoader implements EntityLoader<TestGroup, number> {
     return item;
   }
 
-  async loadByExamination(examination: Examination): Promise<List<TestGroup>> {
-    const testGroups = await this.testGroupRepository.listAsync({examinationId: examination.id});
+  async loadByTest(test: Test): Promise<List<TestGroup>> {
+    const testGroups = await this.testGroupRepository.listAsync({testId: test.id});
     for (const testGroup of testGroups) {
       await this.load(testGroup);
     }
 
+    test.testGroups = testGroups;
     return testGroups;
   }
 

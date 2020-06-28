@@ -2,6 +2,7 @@
 import {Room} from './room.entity';
 import {Group} from './group.entity';
 import {Test} from './test.entity';
+import {LocalTime} from "@js-joda/core";
 
 export class TestGroup extends Entity<number> {
   constructor(value: any = {}) {
@@ -41,5 +42,13 @@ export class TestGroup extends Entity<number> {
   state: string;
 
   isCorrected: boolean;
+
+  get expectedStartHour(): LocalTime {
+    return LocalTime.of(this.startDate.getHours(), this.startDate.getMinutes())
+  }
+
+  get expectedEndHour(): LocalTime {
+    return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes())
+  }
 
 }

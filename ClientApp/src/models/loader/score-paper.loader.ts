@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {EntityLoader} from './entity-loader.interface';
 import {Paper, ScorePaper} from '../entities';
-import {PaperHttpClient, PaperLoader, ScoreLoader} from "examination/models";
+import {PaperHttpClient} from "../httpClient";
+import {ScoreLoader} from "./score.loader";
+import {PaperLoader} from "./paper.loader";
 
 
 @Injectable({providedIn: 'root'})
@@ -22,8 +24,10 @@ export class ScorePaperLoader implements EntityLoader<ScorePaper, number> {
     const items = await this._paperRepository.getScores(paper);
 
     for(const item of items) {
-      await this.loadByPaper(paper);
+      await this.load(item);
     }
+
+    paper.scorePapers = items;
   }
 
   async loadById(id: number): Promise<ScorePaper> {
