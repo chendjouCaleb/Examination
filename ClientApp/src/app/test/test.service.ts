@@ -1,6 +1,6 @@
 ﻿import {Injectable} from "@angular/core";
 import {AlertEmitter, Confirmation} from "examination/controls";
-import {Examination, Score, Speciality, Test, TestHttpClient} from "examination/models";
+import {Examination, Score, ScoreHttpClient, Speciality, Test, TestHttpClient} from "examination/models";
 import {MsfModal} from "fabric-docs";
 import {TestAddComponent} from "examination/app/test/add/test-add.component";
 import {Observable, of, ReplaySubject} from "rxjs";
@@ -29,7 +29,8 @@ export class TestService {
               private _confirmation: Confirmation,
               private _alertEmitter: AlertEmitter,
               private _modal: MsfModal,
-              private _httpClient: TestHttpClient) {
+              private _httpClient: TestHttpClient,
+              private _scoreHttpClient: ScoreHttpClient) {
   }
 
   add(examination: Examination, speciality?: Speciality): Observable<Test> {
@@ -92,6 +93,16 @@ export class TestService {
     const modalRef = this._modal.open(ScoreAddComponent, {disableClose: true});
     modalRef.componentInstance.test = test;
     return modalRef.afterClosed();
+  }
+
+
+  deleteScore(score: Score) {
+    const confirm = this._confirmation.open(`Enlever la ligne ${score.name} du barème`);
+    confirm.accept.subscribe(async () => {
+      await this._scoreHttpClient.delete(score.id);
+      score.test.scores.removeIf(s => s.id === score.id);
+      this._alertEmitter.error(`La ligne ${score.name} a été supprimée`);
+    });
   }
 
 

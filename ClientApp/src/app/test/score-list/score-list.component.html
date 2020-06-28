@@ -12,12 +12,23 @@
     <MsfTableHeadCell>#</MsfTableHeadCell>
     <MsfTableHeadCell sortBy="name">Nom</MsfTableHeadCell>
     <MsfTableHeadCell sortBy="radical">Radical</MsfTableHeadCell>
+    <MsfTableHeadCell></MsfTableHeadCell>
   </MsfTableHead>
   <ng-container *ngIf="test.scores?.length > 0 ">
     <MsfTableRow *ngFor="let item of test.scores" [value]="item" #row>
       <MsfTableCell>{{row.index + 1}}</MsfTableCell>
       <MsfTableCell>{{item.name}}</MsfTableCell>
       <MsfTableCell>{{item.radical}}</MsfTableCell>
+
+      <MsfTableCell class="text-right">
+        <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"
+                       *ngIf="test.examination?.userPrincipal?.isPrincipal"></MsfIconButton>
+        <MsfMenu #more>
+
+          <MsfMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsfMenuItem>
+        </MsfMenu>
+
+      </MsfTableCell>
     </MsfTableRow>
   </ng-container>
 </MsfTable>

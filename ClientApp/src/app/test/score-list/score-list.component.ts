@@ -13,7 +13,7 @@ export class ScoreListComponent implements OnInit {
 
 
   constructor(private _httpClient: ScoreHttpClient,
-              private _service: TestService,
+              public service: TestService,
               private _loader: ScoreLoader) {
   }
 
@@ -22,7 +22,7 @@ export class ScoreListComponent implements OnInit {
   }
 
   add() {
-    this._service.addScore(this.test);
+    this.service.addScore(this.test);
   }
 
 }

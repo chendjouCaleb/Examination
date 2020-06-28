@@ -102,7 +102,7 @@ namespace Exam.Controllers
         }
 
 
-        
+        [HttpDelete("{scoreId}")]
         [LoadScore(ExaminationItemName = "examination", TestItemName = "test")]
         [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
         [AuthorizeExaminationAdmin]
