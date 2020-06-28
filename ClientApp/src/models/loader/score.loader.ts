@@ -34,7 +34,6 @@ export class ScoreLoader implements EntityLoader<Score, number> {
     for (const score of scores) {
       await this.load(score);
     }
-
     return scores;
   }
 

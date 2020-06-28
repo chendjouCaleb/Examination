@@ -12,11 +12,9 @@ export class ScorePaper extends Entity<number> {
     this.value = value.value;
     this.scoreName = value.scoreName;
 
-    this.score = value.score;
     this.scoreId = value.scoreId;
 
     this.paperId = value.paperId;
-    this.paper = value.paper;
   }
 
   value: number;

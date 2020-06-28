@@ -11,7 +11,6 @@ export class Score extends Entity<number> {
     this.name = value.name;
     this.radical = value.radical;
 
-    this.test = value.test;
     this.testId = value.testId;
   }
 

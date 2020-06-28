@@ -2197,6 +2197,7 @@
               <e p="paper.httpClient.ts" t="Include" />
               <e p="principal.httpClient.ts" t="Include" />
               <e p="room.httpClient.ts" t="Include" />
+              <e p="score-paper.httpClient.ts" t="Include" />
               <e p="score.httpClient.ts" t="Include" />
               <e p="secretary.httpClient.ts" t="Include" />
               <e p="speciality.httpClient.ts" t="Include" />
@@ -2225,6 +2226,7 @@
               <e p="paper.loader.ts" t="Include" />
               <e p="principal.loader.ts" t="Include" />
               <e p="room.loader.ts" t="Include" />
+              <e p="score-paper.loader.ts" t="Include" />
               <e p="score.loader.ts" t="Include" />
               <e p="secretary.loader.ts" t="Include" />
               <e p="speciality.loader.ts" t="Include" />
@@ -2286,6 +2288,7 @@
           <e p="PrincipalController.cs" t="Include" />
           <e p="RoomController.cs" t="Include" />
           <e p="ScoreController.cs" t="Include" />
+          <e p="ScorePaperController.cs" t="Include" />
           <e p="SecretaryController.cs" t="Include" />
           <e p="SpecialityController.cs" t="Include" />
           <e p="StudentController.cs" t="Include" />
