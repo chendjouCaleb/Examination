@@ -47,6 +47,7 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<TestGroupController>();
             
             ServiceCollection.AddTransient<ScoreController>();
+            ServiceCollection.AddTransient<ScorePaperController>();
             ServiceCollection.AddTransient<PaperController>();
             ServiceCollection.AddTransient<GroupStudentController>();
             
