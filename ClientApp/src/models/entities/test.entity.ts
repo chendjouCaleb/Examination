@@ -91,6 +91,12 @@ export class Test extends Entity<number> {
   testGroups: List<TestGroup> = new List<TestGroup>();
   scores: List<Score> = new List<Score>();
 
+  get totalScoreRadical(): number {
+    let sum = 0;
+    this.scores.forEach(s => sum += s.radical);
+    return sum;
+  }
+
   get expectedStartHour(): LocalTime {
     return LocalTime.of(this.expectedStartDate.getHours(), this.expectedStartDate.getMinutes())
   }

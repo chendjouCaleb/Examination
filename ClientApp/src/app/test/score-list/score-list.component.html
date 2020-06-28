@@ -1,6 +1,12 @@
 ﻿<div class="text-right">
-  <MsfButton theme="primary" Icon="Add" (click)="add()">Ajouter</MsfButton>
+  <MsfButton theme="primary" Icon="Add" (click)="add()">Ajouter un ligne</MsfButton>
 </div>
+
+<msAlert *ngIf="test.radical !== test.totalScoreRadical" theme="error" class="my-1">
+  Le total des radicaux des lignes du barème ne correspondent pas au radical de l'épreuve. Ajouter des lignes supplémentaires
+  pour compléter les <b> {{test.radical - test.totalScoreRadical}} points </b> manquants!.
+</msAlert>
+
 <MsfTable>
   <MsfTableHead>
     <MsfTableHeadCell>#</MsfTableHeadCell>

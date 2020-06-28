@@ -11,6 +11,7 @@ export class ScoreListComponent implements OnInit {
   @Input()
   test: Test;
 
+
   constructor(private _httpClient: ScoreHttpClient,
               private _service: TestService,
               private _loader: ScoreLoader) {
@@ -23,4 +24,5 @@ export class ScoreListComponent implements OnInit {
   add() {
     this._service.addScore(this.test);
   }
+
 }

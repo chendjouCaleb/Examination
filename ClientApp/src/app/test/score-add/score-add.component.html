@@ -4,13 +4,13 @@
 
   <div class="ms-textField">
     <label for="name" class="msf-label">Nom de la ligne</label>
-    <input type="text" id="name" class="ms-textField-input" formControlName="name" >
+    <input type="text" id="name" class="ms-textField-input" formControlName="name" autocomplete="off" >
     <app-control-error controlName="name"></app-control-error>
   </div>
 
   <div class="ms-textField">
     <label for="radical" class="msf-label">Note maximale</label>
-    <input type="text" id="radical" class="ms-textField-input" formControlName="radical" >
+    <input type="text" id="radical" autocomplete="off" class="ms-textField-input" formControlName="radical" (keyup)="checkRadical()" >
     <app-control-error controlName="radical"></app-control-error>
   </div>
 

@@ -21,6 +21,13 @@ export class ScoreAddComponent{
 
   }
 
+  checkRadical() {
+    const radical = this.form.getControl("radical");
+    const value = +radical.value;
+    if (this.test.totalScoreRadical + value > this.test.radical) {
+      radical.addError("La somme des radicaux dépasse celui assigné à l'épreuve");
+    }
+  }
 
   async add() {
     const formModel = this.form.getModel();
