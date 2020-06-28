@@ -4,20 +4,21 @@ import {ScorePaper} from '../entities';
 import {RoomLoader} from './room.loader';
 import {TestLoader} from './test.loader';
 import {GroupLoader} from './group.loader';
+import {ScorePaperHttpClient} from "../httpClient/score-paper.httpClient";
+import {PaperLoader, ScoreLoader} from "examination/models";
 
 
 @Injectable({providedIn: 'root'})
 export class ScorePaperLoader implements EntityLoader<ScorePaper, number> {
 
   constructor(private scorePaperRepository: ScorePaperHttpClient,
-              private _userHttClient: UserHttpClient,
-              private _roomLoader: RoomLoader,
-              private _testLoader: TestLoader,
-              private _groupLoader: GroupLoader) {
+              private _scoreLoader: ScoreLoader,
+              private _paperLoader: PaperLoader) {
   }
 
   async load(item: ScorePaper): Promise<ScorePaper> {
-    item.test = await this._testLoader.loadById(item.testId);
+    item.paper = await this._paperLoader.loadById(item.paperId);
+    item.score = await this._scoreLoader.loadById(item.scoreId);
     return item;
   }
 
