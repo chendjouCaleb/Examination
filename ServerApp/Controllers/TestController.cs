@@ -118,10 +118,22 @@ namespace Exam.Controllers
                 throw new ArgumentNullException(nameof(test));
             }
 
-            foreach (Group  group in examination.Groups)
+            if (speciality == null)
             {
-                _testGroupController._Add(test,  group, group.Room);
+                foreach (Group  group in examination.Groups)
+                {
+                    _testGroupController._Add(test, group, group.Room);
+                }
             }
+            else
+            {
+                foreach (Group group in speciality.Groups)
+                {
+                    _testGroupController._Add(test, group, group.Room);
+                }
+            }
+
+            
             return CreatedAtAction("Find", new {test.Id}, test);
         }
 

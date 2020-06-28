@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {EntityLoader} from './entity-loader.interface';
-import {Score} from '../entities';
+import {Score, Test, TestGroup} from '../entities';
 import {ScoreHttpClient, UserHttpClient} from '../httpClient';
 import {RoomLoader} from './room.loader';
 import {TestLoader} from './test.loader';
 import {GroupLoader} from './group.loader';
+import {List} from "@positon/collections";
 
 
 @Injectable({providedIn: 'root'})
@@ -24,4 +25,11 @@ export class ScoreLoader implements EntityLoader<Score, number> {
     return item;
   }
 
+  async loadByTest(test: Test): Promise<List<Score>> {
+    const scores = await this.scoreRepository.listAsync({testId: test.id});
+    for (const score of scores) {
+      await this.load(score);
+    }
+    return scores;
+  }
 }

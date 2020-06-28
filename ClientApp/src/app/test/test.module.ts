@@ -7,7 +7,7 @@ import {
   MsfIconModule,
   MsfMenuModule,
   MsfModalModule,
-  MsfPersonaModule
+  MsfPersonaModule, MsfTableModule
 } from "fabric-docs";
 import {TestAddComponent} from "examination/app/test/add/test-add.component";
 import {TestResolver} from "examination/app/test/test.resolver";
@@ -22,15 +22,19 @@ import {RouterModule} from "@angular/router";
 import {TestEditDateComponent} from "./date/test-edit-date.component";
 import {TestListComponent} from "./list/test-list.component";
 import {TestEditComponent} from "examination/app/test/edit/test-edit.component";
+import {ScoreAddComponent} from "examination/app/test/score-add/score-add.component";
+import {ScoreListComponent} from "examination/app/test/score-list/score-list.component";
 
 
 
 @NgModule({
-  declarations: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent, TestEditComponent],
-  exports: [ TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent, TestEditComponent],
+  declarations: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent,
+    TestEditComponent, ScoreAddComponent, ScoreListComponent],
+  exports: [ TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent,
+    TestEditComponent, ScoreAddComponent, ScoreListComponent],
   providers: [ TestResolver, TestService ],
   imports: [
-    CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfCheckboxModule,
+    CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfCheckboxModule, MsfTableModule,
     ControlModule, MsfModalModule, MsfSelectModule, UserPickerModule, MsfMenuModule, ControlModule,
     MsfIconModule, MsfPersonaModule, MsfButtonModule,  MomentModule, ExaminationModule,
     RouterModule, MsfTabModule

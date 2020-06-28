@@ -1,0 +1,21 @@
+﻿<div class="text-right">
+  <MsfButton theme="primary" Icon="Add" (click)="add()">Ajouter</MsfButton>
+</div>
+<MsfTable>
+  <MsfTableHead>
+    <MsfTableHeadCell>#</MsfTableHeadCell>
+    <MsfTableHeadCell sortBy="name">Nom</MsfTableHeadCell>
+    <MsfTableHeadCell sortBy="radical">Radical</MsfTableHeadCell>
+  </MsfTableHead>
+  <ng-container *ngIf="test.scores?.length > 0 ">
+    <MsfTableRow *ngFor="let item of test.scores" [value]="item" #row>
+      <MsfTableCell>{{row.index + 1}}</MsfTableCell>
+      <MsfTableCell>{{item.name}}</MsfTableCell>
+      <MsfTableCell>{{item.radical}}</MsfTableCell>
+    </MsfTableRow>
+  </ng-container>
+</MsfTable>
+
+<msAlert *ngIf="!test.scores || test.scores.length == 0" theme="severeWarning">
+  Cette épreuve n'a pas de barème détaillé!
+</msAlert>

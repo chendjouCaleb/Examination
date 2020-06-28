@@ -1,11 +1,12 @@
 ﻿import {Injectable} from "@angular/core";
 import {AlertEmitter, Confirmation} from "examination/controls";
-import {Examination, Speciality, Test, TestHttpClient} from "examination/models";
+import {Examination, Score, Speciality, Test, TestHttpClient} from "examination/models";
 import {MsfModal} from "fabric-docs";
 import {TestAddComponent} from "examination/app/test/add/test-add.component";
 import {Observable, of, ReplaySubject} from "rxjs";
 import {TestEditDateComponent} from "examination/app/test/date/test-edit-date.component";
 import {TestEditComponent} from "examination/app/test/edit/test-edit.component";
+import {ScoreAddComponent} from "examination/app/test/score-add/score-add.component";
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +86,12 @@ export class TestService {
       this._onremove.next(test);
       this._alertEmitter.error(`L'épreuve ${test.name}(${test.code}) a été supprimé`)
     })
+  }
+
+  addScore(test: Test): Observable<Score> {
+    const modalRef = this._modal.open(ScoreAddComponent, {disableClose: true});
+    modalRef.componentInstance.test = test;
+    return modalRef.afterClosed();
   }
 
 

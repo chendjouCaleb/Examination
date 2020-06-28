@@ -78,7 +78,7 @@ namespace Exam.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPut("{scoreId}/name")]
         [LoadScore(ExaminationItemName = "examination", TestItemName = "test")]
         [RequireQueryParameter("name")]
         [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]

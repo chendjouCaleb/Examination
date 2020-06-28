@@ -1,7 +1,13 @@
 ﻿<app-test-layout>
 <h3>{{test.name}}</h3>
 
+  <h5>{{test.speciality?.name}}</h5>
+
   <labelled text="Corrigé">
     <app-icon icon="CheckMark"></app-icon>
   </labelled>
+
+  <div *ngFor="let item of test.testGroups">{{item.id}}:{{item.group.speciality?.name}}: {{item.test.speciality.name}}</div>
+
+  <app-score-list [test]="test"></app-score-list>
 </app-test-layout>

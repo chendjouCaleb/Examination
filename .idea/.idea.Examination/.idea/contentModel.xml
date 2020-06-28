@@ -1967,6 +1967,15 @@
                 <e p="test-list.component.html" t="Include" />
                 <e p="test-list.component.ts" t="Include" />
               </e>
+              <e p="score-add" t="Include">
+                <e p="score-add.component.html" t="Include" />
+                <e p="score-add.component.ts" t="Include" />
+              </e>
+              <e p="score-form.ts" t="Include" />
+              <e p="score-list" t="Include">
+                <e p="score-list.component.html" t="Include" />
+                <e p="score-list.component.ts" t="Include" />
+              </e>
               <e p="test.module.ts" t="Include" />
               <e p="test.resolver.ts" t="Include" />
               <e p="test.service.ts" t="Include" />

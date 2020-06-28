@@ -10,6 +10,7 @@ export class ScoreAddModel {
 }
 
 
+
 export class ScorePaperModel {
   @IsNotEmpty()
   scoreId: number;

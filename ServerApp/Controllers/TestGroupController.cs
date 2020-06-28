@@ -39,10 +39,28 @@ namespace Exam.Controllers
         public IEnumerable<TestGroup> List(Test test, Group group, Room room,
             [FromQuery] string state, [FromQuery] uint skip = 0, [FromQuery] uint take = 10)
         {
+            _testGroupRepository.DeleteAll();
+            
+            
+            
             IQueryable<TestGroup> queryable = _testGroupRepository.Set;
 
             if (test != null)
             {
+                if (test.Speciality == null)
+                {
+                    foreach (Group g  in test.Examination.Groups)
+                    {
+                        _Add(test, g, g.Room);
+                    }
+                }
+                else
+                {
+                    foreach (Group g  in test.Speciality.Groups)
+                    {
+                         _Add(test, g, g.Room);
+                    }
+                }
                 queryable = queryable.Where(g => test.Equals(g.Test));
             }
 
@@ -94,6 +112,16 @@ namespace Exam.Controllers
             }
             
             if (!room.Organisation.Equals(group.Examination.Organisation))
+            {
+                throw new IncompatibleEntityException<Test, Group>(test, group);
+            }
+
+            if (test.Speciality != null && !test.Speciality.Equals(group.Speciality))
+            {
+                throw new IncompatibleEntityException<Test, Group>(test, group);
+            }
+            
+            if (group.Speciality != null  && !group.Speciality.Equals(test.Speciality))
             {
                 throw new IncompatibleEntityException<Test, Group>(test, group);
             }

@@ -43,8 +43,6 @@ export class TestGroupLoader implements EntityLoader<TestGroup, number> {
     for (const testGroup of testGroups) {
       await this.load(testGroup);
     }
-
-    test.testGroups = testGroups;
     return testGroups;
   }
 

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Statistic">
+    <option name="excludedDirectories">
+      <list>
+        <option value="$PROJECT_DIR$/ServerApp/Migrations" />
+        <option value="$PROJECT_DIR$/ServerApp/Properties" />
+        <option value="$PROJECT_DIR$/ServerApp/obj" />
+        <option value="$PROJECT_DIR$/ServerApp/bin" />
+        <option value="$PROJECT_DIR$/ServerAppTest/obj" />
+        <option value="$PROJECT_DIR$/ServerAppTest/bin" />
+        <option value="$PROJECT_DIR$/ClientApp/node_modules" />
+        <option value="$PROJECT_DIR$/ClientApp/e2e" />
+        <option value="$PROJECT_DIR$/ClientApp/.idea" />
+      </list>
+    </option>
+  </component>
+</project>
