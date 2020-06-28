@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Exam.Controllers
 {
     
-    [Route("api/papers/{paperId}/scores")]
+    [Route("api/papers")]
     public class ScorePaperController:Controller
     {
         private IRepository<ScorePaper, long> _scorePaperRepository;
@@ -29,8 +29,9 @@ namespace Exam.Controllers
             _scoreRepository = scoreRepository;
         }
 
+        
 
-        [HttpGet]
+        [HttpGet("{paperId}/scores")]
         [LoadPaper]
         public IList<ScorePaper> Scores(Paper paper)
         {
@@ -41,7 +42,7 @@ namespace Exam.Controllers
             return _scorePaperRepository.List(s => paper.Equals(s.Paper) );
         }
         
-        [HttpPut]
+        [HttpPut("{paperId}/scores")]
         [LoadPaper(TestItemName = "test", TestGroupItemName = "testGroup")]
         [PeriodNotClosed(ItemName = "test")]
         [AuthorizeTestGroupCorrector]
