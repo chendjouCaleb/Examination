@@ -1,19 +1,11 @@
 ﻿import {Component, Input, OnInit} from "@angular/core";
 import {AlertEmitter} from "src/controls/alert-emitter";
-import {
-  Examination,
-  TestHttpClient,
-  TestLoader,
-  RoomHttpClient,
-  Speciality,
-  SpecialityHttpClient
-} from "src/models";
-import {TestAddForm} from "../form";
 import {MsfModalRef} from "fabric-docs";
 import {List} from "@positon/collections";
 import {
   Corrector,
-  CorrectorHttpClient, CorrectorLoader,
+  CorrectorHttpClient,
+  CorrectorLoader,
   TestGroup,
   TestGroupCorrectorHttpClient,
   TestGroupCorrectorLoader

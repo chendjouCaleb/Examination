@@ -1,0 +1,31 @@
+﻿
+<div class="d-flex justify-content-between align-items-center">
+    <div class="ms-fontWeight-light ms-fontSize-18">Correcteur</div>
+
+    <div class="text-right ml-5">
+      <MsfButton Icon="Add" (click)="service.addTestGroupCorrectors(testGroup)">Ajouter</MsfButton>
+    </div>
+  </div>
+
+  <div>
+    <msAlert *ngIf="testGroup.testGroupCorrectors?.length === 0" theme="severeWarning" class="mt-2">
+      Ce groupe n'a pas de correcteurs.
+    </msAlert>
+
+    <MsfTable class="mt-2">
+      <MsfTableRow *ngFor="let item of testGroup.testGroupCorrectors" [value]="item">
+        <MsfTableCell class="py-1">
+          <MsfPersona size="size32">
+            <MsfPersonaFigure [text]="item.corrector.user.fullName"></MsfPersonaFigure>
+            <MsfPersonaText>{{item.corrector.user.fullName}}</MsfPersonaText>
+          </MsfPersona>
+        </MsfTableCell>
+        <MsfTableCell class="py-1">
+          <i class="ms-Icon ms-Icon--More p-2" [MsfMenuTrigger]="correctorMore" style="cursor:pointer"></i>
+          <MsfMenu #correctorMore>
+            <MsfMenuItem icon="Delete" theme="error" (click)="service.removeTestGroupCorrector(testGroup, item)">Supprimer</MsfMenuItem>
+          </MsfMenu>
+        </MsfTableCell>
+      </MsfTableRow>
+    </MsfTable>
+  </div>

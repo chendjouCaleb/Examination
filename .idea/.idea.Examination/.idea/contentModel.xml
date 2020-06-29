@@ -1943,10 +1943,6 @@
                 <e p="test-add.component.html" t="Include" />
                 <e p="test-add.component.ts" t="Include" />
               </e>
-              <e p="add-test-group-corrector" t="Include">
-                <e p="test-group-corrector-add.component.html" t="Include" />
-                <e p="test-group-corrector-add.component.ts" t="Include" />
-              </e>
               <e p="date" t="Include">
                 <e p="test-edit-date.component.html" t="Include" />
                 <e p="test-edit-date.component.ts" t="Include" />
@@ -1980,9 +1976,33 @@
                 <e p="score-list.component.html" t="Include" />
                 <e p="score-list.component.ts" t="Include" />
               </e>
+              <e p="test-group-corrector-add" t="Include">
+                <e p="test-group-corrector-add.component.html" t="Include" />
+                <e p="test-group-corrector-add.component.ts" t="Include" />
+              </e>
+              <e p="test-group-corrector-list" t="Include">
+                <e p="test-group-corrector-list.component.html" t="Include" />
+                <e p="test-group-corrector-list.component.ts" t="Include" />
+              </e>
               <e p="test-group-item" t="Include">
                 <e p="test-group-item.component.html" t="Include" />
                 <e p="test-group-item.component.ts" t="Include" />
+              </e>
+              <e p="test-group-secretary-add" t="Include">
+                <e p="test-group-secretary-add.component.html" t="Include" />
+                <e p="test-group-secretary-add.component.ts" t="Include" />
+              </e>
+              <e p="test-group-secretary-list" t="Include">
+                <e p="test-group-secretary-list.component.html" t="Include" />
+                <e p="test-group-secretary-list.component.ts" t="Include" />
+              </e>
+              <e p="test-group-supervisor-add" t="Include">
+                <e p="test-group-supervisor-add.component.html" t="Include" />
+                <e p="test-group-supervisor-add.component.ts" t="Include" />
+              </e>
+              <e p="test-group-supervisor-list" t="Include">
+                <e p="test-group-supervisor-list.component.html" t="Include" />
+                <e p="test-group-supervisor-list.component.ts" t="Include" />
               </e>
               <e p="test.module.ts" t="Include" />
               <e p="test.resolver.ts" t="Include" />

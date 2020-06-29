@@ -23,13 +23,14 @@ import {ScoreAddComponent} from "examination/app/test/score-add/score-add.compon
 import {TestGroupItemComponent} from "examination/app/test/test-group-item/test-group-item.component";
 import {ITestService} from "examination/app/test/test.service.interface";
 import {List} from "@positon/collections";
-import {TestGroupCorrectorAddComponent} from "./add-test-group-corrector/test-group-corrector-add.component";
+import {TestGroupCorrectorAddComponent} from "./test-group-corrector-add/test-group-corrector-add.component";
+import {TestGroupSupervisorAddComponent} from "./test-group-supervisor-add/test-group-supervisor-add.component";
+import {TestGroupSecretaryAddComponent} from "./test-group-secretary-add/test-group-secretary-add.component";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TestService implements ITestService {
-
   get onremove(): Observable<Test> {
     return this._onremove.asObservable();
   };
@@ -42,8 +43,7 @@ export class TestService implements ITestService {
 
   _onnew = new ReplaySubject<Test>();
 
-  constructor(public _alert: AlertEmitter,
-              public _confirmation: Confirmation,
+  constructor( public _confirmation: Confirmation,
               public _alertEmitter: AlertEmitter,
               public _modal: MsfModal,
               public _httpClient: TestHttpClient,
@@ -139,15 +139,21 @@ export class TestService implements ITestService {
     const modalRef = this._modal.open(TestGroupCorrectorAddComponent, {disableClose: true});
     modalRef.componentInstance.testGroup = testGroup;
 
-    return modalRef.afterClosed()
+    return modalRef.afterClosed();
   }
 
   addTestGroupSecretaries(testGroup: TestGroup): Observable<List<TestGroupSecretary>> {
-    return undefined;
+    const modalRef = this._modal.open(TestGroupSecretaryAddComponent, {disableClose: true});
+    modalRef.componentInstance.testGroup = testGroup;
+
+    return modalRef.afterClosed();
   }
 
   addTestGroupSupervisors(testGroup: TestGroup): Observable<List<TestGroupSupervisor>> {
-    return undefined;
+    const modalRef = this._modal.open(TestGroupSupervisorAddComponent, {disableClose: true});
+    modalRef.componentInstance.testGroup = testGroup;
+
+    return modalRef.afterClosed();
   }
 
   removeTestGroupCorrector(testGroup: TestGroup, testGroupCorrector: TestGroupCorrector):Promise<void> {
@@ -158,16 +164,32 @@ export class TestService implements ITestService {
         testGroup.testGroupCorrectors.removeIf(c => c.id === testGroupCorrector.id);
         this._alertEmitter.info(`Le correcteur a été enlevé`);
         resolve();
-      })
-    })
+      });
+    });
   }
 
-  removeTestGroupSecretary(testGroupSecretary: TestGroupSecretary):Promise<void> {
-    return undefined;
+  removeTestGroupSecretary(testGroup: TestGroup, testGroupSecretary: TestGroupSecretary):Promise<void> {
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open("Enlever ce secrétaire?");
+      confirm.accept.subscribe(async () => {
+        await this._testGroupSecretaryHttpClient.delete(testGroupSecretary.id);
+        testGroup.testGroupSecretaries.removeIf(c => c.id === testGroupSecretary.id);
+        this._alertEmitter.info(`Le secrétaire a été enlevé`);
+        resolve();
+      });
+    });
   }
 
-  removeTestGroupSupervisor(testGroupSupervisor: TestGroupSupervisor):Promise<void> {
-    return undefined;
+  removeTestGroupSupervisor(testGroup: TestGroup, testGroupSupervisor: TestGroupSupervisor):Promise<void> {
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open("Enlever ce surveillant?");
+      confirm.accept.subscribe(async () => {
+        await this._testGroupSupervisorHttpClient.delete(testGroupSupervisor.id);
+        testGroup.testGroupSupervisors.removeIf(c => c.id === testGroupSupervisor.id);
+        this._alertEmitter.info(`Le surveillant a été enlevé du groupe`);
+        resolve();
+      });
+    });
   }
 
 }

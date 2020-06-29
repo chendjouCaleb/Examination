@@ -116,7 +116,7 @@ namespace ServerAppTest.Controllers
         public void Add()
         {
             TestGroupSupervisor testGroupSupervisor =
-                _controller.Add(_testGroup, _supervisor, true).Value as TestGroupSupervisor;
+                _controller.Add(_testGroup, _supervisor, true);
 
             _testGroupSupervisorRepository.Refresh(testGroupSupervisor);
 
@@ -142,8 +142,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangePrincipal_WhenIsTrue_ShouldSetItAtFalse()
         {
-            TestGroupSupervisor testGroupSupervisor = _controller.Add(_testGroup, _supervisor).Value
-                as TestGroupSupervisor;
+            TestGroupSupervisor testGroupSupervisor = _controller.Add(_testGroup, _supervisor);
 
             _controller.SetPrincipalSupervisor(testGroupSupervisor);
             _testGroupSupervisorRepository.Refresh(testGroupSupervisor);
@@ -156,8 +155,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ChangePrincipal_WhenIsFalse_ShouldSetItAtTrue()
         {
-            TestGroupSupervisor testGroupSupervisor = _controller.Add(_testGroup, _supervisor).Value
-                as TestGroupSupervisor;
+            TestGroupSupervisor testGroupSupervisor = _controller.Add(_testGroup, _supervisor);
 
             _controller.SetPrincipalSupervisor(testGroupSupervisor);
             _testGroupSupervisorRepository.Refresh(testGroupSupervisor);
@@ -173,8 +171,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            TestGroupSupervisor testGroupSupervisor = _controller.Add(_testGroup, _supervisor).Value
-                as TestGroupSupervisor;
+            TestGroupSupervisor testGroupSupervisor = _controller.Add(_testGroup, _supervisor);
 
             _controller.Delete(testGroupSupervisor);
             Assert.False(_testGroupSupervisorRepository.Exists(testGroupSupervisor));

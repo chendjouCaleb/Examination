@@ -45,8 +45,8 @@ export interface ITestService {
 
   removeTestGroupCorrector(testGroup: TestGroup, testGroupCorrector: TestGroupCorrector):Promise<void>;
 
-  removeTestGroupSupervisor(testGroupSupervisor: TestGroupSupervisor):Promise<void>;
+  removeTestGroupSupervisor(testGroup: TestGroup, testGroupSupervisor: TestGroupSupervisor):Promise<void>;
 
-  removeTestGroupSecretary(testGroupSecretary: TestGroupSecretary):Promise<void>;
+  removeTestGroupSecretary(testGroup: TestGroup, testGroupSecretary: TestGroupSecretary):Promise<void>;
 
 }
