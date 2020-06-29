@@ -25,7 +25,9 @@
             </MsfTableCell>
             <MsfTableCell>
               <i class="ms-Icon ms-Icon--More p-2" [MsfMenuTrigger]="correctorMore" style="cursor:pointer"></i>
-              <MsfMenu #correctorMore></MsfMenu>
+              <MsfMenu #correctorMore>
+                <MsfMenuItem icon="Delete" theme="error" (click)="service.removeTestGroupCorrector(testGroup, item)">Supprimer</MsfMenuItem>
+              </MsfMenu>
             </MsfTableCell>
           </MsfTableRow>
         </MsfTable>

@@ -7,7 +7,11 @@ import {
   Speciality,
   Test,
   TestGroup,
-  TestGroupCorrector, TestGroupSecretary, TestGroupSupervisor,
+  TestGroupCorrector,
+  TestGroupCorrectorHttpClient,
+  TestGroupSecretary, TestGroupSecretaryHttpClient,
+  TestGroupSupervisor,
+  TestGroupSupervisorHttpClient,
   TestHttpClient
 } from "examination/models";
 import {MsfModal} from "fabric-docs";
@@ -19,7 +23,7 @@ import {ScoreAddComponent} from "examination/app/test/score-add/score-add.compon
 import {TestGroupItemComponent} from "examination/app/test/test-group-item/test-group-item.component";
 import {ITestService} from "examination/app/test/test.service.interface";
 import {List} from "@positon/collections";
-import {TestGroupCorrectorAddComponent} from "examination/app/test/add-test-group-corrector/test-group-corrector-add.component";
+import {TestGroupCorrectorAddComponent} from "./add-test-group-corrector/test-group-corrector-add.component";
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +47,9 @@ export class TestService implements ITestService {
               public _alertEmitter: AlertEmitter,
               public _modal: MsfModal,
               public _httpClient: TestHttpClient,
+              private _testGroupCorrectorHttpClient: TestGroupCorrectorHttpClient,
+              private _testGroupSupervisorHttpClient: TestGroupSupervisorHttpClient,
+              private _testGroupSecretaryHttpClient: TestGroupSecretaryHttpClient,
               public _scoreHttpClient: ScoreHttpClient) {
   }
 
@@ -99,7 +106,7 @@ export class TestService implements ITestService {
       await this._httpClient.delete(test.id);
       this._onremove.next(test);
       this._alertEmitter.error(`L'épreuve ${test.name}(${test.code}) a été supprimé`)
-    })
+    });
   }
 
   addScore(test: Test): Observable<Score> {
@@ -140,6 +147,26 @@ export class TestService implements ITestService {
   }
 
   addTestGroupSupervisors(testGroup: TestGroup): Observable<List<TestGroupSupervisor>> {
+    return undefined;
+  }
+
+  removeTestGroupCorrector(testGroup: TestGroup, testGroupCorrector: TestGroupCorrector):Promise<void> {
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open("Enlever ce correcteur?");
+      confirm.accept.subscribe(async () => {
+        await this._testGroupCorrectorHttpClient.delete(testGroupCorrector.id);
+        testGroup.testGroupCorrectors.removeIf(c => c.id === testGroupCorrector.id);
+        this._alertEmitter.info(`Le correcteur a été enlevé`);
+        resolve();
+      })
+    })
+  }
+
+  removeTestGroupSecretary(testGroupSecretary: TestGroupSecretary):Promise<void> {
+    return undefined;
+  }
+
+  removeTestGroupSupervisor(testGroupSupervisor: TestGroupSupervisor):Promise<void> {
     return undefined;
   }
 

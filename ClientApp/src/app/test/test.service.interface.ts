@@ -42,4 +42,11 @@ export interface ITestService {
   addTestGroupSupervisors(testGroup: TestGroup): Observable<List<TestGroupSupervisor>>
 
   addTestGroupSecretaries(testGroup: TestGroup): Observable<List<TestGroupSecretary>>
+
+  removeTestGroupCorrector(testGroup: TestGroup, testGroupCorrector: TestGroupCorrector):Promise<void>;
+
+  removeTestGroupSupervisor(testGroupSupervisor: TestGroupSupervisor):Promise<void>;
+
+  removeTestGroupSecretary(testGroupSecretary: TestGroupSecretary):Promise<void>;
+
 }
