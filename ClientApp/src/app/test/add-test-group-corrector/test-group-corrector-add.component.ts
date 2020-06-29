@@ -57,6 +57,8 @@ export class TestGroupCorrectorAddComponent implements OnInit{
       await this._loader.load(corrector);
     }
 
+    this.testGroup.testGroupCorrectors.addRange(correctors);
+
     this._alertEmitter.info(`Les correcteurs ont été ajoutées.`);
     this._dialogRef.close(correctors);
   }

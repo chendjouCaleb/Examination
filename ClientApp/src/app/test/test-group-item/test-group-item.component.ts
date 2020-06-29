@@ -28,13 +28,4 @@ export class TestGroupItemComponent implements OnInit{
     this.testGroup.testGroupSupervisors = await this._testGroupSupervisorLoader.loadByTestGroup(this.testGroup);
   }
 
-  addCorrector() {
-    this.service.addTestGroupCorrectors(this.testGroup).subscribe(correctors => {
-      if(correctors) {
-        this.testGroup.testGroupCorrectors.addRange(correctors);
-      }
-    })
-  }
-  
-
 }
