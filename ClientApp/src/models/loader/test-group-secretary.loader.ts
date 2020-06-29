@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {EntityLoader} from './entity-loader.interface';
 import {TestLoader} from './test.loader';
 import {SecretaryLoader} from './secretary.loader';
-import {TestGroupSecretaryHttpClient} from '../httpClient/test-group-secretary.httpClient';
-import {TestGroupSecretary} from "../entities";
+import {TestGroup, TestGroupSecretary} from "../entities";
 import {TestGroupLoader} from "./test-group.loader";
+import {List} from "@positon/collections";
+import {TestGroupSecretaryHttpClient} from "../httpClient";
 
 
 @Injectable({providedIn: 'root'})
@@ -35,6 +36,12 @@ export class TestGroupSecretaryLoader implements EntityLoader<TestGroupSecretary
     return item;
   }
 
-
+  async loadByTestGroup(testGroup: TestGroup): Promise<List<TestGroupSecretary>> {
+    const testGroupSecretaries = await this.testGroupSecretaryRepository.listByTestGroup(testGroup);
+    for (const item of testGroupSecretaries) {
+      await this.load(item);
+    }
+    return testGroupSecretaries;
+  }
 
 }

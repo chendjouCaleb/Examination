@@ -24,20 +24,24 @@ import {TestListComponent} from "./list/test-list.component";
 import {TestEditComponent} from "examination/app/test/edit/test-edit.component";
 import {ScoreAddComponent} from "examination/app/test/score-add/score-add.component";
 import {ScoreListComponent} from "examination/app/test/score-list/score-list.component";
-
-
+import {TestGroupItemComponent} from "examination/app/test/test-group-item/test-group-item.component";
+import {TEST_SERVICE_TOKEN} from "examination/app/test/test.service.interface";
+import {TestGroupCorrectorAddComponent} from "examination/app/test/add-test-group-corrector/test-group-corrector-add.component";
 
 @NgModule({
   declarations: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent,
-    TestEditComponent, ScoreAddComponent, ScoreListComponent],
-  exports: [ TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent,
-    TestEditComponent, ScoreAddComponent, ScoreListComponent],
-  providers: [ TestResolver, TestService ],
+    TestEditComponent, ScoreAddComponent, ScoreListComponent, TestGroupItemComponent,
+    TestGroupCorrectorAddComponent],
+  exports: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent,
+    TestEditComponent, ScoreAddComponent, ScoreListComponent, TestGroupItemComponent,
+    TestGroupCorrectorAddComponent],
+  providers: [TestResolver, TestService, {provide: TEST_SERVICE_TOKEN, useExisting: TestService}],
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfCheckboxModule, MsfTableModule,
     ControlModule, MsfModalModule, MsfSelectModule, UserPickerModule, MsfMenuModule, ControlModule,
-    MsfIconModule, MsfPersonaModule, MsfButtonModule,  MomentModule, ExaminationModule,
+    MsfIconModule, MsfPersonaModule, MsfButtonModule, MomentModule, ExaminationModule,
     RouterModule, MsfTabModule
   ]
 })
-export class TestModule { }
+export class TestModule {
+}

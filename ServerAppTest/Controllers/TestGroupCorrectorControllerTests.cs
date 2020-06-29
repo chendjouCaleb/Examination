@@ -4,7 +4,6 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
 using Exam.Infrastructure;
-using Exam.Models;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
@@ -117,7 +116,7 @@ namespace ServerAppTest.Controllers
         public void Add()
         {
             TestGroupCorrector testGroupCorrector =
-                _controller.Add(_testGroup, _corrector).Value as TestGroupCorrector;
+                _controller._Add(_testGroup, _corrector);
 
             _testGroupCorrectorRepository.Refresh(testGroupCorrector);
 
@@ -129,11 +128,11 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Try_AddSameCorrectorTwoTime_ShouldThrowError()
         {
-            _controller.Add(_testGroup, _corrector);
+            _controller._Add(_testGroup, _corrector);
 
             InvalidValueException ex =
                 Assert.Throws<InvalidValueException>(
-                    () => _controller.Add(_testGroup, _corrector)
+                    () => _controller._Add(_testGroup, _corrector) 
                 );
             
             Assert.AreEqual("{testGroupCorrector.constraints.uniqueCorrector}", ex.Message);
@@ -143,8 +142,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            TestGroupCorrector testGroupCorrector = _controller.Add(_testGroup, _corrector).Value
-                as TestGroupCorrector;
+            TestGroupCorrector testGroupCorrector = _controller._Add(_testGroup, _corrector);
 
             _controller.Delete(testGroupCorrector);
             Assert.False(_testGroupCorrectorRepository.Exists(testGroupCorrector));

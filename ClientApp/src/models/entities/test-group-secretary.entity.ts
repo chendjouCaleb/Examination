@@ -12,12 +12,9 @@ export class TestGroupSecretary extends Entity<number> {
     this.paperCount = value.paperCount;
 
     this.secretaryId = value.secretaryId;
-    this.secretary = value.secretary;
 
     this.testGroupId = value.testGroupId;
-    this.testGroup = value.testGroup;
   }
-
 
   secretaryId: number;
   secretary: Secretary;

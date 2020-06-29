@@ -3,6 +3,10 @@ import {Room} from './room.entity';
 import {Group} from './group.entity';
 import {Test} from './test.entity';
 import {LocalTime} from "@js-joda/core";
+import {List} from "@positon/collections";
+import {TestGroupCorrector} from "./test-group-corrector.entity";
+import {TestGroupSupervisor} from "./test-group-supervisor.entity";
+import {TestGroupSecretary} from "./test-group-secretary.entity";
 
 export class TestGroup extends Entity<number> {
   constructor(value: any = {}) {
@@ -42,6 +46,10 @@ export class TestGroup extends Entity<number> {
   state: string;
 
   isCorrected: boolean;
+
+  testGroupCorrectors = new List<TestGroupCorrector>();
+  testGroupSupervisors = new List<TestGroupSupervisor>();
+  testGroupSecretaries = new List<TestGroupSecretary>();
 
   get expectedStartHour(): LocalTime {
     return LocalTime.of(this.startDate.getHours(), this.startDate.getMinutes())

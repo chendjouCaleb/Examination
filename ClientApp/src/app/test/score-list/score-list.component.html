@@ -1,6 +1,11 @@
-﻿<div class="text-right">
-  <MsfButton theme="primary" Icon="Add" (click)="add()">Ajouter un ligne</MsfButton>
+﻿<div class="d-flex justify-content-between align-items-center">
+  <h5>Barème de notation</h5>
+  <div class="text-right">
+    <MsfButton theme="primary" Icon="Add" (click)="add()">Ajouter une ligne</MsfButton>
+  </div>
 </div>
+
+
 
 <msAlert *ngIf="test.radical !== test.totalScoreRadical" theme="error" class="my-1">
   Le total des radicaux des lignes du barème ne correspondent pas au radical de l'épreuve. Ajouter des lignes supplémentaires

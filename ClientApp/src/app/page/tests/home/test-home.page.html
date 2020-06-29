@@ -7,7 +7,13 @@
     <app-icon icon="CheckMark"></app-icon>
   </labelled>
 
-  <div *ngFor="let item of test.testGroups">{{item.id}}:{{item.group.speciality?.name}}: {{item.test.speciality.name}}</div>
+  <div *ngFor="let item of test.testGroups">
+    <div class="d-flex justify-content-between p-2 mt-2" style="background: var(--cardBackgroundColor)">
+      <h6>{{item.group.name}}</h6>
+      <MsfButton theme="primary" (click)="_testService.testGroupDetails(item)">Détails</MsfButton>
+    </div>
+
+  </div>
 
   <app-score-list [test]="test"></app-score-list>
 </app-test-layout>

@@ -11,7 +11,7 @@ export class TestHomePage implements OnInit{
   test: Test;
 
   constructor(currentItems: CurrentItems,
-              private _testService: TestService,
+              public _testService: TestService,
               private _scoreLoader: ScoreLoader,
               private _testGroupLoader: TestGroupLoader) {
     this.test = currentItems.get('test');

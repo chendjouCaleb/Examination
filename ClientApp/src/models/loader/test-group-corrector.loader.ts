@@ -3,9 +3,9 @@ import {EntityLoader} from './entity-loader.interface';
 import {TestLoader} from './test.loader';
 import {CorrectorLoader} from './corrector.loader';
 import {TestGroupCorrectorHttpClient} from "../httpClient";
-import {TestGroupCorrector} from "../entities";
+import {TestGroup, TestGroupCorrector} from "../entities";
 import {TestGroupLoader} from "./test-group.loader";
-
+import {List} from "@positon/collections";
 
 
 @Injectable({providedIn: 'root'})
@@ -36,5 +36,12 @@ export class TestGroupCorrectorLoader implements EntityLoader<TestGroupCorrector
     return item;
   }
 
+  async loadByTestGroup(testGroup: TestGroup): Promise<List<TestGroupCorrector>> {
+    const testGroupCorrectors = await this.testGroupCorrectorRepository.listByTestGroup(testGroup);
+    for (const item of testGroupCorrectors) {
+      await this.load(item);
+    }
+    return testGroupCorrectors;
+  }
 
 }

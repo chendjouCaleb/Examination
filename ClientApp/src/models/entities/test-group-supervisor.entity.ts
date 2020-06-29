@@ -13,10 +13,8 @@ export class TestGroupSupervisor extends Entity<number> {
     this.isPrincipal = value.isPrincipal;
 
     this.supervisorId = value.supervisorId;
-    this.supervisor = value.supervisor;
 
     this.testGroupId = value.testGroupId;
-    this.testGroup = value.testGroup;
   }
 
 

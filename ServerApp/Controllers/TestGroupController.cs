@@ -17,12 +17,16 @@ namespace Exam.Controllers
     public class TestGroupController : Controller
     {
         private readonly IRepository<TestGroup, long> _testGroupRepository;
+        private readonly IRepository<Test, long> _testRepository;
         private readonly PaperController _paperController;
 
 
-        public TestGroupController(IRepository<TestGroup, long> testGroupRepository, PaperController paperController)
+        public TestGroupController(IRepository<TestGroup, long> testGroupRepository, 
+            IRepository<Test, long> testRepository, 
+            PaperController paperController)
         {
             _testGroupRepository = testGroupRepository;
+            _testRepository = testRepository;
             _paperController = paperController;
         }
 
@@ -39,28 +43,29 @@ namespace Exam.Controllers
         public IEnumerable<TestGroup> List(Test test, Group group, Room room,
             [FromQuery] string state, [FromQuery] uint skip = 0, [FromQuery] uint take = 10)
         {
-            _testGroupRepository.DeleteAll();
-            
-            
-            
             IQueryable<TestGroup> queryable = _testGroupRepository.Set;
+            //_testGroupRepository.DeleteAll();
+//            foreach (Test t in _testRepository.List())
+//            {
+//                if (t.Speciality == null)
+//                {
+//                    foreach (Group g  in t.Examination.Groups)
+//                    {
+//                        _Add(t, g, g.Room);
+//                    }
+//                }
+//                else
+//                {
+//                    foreach (Group g  in t.Speciality.Groups)
+//                    {
+//                       _Add(t, g, g.Room);
+//                    }
+//                }
+//                
+//            }
 
             if (test != null)
             {
-                if (test.Speciality == null)
-                {
-                    foreach (Group g  in test.Examination.Groups)
-                    {
-                        _Add(test, g, g.Room);
-                    }
-                }
-                else
-                {
-                    foreach (Group g  in test.Speciality.Groups)
-                    {
-                         _Add(test, g, g.Room);
-                    }
-                }
                 queryable = queryable.Where(g => test.Equals(g.Test));
             }
 
@@ -121,10 +126,6 @@ namespace Exam.Controllers
                 throw new IncompatibleEntityException<Test, Group>(test, group);
             }
             
-            if (group.Speciality != null  && !group.Speciality.Equals(test.Speciality))
-            {
-                throw new IncompatibleEntityException<Test, Group>(test, group);
-            }
             
             TestGroup testGroup = new TestGroup
             {

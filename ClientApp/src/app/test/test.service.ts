@@ -1,36 +1,49 @@
 ﻿import {Injectable} from "@angular/core";
 import {AlertEmitter, Confirmation} from "examination/controls";
-import {Examination, Score, ScoreHttpClient, Speciality, Test, TestHttpClient} from "examination/models";
+import {
+  Examination,
+  Score,
+  ScoreHttpClient,
+  Speciality,
+  Test,
+  TestGroup,
+  TestGroupCorrector, TestGroupSecretary, TestGroupSupervisor,
+  TestHttpClient
+} from "examination/models";
 import {MsfModal} from "fabric-docs";
 import {TestAddComponent} from "examination/app/test/add/test-add.component";
-import {Observable, of, ReplaySubject} from "rxjs";
+import {Observable, ReplaySubject} from "rxjs";
 import {TestEditDateComponent} from "examination/app/test/date/test-edit-date.component";
 import {TestEditComponent} from "examination/app/test/edit/test-edit.component";
 import {ScoreAddComponent} from "examination/app/test/score-add/score-add.component";
+import {TestGroupItemComponent} from "examination/app/test/test-group-item/test-group-item.component";
+import {ITestService} from "examination/app/test/test.service.interface";
+import {List} from "@positon/collections";
+import {TestGroupCorrectorAddComponent} from "examination/app/test/add-test-group-corrector/test-group-corrector-add.component";
 
 @Injectable({
   providedIn: 'root'
 })
-export class TestService {
+export class TestService implements ITestService {
 
   get onremove(): Observable<Test> {
     return this._onremove.asObservable();
   };
 
-  private _onremove = new ReplaySubject<Test>();
+  _onremove = new ReplaySubject<Test>();
 
   get onnew(): Observable<Test> {
     return this._onnew.asObservable();
   };
 
-  private _onnew = new ReplaySubject<Test>();
+  _onnew = new ReplaySubject<Test>();
 
-  constructor(private _alert: AlertEmitter,
-              private _confirmation: Confirmation,
-              private _alertEmitter: AlertEmitter,
-              private _modal: MsfModal,
-              private _httpClient: TestHttpClient,
-              private _scoreHttpClient: ScoreHttpClient) {
+  constructor(public _alert: AlertEmitter,
+              public _confirmation: Confirmation,
+              public _alertEmitter: AlertEmitter,
+              public _modal: MsfModal,
+              public _httpClient: TestHttpClient,
+              public _scoreHttpClient: ScoreHttpClient) {
   }
 
   add(examination: Examination, speciality?: Speciality): Observable<Test> {
@@ -57,7 +70,7 @@ export class TestService {
   }
 
   setAnonymous(test: Test): Promise<Test> {
-    return new Promise<Test> (subscriber => {
+    return new Promise<Test>(subscriber => {
       const confirm = this._confirmation.open("Rendre cet épreuve anonyme?");
       confirm.accept.subscribe(async () => {
         await this._httpClient.anonymous(test);
@@ -105,5 +118,29 @@ export class TestService {
     });
   }
 
+
+  testGroupDetails(testGroup: TestGroup) {
+    const modalRef = this._modal.open(TestGroupItemComponent,
+      {
+        panelClass: 'msf-modal-portal',
+        autoFocus: false
+      });
+    modalRef.componentInstance.testGroup = testGroup;
+  }
+
+  addTestGroupCorrectors(testGroup: TestGroup): Observable<List<TestGroupCorrector>> {
+    const modalRef = this._modal.open(TestGroupCorrectorAddComponent, {disableClose: true});
+    modalRef.componentInstance.testGroup = testGroup;
+
+    return modalRef.afterClosed()
+  }
+
+  addTestGroupSecretaries(testGroup: TestGroup): Observable<List<TestGroupSecretary>> {
+    return undefined;
+  }
+
+  addTestGroupSupervisors(testGroup: TestGroup): Observable<List<TestGroupSupervisor>> {
+    return undefined;
+  }
 
 }

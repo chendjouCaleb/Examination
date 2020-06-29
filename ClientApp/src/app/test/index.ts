@@ -8,4 +8,5 @@ export * from './list/test-list.component';
 export * from './date/test-edit-date.component';
 export * from './score-add/score-add.component';
 export * from './score-form';
+export * from './test.service.interface';
 

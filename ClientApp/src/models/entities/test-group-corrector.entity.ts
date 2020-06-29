@@ -12,10 +12,8 @@ export class TestGroupCorrector extends Entity<number> {
     this.paperCount = value.paperCount;
 
     this.correctorId = value.correctorId;
-    this.corrector = value.corrector;
 
     this.testGroupId = value.testGroupId;
-    this.testGroup = value.testGroup;
   }
 
 
