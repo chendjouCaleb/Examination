@@ -17,13 +17,13 @@
         <msAlert theme="severeWarning" class="mt-2">Ce groupe n'a pas de surveillant.</msAlert>
         <MsfTable class="mt-2">
           <MsfTableRow *ngFor="let item of testGroup.testGroupCorrectors" [value]="item">
-            <MsfTableCell>
+            <MsfTableCell class="py-1">
               <MsfPersona size="size32">
                 <MsfPersonaFigure [text]="item.corrector.user.fullName"></MsfPersonaFigure>
                 <MsfPersonaText>{{item.corrector.user.fullName}}</MsfPersonaText>
               </MsfPersona>
             </MsfTableCell>
-            <MsfTableCell>
+            <MsfTableCell class="py-1">
               <i class="ms-Icon ms-Icon--More p-2" [MsfMenuTrigger]="correctorMore" style="cursor:pointer"></i>
               <MsfMenu #correctorMore>
                 <MsfMenuItem icon="Delete" theme="error" (click)="service.removeTestGroupCorrector(testGroup, item)">Supprimer</MsfMenuItem>

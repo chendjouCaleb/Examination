@@ -8,6 +8,7 @@ using Exam.Entities;
 using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -17,13 +18,16 @@ namespace Exam.Controllers
     public class TestGroupSecretaryController : Controller
     {
         private readonly IRepository<TestGroupSecretary, long> _testGroupSecretaryRepository;
+        private readonly IRepository<Secretary, long> _secretaryRepository;
         private readonly ILogger<TestGroupSecretaryController> _logger;
 
 
         public TestGroupSecretaryController(IRepository<TestGroupSecretary, long> testGroupSecretaryRepository, 
+            IRepository<Secretary, long> secretaryRepository,
             ILogger<TestGroupSecretaryController> logger)
         {
             _testGroupSecretaryRepository = testGroupSecretaryRepository;
+            _secretaryRepository = secretaryRepository;
             _logger = logger;
         }
 
@@ -55,16 +59,42 @@ namespace Exam.Controllers
             queryable = queryable.Skip(skip).Take(take);
             return queryable.ToList();
         }
-
-
+        
+        
         [HttpPost]
         [RequireQueryParameter("testGroupId")]
         [RequireQueryParameter("secretaryId")]
-        [LoadTestGroup(TestItemName = "test", ExaminationItemName = "examination")]
+        [LoadTestGroup(Source = ParameterSource.Query, TestItemName = "test", ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        [PeriodHaveState(ItemName = "test", State = "PENDING")]
-        [LoadSecretary(Source = ParameterSource.Query)]
-        public CreatedAtActionResult Add(TestGroup testGroup, Secretary secretary)
+        
+        public ObjectResult Add(TestGroup testGroup, [FromQuery] long[] secretaryId)
+        {
+            List<long> ids = new List<long>();
+
+            foreach (var id in secretaryId)
+            {
+                if(!_testGroupSecretaryRepository.Exists(s => testGroup.Equals(s.TestGroup) && s.SecretaryId == id))
+                {
+                    ids.Add(id);
+                }
+            }
+            
+            List<TestGroupSecretary> secretarys = new List<TestGroupSecretary>();
+
+            foreach (var id in ids)
+            {
+                secretarys.Add(Add(testGroup, id));
+            }
+
+            return StatusCode(StatusCodes.Status201Created, secretarys);
+        }
+
+        public TestGroupSecretary Add(TestGroup testGroup, long id)
+        {
+            return Add(testGroup, _secretaryRepository.Find(id));
+        }
+        
+        public TestGroupSecretary Add(TestGroup testGroup, Secretary secretary)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             Assert.RequireNonNull(secretary, nameof(secretary));
@@ -90,7 +120,7 @@ namespace Exam.Controllers
             testGroupSecretary = _testGroupSecretaryRepository.Save(testGroupSecretary);
 
             _logger.LogInformation($"New testGroupSecretary: {testGroupSecretary}");
-            return CreatedAtAction("Find", new {testGroupSecretary.Id}, testGroupSecretary);
+            return testGroupSecretary;
         }
 
 

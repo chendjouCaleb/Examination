@@ -115,8 +115,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            TestGroupSecretary testGroupSecretary =
-                _controller.Add(_testGroup, _secretary).Value as TestGroupSecretary;
+            TestGroupSecretary testGroupSecretary = _controller.Add(_testGroup, _secretary);
 
             _testGroupSecretaryRepository.Refresh(testGroupSecretary);
 
@@ -142,8 +141,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            TestGroupSecretary testGroupSecretary = _controller.Add(_testGroup, _secretary).Value
-                as TestGroupSecretary;
+            TestGroupSecretary testGroupSecretary = _controller.Add(_testGroup, _secretary);
 
             _controller.Delete(testGroupSecretary);
             Assert.False(_testGroupSecretaryRepository.Exists(testGroupSecretary));
