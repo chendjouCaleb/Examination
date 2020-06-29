@@ -19,15 +19,18 @@ namespace Exam.Controllers
     {
         private readonly IRepository<TestGroupSupervisor, long> _testGroupSupervisorRepository;
         private readonly IRepository<TestGroup, long> _testGroupRepository;
+        private readonly IRepository<Supervisor, long> _supervisorRepository;
         private readonly ILogger<TestGroupSupervisorController> _logger;
 
         public TestGroupSupervisorController(
             IRepository<TestGroupSupervisor, long> testGroupSupervisorRepository, 
             IRepository<TestGroup, long> testGroupRepository, 
+            IRepository<Supervisor, long> supervisorRepository,
             ILogger<TestGroupSupervisorController> logger)
         {
             _testGroupSupervisorRepository = testGroupSupervisorRepository;
             _testGroupRepository = testGroupRepository;
+            _supervisorRepository = supervisorRepository;
             _logger = logger;
         }
 
@@ -58,16 +61,43 @@ namespace Exam.Controllers
             queryable = queryable.Skip(skip).Take(take);
             return queryable.ToList();
         }
-
-
+        
         [HttpPost]
         [RequireQueryParameter("testGroupId")]
         [RequireQueryParameter("supervisorId")]
-        [LoadTestGroup(TestItemName = "test", ExaminationItemName = "examination")]
+        [LoadTestGroup(Source = ParameterSource.Query, TestItemName = "test", ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        [LoadSupervisor(Source = ParameterSource.Query)]
         [PeriodHaveState(ItemName = "test", State = "PENDING")]
-        public CreatedAtActionResult Add(TestGroup testGroup, Supervisor supervisor, [FromQuery] bool isPrincipal = false)
+        public ObjectResult Add(TestGroup testGroup, [FromQuery] long[] supervisorId)
+        {
+            List<long> ids = new List<long>();
+
+            foreach (var id in supervisorId)
+            {
+                if(!_testGroupSupervisorRepository.Exists(s => testGroup.Equals(s.TestGroup) && s.SupervisorId == id))
+                {
+                    ids.Add(id);
+                }
+            }
+            
+            List<TestGroupSupervisor> supervisors = new List<TestGroupSupervisor>();
+
+            foreach (var id in ids)
+            {
+                supervisors.Add(_Add(testGroup, id));
+            }
+
+            return StatusCode(StatusCodes.Status201Created, supervisors);
+        }
+
+
+        public TestGroupSupervisor _Add(TestGroup testGroup, long supervisorId)
+        {
+            return Add(testGroup, _supervisorRepository.Find(supervisorId));
+        }
+        
+        
+        public TestGroupSupervisor Add(TestGroup testGroup, Supervisor supervisor, [FromQuery] bool isPrincipal = false)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             Assert.RequireNonNull(supervisor, nameof(supervisor));
@@ -94,7 +124,7 @@ namespace Exam.Controllers
             testGroupSupervisor = _testGroupSupervisorRepository.Save(testGroupSupervisor);
 
             _logger.LogInformation($"New testGroupSupervisor: {testGroupSupervisor}");
-            return CreatedAtAction("Find", new {testGroupSupervisor.Id}, testGroupSupervisor);
+            return testGroupSupervisor;
         }
 
 
