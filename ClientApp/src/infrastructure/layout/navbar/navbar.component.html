@@ -31,7 +31,7 @@
 
   <span (click)="buttonClick.emit('account')" class="navbar-button navbar-personna" id="account-panel-button">
     <MsfPersona size="size40">
-      <MsfPersonaFigure [text]="authManager.user.fullName"></MsfPersonaFigure>
+      <MsfPersonaFigure [imageUrl]="authManager.user.imageUrl"></MsfPersonaFigure>
     </MsfPersona>
     </span>
 </div>

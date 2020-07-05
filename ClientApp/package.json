@@ -29,6 +29,7 @@
     "class-validator": "^0.11.0",
     "cleave.js": "^1.6.0",
     "core-js": "^3.6.5",
+    "express": "4.17.1",
     "fabric-docs": "^0.0.8",
     "ngx-mask": "^9.1.2",
     "ngx-moment": "^3.5.0",

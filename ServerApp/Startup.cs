@@ -58,7 +58,7 @@ namespace ServerApp
             {
                 options.AddPolicy("corsPolicy", policy =>
                 {
-                    policy.WithOrigins("http://localhost:9200", "http://localhost:9000");
+                    policy.WithOrigins("http://localhost:9200", "http://localhost:9000", "http://localhost:9100");
                     //policy.AllowAnyOrigin();
                     policy.AllowAnyHeader();
                     policy.AllowAnyMethod();

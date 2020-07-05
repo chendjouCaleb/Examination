@@ -16,7 +16,7 @@
       <MsfTableRow *ngFor="let item of testGroup.testGroupCorrectors" [value]="item">
         <MsfTableCell class="py-1">
           <MsfPersona size="size32">
-            <MsfPersonaFigure [text]="item.corrector.user.fullName"></MsfPersonaFigure>
+            <MsfPersonaFigure [imageUrl]="item.corrector.user.imageUrl" ></MsfPersonaFigure>
             <MsfPersonaText>{{item.corrector.user.fullName}}</MsfPersonaText>
           </MsfPersona>
         </MsfTableCell>

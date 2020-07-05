@@ -192,4 +192,22 @@ export class TestService implements ITestService {
     });
   }
 
+
+  setPrincipal(testGroupSupervisor: TestGroupSupervisor): Promise<void> {
+    let message = "Rendre ce surveillant comme principal pour groupe?";
+    if(testGroupSupervisor.isPrincipal) {
+      message = "Enlever le statut de principal à ce surveillant pour ce groupe?"
+    }
+
+
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open(message);
+      confirm.accept.subscribe(async () => {
+        await this._testGroupSupervisorHttpClient.principalState(testGroupSupervisor);
+        testGroupSupervisor.isPrincipal = !testGroupSupervisor.isPrincipal;
+        this._alertEmitter.info(`Modification de statut effectuée`);
+        resolve();
+      });
+    });
+  }
 }

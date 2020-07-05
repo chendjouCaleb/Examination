@@ -49,4 +49,7 @@ export interface ITestService {
 
   removeTestGroupSecretary(testGroup: TestGroup, testGroupSecretary: TestGroupSecretary):Promise<void>;
 
+  setPrincipal(testGroupSupervisor: TestGroupSupervisor);
+
+
 }

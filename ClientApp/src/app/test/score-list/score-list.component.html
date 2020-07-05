@@ -26,10 +26,9 @@
       <MsfTableCell>{{item.radical}}</MsfTableCell>
 
       <MsfTableCell class="text-right">
-        <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"
-                       *ngIf="test.examination?.userPrincipal?.isPrincipal"></MsfIconButton>
+        <span class="ml-2 ms-Icon ms-Icon--More ms-pointer" [MsfMenuTrigger]="more"
+                       *ngIf="test.examination?.userPrincipal?.isPrincipal"></span>
         <MsfMenu #more>
-
           <MsfMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsfMenuItem>
         </MsfMenu>
 

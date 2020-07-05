@@ -15,7 +15,7 @@ export class User extends Entity<string> {
   phoneNumber: string;
 
   imageName: string;
-  imageURL: string;
+  imageUrl: string;
 
   country: string;
   state: string;
@@ -55,7 +55,7 @@ export class User extends Entity<string> {
     account.phoneNumber = value.phoneNumber;
 
     account.imageName = value.imageName;
-    account.imageURL = value.imageURL;
+    account.imageUrl = value.imageUrl;
 
     account.country = value.country;
     account.state = value.state;
@@ -69,8 +69,8 @@ export class User extends Entity<string> {
     account.aboutMe = value.aboutMe;
     account.website = value.website;
 
-    if (!account.imageURL) {
-      account.imageURL = 'assets/default-account.png';
+    if (!account.imageUrl) {
+      account.imageUrl = 'assets/default-account.png';
     }
 
     return account;

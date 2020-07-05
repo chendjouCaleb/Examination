@@ -30,4 +30,7 @@ export class TestGroupSupervisorHttpClient extends GenericHttpClient<TestGroupSu
     return this.add({}, {testGroupId: testGroup.id, supervisorId: supervisor.id, isPrincipal});
   }
 
+  principalState(testGroupSupervisor: TestGroupSupervisor): Promise<void> {
+    return this.httpClient.put<void>(`${this.url}/${testGroupSupervisor.id}/principal`, {}).toPromise();
+  }
 }

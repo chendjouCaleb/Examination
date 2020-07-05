@@ -59,4 +59,8 @@ export class TestGroup extends Entity<number> {
     return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes())
   }
 
+
+  get hasPrincipalSupervisor(): boolean {
+    return this.testGroupSupervisors.exists(t => t.isPrincipal);
+  }
 }

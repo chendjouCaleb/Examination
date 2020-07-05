@@ -32,6 +32,7 @@ import {TestGroupSupervisorListComponent} from "./test-group-supervisor-list/tes
 import {TestGroupSupervisorAddComponent} from "./test-group-supervisor-add/test-group-supervisor-add.component";
 import {TestGroupSecretaryAddComponent} from "./test-group-secretary-add/test-group-secretary-add.component";
 import {TestGroupSecretaryListComponent} from "./test-group-secretary-list/test-group-secretary-list.component";
+import {LayoutModule} from "examination/infrastructure";
 
 @NgModule({
   declarations: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent,
@@ -50,7 +51,7 @@ import {TestGroupSecretaryListComponent} from "./test-group-secretary-list/test-
     CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfCheckboxModule, MsfTableModule,
     ControlModule, MsfModalModule, MsfSelectModule, UserPickerModule, MsfMenuModule, ControlModule,
     MsfIconModule, MsfPersonaModule, MsfButtonModule, MomentModule, ExaminationModule,
-    RouterModule, MsfTabModule
+    RouterModule, MsfTabModule, LayoutModule
   ]
 })
 export class TestModule {
