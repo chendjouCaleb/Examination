@@ -810,7 +810,7 @@
                 <e p="test-group-supervisor-list.component.ts" t="Include" />
               </e>
               <e p="test-group.hub.ts" t="Include" />
-              <e p="test-hub.ts" t="Include" />
+              <e p="test.hub.ts" t="Include" />
               <e p="test.module.ts" t="Include" />
               <e p="test.resolver.ts" t="Include" />
               <e p="test.service.interface.ts" t="Include" />
@@ -1174,7 +1174,6 @@
           <e p="TestGroupSupervisor.cs" t="Include" />
           <e p="UserExamination.cs" t="Include" />
           <e p="UserOrganisation.cs" t="Include" />
-          <e p="UserTest.cs" t="Include" />
         </e>
         <e p="Filters" t="Include">
           <e p="PeriodDontHaveStatecs.cs" t="Include" />
@@ -1271,6 +1270,8 @@
             <e p="OrganisationRepository.cs" t="Include" />
             <e p="PrincipalRepository.cs" t="Include" />
             <e p="SpecialityRepository.cs" t="Include" />
+            <e p="TestGroupRepository.cs" t="Include" />
+            <e p="TestRepository.cs" t="Include" />
           </e>
           <e p="RepositoryServices.cs" t="Include" />
         </e>

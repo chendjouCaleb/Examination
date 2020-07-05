@@ -36,10 +36,16 @@ namespace Exam.Persistence
             services.AddTransient<IRepository<TestGroupSupervisor, long>, Repository<TestGroupSupervisor, long>>();
             services.AddTransient<IRepository<TestGroupSecretary, long>, Repository<TestGroupSecretary, long>>();
             services.AddTransient<IRepository<TestGroupCorrector, long>, Repository<TestGroupCorrector, long>>();
-            services.AddTransient<IRepository<Test, long>, Repository<Test, long>>();
+            
+            services.AddTransient<IRepository<Test, long>, TestRepository>();
+            services.AddTransient<ITestRepository, TestRepository>();
+            
             services.AddTransient<IRepository<Score, long>, Repository<Score, long>>();
             services.AddTransient<IRepository<ScorePaper, long>, Repository<ScorePaper, long>>();
-            services.AddTransient<IRepository<TestGroup, long>, Repository<TestGroup, long>>();
+            
+            services.AddTransient<IRepository<TestGroup, long>, TestGroupRepository>();
+            services.AddTransient<ITestGroupRepository, TestGroupRepository>();
+            
             services.AddTransient<IRepository<Application, long>, Repository<Application, long>>();
             services.AddTransient<IRepository<Secretary, long>, Repository<Secretary, long>>();
         }

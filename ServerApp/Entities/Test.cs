@@ -87,5 +87,23 @@ namespace Exam.Entities
                 return PeriodState.PROGRESS;
             }
         }
+
+        [NotMapped]
+        public UserTest UserTest { get; set; }
+    }
+    
+    
+    public class UserTest
+    {
+        public bool IsCorrector { get; set; }
+        public bool IsSupervisor { get; set; }
+        public bool IsSecretary { get; set; }
+        public bool IsStudent { get; set; }
+    }
+
+
+    public class TestStatistics
+    {
+        public int Presence { get; set; }
     }
 }

@@ -63,4 +63,12 @@ export class TestGroup extends Entity<number> {
   get hasPrincipalSupervisor(): boolean {
     return this.testGroupSupervisors.exists(t => t.isPrincipal);
   }
+
+}
+
+export interface UserTestGroup {
+  isCorrector: boolean;
+  isSupervisor: boolean;
+  isSecretary: boolean;
+  isStudent: boolean;
 }

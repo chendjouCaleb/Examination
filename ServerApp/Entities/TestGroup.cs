@@ -44,8 +44,18 @@ namespace Exam.Entities
         [JsonIgnore] 
         public virtual List<TestGroupCorrector> TestGroupCorrectors { get; set; }
         
-        
-        
-        
+    }
+    
+    public class UserTestGroup
+    {
+        public bool IsCorrector { get; set; }
+        public bool IsSupervisor { get; set; }
+        public bool IsSecretary { get; set; }
+        public bool IsStudent { get; set; }
+    }
+    
+    public class TestGroupStatistics
+    {
+        public int Presence { get; set; }
     }
 }

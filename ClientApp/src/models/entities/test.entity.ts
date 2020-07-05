@@ -118,3 +118,11 @@ export class Test extends Entity<number> {
   }
 
 }
+
+
+export interface UserTest {
+  isCorrector: boolean;
+  isSupervisor: boolean;
+  isSecretary: boolean;
+  isStudent: boolean;
+}
