@@ -10,6 +10,8 @@ using Exam.Infrastructure;
 using Exam.Loaders;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using ServerApp.Hubs;
 
 namespace Exam.Controllers
 {
@@ -17,16 +19,16 @@ namespace Exam.Controllers
     public class TestGroupController : Controller
     {
         private readonly IRepository<TestGroup, long> _testGroupRepository;
-        private readonly IRepository<Test, long> _testRepository;
         private readonly PaperController _paperController;
+        private readonly IHubContext<TestGroupHub, ITestGroupHub> _testGroupHub;
 
 
         public TestGroupController(IRepository<TestGroup, long> testGroupRepository, 
-            IRepository<Test, long> testRepository, 
+            IHubContext<TestGroupHub, ITestGroupHub> testGroupHub, 
             PaperController paperController)
         {
             _testGroupRepository = testGroupRepository;
-            _testRepository = testRepository;
+            _testGroupHub = testGroupHub;
             _paperController = paperController;
         }
 
@@ -180,6 +182,7 @@ namespace Exam.Controllers
             
             testGroup.StartDate = DateTime.Now;
             _testGroupRepository.Update(testGroup);
+            _testGroupHub.Clients.All.TestGroupStarted(testGroup);
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -197,6 +200,7 @@ namespace Exam.Controllers
             }  
             testGroup.EndDate = DateTime.Now;
             _testGroupRepository.Update(testGroup);
+            _testGroupHub.Clients.All.TestGroupEnded(testGroup);
             return StatusCode(StatusCodes.Status202Accepted);
         }
         
@@ -215,6 +219,7 @@ namespace Exam.Controllers
             
             testGroup.EndDate = null;
             _testGroupRepository.Update(testGroup);
+            _testGroupHub.Clients.All.TestGroupRestarted(testGroup);
             return StatusCode(StatusCodes.Status202Accepted);
         }
 

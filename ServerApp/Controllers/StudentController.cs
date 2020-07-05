@@ -179,11 +179,7 @@ namespace Exam.Controllers
 
         public void CheckGroup(Group group, Examination examination)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-
+            if (group == null) throw new ArgumentNullException(nameof(group));
             if (examination == null) throw new ArgumentNullException(nameof(examination));
             if (examination.Equals(group.Examination))
             {

@@ -6,12 +6,12 @@ namespace ServerApp.Hubs
 {
     public interface ITestGroupHub
     {
-        Task TestStarted(TestGroup testGroup);
+        Task TestGroupStarted(TestGroup testGroup);
 
-        Task TestEnded(TestGroup testGroup);
+        Task TestGroupEnded(TestGroup testGroup);
 
-        Task TestRestarted(TestGroup testGroup);
+        Task TestGroupRestarted(TestGroup testGroup);
     }
     
-    public class TestGroupHub: Hub<ITestHub> {}
+    public class TestGroupHub: Hub<ITestGroupHub> {}
 }

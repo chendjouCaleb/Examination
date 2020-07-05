@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
@@ -14,7 +13,8 @@ using Exam.Loaders;
 using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.SignalR;
+using ServerApp.Hubs;
 
 namespace Exam.Controllers
 {
@@ -25,17 +25,21 @@ namespace Exam.Controllers
         private IRepository<Examination, long> _examinationRepository;
         private IRepository<Student, long> _studentRepository;
         private TestGroupController _testGroupController;
+        private readonly IHubContext<TestHub, ITestHub> _testHub;
 
 
         public TestController(IRepository<Test, long> testRepository,
             IRepository<Student, long> studentRepository,
             TestGroupController testGroupController,
-            IRepository<Examination, long> examinationRepository)
+            IRepository<Examination, long> examinationRepository,
+            IHubContext<TestHub, ITestHub> testHub)
         {
             _studentRepository = studentRepository;
             _testGroupController = testGroupController;
             _testRepository = testRepository;
+            _testHub = testHub;
             _examinationRepository = examinationRepository;
+            
         }
 
 
@@ -184,6 +188,7 @@ namespace Exam.Controllers
             };
 
             _testRepository.Save(test);
+            _testHub.Clients.All.TestCreated(test);
             _examinationRepository.Update(examination);
 
             return CreatedAtAction("Find", new {test.Id}, test);
@@ -226,6 +231,7 @@ namespace Exam.Controllers
             Assert.RequireNonNull(test, nameof(test));
             test.StartDate = DateTime.Now;
             _testRepository.Update(test);
+            _testHub.Clients.All.TestStarted(test);
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -245,6 +251,7 @@ namespace Exam.Controllers
 
             test.EndDate = DateTime.Now;
             _testRepository.Update(test);
+            _testHub.Clients.All.TestEnded(test);
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -265,6 +272,7 @@ namespace Exam.Controllers
 
             test.EndDate = null;
             _testRepository.Update(test);
+            _testHub.Clients.All.TestRestarted(test);
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -381,6 +389,8 @@ namespace Exam.Controllers
             }
 
             _testRepository.Update(test);
+            var a = test.IsClosed ? _testHub.Clients.All.TestPublished(test) : _testHub.Clients.All.TestUnPublished(test);
+
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
@@ -402,6 +412,7 @@ namespace Exam.Controllers
             }
 
             _testRepository.Update(test);
+            var a = test.IsClosed ? _testHub.Clients.All.TestClosed(test) : _testHub.Clients.All.TestOpened(test);
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
@@ -414,6 +425,7 @@ namespace Exam.Controllers
         public NoContentResult Delete(Test test)
         {
             _testRepository.Delete(test);
+            _testHub.Clients.All.TestDeleted(test);
             return NoContent();
         }
     }
