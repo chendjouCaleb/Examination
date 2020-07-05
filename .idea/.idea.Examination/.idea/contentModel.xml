@@ -809,6 +809,7 @@
                 <e p="test-group-supervisor-list.component.html" t="Include" />
                 <e p="test-group-supervisor-list.component.ts" t="Include" />
               </e>
+              <e p="test-group.hub.ts" t="Include" />
               <e p="test-hub.ts" t="Include" />
               <e p="test.module.ts" t="Include" />
               <e p="test.resolver.ts" t="Include" />
