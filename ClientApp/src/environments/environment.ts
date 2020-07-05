@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  HUB_URL: 'http://localhost:9000/hubs',
   SERVER_URL: 'http://localhost:9000/api',
   AUTH_APP_URL: 'http://localhost:4000',
   AUTH_SERVER_URL: 'http://localhost:4000/api',

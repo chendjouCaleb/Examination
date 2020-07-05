@@ -5,6 +5,7 @@ import {CurrentItems} from "examination/app/current-items";
 import {AlertEmitter} from "examination/controls";
 import {Student} from "examination/models";
 import {ReplaySubject} from "rxjs";
+import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class StudentHub {
@@ -16,7 +17,7 @@ export class StudentHub {
 
   constructor(private _items: CurrentItems) {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl(`http://localhost:9000/hubs/students`).build();
+      .withUrl(`${environment.HUB_URL}/students`).build();
 
     this.connection.on("StudentCreated", (student: Student) => {
       this.studentCreated.next(student);
