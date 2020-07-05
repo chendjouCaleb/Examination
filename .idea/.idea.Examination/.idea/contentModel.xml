@@ -1755,6 +1755,8 @@
         <e p="Home" t="Include" />
         <e p="Hubs" t="Include">
           <e p="StudentHub.cs" t="Include" />
+          <e p="TestGroupHub.cs" t="Include" />
+          <e p="TestHub.cs" t="Include" />
         </e>
         <e p="infrastructure" t="Include">
           <e p="AccessTokenValidator.cs" t="Include" />

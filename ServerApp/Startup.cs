@@ -82,6 +82,8 @@ namespace ServerApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<StudentHub>("/hubs/students");
+                endpoints.MapHub<TestHub>("hubs/tests");
+                endpoints.MapHub<TestGroupHub>("hubs/testGroups");
                 endpoints.MapDefaultControllerRoute();
             });
 

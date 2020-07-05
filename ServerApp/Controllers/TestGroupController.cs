@@ -187,7 +187,7 @@ namespace Exam.Controllers
         [LoadTestGroup(TestItemName = "test")]
         [AuthorizeTestGroupSupervisor(Principal = true)]
         [PeriodHaveState(ItemName = "test", State = "PROGRESS")]
-        public StatusCodeResult ENd(TestGroup testGroup)
+        public StatusCodeResult End(TestGroup testGroup)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
 

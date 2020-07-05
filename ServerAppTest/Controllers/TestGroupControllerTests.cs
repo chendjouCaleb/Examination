@@ -145,7 +145,7 @@ namespace ServerAppTest.Controllers
             TestGroup testGroup = _controller._Add(_test, _group, _room);
             _testController.Start(testGroup.Test);
             _controller.Start(testGroup);
-            _controller.ENd(testGroup);
+            _controller.End(testGroup);
             
             _testGroupRepository.Refresh(testGroup);
             
@@ -161,7 +161,7 @@ namespace ServerAppTest.Controllers
             TestGroup testGroup = _controller._Add(_test, _group, _room);
             _testController.Start(testGroup.Test);
             _controller.Start(testGroup);
-            _controller.ENd(testGroup);
+            _controller.End(testGroup);
 
             _controller.Restart(testGroup);
             _testGroupRepository.Refresh(testGroup);
