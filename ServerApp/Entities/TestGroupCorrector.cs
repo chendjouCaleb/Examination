@@ -9,10 +9,12 @@ namespace Exam.Entities
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class TestGroupCorrector : Entity<long>
     {
+        [JsonIgnore]
         public virtual Corrector Corrector { get; set; }
         public long? CorrectorId { get; set; }
         
 
+        [JsonIgnore]
         public virtual TestGroup TestGroup { get; set; }
         public long TestGroupId { get; set; }
 

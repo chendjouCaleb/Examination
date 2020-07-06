@@ -64,12 +64,15 @@ namespace Exam.Entities
         public int PaperCount;
 
 
-        [NotMapped] public bool MultipleScore => Scores != null && Scores.Count > 0; 
+        [NotMapped] 
+        [JsonIgnore]
+        public bool MultipleScore => Scores != null && Scores.Count > 0; 
 
         [NotMapped]
         public string State => this.GetState();
         
         [NotMapped]
+        [JsonIgnore]
         public string GroupsState
         {
             get

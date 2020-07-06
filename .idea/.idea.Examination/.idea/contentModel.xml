@@ -1143,6 +1143,7 @@
           <e p="TestGroupCorrectorController.cs" t="Include" />
           <e p="TestGroupSecretaryController.cs" t="Include" />
           <e p="TestGroupSupervisorController.cs" t="Include" />
+          <e p="UserController.cs" t="Include" />
           <e p="UserExaminationController.cs" t="Include" />
           <e p="UserOrganisationController.cs" t="Include" />
         </e>
@@ -1253,6 +1254,7 @@
           <e p="StudentForm.cs" t="Include" />
           <e p="TestForm.cs" t="Include" />
           <e p="TestGroupForm.cs" t="Include" />
+          <e p="UserModel.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
