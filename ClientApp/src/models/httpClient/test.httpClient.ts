@@ -57,7 +57,7 @@ export class TestHttpClient extends GenericHttpClient<Test, number> {
     return this.httpClient.put<void>(`${this.url}/${test.id}/end`, {}).toPromise();
   }
 
-  closed(test: Test): Promise<void> {
+  changeCloseState(test: Test): Promise<void> {
     return this.httpClient.put<void>(`${this.url}/${test.id}/closed`, {}).toPromise();
   }
 

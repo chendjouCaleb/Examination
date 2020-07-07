@@ -33,6 +33,8 @@ import {TestGroupSupervisorAddComponent} from "./test-group-supervisor-add/test-
 import {TestGroupSecretaryAddComponent} from "./test-group-secretary-add/test-group-secretary-add.component";
 import {TestGroupSecretaryListComponent} from "./test-group-secretary-list/test-group-secretary-list.component";
 import {LayoutModule} from "examination/infrastructure";
+import {TEST_GROUP_SERVICE_TOKEN} from "./test-group.service.interface";
+import {TestGroupService} from "./test-group.service";
 
 @NgModule({
   declarations: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent,
@@ -45,7 +47,9 @@ import {LayoutModule} from "examination/infrastructure";
     TestGroupCorrectorAddComponent, TestGroupCorrectorListComponent, TestGroupSupervisorListComponent,
     TestGroupSupervisorAddComponent],
 
-  providers: [TestResolver, TestService, {provide: TEST_SERVICE_TOKEN, useExisting: TestService}],
+  providers: [TestResolver, TestService,
+    {provide: TEST_SERVICE_TOKEN, useExisting: TestService},
+    {provide: TEST_GROUP_SERVICE_TOKEN, useExisting: TestGroupService}],
 
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsfCheckboxModule, MsfTableModule,

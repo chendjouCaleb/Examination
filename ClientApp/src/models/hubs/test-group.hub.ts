@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {Observable, ReplaySubject} from "rxjs";
-import {TestGroup} from "examination/models";
-import {CurrentItems} from "examination/app/current-items";
+
 import {environment} from "../../environments/environment";
+import {TestGroup} from "examination/entities";
 
 @Injectable({
     providedIn: 'root'
@@ -55,7 +55,7 @@ export class TestGroupHub {
     return this._testGroupUnPublished.asObservable();
   }
 
-  constructor(private _items: CurrentItems) {
+  constructor( ) {
     this.connection = new  HubConnectionBuilder()
       .withUrl(`${environment.HUB_URL}/testGroups`).build();
 

@@ -52,4 +52,11 @@ export interface ITestService {
   setPrincipal(testGroupSupervisor: TestGroupSupervisor);
 
 
+  start(test: Test): Promise<void>;
+
+  end(test: Test): Promise<void>;
+
+  restart(test: Test): Promise<void>;
+
+  changeCloseState(test: Test): Promise<void>;
 }

@@ -23,6 +23,10 @@
     "paths": {
       "examination/app/*": ["src/app/*"],
       "examination/models": ["src/models"],
+      "examination/entities": ["src/models/entities"],
+      "examination/hubs": ["src/models/hubs"],
+      "examination/loaders": ["src/models/loader"],
+      "examination/models/http": ["src/models/httpClient"],
       "examination/controls": ["src/controls"],
       "examination/infrastructure": ["src/infrastructure"]
     }

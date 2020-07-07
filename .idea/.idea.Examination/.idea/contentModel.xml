@@ -819,8 +819,8 @@
                 <e p="test-group-supervisor-list.component.html" t="Include" />
                 <e p="test-group-supervisor-list.component.ts" t="Include" />
               </e>
-              <e p="test-group.hub.ts" t="Include" />
-              <e p="test.hub.ts" t="Include" />
+              <e p="test-group.service.interface.ts" t="Include" />
+              <e p="test-group.service.ts" t="Include" />
               <e p="test.module.ts" t="Include" />
               <e p="test.resolver.ts" t="Include" />
               <e p="test.service.interface.ts" t="Include" />
@@ -1074,6 +1074,12 @@
               <e p="test-group.httpClient.ts" t="Include" />
               <e p="test.httpClient.ts" t="Include" />
               <e p="user.httpClient.ts" t="Include" />
+            </e>
+            <e p="Hubs" t="Include">
+              <e p="hubs.module.ts" t="Include" />
+              <e p="index.ts" t="Include" />
+              <e p="test-group.hub.ts" t="Include" />
+              <e p="test.hub.ts" t="Include" />
             </e>
             <e p="index.ts" t="Include" />
             <e p="loader" t="Include">

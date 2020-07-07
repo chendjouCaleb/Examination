@@ -210,4 +210,55 @@ export class TestService implements ITestService {
       });
     });
   }
+
+  changeCloseState(test: Test): Promise<void> {
+    let message = `Vérouiller l'épreuve de ${test.name} (${test.code})`;
+    if(test.isClosed) {
+      message = `Dévérouiller l'épreuve de ${test.name} (${test.code})`;
+    }
+
+
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open(message);
+      confirm.accept.subscribe(async () => {
+        await this._httpClient.changeCloseState(test);
+        test.closingDate = test.isClosed ? null: new Date();
+        this._alertEmitter.info(`Modification de statut effectuée`);
+        resolve();
+      });
+    });
+  }
+
+  end(test: Test): Promise<void> {
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open(`Terminer l'épreuve de ${test.name} (${test.code})`);
+      confirm.accept.subscribe(async () => {
+        await this._httpClient.end(test);
+        test.endDate = new Date();
+        resolve();
+      });
+    });
+  }
+
+  restart(test: Test): Promise<void> {
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open(`Continer l'épreuve de ${test.name} (${test.code})`);
+      confirm.accept.subscribe(async () => {
+        await this._httpClient.restart(test);
+        test.endDate = null;
+        resolve();
+      });
+    });
+  }
+
+  start(test: Test): Promise<void> {
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open(`Débuter l'épreuve de ${test.name} (${test.code})`);
+      confirm.accept.subscribe(async () => {
+        await this._httpClient.start(test);
+        test.startDate = new Date();
+        resolve();
+      });
+    });
+  }
 }

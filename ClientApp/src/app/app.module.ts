@@ -17,6 +17,7 @@ import {registerLocaleData} from '@angular/common';
 import * as moment from 'moment';
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
+import {HubsModule} from "examination/hubs";
 
 moment.locale('fr');
 
@@ -28,7 +29,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   ],
   imports: [MatNativeDateModule,
     BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule, MsfButtonModule, LayoutModule, MsToastModule,
-    AppHttpClientModule, BrowserAnimationsModule
+    AppHttpClientModule, HubsModule, BrowserAnimationsModule
   ],
   providers: [Preference, CurrentItems, {provide: MAT_DATE_LOCALE, useValue: 'fr'}],
   bootstrap: [AppComponent]

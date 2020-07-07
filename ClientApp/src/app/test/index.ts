@@ -18,6 +18,5 @@ export * from './test-group-supervisor-add/test-group-supervisor-add.component';
 export * from './test-group-secretary-add/test-group-secretary-add.component';
 export * from './test-group-secretary-list/test-group-secretary-list.component';
 
-export * from './test-group.hub';
-export * from './test.hub';
-
+export * from './test-group.service.interface';
+export * from './test-group.service';
