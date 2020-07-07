@@ -1,4 +1,21 @@
 import {Entity} from './entity';
+import {List} from "@positon/collections";
+import {Organisation} from "./organisation";
+import {Admin} from "./admin.entity";
+import {Speciality} from "./speciality.entity";
+import {Student} from "./student.entity";
+import {Application} from "./application.entity";
+import {Group} from "./group.entity";
+import {Test} from "./test.entity";
+import {TestGroup} from "./test-group.entity";
+import {Paper} from "./paper.entity";
+import {Corrector} from "./corrector.entity";
+import {Supervisor} from "./supervisor.entity";
+import {Secretary} from "./secretary.entity";
+import {TestGroupSecretary} from "./test-group-secretary.entity";
+import {TestGroupCorrector} from "./test-group-corrector.entity";
+import {TestGroupSupervisor} from "./test-group-supervisor.entity";
+import {Examination} from "./examination.entity";
 
 export class User extends Entity<string> {
   name: string;
@@ -27,8 +44,36 @@ export class User extends Entity<string> {
   aboutMe: string;
   website: string;
 
+  organisations: List<Organisation> = new List<Organisation>();
+  examinations = new List<Examination>();
+
+  admins = new List<Admin>();
+
+  specialities = new List<Speciality>();
+
+  students = new List<Student>();
+
+  applications = new List<Application>();
+
+  groups = new List<Group>();
+  tests = new List<Test>();
+  testGroups = new List<TestGroup>();
+  papers = new List<Paper>();
+
+  correctors = new List<Corrector>();
+  supervisors = new List<Supervisor>();
+  secretaries = new List<Secretary>();
+
+  testGroupSecretaries = new List<TestGroupSecretary>();
+  testGroupCorrectors = new List<TestGroupCorrector>();
+  testGroupSupervisors = new List<TestGroupSupervisor>();
+
   get fullName() {
     return this.name + ' ' + this.surname;
+  }
+
+  get url(): string {
+    return `/users/${this.id}`;
   }
 
 
@@ -72,9 +117,34 @@ export class User extends Entity<string> {
     }
 
     return account;
-
   }
+
+
 }
 
 
+export interface UserModel {
+  organisations: Organisation[];
+  examinations: Examination[ ];
 
+  admins: Admin[];
+
+  specialities: Speciality[];
+
+  students: Student[];
+  applications: Application [];
+
+  groups: Group[];
+  tests: Test[];
+  testGroups: TestGroup[];
+
+  papers: Paper[];
+
+  correctors: Corrector[];
+  supervisors: Supervisor[];
+  secretaries: Secretary[];
+
+  testGroupSecretaries:TestGroupSecretary[];
+  testGroupCorrectors:TestGroupCorrector[];
+  testGroupSupervisors:TestGroupSupervisor[];
+}

@@ -22,3 +22,4 @@ export * from './test-group-corrector.loader';
 export * from './test-group-secretary.loader';
 export * from './paper.loader';
 export * from './score-paper.loader';
+export * from './user.loader';

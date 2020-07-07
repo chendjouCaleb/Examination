@@ -394,7 +394,6 @@
                 <e p="connection.entity.ts" t="Include" />
                 <e p="entity.ts" t="Include" />
                 <e p="token-model.ts" t="Include" />
-                <e p="user.entity.ts" t="Include" />
               </e>
             </e>
             <e p="corrector" t="Include">
@@ -642,6 +641,17 @@
                 </e>
                 <e p="test-page.module.ts" t="Include" />
               </e>
+              <e p="user" t="Include">
+                <e p="Home" t="Include">
+                  <e p="user.home.page.html" t="Include" />
+                  <e p="user.home.page.ts" t="Include" />
+                </e>
+                <e p="tests" t="Include">
+                  <e p="user.tests.page.html" t="Include" />
+                  <e p="user.tests.page.ts" t="Include" />
+                </e>
+                <e p="user.page.module.ts" t="Include" />
+              </e>
             </e>
             <e p="principal" t="Include">
               <e p="add" t="Include">
@@ -831,6 +841,15 @@
               <e p="toast.test.component.html" t="Include" />
               <e p="toast.test.component.ts" t="Include" />
             </e>
+            <e p="user" t="Include">
+              <e p="index.ts" t="Include" />
+              <e p="layout" t="Include">
+                <e p="user-layout.component.html" t="Include" />
+                <e p="user-layout.component.ts" t="Include" />
+              </e>
+              <e p="user.module.ts" t="Include" />
+              <e p="user.resolver.ts" t="Include" />
+            </e>
             <e p="user-picker" t="Include">
               <e p="index.ts" t="Include" />
               <e p="picker-animations.ts" t="Include" />
@@ -917,6 +936,7 @@
               <e p="tab.scss" t="Include" />
               <e p="tab.ts" t="Include" />
             </e>
+            <e p="ucfirst.pipe.ts" t="Include" />
           </e>
           <e p="environments" t="Include">
             <e p="environment.prod.ts" t="Include" />
@@ -1082,6 +1102,7 @@
               <e p="test-group-supervisor.loader.ts" t="Include" />
               <e p="test-group.loader.ts" t="Include" />
               <e p="test.loader.ts" t="Include" />
+              <e p="user.loader.ts" t="Include" />
             </e>
             <e p="paging.ts" t="Include" />
           </e>

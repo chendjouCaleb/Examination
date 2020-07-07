@@ -1,5 +1,5 @@
 import {GenericHttpClient} from './httpClient';
-import {User} from '../entities';
+import {User, UserModel} from '../entities';
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpHeaders} from '@angular/common/http';
@@ -45,6 +45,10 @@ export class UserHttpClient extends GenericHttpClient<User, string> {
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     const body = 'password=' + password;
     return this.httpClient.post(`${this.url}/${userId}/password/check`, body, {headers});
+  }
+
+  userModel(userId: string): Promise<UserModel> {
+    return this.httpClient.get<UserModel>(`${environment.SERVER_URL}/users/${userId}/model`).toPromise();
   }
 }
 

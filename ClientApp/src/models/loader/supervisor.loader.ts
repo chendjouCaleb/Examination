@@ -4,14 +4,16 @@ import {SupervisorHttpClient, UserHttpClient} from '../httpClient';
 import {List} from '@positon/collections';
 import {ExaminationLoader} from "./examination.loader";
 import {EntityLoader} from "./entity-loader.interface";
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: 'root'})
-export class SupervisorLoader implements EntityLoader<Supervisor, number> {
+export class SupervisorLoader extends  Loader<Supervisor, number> {
 
   constructor(private supervisorRepository: SupervisorHttpClient,
               private _userHttClient: UserHttpClient,
               private _examinationLoader: ExaminationLoader) {
+    super(supervisorRepository);
   }
 
   async load(item: Supervisor): Promise<Supervisor> {

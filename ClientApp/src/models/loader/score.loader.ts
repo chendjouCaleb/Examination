@@ -1,17 +1,16 @@
 import {Injectable} from '@angular/core';
-import {EntityLoader} from './entity-loader.interface';
-import {Score, Test, TestGroup} from '../entities';
-import {ScoreHttpClient, UserHttpClient} from '../httpClient';
-import {RoomLoader} from './room.loader';
+import {Score, Test} from '../entities';
+import {ScoreHttpClient} from '../httpClient';
 import {TestLoader} from './test.loader';
-import {GroupLoader} from './group.loader';
 import {List} from "@positon/collections";
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: 'root'})
-export class ScoreLoader implements EntityLoader<Score, number> {
+export class ScoreLoader extends Loader<Score, number> {
 
   constructor(private scoreRepository: ScoreHttpClient, private _testLoader: TestLoader ) {
+    super(scoreRepository);
   }
 
   async load(item: Score): Promise<Score> {

@@ -20,7 +20,7 @@ export class Test extends Entity<number> {
     this.radical = value.radical;
 
     this.isPublished = value.isPublished;
-    this.publicationDate = new Date(value.publicationDate);
+    this.publicationDate = value.publicationDate ? new Date(value.publicationDate) : undefined;
 
     this.isClosed = value.isClosed;
     this.closingDate = new Date(value.closingDate);
@@ -31,8 +31,8 @@ export class Test extends Entity<number> {
     this.expectedStartDate = new Date(value.expectedStartDate);
     this.expectedEndDate = new Date(value.expectedEndDate);
 
-    this.startDate = new Date(value.startDate);
-    this.endDate = new Date(value.endDate);
+    this.startDate = value.startDate ? new Date(value.startDate): undefined;
+    this.endDate = value.endDate ? new Date(value.endDate):undefined;
 
     this.multipleScore = value.multipleScore;
 
@@ -91,6 +91,11 @@ export class Test extends Entity<number> {
   testGroups: List<TestGroup> = new List<TestGroup>();
   scores: List<Score> = new List<Score>();
 
+  isSupervisor: boolean = false;
+  isCorrector: boolean = false;
+  isSecretary: boolean = false;
+  isStudent: boolean = false;
+
   get totalScoreRadical(): number {
     let sum = 0;
     this.scores.forEach(s => sum += s.radical);
@@ -103,6 +108,14 @@ export class Test extends Entity<number> {
 
   get expectedEndHour(): LocalTime {
     return LocalTime.of(this.expectedEndDate.getHours(), this.expectedEndDate.getMinutes())
+  }
+
+  get startHour(): LocalTime {
+    return LocalTime.of(this.startDate.getHours(), this.startDate.getMinutes())
+  }
+
+  get endHour(): LocalTime {
+    return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes())
   }
 
   get singleScore(): boolean {

@@ -1,11 +1,8 @@
 import {Injectable} from "@angular/core";
-import {EntityLoader} from "./entity-loader.interface";
-import {Student, Examination} from "../entities";
+import {Student} from "../entities";
 import {StudentHttpClient, UserHttpClient} from "../httpClient";
 import {ExaminationLoader} from "./examination.loader";
-import {List} from "@positon/collections";
 import {SpecialityLoader} from "./speciality.loader";
-import {RoomLoader} from "./room.loader";
 import {Loader} from "./loader";
 import {GroupLoader} from "./group.loader";
 

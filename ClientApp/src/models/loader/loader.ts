@@ -1,10 +1,10 @@
-﻿import {Entity, Group} from "../entities";
+﻿import {Entity} from "../entities";
 import {GenericHttpClient} from "examination/models";
 import {List} from "@positon/collections";
 
 export abstract class Loader<T extends Entity<TID>, TID> {
 
-  constructor(private _httpClient: GenericHttpClient<T, TID> ) {}
+  constructor(protected _httpClient: GenericHttpClient<T, TID> ) {}
   abstract load(item: T): Promise<T>;
 
   async loadById(id: TID): Promise<T> {

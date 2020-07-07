@@ -1,5 +1,5 @@
 ﻿import {Entity} from './entity';
-import {User} from './user.entity';
+import { User } from 'src/models/entities';
 
 export class Connection extends Entity<number> {
   browser: string;

@@ -4,14 +4,16 @@ import {Examination, Speciality} from '../entities';
 import {SpecialityHttpClient, UserHttpClient} from '../httpClient';
 import {ExaminationLoader} from './examination.loader';
 import {List} from '@positon/collections';
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: 'root'})
-export class SpecialityLoader implements EntityLoader<Speciality, number> {
+export class SpecialityLoader extends  Loader<Speciality, number> {
 
   constructor(private specialityRepository: SpecialityHttpClient,
               private _userHttClient: UserHttpClient,
               private _examinationLoader: ExaminationLoader) {
+    super(specialityRepository);
   }
 
   async load(item: Speciality): Promise<Speciality> {

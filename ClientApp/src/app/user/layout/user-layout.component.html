@@ -1,0 +1,8 @@
+<app-layout [breadcrumbItems]="breadCrumbItems">
+  <div class="layout-sidebar" app-sidebar >
+    <i MsfIcon appSidebarCollapse iconName="GlobalNavButton" ></i>
+    <a app-sidebar-item icon="Home" [routerLink]="[user.url, 'home']" routerLinkActive="active">Accueil</a>
+    <a app-sidebar-item icon="Calendar" [routerLink]="[user.url, 'tests']" routerLinkActive="active">épreuves</a>
+  </div>
+  <ng-content></ng-content>
+</app-layout>

@@ -82,6 +82,12 @@ const routes: Routes = [
     loadChildren: () => import('./page/application/application-page.module').then(m => m.ApplicationPageModule),
   },
 
+  {
+    path: 'users',
+
+    loadChildren: () => import('./page/user/user.page.module').then(m => m.UserPageModule),
+  },
+
   {path: '', redirectTo: 'organisations', pathMatch: 'full'}
 ];
 

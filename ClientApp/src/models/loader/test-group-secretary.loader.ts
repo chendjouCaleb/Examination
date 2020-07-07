@@ -6,15 +6,17 @@ import {TestGroup, TestGroupSecretary} from "../entities";
 import {TestGroupLoader} from "./test-group.loader";
 import {List} from "@positon/collections";
 import {TestGroupSecretaryHttpClient} from "../httpClient";
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: 'root'})
-export class TestGroupSecretaryLoader implements EntityLoader<TestGroupSecretary, number> {
+export class TestGroupSecretaryLoader extends Loader<TestGroupSecretary, number> {
 
   constructor(private testGroupSecretaryRepository: TestGroupSecretaryHttpClient,
               private _testGroupLoader: TestGroupLoader,
               private _testLoader: TestLoader,
               private _secretaryLoader: SecretaryLoader) {
+    super(testGroupSecretaryRepository);
   }
 
   async load(item: TestGroupSecretary): Promise<TestGroupSecretary> {

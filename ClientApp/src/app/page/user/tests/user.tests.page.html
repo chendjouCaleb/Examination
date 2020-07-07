@@ -1,0 +1,54 @@
+﻿<app-user-layout>
+  <div *ngIf="user">
+    <div *ngFor="let test of user.tests" class="p-3 cardBgColor mt-3">
+      <div class="ms-fontSize-16 ms-fontWeight-semibold">{{test.name | ucFirst}} &#8226; ({{test.code}})</div>
+      <div class="ms-fontSize-12">
+        {{test.examination?.organisation?.name}} / {{test.examination?.name}}
+        <ng-container *ngIf="test.speciality">/ {{test.speciality.name}}</ng-container>
+      </div>
+
+      <div class="mt-3 d-flex">
+        <span class="d-flex align-items-center">
+          <app-icon *ngIf="test.isStudent"></app-icon>
+          <app-icon *ngIf="!test.isStudent" icon="Cancel" bgColor="sharedRed10"></app-icon>
+          <span class="ml-2">Candidat</span>
+        </span>
+
+        <span class=" ml-4 d-flex align-items-center">
+          <app-icon *ngIf="test.isCorrector"></app-icon>
+          <app-icon *ngIf="!test.isCorrector" icon="Cancel" bgColor="sharedRed10"></app-icon>
+          <span class="ml-2">Correcteur</span>
+        </span>
+
+        <span class="ml-4 d-flex align-items-center">
+          <app-icon *ngIf="test.isSupervisor"></app-icon>
+          <app-icon *ngIf="!test.isSupervisor" icon="Cancel" bgColor="sharedRed10"></app-icon>
+          <span class="ml-2">Surveillants</span>
+        </span>
+
+        <span class="ml-4 d-flex align-items-center">
+          <app-icon *ngIf="test.isSecretary"></app-icon>
+          <app-icon *ngIf="!test.isSecretary" icon="Cancel" bgColor="sharedRed10"></app-icon>
+          <span class="ml-2">Sécrétaire</span>
+        </span>
+      </div>
+
+      <div class="mt-3 ms-fontSize-12">
+        <div class="d-flex align-items-center" *ngIf="test.endDate">
+          <app-icon size="small"></app-icon>
+          <span class="ml-2">{{test.startDate | amCalendar}} - {{test.startHour}} à {{test.endHour}}</span>
+        </div>
+
+        <span>
+        <span class="d-flex align-items-center ms-bgColor-sharedOrange10" *ngIf="!test.endDate" style="padding: 1px">
+          <app-icon icon="Calendar" size="small" bgColor="sharedOrange10"></app-icon>
+          <span class="ml-2">
+            {{test.expectedStartDate | amCalendar}} - {{test.expectedStartHour}} à {{test.expectedEndHour}}
+          </span>
+        </span>
+          </span>
+      </div>
+
+    </div>
+  </div>
+</app-user-layout>

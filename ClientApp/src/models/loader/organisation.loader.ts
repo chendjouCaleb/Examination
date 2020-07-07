@@ -2,12 +2,14 @@ import {Injectable} from "@angular/core";
 import {EntityLoader} from "./entity-loader.interface";
 import {Organisation} from "../entities";
 import {OrganisationHttpClient, UserHttpClient} from "../httpClient";
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: "root"})
-export class OrganisationLoader implements EntityLoader<Organisation, number> {
+export class OrganisationLoader extends Loader<Organisation, number> {
 
-  constructor(private _httpClient: OrganisationHttpClient, private _userHttClient: UserHttpClient) {
+  constructor( _httpClient: OrganisationHttpClient, private _userHttClient: UserHttpClient) {
+    super(_httpClient);
   }
 
   async load(item: Organisation): Promise<Organisation> {

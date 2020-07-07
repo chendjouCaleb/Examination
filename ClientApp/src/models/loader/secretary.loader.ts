@@ -4,14 +4,16 @@ import {Examination, Secretary} from '../entities';
 import {SecretaryHttpClient, UserHttpClient} from '../httpClient';
 import {ExaminationLoader} from './examination.loader';
 import {List} from '@positon/collections';
+import {Loader} from './loader';
 
 
 @Injectable({providedIn: 'root'})
-export class SecretaryLoader implements EntityLoader<Secretary, number> {
+export class SecretaryLoader extends Loader<Secretary, number> {
 
   constructor(private secretaryRepository: SecretaryHttpClient,
               private _userHttClient: UserHttpClient,
               private _examinationLoader: ExaminationLoader) {
+    super(secretaryRepository);
   }
 
   async load(item: Secretary): Promise<Secretary> {

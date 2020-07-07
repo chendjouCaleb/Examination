@@ -1,16 +1,10 @@
 ﻿﻿<app-student-layout [student]="student">
-  <div style="background: var(--cardBackgroundColor)" class="p-3">
+
     <div class="ms-fontSize-28">{{student.fullName}}</div>
     <div class="ms-fontSize-12">Ajouté {{student.registrationDate | amCalendar}}</div>
 
     <div class="mt-4">
-      <MsfPersona>
-        <MsfPersonaFigure text="{{student.registerUser.fullName}}"></MsfPersonaFigure>
-        <MsfPersonaText>
-          <div class="ms-fontSize-12">Ajouté par</div>
-          <div class="ms-fontWeight-semibold">{{student.registerUser.fullName}}</div>
-        </MsfPersonaText>
-      </MsfPersona>
+
 
       <MsfPersona *ngIf="student.user" class="ml-5">
         <MsfPersonaFigure text="{{student.user.fullName}}"></MsfPersonaFigure>
@@ -21,50 +15,72 @@
       </MsfPersona>
     </div>
 
-    <div class="mt-4">
-      <div>Matricule</div>
-      <div class="ms-fontSize-16">{{student.registrationId}}</div>
-    </div>
+  <div>
+    <MsfTable>
+      <MsfTableRow>
+        <MsfTableCell>Matricule</MsfTableCell>
+        <MsfTableCell class="ms-fontWeight-semibold">{{student.registrationId}}</MsfTableCell>
+      </MsfTableRow>
 
-    <div class="mt-3">
-      <div>Date de naissance</div>
-      <div class="ms-fontSize-16">{{student.birthDate | amCalendar}}</div>
-    </div>
+      <MsfTableRow>
+        <MsfTableCell>Date de naissance</MsfTableCell>
+        <MsfTableCell class="ms-fontWeight-semibold">{{student.birthDate | amCalendar}}</MsfTableCell>
+      </MsfTableRow>
+      <MsfTableRow>
+        <MsfTableCell>Sexe</MsfTableCell>
+        <MsfTableCell class="ms-fontWeight-semibold">
+          <ng-container *ngIf="student.gender == 'M' || student.gender == 'm'">Masculin</ng-container>
+          <ng-container *ngIf="student.gender == 'F' || student.gender == 'f'">Féminin</ng-container>
+        </MsfTableCell>
+      </MsfTableRow>
 
-    <div class="mt-3">
-      <div>Genre</div>
-      <div class="ms-fontSize-16">
-        <ng-container *ngIf="student.gender == 'M' || student.gender == 'm'">Masculin</ng-container>
-        <ng-container *ngIf="student.gender == 'F' || student.gender == 'f'">Féminin</ng-container>
-      </div>
-    </div>
+      <MsfTableRow>
+        <MsfTableCell>Spécialité</MsfTableCell>
+        <MsfTableCell class="ms-fontWeight-semibold">
+          <div>{{student.speciality.name}}</div>
+          <div class="ms-fontColor-sharedOrange10" *ngIf="!student.speciality">Aucune</div>
+        </MsfTableCell>
+      </MsfTableRow>
 
-    <div class="divider"></div>
+      <MsfTableRow>
+        <MsfTableCell>Groupe</MsfTableCell>
+        <MsfTableCell>
+          <span *ngIf="student.group">{{student.group.name}} ({{student.group.index}})</span>
+          <span class="ms-fontColor-sharedRed10" *ngIf="!student.group">Indisponible</span>
+        </MsfTableCell>
+      </MsfTableRow>
 
-    <div class="mt-3">
-      <div>Spécialité</div>
-      <div class="ms-fontSize-16">{{student.speciality.name}}</div>
-      <div class="ms-fontSize-16 ms-fontColor-sharedOrange10" *ngIf="!student.speciality">Aucune</div>
 
-    </div>
+    <MsfTableRow>
+      <MsfTableCell>N° général</MsfTableCell>
+      <MsfTableCell>
+        <span *ngIf="student.index">{{student.index}})</span>
+        <span class="ms-fontColor-sharedRed10" *ngIf="!student.index">Indisponible</span>
+      </MsfTableCell>
 
-    <div class="mt-3">
-      <div>Groupe</div>
-      <div class="ms-fontSize-16" *ngIf="student.group">{{student.group.name}} ({{student.group.index}})</div>
-      <div class="ms-fontSize-16 ms-fontColor-sharedRed10" *ngIf="!student.group">Indisponible</div>
-    </div>
+    </MsfTableRow>
 
-    <div class="mt-3">
-      <div>N° général</div>
-      <div class="ms-fontSize-16" *ngIf="student.index">{{student.index}})</div>
-      <div class="ms-fontSize-16 ms-fontColor-sharedRed10" *ngIf="!student.index">Indisponible</div>
-    </div>
+    <MsfTableRow>
+      <MsfTableCell>N° de groupe</MsfTableCell>
+      <MsfTableCell>
+        <div *ngIf="student.groupIndex">{{student.groupIndex}})</div>
+        <div class="ms-fontColor-sharedRed10" *ngIf="!student.groupIndex">Indisponible</div>
+      </MsfTableCell>
 
-    <div class="mt-3">
-      <div>N° de groupe</div>
-      <div class="ms-fontSize-16" *ngIf="student.groupIndex">{{student.groupIndex}})</div>
-      <div class="ms-fontSize-16 ms-fontColor-sharedRed10" *ngIf="!student.groupIndex">Indisponible</div>
-    </div>
+    </MsfTableRow>
 
+      <MsfTableRow>
+        <MsfTableCell>Ajouté par</MsfTableCell>
+        <MsfTableCell>
+          <MsfPersona size="size40">
+            <MsfPersonaFigure size="size40" [imageUrl]="student.registerUser.imageUrl" ></MsfPersonaFigure>
+            <MsfPersonaText>
+              <div class="ms-fontWeight-semibold">{{student.registerUser.fullName}}</div>
+              <div class="ms-fontSize-12">@{{student.registerUser.username}}</div>
+            </MsfPersonaText>
+          </MsfPersona>
+        </MsfTableCell>
+      </MsfTableRow>
+    </MsfTable>
   </div>
 </app-student-layout>

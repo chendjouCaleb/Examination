@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
-import {EntityLoader} from './entity-loader.interface';
 import {Examination, Test} from '../entities';
 import {TestHttpClient, UserHttpClient} from '../httpClient';
 import {ExaminationLoader} from './examination.loader';
 import {List} from '@positon/collections';
 import {SpecialityLoader} from './speciality.loader';
-import {RoomLoader} from './room.loader';
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: 'root'})
-export class TestLoader implements EntityLoader<Test, number> {
+export class TestLoader extends Loader<Test, number> {
 
   constructor(private testRepository: TestHttpClient,
               private _userHttClient: UserHttpClient,
               private _specialityLoader: SpecialityLoader,
               private _examinationLoader: ExaminationLoader) {
+    super(testRepository);
   }
 
   async load(item: Test): Promise<Test> {

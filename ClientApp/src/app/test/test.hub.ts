@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HubConnection, default as signalR} from "@microsoft/signalr";
+import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {Observable, ReplaySubject} from "rxjs";
 import {Test} from "examination/models";
 import {CurrentItems} from "examination/app/current-items";
@@ -56,7 +56,7 @@ export class TestHub {
   }
 
   constructor(private _items: CurrentItems) {
-    this.connection = new signalR.HubConnectionBuilder()
+    this.connection = new  HubConnectionBuilder()
       .withUrl(`${environment.HUB_URL}/tests`).build();
 
     this.connection.on("TestCreated", (test: Test) => {

@@ -14,14 +14,15 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MsAlert, MsAlertButton, MsAlertFooter} from "./alert/alert";
 import {LocalTimeDirective} from "./local-time.directive";
 import {DateInputDirective} from "./date-input.directive";
+import {UcFirstPipe} from "./ucfirst.pipe";
 
 @NgModule({
   imports: [CommonModule, MatSnackBarModule, MsfModalModule, MsfButtonModule],
   providers: [AlertEmitter, Confirmation],
   declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
-    MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective],
+    MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe],
   exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
-    MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective],
+    MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe],
 })
 export class ControlModule {
 

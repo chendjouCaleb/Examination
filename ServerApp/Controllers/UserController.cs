@@ -36,7 +36,8 @@ namespace Exam.Controllers
                 .Where(t => t != null)
                 .SelectMany(i => i).Distinct()
                 .Where(t => t != null).ToList();
-            model.Tests = Tests(userId);
+            
+            
 
             model.Specialities = model.Students.ConvertAll(s => s.Speciality).Distinct().Where(t => t != null)
                 .ToList();
@@ -62,23 +63,53 @@ namespace Exam.Controllers
 
             model.Organisations = model.Examinations.ConvertAll(e => e.Organisation)
                 .Distinct().ToList();
-            
+
             model.Organisations.AddRange(model.Admins.ConvertAll(a => a.Organisation));
+            
+            SetTests(model);
+            
 
             return model;
         }
 
+        public void SetTests(UserModel model)
+        {
+            model.Tests = model.Students.ConvertAll(GetStudentTests).SelectMany(t => t).ToList();
+
+            model.Tests.AddRange(
+                model.TestGroupCorrectors.ConvertAll(c => c.TestGroup.Test).ToList()
+            );
+            
+            model.Tests.AddRange(
+                model.TestGroupSupervisors.ConvertAll(c => c.TestGroup.Test).ToList()
+            );
+            
+            model.Tests.AddRange(
+                model.TestGroupSecretaries.ConvertAll(c => c.TestGroup.Test).ToList()
+            );
+            model.Tests = model.Tests.Distinct().OrderByDescending(t => t.ExpectedStartDate).ToList();
+        }
+
         [HttpGet("{userId}/tests")]
-        public List<Test> Tests(string userId)
+        public List<Test> StudentTests(string userId)
         {
             List<Student> students = Students(userId);
-            List<Test> tests = new List<Test>();
+            return students.ConvertAll(GetStudentTests).SelectMany(t => t).Distinct().ToList();
+        }
 
-            foreach (Student student in students)
+        public List<Test> GetStudentTests(Student student)
+        {
+            List<Test> tests = new List<Test>();
+            
+            tests.AddRange(
+                _dbContext.Set<Test>().Where(t =>
+                    t.ExaminationId == student.ExaminationId && t.Speciality == null).ToList()
+            );
+            if (student.Speciality != null)
             {
                 tests.AddRange(
                     _dbContext.Set<Test>().Where(t =>
-                        t.ExaminationId == student.ExaminationId && t.SpecialityId == student.SpecialityId)
+                        t.SpecialityId != null && t.SpecialityId == student.SpecialityId).ToList()
                 );
             }
 
@@ -97,7 +128,7 @@ namespace Exam.Controllers
         {
             return Students(userId).ConvertAll(s => s.Group).Distinct().Where(s => s != null).ToList();
         }
-        
+
         [HttpGet("{userId}/admins")]
         public List<Admin> Admins(string userId)
         {

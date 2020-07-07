@@ -5,24 +5,26 @@ import {ExaminationHttpClient, UserHttpClient} from "../httpClient";
 import {OrganisationLoader} from "./organisation.loader";
 import {List} from "@positon/collections";
 import {AuthorizationManager} from "examination/app/authorization";
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: "root"})
-export class ExaminationLoader implements EntityLoader<Examination, number> {
+export class ExaminationLoader extends Loader<Examination, number> {
 
-  constructor(private _httpClient: ExaminationHttpClient,
+  constructor(private _examinationHttpClient: ExaminationHttpClient,
               private _userHttClient: UserHttpClient,
               private identity: AuthorizationManager,
               private _organisationLoader: OrganisationLoader) {
+    super(_examinationHttpClient);
   }
 
   async load(item: Examination): Promise<Examination> {
-    if(item.registerUserId){
+    if (item.registerUserId) {
       item.registerUser = await this._userHttClient.findAsync(item.registerUserId);
     }
 
     if (this.identity.user) {
-      item.userPrincipal = await this._httpClient.examinationUser(item.id, this.identity.user.id);
+      item.userPrincipal = await this._examinationHttpClient.examinationUser(item.id, this.identity.user.id);
     }
 
     item.organisation = await this._organisationLoader.loadById(item.organisationId);

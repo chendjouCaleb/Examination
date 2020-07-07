@@ -1,7 +1,7 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthorizationManager} from 'src/app/authorization/authorization-manager';
-import {User} from '../../../../app/authorization/models/user.entity';
+import { User } from 'src/models/entities';
 
 
 @Component({

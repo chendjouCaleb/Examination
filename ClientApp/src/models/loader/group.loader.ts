@@ -6,16 +6,18 @@ import {ExaminationLoader} from "./examination.loader";
 import {List} from "@positon/collections";
 import {SpecialityLoader} from "./speciality.loader";
 import {RoomLoader} from "./room.loader";
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: "root"})
-export class GroupLoader implements EntityLoader<Group, number> {
+export class GroupLoader extends Loader<Group, number> {
 
   constructor(private groupRepository: GroupHttpClient,
               private _userHttClient: UserHttpClient,
               private _roomLoader: RoomLoader,
               private _specialityLoader: SpecialityLoader,
               private _examinationLoader: ExaminationLoader) {
+    super(groupRepository);
   }
 
   async load(item: Group): Promise<Group> {

@@ -10,9 +10,10 @@ import {TestGroupCorrectorLoader} from "./test-group-corrector.loader";
 import {TestGroupSupervisorLoader} from "./test-group-supervisor.loader";
 import {TestGroupSecretaryLoader} from "./test-group-secretary.loader";
 import {StudentLoader} from "./student.loader";
+import {Loader} from "./loader";
 
 @Injectable({providedIn: 'root'})
-export class PaperLoader implements EntityLoader<Paper, number> {
+export class PaperLoader extends Loader<Paper, number> {
 
   constructor(private paperRepository: PaperHttpClient,
               private _userHttClient: UserHttpClient,
@@ -24,6 +25,8 @@ export class PaperLoader implements EntityLoader<Paper, number> {
               private _testGroupSecretaryLoader: TestGroupSecretaryLoader,
               private _studentLoader: StudentLoader,
               private _groupLoader: GroupLoader) {
+
+    super(paperRepository);
   }
 
   async load(item: Paper): Promise<Paper> {

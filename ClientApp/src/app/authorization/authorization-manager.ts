@@ -4,11 +4,11 @@ import {environment} from '../../environments/environment';
 
 import JwtDecode from 'jwt-decode';
 import {Claims} from './claims';
-import {User} from './models/user.entity';
 import {Authorization} from './models/authorization.entity';
 import {ITokenModel} from './models/token-model';
 import {Connection} from './models/connection.entity';
 import {Subject} from 'rxjs';
+import { User } from 'src/models/entities';
 
 @Injectable()
 export class AuthorizationManager {

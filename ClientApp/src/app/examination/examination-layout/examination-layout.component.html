@@ -2,7 +2,7 @@
   <div class="layout-sidebar" app-sidebar >
     <i MsfIcon appSidebarCollapse iconName="GlobalNavButton" ></i>
     <a app-sidebar-item icon="Home" [routerLink]="[examination.url, 'home']" routerLinkActive="active">Accueil</a>
-    <a app-sidebar-item icon="Calendar" [routerLink]="[examination.url, 'tests']" routerLinkActive="active">épreuves</a>
+    <a app-sidebar-item icon="Calendar" [routerLink]="[examination.url, 'tests']" routerLinkActive="active">{{'épreuves' | ucFirst}}</a>
 
     <a  app-sidebar-item icon="Contact" [routerLink]="[ examination.url, 'correctors']" routerLinkActive="active">Correcteurs</a>
 
@@ -14,7 +14,7 @@
 
 
 
-    <a app-sidebar-item icon="Contact" [routerLink]="[ examination.url, 'students']" routerLinkActive="active">étudiants</a>
+    <a app-sidebar-item icon="Contact" [routerLink]="[ examination.url, 'students']" routerLinkActive="active">{{'étudiants' | ucFirst}}</a>
     <a app-sidebar-item icon="FollowUser" [routerLink]="[ examination.url, 'applications']" routerLinkActive="active">Demandes</a>
 
     <a app-sidebar-item icon="Group" [routerLink]="[ examination.url, 'groups']" routerLinkActive="active">Groupes</a>

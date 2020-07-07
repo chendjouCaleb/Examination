@@ -9,6 +9,7 @@ import {StudentModule, StudentResolver} from 'src/app/student';
 import {ControlModule} from 'examination/controls';
 import {ExaminationModule} from 'examination/app/examination';
 import {MatRippleModule} from '@angular/material/core';
+import {GroupModule} from "examination/app/group";
 
 const routes: Routes = [
   {path: '', component: StudentListPage},
@@ -18,7 +19,7 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, ControlModule, StudentModule, ExaminationModule, MsfPersonaModule,
     MsfButtonModule, MomentModule, MatRippleModule, MsfTableModule,
-    MsfIconModule, MsfMenuModule, MsfModalModule,
+    MsfIconModule, MsfMenuModule, MsfModalModule, GroupModule,
     RouterModule.forChild(routes)],
   declarations: [StudentListPage, StudentHomePage],
   providers: [StudentResolver]

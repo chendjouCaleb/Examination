@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HubConnection, default as signalR} from "@microsoft/signalr";
+import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {Observable, ReplaySubject} from "rxjs";
 import {TestGroup} from "examination/models";
 import {CurrentItems} from "examination/app/current-items";
@@ -56,7 +56,7 @@ export class TestGroupHub {
   }
 
   constructor(private _items: CurrentItems) {
-    this.connection = new signalR.HubConnectionBuilder()
+    this.connection = new  HubConnectionBuilder()
       .withUrl(`${environment.HUB_URL}/testGroups`).build();
 
     this.connection.on("TestGroupCreated", (testGroup: TestGroup) => {
