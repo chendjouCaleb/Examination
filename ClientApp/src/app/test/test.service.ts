@@ -231,7 +231,7 @@ export class TestService implements ITestService {
 
   end(test: Test): Promise<void> {
     return new Promise<void>(resolve => {
-      const confirm = this._confirmation.open(`Terminer l'épreuve de ${test.name} (${test.code})`);
+      const confirm = this._confirmation.open(`Terminer l'épreuve de ${test.name} (${test.code})?`);
       confirm.accept.subscribe(async () => {
         await this._httpClient.end(test);
         test.endDate = new Date();
@@ -242,7 +242,7 @@ export class TestService implements ITestService {
 
   restart(test: Test): Promise<void> {
     return new Promise<void>(resolve => {
-      const confirm = this._confirmation.open(`Continer l'épreuve de ${test.name} (${test.code})`);
+      const confirm = this._confirmation.open(`Continuer l'épreuve de ${test.name} (${test.code})?`);
       confirm.accept.subscribe(async () => {
         await this._httpClient.restart(test);
         test.endDate = null;
@@ -253,7 +253,7 @@ export class TestService implements ITestService {
 
   start(test: Test): Promise<void> {
     return new Promise<void>(resolve => {
-      const confirm = this._confirmation.open(`Débuter l'épreuve de ${test.name} (${test.code})`);
+      const confirm = this._confirmation.open(`Débuter l'épreuve de ${test.name} (${test.code})?`);
       confirm.accept.subscribe(async () => {
         await this._httpClient.start(test);
         test.startDate = new Date();
