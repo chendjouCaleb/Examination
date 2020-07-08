@@ -120,6 +120,58 @@ export class User extends Entity<string> {
   }
 
 
+  isAffectedByTest(test: Test): boolean {
+    return this.isTestAdmin(test)
+    || this.isTestCorrector(test)
+    || this.isTestSecretary(test)
+    || this.isTestSupervisor(test)
+    || this.isTestStudent(test)
+  }
+
+  isAffectedByTestGroup(testGroup: TestGroup): boolean {
+    return this.isTestAdmin(testGroup.test)
+      || this.isTestGroupCorrector(testGroup)
+      || this.isTestGroupSecretary(testGroup)
+      || this.isTestGroupSupervisor(testGroup)
+      || this.isTestGroupStudent(testGroup)
+  }
+
+  isTestAdmin(test: Test) {
+    return this.admins.exists(a => a.organisationId === test.examination.organisationId);
+  }
+
+  isTestGroupStudent(testGroup: TestGroup): boolean {
+    return this.students.exists(s => s.groupId === testGroup.groupId);
+  }
+
+  isTestGroupCorrector(testGroup: TestGroup): boolean {
+    return this.testGroupCorrectors.exists(tgc => tgc.testGroupId === testGroup.id );
+  }
+
+  isTestGroupSupervisor(testGroup: TestGroup): boolean {
+    return this.testGroupSupervisors.exists(tgc => tgc.testGroupId === testGroup.id );
+  }
+
+  isTestGroupSecretary(testGroup: TestGroup): boolean {
+    return this.testGroupSecretaries.exists(tgc => tgc.testGroupId === testGroup.id );
+  }
+
+  isTestCorrector(test: Test): boolean {
+    return this.testGroupCorrectors.exists(tgc => tgc.testGroup.testId === test.id );
+  }
+
+  isTestSupervisor(test: Test): boolean {
+    return this.testGroupSupervisors.exists(tgc => tgc.testGroup.testId === test.id );
+  }
+
+  isTestSecretary(test: Test): boolean {
+    return this.testGroupSecretaries.exists(tgc => tgc.testGroup.testId === test.id );
+  }
+
+  isTestStudent(test: Test): boolean {
+    return this.students.containsIf(s => !test.speciality && s.examinationId === test.examinationId)
+    || this.students.containsIf(s =>  test.speciality && s.specialityId === test.specialityId)
+  }
 }
 
 

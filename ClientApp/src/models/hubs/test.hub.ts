@@ -60,39 +60,39 @@ export class TestHub {
       .withUrl(`${environment.HUB_URL}/tests`).build();
 
     this.connection.on("TestCreated", (test: Test) => {
-      this._testCreated.next(test);
+      this._testCreated.next(new Test(test));
     });
 
     this.connection.on("TestDeleted", (test: Test) => {
-      this._testDeleted.next(test);
+      this._testDeleted.next(new Test(test));
     });
 
     this.connection.on("TestStarted", (test: Test) => {
-      this._testStarted.next(test);
+      this._testStarted.next(new Test(test));
     });
 
     this.connection.on("TestEnded", (test: Test) => {
-      this._testEnded.next(test);
+      this._testEnded.next(new Test(test));
     });
 
     this.connection.on("TestRestarted", (test: Test) => {
-      this._testRestarted.next(test);
+      this._testRestarted.next(new Test(test));
     });
 
     this.connection.on("TestClosed", (test: Test) => {
-      this._testClosed.next(test);
+      this._testClosed.next(new Test(test));
     });
 
     this.connection.on("TestOpened", (test: Test) => {
-      this._testOpened.next(test);
+      this._testOpened.next(new Test(test));
     });
 
     this.connection.on("TestPublished", (test: Test) => {
-      this._testPublished.next(test);
+      this._testPublished.next(new Test(test));
     });
 
     this.connection.on("TestUnPublished", (test: Test) => {
-      this._testUnPublished.next(test);
+      this._testUnPublished.next(new Test(test));
     });
 
     this.connection.start().then(() => console.log( "Test hub is ok!")).catch(error => console.error(error));

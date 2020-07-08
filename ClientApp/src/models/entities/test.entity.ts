@@ -118,6 +118,18 @@ export class Test extends Entity<number> {
     return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes())
   }
 
+  get waiting(): boolean {
+    return !this.startDate;
+  }
+
+  get finished(): boolean {
+    return !!this.endDate;
+  }
+
+  get progress(): boolean {
+    return !!this.startDate && !this.endDate;
+  }
+
   get singleScore(): boolean {
     return !this.multipleScore;
   }

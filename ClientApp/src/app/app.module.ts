@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -19,6 +19,11 @@ import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
 import {HubsModule} from "examination/hubs";
 
+import {AlertEmitter} from "examination/controls";
+import {HubListenerModule, LISTENER_ALERT_SERVICE_TOKEN} from "examination/listeners";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+
+
 moment.locale('fr');
 
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
@@ -27,11 +32,14 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   declarations: [
     AppComponent, ToastTestComponent
   ],
-  imports: [MatNativeDateModule,
+  imports: [MatNativeDateModule, MatSnackBarModule,
     BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule, MsfButtonModule, LayoutModule, MsToastModule,
-    AppHttpClientModule, HubsModule, BrowserAnimationsModule
+    AppHttpClientModule, HubsModule, HubListenerModule, BrowserAnimationsModule
   ],
-  providers: [Preference, CurrentItems, {provide: MAT_DATE_LOCALE, useValue: 'fr'}],
+  providers: [Preference, CurrentItems,
+    {provide: LISTENER_ALERT_SERVICE_TOKEN, useExisting: AlertEmitter},
+    {provide: LOCALE_ID, useValue: 'fr-FR'},
+    {provide: MAT_DATE_LOCALE, useValue: 'fr'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

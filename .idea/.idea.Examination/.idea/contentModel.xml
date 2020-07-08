@@ -1082,6 +1082,12 @@
               <e p="test.hub.ts" t="Include" />
             </e>
             <e p="index.ts" t="Include" />
+            <e p="listeners" t="Include">
+              <e p="index.ts" t="Include" />
+              <e p="listener-alert.interface.ts" t="Include" />
+              <e p="listener.module.ts" t="Include" />
+              <e p="test.listener.ts" t="Include" />
+            </e>
             <e p="loader" t="Include">
               <e p="admin.loader.ts" t="Include" />
               <e p="application.loader.ts" t="Include" />

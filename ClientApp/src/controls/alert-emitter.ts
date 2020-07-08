@@ -19,6 +19,6 @@ export class AlertEmitter {
   }
 
   info(message: string, duration: number = 50000) {
-    this.snackBar.open(message, "Fermer", {duration, panelClass: ["ms-bgColor-sharedBlue10", "ms-color-white"]});
+    this.snackBar.open(message, "Fermer", {duration, panelClass: ["ms-bgColor-sharedBlue10", "ms-fontColor-white"]});
   }
 }

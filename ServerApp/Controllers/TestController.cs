@@ -256,7 +256,7 @@ namespace Exam.Controllers
         }
 
 
-        [HttpPut("{testId}/start")]
+        [HttpPut("{testId}/restart")]
         [LoadTest(ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
         [PeriodHaveState(State = "FINISHED", ItemName = "test")]

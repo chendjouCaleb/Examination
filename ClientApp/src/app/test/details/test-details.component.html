@@ -56,14 +56,43 @@
   </div>
 
   <div class="app-test-details-infos ml-5">
-    <div class="icon-label">
-      <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
-      <span class="icon-label-text">{{test.expectedStartDate | amCalendar}}</span>
+    <div>
+      <div>Prévue pour</div>
+      <div class="d-flex">
+        <div class="icon-label">
+          <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+          <span class="icon-label-text">{{test.expectedStartDate | date}}</span>
+        </div>
+
+        <div class="icon-label ml-2">
+          <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+          <span class="icon-label-text"> {{test.expectedStartHour}} à {{test.expectedEndHour}}</span>
+        </div>
+      </div>
     </div>
 
-    <div class=" icon-label">
-      <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
-      <span class="icon-label-text"> {{test.expectedStartHour}} à {{test.expectedEndHour}}</span>
+    <div *ngIf="test.progress">
+      <div>Heure de début</div>
+      <div class=" icon-label">
+        <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+        <span class="icon-label-text"> {{test.startHour}} </span>
+      </div>
+    </div>
+
+
+    <div *ngIf="test.finished">
+      <div>Effectuée le</div>
+      <div class="d-flex">
+        <div class="icon-label">
+          <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+          <span class="icon-label-text">{{test.startDate | amCalendar}}</span>
+        </div>
+
+        <div class=" icon-label ml-2">
+          <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+          <span class="icon-label-text"> {{test.startHour}} à {{test.endHour}}</span>
+        </div>
+      </div>
     </div>
 
     <div class=" icon-label">
