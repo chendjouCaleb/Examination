@@ -37,7 +37,9 @@ namespace Exam.Controllers
         public TestGroupSecretary Find(TestGroupSecretary testGroupSecretary) => testGroupSecretary;
 
         [HttpGet]
-        [LoadExamination(Source = ParameterSource.Query)]
+        [LoadTestGroup(Source = ParameterSource.Query)]
+        [LoadSecretary(Source = ParameterSource.Query)]
+        [LoadTest(Source = ParameterSource.Query)]
         public IEnumerable<TestGroupSecretary> List(Test test, TestGroup testGroup, Secretary secretary, int skip = 0, int take = 20)
         {
             IQueryable<TestGroupSecretary> queryable = _testGroupSecretaryRepository.Set;

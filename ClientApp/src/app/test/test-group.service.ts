@@ -30,7 +30,7 @@ export class TestGroupService implements ITestGroupService {
     return new Promise<void>(resolve => {
       const confirm = this._confirmation.open(message);
       confirm.accept.subscribe(async () => {
-        await this._httpClient.end(testGroup);
+        await this._httpClient.restart(testGroup);
         testGroup.endDate = null;
         resolve();
       });

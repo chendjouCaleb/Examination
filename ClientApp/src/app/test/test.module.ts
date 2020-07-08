@@ -45,9 +45,9 @@ import {TestGroupService} from "./test-group.service";
   exports: [TestDetailsComponent, TestAddComponent, TestListComponent, TestLayoutComponent, TestEditDateComponent,
     TestEditComponent, ScoreAddComponent, ScoreListComponent, TestGroupItemComponent,
     TestGroupCorrectorAddComponent, TestGroupCorrectorListComponent, TestGroupSupervisorListComponent,
-    TestGroupSupervisorAddComponent],
+    TestGroupSecretaryListComponent, TestGroupSupervisorAddComponent],
 
-  providers: [TestResolver, TestService,
+  providers: [TestResolver, TestService, TestGroupService,
     {provide: TEST_SERVICE_TOKEN, useExisting: TestService},
     {provide: TEST_GROUP_SERVICE_TOKEN, useExisting: TestGroupService}],
 

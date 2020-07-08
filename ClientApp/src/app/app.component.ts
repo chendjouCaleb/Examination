@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationManager} from 'examination/app/authorization';
 import {UserLoader} from "examination/models";
-import {TestHubListener} from "examination/listeners";
+import {TestGroupHubListener, TestHubListener} from "examination/listeners";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,7 @@ export class AppComponent implements OnInit{
 
   constructor(private _auth: AuthorizationManager,
               private _userLoader: UserLoader,
+              private _testGroupListener: TestGroupHubListener,
               private _testListener: TestHubListener) { }
 
   async ngOnInit() {
@@ -24,5 +25,6 @@ export class AppComponent implements OnInit{
     });
 
     this._testListener.listen();
+    this._testGroupListener.listen();
   }
 }

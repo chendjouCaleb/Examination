@@ -3,7 +3,7 @@ import {ConfirmationComponent} from "./confirmation.component";
 import {Subject} from "rxjs";
 import {MsfModal} from "fabric-docs";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class Confirmation {
     constructor(private dialog: MsfModal) {}
 

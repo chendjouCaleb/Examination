@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
-import {Observable, ReplaySubject} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {Test} from "examination/models";
 import {CurrentItems} from "examination/app/current-items";
 import {environment} from "../../environments/environment";
@@ -12,15 +12,15 @@ export class TestHub {
   public readonly connection: HubConnection;
 
 
-  private readonly _testCreated = new ReplaySubject<Test>();
-  private readonly _testDeleted = new ReplaySubject<Test>();
-  private readonly _testStarted = new ReplaySubject<Test>();
-  private readonly _testEnded = new ReplaySubject<Test>();
-  private readonly _testRestarted = new ReplaySubject<Test>();
-  private readonly _testClosed = new ReplaySubject<Test>();
-  private readonly _testOpened = new ReplaySubject<Test>();
-  private readonly _testPublished = new ReplaySubject<Test>();
-  private readonly _testUnPublished = new ReplaySubject<Test>();
+  private readonly _testCreated = new Subject<Test>();
+  private readonly _testDeleted = new Subject<Test>();
+  private readonly _testStarted = new Subject<Test>();
+  private readonly _testEnded = new Subject<Test>();
+  private readonly _testRestarted = new Subject<Test>();
+  private readonly _testClosed = new Subject<Test>();
+  private readonly _testOpened = new Subject<Test>();
+  private readonly _testPublished = new Subject<Test>();
+  private readonly _testUnPublished = new Subject<Test>();
 
   get testCreated(): Observable<Test> {
     return this._testCreated.asObservable();

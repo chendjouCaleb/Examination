@@ -7,6 +7,7 @@ import {List} from "@positon/collections";
 import {TestGroupCorrector} from "./test-group-corrector.entity";
 import {TestGroupSupervisor} from "./test-group-supervisor.entity";
 import {TestGroupSecretary} from "./test-group-secretary.entity";
+import {Examination} from "./examination.entity";
 
 export class TestGroup extends Entity<number> {
   constructor(value: any = {}) {
@@ -16,8 +17,8 @@ export class TestGroup extends Entity<number> {
     this.registrationDate = new Date(value.registrationDate);
 
 
-    this.startDate = new Date(value.startDate);
-    this.endDate = new Date(value.endDate);
+    this.startDate = value.startDate ? new Date(value.startDate) : null;
+    this.endDate = value.endDate ? new Date(value.endDate) : null;
     this.state = value.state;
     this.isCorrected = value.isCorrected;
 
@@ -59,6 +60,14 @@ export class TestGroup extends Entity<number> {
     return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes())
   }
 
+  get startHour(): LocalTime {
+    return LocalTime.of(this.startDate.getHours(), this.startDate.getMinutes())
+  }
+
+  get endHour(): LocalTime {
+    return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes())
+  }
+
   get waiting(): boolean {
     return !this.startDate;
   }
@@ -76,6 +85,13 @@ export class TestGroup extends Entity<number> {
     return this.testGroupSupervisors.exists(t => t.isPrincipal);
   }
 
+  get url(): string {
+    return `/organisations/${this.examination.organisationId}/examinations/${this.examination.id}/tests/${this.testId}/testGroups/${this.id}`;
+  }
+
+  get examination(): Examination {
+    return this.test.examination;
+  }
 }
 
 export interface UserTestGroup {

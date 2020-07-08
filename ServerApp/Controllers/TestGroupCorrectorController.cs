@@ -37,7 +37,9 @@ namespace Exam.Controllers
         public TestGroupCorrector Find(TestGroupCorrector testGroupCorrector) => testGroupCorrector;
 
         [HttpGet]
-        [LoadExamination(Source = ParameterSource.Query)]
+        [LoadTestGroup(Source = ParameterSource.Query)]
+        [LoadCorrector(Source = ParameterSource.Query)]
+        [LoadTest(Source = ParameterSource.Query)]
         public IEnumerable<TestGroupCorrector> List(Test test, TestGroup testGroup, Corrector corrector, int skip = 0, int take = 20)
         {
             IQueryable<TestGroupCorrector> queryable = _testGroupCorrectorRepository.Set;

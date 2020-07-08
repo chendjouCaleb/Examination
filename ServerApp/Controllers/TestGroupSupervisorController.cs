@@ -39,7 +39,9 @@ namespace Exam.Controllers
         public TestGroupSupervisor Find(TestGroupSupervisor testGroupSupervisor) => testGroupSupervisor;
 
         [HttpGet]
-        [LoadExamination(Source = ParameterSource.Query)]
+        [LoadTestGroup(Source = ParameterSource.Query)]
+        [LoadSupervisor(Source = ParameterSource.Query)]
+        [LoadTest(Source = ParameterSource.Query)]
         public IEnumerable<TestGroupSupervisor> List(Test test, TestGroup testGroup, Supervisor supervisor, int skip = 0, int take = 20)
         {
             IQueryable<TestGroupSupervisor> queryable = _testGroupSupervisorRepository.Set;
@@ -57,6 +59,7 @@ namespace Exam.Controllers
             {
                 queryable = queryable.Where(p => supervisor.Equals(p.Supervisor));
             }
+            
 
             queryable = queryable.Skip(skip).Take(take);
             return queryable.ToList();
@@ -67,7 +70,8 @@ namespace Exam.Controllers
         [RequireQueryParameter("supervisorId")]
         [LoadTestGroup(Source = ParameterSource.Query, TestItemName = "test", ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        [PeriodHaveState(ItemName = "test", State = "PENDING")]
+        
+        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
         public ObjectResult Add(TestGroup testGroup, [FromQuery] long[] supervisorId)
         {
             List<long> ids = new List<long>();
@@ -131,7 +135,7 @@ namespace Exam.Controllers
         [HttpPut("{testGroupSupervisorId}/principal")]
         [LoadTestGroupSupervisor(ExaminationItemName = "examination", TestItemName = "test")]
         [AuthorizeExaminationAdmin]
-        [PeriodHaveState(ItemName = "test", State = "PENDING")]
+        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
         
         public StatusCodeResult SetPrincipalSupervisor(TestGroupSupervisor testGroupSupervisor)
         {

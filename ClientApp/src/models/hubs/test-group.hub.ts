@@ -1,101 +1,77 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
-import {Observable, ReplaySubject} from "rxjs";
+import { Subject} from "rxjs";
 
 import {environment} from "../../environments/environment";
 import {TestGroup} from "examination/entities";
+import {TestGroupLoader} from "examination/loaders";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class TestGroupHub {
   public readonly connection: HubConnection;
 
 
-  private readonly _testGroupCreated = new ReplaySubject<TestGroup>();
-  private readonly _testGroupDeleted = new ReplaySubject<TestGroup>();
-  private readonly _testGroupStarted = new ReplaySubject<TestGroup>();
-  private readonly _testGroupEnded = new ReplaySubject<TestGroup>();
-  private readonly _testGroupRestarted = new ReplaySubject<TestGroup>();
-  private readonly _testGroupClosed = new ReplaySubject<TestGroup>();
-  private readonly _testGroupOpened = new ReplaySubject<TestGroup>();
-  private readonly _testGroupPublished = new ReplaySubject<TestGroup>();
-  private readonly _testGroupUnPublished = new ReplaySubject<TestGroup>();
+  private readonly _testGroupCreated = new Subject<TestGroup>();
+  private readonly _testGroupDeleted = new Subject<TestGroup>();
+  private readonly _testGroupStarted = new Subject<TestGroup>();
+  private readonly _testGroupEnded = new Subject<TestGroup>();
+  private readonly _testGroupRestarted = new Subject<TestGroup>();
 
-  get testGroupCreated(): Observable<TestGroup> {
-    return this._testGroupCreated.asObservable();
-  }
-  get testGroupDeleted(): Observable<TestGroup> {
-    return this._testGroupDeleted.asObservable();
-  }
-  get testGroupStarted(): Observable<TestGroup> {
-    return this._testGroupStarted.asObservable();
-  }
-  get testGroupEnded(): Observable<TestGroup> {
-    return this._testGroupEnded.asObservable();
+
+
+  get testGroupCreated(): Subject<TestGroup> {
+    return this._testGroupCreated;
   }
 
-  get testGroupRestarted(): Observable<TestGroup> {
-    return this._testGroupRestarted.asObservable();
+  get testGroupDeleted(): Subject<TestGroup> {
+    return this._testGroupDeleted;
   }
 
-  get testGroupClosed(): Observable<TestGroup> {
-    return this._testGroupClosed.asObservable();
+  get testGroupStarted(): Subject<TestGroup> {
+    return this._testGroupStarted;
   }
 
-  get testGroupOpened(): Observable<TestGroup> {
-    return this._testGroupOpened.asObservable();
+  get testGroupEnded(): Subject<TestGroup> {
+    return this._testGroupEnded;
   }
 
-  get testGroupPublished(): Observable<TestGroup> {
-    return this._testGroupPublished.asObservable();
+  get testGroupRestarted(): Subject<TestGroup> {
+    return this._testGroupRestarted;
   }
 
-  get testGroupUnPublished(): Observable<TestGroup> {
-    return this._testGroupUnPublished.asObservable();
-  }
 
-  constructor( ) {
-    this.connection = new  HubConnectionBuilder()
+  constructor(private _loader: TestGroupLoader) {
+    this.connection = new HubConnectionBuilder()
       .withUrl(`${environment.HUB_URL}/testGroups`).build();
 
-    this.connection.on("TestGroupCreated", (testGroup: TestGroup) => {
-      this._testGroupCreated.next(testGroup);
+
+    this.connection.on("TestGroupCreated", (value) => {
+      this._loader.load(new TestGroup(value)).then((testGroup) => {
+        this._testGroupCreated.next(testGroup);
+      })
     });
 
-    this.connection.on("TestGroupDeleted", (testGroup: TestGroup) => {
+    this.connection.on("TestGroupDeleted", async (value) => {
+      const testGroup = await this._loader.load(new TestGroup(value));
       this._testGroupDeleted.next(testGroup);
     });
 
-    this.connection.on("TestGroupStarted", (testGroup: TestGroup) => {
-      this._testGroupStarted.next(testGroup);
+    this.connection.on("TestGroupStarted", async (value) => {
+      this._testGroupStarted.next(await this._loader.load(new TestGroup(value)));
     });
 
-    this.connection.on("TestGroupEnded", (testGroup: TestGroup) => {
-      this._testGroupEnded.next(testGroup);
+    this.connection.on("TestGroupEnded", async (value) => {
+      this._testGroupEnded.next(await this._loader.load(new TestGroup(value)));
     });
 
-    this.connection.on("TestGroupRestarted", (testGroup: TestGroup) => {
-      this._testGroupRestarted.next(testGroup);
+    this.connection.on("TestGroupRestarted", async (value) => {
+      this._testGroupRestarted.next(await this._loader.load(new TestGroup(value)));
     });
 
-    this.connection.on("TestGroupClosed", (testGroup: TestGroup) => {
-      this._testGroupClosed.next(testGroup);
-    });
 
-    this.connection.on("TestGroupOpened", (testGroup: TestGroup) => {
-      this._testGroupOpened.next(testGroup);
-    });
-
-    this.connection.on("TestGroupPublished", (testGroup: TestGroup) => {
-      this._testGroupPublished.next(testGroup);
-    });
-
-    this.connection.on("TestGroupUnPublished", (testGroup: TestGroup) => {
-      this._testGroupUnPublished.next(testGroup);
-    });
-
-    this.connection.start().then(() => console.log( "TestGroup hub is ok!")).catch(error => console.error(error));
+    this.connection.start().then(() => console.log("TestGroup hub is ok!")).catch(error => console.error(error));
 
     this.connection.onclose((error) => {
       console.log(error)
