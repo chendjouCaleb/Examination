@@ -10,6 +10,7 @@ using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -104,13 +105,6 @@ namespace Exam.Controllers
         }
 
 
-        [HttpPost]
-        [RequireQueryParameter("studentId")]
-        [RequireQueryParameter("testGroupId")]
-        [LoadStudent(Source = ParameterSource.Query)]
-        [LoadTestGroup(Source = ParameterSource.Query, TestItemName = "test")]
-        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
-        [AuthorizeTestGroupSupervisor]
         public CreatedAtActionResult Add(TestGroup testGroup, Student student, TestGroupSupervisor testGroupSupervisor)
         {
             Assert.RequireNonNull(student, nameof(student));
@@ -134,8 +128,8 @@ namespace Exam.Controllers
                 Student = student,
                 TestGroup = testGroup,
                 TestGroupSupervisor = testGroupSupervisor,
-                SupervisorUserId = testGroupSupervisor.Supervisor.UserId,
-                StartDate = DateTime.Now
+                SupervisorUserId = testGroupSupervisor.Supervisor.UserId
+                
             };
 
             paper = _paperRepository.Save(paper);
@@ -144,7 +138,12 @@ namespace Exam.Controllers
         }
 
 
-        public StatusCodeResult AddAll(TestGroup testGroup, User user)
+        [HttpPost]
+        [RequireQueryParameter("testGroupId")]
+        [LoadTestGroup(Source = ParameterSource.Query, TestItemName = "test")]
+        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
+        [AuthorizeTestGroupSupervisor]
+        public StatusCodeResult AddAll(TestGroup testGroup)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             if (testGroup.Test.State == PeriodState.FINISHED)
@@ -152,18 +151,45 @@ namespace Exam.Controllers
                 throw new InvalidOperationException("{paper.constraints.addBeforeFinish}");
             }
 
-            testGroup.Group.Students.ForEach(student =>
+            foreach (Student student in testGroup.Group.Students)
             {
+                if (_paperRepository.Exists(p => student.Equals(p.Student) && testGroup.Equals(p.TestGroup)))
+                {
+                    continue;
+                }
                 Paper paper = new Paper
                 {
                     Student = student,
-                    TestGroup = testGroup,
-                    SupervisorUserId = user.Id,
+                    TestGroup = testGroup
+                    
                 };
                 _paperRepository.Save(paper);
-            });
+            } 
 
             return StatusCode(StatusCodes.Status201Created);
+        }
+
+        [HttpPut("{paperId}/present")]
+        [LoadPaper(TestGroupItemName = "testGroup", TestItemName = "test")]
+        [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
+        [AuthorizeTestGroupSupervisor]
+
+        public StatusCodeResult ChangePresenceState(Paper paper, TestGroupSupervisor testGroupSupervisor)
+        {
+            if (!paper.IsPresent)
+            {
+                paper.StartDate = DateTime.Now;
+                paper.TestGroupSupervisor = testGroupSupervisor;
+            }
+            else
+            {
+                paper.StartDate = null;
+                paper.TestGroupSupervisor = null;
+                paper.TestGroupSupervisorId = null;
+            }
+
+            _paperRepository.Update(paper);
+            return StatusCode(StatusCodes.Status202Accepted);
         }
 
 

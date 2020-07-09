@@ -31,7 +31,8 @@ namespace Exam.Entities
                 return Score ?? 0;
             } 
         }
-        
+
+        public bool IsPresent => StartDate != null;
         
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
