@@ -65,14 +65,15 @@ export class PaperHttpClient extends GenericHttpClient<Paper, number> {
   }
 
 
-  addPaper(student: Student, testGroup: TestGroup, testGroupSupervisor: TestGroupSupervisor): Promise<Paper> {
-    const params: any = {
-      studentId: student.id,
-      testGroupId: testGroup.id,
-      testGroupSupervisor: TestGroupSupervisor
-    };
+  async addPapers(testGroup: TestGroup): Promise<List<Paper>> {
+    const params: any = { testGroupId: testGroup.id };
+    const result = await this.httpClient.post<any[]>(`${this.url}`, {}, { params }).toPromise();
 
-    return this.add({}, params);
+    return List.fromArray(result.map<Paper>(u => new Paper(u)));
+  }
+
+  presentState(paper: Paper): Promise<void> {
+    return this.httpClient.put<void>(`${this.url}/${paper.id}/present`, {}).toPromise();
   }
 
   changeDates(paper: Paper, model: PeriodModel): Promise<void> {

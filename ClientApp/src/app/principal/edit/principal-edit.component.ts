@@ -1,8 +1,8 @@
 ﻿import {Component, Input, OnInit} from '@angular/core';
 import {AlertEmitter} from 'src/controls/alert-emitter';
 import {Principal, PrincipalHttpClient, PrincipalLoader, UserHttpClient} from '../../../models';
-import {MatDialogRef} from '@angular/material/dialog';
 import {PrincipalEditForm} from '../form';
+import {MsfModalRef} from "fabric-docs";
 
 
 @Component({
@@ -17,7 +17,7 @@ export class PrincipalEditComponent implements OnInit {
   constructor(private _httpClient: PrincipalHttpClient,
               private _loader: PrincipalLoader,
               private _userHttpClient: UserHttpClient,
-              private _dialogRef: MatDialogRef<PrincipalEditComponent>,
+              private _dialogRef: MsfModalRef<PrincipalEditComponent>,
               private _alertEmitter: AlertEmitter) {
   }
 

@@ -9,6 +9,7 @@ import {TestGroupSecretary} from './test-group-secretary.entity';
 import {TestGroupCorrector} from './test-group-corrector.entity';
 import {ScorePaper} from './score-paper.entity';
 import {User} from './user.entity';
+import {LocalTime} from "@js-joda/core";
 
 export class Paper extends Entity<number> {
 
@@ -18,9 +19,8 @@ export class Paper extends Entity<number> {
     this.id = value.id;
     this.registrationDate = new Date(value.registrationDate);
 
-
-    this.startDate = new Date(value.startDate);
-    this.endDate = new Date(value.endDate);
+    this.startDate = value.startDate ? new Date(value.startDate) : null;
+    this.endDate = value.endDate ? new Date(value.endDate) : null;
     this.score = value.score;
     this.anonymity = value.anonymity;
 
@@ -91,6 +91,26 @@ export class Paper extends Entity<number> {
 
   paperFiles = new List<PaperFile>();
   paperFileCount: number;
+
+  get startHour(): LocalTime {
+    return LocalTime.of(this.startDate.getHours(), this.startDate.getMinutes())
+  }
+
+  get endHour(): LocalTime {
+    return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes())
+  }
+
+  get isPresent(): boolean {
+    return !!this.startDate;
+  }
+
+  get index(): number {
+    return this.student.groupIndex;
+  }
+
+  get fullName(): string {
+    return this.student.fullName;
+  }
 
 }
 

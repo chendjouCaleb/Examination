@@ -143,13 +143,15 @@ namespace Exam.Controllers
         [LoadTestGroup(Source = ParameterSource.Query, TestItemName = "test")]
         [PeriodDontHaveState(ItemName = "test", State = "FINISHED")]
         [AuthorizeTestGroupSupervisor]
-        public StatusCodeResult AddAll(TestGroup testGroup)
+        public ObjectResult AddAll(TestGroup testGroup)
         {
             Assert.RequireNonNull(testGroup, nameof(testGroup));
             if (testGroup.Test.State == PeriodState.FINISHED)
             {
                 throw new InvalidOperationException("{paper.constraints.addBeforeFinish}");
             }
+            
+            List<Paper> papers = new List<Paper>();
 
             foreach (Student student in testGroup.Group.Students)
             {
@@ -164,9 +166,10 @@ namespace Exam.Controllers
                     
                 };
                 _paperRepository.Save(paper);
+                papers.Add(paper);
             } 
 
-            return StatusCode(StatusCodes.Status201Created);
+            return StatusCode(StatusCodes.Status201Created, papers);
         }
 
         [HttpPut("{paperId}/present")]

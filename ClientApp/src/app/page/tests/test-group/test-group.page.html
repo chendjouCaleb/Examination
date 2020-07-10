@@ -36,4 +36,52 @@
   </div>
 
 
+  <div class="mt-3">
+    <div class="d-flex justify-content-between align-items-center my-2">
+      <div class="ms-fontSize-24">Partipants</div>
+      <div class="text-right">
+        <MsfButton Icon="Add" theme="primary" (click)="addPapers()">Ajouter les étudiants</MsfButton>
+      </div>
+    </div>
+
+    <MsfTable *ngIf="papers">
+      <MsfTableHead>
+        <MsfTableHeadCell>#</MsfTableHeadCell>
+        <MsfTableHeadCell sortBy="index">N°</MsfTableHeadCell>
+        <MsfTableHeadCell>Matricule</MsfTableHeadCell>
+        <MsfTableHeadCell sortBy="fullName">Nom & prénom</MsfTableHeadCell>
+        <MsfTableHeadCell>Heure d'arrivée</MsfTableHeadCell>
+        <MsfTableHeadCell>Heure de départ</MsfTableHeadCell>
+        <MsfTableHeadCell></MsfTableHeadCell>
+      </MsfTableHead>
+
+      <MsfTableRow #row *ngFor="let item of papers" [value]="item">
+        <MsfTableCell> {{row.index + 1}}</MsfTableCell>
+        <MsfTableCell> {{item.student.groupIndex + 1}}</MsfTableCell>
+        <MsfTableCell> {{item.student.registrationId}}</MsfTableCell>
+        <MsfTableCell> {{item.student.fullName}}</MsfTableCell>
+
+        <MsfTableCell>
+          <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!item.isPresent"></app-icon>
+          <ng-container *ngIf="item.isPresent">{{item.startHour}}</ng-container>
+        </MsfTableCell>
+
+        <MsfTableCell>
+          <app-icon icon="Cancel" bgColor="sharedRed20" *ngIf="!item.isPresent"></app-icon>
+          <ng-container *ngIf="item.isPresent && item.endDate">{{item.endHour}}</ng-container>
+        </MsfTableCell>
+        <MsfTableCell class="text-right">
+          <MsfIconButton *ngIf="!item.isPresent" (click)="paperService.changePresentState(item)" [rounded]="true" icon="CheckMark" theme="primary"></MsfIconButton>
+          <MsfIconButton *ngIf="item.isPresent" (click)="paperService.changePresentState(item)" [rounded]="true" icon="Cancel" theme="error" class="ml-2"></MsfIconButton>
+          <MsfIconButton [rounded]="true" icon="Lock" theme="warning" class="ml-2"></MsfIconButton>
+          <MsfIconButton [rounded]="true" icon="Edit" theme="standard" class="ml-2"></MsfIconButton>
+          <MsfIconButton [rounded]="true" icon="MoreVertical" class="ml-2"></MsfIconButton>
+        </MsfTableCell>
+      </MsfTableRow>
+
+
+    </MsfTable>
+  </div>
+
+
 </app-test-layout>

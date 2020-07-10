@@ -17,7 +17,6 @@ export class PaperLoader extends Loader<Paper, number> {
 
   constructor(private paperRepository: PaperHttpClient,
               private _userHttClient: UserHttpClient,
-              private _roomLoader: RoomLoader,
               private _testLoader: TestLoader,
               private _testGroupLoader: TestGroupLoader,
               private _testGroupCorrectorLoader: TestGroupCorrectorLoader,
@@ -30,7 +29,6 @@ export class PaperLoader extends Loader<Paper, number> {
   }
 
   async load(item: Paper): Promise<Paper> {
-
     if (item.testGroupId) {
       item.testGroup = await this._testGroupLoader.loadById(item.testGroupId);
     }

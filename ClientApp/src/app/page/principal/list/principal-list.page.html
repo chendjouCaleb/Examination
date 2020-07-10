@@ -24,7 +24,7 @@
           </div>
         </MsfPersona>
       </MsfTableCell>
-      <MsfTableCell class="ms-fontSize-12">{{item.registrationDate | amCalendar}}</MsfTableCell>
+      <MsfTableCell class="ms-fontSize-12">{{item.registrationDate | date}}</MsfTableCell>
       <MsfTableCell>
         <MsfPersona size="size32">
           <MsfPersonaFigure [text]="item.registerUser?.fullName" size="size32"></MsfPersonaFigure>
