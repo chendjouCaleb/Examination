@@ -53,6 +53,8 @@ html[data-theme="light"] {
   --navbarColor: #{$ms-color-gray190};
 
   --panelBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.5));
+
+  --borderColor:  #{$ms-color-gray30};
 }
 
 html[data-theme="dark"] {
@@ -73,6 +75,8 @@ html[data-theme="dark"] {
   --textFieldBorderColor: #{$ms-color-gray30};
 
   --panelBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.5));
+
+  --borderColor:  #{$ms-color-gray150};
 }
 
 

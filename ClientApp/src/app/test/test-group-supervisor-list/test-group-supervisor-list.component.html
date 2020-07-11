@@ -7,7 +7,7 @@
     </div>
   </div>
 
-  <div>
+  <div *ngIf="testGroup.testGroupSupervisors">
     <msAlert *ngIf="testGroup.testGroupSupervisors?.length === 0" theme="severeWarning" class="mt-2">
       Ce groupe n'a pas de surveillant.
     </msAlert>

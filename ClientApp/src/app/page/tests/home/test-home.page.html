@@ -24,16 +24,28 @@
   </div>
   <div class="ms-fontSize-12">{{test.speciality?.name}}</div>
 
-  <div>
-    Prévue pour le {{test.expectedStartDate | date}} {{test.expectedStartHour}} - {{test.expectedEndHour}}
-  </div>
+  <div class="ms-description-list">
 
-  <div *ngIf="test.progress">
-    Heure de début: {{test.startHour}}
-  </div>
+    <dl>
+      <dt>État</dt>
+      <dd><span [appStateBadge]="test.state"></span></dd>
+    </dl>
 
-  <div *ngIf="test.finished">
-    {{'éffectuée' | ucFirst}} le : {{test.startDate | date}} de {{test.startHour}} à {{test.endHour}}
+    <dl>
+      <dt>Prévue pour le </dt>
+      <dd>{{test.expectedStartDate | date}} {{test.expectedStartHour}} - {{test.expectedEndHour}}</dd>
+    </dl>
+
+    <dl *ngIf="test.progress">
+      <dt>Heure de début</dt>
+      <dd>{{test.startHour}} </dd>
+    </dl>
+
+    <dl *ngIf="test.finished">
+      <dt>Éffectué</dt>
+      <dd>{{test.startDate | date}} de {{test.startHour}} à {{test.endHour}}</dd>
+    </dl>
+
   </div>
 
 

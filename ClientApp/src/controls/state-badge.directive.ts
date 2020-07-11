@@ -11,15 +11,15 @@ export class StateBadgeDirective implements OnInit, OnChanges {
 
   constructor(private element: ElementRef) {
 
-    this.labels['0'] = new State('badge-warning', 'En attente');
-    this.labels['-1'] = new State('badge-danger', 'Rejeté(e)');
-    this.labels['1'] = new State('badge-success', 'Accepté(e)');
-    this.labels['ACCEPTED'] = new State('badge-success', 'Accepté(e)');
-    this.labels['REJECTED'] = new State('badge-danger', 'Rejeté(e)');
-    this.labels['WAITING'] = new State('badge-warning', 'En attente');
-    this.labels['PROGRESS'] = new State('badge-primary', 'En cours');
-    this.labels['PENDING'] = new State('badge-warning', 'En attente');
-    this.labels['FINISHED'] = new State('badge-danger', 'Terminé');
+    this.labels['0'] = new State('ms-badge-warning', 'En attente');
+    this.labels['-1'] = new State('ms-badge-danger', 'Rejeté(e)');
+    this.labels['1'] = new State('ms-badge-success', 'Accepté(e)');
+    this.labels['ACCEPTED'] = new State('ms-badge-success', 'Accepté(e)');
+    this.labels['REJECTED'] = new State('ms-badge-danger', 'Rejeté(e)');
+    this.labels['WAITING'] = new State('ms-badge-warning', 'En attente');
+    this.labels['PROGRESS'] = new State('ms-badge-primary', 'En cours');
+    this.labels['PENDING'] = new State('ms-badge-warning', 'En attente');
+    this.labels['FINISHED'] = new State('ms-badge-danger', 'Terminé');
   }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class StateBadgeDirective implements OnInit, OnChanges {
       this.element.nativeElement.classList.remove(this.stateClassName);
     }
     const label: State = this.labels[this.appStateBadge];
-    this.element.nativeElement.classList.add('badge');
+    this.element.nativeElement.classList.add('ms-badge');
     this.element.nativeElement.classList.add('text-uppercase');
     this.element.nativeElement.classList.add(label.className);
     this.element.nativeElement.innerText = label.text;

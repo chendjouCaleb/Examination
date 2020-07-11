@@ -1,0 +1,63 @@
+﻿<div class="ms-description-list p-3">
+  <dl>
+    <dt>Nom & prénom</dt>
+    <dd>{{paper.student.fullName}}</dd>
+  </dl>
+
+  <dl>
+    <dt>Matricule</dt>
+    <dd>{{paper.student.registrationId}}</dd>
+  </dl>
+
+  <dl>
+    <dt>Specialité</dt>
+    <dd>
+      <ng-container *ngIf="paper.student.speciality">{{paper.student.speciality?.name}}</ng-container>
+      <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.student.speciality"></app-icon>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>Groupe</dt>
+    <dd>{{paper.student.group.name}}</dd>
+  </dl>
+
+  <dl>
+    <dt>N°</dt>
+    <dd>{{paper.student.groupIndex}}</dd>
+  </dl>
+</div>
+
+
+<div class="ms-description-list p-3">
+  <dl>
+    <dt>État</dt>
+    <dd><span [appStateBadge]="paper.state"></span></dd>
+  </dl>
+
+  <dl>
+    <dt>Date de composition</dt>
+    <dd>
+      <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.isPresent"></app-icon>
+      <ng-container *ngIf="paper.isPresent">{{paper.startDate | date}}</ng-container>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>Heure d'arrivée</dt>
+    <dd>
+      <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.isPresent"></app-icon>
+      <ng-container *ngIf="paper.isPresent">{{paper.startHour}}</ng-container>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>Heure de départ</dt>
+    <dd>
+      <app-icon icon="Cancel" bgColor="sharedRed20" *ngIf="!paper.isPresent"></app-icon>
+      <app-icon icon="AwayStatus" bgColor="sharedRedOrange10" *ngIf="paper.isPresent"></app-icon>
+      <ng-container *ngIf="paper.finished">{{paper.endHour}}</ng-container>
+    </dd>
+  </dl>
+
+</div>

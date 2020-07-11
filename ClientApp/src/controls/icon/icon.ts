@@ -1,4 +1,5 @@
 ﻿import {Component, ElementRef, Input, ViewEncapsulation} from "@angular/core";
+import {msColor} from "../colors";
 
 export type IconSize = "small" | "normal" | "large";
 
@@ -15,17 +16,17 @@ export type IconSize = "small" | "normal" | "large";
 })
 export class Icon {
   @Input()
-  get bgColor(): string {
+  get bgColor(): msColor {
     return this._bgColor
   };
 
-  set bgColor(value: string) {
+  set bgColor(value: msColor) {
     this._elementRef.nativeElement.classList.remove(`ms-bgColor-${this._bgColor}`);
     this._elementRef.nativeElement.classList.add(`ms-bgColor-${value}`);
     this._bgColor = value;
   }
 
-  _bgColor: string = 'sharedGreenCyan10';
+  _bgColor: msColor = 'sharedGreenCyan10';
 
   @Input()
   fontColor = 'white';

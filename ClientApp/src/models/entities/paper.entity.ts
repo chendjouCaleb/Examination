@@ -112,6 +112,28 @@ export class Paper extends Entity<number> {
     return this.student.fullName;
   }
 
+  get waiting(): boolean {
+    return !this.startDate;
+  }
+
+  get finished(): boolean {
+    return !!this.endDate;
+  }
+
+  get progress(): boolean {
+    return !!this.startDate && !this.endDate;
+  }
+
+  get state(): string {
+    if(this.finished){
+      return 'FINISHED';
+    }
+    if(this.progress) {
+      return 'PROGRESS';
+    }
+    return 'WAITING'
+  }
+
 }
 
 

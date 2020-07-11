@@ -19,7 +19,6 @@ export class TestGroup extends Entity<number> {
 
     this.startDate = value.startDate ? new Date(value.startDate) : null;
     this.endDate = value.endDate ? new Date(value.endDate) : null;
-    this.state = value.state;
     this.isCorrected = value.isCorrected;
 
     this.roomId = value.roomId;
@@ -44,13 +43,12 @@ export class TestGroup extends Entity<number> {
   test: Test;
   testId: number;
 
-  state: string;
 
   isCorrected: boolean;
 
-  testGroupCorrectors = new List<TestGroupCorrector>();
-  testGroupSupervisors = new List<TestGroupSupervisor>();
-  testGroupSecretaries = new List<TestGroupSecretary>();
+  testGroupCorrectors: List<TestGroupCorrector>;
+  testGroupSupervisors: List<TestGroupSupervisor>;
+  testGroupSecretaries: List<TestGroupSecretary>;
 
   get expectedStartHour(): LocalTime {
     return LocalTime.of(this.startDate.getHours(), this.startDate.getMinutes())
@@ -78,6 +76,16 @@ export class TestGroup extends Entity<number> {
 
   get progress(): boolean {
     return !!this.startDate && !this.endDate;
+  }
+
+  get state(): string {
+    if(this.finished){
+      return 'FINISHED';
+    }
+    if(this.progress) {
+      return 'PROGRESS';
+    }
+    return 'WAITING'
   }
 
 

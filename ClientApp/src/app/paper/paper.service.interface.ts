@@ -6,4 +6,6 @@ export const PAPER_SERVICE_TOKEN =
 
 export interface IPaperService {
   changePresentState(paper: Paper): Promise<void>;
+
+  details(paper: Paper);
 }

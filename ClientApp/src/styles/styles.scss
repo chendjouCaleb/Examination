@@ -147,3 +147,49 @@ body {
 .cardBgColor {
   background-color: var(--cardBackgroundColor);
 }
+
+
+.ms-badge {
+  color: #FFF;
+  border-radius: 2px;
+  padding: 1px 3px;
+  font-size: 11px;
+  user-select: none;
+
+  &.ms-badge-primary {
+    background-color: $ms-color-themePrimary;
+  }
+  &.ms-badge-success {
+    background-color: $ms-color-success;
+  }
+
+  &.ms-badge-warning {
+    background-color: $ms-color-warning;
+  }
+
+  &.ms-badge-danger {
+    background-color: $ms-color-error;
+  }
+}
+
+.ms-description-list {
+  display: table;
+  & dl {
+    display: table-row;
+  }
+  & dt {
+    display: table-cell;
+    font-weight: normal;
+    opacity: 0.8;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--borderColor);
+  }
+
+  & dd {
+    display: table-cell;
+    font-weight: 600;
+    padding: 10px 0 10px 50px;
+    border-bottom: 1px solid var(--borderColor);
+
+  }
+}

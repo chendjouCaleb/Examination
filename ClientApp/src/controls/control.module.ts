@@ -16,13 +16,21 @@ import {LocalTimeDirective} from "./local-time.directive";
 import {DateInputDirective} from "./date-input.directive";
 import {UcFirstPipe} from "./ucfirst.pipe";
 
+import {MsFontWeightDirective} from "./font-weight.directive";
+import {MsFontSizeDirective} from "./font-size.directive";
+import {MsBorderColorDirective} from "./border-color.directive";
+import {MsBgColorDirective} from "./bg-color.directive";
+import {MsColorDirective} from "./font-color.directive";
+
 @NgModule({
   imports: [CommonModule, MatSnackBarModule, MsfModalModule, MsfButtonModule],
   providers: [AlertEmitter, Confirmation],
   declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
-    MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe],
+    MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe,
+    MsColorDirective, MsFontWeightDirective, MsFontSizeDirective, MsBorderColorDirective, MsBgColorDirective],
   exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
-    MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe],
+    MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe,
+     MsFontWeightDirective, MsFontSizeDirective, MsColorDirective, MsBorderColorDirective, MsBgColorDirective],
 })
 export class ControlModule {
 

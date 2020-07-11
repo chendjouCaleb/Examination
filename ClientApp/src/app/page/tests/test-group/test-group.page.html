@@ -14,18 +14,27 @@
     </div>
   </div>
 
-  <div>
-    <div *ngIf="testGroup.waiting">
-      En attente
-    </div>
+  <div class="ms-description-list">
+    <dl>
+      <dt>État</dt>
+      <dd><span [appStateBadge]="testGroup.state"></span></dd>
+    </dl>
 
-    <div *ngIf="testGroup.progress">
-      Heure de début: {{testGroup.startHour}}
-    </div>
+    <dl *ngIf="testGroup.progress">
+      <dt>Heure de début</dt>
+      <dd>{{testGroup.startHour}}</dd>
+    </dl>
 
-    <div *ngIf="testGroup.finished">
-      {{'éffectuée' | ucFirst}} le : {{testGroup.startDate | date}} de {{testGroup.startHour}} à {{testGroup.endHour}}
-    </div>
+    <dl *ngIf="testGroup.finished">
+      <dt >Éffectué le</dt>
+      <dd msColor="sharedBlue10">{{testGroup.startDate | date}} de {{testGroup.startHour}} à {{testGroup.endHour}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Salle</dt>
+      <dd>{{testGroup.room.name}}</dd>
+    </dl>
+
   </div>
 
 
@@ -71,8 +80,13 @@
           <ng-container *ngIf="item.isPresent && item.endDate">{{item.endHour}}</ng-container>
         </MsfTableCell>
         <MsfTableCell class="text-right">
-          <MsfIconButton *ngIf="!item.isPresent" (click)="paperService.changePresentState(item)" [rounded]="true" icon="CheckMark" theme="primary"></MsfIconButton>
-          <MsfIconButton *ngIf="item.isPresent" (click)="paperService.changePresentState(item)" [rounded]="true" icon="Cancel" theme="error" class="ml-2"></MsfIconButton>
+          <MsfIconButton (click)="paperService.details(item)" [rounded]="true"
+                         icon="RedEye" theme="primary"></MsfIconButton>
+
+          <MsfIconButton *ngIf="!item.isPresent" (click)="paperService.changePresentState(item)" [rounded]="true"
+                         icon="CheckMark" theme="primary"></MsfIconButton>
+          <MsfIconButton *ngIf="item.isPresent" (click)="paperService.changePresentState(item)" [rounded]="true"
+                         icon="Cancel" theme="error" class="ml-2"></MsfIconButton>
           <MsfIconButton [rounded]="true" icon="Lock" theme="warning" class="ml-2"></MsfIconButton>
           <MsfIconButton [rounded]="true" icon="Edit" theme="standard" class="ml-2"></MsfIconButton>
           <MsfIconButton [rounded]="true" icon="MoreVertical" class="ml-2"></MsfIconButton>

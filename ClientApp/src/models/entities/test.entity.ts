@@ -36,7 +36,6 @@ export class Test extends Entity<number> {
 
     this.multipleScore = value.multipleScore;
 
-    this.state = value.state;
     this.groupsState = value.groupsState;
 
     this.isCorrected = value.isCorrected;
@@ -80,8 +79,6 @@ export class Test extends Entity<number> {
   examinationId: number;
 
   multipleScore: boolean;
-
-  state: string;
 
   groupsState: string;
 
@@ -132,6 +129,16 @@ export class Test extends Entity<number> {
 
   get singleScore(): boolean {
     return !this.multipleScore;
+  }
+
+  get state(): string {
+    if(this.finished){
+      return 'FINISHED';
+    }
+    if(this.progress) {
+      return 'PROGRESS';
+    }
+    return 'WAITING'
   }
 
   get url(): string {
