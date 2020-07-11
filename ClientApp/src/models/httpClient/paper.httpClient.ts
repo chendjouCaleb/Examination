@@ -12,7 +12,7 @@ import {
 } from '../entities';
 import {Injectable} from '@angular/core';
 import {List} from '@positon/collections';
-import {PaperReportModel, PeriodModel, ScorePaperModel} from 'examination/models';
+import {PaperPeriodBodyModel, PaperReportModel, PeriodModel, ScorePaperModel} from 'examination/models';
 
 
 @Injectable()
@@ -76,7 +76,7 @@ export class PaperHttpClient extends GenericHttpClient<Paper, number> {
     return this.httpClient.put<void>(`${this.url}/${paper.id}/present`, {}).toPromise();
   }
 
-  changeDates(paper: Paper, model: PeriodModel): Promise<void> {
+  changeDates(paper: Paper, model: PaperPeriodBodyModel): Promise<void> {
     return this.httpClient.put<void>(`${this.url}/${paper.id}/dates`, model).toPromise();
   }
 

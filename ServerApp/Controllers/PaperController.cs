@@ -179,16 +179,23 @@ namespace Exam.Controllers
 
         public StatusCodeResult ChangePresenceState(Paper paper, TestGroupSupervisor testGroupSupervisor)
         {
+            Assert.RequireNonNull(paper, nameof(paper));
+
+            if (testGroupSupervisor == null)
+            {
+                testGroupSupervisor = HttpContext.Items["testGroupSupervisor"] as TestGroupSupervisor;
+            }
+            
             if (!paper.IsPresent)
             {
                 paper.StartDate = DateTime.Now;
                 paper.TestGroupSupervisor = testGroupSupervisor;
+                paper.SupervisorUserId = testGroupSupervisor.Supervisor.UserId;
             }
             else
             {
                 paper.StartDate = null;
-                paper.TestGroupSupervisor = null;
-                paper.TestGroupSupervisorId = null;
+                
             }
 
             _paperRepository.Update(paper);
@@ -201,7 +208,7 @@ namespace Exam.Controllers
         [PeriodNotClosed(ItemName = "test")]
         [AuthorizeTestGroupSupervisor]
         
-        public StatusCodeResult ChangeDate(Paper paper,[FromBody] PeriodForm form)
+        public StatusCodeResult ChangeDate(Paper paper, [FromBody] PeriodForm form)
         {
             Assert.RequireNonNull(paper, nameof(paper));
             Assert.RequireNonNull(form, nameof(form));

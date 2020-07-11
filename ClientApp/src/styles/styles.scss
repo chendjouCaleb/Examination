@@ -174,18 +174,19 @@ body {
 
 .ms-description-list {
   display: table;
-  & dl {
+  & dl, & .ms-dl {
     display: table-row;
   }
-  & dt {
+  & dt, & .ms-dt {
     display: table-cell;
     font-weight: normal;
     opacity: 0.8;
     padding: 10px 0;
     border-bottom: 1px solid var(--borderColor);
+    vertical-align: middle;
   }
 
-  & dd {
+  & dd, & .ms-dd {
     display: table-cell;
     font-weight: 600;
     padding: 10px 0 10px 50px;

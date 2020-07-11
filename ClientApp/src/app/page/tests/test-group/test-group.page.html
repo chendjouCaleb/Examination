@@ -88,8 +88,13 @@
           <MsfIconButton *ngIf="item.isPresent" (click)="paperService.changePresentState(item)" [rounded]="true"
                          icon="Cancel" theme="error" class="ml-2"></MsfIconButton>
           <MsfIconButton [rounded]="true" icon="Lock" theme="warning" class="ml-2"></MsfIconButton>
-          <MsfIconButton [rounded]="true" icon="Edit" theme="standard" class="ml-2"></MsfIconButton>
-          <MsfIconButton [rounded]="true" icon="MoreVertical" class="ml-2"></MsfIconButton>
+          <MsfIconButton [rounded]="true" icon="CommentAdd"   class="ml-2"></MsfIconButton>
+          <MsfIconButton [rounded]="true" icon="CalendarSettingsMirrored" (click)="paperService.editDates(item)" class="ml-2"></MsfIconButton>
+          <MsfIconButton [rounded]="true" icon="MoreVertical" class="ml-2" [MsfMenuTrigger]="more"></MsfIconButton>
+
+          <MsfMenu #more>
+            <MsfMenuItem icon="CommentAdd" (click)="paperService.supervisorComment(item)">Commentaire de surveillance</MsfMenuItem>
+          </MsfMenu>
         </MsfTableCell>
       </MsfTableRow>
 

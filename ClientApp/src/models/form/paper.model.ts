@@ -2,8 +2,8 @@ import {IsNotEmpty} from 'class-validator';
 import {LocalTime} from "@js-joda/core";
 
 export interface PaperPeriodBodyModel {
-  expectedStartDate: Date;
-  expectedEndDate: Date;
+  startDate: Date;
+  endDate: Date;
 }
 
 export class PaperPeriodModel {
@@ -22,8 +22,8 @@ export class PaperPeriodModel {
     const endDate = new Date(this.day);
     endDate.setHours(this.endHour.hour(), this.endHour.minute());
     return {
-      expectedStartDate: startDate,
-      expectedEndDate: endDate
+      startDate: startDate,
+      endDate: endDate
     };
   }
 }

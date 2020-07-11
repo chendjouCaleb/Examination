@@ -658,6 +658,10 @@
               </e>
             </e>
             <e p="paper" t="Include">
+              <e p="date" t="Include">
+                <e p="paper-edit-date.component.html" t="Include" />
+                <e p="paper-edit-date.component.ts" t="Include" />
+              </e>
               <e p="form.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="item" t="Include">
@@ -667,6 +671,10 @@
               <e p="paper.module.ts" t="Include" />
               <e p="paper.service.interface.ts" t="Include" />
               <e p="paper.service.ts" t="Include" />
+              <e p="supervisor-comment" t="Include">
+                <e p="paper-supervisor-comment.component.html" t="Include" />
+                <e p="paper-supervisor-comment.component.ts" t="Include" />
+              </e>
             </e>
             <e p="principal" t="Include">
               <e p="add" t="Include">

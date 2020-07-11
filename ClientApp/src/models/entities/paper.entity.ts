@@ -30,24 +30,22 @@ export class Paper extends Entity<number> {
     this.studentId = value.studentId;
     this.student = value.student;
 
-    this.testGroupSupervisor = value.testGroupSupervisor;
+
     this.testGroupSupervisorId = value.testGroupSupervisorId;
     this.supervisorUserId = value.supervisorUserId;
     this.collectorUserId = value.collectorUserId;
     this.supervisorComment = value.supervisorComment;
 
-    this.testGroupCorrector = value.testGroupCorrector;
     this.testGroupCorrectorId = value.testGroupCorrectorId;
     this.correctorUserId = value.correctorUserId;
     this.correctorComment = value.correctorComment;
 
-    this.testGroupSecretary = value.testGroupSecretary;
     this.testGroupSecretaryId = value.testGroupSecretaryId;
     this.secretaryUserId = value.secretaryUserId;
     this.collectorUserId = value.collectorUserId;
     this.secretaryComment = value.secretaryComment;
-
   }
+
   score: number;
   anonymity: string;
   startDate: Date;

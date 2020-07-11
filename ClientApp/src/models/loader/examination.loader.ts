@@ -22,12 +22,20 @@ export class ExaminationLoader extends Loader<Examination, number> {
     if (item.registerUserId) {
       item.registerUser = await this._userHttClient.findAsync(item.registerUserId);
     }
+    item.organisation = await this._organisationLoader.loadById(item.organisationId);
 
     if (this.identity.user) {
-      item.userPrincipal = await this._examinationHttpClient.examinationUser(item.id, this.identity.user.id);
+      item.userPrincipal = {
+        userId : this.identity.user.id,
+        isPrincipal: item.organisation.adminUserId === this.identity.user.id,
+        isCorrector: false,
+        isStudent: false,
+        isSecretary: false,
+        isSupervisor: false
+      }
     }
 
-    item.organisation = await this._organisationLoader.loadById(item.organisationId);
+
     return item;
   }
 
