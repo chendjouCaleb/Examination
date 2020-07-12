@@ -81,33 +81,45 @@
 
       <dl>
         <dt>Admis en salle par</dt>
-        <dd>
-          <MsfPersona *ngIf="paper.supervisorUser" size="size32">
+        <dd *ngIf="paper.supervisorUser">
+          <MsfPersona  size="size32">
             <MsfPersonaFigure [imageUrl]="paper.supervisorUser.imageUrl"></MsfPersonaFigure>
             <MsfPersonaText>{{paper.supervisorUser.fullName | titlecase}}</MsfPersonaText>
           </MsfPersona>
+        </dd>
+        <dd *ngIf="!paper.supervisorUser">
+          <app-icon icon="Cancel" bgColor="sharedRed10" ></app-icon>
         </dd>
       </dl>
 
       <dl>
         <dt style="vertical-align: top">Commentaire de surveillance</dt>
-        <dd style="max-width: 350px; font-weight: 400">{{paper.supervisorComment}}</dd>
+        <dd style="max-width: 350px; font-weight: 400" *ngIf="paper.supervisorComment">{{paper.supervisorComment}}</dd>
+        <dd *ngIf="!paper.supervisorComment">
+          <app-icon icon="Cancel" bgColor="sharedRed10"></app-icon>
+        </dd>
       </dl>
 
 
       <dl>
         <dt>Copie consignée par</dt>
-        <dd>
-          <MsfPersona *ngIf="paper.secretaryUser" size="size32">
+        <dd *ngIf="paper.secretaryUser">
+          <MsfPersona size="size32">
             <MsfPersonaFigure [imageUrl]="paper.secretaryUser.imageUrl"></MsfPersonaFigure>
             <MsfPersonaText>{{paper.secretaryUser.fullName | titlecase}}</MsfPersonaText>
           </MsfPersona>
+        </dd>
+        <dd *ngIf="!paper.secretaryUser">
+          <app-icon icon="Cancel" bgColor="sharedRed10" ></app-icon>
         </dd>
       </dl>
 
       <dl>
         <dt style="vertical-align: top">Commentaire de surveillance</dt>
-        <dd style="max-width: 350px; font-weight: 400" >{{paper.secretaryComment}}</dd>
+        <dd style="max-width: 350px; font-weight: 400" *ngIf="paper.secretaryComment">{{paper.secretaryComment}}</dd>
+        <dd>
+          <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.secretaryComment"></app-icon>
+        </dd>
       </dl>
     </div>
   </div>

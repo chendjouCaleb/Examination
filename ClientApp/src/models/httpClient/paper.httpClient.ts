@@ -1,7 +1,8 @@
 import {GenericHttpClient, SERVER_URL} from './httpClient';
 import {
   Corrector,
-  Paper, ScorePaper,
+  Paper,
+  ScorePaper,
   Secretary,
   Student,
   Supervisor,
@@ -12,7 +13,7 @@ import {
 } from '../entities';
 import {Injectable} from '@angular/core';
 import {List} from '@positon/collections';
-import {PaperPeriodBodyModel, PaperReportModel, PeriodModel, ScorePaperModel} from 'examination/models';
+import {IScorePaperModel, PaperPeriodBodyModel, PaperReportModel} from 'examination/models';
 
 
 @Injectable()
@@ -107,7 +108,7 @@ export class PaperHttpClient extends GenericHttpClient<Paper, number> {
     return this.httpClient.put<void>(`${this.url}/${paper.id}/score`, {}, {params: {score}}).toPromise();
   }
 
-  scores(paper: Paper, scores: ScorePaperModel[]): Promise<void> {
+  scores(paper: Paper, scores: IScorePaperModel[]): Promise<void> {
     return this.httpClient.put<void>(`${this.url}/${paper.id}/scores`, scores).toPromise();
   }
 

@@ -10,6 +10,7 @@ import {Observable} from "rxjs";
 import {PaperEditDateComponent} from "examination/app/paper/date/paper-edit-date.component";
 import {PaperSupervisorCommentComponent} from "examination/app/paper/supervisor-comment/paper-supervisor-comment.component";
 import {PaperReportComponent} from "examination/app/paper/report/paper-report.component";
+import {PaperScoresComponent} from "examination/app/paper/scores/paper-scores.component";
 
 @Injectable()
 export class PaperService implements IPaperService {
@@ -39,6 +40,12 @@ export class PaperService implements IPaperService {
 
   report(paper: Paper): Observable<Paper> {
     const modalRef = this._modal.open(PaperReportComponent, {disableClose: true});
+    modalRef.componentInstance.paper = paper;
+    return modalRef.afterClosed();
+  }
+
+  scores(paper: Paper): Observable<Paper> {
+    const modalRef = this._modal.open(PaperScoresComponent, {disableClose: true});
     modalRef.componentInstance.paper = paper;
     return modalRef.afterClosed();
   }

@@ -1,13 +1,15 @@
 ﻿import {EvFormControl, EvFormGroup} from "examination/controls";
-import {PaperPeriodModel, PaperReportModel} from "examination/models";
+import {IScorePaperModel, PaperPeriodModel, PaperReportModel, Score, ScorePaper} from "examination/models";
+import {List} from "@positon/collections";
 
 export class PaperPeriodForm extends EvFormGroup<PaperPeriodModel> {
-  constructor(value:any = {}) {
+  constructor(value: any = {}) {
     super({
-      day: new EvFormControl("day",  value.day),
-      startHour: new EvFormControl("startHour",  value.startHour),
-      endHour: new EvFormControl("endHour",  value.endHour)
+      day: new EvFormControl("day", value.day),
+      startHour: new EvFormControl("startHour", value.startHour),
+      endHour: new EvFormControl("endHour", value.endHour)
     });
+
   }
 
   getModel(): PaperPeriodModel {
@@ -21,10 +23,10 @@ export class PaperPeriodForm extends EvFormGroup<PaperPeriodModel> {
 
 
 export class PaperReportForm extends EvFormGroup<PaperReportModel> {
-  constructor(value:any = {}) {
+  constructor(value: any = {}) {
     super({
-      anonymity: new EvFormControl("anonymity",  value.anonymity),
-      comment: new EvFormControl("comment",  value.comment)
+      anonymity: new EvFormControl("anonymity", value.anonymity),
+      comment: new EvFormControl("comment", value.comment)
     });
   }
 
@@ -33,5 +35,21 @@ export class PaperReportForm extends EvFormGroup<PaperReportModel> {
     model.anonymity = this.controls.anonymity.value;
     model.comment = this.controls.comment.value;
     return model;
+  }
+}
+
+
+export class PaperScoreForm extends EvFormGroup<IScorePaperModel[]> {
+  constructor(scores: List<Score> | Array<Score>) {
+    super({});
+    for (const score of scores) {
+      this.controls[score.id] = new EvFormControl(score.id, '')
+    }
+  }
+
+  getModel(): IScorePaperModel[] {
+    return this.getControls().map<IScorePaperModel>(p => {
+      return {scoreId: p.name, value: p.value}
+    });
   }
 }

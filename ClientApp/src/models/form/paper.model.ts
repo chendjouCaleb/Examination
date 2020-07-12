@@ -33,3 +33,9 @@ export class PaperReportModel {
 
   anonymity: string;
 }
+
+
+export class IScorePaperModel {
+  scoreId: number | string;
+  value: number;
+}

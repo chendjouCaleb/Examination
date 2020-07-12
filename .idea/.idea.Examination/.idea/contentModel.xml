@@ -675,6 +675,10 @@
                 <e p="paper-report.component.html" t="Include" />
                 <e p="paper-report.component.ts" t="Include" />
               </e>
+              <e p="scores" t="Include">
+                <e p="paper-scores.component.html" t="Include" />
+                <e p="paper-scores.component.ts" t="Include" />
+              </e>
               <e p="supervisor-comment" t="Include">
                 <e p="paper-supervisor-comment.component.html" t="Include" />
                 <e p="paper-supervisor-comment.component.ts" t="Include" />

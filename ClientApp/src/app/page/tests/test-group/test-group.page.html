@@ -80,7 +80,8 @@
           <ng-container *ngIf="item.isPresent && item.endDate">{{item.endHour}}</ng-container>
         </MsfTableCell>
         <MsfTableCell class="text-right">
-
+          <MsfIconButton *ngIf="item.finished" (click)="paperService.scores(item)" [rounded]="true"
+                         icon="EditNote" theme="primary"></MsfIconButton>
 
           <MsfIconButton *ngIf="!item.isPresent" (click)="paperService.changePresentState(item)" [rounded]="true"
                          icon="AddFriend" theme="primary"></MsfIconButton>
@@ -97,6 +98,11 @@
                          icon="RedEye" theme="primary"></MsfIconButton>
 
           <MsfMenu #more>
+
+            <MsfMenuItem *ngIf="item.finished" icon="EditNote"
+                         (click)="paperService.scores(item)">Noter
+            </MsfMenuItem>
+
             <MsfMenuItem *ngIf="!item.isPresent && !testGroup.finished" icon="AddFriend"
                          (click)="paperService.changePresentState(item)">Admettre cet étudiant
             </MsfMenuItem>

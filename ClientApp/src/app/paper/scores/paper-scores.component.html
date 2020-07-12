@@ -1,0 +1,21 @@
+﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
+  <div class="ms-form-header">Noter la copie</div>
+
+
+
+  <div class="ms-textField" *ngFor="let score of scores">
+    <label [for]="score.id"  class="msf-label">{{score.name}}  /{{score.radical}} points</label>
+    <input type="number" [id]="score.id" [name]="score.id"  class="ms-textField-input" DateInput [formControlName]="score.id">
+    <app-control-error controlName="day"></app-control-error>
+  </div>
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">
+      Modifier
+    </MsfButton>
+  </div>
+</form>
+
+
