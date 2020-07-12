@@ -9,6 +9,7 @@ import {AuthorizationManager} from "examination/app/authorization";
 import {Observable} from "rxjs";
 import {PaperEditDateComponent} from "examination/app/paper/date/paper-edit-date.component";
 import {PaperSupervisorCommentComponent} from "examination/app/paper/supervisor-comment/paper-supervisor-comment.component";
+import {PaperReportComponent} from "examination/app/paper/report/paper-report.component";
 
 @Injectable()
 export class PaperService implements IPaperService {
@@ -36,6 +37,29 @@ export class PaperService implements IPaperService {
     return modalRef.afterClosed();
   }
 
+  report(paper: Paper): Observable<Paper> {
+    const modalRef = this._modal.open(PaperReportComponent, {disableClose: true});
+    modalRef.componentInstance.paper = paper;
+    return modalRef.afterClosed();
+  }
+
+  collect(paper: Paper): Promise<void> {
+    let message = `Récupérer la copie de cet étudiant?`;
+
+
+    return new Promise<void>(resolve => {
+      const confirm = this._confirmation.open(message);
+      confirm.accept.subscribe(async () => {
+        await this._httpClient.collect(paper);
+        paper.collectorUser = this._auth.user;
+        paper.collectorUserId = this._auth.user.id;
+        paper.endDate = new Date();
+        this._alertEmitter.info(`Copié marquée comme réçue!`);
+        resolve();
+      });
+    });
+  }
+
   changePresentState(paper: Paper): Promise<void> {
     let message = `Marquer l'étudiant ${paper.student.fullName} comme présent?`;
     if(paper.isPresent) {
@@ -55,4 +79,6 @@ export class PaperService implements IPaperService {
       });
     });
   }
+
+
 }

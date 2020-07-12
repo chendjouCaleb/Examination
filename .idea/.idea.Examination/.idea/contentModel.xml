@@ -671,6 +671,10 @@
               <e p="paper.module.ts" t="Include" />
               <e p="paper.service.interface.ts" t="Include" />
               <e p="paper.service.ts" t="Include" />
+              <e p="report" t="Include">
+                <e p="paper-report.component.html" t="Include" />
+                <e p="paper-report.component.ts" t="Include" />
+              </e>
               <e p="supervisor-comment" t="Include">
                 <e p="paper-supervisor-comment.component.html" t="Include" />
                 <e p="paper-supervisor-comment.component.ts" t="Include" />

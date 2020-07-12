@@ -259,7 +259,7 @@ namespace Exam.Controllers
         [PeriodHaveState(ItemName = "testGroup", State = "FINISHED")]
         [PeriodNotClosed(ItemName = "testGroup")]
         [AuthorizeTestGroupSecretary]
-        public AcceptedResult Report(Paper paper, TestGroupSecretary testGroupSecretary, PaperReportForm form)
+        public AcceptedResult Report(Paper paper, TestGroupSecretary testGroupSecretary, [FromBody] PaperReportForm form)
         {
             Assert.RequireNonNull(paper, nameof(paper));
             Assert.RequireNonNull(testGroupSecretary, nameof(testGroupSecretary));

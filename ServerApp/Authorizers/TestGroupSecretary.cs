@@ -41,7 +41,10 @@ namespace Exam.Authorizers
                 throw new UnauthorizedException("{authorization.constraints.requireTestGroupSecretary}");
             }
 
-            context.HttpContext.Items[ItemName] = secretary;
+            if (context.ActionArguments.ContainsKey(ItemName))
+            {
+                context.ActionArguments[ItemName] = secretary;
+            }
         }
     }
 }

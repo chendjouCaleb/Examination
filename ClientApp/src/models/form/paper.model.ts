@@ -29,9 +29,7 @@ export class PaperPeriodModel {
 }
 
 export class PaperReportModel {
-  @IsNotEmpty()
   comment: string;
 
-  @IsNotEmpty()
   anonymity: string;
 }

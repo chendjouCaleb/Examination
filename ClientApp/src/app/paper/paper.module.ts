@@ -8,10 +8,11 @@ import {PaperItemComponent} from "examination/app/paper/item/paper-item.componen
 import {PaperEditDateComponent} from "examination/app/paper/date/paper-edit-date.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PaperSupervisorCommentComponent} from "./supervisor-comment/paper-supervisor-comment.component";
+import {PaperReportComponent} from "examination/app/paper/report/paper-report.component";
 
 @NgModule({
-  declarations: [PaperItemComponent, PaperEditDateComponent, PaperSupervisorCommentComponent],
-  exports: [PaperItemComponent, PaperEditDateComponent, PaperSupervisorCommentComponent],
+  declarations: [PaperItemComponent, PaperEditDateComponent, PaperSupervisorCommentComponent, PaperReportComponent],
+  exports: [PaperItemComponent, PaperEditDateComponent, PaperSupervisorCommentComponent, PaperReportComponent],
   imports: [CommonModule, AppFormModule, FormsModule, ReactiveFormsModule,
     ControlModule, MsfButtonModule, MsfPersonaModule, MsfModalModule, MsfTableModule],
   providers: [PaperService, {provide: PAPER_SERVICE_TOKEN, useExisting: PaperService}]

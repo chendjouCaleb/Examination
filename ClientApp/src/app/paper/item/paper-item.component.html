@@ -58,7 +58,7 @@
         <dt>Heure de départ</dt>
         <dd>
           <app-icon icon="Cancel" bgColor="sharedRed20" *ngIf="!paper.isPresent"></app-icon>
-          <app-icon icon="AwayStatus" bgColor="sharedRedOrange10" *ngIf="paper.isPresent"></app-icon>
+          <app-icon icon="AwayStatus" bgColor="sharedRedOrange10" *ngIf="paper.isPresent && !paper.finished"></app-icon>
           <ng-container *ngIf="paper.finished">{{paper.endHour}}</ng-container>
         </dd>
       </dl>
@@ -69,6 +69,16 @@
 
   <div>
     <div class="ms-description-list p-3">
+      <dl>
+        <dt>Copié récupérée par</dt>
+        <dd>
+          <MsfPersona *ngIf="paper.collectorUser" size="size32">
+            <MsfPersonaFigure [imageUrl]="paper.collectorUser.imageUrl"></MsfPersonaFigure>
+            <MsfPersonaText>{{paper.collectorUser.fullName | titlecase}}</MsfPersonaText>
+          </MsfPersona>
+        </dd>
+      </dl>
+
       <dl>
         <dt>Admis en salle par</dt>
         <dd>
@@ -81,7 +91,23 @@
 
       <dl>
         <dt style="vertical-align: top">Commentaire de surveillance</dt>
-        <dd style="max-width: 250px">{{paper.supervisorComment}}</dd>
+        <dd style="max-width: 350px; font-weight: 400">{{paper.supervisorComment}}</dd>
+      </dl>
+
+
+      <dl>
+        <dt>Copie consignée par</dt>
+        <dd>
+          <MsfPersona *ngIf="paper.secretaryUser" size="size32">
+            <MsfPersonaFigure [imageUrl]="paper.secretaryUser.imageUrl"></MsfPersonaFigure>
+            <MsfPersonaText>{{paper.secretaryUser.fullName | titlecase}}</MsfPersonaText>
+          </MsfPersona>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt style="vertical-align: top">Commentaire de surveillance</dt>
+        <dd style="max-width: 350px; font-weight: 400" >{{paper.secretaryComment}}</dd>
       </dl>
     </div>
   </div>

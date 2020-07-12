@@ -89,9 +89,13 @@ export class PaperHttpClient extends GenericHttpClient<Paper, number> {
     return this.httpClient.put<void>(`${this.url}/${paper.id}/correctorComment`, {}, {params: {comment}}).toPromise();
   }
 
-  collect(paper: Paper, endDate: Date): Promise<void> {
+  collect(paper: Paper, endDate?: Date): Promise<void> {
+    const params:any = {};
+    if(endDate) {
+      params.endDate = endDate.toDateString()
+    }
     return this.httpClient.put<void>(`${this.url}/${paper.id}/collect`, {},
-      {params: {endDate: endDate.toDateString()}}).toPromise();
+      {params}).toPromise();
   }
 
 
