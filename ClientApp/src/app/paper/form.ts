@@ -1,6 +1,7 @@
 ﻿import {EvFormControl, EvFormGroup} from "examination/controls";
-import {IScorePaperModel, PaperPeriodModel, PaperReportModel, Score, ScorePaper} from "examination/models";
+import {IScorePaperModel, PaperPeriodModel, PaperReportModel, Score} from "examination/models";
 import {List} from "@positon/collections";
+import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 
 export class PaperPeriodForm extends EvFormGroup<PaperPeriodModel> {
   constructor(value: any = {}) {
@@ -39,17 +40,52 @@ export class PaperReportForm extends EvFormGroup<PaperReportModel> {
 }
 
 
-export class PaperScoreForm extends EvFormGroup<IScorePaperModel[]> {
+export class PaperScoreForm extends FormGroup {
   constructor(scores: List<Score> | Array<Score>) {
-    super({});
+    super(PaperScoreForm.createControls(scores));
+
+  }
+
+  static createControls(scores: List<Score> | Array<Score>) {
+    const controls: {[key: string] : AbstractControl}= {};
+
     for (const score of scores) {
-      this.controls[score.id] = new EvFormControl(score.id, '')
+      controls[score.id] = new FormControl(null, Validators.compose(
+        [Validators.required, Validators.min(0), Validators.max(score.radical)]));
     }
+    return controls;
   }
 
   getModel(): IScorePaperModel[] {
-    return this.getControls().map<IScorePaperModel>(p => {
-      return {scoreId: p.name, value: p.value}
-    });
+    const controls = Object.keys(this.controls)
+      .map<IScorePaperModel>(p => {
+        return {scoreId: p, value: this.controls[p].value}
+      });
+    return controls;
+  }
+
+  getControl(): FormControl[] {
+    return Object.values(this.controls) as FormControl[];
+  }
+
+  getErrorMessage(name: string) {
+    const errors = this.controls[name].errors;
+    let messages = [];
+    if (errors) {
+      for (let errorName in errors) {
+        switch (errorName) {
+          case 'required':
+            messages.push('Cette note est obligatoire');
+            break;
+          case 'max':
+            messages.push(`Cette note doit être inférieure ou égale à ${errors.max.max}`);
+            break;
+          case 'min':
+            messages.push(`Cette note doit être supérieure ou égale à ${errors.min.min}`);
+            break;
+        }
+      }
+    }
+    return messages;
   }
 }

@@ -49,7 +49,10 @@ namespace Exam.Authorizers
                 throw new UnauthorizedException("{authorization.constraints.requirePrincipalTestGroupSupervisor}");
             }
 
-            context.HttpContext.Items[ItemName] = supervisor;
+            if (context.ActionArguments.ContainsKey(ItemName))
+            {
+                context.ActionArguments[ItemName] = supervisor;
+            }
         }
     }
 }

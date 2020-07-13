@@ -41,7 +41,10 @@ namespace Exam.Authorizers
                 throw new UnauthorizedException("{authorization.constraints.requireTestGroupCorrector}");
             }
 
-            context.HttpContext.Items[ItemName] = corrector;
+            if (context.ActionArguments.ContainsKey(ItemName))
+            {
+                context.ActionArguments[ItemName] = corrector;
+            }
         }
     }
 }

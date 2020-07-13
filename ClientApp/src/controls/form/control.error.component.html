@@ -1,4 +1,5 @@
 <div  style="font-size: 11px " class="text-danger col-12 px-0 mx-0" *ngIf="control && control.dirty && control.invalid">
+  {{control.errors | json}}
   <div *ngFor="let error of control.errors.message" class="col-12 px-0 mx-0">
     &#8226;
      {{error}}
