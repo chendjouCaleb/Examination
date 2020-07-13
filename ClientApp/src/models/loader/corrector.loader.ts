@@ -34,7 +34,7 @@ export class CorrectorLoader implements EntityLoader<Corrector, number> {
   }
 
   async loadByExamination(examination: Examination): Promise<List<Corrector>> {
-    const correctors = await this.correctorRepository.listAsync({examinationId: examination.id});
+    const correctors = await this.correctorRepository.list({examinationId: examination.id});
     for (const corrector of correctors) {
       await this.load(corrector);
     }

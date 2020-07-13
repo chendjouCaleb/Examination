@@ -1101,6 +1101,7 @@
               <e p="paper.httpClient.ts" t="Include" />
               <e p="principal.httpClient.ts" t="Include" />
               <e p="room.httpClient.ts" t="Include" />
+              <e p="score-paper.httpClient.ts" t="Include" />
               <e p="score.httpClient.ts" t="Include" />
               <e p="secretary.httpClient.ts" t="Include" />
               <e p="speciality.httpClient.ts" t="Include" />

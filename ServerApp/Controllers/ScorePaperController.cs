@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Everest.AspNetStartup.Exceptions;
+using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Exam.Controllers
 {
     
-    [Route("api/papers")]
+    [Route("api")]
     public class ScorePaperController:Controller
     {
         private IRepository<ScorePaper, long> _scorePaperRepository;
@@ -29,9 +30,22 @@ namespace Exam.Controllers
             _scoreRepository = scoreRepository;
         }
 
+        [HttpGet("scorePapers/{scorePaperId}")]
+        public ScorePaper Get(long scorePaperId) => _scorePaperRepository.Find(scorePaperId);
+        
+        [HttpGet("scorePapers")]
+        [LoadPaper(Source = ParameterSource.Query)]
+        public IList<ScorePaper> List(Paper paper)
+        {
+            if (paper == null)
+            {
+                throw new ArgumentNullException(nameof(paper));
+            }
+            return _scorePaperRepository.List(s => paper.Equals(s.Paper) );
+        }
         
 
-        [HttpGet("{paperId}/scores")]
+        [HttpGet("papers/{paperId}/scores")]
         [LoadPaper]
         public IList<ScorePaper> Scores(Paper paper)
         {
@@ -42,7 +56,7 @@ namespace Exam.Controllers
             return _scorePaperRepository.List(s => paper.Equals(s.Paper) );
         }
         
-        [HttpPut("{paperId}/scores")]
+        [HttpPut("papers/{paperId}/scores")]
         [LoadPaper(TestItemName = "test", TestGroupItemName = "testGroup")]
         [PeriodNotClosed(ItemName = "test")]
         [AuthorizeTestGroupCorrector]

@@ -20,7 +20,7 @@ export class TestGroupCorrectorAddComponent implements OnInit{
   @Input()
   testGroup: TestGroup;
 
-  correctors: List<Corrector>;
+  correctors: Array<Corrector>;
 
   constructor(private _httpClient: TestGroupCorrectorHttpClient,
               private _correctorHttpClient: CorrectorHttpClient,
@@ -32,11 +32,15 @@ export class TestGroupCorrectorAddComponent implements OnInit{
   }
 
   async ngOnInit() {
-    this.correctors = await this._correctorLoader.loadByExamination(this.testGroup.test.examination);
+    const correctors = await this._correctorLoader.loadByExamination(this.testGroup.test.examination);
 
-    for(const item of this.testGroup.testGroupCorrectors) {
-      this.correctors.removeIf(c => c.id === item.correctorId);
-    }
+
+
+    this.correctors = correctors.toArray();//.filter(c => !this.testGroup.testGroupCorrectors.containsIf(cc => cc.id === c.id));
+
+    // for(const item of this.testGroup.testGroupCorrectors) {
+    //   this.correctors.removeIf(c => !c || c.id === item.correctorId);
+    // }
   }
 
 

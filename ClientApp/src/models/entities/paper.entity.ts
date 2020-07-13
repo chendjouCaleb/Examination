@@ -132,6 +132,18 @@ export class Paper extends Entity<number> {
     return 'WAITING'
   }
 
+  get scoreSum(): number {
+    if(!this.scorePapers) {
+      return 0;
+    }
+
+    let sum = 0;
+    for(const s of this.scorePapers) {
+      sum += s.value;
+    }
+    return sum;
+  }
+
 }
 
 

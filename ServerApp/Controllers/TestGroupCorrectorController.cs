@@ -132,7 +132,7 @@ namespace Exam.Controllers
         [HttpDelete("{testGroupCorrectorId}")]
         [LoadTestGroupCorrector(TestItemName = "test", ExaminationItemName = "examination")]
         [AuthorizeExaminationAdmin]
-        [PeriodHaveState(ItemName = "test", State = "PENDING")]
+        
         public NoContentResult Delete(TestGroupCorrector testGroupCorrector)
         {
             Assert.RequireNonNull(testGroupCorrector, nameof(testGroupCorrector));

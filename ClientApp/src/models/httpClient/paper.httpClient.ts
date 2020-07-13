@@ -108,14 +108,14 @@ export class PaperHttpClient extends GenericHttpClient<Paper, number> {
     return this.httpClient.put<void>(`${this.url}/${paper.id}/score`, {}, {params: {score}}).toPromise();
   }
 
-  scores(paper: Paper, scores: IScorePaperModel[]): Promise<void> {
-    return this.httpClient.put<void>(`${this.url}/${paper.id}/scores`, scores).toPromise();
+  scores(paper: Paper, scores: IScorePaperModel[]): Promise<ScorePaper[]> {
+    return this.httpClient.put<ScorePaper[]>(`${this.url}/${paper.id}/scores`, scores).toPromise();
   }
 
-  async getScores(paper: Paper): Promise<List<ScorePaper>> {
+  async getScores(paper: Paper): Promise<Array<ScorePaper>> {
     const result = await this.httpClient.get<any[]>(`${this.url}/${paper.id}/scores` ).toPromise();
-    const list = new List<ScorePaper>();
-    result.forEach(item => list.add(new ScorePaper(item)));
+    const list = new Array<ScorePaper>();
+    result.forEach(item => list.push(new ScorePaper(item)));
     return list;
   }
 

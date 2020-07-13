@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import {EntityLoader} from './entity-loader.interface';
 import {Paper} from '../entities';
 import {PaperHttpClient, UserHttpClient} from '../httpClient';
-import {RoomLoader} from './room.loader';
 import {TestLoader} from './test.loader';
 import {GroupLoader} from './group.loader';
 import {TestGroupLoader} from "./test-group.loader";
@@ -11,6 +9,7 @@ import {TestGroupSupervisorLoader} from "./test-group-supervisor.loader";
 import {TestGroupSecretaryLoader} from "./test-group-secretary.loader";
 import {StudentLoader} from "./student.loader";
 import {Loader} from "./loader";
+import {ScorePaperLoader} from "./score-paper.loader";
 
 @Injectable({providedIn: 'root'})
 export class PaperLoader extends Loader<Paper, number> {
@@ -18,6 +17,7 @@ export class PaperLoader extends Loader<Paper, number> {
   constructor(private paperRepository: PaperHttpClient,
               private _userHttClient: UserHttpClient,
               private _testLoader: TestLoader,
+
               private _testGroupLoader: TestGroupLoader,
               private _testGroupCorrectorLoader: TestGroupCorrectorLoader,
               private _testGroupSupervisorLoader: TestGroupSupervisorLoader,
@@ -65,6 +65,7 @@ export class PaperLoader extends Loader<Paper, number> {
     if (item.secretaryUserId) {
       item.secretaryUser = await this._userHttClient.findAsync(item.secretaryUserId);
     }
+
     return item;
   }
 

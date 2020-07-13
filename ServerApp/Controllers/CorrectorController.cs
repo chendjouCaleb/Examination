@@ -44,7 +44,7 @@ namespace Exam.Controllers
         {
             if (examination != null)
             {
-                return examination.Correctors;
+                return _correctorRepository.List(c => c.ExaminationId == examination.Id);
             }
 
             return new Corrector[] {};

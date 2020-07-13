@@ -6,7 +6,7 @@
     <label for="corrector" class="msf-label">Selectionner</label>
 
     <MsfSelect id="corrector" name="corrector" [(ngModel)]="correctorId" [multiple]="true" class="ms-textField-input"  placeholder="Choisir les correcteurs">
-      <MsfSelectOption *ngFor="let item of correctors"  [value]="item.id">{{item.user.fullName}}</MsfSelectOption>
+      <MsfSelectOption *ngFor="let item of correctors"  [value]="item?.id">{{item?.user?.fullName}}</MsfSelectOption>
     </MsfSelect>
 
   </div>

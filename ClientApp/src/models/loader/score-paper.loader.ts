@@ -1,17 +1,19 @@
 import {Injectable} from '@angular/core';
-import {EntityLoader} from './entity-loader.interface';
 import {Paper, ScorePaper} from '../entities';
-import {PaperHttpClient} from "../httpClient";
+import {PaperHttpClient, ScorePaperHttpClient} from "../httpClient";
 import {ScoreLoader} from "./score.loader";
 import {PaperLoader} from "./paper.loader";
+import {Loader} from "./loader";
 
 
 @Injectable({providedIn: 'root'})
-export class ScorePaperLoader implements EntityLoader<ScorePaper, number> {
+export class ScorePaperLoader extends Loader<ScorePaper, number> {
 
   constructor(private _paperRepository: PaperHttpClient,
+                private _scorePaperHttpClient: ScorePaperHttpClient,
               private _scoreLoader: ScoreLoader,
               private _paperLoader: PaperLoader) {
+    super(_scorePaperHttpClient);
   }
 
   async load(item: ScorePaper): Promise<ScorePaper> {
@@ -21,16 +23,17 @@ export class ScorePaperLoader implements EntityLoader<ScorePaper, number> {
   }
 
   async loadByPaper(paper: Paper) {
-    const items = await this._paperRepository.getScores(paper);
+    const items = await this._scorePaperHttpClient.listByPaper(paper);
 
     for(const item of items) {
       await this.load(item);
     }
 
     paper.scorePapers = items;
+    return items;
   }
 
   async loadById(id: number): Promise<ScorePaper> {
-    throw new Error("Not implemented method!")
+    return this.load(await this._httpClient.findAsync(id));
   }
 }
