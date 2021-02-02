@@ -3,6 +3,7 @@ using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Infrastructure;
+using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,11 +13,14 @@ namespace Exam.Loaders
     public class LoadTestGroupCorrector : Attribute, IResourceFilter
     {
         public string ItemName { get; set; } = "testGroupCorrector";
-        public string ExaminationItemName { get; set; }
         
         public string TestItemName { get; set; }
         
         public string TestGroupItemName { get; set; }
+        
+        public string SchoolItemName { get; set; }
+        
+        public string ExaminationItemName { get; set; }
 
         public string ParameterName { get; set; } = "testGroupCorrectorId";
 
@@ -29,8 +33,8 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<TestGroupCorrector, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<TestGroupCorrector, long>>();
+            ITestGroupCorrectorRepository repository =
+                context.HttpContext.RequestServices.GetRequiredService<ITestGroupCorrectorRepository>();
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
@@ -50,9 +54,14 @@ namespace Exam.Loaders
                 context.HttpContext.Items[TestItemName] = testGroupCorrector.TestGroup.Test;
             }
 
+            if (!string.IsNullOrWhiteSpace(SchoolItemName))
+            {
+                context.HttpContext.Items[SchoolItemName] = repository.GetSchool(testGroupCorrector);
+            }
+            
             if (!string.IsNullOrWhiteSpace(ExaminationItemName))
             {
-                context.HttpContext.Items[ExaminationItemName] = testGroupCorrector.TestGroup.Test.Examination;
+                context.HttpContext.Items[ExaminationItemName] = repository.GetExamination(testGroupCorrector);
             }
         }
     }

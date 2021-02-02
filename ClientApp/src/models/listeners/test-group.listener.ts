@@ -1,6 +1,6 @@
 ﻿import {Inject, Injectable} from "@angular/core";
 import {TestGroupHub} from "examination/hubs";
-import {  AuthorizationManager} from "examination/app/authorization";
+import {AuthorizationManager} from "examination/app/authorization";
 import {IListenerAlert, LISTENER_ALERT_SERVICE_TOKEN} from "./listener-alert.interface";
 import {TestGroup} from "examination/entities";
 
@@ -8,20 +8,20 @@ import {TestGroup} from "examination/entities";
 export class TestGroupHubListener {
 
   testGroupStartedSubscription = (testGroup: TestGroup) => {
-    if(this._identity.user.isAffectedByTestGroup(testGroup)) {
-      this._alert.info(`Le groupe ${testGroup.group.name} de l'épreuve ${testGroup.test.name} (${testGroup.test.code}) vient de débuter.`)
+    if (this._identity.user.isAffectedByTestGroup(testGroup)) {
+      this._alert.info(`Le groupe ${testGroup.index} de l'épreuve ${testGroup.test.course.name} (${testGroup.test.course.code}) vient de débuter.`)
     }
   };
 
-  testGroupEndedSubscription = (testGroup: TestGroup)  => {
-    if(this._identity.user.isAffectedByTestGroup(testGroup)) {
-      this._alert.info(`Le groupe ${testGroup.group.name} de l'épreuve ${testGroup.test.name} (${testGroup.test.code}) vient de terminer.`)
+  testGroupEndedSubscription = (testGroup: TestGroup) => {
+    if (this._identity.user.isAffectedByTestGroup(testGroup)) {
+      this._alert.info(`Le groupe ${testGroup.index} de l'épreuve ${testGroup.test.course.name} (${testGroup.test.course.code}) vient de terminer.`)
     }
   };
 
   testGroupRestartedSubscription = (testGroup: TestGroup) => {
-    if(this._identity.user.isAffectedByTestGroup(testGroup)) {
-      this._alert.info(`Le groupe ${testGroup.group.name} de l'épreuve ${testGroup.test.name} (${testGroup.test.code}) est à nouveau en cours.`)
+    if (this._identity.user.isAffectedByTestGroup(testGroup)) {
+      this._alert.info(`Le groupe ${testGroup.index} de l'épreuve ${testGroup.test.course.name} (${testGroup.test.course.code}) est à nouveau en cours.`)
     }
   };
 

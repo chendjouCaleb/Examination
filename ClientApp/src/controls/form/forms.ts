@@ -7,7 +7,6 @@ export class EvFormGroup<T> extends FormGroup {
 
   constructor(controls: any) {
     super(controls);
-
     this.valueChanges.subscribe(() => {
       this.doValidation();
     });
@@ -23,6 +22,15 @@ export class EvFormGroup<T> extends FormGroup {
 
   getModel(): T {
     return this.value as T;
+  }
+
+  get canSubmit(): boolean {
+    return this.touched && this.valid;
+  }
+
+
+  get canDisabledSubmit(): boolean {
+    return this.pristine || this.invalid;
   }
 
 

@@ -1,0 +1,43 @@
+﻿<app-layout>
+
+
+  <app-department-banner (onDepartmentDelete)="_router.navigateByUrl(department.school.url)"
+    [department]="department"></app-department-banner>
+
+  <msPivot>
+    <msPivotHeader>
+      <msPivotLabel>Acceuil</msPivotLabel>
+      <msPivotLabel>Salles</msPivotLabel>
+      <msPivotLabel>Étudiants</msPivotLabel>
+      <msPivotLabel>Délégués</msPivotLabel>
+      <msPivotLabel>Correcteurs</msPivotLabel>
+      <msPivotLabel>Superviseurs</msPivotLabel>
+      <msPivotLabel>Sécretaires</msPivotLabel>
+    </msPivotHeader>
+    <msPivotBody>
+      <div *msPivotContentDef>
+        <app-department-home-page [department]="department"></app-department-home-page>
+      </div>
+      <div *msPivotContentDef>
+        <app-room-list  [department]="department"></app-room-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-student-list  [department]="department"></app-student-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-principal-list  [department]="department"></app-principal-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-corrector-list  [department]="department"></app-corrector-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-supervisor-list  [department]="department"></app-supervisor-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-secretary-list  [department]="department"></app-secretary-list>
+      </div>
+    </msPivotBody>
+  </msPivot>
+
+
+</app-layout>

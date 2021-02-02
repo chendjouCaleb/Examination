@@ -1,8 +1,8 @@
 ﻿using System;
 using Everest.AspNetStartup.Infrastructure;
-using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Infrastructure;
+using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,9 +12,10 @@ namespace Exam.Loaders
     public class LoadTestGroup : Attribute, IResourceFilter
     {
         public string ItemName { get; set; } = "testGroup";
-        public string ExaminationItemName { get; set; }
         
         public string TestItemName { get; set; }
+        
+        public string SchoolItemName { get; set; }
 
         public string ParameterName { get; set; } = "testGroupId";
 
@@ -27,8 +28,7 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<TestGroup, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<TestGroup, long>>();
+            ITestGroupRepository repository = context.HttpContext.RequestServices.GetRequiredService<ITestGroupRepository>();
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
@@ -43,10 +43,11 @@ namespace Exam.Loaders
                 context.HttpContext.Items[TestItemName] = testGroup.Test;
             }
 
-            if (!string.IsNullOrWhiteSpace(ExaminationItemName))
+            if (!string.IsNullOrWhiteSpace(SchoolItemName))
             {
-                context.HttpContext.Items[ExaminationItemName] = testGroup.Test.Examination;
+                context.HttpContext.Items[SchoolItemName] = repository.GetSchool(testGroup);
             }
+            
         }
     }
 }

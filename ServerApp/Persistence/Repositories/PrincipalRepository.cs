@@ -12,21 +12,16 @@ namespace Exam.Persistence.Repositories
             _dataContext = dataContext;
         }
 
-        public Principal Save(Principal item)
+        public new Principal Save(Principal item)
         {
-            item = base.Save(item);
-            item.Examination.PrincipalCount += 1;
-            _dataContext.Update(item.Examination);
-            _dataContext.SaveChanges();
-            return item;
+            return base.Save(item);
+            
         }
 
-        public void Delete(Principal item)
+        public new void Delete(Principal item)
         {
-            item = base.Save(item);
-            item.Examination.PrincipalCount -= 1;
-            _dataContext.Update(item.Examination);
-            _dataContext.SaveChanges();
+         base.Delete(item);
+         
         }
     }
 }

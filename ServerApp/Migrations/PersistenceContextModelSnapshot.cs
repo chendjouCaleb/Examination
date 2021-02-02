@@ -19,35 +19,6 @@ namespace Exam.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Exam.Entities.Admin", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("OrganisationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("RegisterUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RegistrationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganisationId");
-
-                    b.ToTable("Admins");
-                });
-
             modelBuilder.Entity("Exam.Entities.Application", b =>
                 {
                     b.Property<long>("Id")
@@ -58,7 +29,7 @@ namespace Exam.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("ExaminationId")
+                    b.Property<long?>("DepartmentId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("FullName")
@@ -67,6 +38,12 @@ namespace Exam.Migrations
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
+
+                    b.Property<long>("LevelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("LevelSpecialityId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("ProcessDate")
                         .HasColumnType("datetime2");
@@ -80,9 +57,6 @@ namespace Exam.Migrations
                     b.Property<string>("RegistrationId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("SpecialityId")
-                        .HasColumnType("bigint");
-
                     b.Property<long?>("StudentId")
                         .HasColumnType("bigint");
 
@@ -91,9 +65,11 @@ namespace Exam.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("DepartmentId");
 
-                    b.HasIndex("SpecialityId");
+                    b.HasIndex("LevelId");
+
+                    b.HasIndex("LevelSpecialityId");
 
                     b.HasIndex("StudentId")
                         .IsUnique()
@@ -135,7 +111,10 @@ namespace Exam.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("ExaminationId")
+                    b.Property<long>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MemberId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("PaperCount")
@@ -152,9 +131,116 @@ namespace Exam.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("MemberId")
+                        .IsUnique();
 
                     b.ToTable("Correctors");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Course", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Coefficient")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsGeneral")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("LevelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("MultipleScore")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Radical")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LevelId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Exam.Entities.CourseLevelSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("CourseId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LevelSpecialityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("LevelSpecialityId");
+
+                    b.ToTable("CourseLevelSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Department", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Acronym")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasCoverImage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasImage")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrincipalUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("SchoolId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Exam.Entities.Examination", b =>
@@ -163,18 +249,6 @@ namespace Exam.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AcceptedApplicationCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ApplicationCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClosedTestCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CorrectorCount")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
@@ -185,182 +259,234 @@ namespace Exam.Migrations
                     b.Property<DateTime>("ExpectedStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GroupCount")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Grouped")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsClosed")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("LastGroupingDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NonGroupedStudentsCount")
-                        .HasColumnType("int");
-
-                    b.Property<long>("OrganisationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("PrincipalCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProgressTestCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RegisterUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RejectedApplicationCount")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("RequireSpeciality")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ReviewAverage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReviewCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SecretaryCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialityCount")
-                        .HasColumnType("int");
+                    b.Property<long>("SchoolId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StudentCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SupervisorCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WaitingTestCount")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganisationId");
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Examinations");
                 });
 
-            modelBuilder.Entity("Exam.Entities.ExaminationReview", b =>
+            modelBuilder.Entity("Exam.Entities.ExaminationDepartment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ExaminationId")
+                    b.Property<long?>("DepartmentId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("RegistrationDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Score")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExaminationId");
-
-                    b.ToTable("ExaminationReviews");
-                });
-
-            modelBuilder.Entity("Exam.Entities.Group", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<long?>("ExaminationId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Index")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("RegisterUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("ExaminationId");
+
+                    b.ToTable("ExaminationDepartments");
+                });
+
+            modelBuilder.Entity("Exam.Entities.ExaminationLevel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ExaminationDepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("LevelId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("RoomId")
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExaminationDepartmentId");
+
+                    b.HasIndex("LevelId");
+
+                    b.ToTable("ExaminationLevels");
+                });
+
+            modelBuilder.Entity("Exam.Entities.ExaminationLevelSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("ExaminationLevelId")
                         .HasColumnType("bigint");
+
+                    b.Property<long?>("ExaminationSpecialityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LevelSpecialityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExaminationLevelId");
+
+                    b.HasIndex("ExaminationSpecialityId");
+
+                    b.HasIndex("LevelSpecialityId");
+
+                    b.ToTable("ExaminationLevelSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.ExaminationSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("ExaminationDepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<long?>("SpecialityId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
-
-                    b.HasIndex("RoomId");
+                    b.HasIndex("ExaminationDepartmentId");
 
                     b.HasIndex("SpecialityId");
 
-                    b.ToTable("Groups");
+                    b.ToTable("ExaminationSpecialities");
                 });
 
-            modelBuilder.Entity("Exam.Entities.Organisation", b =>
+            modelBuilder.Entity("Exam.Entities.ExaminationStudent", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("AdminCount")
+                    b.Property<long?>("ExaminationLevelId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("AdminUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ExaminationCount")
+                    b.Property<long?>("ExaminationLevelSpecialityId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Identifier")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("RoomCount")
+                    b.Property<long>("StudentId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExaminationLevelId");
+
+                    b.HasIndex("ExaminationLevelSpecialityId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("ExaminationStudents");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Level", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Levels");
+                });
+
+            modelBuilder.Entity("Exam.Entities.LevelSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("LevelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("SpecialityId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LevelId");
+
+                    b.HasIndex("SpecialityId");
+
+                    b.ToTable("LevelSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Member", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("SchoolId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
@@ -368,7 +494,9 @@ namespace Exam.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organisations");
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("Exam.Entities.Paper", b =>
@@ -396,14 +524,17 @@ namespace Exam.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<long?>("ExaminationStudentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("GroupIndex")
+                        .HasColumnType("int");
+
                     b.Property<int>("PaperFileCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ReviewCount")
-                        .HasColumnType("int");
 
                     b.Property<double?>("Score")
                         .HasColumnType("float");
@@ -417,9 +548,6 @@ namespace Exam.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("StudentId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("SupervisorComment")
                         .HasColumnType("nvarchar(max)");
 
@@ -429,7 +557,7 @@ namespace Exam.Migrations
                     b.Property<long?>("TestGroupCorrectorId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("TestGroupId")
+                    b.Property<long?>("TestGroupId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("TestGroupSecretaryId")
@@ -438,9 +566,15 @@ namespace Exam.Migrations
                     b.Property<long?>("TestGroupSupervisorId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("TestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("TestLevelSpecialityId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("ExaminationStudentId");
 
                     b.HasIndex("TestGroupCorrectorId");
 
@@ -449,6 +583,10 @@ namespace Exam.Migrations
                     b.HasIndex("TestGroupSecretaryId");
 
                     b.HasIndex("TestGroupSupervisorId");
+
+                    b.HasIndex("TestId");
+
+                    b.HasIndex("TestLevelSpecialityId");
 
                     b.ToTable("Papers");
                 });
@@ -485,33 +623,35 @@ namespace Exam.Migrations
                     b.ToTable("PaperFiles");
                 });
 
-            modelBuilder.Entity("Exam.Entities.PaperReview", b =>
+            modelBuilder.Entity("Exam.Entities.Planner", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("PaperId")
+                    b.Property<long>("MemberId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("RegisterUserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Score")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("SchoolId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PaperId");
+                    b.HasIndex("MemberId");
 
-                    b.ToTable("PaperReviews");
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("Planners");
                 });
 
             modelBuilder.Entity("Exam.Entities.Principal", b =>
@@ -521,7 +661,10 @@ namespace Exam.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("ExaminationId")
+                    b.Property<long>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MemberId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("RegisterUserId")
@@ -530,15 +673,15 @@ namespace Exam.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("MemberId")
+                        .IsUnique();
 
                     b.ToTable("Principals");
                 });
@@ -556,14 +699,14 @@ namespace Exam.Migrations
                     b.Property<long>("Capacity")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("GroupCount")
+                    b.Property<long?>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("LevelId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("OrganisationId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("RegisterUserId")
                         .HasColumnType("nvarchar(max)");
@@ -571,14 +714,65 @@ namespace Exam.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("TestGroupCount")
+                    b.Property<long>("SchoolId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganisationId");
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("LevelId");
+
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Exam.Entities.School", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Acronym")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasCoverImage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasImage")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Identifier")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("PrincipalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PrincipalId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PrincipalUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegisterUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrincipalId1");
+
+                    b.ToTable("Schools");
                 });
 
             modelBuilder.Entity("Exam.Entities.Score", b =>
@@ -587,6 +781,9 @@ namespace Exam.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("CourseId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -597,12 +794,9 @@ namespace Exam.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("TestId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TestId");
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Scores");
                 });
@@ -620,7 +814,7 @@ namespace Exam.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("ScoreId")
+                    b.Property<long>("TestScoreId")
                         .HasColumnType("bigint");
 
                     b.Property<double>("Value")
@@ -630,7 +824,7 @@ namespace Exam.Migrations
 
                     b.HasIndex("PaperId");
 
-                    b.HasIndex("ScoreId");
+                    b.HasIndex("TestScoreId");
 
                     b.ToTable("ScorePapers");
                 });
@@ -642,7 +836,10 @@ namespace Exam.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("ExaminationId")
+                    b.Property<long>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MemberId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("RegisterUserId")
@@ -656,7 +853,9 @@ namespace Exam.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("MemberId");
 
                     b.ToTable("Secretaries");
                 });
@@ -668,23 +867,11 @@ namespace Exam.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AcceptedApplicationCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ApplicationCount")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("ExaminationId")
+                    b.Property<long>("DepartmentId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("GroupCount")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Grouped")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastGroupingDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -692,18 +879,9 @@ namespace Exam.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RejectedApplicationCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestCount")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Specialities");
                 });
@@ -718,7 +896,7 @@ namespace Exam.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("ExaminationId")
+                    b.Property<long?>("DepartmentId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("FullName")
@@ -728,17 +906,11 @@ namespace Exam.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
-                    b.Property<long?>("GroupId")
+                    b.Property<long>("LevelId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("GroupIndex")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Index")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaperCount")
-                        .HasColumnType("int");
+                    b.Property<long?>("LevelSpecialityId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("RegisterUserId")
                         .HasColumnType("nvarchar(max)");
@@ -749,19 +921,16 @@ namespace Exam.Migrations
                     b.Property<string>("RegistrationId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("SpecialityId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("DepartmentId");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("LevelId");
 
-                    b.HasIndex("SpecialityId");
+                    b.HasIndex("LevelSpecialityId");
 
                     b.ToTable("Students");
                 });
@@ -773,7 +942,10 @@ namespace Exam.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("ExaminationId")
+                    b.Property<long>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MemberId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("RegistrationDate")
@@ -784,7 +956,9 @@ namespace Exam.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("MemberId");
 
                     b.ToTable("Supervisors");
                 });
@@ -799,16 +973,22 @@ namespace Exam.Migrations
                     b.Property<DateTime?>("ClosingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("Coefficient")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ConsignedPaperCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CorrectedPaperCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CourseId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("ExaminationId")
+                    b.Property<long?>("ExaminationLevelId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("ExpectedEndDate")
@@ -817,17 +997,32 @@ namespace Exam.Migrations
                     b.Property<DateTime>("ExpectedStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GroupCount")
-                        .HasColumnType("int");
+                    b.Property<bool>("Grouped")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsGeneral")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastGroupingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("MultipleScore")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("NotGroupedStudentCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PaperCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PresentPaperCount")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("PublicationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Radical")
-                        .HasColumnType("int");
+                    b.Property<long>("Radical")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("RegisterUserId")
                         .HasColumnType("nvarchar(max)");
@@ -835,23 +1030,20 @@ namespace Exam.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReviewCount")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("SpecialityId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<long>("TestGroupCount")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("UseAnonymity")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("CourseId");
 
-                    b.HasIndex("SpecialityId");
+                    b.HasIndex("ExaminationLevelId");
 
                     b.ToTable("Tests");
                 });
@@ -863,11 +1055,20 @@ namespace Exam.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long>("Capacity")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ConsignedPaperCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CorrectedPaperCount")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("GroupId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsClosed")
                         .HasColumnType("bit");
@@ -875,10 +1076,13 @@ namespace Exam.Migrations
                     b.Property<long>("PaperCount")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("PresentPaperCount")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("RoomId")
+                    b.Property<long?>("RoomId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("StartDate")
@@ -888,8 +1092,6 @@ namespace Exam.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
 
                     b.HasIndex("RoomId");
 
@@ -905,7 +1107,7 @@ namespace Exam.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CorrectorId")
+                    b.Property<long>("CorrectorId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("PaperCount")
@@ -964,6 +1166,9 @@ namespace Exam.Migrations
                     b.Property<bool>("IsPrincipal")
                         .HasColumnType("bit");
 
+                    b.Property<long>("PaperCount")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
@@ -982,55 +1187,77 @@ namespace Exam.Migrations
                     b.ToTable("TestGroupSupervisors");
                 });
 
-            modelBuilder.Entity("Exam.Entities.TestReview", b =>
+            modelBuilder.Entity("Exam.Entities.TestLevelSpeciality", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("CourseLevelSpecialityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ExaminationLevelSpecialityId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Score")
+                    b.Property<long?>("TestId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseLevelSpecialityId");
+
+                    b.HasIndex("ExaminationLevelSpecialityId");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("TestLevelSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.TestScore", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Radical")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<long>("TestId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("TestReviews");
-                });
-
-            modelBuilder.Entity("Exam.Entities.Admin", b =>
-                {
-                    b.HasOne("Exam.Entities.Organisation", "Organisation")
-                        .WithMany("Admins")
-                        .HasForeignKey("OrganisationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("TestScores");
                 });
 
             modelBuilder.Entity("Exam.Entities.Application", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
+                    b.HasOne("Exam.Entities.Department", null)
                         .WithMany("Applications")
-                        .HasForeignKey("ExaminationId")
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Exam.Entities.Level", "Level")
+                        .WithMany("Applications")
+                        .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Exam.Entities.Speciality", "Speciality")
+                    b.HasOne("Exam.Entities.LevelSpeciality", "LevelSpeciality")
                         .WithMany("Applications")
-                        .HasForeignKey("SpecialityId");
+                        .HasForeignKey("LevelSpecialityId");
 
                     b.HasOne("Exam.Entities.Student", "Student")
                         .WithOne("Application")
@@ -1048,53 +1275,156 @@ namespace Exam.Migrations
 
             modelBuilder.Entity("Exam.Entities.Corrector", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
+                    b.HasOne("Exam.Entities.Department", "Department")
                         .WithMany("Correctors")
-                        .HasForeignKey("ExaminationId")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.Member", "Member")
+                        .WithOne("Corrector")
+                        .HasForeignKey("Exam.Entities.Corrector", "MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Course", b =>
+                {
+                    b.HasOne("Exam.Entities.Level", "Level")
+                        .WithMany("Courses")
+                        .HasForeignKey("LevelId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.CourseLevelSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.Course", "Course")
+                        .WithMany("CourseLevelSpecialities")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("Exam.Entities.LevelSpeciality", "LevelSpeciality")
+                        .WithMany()
+                        .HasForeignKey("LevelSpecialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Department", b =>
+                {
+                    b.HasOne("Exam.Entities.School", "School")
+                        .WithMany("Departments")
+                        .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Exam.Entities.Examination", b =>
                 {
-                    b.HasOne("Exam.Entities.Organisation", "Organisation")
+                    b.HasOne("Exam.Entities.School", "School")
                         .WithMany("Examinations")
-                        .HasForeignKey("OrganisationId")
+                        .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Exam.Entities.ExaminationReview", b =>
+            modelBuilder.Entity("Exam.Entities.ExaminationDepartment", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
-                        .WithMany("Reviews")
-                        .HasForeignKey("ExaminationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    b.HasOne("Exam.Entities.Department", "Department")
+                        .WithMany("ExaminationDepartments")
+                        .HasForeignKey("DepartmentId");
 
-            modelBuilder.Entity("Exam.Entities.Group", b =>
-                {
                     b.HasOne("Exam.Entities.Examination", "Examination")
-                        .WithMany("Groups")
+                        .WithMany("ExaminationDepartments")
                         .HasForeignKey("ExaminationId");
+                });
 
-                    b.HasOne("Exam.Entities.Room", "Room")
-                        .WithMany("Groups")
-                        .HasForeignKey("RoomId")
+            modelBuilder.Entity("Exam.Entities.ExaminationLevel", b =>
+                {
+                    b.HasOne("Exam.Entities.ExaminationDepartment", "ExaminationDepartment")
+                        .WithMany("ExaminationLevels")
+                        .HasForeignKey("ExaminationDepartmentId");
+
+                    b.HasOne("Exam.Entities.Level", "Level")
+                        .WithMany("ExaminationLevels")
+                        .HasForeignKey("LevelId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.ExaminationLevelSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.ExaminationLevel", "ExaminationLevel")
+                        .WithMany("ExaminationLevelSpecialities")
+                        .HasForeignKey("ExaminationLevelId");
+
+                    b.HasOne("Exam.Entities.ExaminationSpeciality", "ExaminationSpeciality")
+                        .WithMany("ExaminationLevelSpecialities")
+                        .HasForeignKey("ExaminationSpecialityId");
+
+                    b.HasOne("Exam.Entities.LevelSpeciality", "LevelSpeciality")
+                        .WithMany("ExaminationLevelSpecialities")
+                        .HasForeignKey("LevelSpecialityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.ExaminationSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.ExaminationDepartment", "ExaminationDepartment")
+                        .WithMany("ExaminationSpecialities")
+                        .HasForeignKey("ExaminationDepartmentId");
 
                     b.HasOne("Exam.Entities.Speciality", "Speciality")
-                        .WithMany("Groups")
+                        .WithMany("ExaminationSpecialities")
                         .HasForeignKey("SpecialityId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.ExaminationStudent", b =>
+                {
+                    b.HasOne("Exam.Entities.ExaminationLevel", "ExaminationLevel")
+                        .WithMany("ExaminationStudents")
+                        .HasForeignKey("ExaminationLevelId");
+
+                    b.HasOne("Exam.Entities.ExaminationLevelSpeciality", "ExaminationLevelSpeciality")
+                        .WithMany("ExaminationStudents")
+                        .HasForeignKey("ExaminationLevelSpecialityId");
+
+                    b.HasOne("Exam.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Level", b =>
+                {
+                    b.HasOne("Exam.Entities.Department", "Department")
+                        .WithMany("Levels")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.LevelSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.Level", "Level")
+                        .WithMany("LevelSpecialities")
+                        .HasForeignKey("LevelId");
+
+                    b.HasOne("Exam.Entities.Speciality", "Speciality")
+                        .WithMany("LevelSpecialities")
+                        .HasForeignKey("SpecialityId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Member", b =>
+                {
+                    b.HasOne("Exam.Entities.School", "School")
+                        .WithMany("Members")
+                        .HasForeignKey("SchoolId");
                 });
 
             modelBuilder.Entity("Exam.Entities.Paper", b =>
                 {
-                    b.HasOne("Exam.Entities.Student", "Student")
+                    b.HasOne("Exam.Entities.ExaminationStudent", "ExaminationStudent")
                         .WithMany("Papers")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("ExaminationStudentId");
 
                     b.HasOne("Exam.Entities.TestGroupCorrector", "TestGroupCorrector")
                         .WithMany("Papers")
@@ -1102,9 +1432,7 @@ namespace Exam.Migrations
 
                     b.HasOne("Exam.Entities.TestGroup", "TestGroup")
                         .WithMany("Papers")
-                        .HasForeignKey("TestGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TestGroupId");
 
                     b.HasOne("Exam.Entities.TestGroupSecretary", "TestGroupSecretary")
                         .WithMany("Papers")
@@ -1113,6 +1441,16 @@ namespace Exam.Migrations
                     b.HasOne("Exam.Entities.TestGroupSupervisor", "TestGroupSupervisor")
                         .WithMany()
                         .HasForeignKey("TestGroupSupervisorId");
+
+                    b.HasOne("Exam.Entities.Test", "Test")
+                        .WithMany("Papers")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.TestLevelSpeciality", "TestLevelSpeciality")
+                        .WithMany("Papers")
+                        .HasForeignKey("TestLevelSpecialityId");
                 });
 
             modelBuilder.Entity("Exam.Entities.PaperFile", b =>
@@ -1124,38 +1462,65 @@ namespace Exam.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Exam.Entities.PaperReview", b =>
+            modelBuilder.Entity("Exam.Entities.Planner", b =>
                 {
-                    b.HasOne("Exam.Entities.Paper", "Paper")
-                        .WithMany("Reviews")
-                        .HasForeignKey("PaperId")
+                    b.HasOne("Exam.Entities.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.School", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Exam.Entities.Principal", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
+                    b.HasOne("Exam.Entities.Department", "Department")
                         .WithMany("Principals")
-                        .HasForeignKey("ExaminationId")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.Member", "Member")
+                        .WithOne("Principal")
+                        .HasForeignKey("Exam.Entities.Principal", "MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Exam.Entities.Room", b =>
                 {
-                    b.HasOne("Exam.Entities.Organisation", "Organisation")
+                    b.HasOne("Exam.Entities.Department", "Department")
                         .WithMany("Rooms")
-                        .HasForeignKey("OrganisationId")
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Exam.Entities.Level", "Level")
+                        .WithMany()
+                        .HasForeignKey("LevelId");
+
+                    b.HasOne("Exam.Entities.School", "School")
+                        .WithMany("Rooms")
+                        .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Exam.Entities.School", b =>
+                {
+                    b.HasOne("Exam.Entities.Member", "Principal")
+                        .WithMany()
+                        .HasForeignKey("PrincipalId1");
+                });
+
             modelBuilder.Entity("Exam.Entities.Score", b =>
                 {
-                    b.HasOne("Exam.Entities.Test", "Test")
+                    b.HasOne("Exam.Entities.Course", "Course")
                         .WithMany("Scores")
-                        .HasForeignKey("TestId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1166,77 +1531,85 @@ namespace Exam.Migrations
                         .WithMany("ScorePapers")
                         .HasForeignKey("PaperId");
 
-                    b.HasOne("Exam.Entities.Score", "Score")
-                        .WithMany("ScorePapers")
-                        .HasForeignKey("ScoreId")
+                    b.HasOne("Exam.Entities.TestScore", "TestScore")
+                        .WithMany()
+                        .HasForeignKey("TestScoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Exam.Entities.Secretary", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
+                    b.HasOne("Exam.Entities.Department", "Department")
                         .WithMany("Secretaries")
-                        .HasForeignKey("ExaminationId")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Exam.Entities.Speciality", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
+                    b.HasOne("Exam.Entities.Department", "Department")
                         .WithMany("Specialities")
-                        .HasForeignKey("ExaminationId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Exam.Entities.Student", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
+                    b.HasOne("Exam.Entities.Department", null)
                         .WithMany("Students")
-                        .HasForeignKey("ExaminationId")
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Exam.Entities.Level", "Level")
+                        .WithMany("Students")
+                        .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Exam.Entities.Group", "Group")
+                    b.HasOne("Exam.Entities.LevelSpeciality", "LevelSpeciality")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId");
-
-                    b.HasOne("Exam.Entities.Speciality", "Speciality")
-                        .WithMany("Students")
-                        .HasForeignKey("SpecialityId");
+                        .HasForeignKey("LevelSpecialityId");
                 });
 
             modelBuilder.Entity("Exam.Entities.Supervisor", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
+                    b.HasOne("Exam.Entities.Department", "Department")
                         .WithMany("Supervisors")
-                        .HasForeignKey("ExaminationId")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Exam.Entities.Test", b =>
                 {
-                    b.HasOne("Exam.Entities.Examination", "Examination")
+                    b.HasOne("Exam.Entities.Course", "Course")
                         .WithMany("Tests")
-                        .HasForeignKey("ExaminationId");
+                        .HasForeignKey("CourseId");
 
-                    b.HasOne("Exam.Entities.Speciality", "Speciality")
+                    b.HasOne("Exam.Entities.ExaminationLevel", "ExaminationLevel")
                         .WithMany("Tests")
-                        .HasForeignKey("SpecialityId");
+                        .HasForeignKey("ExaminationLevelId");
                 });
 
             modelBuilder.Entity("Exam.Entities.TestGroup", b =>
                 {
-                    b.HasOne("Exam.Entities.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId");
-
                     b.HasOne("Exam.Entities.Room", "Room")
-                        .WithMany("TestGroups")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("RoomId");
 
                     b.HasOne("Exam.Entities.Test", "Test")
                         .WithMany("Groups")
@@ -1249,7 +1622,9 @@ namespace Exam.Migrations
                 {
                     b.HasOne("Exam.Entities.Corrector", "Corrector")
                         .WithMany("TestGroupCorrectors")
-                        .HasForeignKey("CorrectorId");
+                        .HasForeignKey("CorrectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Exam.Entities.TestGroup", "TestGroup")
                         .WithMany("TestGroupCorrectors")
@@ -1284,10 +1659,25 @@ namespace Exam.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Exam.Entities.TestReview", b =>
+            modelBuilder.Entity("Exam.Entities.TestLevelSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.CourseLevelSpeciality", "CourseLevelSpeciality")
+                        .WithMany("TestLevelSpecialities")
+                        .HasForeignKey("CourseLevelSpecialityId");
+
+                    b.HasOne("Exam.Entities.ExaminationLevelSpeciality", "ExaminationLevelSpeciality")
+                        .WithMany("TestLevelSpecialities")
+                        .HasForeignKey("ExaminationLevelSpecialityId");
+
+                    b.HasOne("Exam.Entities.Test", "Test")
+                        .WithMany("TestLevelSpecialities")
+                        .HasForeignKey("TestId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.TestScore", b =>
                 {
                     b.HasOne("Exam.Entities.Test", "Test")
-                        .WithMany("Reviews")
+                        .WithMany("TestScores")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

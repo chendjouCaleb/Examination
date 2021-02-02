@@ -1,0 +1,117 @@
+<div class="ms-pageTitle">
+  <div class="ms-fontSize-20">Participations</div>
+  <div>
+    <MsfButton class="mr-2" Icon="Refresh" (click)="reload()">Recharger</MsfButton>
+
+    <ng-container *ngIf="test">
+      <MsfButton Icon="Group" class="mr-2" [outline]="true" theme="primary" (click)="group()">Grouper les étudiants
+      </MsfButton>
+      <MsfButton Icon="Add" theme="primary" *ngIf="test" (click)="addPapers( )">Ajouter les étudiants</MsfButton>
+    </ng-container>
+  </div>
+</div>
+
+
+<div class="ms-table-container">
+  <MsfTable *ngIf="papers">
+    <MsfTableHead>
+      <MsfTableHeadCell>#</MsfTableHeadCell>
+      <MsfTableHeadCell>Matricule</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="fullName">Nom</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="groupIndex">N°</MsfTableHeadCell>
+      <MsfTableHeadCell>Groupe</MsfTableHeadCell>
+      <MsfTableHeadCell>Specialité</MsfTableHeadCell>
+      <MsfTableHeadCell>Présent</MsfTableHeadCell>
+      <MsfTableHeadCell>Arrivée</MsfTableHeadCell>
+      <MsfTableHeadCell>Départ</MsfTableHeadCell>
+      <MsfTableHeadCell style="text-align: right">Actions</MsfTableHeadCell>
+    </MsfTableHead>
+
+    <MsfTableRow #row *ngFor="let item of papers" [value]="item">
+      <MsfTableCell>{{row.index}}</MsfTableCell>
+
+
+      <MsfTableCell>{{item.examinationStudent?.student?.registrationId}}</MsfTableCell>
+
+      <MsfTableCell>
+        <div class="ms-fontWeight-semibold text-capitalize">{{item.examinationStudent?.student.fullName}}</div>
+      </MsfTableCell>
+
+      <MsfTableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+        <ng-container *ngIf="item.testGroup">
+          {{item?.groupIndex + 1}}
+        </ng-container>
+        <app-icon *ngIf="!item.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <ng-container *ngIf="item.testGroup">
+          {{item.testGroup?.index + 1}}
+        </ng-container>
+        <app-icon *ngIf="!item.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <ng-container *ngIf="item.testLevelSpeciality">
+          {{item.testLevelSpeciality.examinationLevelSpeciality?.examinationSpeciality?.speciality.name}}
+        </ng-container>
+        <app-icon *ngIf="!item.testLevelSpeciality" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <app-icon *ngIf="!item.isPresent" bgColor="sharedRed10" icon="Cancel"></app-icon>
+        <app-icon *ngIf="item.isPresent"></app-icon>
+      </MsfTableCell>
+
+      <MsfTableCell class="ms-fontWeight-semibold">
+        <ng-container *ngIf="item.startDate">
+          {{item.startHour}}
+        </ng-container>
+        <app-icon *ngIf="!item.startDate" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </MsfTableCell>
+
+      <MsfTableCell class="ms-fontWeight-semibold">
+        <ng-container *ngIf="item.endDate">
+          {{item.endHour}}
+        </ng-container>
+        <app-icon *ngIf="!item.endDate" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </MsfTableCell>
+
+
+      <MsfTableCell style="text-align: right">
+        <MsfButton theme="primary" (click)="service.details(item)">Détails</MsfButton>
+
+        <ng-container *ngIf="testGroup && testGroup.relation">
+          <MsfIconButton class="ml-2"  [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+
+          <MsfMenu #more>
+            <MsfMenuItemGroup *ngIf="testGroup.relation.isSupervisor">
+              <MsfMenuItem icon="CheckMark" *ngIf="!item.isPresent" (click)="service.changePresentState(item)">
+                Marquer comme présent
+              </MsfMenuItem>
+              <MsfMenuItem icon="Cancel" theme="error" *ngIf="item.isPresent"
+                           (click)="service.changePresentState(item)">
+                Marquer comme absent
+              </MsfMenuItem>
+              <MsfMenuItem icon="CheckMark" theme="success" *ngIf="item.isPresent" (click)="service.collect(item)">
+                Récupérer la copie
+              </MsfMenuItem>
+              <MsfMenuItem icon="Calendar" theme="warning" *ngIf="item.isPresent" (click)="service.editDates(item)">
+                Modifier l'horaire
+              </MsfMenuItem>
+              <MsfMenuItem icon="EditNote" (click)="service.supervisorComment(item)">Commentaire du surveillant
+              </MsfMenuItem>
+            </MsfMenuItemGroup>
+
+            <MsfMenuItemGroup *ngIf="testGroup.relation.isSecretary">
+              <MsfMenuItem icon="EditNote" (click)="service.report(item)">Consigner la copie</MsfMenuItem>
+            </MsfMenuItemGroup>
+
+          </MsfMenu>
+
+        </ng-container>
+      </MsfTableCell>
+    </MsfTableRow>
+  </MsfTable>
+
+</div>

@@ -1,0 +1,43 @@
+﻿﻿<form class="ms-form" [formGroup]="form">
+  <div class="ms-form-header">Modifier un étudiant</div>
+
+
+  <div class="ms-textField">
+    <label for="fullName" class="msf-label">Nom & prénom</label>
+    <input type="text" id="fullName" class="ms-textField-input" formControlName="fullName" >
+    <app-control-error [control]="form.controls['fullName']"></app-control-error>
+  </div>
+
+
+  <div class="ms-textField">
+    <label for="birthDate" class="msf-label">Date de naissance</label>
+    <input id="birthDate" DateInput class="ms-textField-input" formControlName="birthDate">
+    <app-control-error [control]="form.controls['birthDate']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label  class="msf-label">Genre</label>
+    <MsfRadioGroup formControlName="gender" name="gender" style="display: flex">
+      <label class="ms-label"  for="gender-M">
+        <MsfRadio id="gender-M" value="M" inputId="g-M-i" [checked]="student.gender == 'M'"></MsfRadio> Homme
+      </label>
+
+      <label for="gender-F" class="ml-2 ms-Label">
+        <MsfRadio id="gender-F" value="F" inputId="g-F-i"  [checked]="student.gender == 'F'"></MsfRadio> Femme
+      </label>
+    </MsfRadioGroup>
+
+    <app-control-error [control]="form.controls['gender']"></app-control-error>
+  </div>
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" [class.msf-disabled]="form.invalid"  (click)="edit()">
+      Modifier
+    </MsfButton>
+  </div>
+</form>
+
+

@@ -13,7 +13,7 @@
   top: 55px;
   right: 0;
   height: 45px;
-  border-bottom: 1px solid $ms-color-gray100;
+  border-bottom: 1px solid var(--borderColor);
 
 
   //backdrop-filter: blur(var(--blurSize));
@@ -45,9 +45,9 @@
   top: 55px;
   right: 0;
   bottom: 0;
-  overflow: auto;
-  padding: 10px;
-  //backdrop-filter: blur(var(--blurSize));
+  overflow-y: auto;
+  padding: 0;
+  backdrop-filter: blur(var(--blurSize));
   background-color: var(--bodyBackgroundColor);
 
   .app-layout-withSidebar & {

@@ -1,0 +1,36 @@
+﻿<app-layout>
+  <div class="ms-pageTitle">
+    <h4>Niveau {{level.index + 1}}</h4>
+    <div class="text-right">
+      <MsfButton (click)="sendApplication()" Icon="AddFriend" theme="primary">Devenir étudiant</MsfButton>
+    </div>
+  </div>
+
+  <msPivot>
+    <msPivotHeader>
+      <msPivotLabel>Acceuil</msPivotLabel>
+      <msPivotLabel>Cours</msPivotLabel>
+      <msPivotLabel>Étudiants</msPivotLabel>
+      <msPivotLabel>Salles</msPivotLabel>
+      <msPivotLabel>Demandes</msPivotLabel>
+    </msPivotHeader>
+    <msPivotBody>
+      <div *msPivotContentDef>
+        <app-level-home [level]="level"></app-level-home>
+      </div>
+      <div *msPivotContentDef>
+        <app-course-list [level]="level"></app-course-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-student-list  [level]="level"></app-student-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-room-list  [level]="level"></app-room-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-application-list  [level]="level"></app-application-list>
+      </div>
+    </msPivotBody>
+  </msPivot>
+
+</app-layout>

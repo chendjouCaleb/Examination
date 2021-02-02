@@ -1,30 +1,31 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationManager} from 'examination/app/authorization';
-import {UserLoader} from "examination/models";
-import {TestGroupHubListener, TestHubListener} from "examination/listeners";
+import {RouterOutlet} from "@angular/router";
+import {slideInAnimation} from "examination/app/route-animations";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: `<ng-container *ngIf="initialized">' 
+    <div><router-outlet #outlet="outlet"> </router-outlet></div>
+    </ng-container> `,
+  animations: [ slideInAnimation ]
+
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Examination';
 
-  constructor(private _auth: AuthorizationManager,
-              private _userLoader: UserLoader,
-              private _testGroupListener: TestGroupHubListener,
-              private _testListener: TestHubListener) { }
+  initialized: boolean = false;
+
+  constructor(private _auth: AuthorizationManager ) {
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+  }
 
   async ngOnInit() {
-    const result = await this._auth.init();
+    await this._auth.init();
+    this.initialized = true;
     console.log('Authorization manager is ok!');
-
-    this._userLoader.load(this._auth.user).then(data => {
-      console.log('User data is loaded');
-    });
-
-    this._testListener.listen();
-    this._testGroupListener.listen();
   }
 }

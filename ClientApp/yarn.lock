@@ -1278,6 +1278,60 @@
     request "^2.88.0"
     ws "^6.0.0"
 
+"@ms-fluent/button@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@ms-fluent/button/-/button-0.0.13.tgz#c15b44187a05df07843cb78812394142a4c4760a"
+  integrity sha512-nujb0ARmoTKWaclZYmDp4aKNIeRG1Yf79rYN2aH58lWjZQhy3IWJZ+r2/58n/TQTYrFoa0lU2ll/j9fj2iwTxA==
+  dependencies:
+    "@angular/animations" "~9.0.1"
+    "@angular/common" "~9.0.1"
+    "@angular/compiler" "~9.0.1"
+    "@angular/core" "~9.0.1"
+    "@angular/forms" "~9.0.1"
+    "@angular/platform-browser" "~9.0.1"
+    "@angular/platform-browser-dynamic" "~9.0.1"
+    "@angular/router" "~9.0.1"
+    office-ui-fabric-core "^11.0.0"
+    rxjs "~6.5.4"
+    tslib "^1.10.0"
+    zone.js "~0.10.2"
+
+"@ms-fluent/persona@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@ms-fluent/persona/-/persona-0.0.5.tgz#31d60fe4426332cf58b28846fa6a057089bd4c9a"
+  integrity sha512-Yp595Def3WJMb7gfb/8gspLqmK9sJUJjET5wan1PL9JZ+xjicEOfNWjFLchixsn1sel9cmDaeN4y2Yg9hL9LFA==
+  dependencies:
+    "@angular/animations" "~9.0.1"
+    "@angular/common" "~9.0.1"
+    "@angular/compiler" "~9.0.1"
+    "@angular/core" "~9.0.1"
+    "@angular/forms" "~9.0.1"
+    "@angular/platform-browser" "~9.0.1"
+    "@angular/platform-browser-dynamic" "~9.0.1"
+    "@angular/router" "~9.0.1"
+    office-ui-fabric-core "^11.0.0"
+    rxjs "~6.5.4"
+    tslib "^1.10.0"
+    zone.js "~0.10.2"
+
+"@ms-fluent/table@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@ms-fluent/table/-/table-0.0.5.tgz#0ba439312458de4c1cf348b0183aaf6676482879"
+  integrity sha512-mu23QbuWygCJrVlGP9BFKcOKAClwNw8KN4pENQieI5Qw26CAJqu4kP9yC2UHttLqe6QARFYBTdpjDfqxQEWcwg==
+  dependencies:
+    "@angular/animations" "~9.0.1"
+    "@angular/common" "~9.0.1"
+    "@angular/compiler" "~9.0.1"
+    "@angular/core" "~9.0.1"
+    "@angular/forms" "~9.0.1"
+    "@angular/platform-browser" "~9.0.1"
+    "@angular/platform-browser-dynamic" "~9.0.1"
+    "@angular/router" "~9.0.1"
+    office-ui-fabric-core "^11.0.0"
+    rxjs "~6.5.4"
+    tslib "^1.10.0"
+    zone.js "~0.10.2"
+
 "@ngtools/webpack@9.0.7":
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-9.0.7.tgz#2d9397544afcf503530eafc764c64d40a99fa070"
@@ -1828,11 +1882,6 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
-
-animejs@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/animejs/-/animejs-3.1.0.tgz#748a90fc1d4bef3efed64508af9a6a82babf5c47"
-  integrity sha512-BjnCroPPQPEAngT0M89pz9TBcOGgOFLnVoq3+jV2upl4rn60k57/AXvESTnuILsNgOEjGuhMEOMp7IlQzk40kA==
 
 ansi-colors@4.1.1:
   version "4.1.1"
@@ -3270,6 +3319,11 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     ripemd160 "^2.0.0"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+cropperjs@^1.5.7:
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.5.7.tgz#b65019725bae1c6285e881fb661b2141fa57025b"
+  integrity sha512-sGj+G/ofKh+f6A4BtXLJwtcKJgMUsXYVUubfTo9grERiDGXncttefmue/fyQFvn8wfdyoD1KhDRYLfjkJFl0yw==
 
 cross-spawn@^3.0.0:
   version "3.0.1"
@@ -7342,6 +7396,11 @@ mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1, mkdir
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.28.0:
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.28.0.tgz#cdfe73ce01327cee6537b0fafac2e0f21a237d75"
+  integrity sha512-Z5KOjYmnHyd/ukynmFd/WwyXHd7L4J9vTI/nn5Ap9AVUgaAE15VvQ9MOGmJJygEUklupqIrFnor/tjTwRU+tQw==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -7423,13 +7482,6 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
-
-ngx-mask@^9.1.2:
-  version "9.1.2"
-  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-9.1.2.tgz#a48573adb489f7aaee1bd60e3070ecf47fdf968e"
-  integrity sha512-Fkf1HjBahuDlOSnygya9eXrR0Do3H2LXgxioJz6tHRnSU1Z5I0qkrJ5VbM9zLCQ3TUy0/bUUBK8h5bap8RVQ4w==
-  dependencies:
-    tslib "^1.10.0"
 
 ngx-moment@^3.5.0:
   version "3.5.0"

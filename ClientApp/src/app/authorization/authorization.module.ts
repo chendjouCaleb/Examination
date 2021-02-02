@@ -12,7 +12,7 @@ import {LayoutModule} from "examination/infrastructure";
 
 
 const routes: Routes = [
-  {path: 'authorize/callback', component: AuthorizeCallbackComponent, canActivate: [NoAuthorizedGuard]},
+  {path: 'authorize/callback', component: AuthorizeCallbackComponent },
   {path: 'authorize/request', component: AuthorizeRequestComponent, canActivate: [NoAuthorizedGuard]}
 ];
 

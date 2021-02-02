@@ -1,0 +1,28 @@
+<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px; background: transparent">
+  <div class="ms-form-header"> Modifier les informations</div>
+
+
+  <div class="ms-textField">
+    <label for="name" class="msf-label">Nom</label>
+    <input type="text" id="name" class="ms-textField-input" formControlName="name">
+    <app-control-error [control]="form.controls['name']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="acronym" class="msf-label">Acronyme</label>
+    <input type="text" id="acronym" class="ms-textField-input" formControlName="acronym">
+    <app-control-error [control]="form.controls['acronym']"></app-control-error>
+  </div>
+
+
+  <div class="ms-textField">
+    <label for="address" class="msf-label">Addresse</label>
+    <input id="address" class="ms-textField-input" formControlName="address">
+    <app-control-error [control]="form.controls['address']"></app-control-error>
+  </div>
+
+  <div class="mt-4 text-right">
+    <MsfButton class="mr-3" MsfModalClose (click)="form.reset(school)">Annuler</MsfButton>
+    <button MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">Modifier</button>
+  </div>
+</form>

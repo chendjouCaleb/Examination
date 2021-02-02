@@ -1,5 +1,5 @@
-﻿import {IsAlphanumeric, IsIn, IsNotEmpty, MinLength} from "class-validator";
-import { Speciality} from "../entities";
+﻿import {IsAlphanumeric, IsIn, IsNotEmpty, MinLength} from 'class-validator';
+import {Department, Level, LevelSpeciality} from 'examination/entities';
 
 export interface ApplicationAddBody {
   registrationId: number;
@@ -9,7 +9,8 @@ export interface ApplicationAddBody {
 }
 
 export interface ApplicationAddParams {
-  specialityId?: number;
+  levelSpecialityId?: number;
+  levelId?: number;
 }
 
 export class ApplicationAddModel {
@@ -29,7 +30,13 @@ export class ApplicationAddModel {
   @IsIn(["F", "M", 'f', 'm'])
   gender: string;
 
-  speciality: Speciality;
+  department: Department;
+
+  @IsNotEmpty()
+  level: Level;
+
+  levelSpeciality: LevelSpeciality;
+
 
 
   get body(): ApplicationAddBody {
@@ -42,12 +49,14 @@ export class ApplicationAddModel {
   }
 
   get params(): ApplicationAddParams {
-    if(!this.speciality) {
-      return {};
+    const params: ApplicationAddParams = {
+      levelId: this.level.id
+    };
+
+    if(this.levelSpeciality) {
+      params.levelSpecialityId = this.levelSpeciality.id;
     }
-    return {
-      specialityId: this.speciality?.id
-    }
+    return  params;
   }
 }
 

@@ -9,45 +9,64 @@ namespace Exam.Persistence
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IRepository<Organisation, long>, OrganisationRepository>();
-            services.AddTransient<IOrganisationRepository, OrganisationRepository>();
-            services.AddTransient<IRepository<Admin, long>, Repository<Admin, long>>();
+            services.AddTransient<IRepository<School, long>, SchoolRepository>();
+            services.AddTransient<ISchoolRepository, SchoolRepository>();
+            services.AddTransient<IRepository<Department, long>, Repository<Department, long>>();
+            services.AddTransient<IRepository<Level, long>, Repository<Level, long>>();
+            services.AddTransient<IRepository<Speciality, long>, SpecialityRepository>();
+            services.AddTransient<ISpecialityRepository, SpecialityRepository>();
             services.AddTransient<IRepository<Room, long>, Repository<Room, long>>();
+            services.AddTransient<IRepository<LevelSpeciality, long>, Repository<LevelSpeciality, long>>();
+            
+            services.AddTransient<IRepository<Score, long>, Repository<Score, long>>();
+            services.AddTransient<IRepository<Course, long>, CourseRepository>();
+            services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddTransient<IRepository<CourseLevelSpeciality, long>, CourseLevelSpecialityRepository>();
+            services.AddTransient<ICourseLevelSpecialityRepository, CourseLevelSpecialityRepository>();
+            
             services.AddTransient<IRepository<Examination, long>, ExaminationRepository>();
             services.AddTransient<IExaminationRepository, ExaminationRepository>();
-            services.AddTransient<IRepository<Principal, long>, PrincipalRepository>();
-            services.AddTransient<IRepository<Contest, long>, Repository<Contest, long>>();
-            services.AddTransient<IRepository<Corrector, long>, Repository<Corrector, long>>();
+            services.AddTransient<IRepository<ExaminationDepartment, long>, Repository<ExaminationDepartment, long>>();
+            services.AddTransient<IRepository<ExaminationLevel, long>, Repository<ExaminationLevel, long>>();
+            services.AddTransient<IRepository<ExaminationLevelSpeciality, long>, Repository<ExaminationLevelSpeciality, long>>();
+            services.AddTransient<IRepository<ExaminationSpeciality, long>, Repository<ExaminationSpeciality, long>>();
+            services.AddTransient<IRepository<ExaminationStudent, long>, Repository<ExaminationStudent, long>>();
             
-            services.AddTransient<IRepository<Group, long>, GroupRepository>();
-            services.AddTransient<IGroupRepository,GroupRepository>();
+            services.AddTransient<IRepository<Member, long>, MemberRepository>();
+            services.AddTransient<IMemberRepository, MemberRepository>();
+            services.AddTransient<IRepository<Principal, long>, PrincipalRepository>();
+            
+            services.AddTransient<IRepository<Corrector, long>, Repository<Corrector, long>>();
+            services.AddTransient<IRepository<Student, long>, Repository<Student, long>>();
+            services.AddTransient<IRepository<Supervisor, long>, Repository<Supervisor, long>>();
+            services.AddTransient<IRepository<Secretary, long>, Repository<Secretary, long>>();
+            services.AddTransient<IRepository<Planner, long>, Repository<Planner, long>>();
+            services.AddTransient<IRepository<Application, long>, Repository<Application, long>>();
+            
+            services.AddTransient<IRepository<Contest, long>, Repository<Contest, long>>();
+            
+            services.AddTransient<IRepository<Test, long>, TestRepository>();
+            services.AddTransient<ITestLevelSpecialityRepository, TestLevelSpecialityRepository>();
+            services.AddTransient<IRepository<TestLevelSpeciality, long>, TestLevelSpecialityRepository>();
+            
+            services.AddTransient<IRepository<TestScore, long>, Repository<TestScore, long>>();
+            services.AddTransient<ITestRepository, TestRepository>();
+            services.AddTransient<IRepository<TestGroupSupervisor, long>, TestGroupSupervisorRepository>();
+            services.AddTransient<IRepository<TestGroupSecretary, long>, TestGroupSecretaryRepository>();
+            services.AddTransient<IRepository<TestGroupCorrector, long>, TestGroupCorrectorRepository>();
+            
+            services.AddTransient<ITestGroupSupervisorRepository, TestGroupSupervisorRepository>();
+            services.AddTransient<ITestGroupSecretaryRepository, TestGroupSecretaryRepository>();
+            services.AddTransient<ITestGroupCorrectorRepository, TestGroupCorrectorRepository>();
             
             services.AddTransient<IRepository<Paper, long>, Repository<Paper, long>>();
             services.AddTransient<IRepository<PaperFile, long>, Repository<PaperFile, long>>();
-            services.AddTransient<IRepository<ExaminationReview, long>, Repository<ExaminationReview, long>>();
-            services.AddTransient<IRepository<PaperReview, long>, Repository<PaperReview, long>>();
-            services.AddTransient<IRepository<TestReview, long>, Repository<TestReview, long>>();
-            
-            services.AddTransient<IRepository<Speciality, long>, SpecialityRepository>();
-            services.AddTransient<ISpecialityRepository, SpecialityRepository>();
-            
-            services.AddTransient<IRepository<Student, long>, Repository<Student, long>>();
-            services.AddTransient<IRepository<Supervisor, long>, Repository<Supervisor, long>>();
-            services.AddTransient<IRepository<TestGroupSupervisor, long>, Repository<TestGroupSupervisor, long>>();
-            services.AddTransient<IRepository<TestGroupSecretary, long>, Repository<TestGroupSecretary, long>>();
-            services.AddTransient<IRepository<TestGroupCorrector, long>, Repository<TestGroupCorrector, long>>();
-            
-            services.AddTransient<IRepository<Test, long>, TestRepository>();
-            services.AddTransient<ITestRepository, TestRepository>();
-            
-            services.AddTransient<IRepository<Score, long>, Repository<Score, long>>();
             services.AddTransient<IRepository<ScorePaper, long>, Repository<ScorePaper, long>>();
-            
             services.AddTransient<IRepository<TestGroup, long>, TestGroupRepository>();
             services.AddTransient<ITestGroupRepository, TestGroupRepository>();
             
-            services.AddTransient<IRepository<Application, long>, Repository<Application, long>>();
-            services.AddTransient<IRepository<Secretary, long>, Repository<Secretary, long>>();
+            
+            
         }
     }
 }

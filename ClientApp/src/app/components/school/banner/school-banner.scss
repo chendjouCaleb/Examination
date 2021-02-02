@@ -1,0 +1,105 @@
+﻿.school-banner-layout {
+  position: relative;
+
+  height: 300px;
+  width: 100%;
+}
+
+.school-banner-cover {
+  position: absolute;
+  top:0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  overflow: hidden;
+
+  & img {
+    width: 100%;
+  }
+}
+
+.school-banner-front {
+  position: absolute;
+  white-space: nowrap;
+  padding: 20px;
+  top:0;
+  left: 0;
+  bottom: 50px;
+  right: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #FFF;
+}
+
+.school-banner-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+}
+
+.school-banner-info {
+  position: absolute;
+  left: 200px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  padding-left: 10px;
+
+  display: flex;
+  align-items: center;
+}
+
+.school-banner-name {
+  font-size: 24px;
+}
+
+.school-banner-footer {
+  position: absolute;
+  padding: 10px;
+  height: 50px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: right;
+}
+
+
+@media screen and (max-width: 639px){
+  .school-banner-layout {
+    height: 180px;
+  }
+
+  .school-banner-name {
+    font-size: 18px;
+  }
+
+  .school-banner-image {
+    width: 90px;
+
+    & img {
+      width: 90px;
+      height: 90px;
+    }
+  }
+
+  .school-banner-info {
+    left: 90px;
+  }
+}

@@ -1,21 +1,31 @@
-﻿namespace Exam.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Exam.Models
 {
     public class ScoreForm
     {
+        [Required]
         public string Name { get; set; }
         
+        [Required]
         public double Radical { get; set; }
     }
-
-    public class ScoreEditForm
+    
+    public class TestScoreForm
     {
+        [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
+        
+        [Required]
+        public double Radical { get; set; }
     }
     
     public class ScorePaperForm 
     {
-        public long ScoreId { get; set; }
+        [Required]
+        public long TestScoreId { get; set; }
+        
+        [Required]
         public double Value { get; set; }
     }
 }

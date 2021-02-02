@@ -1,7 +1,5 @@
 <div style="height:100%; align-items: center; display: flex">
   <div class="navbar-brand ms-fontSize-24 ms-fontWeight-light px-3">Examination</div>
-
-
 </div>
 
 <div [class.search-bar-active]="activeSearchBar" class="navbar-search-bar search-bar ms-hiddenLgDown" id="search-bar">
@@ -37,5 +35,5 @@
 </div>
 
 <div *ngIf="!authManager.isAuthorized" class="px-3">
-  <a MsfButton Icon="Contact" theme="standard" routerLink="/authorize/request">Connexion</a>
+  <a MsfButton Icon="Contact" theme="standard" (click)="authManager.requestAuthorizationCode()">Connexion</a>
 </div>

@@ -1,0 +1,202 @@
+﻿<div class="ms-pageTitle">
+  <h4 class="px-3">Copie</h4>
+  <div>
+    <ng-container *ngIf="paper.testGroup && paper.testGroup?.relation">
+      <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+
+      <MsfMenu #more>
+        <MsfMenuItemGroup *ngIf="paper.testGroup?.relation.isSupervisor">
+          <MsfMenuItem icon="CheckMark" *ngIf="!paper.isPresent" (click)="service.changePresentState(paper)">
+            Marquer comme présent
+          </MsfMenuItem>
+          <MsfMenuItem icon="Cancel" theme="error" *ngIf="paper.isPresent"
+                       (click)="service.changePresentState(paper)">
+            Marquer comme absent
+          </MsfMenuItem>
+          <MsfMenuItem icon="CheckMark" theme="success" *ngIf="paper.isPresent" (click)="service.collect(paper)">
+            Récupérer la copie
+          </MsfMenuItem>
+          <MsfMenuItem icon="Calendar" theme="warning" *ngIf="paper.isPresent" (click)="service.editDates(paper)">
+            Modifier l'horaire
+          </MsfMenuItem>
+          <MsfMenuItem icon="EditNote" (click)="service.supervisorComment(paper)">Commentaire du surveillant
+          </MsfMenuItem>
+        </MsfMenuItemGroup>
+
+        <MsfMenuItemGroup *ngIf="paper.testGroup?.relation.isSecretary">
+          <MsfMenuItem icon="EditNote" (click)="service.report(paper)">Consigner la copie</MsfMenuItem>
+        </MsfMenuItemGroup>
+
+      </MsfMenu>
+
+    </ng-container>
+  </div>
+</div>﻿
+
+
+<div class="d-flex">
+
+  <div>
+    <div class="ms-description-list p-3">
+      <dl>
+        <dt>Épreuve</dt>
+        <dd>{{paper.test.course?.name}}</dd>
+      </dl>
+      <dl>
+        <dt>Nom & prénom</dt>
+        <dd>{{paper.examinationStudent.student.fullName}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Matricule</dt>
+        <dd>{{paper.examinationStudent.student.registrationId}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Specialité</dt>
+        <dd>
+          <ng-container *ngIf="paper.testLevelSpeciality">
+            {{paper.testLevelSpeciality.examinationLevelSpeciality?.examinationSpeciality?.speciality.name}}
+          </ng-container>
+          <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.testLevelSpeciality"></app-icon>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Groupe</dt>
+        <dd>
+          <ng-container *ngIf="paper.testGroup">{{paper.testGroup?.index + 1}}  </ng-container>
+          <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.testGroup"></app-icon>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>N°</dt>
+        <dd>{{paper.index + 1}}</dd>
+      </dl>
+    </div>
+
+
+    <div class="ms-description-list p-3">
+      <dl>
+        <dt>État</dt>
+        <dd><span [appStateBadge]="paper.state"></span></dd>
+      </dl>
+
+      <dl>
+        <dt>Date de composition</dt>
+        <dd>
+          <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.isPresent"></app-icon>
+          <ng-container *ngIf="paper.isPresent">{{paper.startDate | date}}</ng-container>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Heure d'arrivée</dt>
+        <dd>
+          <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.isPresent"></app-icon>
+          <ng-container *ngIf="paper.isPresent">{{paper.startHour}}</ng-container>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Heure de départ</dt>
+        <dd>
+          <app-icon icon="Cancel" bgColor="sharedRed20" *ngIf="!paper.isPresent"></app-icon>
+          <app-icon icon="AwayStatus" bgColor="sharedRedOrange10" *ngIf="paper.isPresent && !paper.finished"></app-icon>
+          <ng-container *ngIf="paper.finished">{{paper.endHour}}</ng-container>
+        </dd>
+      </dl>
+
+    </div>
+  </div>
+
+
+  <div>
+    <div class="ms-description-list p-3">
+      <dl>
+        <dt>Note obtenue</dt>
+        <dd msFontSize="18" >{{paper.score}}/{{paper.test.radical}}
+
+          <MsfIconButton *ngIf="paper.testGroup?.relation.isPlanner" class="ml-3" icon="Edit" (click)="service.scores(paper)"></MsfIconButton>
+          </dd>
+      </dl>
+
+      <ng-container *ngIf="paper.scorePapers && paper.scorePapers.length > 0">
+        <dl *ngFor="let score of paper.scorePapers; let i=index" msFontSize="12">
+          <dt>{{score.scoreName | ucFirst}}</dt>
+          <dd>{{score.value}}/{{score.radical}}</dd>
+        </dl>
+      </ng-container>
+
+
+
+      <dl>
+        <dt>Copie corrigée par</dt>
+        <dd>
+          <MsfPersona *ngIf="paper.correctorUser" size="size32" >
+            <MsfPersonaFigure [imageUrl]="paper.correctorUser.imageUrl"></MsfPersonaFigure>
+            <MsfPersonaText>{{paper.correctorUser.fullName | titlecase}}</MsfPersonaText>
+          </MsfPersona>
+          <app-icon *ngIf="!paper.correctorUser" icon="Cancel" bgColor="sharedRed10"></app-icon>
+        </dd>
+      </dl>
+    </div>
+
+
+    <div class="ms-description-list p-3 mt-3">
+      <dl>
+        <dt>Copie récupérée par</dt>
+        <dd>
+          <MsfPersona *ngIf="paper.collectorUser" size="size32">
+            <MsfPersonaFigure [imageUrl]="paper.collectorUser.imageUrl"></MsfPersonaFigure>
+            <MsfPersonaText>{{paper.collectorUser.fullName | titlecase}}</MsfPersonaText>
+          </MsfPersona>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Admis en salle par</dt>
+        <dd *ngIf="paper.supervisorUser">
+          <MsfPersona size="size32">
+            <MsfPersonaFigure [imageUrl]="paper.supervisorUser.imageUrl"></MsfPersonaFigure>
+            <MsfPersonaText>{{paper.supervisorUser.fullName | titlecase}}</MsfPersonaText>
+          </MsfPersona>
+        </dd>
+        <dd *ngIf="!paper.supervisorUser">
+          <app-icon icon="Cancel" bgColor="sharedRed10"></app-icon>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt style="vertical-align: top">Commentaire de surveillance</dt>
+        <dd style="max-width: 350px; font-weight: 400" *ngIf="paper.supervisorComment">{{paper.supervisorComment}}</dd>
+        <dd *ngIf="!paper.supervisorComment">
+          <app-icon icon="Cancel" bgColor="sharedRed10"></app-icon>
+        </dd>
+      </dl>
+
+
+      <dl>
+        <dt>Copie consignée par</dt>
+        <dd *ngIf="paper.secretaryUser">
+          <MsfPersona size="size32">
+            <MsfPersonaFigure [imageUrl]="paper.secretaryUser.imageUrl"></MsfPersonaFigure>
+            <MsfPersonaText>{{paper.secretaryUser.fullName | titlecase}}</MsfPersonaText>
+          </MsfPersona>
+        </dd>
+        <dd *ngIf="!paper.secretaryUser">
+          <app-icon icon="Cancel" bgColor="sharedRed10"></app-icon>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt style="vertical-align: top">Commentaire du sécretariat</dt>
+        <dd style="max-width: 350px; font-weight: 400" *ngIf="paper.secretaryComment">{{paper.secretaryComment}}</dd>
+        <dd>
+          <app-icon icon="Cancel" bgColor="sharedRed10" *ngIf="!paper.secretaryComment"></app-icon>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>

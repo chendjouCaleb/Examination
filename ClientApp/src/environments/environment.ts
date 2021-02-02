@@ -2,18 +2,23 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const host = isMobile() ? '192.168.43.24' : 'localhost';
+const authUrl = `http://${host}:4000`;
 export const environment = {
   production: false,
-  HUB_URL: 'http://localhost:9000/hubs',
-  SERVER_URL: 'http://localhost:9000/api',
-  AUTH_APP_URL: 'http://localhost:4000',
-  AUTH_SERVER_URL: 'http://localhost:4000/api',
-  AUTH_URL: 'http://localhost:4000/auth/authorize',
-  AUTH_CALLBACK_URL: 'http://localhost:9200/authorize/callback',
-  AUTH_CLIENT_ID: 'b59d6be9-6d71-478f-bd70-843154b2fc4a',
-  AUTH_SECRET_CODE: '28915824-e9ae-40f5-a943-499d382ee679',
+  HUB_URL: `http://${host}:9000/hubs`,
+  SERVER_URL: `http://${host}:9000/api`,
+  AUTH_APP_URL: authUrl,
+  AUTH_SERVER_URL: authUrl + '/api',
+  AUTH_CODE_URL: authUrl + '/oauth/authorize',
+  AUTH_CALLBACK_URL: `http://${host}:9000/authorize/callback`,
+  AUTH_CLIENT_ID: '7cad825d-3465-4ce4-9290-db2637f14f6e',
   AUTH_RETURN_URL: '/home'
 };
+
+function isMobile(): boolean {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -1,0 +1,9 @@
+<h4> {{examinationSpeciality.speciality.name}} </h4>
+
+<div *ngIf="examinationSpeciality.examinationLevelSpecialities">
+  <app-examination-speciality-level-item *ngFor="let item of examinationSpeciality.examinationLevelSpecialities"
+                                         [item]="item">
+
+  </app-examination-speciality-level-item>
+</div>
+

@@ -1,0 +1,13 @@
+﻿<h4>Niveau {{level.index + 1}}</h4>
+
+<div>
+  <h5>Spécialité</h5>
+  <div>
+        <span class="mr-2" *ngFor="let levelSpeciality of level.levelSpecialities">
+          {{levelSpeciality.speciality.name}}
+
+          <MsfIconButton theme="error" icon="Delete" [rounded]="true"
+                         (click)="service.removeSpeciality(levelSpeciality)"></MsfIconButton>
+        </span>
+  </div>
+</div>

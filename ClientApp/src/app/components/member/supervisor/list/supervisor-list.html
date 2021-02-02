@@ -1,0 +1,36 @@
+﻿
+<div class="d-flex justify-content-between align-items-center p-2">
+  <div class="ms-fontSize-24 ms-fontWeight-light py-2">Superviseurs</div>
+  <MsfButton Icon="Add" theme="primary" (click)="_service.addSupervisors(department)">Ajouter un superviseur</MsfButton>
+</div>
+
+<MsfTable *ngIf="department.supervisors">
+  <MsfTableHead>
+    <MsfTableHeadCell>#</MsfTableHeadCell>
+    <MsfTableHeadCell>Utilisateur</MsfTableHeadCell>
+    <MsfTableHeadCell>Date d'ajout</MsfTableHeadCell>
+
+    <MsfTableHeadCell></MsfTableHeadCell>
+  </MsfTableHead>
+  <MsfTableRow #row *ngFor="let item of department.supervisors">
+    <MsfTableCell>{{row.index}}</MsfTableCell>
+    <MsfTableCell>
+      <MsfPersona size="size32">
+        <MsfPersonaFigure [text]="item.user?.fullName" size="size32"></MsfPersonaFigure>
+        <div class="ml-2">
+          <div class="ms-fontWeight-semibold">{{item.user?.fullName}}</div>
+          <div class="ms-fontSize-12" *ngIf="item.user?.username">@{{item.user?.username}}</div>
+        </div>
+      </MsfPersona>
+    </MsfTableCell>
+    <MsfTableCell class="ms-fontSize-12">{{item.registrationDate | date}}</MsfTableCell>
+
+
+    <MsfTableCell>
+      <MsfIconButton (click)="_service.deleteSupervisor(item)" icon="Delete" theme="error"
+                     [rounded]="true"></MsfIconButton>
+    </MsfTableCell>
+  </MsfTableRow>
+</MsfTable>
+
+

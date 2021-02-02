@@ -1,0 +1,45 @@
+﻿<ng-container *ngIf="loaded">
+  <div class="ms-pageTitle">
+    <h5>Barème de notation</h5>
+    <div class="text-right" *ngIf="test.isPlanner">
+      <MsfButton theme="primary" Icon="Add" (click)="add()" class="ml-2" style="font-size: 12px">Ajouter une ligne</MsfButton>
+    </div>
+  </div>
+
+
+
+  <msAlert *ngIf="test.multipleScore && test.radical !== test.totalScoreRadical"
+           theme="error" class="my-1" >
+    Le total des radicaux des lignes du barème ne correspondent pas au radical de l'épreuve. Ajouter des lignes supplémentaires
+    pour compléter les <b> {{test.radical - test.totalScoreRadical}} points </b> manquants!.
+  </msAlert>
+
+  <MsfTable style="width: 100%">
+    <MsfTableHead>
+      <MsfTableHeadCell>#</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="name">Nom</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="radical">Radical</MsfTableHeadCell>
+      <MsfTableHeadCell  *ngIf="test.isPlanner"></MsfTableHeadCell>
+    </MsfTableHead>
+    <ng-container *ngIf="test.testScores?.length > 0 ">
+      <MsfTableRow *ngFor="let item of test.testScores" [value]="item" #row>
+        <MsfTableCell>{{row.index + 1}}</MsfTableCell>
+        <MsfTableCell>{{item.name}}</MsfTableCell>
+        <MsfTableCell>{{item.radical}} points</MsfTableCell>
+
+        <MsfTableCell class="text-right"  *ngIf="test.isPlanner">
+          <span class="ml-2 ms-Icon ms-Icon--More ms-pointer" [MsfMenuTrigger]="more" ></span>
+          <MsfMenu #more>
+            <MsfMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsfMenuItem>
+          </MsfMenu>
+
+        </MsfTableCell>
+      </MsfTableRow>
+    </ng-container>
+  </MsfTable>
+
+  <msAlert *ngIf="!test.testScores || test.testScores.length == 0" theme="severeWarning">
+    Ce cours n'a pas de barème détaillé!
+  </msAlert>
+
+</ng-container>

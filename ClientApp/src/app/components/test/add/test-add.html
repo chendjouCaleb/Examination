@@ -1,0 +1,85 @@
+﻿﻿<ng-container *ngIf="form">
+<form class="ms-form"  [formGroup]="form">
+  <div class="ms-form-header">Ajouter une épreuve</div>
+
+  <div class="ms-textField" *ngIf="examination && !examinationDepartment">
+    <label for="examinationDepartment" class="msf-label">Département</label>
+
+    <MsfSelect id="examinationDepartment" formControlName="examinationDepartment"
+               class="ms-textField-input" placeholder="Choisir un département"
+               (selectionchange)="changeExaminationDepartment($event.value)">
+      <MsfSelectOption *ngFor="let item of examination.examinationDepartments" [value]="item">{{item.department?.name}}
+      </MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+  <div class="ms-textField" *ngIf="examinationLevels">
+    <label for="examinationLevel" class="msf-label">Niveau</label>
+
+    <MsfSelect *ngIf="!examinationLevel" id="examinationLevel"
+               formControlName="examinationLevel" class="ms-textField-input"
+               placeholder="Choisir un niveau" (selectionchange)="changeExaminationLevel($event.value)">
+      <MsfSelectOption *ngFor="let item of examinationLevels"
+                       [value]="item">Niveau {{item.level?.index + 1}}
+      </MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+
+  <div class="ms-textField" *ngIf="courses">
+    <label for="course" class="msf-label">Matière</label>
+    <MsfSelect id="course" formControlName="course" class="ms-textField-input"
+               (selectionchange)="changeCourse($event.value)"
+               placeholder="Choisir un cours">
+      <MsfSelectOption *ngFor="let item of courses" [value]="item">{{item.name}} ({{item.code}})</MsfSelectOption>
+    </MsfSelect>
+
+  </div>
+
+  <div [hidden]="!selectedCourse">
+    <div class="ms-textField">
+      <label for="coefficient" class="msf-label">Coefficient</label>
+      <input type="number" id="coefficient" class="ms-textField-input"
+             formControlName="coefficient">
+      <app-control-error controlName="coefficient"></app-control-error>
+    </div>
+
+    <div class="ms-textField">
+      <label for="day" class="msf-label">Date</label>
+      <input type="text" id="day" name="day" class="ms-textField-input" DateInput formControlName="day">
+      <app-control-error controlName="day"></app-control-error>
+    </div>
+
+    <div class="ms-textFieldGroup">
+      <div class="ms-textField">
+        <label for="startHour" class="msf-label">Heure de début</label>
+        <input type="text" id="startHour" name="startHour" class="ms-textField-input" autocomplete="off" LocalTimeInput
+               formControlName="startHour">
+        <app-control-error controlName="startHour"></app-control-error>
+      </div>
+
+      <div class="ms-textField ml-2">
+        <label for="endHour" class="msf-label">Heure de fin</label>
+        <input type="text" id="endHour" name="endHour" class="ms-textField-input" autocomplete="off"
+               formControlName="endHour" LocalTimeInput>
+        <app-control-error controlName="endHour"></app-control-error>
+      </div>
+    </div>
+
+    <div class="ms-textField">
+      <div labelled text="Utiliser des anonymats" for="useAnonymity">
+        <MsfCheckbox id="useAnonymity" formControlName="useAnonymity"></MsfCheckbox>
+      </div>
+    </div>
+
+  </div>
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.canDisabledSubmit" (click)="add()">
+      Ajouter
+    </MsfButton>
+  </div>
+</form>
+
+
+</ng-container>

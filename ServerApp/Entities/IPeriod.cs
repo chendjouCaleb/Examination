@@ -15,7 +15,7 @@ namespace Exam.Entities
     public class Period : IPeriod
     {
         public bool IsClosed { get; }
-        
+
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
@@ -44,6 +44,7 @@ namespace Exam.Entities
             {
                 return PeriodState.CLOSED;
             }
+
             if (period.EndDate != null)
             {
                 return PeriodState.FINISHED;
@@ -121,9 +122,8 @@ namespace Exam.Entities
             return p.ExpectedStartDate.IsBeforeOrEqual(period.ExpectedEndDate) &&
                    p.ExpectedStartDate.IsAfterOrEqual(period.ExpectedStartDate);
         }
-        
-        
-        
+
+
         public static bool ExpectedOverlap(this IPeriod p, IExpectedPeriod period)
         {
             if (period == null)
@@ -147,7 +147,8 @@ namespace Exam.Entities
                    p.StartDate.Value.IsAfterOrEqual(period.ExpectedStartDate);
         }
 
-        public static T ExpectedOverlap<T>(this IExpectedPeriod p, IEnumerable<T> periods) where T : IExpectedPeriod, IExtendedPeriod
+        public static T ExpectedOverlap<T>(this IExpectedPeriod p, IEnumerable<T> periods)
+            where T : IExpectedPeriod, IExtendedPeriod
         {
             if (periods == null)
             {
@@ -164,9 +165,30 @@ namespace Exam.Entities
 
             return default;
         }
-        
-        
-        public static T ExpectedOverlap<T>(this IPeriod p, IEnumerable<T> periods) where T : IExpectedPeriod, IExtendedPeriod
+
+        public static List<T> ExpectedOverlaps<T>(this IExpectedPeriod p, IEnumerable<T> periods)
+            where T : IExpectedPeriod, IExtendedPeriod
+        {
+            if (periods == null)
+            {
+                throw new ArgumentNullException(nameof(periods));
+            }
+
+            var result = new List<T>();
+            foreach (var period in periods)
+            {
+                if (p.ExpectedOverlap(period))
+                {
+                    result.Add(period);
+                }
+            }
+
+            return result;
+        }
+
+
+        public static T ExpectedOverlap<T>(this IPeriod p, IEnumerable<T> periods)
+            where T : IExpectedPeriod, IExtendedPeriod
         {
             if (periods == null)
             {

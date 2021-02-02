@@ -1,0 +1,27 @@
+﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
+  <div class="ms-form-header">Ajouter une ligne au barème</div>
+
+
+  <div class="ms-textField">
+    <label for="name" class="msf-label">Nom de la ligne</label>
+    <input type="text" id="name" class="ms-textField-input" formControlName="name" autocomplete="off" >
+    <app-control-error controlName="name"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="radical" class="msf-label">Note maximale</label>
+    <input type="text" id="radical" autocomplete="off" class="ms-textField-input" formControlName="radical" (keyup)="checkRadical()" >
+    <app-control-error controlName="radical"></app-control-error>
+  </div>
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.canDisabledSubmit"  (click)="add()">
+      Ajouter
+    </MsfButton>
+  </div>
+</form>
+
+

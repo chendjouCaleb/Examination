@@ -1,0 +1,44 @@
+﻿<div style="padding: 50px 100px" *ngIf="!test.isPublished">
+  <div class="ms-textAlignCenter">
+    <span class="ms-rounded" msBgColor="greenLight"
+          style="width: 70px; height: 70px; display: inline-block; line-height: 70px">
+      <i class="ms-Icon ms-Icon--RedEye" msColor="white" style="font-size: 60px; "></i>
+    </span>
+  </div>
+
+  <div class="ms-textAlignCenter ms-fontSize-20 mt-3">
+    Publier les notes de l'épreuve
+  </div>
+
+  <div class="mt-2 ms-fontSize-12" style="opacity: 0.7">
+    Les notes de cette épreuve seront visiblement par tous!
+  </div>
+
+  <div class="ms-textAlignCenter mt-4">
+    <MsfButton class="ml-2" MsfModalClose>Annuler</MsfButton>
+    <MsfButton theme="success" (click)="changePublishState()">Publier</MsfButton>
+  </div>
+</div>
+
+
+<div style="padding: 50px 100px" *ngIf="test.isPublished">
+  <div class="ms-textAlignCenter">
+    <span class="ms-rounded" msBgColor="sharedPinkRed10"
+          style="width: 70px; height: 70px; display: inline-block; line-height: 70px">
+      <i class="ms-Icon ms-Icon--Hide3" msColor="white" style="font-size: 60px;"></i>
+    </span>
+  </div>
+
+  <div class="ms-textAlignCenter ms-fontSize-20 mt-3">
+    Annuler la publication les notes de l'épreuve
+  </div>
+  <div class="mt-2 " style="opacity: 0.7">
+    Les notes de cette épreuve seront visiblement uniquement par ses correcteurs désignés.
+  </div>
+
+  <div class="ms-textAlignCenter mt-4">
+    <MsfButton class="ml-2" MsfModalClose>Annuler</MsfButton>
+    <MsfButton theme="error" (click)="changePublishState()">Cacher</MsfButton>
+  </div>
+</div>
+

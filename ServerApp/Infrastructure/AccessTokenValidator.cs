@@ -5,8 +5,15 @@ namespace Exam.Infrastructure
 {
     public class AccessTokenValidator
     {
-        private IConfiguration configuration;
+        private IConfiguration _configuration;
         private ILogger<AccessTokenValidator> _logger;
+
+
+        public AccessTokenValidator(IConfiguration configuration, ILogger<AccessTokenValidator> logger)
+        {
+            _configuration = configuration;
+            _logger = logger;
+        }
         
         
     }

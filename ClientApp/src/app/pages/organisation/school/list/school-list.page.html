@@ -1,0 +1,31 @@
+<app-layout>
+  <div class="p-3" *ngIf="schools">
+    <div class="ms-pageTitle">
+        <h2> Établissements ({{schools.length}}) </h2>
+        <div class="ms-hiddenSm">
+          <button *ngIf="_auth.isAuthorized" msButton icon="Add" theme="primary" (click)="add()">Ajouter un établissement</button>
+        </div>
+    </div>
+
+    <msAlert theme="info" *ngIf="_auth.isAuthorized" class="d-block my-2 ms-hiddenMdUp">
+      <div>
+        Vous êtes chef d'un établissement? Ajouter votre établissement sur notre plateforme dès maintenant.
+      </div>
+
+      <div class="mt-2">
+        <button msButton icon="Add" theme="primary" routerLink="/schools/add">Ajouter un établissement</button>
+      </div>
+
+    </msAlert>
+
+    <div class="py-3">
+      <ms-grid [itemWidth]="320" [itemHeight]="512" yGap="15">
+        <app-school-card style="background-color: var(--cardBackgroundColor)" *msGridItemDef="let school of schools" [school]="school" (onclick)="router.navigateByUrl(school.url)">
+
+        </app-school-card>
+      </ms-grid>
+    </div>
+
+  </div>
+
+</app-layout>

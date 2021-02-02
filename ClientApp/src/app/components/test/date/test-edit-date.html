@@ -1,0 +1,36 @@
+﻿﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
+  <div class="ms-form-header">Reprogrammer l'épreuve</div>
+
+
+
+  <div class="ms-textField" >
+    <label for="day" class="msf-label">Date</label>
+    <input type="text" id="day" name="day" class="ms-textField-input" DateInput formControlName="day">
+    <app-control-error controlName="day"></app-control-error>
+  </div>
+
+  <div class="ms-textFieldGroup">
+    <div class="ms-textField" >
+      <label for="startHour" class="msf-label">Heure de début</label>
+      <input type="text" id="startHour" name="startHour" class="ms-textField-input" LocalTimeInput formControlName="startHour">
+      <app-control-error controlName="startHour"></app-control-error>
+    </div>
+
+    <div class="ms-textField ml-2" >
+      <label for="endHour" class="msf-label">Heure de fin</label>
+      <input type="text" id="endHour" name="endHour" class="ms-textField-input" formControlName="endHour" LocalTimeInput>
+      <app-control-error controlName="endHour"></app-control-error>
+    </div>
+  </div>
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid"  (click)="edit()">
+      Modifier
+    </MsfButton>
+  </div>
+</form>
+
+

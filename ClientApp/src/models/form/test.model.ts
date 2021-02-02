@@ -1,23 +1,19 @@
-import {IsNotEmpty, IsNumber, MinLength} from 'class-validator';
-import {Speciality} from '../entities';
-import {LocalTime} from "@js-joda/core";
+import {IsNotEmpty, IsNumber} from 'class-validator';
+import {Course, ExaminationDepartment, ExaminationLevel} from '../entities';
+import {LocalTime} from '@js-joda/core';
 
 export interface TestAddBodyModel {
-  name: string;
-  code: string;
-  radical: number;
   coefficient: number;
   useAnonymity: boolean;
+  radical: number;
 
   expectedStartDate: Date;
   expectedEndDate: Date;
 }
 
 export interface TestEditBodyModel {
-  name: string;
-  code: string;
-  radical: number;
   coefficient: number;
+  useAnonymity: boolean;
 }
 
 export interface TestEditDateBody {
@@ -26,25 +22,18 @@ export interface TestEditDateBody {
 }
 
 export interface TestAddParams {
-  specialityId?: number;
+  courseId: number,
+  examinationLevelId: number;
 }
 
 export class TestAddModel {
   @IsNotEmpty()
-  @MinLength(3)
-  name: string;
-
-  @IsNotEmpty()
-  code: string;
+  @IsNumber()
+  coefficient: number;
 
   @IsNotEmpty()
   @IsNumber()
   radical: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  coefficient: number;
-
 
   useAnonymity: boolean;
 
@@ -57,7 +46,13 @@ export class TestAddModel {
   @IsNotEmpty()
   endHour: LocalTime;
 
-  speciality: Speciality;
+  @IsNotEmpty()
+  course: Course;
+
+  @IsNotEmpty()
+  examinationLevel: ExaminationLevel;
+
+  examinationDepartment: ExaminationDepartment;
 
   get body(): TestAddBodyModel {
     const startDate = new Date(this.day);
@@ -65,10 +60,8 @@ export class TestAddModel {
     const endDate = new Date(this.day);
     endDate.setHours(this.endHour.hour(), this.endHour.minute());
     return {
-      name: this.name,
-      code: this.code,
-      radical: this.radical,
       coefficient: this.coefficient,
+      radical: this.radical,
       useAnonymity: this.useAnonymity,
 
       expectedStartDate: startDate,
@@ -77,26 +70,15 @@ export class TestAddModel {
   }
 
   get params(): TestAddParams {
-    if (!this.speciality) {
-      return {};
-    }
     return {
-      specialityId: this.speciality?.id
-    }
+      examinationLevelId: this.examinationLevel.id,
+      courseId: this.course.id
+    };
   }
 }
 
 export class TestEditModel {
-  @IsNotEmpty()
-  @MinLength(3)
-  name: string;
-
-  @IsNotEmpty()
-  code: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  radical: number;
+  useAnonymity: boolean;
 
   @IsNotEmpty()
   @IsNumber()
@@ -104,9 +86,7 @@ export class TestEditModel {
 
   get body(): TestEditBodyModel {
     return {
-      name: this.name,
-      code: this.code,
-      radical: this.radical,
+      useAnonymity: this.useAnonymity,
       coefficient: this.coefficient
     };
   }

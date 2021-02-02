@@ -12,7 +12,7 @@ namespace Exam.Loaders
     public class LoadPaper : Attribute, IResourceFilter
     {
         public string ItemName { get; set; } = "paper";
-        public string ExaminationItemName { get; set; }
+        
         
         public string TestItemName { get; set; }
         
@@ -47,13 +47,9 @@ namespace Exam.Loaders
             
             if (!string.IsNullOrWhiteSpace(TestItemName))
             {
-                context.HttpContext.Items[TestItemName] = paper.TestGroup.Test;
+                context.HttpContext.Items[TestItemName] = paper.Test;
             }
-
-            if (!string.IsNullOrWhiteSpace(ExaminationItemName))
-            {
-                context.HttpContext.Items[ExaminationItemName] = paper.TestGroup.Test.Examination;
-            }
+            
         }
     }
 }

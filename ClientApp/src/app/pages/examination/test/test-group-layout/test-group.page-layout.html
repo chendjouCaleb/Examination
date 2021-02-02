@@ -1,0 +1,22 @@
+﻿<app-layout [breadcrumbItems]="breadCrumbItems">
+  <msPivot *ngIf="_isOk">
+    <msPivotHeader>
+      <msPivotLabel name="home">Acceuil</msPivotLabel>
+      <msPivotLabel name="students">Étudiants</msPivotLabel>
+      <msPivotLabel name="scores">Notes</msPivotLabel>
+    </msPivotHeader>
+    <msPivotBody>
+      <div *msPivotContentDef>
+        <app-test-group-details [testGroup]="testGroup"></app-test-group-details>
+      </div>
+      <div *msPivotContentDef>
+        <app-paper-list [testGroup]="testGroup"></app-paper-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-paper-score-list [testGroup]="testGroup"></app-paper-score-list>
+      </div>
+    </msPivotBody>
+  </msPivot>
+
+
+</app-layout>

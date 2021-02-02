@@ -30,8 +30,8 @@
     top:0;
     height: 45px;
     line-height: 45px;
-    color: inherit;
-    font-size: 18px;
+    color: var(--borderColor);
+    font-size: 14px;
 
     & .breadcrumb-link {
       color: var(--primaryColor);

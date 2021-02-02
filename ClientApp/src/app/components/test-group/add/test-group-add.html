@@ -1,0 +1,23 @@
+﻿﻿
+<form class="ms-form" >
+  <div class="ms-form-header">Ajouter un groupe</div>
+
+  <div class="ms-textField">
+    <label for="room" class="msf-label">Salle</label>
+    <MsfSelect id="room" [(ngModel)]="room" class="ms-textField-input" name="name"
+               placeholder="Choisir une salle">
+      <MsfSelectOption *ngFor="let item of school.rooms" [value]="item">{{item.name}} ({{item.capacity}} places)</MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="!room" (click)="add()">
+      Ajouter
+    </MsfButton>
+  </div>
+</form>
+
+

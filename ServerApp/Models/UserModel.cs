@@ -5,18 +5,13 @@ namespace Exam.Models
 {
     public class UserModel
     {
-        public List<Organisation> Organisations { get; set; }
+        public List<School> Schools { get; set; }
         public List<Examination> Examinations { get; set; }
         
-        public List<Admin> Admins { get; set; }
-        public List<Speciality> Specialities { get; set; }
-
         public List<Student> Students { get; set; }
         public List<Application> Applications { get; set; }
 
         
-        
-        public List<Group> Groups { get; set; }
         public List<Test> Tests { get; set; }
         public List<TestGroup> TestGroups { get; set; }
         public List<Paper> Papers { get; set; }

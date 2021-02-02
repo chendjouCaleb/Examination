@@ -1,0 +1,14 @@
+﻿<app-layout>
+  <app-school-banner [school]="school" (onSchoolDelete)="_router.navigateByUrl('/schools')"></app-school-banner>
+  <msf-tab>
+    <msf-tab-label [routerLink]="[school.url]">Accueil</msf-tab-label>
+    <msf-tab-label [routerLink]="[school.url, 'departments']">Départments</msf-tab-label>
+    <msf-tab-label [routerLink]="[school.url, 'planners']">Planificateurs</msf-tab-label>
+    <msf-tab-label [routerLink]="[school.url, 'rooms']">Salles</msf-tab-label>
+    <msf-tab-label [routerLink]="[school.url, 'examinations']">Examens</msf-tab-label>
+  </msf-tab>
+
+  <div>
+    <ng-content></ng-content>
+  </div>
+</app-layout>

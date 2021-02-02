@@ -1,0 +1,20 @@
+﻿﻿<div class="ms-form" >
+  <div class="ms-form-header">Changer la spécialité </div>
+
+  <div class="ms-textField">
+    <label for="levelSpeciality" class="msf-label" >Spécialité </label>
+    <MsfSelect id="levelSpeciality" class="ms-textField-input" [(ngModel)]="levelSpeciality" placeholder="Choisir une specialité">
+      <MsfSelectOption *ngFor="let item of student.level.levelSpecialities"  [value]="item">{{item.speciality.name}}</MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" [class.msf-disabled]="!levelSpeciality"  (click)="change()">
+      Changer
+    </MsfButton>
+  </div>
+</div>
+
+

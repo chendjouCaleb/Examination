@@ -4,75 +4,121 @@ import {environment} from '../../environments/environment';
 
 import JwtDecode from 'jwt-decode';
 import {Claims} from './claims';
-import {Authorization} from './models/authorization.entity';
-import {ITokenModel} from './models/token-model';
+import {AccessToken} from './models/token-model';
 import {Connection} from './models/connection.entity';
 import {Subject} from 'rxjs';
-import { User } from 'src/models/entities';
+import {User} from 'src/models/entities';
 
 @Injectable()
 export class AuthorizationManager {
-  private _isAuthorized: boolean = false;
   private _isInitialized: boolean = false;
-  private _user: User;
-  private _authorization: Authorization;
   private _connection: Connection;
-  private _token: ITokenModel;
 
   private _stateChange = new Subject<boolean>();
 
-  private _returnUrl: string = environment.AUTH_RETURN_URL;
-
   private _connectionUrl = environment.AUTH_SERVER_URL + '/connections';
   private _userUrl = environment.AUTH_SERVER_URL + '/users';
-  private _authorizationUrl = environment.AUTH_SERVER_URL + '/authorizations';
+  private _accessTokenUrl = environment.SERVER_URL + '/authorize/accessToken';
+  private _refreshTokenUrl = environment.SERVER_URL + '/authorize/refreshToken';
 
-
-  constructor(private _httpClient: HttpClient) {
-  }
+  constructor(private _httpClient: HttpClient) { }
 
   async init() {
-    const accessToken = localStorage.getItem('.Auth.AccessToken');
-    const refreshToken = localStorage.getItem('.Auth.RefreshToken');
-
-    if (!accessToken || !refreshToken) {
+    if (!this.accessToken || !this.authCode) {
       this._isInitialized = true;
       this._stateChange.next(false);
+      console.log('Authorization manager is initialized!');
+      console.log('There is no connected user');
       return;
     }
 
-    let token: ITokenModel = {accessToken: accessToken.trim(), refreshToken: refreshToken.trim()};
-    token = await this._getOrRefreshToken(token);
-    await this.refreshAuthorizationToken(token);
+    if(this.accessToken.expireAt.getDate() < Date.now()) {
+      console.log('Access token expired');
+      await this.refreshAuthorization();
+    }
+
+    this._connection = await this.getConnection(this.accessToken.connectionId);
+    console.log('Authorization manager is initialized!');
+    console.log(`${this.user.fullName} is logged!`);
     this._isInitialized = true;
     this._stateChange.next(true);
   }
 
-  async refreshAuthorizationToken(token: ITokenModel) {
-    this._saveToken(token);
-    this._token = token;
-    const result = JwtDecode(token.accessToken);
+  async validateAccessToken() {
 
-    this._connection = await this.getConnection(result[Claims.ConnectionId]);
-    this._user = await this.getUser(result[Claims.NameIdentifier]);
-    this._isAuthorized = true;
+  }
+
+  async refreshAuthorization(){
+    this.accessToken = await this.requestRefreshToken(this.accessToken, this.authCode);
+    console.log('Access token refreshed');
   }
 
 
-  authorize(returnUrl: string) {
-    const url = `${environment.AUTH_URL}?callbackUrl=${environment.AUTH_CALLBACK_URL}`
-      + `&clientId=${environment.AUTH_CLIENT_ID}`
-      + `&secretCode=${environment.AUTH_SECRET_CODE}`
-      + `&redirectUrl=${returnUrl}`;
+  async authorize(authCode: string): Promise<void> {
+     this.authCode = authCode;
 
-    document.location.href = url;
+     const accessToken = await this.requestAccessToken(authCode);
+     this.accessToken = accessToken;
+
+     const decodedToken = JwtDecode(accessToken.token);
+
+    this._connection = await this.getConnection(decodedToken[Claims.ConnectionId]);
+
+     return Promise.resolve();
   }
 
-
-  private _saveToken(token: ITokenModel) {
-    localStorage.setItem('.Auth.AccessToken', token.accessToken);
-    localStorage.setItem('.Auth.RefreshToken', token.refreshToken);
+  private _accessToken: AccessToken;
+  get accessToken(): AccessToken{
+    if(this._accessToken){
+      return this._accessToken;
+    }
+    const value = localStorage.getItem('AUTH_ACCESS_TOKEN');
+    if(!value) {
+      return null;
+    }
+    this._accessToken = new AccessToken(JSON.parse(value));
+    return this._accessToken;
   }
+
+  set accessToken(value: AccessToken) {
+    this._accessToken = value;
+    localStorage.setItem('AUTH_ACCESS_TOKEN', JSON.stringify(value));
+  }
+
+  private _authCode: string;
+
+  get authCode(): string {
+    if(this._authCode){
+      return this._authCode;
+    }
+    this._authCode = localStorage.getItem('AUTH_CODE');
+    return this._authCode;
+  }
+
+  set authCode(authCode: string) {
+    this._authCode = authCode;
+    localStorage.setItem('AUTH_CODE', authCode);
+  }
+
+  requestAuthorizationCode() {
+    document.location.href = `${environment.AUTH_CODE_URL}?redirectUri=${environment.AUTH_CALLBACK_URL}`
+      + `&clientId=${environment.AUTH_CLIENT_ID}`;
+  }
+
+  requestAccessToken(code: string): Promise<AccessToken> {
+    const form = new FormData();
+    form.append('code', code);
+    return this._httpClient.post<AccessToken>(this._accessTokenUrl,  form).toPromise();
+  }
+
+  requestRefreshToken(accessToken: AccessToken, code: string): Promise<AccessToken> {
+    const form = new FormData();
+    form.append('code', code);
+    form.append('refreshToken', accessToken.refreshToken);
+    form.append('accessToken', accessToken.token);
+    return this._httpClient.post<AccessToken>(this._refreshTokenUrl,  form).toPromise();
+  }
+
 
 
   async getUser(id: string): Promise<User> {
@@ -86,13 +132,9 @@ export class AuthorizationManager {
   }
 
 
-  private async _getOrRefreshToken(model: ITokenModel): Promise<ITokenModel> {
-    return await this._httpClient.post<ITokenModel>(`${this._authorizationUrl}/refreshToken`, model).toPromise();
-  }
-
   getAuthorizationState(): Promise<boolean> {
     if (this._isInitialized) {
-      return Promise.resolve(this._isAuthorized);
+      return Promise.resolve(this.isAuthorized);
     }
 
     return new Promise<boolean>((resolve) => {
@@ -104,19 +146,15 @@ export class AuthorizationManager {
 
 
   get isAuthorized(): boolean {
-    return this._isAuthorized;
+    return !!this._connection;
   }
 
   get user(): User {
-    return this._user;
+    return this._connection?.user;
   }
 
   get connection(): Connection {
     return this._connection;
   }
 
-
-  get token(): ITokenModel {
-    return this._token;
-  }
 }

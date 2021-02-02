@@ -36,6 +36,6 @@ export class PaperReportModel {
 
 
 export class IScorePaperModel {
-  scoreId: number | string;
+  testScoreId: number | string;
   value: number;
 }

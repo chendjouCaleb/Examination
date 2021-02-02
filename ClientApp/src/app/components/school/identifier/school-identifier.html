@@ -1,0 +1,21 @@
+<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+  <div class="ms-form-header">Changer l'identifiant</div>
+
+
+  <div class="ms-textField">
+    <label for="identifier" class="msf-label">Identifiant</label>
+    <input type="identifier" id="identifier" class="ms-textField-input" formControlName="identifier"
+           (blur)="checkIdentifier()">
+    <app-control-error [control]="form.controls['identifier']"></app-control-error>
+    <div class="col-12 small mt-0 px-0">
+      L'identifiant permet d'identifier votre organisation de façon unique parmi
+      plusieurs organisations qui peuvent avoir le même nom.
+    </div>
+  </div>
+
+
+  <div class="mt-4 text-right">
+    <MsfButton (click)="cancel()" class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">Modifier</MsfButton>
+  </div>
+</form>

@@ -13,9 +13,8 @@
     "target": "es2015",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": [ "node_modules/@types" ],
+    "types": ["resize-observer-browser"],
     "lib": [
       "es2018",
       "dom"
@@ -24,6 +23,7 @@
       "examination/app/*": ["src/app/*"],
       "examination/models": ["src/models"],
       "examination/entities": ["src/models/entities"],
+      "examination/entities/identity": ["src/models/entities/identity"],
       "examination/hubs": ["src/models/hubs"],
       "examination/listeners": ["src/models/listeners"],
       "examination/loaders": ["src/models/loader"],

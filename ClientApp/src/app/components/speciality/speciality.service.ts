@@ -1,0 +1,66 @@
+import {ISpecialityService} from './speciality.service.interface';
+import {Injectable} from '@angular/core';
+import {MsfModal} from 'fabric-docs';
+import {Speciality, Department, Level, LevelSpeciality} from 'examination/entities';
+import {AlertEmitter, Confirmation} from 'examination/controls';
+import {SpecialityAdd} from './add/speciality-add';
+import {SpecialityEdit} from './edit/speciality-edit';
+import {SpecialityDelete} from './delete/speciality-delete';
+import {LevelSpecialityHttpClient} from "examination/models/http";
+
+@Injectable()
+export class SpecialityService implements ISpecialityService {
+  constructor(private _modal: MsfModal,
+              private _alertEmitter: AlertEmitter,
+              private _levelSpecialityHttpClient: LevelSpecialityHttpClient,
+              private _confirmation: Confirmation) {
+  }
+
+
+  add(department: Department): Promise<Speciality> {
+    const modalRef = this._modal.open(SpecialityAdd);
+    modalRef.componentInstance.department = department;
+    return modalRef.afterClosed().toPromise();
+  }
+
+
+  delete(speciality: Speciality): Promise<boolean> {
+    const modalRef = this._modal.open(SpecialityDelete, {autoFocus: false});
+    modalRef.componentInstance.speciality = speciality;
+    return modalRef.afterClosed().toPromise();
+  }
+
+  edit(speciality: Speciality): Promise<void> {
+    const modalRef = this._modal.open(SpecialityEdit);
+    modalRef.componentInstance.speciality = speciality;
+    return modalRef.afterClosed().toPromise();
+  }
+
+  addLevelSpeciality(speciality: Speciality, level: Level): Promise<LevelSpeciality> {
+    const result = this._confirmation.open(`Ajouter le niveau ${level.index} à la spécialité ${speciality.name}`);
+
+    return new Promise<LevelSpeciality>(resolve => {
+      result.accept.subscribe(async () => {
+        const levelSpeciality = await this._levelSpecialityHttpClient.addLevelSpeciality(level, speciality);
+        resolve(levelSpeciality);
+      });
+    });
+  }
+
+  removeLevelSpeciality(levelSpeciality: LevelSpeciality): Promise<boolean> {
+    const m = `Enlever le niveau ${levelSpeciality.level.index + 1} à la spécialité ${levelSpeciality.speciality.name}?`;
+    const result = this._confirmation.open(m);
+
+    return new Promise<boolean>(resolve => {
+      result.accept.subscribe(async () => {
+        await this._levelSpecialityHttpClient.delete(levelSpeciality.id);
+        this._alertEmitter
+          .info(`Le niveau ${levelSpeciality.level.index + 1} a été enlevé de la spécialité ${levelSpeciality.speciality.name}?`);
+
+        levelSpeciality.level.department.removeLevelSpeciality(levelSpeciality);
+        resolve(true);
+      });
+    });
+  }
+
+}

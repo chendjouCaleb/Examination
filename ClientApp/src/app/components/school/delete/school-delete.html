@@ -1,0 +1,17 @@
+﻿<form class="ms-form ms-depth-8" style="width: 400px">
+  <div class="ms-form-header ms-fontColor-error">Supprimer l'établissement</div>
+
+  <div class="br-2 ms-bgColor-error ms-fontColor-error p-2 ms-fontSize-14">
+    Souhaitez vous réellement supprimer cette établissement et toutes ses sonnées?<br>
+    Cette opération est irréversible.
+  </div>
+
+  <div class="br-2 ms-bgColor-info ms-fontColor-info p-2 mt-2 ms-fontSize-12" *ngIf="eventLogs.length > 0">
+    <div class="mt-1" *ngFor="let log of eventLogs">{{log }}....</div>
+  </div>
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose="" class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="error" Icon="Delete" (click)="delete()">Supprimer</MsfButton>
+  </div>
+</form>

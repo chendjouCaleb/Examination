@@ -1,5 +1,5 @@
-﻿import {IsAlpha, IsAlphanumeric, IsIn, IsNotEmpty, MinLength} from "class-validator";
-import {Group, Speciality} from "../entities";
+﻿import {IsAlphanumeric, IsIn, IsNotEmpty, MinLength} from 'class-validator';
+import {Level, LevelSpeciality} from 'examination/entities';
 
 export interface StudentAddBody {
   registrationId: number;
@@ -9,7 +9,8 @@ export interface StudentAddBody {
 }
 
 export interface StudentAddParams {
-  specialityId?: number;
+  levelId?: number;
+  levelSpecialityId?: number;
 }
 
 export class StudentAddModel {
@@ -19,7 +20,6 @@ export class StudentAddModel {
   registrationId: number;
 
   @IsNotEmpty()
-
   @MinLength(3)
   fullName: string;
 
@@ -27,12 +27,13 @@ export class StudentAddModel {
   birthDate: Date;
 
   @IsNotEmpty()
-  @IsIn(["F", "M", 'f', 'm'])
+  @IsIn(['F', 'M', 'f', 'm'])
   gender: string;
 
-  group: Group;
+  @IsNotEmpty()
+  level: Level;
 
-  speciality: Speciality;
+  levelSpeciality: LevelSpeciality;
 
 
   get body(): StudentAddBody {
@@ -41,16 +42,15 @@ export class StudentAddModel {
       birthDate: this.birthDate,
       gender: this.gender,
       registrationId: this.registrationId
-    }
+    };
   }
 
   get params(): StudentAddParams {
-    if(!this.speciality) {
-      return {};
+    const params: StudentAddParams = {levelId: this.level.id};
+    if (this.levelSpeciality) {
+      params.levelSpecialityId = this.levelSpeciality.id;
     }
-    return {
-      specialityId: this.speciality?.id
-    }
+    return params;
   }
 }
 
@@ -64,7 +64,7 @@ export class StudentInfoModel {
   birthDate: Date;
 
   @IsNotEmpty()
-  @IsIn(["F", "M", 'f', 'm'])
+  @IsIn(['F', 'M', 'f', 'm'])
   gender: string;
 }
 

@@ -1,0 +1,42 @@
+<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+  <div class="ms-form-header">Modifier le cours</div>
+
+
+  <div class="ms-textField">
+    <label for="name" class="msf-label">Nom</label>
+    <input type="text" id="name" class="ms-textField-input" formControlName="name" >
+    <app-control-error [control]="form.controls['name']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="code" class="msf-label">Code</label>
+    <input type="text" id="code" class="ms-textField-input" formControlName="code" (blur)="checkCode()">
+    <app-control-error [control]="form.controls['code']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="radical" class="msf-label">Radical</label>
+    <input type="text" id="radical" class="ms-textField-input" formControlName="radical" >
+    <app-control-error [control]="form.controls['radical']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="coefficient" class="msf-label">Coefficient</label>
+    <input type="text" id="coefficient" class="ms-textField-input" formControlName="coefficient" >
+    <app-control-error [control]="form.controls['coefficient']"></app-control-error>
+  </div>
+
+
+  <div class="ms-textField">
+    <label class="msf-label" for="description">Description</label>
+    <textarea type="text" id="description" name="description" formControlName="description" class="ms-textField-textarea"></textarea>
+    <app-control-error [control]="form.controls['description']"></app-control-error>
+  </div>
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton (click)="cancel()" class="mr-3">Annuler</MsfButton>
+    <button MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">Modifier</button>
+  </div>
+</form>

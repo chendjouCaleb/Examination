@@ -231,7 +231,7 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
     this._isInitialized = true;
     this._selectionModel = new SelectionModel<MsfSelectOption>(this.multiple);
 
-    if(!this.empty){
+    if (!this.empty) {
       this._onChange(this.value);
     }
 
@@ -243,10 +243,14 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
 
 
     this._attachOptionEvents();
-    this.options.changes.subscribe(() => this._attachOptionEvents());
+    this.options.changes.subscribe(() => {
+      this._attachOptionEvents();
+      this._resetValue();
+    });
   }
 
   _attachOptionEvents() {
+
     this.options.forEach(option => {
       if (option.onSelectionChange.observers.length === 0) {
         option.onSelectionChange.subscribe(() => {
@@ -256,6 +260,17 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
     });
   }
 
+  _resetValue() {
+    const selectedOptions = this._selectionModel.selected;
+    for(const selectedOption of selectedOptions) {
+      if( !this.options.find(option => option.value === selectedOption)) {
+        this._selectionModel.deselect(selectedOption);
+      }
+    }
+
+    this.updateViewValue();
+  }
+
   _optionEventFn(option: MsfSelectOption) {
     if (this.multiple) {
       if (option.selected) {
@@ -263,12 +278,12 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
       } else {
         this._selectionModel.deselect(option);
       }
-      this._changeValues(this.values);
+      this._changeViewValues(this.values);
 
     } else if (!this._selectionModel.isSelected(option)) {
       this._deselectAll();
       this._selectionModel.select(option);
-      this._changeValue(this.value);
+      this._changeViewValue(this.value);
       this.close();
     }
 
@@ -288,7 +303,7 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
     this._elementWidth = this._elementRef.nativeElement.offsetWidth;
     this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
       this._selectValue(this._valueOnInit);
-      this._emitChangeValue();
+      //this._emitChangeValue();
       this._changeDetector.detectChanges();
     });
   }
@@ -296,8 +311,10 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
   _emitChangeValue() {
     if (this.multiple) {
       this._onChange(this.values);
+      this.selectionchange.emit({source: this, value: this.values});
     } else {
       this._onChange(this.value);
+      this.selectionchange.emit({source: this, value: this.value});
     }
   }
 
@@ -356,20 +373,28 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
   }
 
 
-  _changeValue(value: any) {
+  _changeViewValue(value: any) {
     if (this._initializedView) {
       this.contentView.clear();
-      this.contentView.createEmbeddedView(this.template, {value: this.value});
+      this.contentView.createEmbeddedView(this.template, {value: value});
       this._changeDetector.markForCheck();
     }
   }
 
 
-  _changeValues(values: any[]) {
+  _changeViewValues(values: any[]) {
     if (this._initializedView) {
       this.contentView.clear();
       this.contentView.createEmbeddedView(this.template, {values});
       this._changeDetector.markForCheck();
+    }
+  }
+
+  updateViewValue() {
+    if(this.multiple) {
+      this._changeViewValues(this.values);
+    }else {
+      this._changeViewValue(this.value);
     }
   }
 
@@ -484,7 +509,7 @@ export class MsfSelect extends _MsfSelectMixinBase implements CanDisable, OnDest
   }
 
   get selection(): MsfSelectOption[] {
-    return this.options.filter(o => o.selected);
+    return this._selectionModel.selected;
   }
 }
 

@@ -12,9 +12,7 @@ export class AuthPanelComponent implements OnInit {
   user: User;
   isAuth: boolean;
 
-  constructor(public identity: AuthorizationManager, private router: Router) {
-    this.user = this.identity.user;
-  }
+  constructor(public identity: AuthorizationManager, private router: Router) { }
 
   ngOnInit(): void {
     this.isAuth = this.identity.isAuthorized;

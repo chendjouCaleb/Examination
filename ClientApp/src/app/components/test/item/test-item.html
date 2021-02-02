@@ -1,0 +1,122 @@
+﻿<div class="d-flex justify-content-between">
+  <div>
+    <div class="app-test-item-testName">{{test.course?.name}} ({{test.course?.code}})</div>
+  </div>
+  <div class="text-right">
+    <a [routerLink]="test.url">Détails</a>
+    <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+    <MsfMenu #more>
+
+      <MsfMenuItem *ngIf="!test.isPublished" icon="RedEye" (click)="service.publish(test)">Publier les notes
+      </MsfMenuItem>
+
+      <MsfMenuItem *ngIf="test.isPublished" icon="Hide3" theme="error" (click)="service.publish(test)">
+        cacher les notes
+      </MsfMenuItem>
+
+      <MsfMenuItem *ngIf="!test.isClosed" icon="LockSolid" theme="error" (click)="service.changeCloseState(test)">Fermer
+      </MsfMenuItem>
+      <MsfMenuItem *ngIf="test.isClosed" icon="UnlockSolid" (click)="service.changeCloseState(test)">Ouvrir</MsfMenuItem>
+      <MsfMenuItem icon="Edit" (click)="service.edit(test)">Modifier les informations</MsfMenuItem>
+      <MsfMenuItem *ngIf="test.useAnonymity" icon="RedEye" (click)="service.unsetAnonymous(test)">Enlever l'anonymat
+      </MsfMenuItem>
+      <MsfMenuItem *ngIf="!test.useAnonymity" theme="error" icon="Hide3" (click)="service.setAnonymous(test)">Utiliser
+        l'anonymat
+      </MsfMenuItem>
+      <MsfMenuItem icon="CalendarSettings" (click)="service.editDate(test)">Modifier la date</MsfMenuItem>
+      <MsfMenuItem icon="Delete" (click)="service.delete(test)" theme="error">Supprimer</MsfMenuItem>
+    </MsfMenu>
+  </div>
+</div>
+
+
+<div class="d-flex mt-2">
+
+  <div class="app-test-item-states">
+    <labelled text="Fermée" style="margin-top:0" msColor="sharedRed10" *ngIf="test.isClosed">
+      <app-icon bgColor="sharedRed10" icon="Lock" style="font-size: 12px"></app-icon>
+    </labelled>
+
+    <labelled text="Ouvert" style="margin-top:0" *ngIf="!test.isClosed">
+      <app-icon icon="Unlock" style="font-size: 12px"></app-icon>
+    </labelled>
+
+    <labelled text="Corrigée" *ngIf="test.correctedPaperCount === test.paperCount">
+      <app-icon></app-icon>
+    </labelled>
+
+    <labelled text="En correction" *ngIf="test.correctedPaperCount > 0 && test.correctedPaperCount !== test.paperCount">
+      <app-icon icon="StatusCircleExclamation" bgColor="sharedRedOrange10"></app-icon>
+    </labelled>
+
+    <labelled text="Non Corrigée" *ngIf="test.correctedPaperCount == 0">
+      <app-icon bgColor="sharedRed10" icon="Cancel"></app-icon>
+    </labelled>
+
+    <labelled *ngIf="!test.isPublished" text="Notes non publiées">
+      <app-icon icon="Hide3" bgColor="sharedRedOrange10"></app-icon>
+    </labelled>
+
+    <labelled *ngIf="test.isPublished" text="Notes publiées">
+      <app-icon icon="CheckMark"  ></app-icon>
+    </labelled>
+
+  </div>
+
+  <div class=" ml-5">
+    <div> Coefficient: {{test.coefficient}} </div>
+    <div> Niveau: {{test.examinationLevel?.level?.index + 1}} </div>
+    <div> Groupes: {{test.testGroupCount}}</div>
+  </div>
+
+  <div class="app-test-item-infos ml-5">
+    <div>
+
+      <div class="icon-label">
+        <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+        <span class="icon-label-text">{{test.expectedStartDate | date}}</span>
+      </div>
+
+      <div class="icon-label">
+        <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+        <span class="icon-label-text"> {{test.expectedStartHour}} à {{test.expectedEndHour}}</span>
+      </div>
+
+    </div>
+
+    <div *ngIf="test.progress">
+      <div>Heure de début</div>
+      <div class=" icon-label">
+        <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+        <span class="icon-label-text"> {{test.startHour}} </span>
+      </div>
+    </div>
+
+
+    <div *ngIf="test.finished">
+      <div>Effectuée le</div>
+      <div>
+        <div class="icon-label">
+          <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+          <span class="icon-label-text">{{test.startDate | amCalendar}}</span>
+        </div>
+
+        <div class=" icon-label ml-2">
+          <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+          <span class="icon-label-text"> {{test.startHour}} à {{test.endHour}}</span>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+<div *ngIf="!test.isGeneral && test.testLevelSpecialities">
+          <span class=" ms-badge ms-pointer ml-1" msBgColor="sharedOrangeYellow10"
+                *ngFor="let item of test.testLevelSpecialities"
+                (click)="service.detailsTestLevelSpeciality(item)">
+            {{item.examinationLevelSpeciality.levelSpeciality.speciality.name}}
+          </span>
+</div>

@@ -1,0 +1,19 @@
+<app-school-page-layout [school]="school">
+  <ng-container *ngIf="departments">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3> Départements ({{departments.size()}})</h3>
+      <div>
+        <MsfButton Icon="Add" theme="primary" (click)="add()">Ajouter un département</MsfButton>
+      </div>
+    </div>
+
+    <div>
+      <app-department-card *ngFor="let department of departments" [department]="department" (onclick)="router.navigateByUrl(department.url)">
+
+      </app-department-card>
+    </div>
+
+
+  </ng-container>
+
+</app-school-page-layout>

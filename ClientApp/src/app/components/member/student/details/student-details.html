@@ -1,0 +1,117 @@
+﻿<dd style="background: var(--cardBackgroundColor)" class="p-3">
+
+  <div class="ms-pageTitle">
+    <div class="ms-fontSize-28">{{student.fullName | titlecase}}</div>
+
+    <div class="text-right">
+      <MsfButton LeftIcon="ChevronDown" [MsfMenuTrigger]="more" >Paramètres</MsfButton>
+      <MsfMenu #more>
+        <MsfMenuItem icon="Contact" (click)="_studentService.editStudent(student)">Modifier les informations
+        </MsfMenuItem>
+        <MsfMenuItem icon="AddFriend" *ngIf="!student.user" (click)="_studentService.link(student)">Lier à un utilisateur
+        </MsfMenuItem>
+        <MsfMenuItem icon="UserSync" *ngIf="student.user" (click)="_studentService.link(student)">Changer l'utilisateur
+        </MsfMenuItem>
+        <MsfMenuItem icon="UserRemove" theme="error" *ngIf="student.user" (click)="_studentService.removeUser(student)">
+          Enlever l'utilisateur
+        </MsfMenuItem>
+        <MsfMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(student)">Changer le matricule
+        </MsfMenuItem>
+        <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
+                     *ngIf="student.levelSpeciality">Changer la spécialité
+        </MsfMenuItem>
+        <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
+                     *ngIf="!student.levelSpeciality">Assigner une spécialité
+        </MsfMenuItem>
+        <MsfMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(student)"
+                     *ngIf="student.levelSpeciality">Enlever la spécialité
+        </MsfMenuItem>
+        <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
+      </MsfMenu>
+
+    </div>
+  </div>
+
+  <div class="d-flex mt-4">
+    <div class="ms-description-list">
+      <dl>
+        <dt>Matricule</dt>
+        <dd>{{student.registrationId}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Date de naissance</dt>
+        <dd>{{student.birthDate | date}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Sexe</dt>
+        <dd>
+          <ng-container *ngIf="student.gender == 'M' || student.gender == 'm'">Masculin</ng-container>
+          <ng-container *ngIf="student.gender == 'F' || student.gender == 'f'">Féminin</ng-container>
+        </dd>
+      </dl>
+
+      <div class="divider"></div>
+
+      <dl>
+        <dt>Départment</dt>
+        <dd>{{student.level.department.name}}</dd>
+      </dl>
+      <dl>
+        <dt>Niveau</dt>
+        <dd>{{student.level.index + 1}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Spécialité</dt>
+        <dd *ngIf="student.levelSpeciality">{{student.levelSpeciality.speciality.name}}</dd>
+        <dd *ngIf="!student.levelSpeciality">
+          <span class="ms-badge ms-badge-error">Aucune</span>
+        </dd>
+      </dl>
+    </div>
+
+    <div class="ms-description-list ml-5">
+      <dl>
+        <dt>Date d'enregistrement</dt>
+        <dd>
+          <span class="ms-badge ms-badge-info">{{student.registrationDate | amTimeAgo}}</span>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Ajouté par</dt>
+        <dd>
+          <MsfPersona size="size32">
+            <MsfPersonaFigure [imageUrl]="student.registerUser.imageUrl" text="{{student.registerUser.fullName}}"></MsfPersonaFigure>
+            <MsfPersonaText>
+              <div class="ms-fontWeight-semibold">{{student.registerUser.fullName}}</div>
+              <div class="ms-fontSize-12  ms-fontWeight-light">@{{student.registerUser?.username}}</div>
+            </MsfPersonaText>
+          </MsfPersona>
+        </dd>
+      </dl>
+
+
+      <dl>
+        <dt>Lié à l'utilisateur</dt>
+
+        <dd >
+          <MsfPersona size="size32" *ngIf="student.user">
+            <MsfPersonaFigure text="{{student.user.fullName}}" [imageUrl]="student.user.imageUrl"></MsfPersonaFigure>
+            <MsfPersonaText>
+              <div class="ms-fontWeight-semibold">{{student.user.fullName}}</div>
+              <div class="ms-fontSize-12  ms-fontWeight-light">@{{student.user.username}}</div>
+            </MsfPersonaText>
+          </MsfPersona>
+
+          <span class="ms-badge ms-badge-error">Aucune liaison</span>
+        </dd>
+
+      </dl>
+    </div>
+
+
+  </div>
+

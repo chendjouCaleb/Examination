@@ -3,6 +3,7 @@ using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Infrastructure;
+using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,11 +13,14 @@ namespace Exam.Loaders
     public class LoadTestGroupSecretary : Attribute, IResourceFilter
     {
         public string ItemName { get; set; } = "testGroupSecretary";
-        public string ExaminationItemName { get; set; }
         
         public string TestItemName { get; set; }
         
         public string TestGroupItemName { get; set; }
+        
+        public string SchoolItemName { get; set; }
+        
+        public string ExaminationItemName { get; set; }
 
         public string ParameterName { get; set; } = "testGroupSecretaryId";
 
@@ -29,8 +33,8 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<TestGroupSecretary, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<TestGroupSecretary, long>>();
+            ITestGroupSecretaryRepository repository =
+                context.HttpContext.RequestServices.GetRequiredService<ITestGroupSecretaryRepository>();
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
@@ -49,11 +53,17 @@ namespace Exam.Loaders
             {
                 context.HttpContext.Items[TestItemName] = testGroupSecretary.TestGroup.Test;
             }
-
+            
+            if (!string.IsNullOrWhiteSpace(SchoolItemName))
+            {
+                context.HttpContext.Items[SchoolItemName] = repository.GetSchool(testGroupSecretary);
+            }
+            
             if (!string.IsNullOrWhiteSpace(ExaminationItemName))
             {
-                context.HttpContext.Items[ExaminationItemName] = testGroupSecretary.TestGroup.Test.Examination;
+                context.HttpContext.Items[ExaminationItemName] = repository.GetExamination(testGroupSecretary);
             }
+            
         }
     }
 }

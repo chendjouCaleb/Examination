@@ -1,9 +1,0 @@
-﻿<app-examination-layout [examination]="test.examination" [paths]="paths">
-  <MsfTab>
-    <a MsfTabLabel routerLinkActive="active"  [routerLink]="[test.url, 'home']" icon="Home">Accueil</a>
-    <a MsfTabLabel routerLinkActive="active"  [routerLink]="[test.url, 'students']" icon="Test">étudiants</a>
-
-    <a MsfTabLabel [routerLink]="[test.url, 'settings']" icon="Settings">Paramètres</a>
-  </MsfTab>
-  <ng-content></ng-content>
-</app-examination-layout>

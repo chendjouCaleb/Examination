@@ -1,0 +1,31 @@
+<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+  <div class="ms-form-header">Ajouter une salle</div>
+
+
+  <div class="ms-textField">
+    <label for="name" class="msf-label">Nom</label>
+    <input type="text" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()" >
+    <app-control-error [control]="form.controls['name']"></app-control-error>
+  </div>
+
+
+  <div class="ms-textField">
+    <label for="capacity" class="msf-label">Capacity</label>
+    <input type="text" id="capacity" class="ms-textField-input" formControlName="capacity" >
+    <app-control-error [control]="form.controls['capacity']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="address" class="msf-label">Address</label>
+    <input type="text" id="address" class="ms-textField-input" formControlName="address" >
+    <app-control-error [control]="form.controls['address']"></app-control-error>
+  </div>
+
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton (click)="cancel()" class="mr-3">Annuler</MsfButton>
+    <button MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">Modifier</button>
+  </div>
+</form>

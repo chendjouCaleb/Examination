@@ -1,0 +1,21 @@
+<h5>{{item.department?.name}}</h5>
+<div class="ms-divider my-3"></div>
+
+<div>
+    <span class="ms-pointer ms-bgColor-sharedCyanBlue20 ms-fontColor-white p-1  mr-1 mt-1"
+          *ngFor="let level of item.examinationLevels"
+          [routerLink]="level.url">
+      Niveau {{level.level.index + 1}}</span>
+</div>
+
+
+<div class="mt-4">
+    <span class="ms-pointer ms-bgColor-sharedOrangeYellow20 ms-fontColor-white p-1 mr-1 mt-1"
+          *ngFor="let speciality of item.examinationSpecialities"
+          [routerLink]="speciality.url">  {{speciality.name}}</span>
+</div>
+
+<div class="ms-divider my-3"></div>
+<div>
+  <MsfButton theme="primary" [routerLink]="item.url">Aller à la page</MsfButton>
+</div>

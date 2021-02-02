@@ -1,0 +1,55 @@
+﻿<form class="ms-form" *ngIf="form"  [formGroup]="form">
+  <div class="ms-form-header">Ajouter une salle</div>
+
+
+  <div class="ms-textField">
+    <label for="name" class="msf-label">Nom de la salle</label>
+    <input type="name" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
+    <app-control-error [control]="form.controls['name']"></app-control-error>
+  </div>
+
+
+  <div class="ms-textField">
+    <label for="capacity" class="msf-label">Nombre de place</label>
+    <input id="capacity" class="ms-textField-input" formControlName="capacity">
+    <app-control-error [control]="form.controls['capacity']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="address" class="msf-label">Addresse de la salle</label>
+    <input id="address" class="ms-textField-input" formControlName="address">
+    <app-control-error [control]="form.controls['address']"></app-control-error>
+  </div>
+
+  <div class="ms-textField" *ngIf="school">
+    <label for="department" class="msf-label">Département</label>
+    <MsfSelect id="department" formControlName="department" class="ms-textField-input"
+               (selectionchange)="updateLevels($event.value)"
+               placeholder="Choisir un département">
+      <MsfSelectOption *ngFor="let item of school.departments" [value]="item">
+        {{item.name | ucFirst}}
+      </MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+  <div class="ms-textField" *ngIf="department && levels">
+    <label for="department" class="msf-label">Niveau</label>
+    <MsfSelect id="level" formControlName="level" class="ms-textField-input"
+               placeholder="Choisir un niveau">
+      <MsfSelectOption *ngFor="let item of levels" [value]="item">
+        Niveau {{item.index + 1}}({{item.department.name}})
+      </MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton (click)="cancel()" class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">
+      Ajouter
+    </MsfButton>
+  </div>
+</form>
+
+

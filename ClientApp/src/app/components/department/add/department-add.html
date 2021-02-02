@@ -1,0 +1,35 @@
+<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+  <div class="ms-form-header">Ajouter un département</div>
+
+
+  <div class="ms-textField">
+    <label for="name" class="msf-label">Nom</label>
+    <input type="text" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
+    <app-control-error [control]="form.controls['name']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="acronym" class="msf-label">Acronyme</label>
+    <input type="text" id="acronym" class="ms-textField-input" formControlName="acronym">
+    <app-control-error [control]="form.controls['acronym']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="address" class="msf-label">Adresse</label>
+    <input id="address" class="ms-textField-input" formControlName="address">
+    <app-control-error [control]="form.controls['address']"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label class="msf-label" for="user">Choisir l'utilisateur administrateur</label>
+    <user-picker [maxSize]="1" id="user" formControlName="user"></user-picker>
+    <app-control-error [control]="form.controls['user']"></app-control-error>
+  </div>
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton (click)="oncancel()" class="mr-3">Annuler</MsfButton>
+    <button MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">Ajouter</button>
+  </div>
+</form>

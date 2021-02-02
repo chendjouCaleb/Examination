@@ -1,0 +1,36 @@
+﻿<div class="department-banner-layout">
+  <div class="department-banner-cover">
+    <img  [src]="department.coverImageUrl" alt="">
+  </div>
+
+  <div class="department-banner-front">
+    <div class="department-banner-image">
+      <img [src]="imageUrl" alt="">
+    </div>
+    <div class="department-banner-info">
+      <div class="ms-fontSize-24">{{department.name | ucFirst}}({{department.acronym| uppercase}})</div>
+
+
+      <labelled-icon icon="POISolid" [text]="department.address"> </labelled-icon>
+      <MsfPersona size="size32">
+        <MsfPersonaFigure [imageUrl]="department.principalUser.imageUrl"></MsfPersonaFigure>
+        <MsfPersonaText>{{department.principalUser.fullName | titlecase}}</MsfPersonaText>
+      </MsfPersona>
+      <div class="mt-2">
+        0 niveaux, 0 specialités
+      </div>
+    </div>
+  </div>
+  <div class="department-banner-footer">
+    <MsfButton theme="primary" Icon="AddFriend" (click)="sendApplication()">Devenir étudiant</MsfButton>
+    <MsfButton Icon="Settings" theme="standard" LeftIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">Paramètres
+    </MsfButton>
+    <MsfMenu #settingsMenu>
+      <MsfMenuItem icon="Edit" (click)="service.edit(department)">Modifier les informations</MsfMenuItem>
+
+      <MsfMenuItem icon="EditPhoto" (click)="changeImage()">Changer l'image de profil</MsfMenuItem>
+      <MsfMenuItem icon="EditPhoto" (click)="changeCoverImage()">Changer l'image de couverture</MsfMenuItem>
+      <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
+    </MsfMenu>
+  </div>
+</div>

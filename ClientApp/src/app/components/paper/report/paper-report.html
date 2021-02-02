@@ -1,0 +1,27 @@
+﻿﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
+  <div class="ms-form-header">Consigner la copie</div>
+
+
+
+  <div class="ms-textField" *ngIf="paper.testGroup.test.useAnonymity">
+    <label for="anonymity" class="msf-label">Anonymat</label>
+    <input type="text" id="anonymity" name="anonymity" class="ms-textField-input" formControlName="anonymity">
+    <app-control-error controlName="anonymity"></app-control-error>
+  </div>
+
+  <div class="ms-textField">
+    <label for="comment" class="msf-label">Remarques & Commentaires</label>
+    <textarea type="text" id="comment" name="comment" formControlName="comment" class="ms-textField-textarea">
+    </textarea>
+  </div>
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" [class.msf-disabled]="form.invalid" (click)="edit()">
+      Consigner
+    </MsfButton>
+  </div>
+</form>
+
+

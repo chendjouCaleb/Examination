@@ -4,8 +4,8 @@ html {
   --opacity: 1;
   --blurSize: 10px;
   --redColor: rgba(209, 52, 56, 1);
-  --pinkColor: rgba(227, 0, 140, var(--opacity));
-  --blueColor: rgba(16, 110, 190, var(--opacity));
+  --pinkColor: #005b70;
+  --blueColor: #{$ms-color-blue};
   --greenColor: rgba(16, 124, 16, var(--opacity));
 
   --darkColor: rgba(32, 31, 30, var(--opacity));
@@ -33,6 +33,7 @@ html {
   --primaryColor: var(--blueColor);
 
   --textFieldBorderColor: #{$ms-color-gray190};
+  --cardBackgroundColor:  #{$ms-color-gray10};
 }
 
 html[data-theme="light"] {

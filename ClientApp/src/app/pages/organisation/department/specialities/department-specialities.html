@@ -1,0 +1,35 @@
+<div>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="ms-fontSize-24">Spécialité</div>
+    <MsfButton Icon="Add" theme="primary" (click)="service.add(department)">Ajouter une spécialité</MsfButton>
+  </div>
+
+
+  <div>
+    <div *ngFor="let item of department.specialities" class="mt-2 p-3" style="background-color: var(--cardBackgroundColor)">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="ms-fontSize-18 ms-fontWeight-semibold">{{item.name}}</div>
+
+        <div>
+          <a [routerLink]="item.url" class="mr-2">Détails</a>
+          <MsfIconButton icon="More" [MsfMenuTrigger]="levelMenu"></MsfIconButton>
+          <MsfMenu #levelMenu>
+            <MsfMenuItem icon="Add">Ajouter un niveau</MsfMenuItem>
+            <MsfMenuItem icon="Delete" theme="error" (click)="service.delete(item)">
+              Supprimer cette specialité
+            </MsfMenuItem>
+          </MsfMenu>
+        </div>
+      </div>
+
+      <div>
+        <span class="mr-2" *ngFor="let levelSpeciality of item.levelSpecialities">
+          Niveau {{levelSpeciality.level.index + 1}}
+          <MsfIconButton icon="Delete" [rounded]="true"
+                         (click)="service.removeLevelSpeciality(levelSpeciality)"></MsfIconButton>
+        </span>
+      </div>
+      <div>{{item.description}}</div>
+    </div>
+  </div>
+</div>

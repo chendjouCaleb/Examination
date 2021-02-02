@@ -27,12 +27,13 @@ namespace ServerAppTest.Controllers
 
         private IRepository<Student, long> _studentRepository;
         private IRepository<Paper, long> _paperRepository;
-        private IRepository<Group, long> _groupRepository;
+
         private IRepository<Room, long> _roomRepository;
-        private IRepository<Organisation, long> _organisationRepository;
+        private IRepository<Course, long> _courseRepository;
+        private IRepository<School, long> _schoolRepository;
         private IRepository<Examination, long> _examinationRepository;
 
-        private IRepository<Score, long> _scoreRepository;
+        private IRepository<TestScore, long> _testScoreRepository;
         private IRepository<ScorePaper, long> _scorePaperRepository;
 
         private User _user = new User();
@@ -48,13 +49,15 @@ namespace ServerAppTest.Controllers
         private TestGroupSupervisor _testGroupSupervisor;
         private TestGroupSecretary _testGroupSecretary;
 
+        private ExaminationStudent _examinationStudent;
+
+        private Course _course;
         private Room _room;
-        private Group _group;
         private TestGroup _testGroup;
         private Student _student;
         private Test _test;
         private Examination _examination;
-        private Organisation _organisation;
+        private School _school;
 
 
         [SetUp]
@@ -67,9 +70,9 @@ namespace ServerAppTest.Controllers
             _controller = serviceProvider.GetRequiredService<PaperController>();
 
 
-            _organisationRepository = serviceProvider.GetRequiredService<IRepository<Organisation, long>>();
+            _schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
             _testRepository = serviceProvider.GetRequiredService<IRepository<Test, long>>();
-            _groupRepository = serviceProvider.GetRequiredService<IRepository<Group, long>>();
+
             _roomRepository = serviceProvider.GetRequiredService<IRepository<Room, long>>();
             _testGroupRepository = serviceProvider.GetRequiredService<IRepository<TestGroup, long>>();
 
@@ -82,55 +85,72 @@ namespace ServerAppTest.Controllers
             _secretaryRepository = serviceProvider.GetRequiredService<IRepository<Secretary, long>>();
             _supervisorRepository = serviceProvider.GetRequiredService<IRepository<Supervisor, long>>();
 
-            _scoreRepository = serviceProvider.GetRequiredService<IRepository<Score, long>>();
+            _testScoreRepository = serviceProvider.GetRequiredService<IRepository<TestScore, long>>();
             _scorePaperRepository = serviceProvider.GetRequiredService<IRepository<ScorePaper, long>>();
 
             _studentRepository = serviceProvider.GetRequiredService<IRepository<Student, long>>();
             _examinationRepository = serviceProvider.GetRequiredService<IRepository<Examination, long>>();
             _paperRepository = serviceProvider.GetRequiredService<IRepository<Paper, long>>();
 
-            _organisation = _organisationRepository.Save(new Organisation
+            _courseRepository = serviceProvider.GetRequiredService<IRepository<Course, long>>();
+            var levelRepository = serviceProvider.GetRequiredService<IRepository<Level, long>>();
+            var departmentRepository = serviceProvider.GetRequiredService<IRepository<Department, long>>();
+            var examinationLevelRepository = serviceProvider.GetRequiredService<IRepository<ExaminationLevel, long>>();
+            var examinationStudentRepository =
+                serviceProvider.GetRequiredService<IRepository<ExaminationStudent, long>>();
+            var examinationDepartmentRepository =
+                serviceProvider.GetRequiredService<IRepository<ExaminationDepartment, long>>();
+
+
+            _school = _schoolRepository.Save(new School
             {
                 Name = "Org name"
             });
 
+            var department = departmentRepository.Save(new Department {Name = "dept", School = _school});
+            var level = levelRepository.Save(new Level {Index = 0, Department = department});
+            _course = _courseRepository.Save(new Course {Code = "125", Level = level});
+
             _room = _roomRepository.Save(new Room
             {
-                Organisation = _organisation,
+                School = _school,
                 Name = "ABC"
             });
 
             _examination = _examinationRepository.Save(new Examination
             {
-                Organisation = _organisation,
+                School = _school,
                 Name = "Exam name",
                 StartDate = DateTime.Now.AddMonths(1),
                 ExpectedEndDate = DateTime.Now.AddMonths(4)
             });
 
-            _group = _groupRepository.Save(new Group
+            var examinationDepartment = examinationDepartmentRepository.Save(new ExaminationDepartment
             {
-                Examination = _examination,
-                Name = "A1",
-                Index = 1,
-                Room = _room
+                Department = department,
+                Examination = _examination
             });
+
+            var examinationLevel = examinationLevelRepository.Save(new ExaminationLevel
+            {
+                ExaminationDepartment = examinationDepartment,
+                Level = level
+            });
+
 
             _student = _studentRepository.Save(new Student
             {
                 UserId = _user.Id,
-                Examination = _examination,
-                Group = _group
+                Level = level
             });
 
             _test = _testRepository.Save(
                 new Test
                 {
-                    Examination = _examination,
-                    Name = "test name",
-                    Code = "ABC 32",
+                    Course = _course,
                     Coefficient = 5,
                     Radical = 20,
+                    ExaminationLevel = examinationLevel,
                     UseAnonymity = false,
                     ExpectedStartDate = _examination.ExpectedStartDate.AddHours(1),
                     ExpectedEndDate = _examination.ExpectedEndDate.AddHours(3)
@@ -140,18 +160,17 @@ namespace ServerAppTest.Controllers
             _testGroup = _testGroupRepository.Save(new TestGroup
             {
                 Test = _test,
-                Group = _group,
                 Room = _room
             });
 
             _corrector = _correctorRepository.Save(new Corrector
-                {UserId = _correctorUser.Id, Examination = _examination});
+                {UserId = _correctorUser.Id, Department = department});
 
             _supervisor = _supervisorRepository.Save(new Supervisor
-                {UserId = _supervisorUser.Id, Examination = _examination});
+                {UserId = _supervisorUser.Id, Department = department});
 
             _secretary = _secretaryRepository.Save(new Secretary
-                {UserId = _secretaryUser.Id, Examination = _examination});
+                {UserId = _secretaryUser.Id, Department = department});
 
             _testGroupCorrector = _testGroupCorrectorRepository.Save(new TestGroupCorrector
             {
@@ -167,36 +186,61 @@ namespace ServerAppTest.Controllers
             {
                 Secretary = _secretary, TestGroup = _testGroup
             });
+
+            _examinationStudent = examinationStudentRepository.Save(new ExaminationStudent
+            {
+                Student = _student,
+                ExaminationLevel = examinationLevel
+            });
         }
 
         [Test]
         public void Add()
         {
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
 
             _paperRepository.Refresh(paper);
 
             Assert.NotNull(paper);
-            Assert.AreEqual(_testGroup, paper.TestGroup);
-            Assert.AreEqual(_student, paper.Student);
-            Assert.AreEqual(_testGroupSupervisor, paper.TestGroupSupervisor);
 
-            Assert.NotNull(paper.StartDate);
-
-            Assert.AreEqual(_testGroupSupervisor.Supervisor.UserId, paper.SupervisorUserId);
-            Assert.True(DateTimeAssert.EqualsAtMinute(DateTime.Now, paper.StartDate.Value));
+            Assert.AreEqual(_examinationStudent, paper.ExaminationStudent);
+            Assert.AreEqual(_test, paper.Test);
         }
 
         [Test]
-        public void TryAdd_SameStudentTwoTime_ShouldThrowError()
+        public void Check_If_Add_DontAddSameStudent_TwoTime()
         {
-            _controller.Add(_testGroup, _student, _testGroupSupervisor);
+            Paper paper1 = _controller.Add(_test, _examinationStudent);
+            Paper paper2 = _controller.Add(_test, _examinationStudent);
 
-            Exception ex = Assert.Throws<InvalidOperationException>(
-                () => _controller.Add(_testGroup, _student, _testGroupSupervisor)
-            );
+            Assert.AreEqual(paper1, paper2);
+        }
 
-            Assert.AreEqual("{paper.constraints.uniqueStudent}", ex.Message);
+        [Test]
+        public void changePresenceState_WhenStudentIsAbsent_ShouldSetIt_AsPresent()
+        {
+            Paper paper = _controller.Add(_test, _examinationStudent);
+
+            _controller.ChangePresenceState(paper, _testGroupSupervisor);
+            _paperRepository.Refresh(paper);
+
+            Assert.NotNull(paper.StartDate);
+            Assert.True(DateTimeAssert.EqualsAtMinute(DateTime.Now, paper.StartDate.Value));
+            Assert.AreEqual(paper.TestGroupSupervisor, _testGroupSupervisor);
+            Assert.AreEqual(paper.SupervisorUserId, _testGroupSupervisor.Supervisor.UserId);
+        }
+
+        [Test]
+        public void changePresenceState_WhenStudentIsPresent_ShouldSetIt_AsAbsent()
+        {
+            Paper paper = _controller.Add(_test, _examinationStudent);
+
+            _controller.ChangePresenceState(paper, _testGroupSupervisor);
+            _paperRepository.Refresh(paper);
+            _controller.ChangePresenceState(paper, _testGroupSupervisor);
+            _paperRepository.Refresh(paper);
+
+            Assert.Null(paper.StartDate);
         }
 
         [Test]
@@ -208,7 +252,7 @@ namespace ServerAppTest.Controllers
                 EndDate = DateTime.Now.AddHours(1)
             };
 
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
 
             _controller.ChangeDate(paper, form);
             _paperRepository.Refresh(paper);
@@ -221,7 +265,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void CollectPaper_WithEndDate()
         {
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
             DateTime endDate = DateTime.Now.AddHours(2);
 
             _controller.Collect(paper, _supervisorUser, endDate);
@@ -235,7 +279,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void CollectPaper_WithoutEndDate()
         {
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
             _controller.Collect(paper, _supervisorUser);
             _paperRepository.Refresh(paper);
 
@@ -248,7 +292,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void SetSupervisorComment()
         {
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
             string comment = "supervisor comment";
 
             _controller.SupervisorComment(paper, comment);
@@ -262,7 +306,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void SetCorrectorComment()
         {
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
             string comment = "corrector comment";
 
             _controller.CorrectorComment(paper, comment);
@@ -275,7 +319,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void ReportPaper()
         {
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
 
             PaperReportForm form = new PaperReportForm
             {
@@ -295,7 +339,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void SetScore()
         {
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
             double score = 12;
 
             _controller.Score(paper, _testGroupCorrector, score);
@@ -309,11 +353,12 @@ namespace ServerAppTest.Controllers
         }
 
         [Test]
-        public void TrySetScore_WhenTestHaveMultipleScore_ShouldThrowError()
+        public void TrySetScore_WhenCourseHaveMultipleScore_ShouldThrowError()
         {
-            Paper paper = _controller.Add(_testGroup, _student, _testGroupSupervisor).Value as Paper;
+            Paper paper = _controller.Add(_test, _examinationStudent);
 
-            _scoreRepository.Save(new Score {Test = _test, Radical = 1});
+            _test.MultipleScore = true;
+            _testRepository.Update(_test);
             _testRepository.Refresh(_test);
 
             Exception ex = Assert.Throws<InvalidOperationException>(
@@ -323,5 +368,106 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual("{paper.constraints.multipleScore}", ex.Message);
         }
         
+        
+        [Test]
+        public void AddPaperScore()
+        {
+            Paper paper = _controller.Add(_test, _examinationStudent);
+            TestScore score = _testScoreRepository.Save(new TestScore {Test = _test, Name = "Exercise1", Radical = 5});
+
+            ScorePaper scorePaper = _controller.AddOrUpdatePaperScore(paper, score, 5);
+            _scorePaperRepository.Refresh(scorePaper);
+
+            Assert.NotNull(scorePaper);
+            Assert.AreEqual(paper, scorePaper.Paper);
+            Assert.AreEqual(score, scorePaper.TestScore);
+            Assert.AreEqual(5, scorePaper.Value);
+        }
+        
+        
+        [Test]
+        public void AddExistingScorePaper_ShouldUpdateIt()
+        {
+            Paper paper = _controller.Add(_test, _examinationStudent);
+            TestScore score = _testScoreRepository.Save(new TestScore {Test=_test, Name = "Exercise1", Radical = 5});
+
+            ScorePaper scorePaper1 = _controller.AddOrUpdatePaperScore(paper, score, 5);
+            ScorePaper scorePaper2 = _controller.AddOrUpdatePaperScore(paper, score, 1);
+            _scorePaperRepository.Refresh(scorePaper1);
+            _scorePaperRepository.Refresh(scorePaper2);
+
+            Assert.NotNull(scorePaper1);
+            Assert.NotNull(scorePaper2);
+            Assert.AreEqual(scorePaper1, scorePaper2);
+            Assert.AreEqual(1, scorePaper2.Value);
+        }
+        
+        [Test]
+        public void Try_AddOrUpdateScorePaper_WhichValueUpperThanRadical_ShouldThrow()
+        {
+            Paper paper = _controller.Add(_test, _examinationStudent);
+            TestScore score = _testScoreRepository.Save(new TestScore {Test=_test, Name = "Exercise1", Radical = 5});
+
+            Exception ex = Assert.Throws<InvalidValueException>(
+                () => _controller.AddOrUpdatePaperScore(paper, score, 6)
+            );
+
+            Assert.AreEqual("{paperScore.constraints.valueLowerOrEqualThanRadical}", ex.Message);
+        }
+        
+        
+        
+        [Test]
+        public void SetMultipleScore()
+        {
+            Paper paper = _controller.Add(_test, _examinationStudent);
+            
+            TestScore score1 = _testScoreRepository.Save(new TestScore {Test=_test, Name = "Exercise1", Radical = 5});
+            TestScore score2 = _testScoreRepository.Save(new TestScore {Test=_test, Name = "Exercise2", Radical = 5});
+            TestScore score3 = _testScoreRepository.Save(new TestScore {Test=_test, Name = "Exercise3", Radical = 10});
+            
+            List<ScorePaperForm> form = new List<ScorePaperForm>(new []
+            {
+                new ScorePaperForm { TestScoreId = score1.Id, Value = 1}, 
+                new ScorePaperForm { TestScoreId = score2.Id, Value = 2}, 
+                new ScorePaperForm { TestScoreId = score3.Id, Value = 3} 
+            });
+            _test.MultipleScore = true;
+            _testRepository.Update(_test); 
+            _paperRepository.Refresh(paper);
+
+            List<ScorePaper> scorePapers =
+                _controller.Scores(paper, _testGroupCorrector, form).Value as List<ScorePaper>;
+            
+            _paperRepository.Refresh(paper);
+            Assert.IsNotNull(paper);
+            Assert.IsNotNull(scorePapers);
+            Assert.AreEqual(3, scorePapers.Count);
+            
+            Assert.AreEqual(_testGroupCorrector, paper.TestGroupCorrector);
+            Assert.AreEqual(_testGroupCorrector.Corrector.UserId, paper.CorrectorUserId);
+
+            foreach (var item in scorePapers)
+            {
+                _scorePaperRepository.Refresh(item);
+                Assert.IsNotNull(item);
+                Assert.AreEqual( paper, item.Paper);
+                Assert.AreEqual( paper.Test, item.TestScore.Test);
+            }
+
+        }
+        
+        
+        [Test]
+        public void TrySetScorePapers_WhenTestHaveSingleScore_ShouldThrowError()
+        {
+            Paper paper = _controller.Add(_test, _examinationStudent);
+            
+            Exception ex = Assert.Throws<InvalidOperationException>(
+                () => _controller.Scores(paper, _testGroupCorrector, new List<ScorePaperForm>())
+            );
+
+            Assert.AreEqual("{paper.constraints.singleScore}", ex.Message);
+        }
     }
 }

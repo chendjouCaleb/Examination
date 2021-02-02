@@ -1,10 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/purple-green.css";
+@import "~cropperjs/dist/cropper.min.css";
 @import "bootstrap.min.css";
 @import "variable";
 @import "ms-Icon-fix";
 @import "~office-ui-fabric-core/dist/sass/Fabric";
 
+@import "~@ms-fluent/table/src/styles/table";
+@import "~@ms-fluent/grid/src/styles/grid";
+@import "~@ms-fluent/button/src/styles/ms-button";
+@import "~@ms-fluent/persona/src/styles/persona";
+@import "~@ms-fluent/pivot/src/styles/ms-pivot";
+
+@import "title";
 
 $font-family-sans-serif: Metropolis, sans-serif;
 $msf-button-backgroundColor: red;
@@ -20,6 +28,30 @@ $msf-button-backgroundColor: red;
   outline: none;
 }
 
+.ms-tableHeadCell-label {
+  flex-grow: 2;
+}
+
+.ms-bgColor-transparent {
+  background: transparent;
+}
+
+.ms-borderColor-transparent {
+  border-color: transparent;
+}
+
+.ms-fontColor-transparent {
+  color: transparent;
+}
+
+.ms-fontColor-transparent--hover:hover {
+  color: transparent;
+}
+
+.ms-iconButton.rounded {
+  border-radius: 50% !important;
+}
+
 .msf-menu {
   background: var(--cardBackgroundColor);
 }
@@ -31,12 +63,14 @@ $msf-button-backgroundColor: red;
 }
 
 .msf-table {
-  width: 100%
+  width: 100%;
+  position: relative;
 }
 
-.ms-table-container{
+.ms-table-container {
   width: 100%;
-  overflow-x: auto;
+  overflow: auto;
+  max-height: 400px;
 }
 
 .msf-table-row {
@@ -49,6 +83,9 @@ $msf-button-backgroundColor: red;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  position: static;
+  top: 0;
+
   &:hover {
     background-color: var(--hoverBackgroundColor);
   }
@@ -110,6 +147,7 @@ body {
 .msf-modal-portal {
   padding: 0;
   background: var(--bodyBackgroundColor);
+  backdrop-filter: blur(5px);
 }
 
 .msf-button.msf-theme-primary {
@@ -135,7 +173,7 @@ body {
 
 .mat-snackbar-panel {
   background-color: transparent !important;
-  border-radius: 0 !important; ;
+  border-radius: 0 !important;;
   padding: 0 !important;
   color: #FFF;
 }
@@ -159,24 +197,35 @@ body {
   &.ms-badge-primary {
     background-color: $ms-color-themePrimary;
   }
+
   &.ms-badge-success {
-    background-color: $ms-color-success;
+    background-color: $ms-color-successBackground;
+    color: $ms-color-success;
+  }
+
+  &.ms-badge-info {
+    background-color: $ms-color-infoBackground;
+    color: $ms-color-info;
   }
 
   &.ms-badge-warning {
-    background-color: $ms-color-warning;
+    background-color: $ms-color-warningBackground;
+    color: $ms-color-warning;
   }
 
-  &.ms-badge-danger {
-    background-color: $ms-color-error;
+  &.ms-badge-error {
+    background-color: $ms-color-errorBackground;
+    color: $ms-color-error;
   }
 }
 
 .ms-description-list {
   display: table;
+
   & dl, & .ms-dl {
     display: table-row;
   }
+
   & dt, & .ms-dt {
     display: table-cell;
     font-weight: normal;
@@ -191,6 +240,50 @@ body {
     font-weight: 600;
     padding: 10px 0 10px 50px;
     border-bottom: 1px solid var(--borderColor);
-
+    vertical-align: middle;
   }
 }
+
+.br-2 {
+  border-radius: 2px;
+}
+
+.ms-pageTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--borderColor);
+  padding: 5px 0;
+}
+
+.ms-gridItem {
+  overflow: hidden;
+}
+
+.ms-grid {
+  border-color: transparent !important;
+}
+.ms-link {
+  cursor: pointer;
+  color: var(--primaryColor);
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.ms-divider {
+  display: block;
+  height: 1px;
+  border: none;
+  background-color: var(--borderColor);
+}
+
+.ms-h-divider {
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+  border: none;
+  background-color: var(--borderColor);
+}
+
+

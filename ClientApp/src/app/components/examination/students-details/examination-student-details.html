@@ -1,0 +1,125 @@
+﻿<div class="p-3">
+
+  <div class="ms-pageTitle">
+    <h5>{{examinationStudent.student.fullName}}</h5>
+  </div>
+
+
+  <div class="d-flex">
+    <div class="ms-description-list">
+      <dl>
+        <dt>Nom & prénom</dt>
+        <dd>{{examinationStudent.student.fullName}}</dd>
+      </dl>
+      <dl>
+        <dt>Matricule</dt>
+        <dd>{{examinationStudent.student.registrationId}}</dd>
+      </dl>
+      <dl>
+        <dt>Date de naissance</dt>
+        <dd>{{student.birthDate | date}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Sexe</dt>
+        <dd>
+          <ng-container *ngIf="student.gender == 'M' || student.gender == 'm'">Masculin</ng-container>
+          <ng-container *ngIf="student.gender == 'F' || student.gender == 'f'">Féminin</ng-container>
+        </dd>
+      </dl>
+
+    </div>
+
+    <div class="ml-5 ms-description-list">
+      <dl>
+        <dt>Départment</dt>
+        <dd>{{examinationStudent.examinationLevel?.examinationDepartment?.department.name}}</dd>
+      </dl>
+      <dl>
+        <dt>Niveau</dt>
+        <dd>{{examinationStudent.examinationLevel.level.index + 1}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Spécialité</dt>
+        <dd *ngIf="examinationStudent.examinationLevelSpeciality">
+          {{examinationStudent.examinationLevelSpeciality?.examinationSpeciality?.speciality.name}}</dd>
+        <dd *ngIf="!examinationStudent.examinationLevelSpeciality">
+          <span class="ms-badge ms-badge-error">Aucune</span>
+        </dd>
+      </dl>
+    </div>
+
+
+    <div class="ml-5 ms-description-list" *ngIf="examinationStudent.papers">
+      <dl>
+        <dt>Participation</dt>
+        <dd>{{statistics?.testCount}}
+          <span msColor="sharedGreen10"> ({{statistics.correctedTestCount}} Corrigés)</span>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Score</dt>
+        <dd>{{statistics?.score}} / {{statistics?.radical}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Moyenne</dt>
+        <dd>
+          <span [class.ms-fontColor-sharedGreen10]="statistics.mean > 0.7"
+                [class.ms-fontColor-sharedRed10]="statistics.mean < 0.5">
+            {{statistics.mean * 20 | number}} / 20
+          </span>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <MsfTable>
+      <MsfTableHead>
+        <MsfTableHeadCell>#</MsfTableHeadCell>
+        <MsfTableHeadCell>Cours</MsfTableHeadCell>
+        <MsfTableHeadCell>Groupe</MsfTableHeadCell>
+        <MsfTableHeadCell>Coefficient</MsfTableHeadCell>
+        <MsfTableHeadCell>Radical</MsfTableHeadCell>
+        <MsfTableHeadCell>Note</MsfTableHeadCell>
+        <MsfTableHeadCell>Présent</MsfTableHeadCell>
+        <MsfTableHeadCell></MsfTableHeadCell>
+      </MsfTableHead>
+      <MsfTableRow *ngFor="let paper of examinationStudent?.papers" #row>
+        <MsfTableCell>{{row.index + 1}}</MsfTableCell>
+        <MsfTableCell>{{paper.test?.course.name}}</MsfTableCell>
+        <MsfTableCell>
+          <a *ngIf="paper.testGroup" [routerLink]="paper.testGroup?.url">{{paper.testGroup?.index + 1}}</a>
+          <app-icon *ngIf="!paper.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
+        </MsfTableCell>
+        <MsfTableCell>{{paper.test?.coefficient}}</MsfTableCell>
+        <MsfTableCell>{{paper.test?.radical}}</MsfTableCell>
+        <MsfTableCell>
+        <span class="br-2 ms-fontWeight-semibold text-right ms-fontColor-white" *ngIf="paper.isCorrected && paper.test"
+              style="padding:3px"
+              [class.ms-bgColor-sharedRed20]="paper.is1_5"
+              [class.ms-bgColor-sharedRedOrange10]="paper.is2_5"
+              [class.ms-bgColor-sharedOrangeYellow10]="paper.is3_5"
+              [class.ms-bgColor-sharedCyan30]="paper.is4_5"
+              [class.ms-bgColor-sharedGreen10]="paper.is5_5"
+        >
+          <ng-container *ngIf="paper.score < 10">0</ng-container>
+          {{paper.score}}</span>
+          <app-icon *ngIf="!paper.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
+        </MsfTableCell>
+
+        <MsfTableCell>
+          <app-icon *ngIf="!paper.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
+          <app-icon *ngIf="paper.isCorrected"></app-icon>
+        </MsfTableCell>
+
+        <MsfTableCell class="text-right">
+          <span class="ms-link" (click)="paperService.details(paper)">Détails</span>
+        </MsfTableCell>
+      </MsfTableRow>
+    </MsfTable>
+  </div>
+</div>

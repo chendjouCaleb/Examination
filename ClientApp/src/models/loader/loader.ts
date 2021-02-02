@@ -1,5 +1,5 @@
-﻿import {Entity} from "../entities";
-import {GenericHttpClient} from "examination/models";
+﻿import {Entity} from "examination/entities";
+import {GenericHttpClient} from "examination/models/http";
 import {List} from "@positon/collections";
 
 export abstract class Loader<T extends Entity<TID>, TID> {

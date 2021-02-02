@@ -1,0 +1,12 @@
+﻿<app-layout>
+  <msf-tab>
+    <msf-tab-label routerLinkActive="active" [routerLink]="[speciality.url, 'home']">Accueil</msf-tab-label>
+    <msf-tab-label routerLinkActive="active" [routerLink]="[speciality.url, 'courses']">Cours</msf-tab-label>
+    <msf-tab-label routerLinkActive="active" [routerLink]="[speciality.url, 'students']">étudiants</msf-tab-label>
+    <msf-tab-label routerLinkActive="active" [routerLink]="[speciality.url, 'application']">Demandes</msf-tab-label>
+  </msf-tab>
+
+  <div>
+    <ng-content></ng-content>
+  </div>
+</app-layout>

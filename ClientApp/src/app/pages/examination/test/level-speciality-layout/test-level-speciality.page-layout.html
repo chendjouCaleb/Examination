@@ -1,0 +1,24 @@
+﻿<app-layout [breadcrumbItems]="breadCrumbItems">
+  <msPivot>
+    <msPivotHeader>
+      <msPivotLabel name="home">Acceuil</msPivotLabel>
+      <msPivotLabel name="students">Étudiants</msPivotLabel>
+      <msPivotLabel name="scores">Notes</msPivotLabel>
+    </msPivotHeader>
+    <msPivotBody>
+      <div *msPivotContentDef>
+        <app-test-level-speciality-details [testLevelSpeciality]="testLevelSpeciality">
+
+        </app-test-level-speciality-details>
+      </div>
+      <div *msPivotContentDef>
+        <app-paper-list [testLevelSpeciality]="testLevelSpeciality"></app-paper-list >
+      </div>
+      <div *msPivotContentDef>
+        <app-paper-score-list [testLevelSpeciality]="testLevelSpeciality"></app-paper-score-list>
+      </div>
+    </msPivotBody>
+  </msPivot>
+
+
+</app-layout>

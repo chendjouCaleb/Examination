@@ -5,8 +5,6 @@ export class ExaminationAddModel {
   @MinLength(3)
   name: string;
 
-  requireSpeciality: boolean;
-
   @IsNotEmpty()
   expectedStartDate: any;
 

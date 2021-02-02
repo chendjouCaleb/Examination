@@ -1,0 +1,55 @@
+﻿<div class="ms-pageTitle">
+  <div class="ms-fontSize-24">Salles</div>
+  <MsfButton Icon="Add" theme="primary" (click)="addRoom() ">Ajouter une salle</MsfButton>
+</div>
+
+<div>
+
+  <MsfTable>
+    <MsfTableHead>
+      <MsfTableHeadCell>#</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="name">Nom</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="capacity">Capacité</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="address">Addresse</MsfTableHeadCell>
+
+      <MsfTableHeadCell>Departement</MsfTableHeadCell>
+      <MsfTableHeadCell>Niveau</MsfTableHeadCell>
+      <MsfTableHeadCell>Date d'ajout</MsfTableHeadCell>
+      <MsfTableHeadCell></MsfTableHeadCell>
+    </MsfTableHead>
+
+    <MsfTableRow *ngFor="let item of rooms" [value]="item" #row>
+      <MsfTableCell>{{row.index + 1}}</MsfTableCell>
+      <MsfTableCell>{{item.name | ucFirst}}</MsfTableCell>
+      <MsfTableCell>{{item.capacity}} places</MsfTableCell>
+      <MsfTableCell>{{item.address}}</MsfTableCell>
+
+
+      <MsfTableCell>
+        <ng-container *ngIf="item.department">
+          {{item.department.name}}
+        </ng-container>
+        <app-icon *ngIf="!item.department" bgColor="sharedRed10" icon="Cancel"> </app-icon>
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <ng-container *ngIf="item.level">
+          Niveau {{item.level.index + 1}}
+        </ng-container>
+        <app-icon *ngIf="!item.level" bgColor="sharedRed10" icon="Cancel"> </app-icon>
+      </MsfTableCell>
+
+      <MsfTableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</MsfTableCell>
+      <MsfTableCell class="text-right">
+
+        <a   (click)="service.detailsRoom(item)">Détails</a>
+        <MsfIconButton class="ml-2" icon="More" [MsfMenuTrigger]="roomMenu"></MsfIconButton>
+        <MsfMenu #roomMenu>
+          <MsfMenuItem icon="Edit" (click)="service.editRoom(item)">Modifier</MsfMenuItem>
+          <MsfMenuItem icon="Delete" theme="error" (click)="service.deleteRoom(item)">Supprimer</MsfMenuItem>
+        </MsfMenu>
+      </MsfTableCell>
+    </MsfTableRow>
+  </MsfTable>
+
+</div>

@@ -1,0 +1,33 @@
+<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+  <div class="ms-form-header">Ajouter un cours</div>
+
+
+
+
+  <div class="ms-textField" *ngIf="!levelSpeciality">
+    <label for="levelSpeciality" class="msf-label">Spécialité</label>
+    <MsfSelect id="levelSpeciality" formControlName="levelSpeciality" class="ms-textField-input"
+    placeholder="Choisir une spécialité">
+      <MsfSelectOption *ngFor="let item of course.level.levelSpecialities" [value]="item">
+        {{item.speciality.name}}
+      </MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+  <div class="ms-textField" *ngIf="!course">
+    <label for="course" class="msf-label">Cours</label>
+    <MsfSelect id="course" formControlName="course" class="ms-textField-input" [multiple]="true"
+               placeholder="Choisir un cours">
+      <MsfSelectOption *ngFor="let item of levelSpeciality.level.courses" [value]="item">
+        {{item.name}}
+      </MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose  class="mr-3">Annuler</MsfButton>
+    <button MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">Ajouter</button>
+  </div>
+</form>

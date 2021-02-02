@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
 using Exam.Infrastructure;
-using Exam.Models;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
@@ -15,47 +13,39 @@ namespace ServerAppTest.Controllers
 {
     public class StudentGroupingControllerTests
     {
-        private GroupStudentController _controller;
-        private IRepository<Group, long> _groupRepository;
-        private IRepository<Organisation, long> _organisationRepository;
+        private GroupPaperController _controller;
+
+        private IRepository<School, long> _schoolRepository;
         private IRepository<Room, long> _roomRepository;
         private IRepository<Examination, long> _examinationRepository;
-        private IRepository<Speciality, long> _specialityRepository;
+        private IRepository<ExaminationSpeciality, long> _specialityRepository;
         private IRepository<Student, long> _studentRepository;
+        private IRepository<Test, long> _testRepository;
+        private IRepository<TestGroup, long> _testGroupRepository;
+        private IRepository<Paper, long> _paperRepository;
 
-        private Speciality _speciality1;
-        private Speciality _speciality2;
+        private ExaminationSpeciality _speciality1;
+        private ExaminationSpeciality _speciality2;
         private Examination _examination;
-        private Room _room;
-        private Organisation _organisation;
+        private School _school;
 
-        private Group _group1;
-        private Group _group2;
-        private Group _group3;
+        private Test _test;
 
-        private Group _speciality1Group1;
-        private Group _speciality1Group2;
-        private Group _speciality1Group3;
+        private TestGroup _testGroup0;
+        private TestGroup _testGroup1;
+        private TestGroup _testGroup2;
 
-        private Group _speciality2Group1;
-        private Group _speciality2Group2;
-        private Group _speciality2Group3;
 
-        private List<Student> _speciality1Students = new List<Student>();
-        private List<Student> _speciality2Students = new List<Student>();
-        private List<Student> _noSpecialityStudents = new List<Student>();
-
-        private User _user = new User
-        {
-            Id = Guid.NewGuid().ToString()
-        };
+        private ExaminationLevel _examinationLevel;
+        private List<Paper> _papers = new List<Paper>();
+        
 
         [TearDown]
         public void AfterAll()
         {
             _studentRepository.DeleteAll();
         }
-        
+
         [SetUp]
         public void BeforeEach()
         {
@@ -63,253 +53,123 @@ namespace ServerAppTest.Controllers
             IServiceProvider serviceProvider = ServiceConfiguration.BuildServiceProvider();
 
 
-            _controller = serviceProvider.GetRequiredService<GroupStudentController>();
+            _controller = serviceProvider.GetRequiredService<GroupPaperController>();
 
-            _organisationRepository = serviceProvider.GetRequiredService<IRepository<Organisation, long>>();
-            _groupRepository = serviceProvider.GetRequiredService<IRepository<Group, long>>();
+            _schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
+            _paperRepository = serviceProvider.GetRequiredService<IRepository<Paper, long>>();
             _examinationRepository = serviceProvider.GetRequiredService<IRepository<Examination, long>>();
-            _specialityRepository = serviceProvider.GetRequiredService<IRepository<Speciality, long>>();
+            var examinationStudentRepository =
+                serviceProvider.GetRequiredService<IRepository<ExaminationStudent, long>>();
+
             _roomRepository = serviceProvider.GetRequiredService<IRepository<Room, long>>();
             _studentRepository = serviceProvider.GetRequiredService<IRepository<Student, long>>();
+            var examinationLevelRepository = serviceProvider.GetRequiredService<IRepository<ExaminationLevel, long>>();
 
-            _studentRepository.DeleteAll();
-            _organisation = _organisationRepository.Save(new Organisation
+            _paperRepository.DeleteAll();
+            _school = _schoolRepository.Save(new School
             {
                 Name = "Org name"
             });
 
             _examination = _examinationRepository.Save(new Examination
             {
-                Organisation = _organisation,
+                School = _school,
                 Name = "Exam name",
                 ExpectedStartDate = DateTime.Now.AddMonths(1),
                 ExpectedEndDate = DateTime.Now.AddMonths(4)
             });
 
-            _speciality1 = _specialityRepository.Save(new Speciality
-            {
-                Name = "speciality1 name",
-                Examination = _examination
-            });
-
-            _speciality2 = _specialityRepository.Save(new Speciality
-            {
-                Name = "speciality1 name",
-                Examination = _examination
-            });
-
-            _room = _roomRepository.Save(new Room
-            {
-                Organisation = _organisation,
-                Name = "name",
-                Capacity = 10
-            });
-            _group1 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 4})
-            });
-
-            _group2 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 5})
-            });
-
-            _group3 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 5})
-            });
-
-            _speciality1Group1 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Speciality = _speciality1,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 5})
-            });
-
-            _speciality1Group2 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Speciality = _speciality1,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 6})
-            });
-
-            _speciality1Group3 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Speciality = _speciality1,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 6})
-            });
-
-
-            _speciality2Group1 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Speciality = _speciality2,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 3})
-            });
-
-            _speciality2Group2 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Speciality = _speciality2,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 3})
-            });
-
-            _speciality2Group3 = _groupRepository.Save(new Group
-            {
-                Examination = _examination,
-                Speciality = _speciality2,
-                Room = _roomRepository.Save(new Room {Organisation = _organisation, Capacity = 5})
-            });
+            _examinationLevel = examinationLevelRepository.Save(new ExaminationLevel
+             ());
 
             
-            _speciality1Students.Clear();
-            _speciality2Students.Clear();
-            _noSpecialityStudents.Clear();
+            _test = _testRepository.Save(new Test
+            {
+                ExaminationLevel = _examinationLevel
+            });
+
+            _testGroup0 = _testGroupRepository.Save(new TestGroup
+            {
+                Test = _test,
+                Room = _roomRepository.Save(new Room {School = _school, Capacity = 4})
+            });
+
+            _testGroup1 = _testGroupRepository.Save(new TestGroup
+            {
+                Test = _test,
+                Room = _roomRepository.Save(new Room {School = _school, Capacity = 5})
+            });
+
+            _testGroup2 = _testGroupRepository.Save(new TestGroup
+            {
+                Test = _test,
+                Room = _roomRepository.Save(new Room {School = _school, Capacity = 5})
+            });
+
+
             for (int i = 0; i < 10; i++)
             {
-                _noSpecialityStudents.Add(_studentRepository.Save(new Student
+                Student student = _studentRepository.Save(new Student {FullName = i + "Name"});
+                ExaminationStudent examinationStudent = examinationStudentRepository.Save(new ExaminationStudent
                 {
-                    FullName = i + "Name",
-                    Examination = _examination
+                    Student = student
+                });
+                _papers.Add(_paperRepository.Save(new Paper
+                {
+                    ExaminationStudent = examinationStudent,
+                    Test = _test
                 }));
             }
-
-            
-            for (int i = 0; i < 10; i++)
-            {
-                _speciality1Students.Add(_studentRepository.Save(new Student
-                {
-                    FullName = i + "Name",
-                    Examination = _examination,
-                    Speciality = _speciality1
-                }));
-            }
-
-            
-            for (int i = 0; i < 10; i++)
-            {
-                _speciality2Students.Add(_studentRepository.Save(new Student
-                {
-                    FullName = i + "Name",
-                    Examination = _examination,
-                    Speciality = _speciality2
-                }));
-            }
-            
-            
         }
 
-        [Test]
-        public void CanGroupStudentSpeciality()
-        {
-            int result = _controller.CanGroupStudentOfSpeciality(_speciality1);
-            Assert.AreEqual(7, result);
-
-            result = _controller.CanGroupStudentOfSpeciality(_speciality2);
-            Assert.AreEqual(1, result);
-        }
-
-        [Test]
-        public void CanGroupStudentWithoutSpeciality()
-        {
-            int result = _controller.CanGroupStudentWithoutSpeciality(_examination);
-            Assert.AreEqual(4, result);
-        }
 
         [Test]
         public void CanGroupStudent()
         {
-            int result = _controller.CanGroupStudents(_examination);
-            Assert.AreEqual(12, result);
+            int result = _controller.CanGroupPapers(_test);
+            Assert.AreEqual(4, result);
         }
-        
+
 
         [Test]
-        public void GroupStudentWithoutSpeciality()
+        public void GroupStudent()
         {
-            _controller.GroupStudentWithoutSpeciality(_examination);
+            _controller.Group(_test);
 
-            
-            List <Student> students = _noSpecialityStudents.OrderBy(u => u.FullName).ToList();
-            students.ForEach(s => _studentRepository.Refresh(s));
-            
+
+            List<Paper> papers = _papers.OrderBy(u => u.ExaminationStudent.Student.FullName).ToList();
+            papers.ForEach(s => _paperRepository.Refresh(s));
+
             for (int i = 0; i < 4; i++)
             {
-                Assert.AreEqual(_group1, students[i].Group);
-                Assert.AreEqual(i, students[i].GroupIndex);
+                Assert.AreEqual(_testGroup0, papers[i].TestGroup);
+                Assert.AreEqual(i, papers[i].GroupIndex);
             }
 
             for (int i = 4, j = 0; i < 9; i++, j++)
             {
-                Assert.AreEqual(_group2, students[i].Group);
-                Assert.AreEqual(j, students[i].GroupIndex);
+                Assert.AreEqual(_testGroup1, papers[i].TestGroup);
+                Assert.AreEqual(j, papers[i].GroupIndex);
             }
-            
-            for (int i = 9, j = 0; i < students.Count; i++, j++)
+
+            for (int i = 9, j = 0; i < papers.Count; i++, j++)
             {
-                Assert.AreEqual(_group3, students[i].Group);
-                Assert.AreEqual(j, students[i].GroupIndex);
+                Assert.AreEqual(_testGroup2, papers[i].TestGroup);
+                Assert.AreEqual(j, papers[i].GroupIndex);
             }
-            
         }
-        
-        
+
         [Test]
-        public void GroupStudentWithSpeciality()
+        public void UngroupTest()
         {
-            _controller.Group(_speciality1);
-
-            
-            List <Student> students = _speciality1Students.OrderBy(u => u.FullName).ToList();
-            students.ForEach(s => _studentRepository.Refresh(s));
-            
-            for (int i = 0; i < 5; i++)
+            _controller.Group(_test);
+            _controller.UnGroup(_test);
+            IList<Paper> papers = _paperRepository.List(p => p.Test.Equals(_test));
+            foreach (var paper in papers)
             {
-                Assert.AreEqual(_speciality1Group1, students[i].Group);
-                Assert.AreEqual(i, students[i].GroupIndex);
+                Assert.Null(paper.TestGroup);
+                Assert.Null(paper.TestGroupId);
             }
-
-            for (int i = 5, j = 0; i < students.Count; i++, j++)
-            {
-                Assert.AreEqual(_speciality1Group2, students[i].Group);
-                Assert.AreEqual(j, students[i].GroupIndex);
-            }
-            
         }
-        
-        [Test]
-        public void GroupStudentWithSpeciality2()
-        {
-            _controller.Group(_speciality2);
-
-            
-            List <Student> students = _speciality2Students.OrderBy(u => u.FullName).ToList();
-            students.ForEach(s => _studentRepository.Refresh(s));
-            
-            for (int i = 0; i < 3; i++)
-            {
-                Assert.AreEqual(_speciality2Group1, students[i].Group);
-                Assert.AreEqual(i, students[i].GroupIndex);
-            }
-
-            for (int i = 3, j = 0; i < 6; i++, j++)
-            {
-                Assert.AreEqual(_speciality2Group2, students[i].Group);
-                Assert.AreEqual(j, students[i].GroupIndex);
-            }
-            
-            for (int i = 6, j = 0; i < students.Count; i++, j++)
-            {
-                Assert.AreEqual(_speciality2Group3, students[i].Group);
-                Assert.AreEqual(j, students[i].GroupIndex);
-            }
-            
-        }
-        
-        
     }
 }

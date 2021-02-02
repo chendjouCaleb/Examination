@@ -1,9 +1,0 @@
-﻿<app-examination-layout [examination]="group.examination" [paths]="paths">
-  <MsfTab>
-    <a MsfTabLabel routerLinkActive="active"  [routerLink]="[group.url, 'home']" icon="Home">Accueil</a>
-    <a MsfTabLabel routerLinkActive="active"  [routerLink]="[group.url, 'students']" icon="Group">étudiants</a>
-    <a MsfTabLabel routerLinkActive="active"  [routerLink]="[group.url, 'tests']" icon="Calendar">épreuves</a>
-    <a MsfTabLabel [routerLink]="[group.url, 'settings']" icon="Settings">Paramètres</a>
-  </MsfTab>
-  <ng-content></ng-content>
-</app-examination-layout>

@@ -1,10 +1,14 @@
 ﻿using System;
 using Exam.Controllers;
+using Exam.Entities;
 using Exam.Persistence;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using ServerApp.Hubs;
 
 namespace ServerAppTest
 {
@@ -27,35 +31,61 @@ namespace ServerAppTest
 
             ServiceCollection.AddLogging();
 
-            ServiceCollection.AddTransient<OrganisationController>();
-            ServiceCollection.AddTransient<AdminController>();
-            ServiceCollection.AddTransient<RoomController>();
-            ServiceCollection.AddTransient<GroupController>();
-            ServiceCollection.AddTransient<ExaminationController>();
-            ServiceCollection.AddTransient<PrincipalController>();
+            ServiceCollection.AddTransient<SchoolController>();
+            ServiceCollection.AddTransient<DepartmentController>();
             ServiceCollection.AddTransient<SpecialityController>();
+            ServiceCollection.AddTransient<LevelController>();
+            ServiceCollection.AddTransient<LevelSpecialityController>();
+            ServiceCollection.AddTransient<ScoreController>();
+            ServiceCollection.AddTransient<CourseController>();
+            ServiceCollection.AddTransient<CourseLevelSpecialityController>();
+            ServiceCollection.AddTransient<RoomController>();
+            
+            
+            ServiceCollection.AddTransient<ExaminationController>();
+            ServiceCollection.AddTransient<ExaminationDepartmentController>();
+            ServiceCollection.AddTransient<ExaminationLevelController>();
+            ServiceCollection.AddTransient<ExaminationLevelSpecialityController>();
+            ServiceCollection.AddTransient<ExaminationSpecialityController>();
+            ServiceCollection.AddTransient<ExaminationStudentController>();
+            
+            ServiceCollection.AddTransient<MemberController>();
+            ServiceCollection.AddTransient<PlannerController>();
+            ServiceCollection.AddTransient<PrincipalController>();
+            
             ServiceCollection.AddTransient<CorrectorController>();
             ServiceCollection.AddTransient<SupervisorController>();
+            ServiceCollection.AddTransient<SecretaryController>();
             ServiceCollection.AddTransient<StudentController>();
-            ServiceCollection.AddTransient<TestController>();
-            ServiceCollection.AddTransient<ApplicationController>();
-            ServiceCollection.AddTransient<GroupController>();
             
+            ServiceCollection.AddTransient<ApplicationController>();
+            
+            
+            ServiceCollection.AddTransient<TestController>();
+            ServiceCollection.AddTransient<TestLevelSpecialityController>();
+            ServiceCollection.AddTransient<TestScoreController>();
+            ServiceCollection.AddTransient<TestLevelSpeciality>();
             ServiceCollection.AddTransient<TestGroupSupervisorController>();
             ServiceCollection.AddTransient<TestGroupSecretaryController>();
             ServiceCollection.AddTransient<TestGroupCorrectorController>();
             ServiceCollection.AddTransient<TestGroupController>();
             
-            ServiceCollection.AddTransient<ScoreController>();
+            
             ServiceCollection.AddTransient<ScorePaperController>();
             ServiceCollection.AddTransient<PaperController>();
-            ServiceCollection.AddTransient<GroupStudentController>();
+            ServiceCollection.AddTransient<GroupPaperController>();
             
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            ServiceCollection.AddSingleton<IConfiguration>(configuration);
+            ServiceCollection.AddSingleton(configuration);
+
+            var testHubMock = new Mock<IHubContext<TestHub, ITestHub>>();
+            var testGroupHubMock = new Mock<IHubContext<TestGroupHub, ITestGroupHub>>();
+            
+            ServiceCollection.AddSingleton(testHubMock.Object);
+            ServiceCollection.AddSingleton(testGroupHubMock.Object);
             return ServiceCollection;
         }
 

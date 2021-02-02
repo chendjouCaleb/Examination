@@ -1,23 +1,27 @@
-import {HttpClient} from "@angular/common/http";
-import {Observable, of} from "rxjs";
-import {map} from "rxjs/operators";
-import {Injectable} from "@angular/core";
-import {Dictionary, IDictionary, List} from "@positon/collections";
-import {environment} from "src/environments/environment";
+import {HttpClient} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {List} from '@positon/collections';
+import {environment} from 'src/environments/environment';
 
-import  moment from "moment";
-import {Entity} from "../entities";
+import moment from 'moment';
+import {Entity} from '../entities';
+import {ItemListModel, ItemListResult} from './itemList';
+import {HttpClientCache} from "./httpClient-cache";
 
 export const SERVER_URL = environment.SERVER_URL;
-export const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
+export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 
 @Injectable()
 export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
-  protected cache: IDictionary<TID, T>;
 
-  constructor(protected httpClient: HttpClient) {
-    this.cache = new Dictionary<TID, T>();
+
+  constructor(protected httpClient: HttpClient) { }
+
+  get cache(): Map<TID, T> {
+    return HttpClientCache.instance.get(this.url);
   }
 
   abstract get url(): string;
@@ -25,10 +29,14 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
   abstract createFromAny(value: any): T;
 
   findById(id: TID): Observable<T> {
-    if (this.cache.containsKey(id)) {
+    if (this.cache.has(id)) {
       return of(this.cache.get(id));
     }
-    return this.httpClient.get<T>(this.url + "/" + id).pipe(map(value => this.createFromAny(value)));
+    return this.httpClient.get<T>(this.url + '/' + id).pipe(map(value => {
+      const result = this.createFromAny(value);
+      this.cache.set(result.id, result);
+      return result;
+    }));
   }
 
   async listAsync(queryParams?: any): Promise<List<T>> {
@@ -37,9 +45,26 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
     result.forEach(v => {
       const item = this.createFromAny(v);
       items.add(item);
-      this.cache.put(v.id, item);
+      this.cache.set(v.id, item);
     });
     return items;
+  }
+
+  async itemList(queryParams: any, itemParams: ItemListModel = {}): Promise<ItemListResult<T>> {
+    const result = await this.httpClient.get<ItemListResult<T>>(this.url, {
+      params: {
+        ...queryParams,
+        itemParams
+      }
+    }).toPromise();
+    const items = new List<T>();
+    result.items.forEach(v => {
+      const item = this.createFromAny(v);
+      items.add(item);
+      this.cache.set(v.id, item);
+    });
+    result.items = items;
+    return result;
   }
 
   async listByIdAsync(id: any[]): Promise<List<T>> {
@@ -47,18 +72,20 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
     const items = new List<T>();
     result.forEach(v => {
       items.add(this.createFromAny(v));
-      this.cache.put(v.id, v);
+      this.cache.set(v.id, v);
     });
     return items;
   }
 
   async findAsync(id: TID): Promise<T> {
-    if (this.cache.containsKey(id)) {
+    if (this.cache.has(id)) {
+      //console.log('Cached');
       return this.cache.get(id);
     }
-    const value = await this.httpClient.get<T>(this.url + "/" + id).toPromise();
+    const value = await this.httpClient.get<T>(this.url + '/' + id).toPromise();
     const item = this.createFromAny(value);
-    this.cache.put(value.id, item);
+    this.cache.set(item.id, item);
+    console.log("cached result: " + this.cache.size);
     return item;
   }
 
@@ -68,32 +95,32 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
   }
 
   getStatistics<TS>(item: T): Promise<TS> {
-    return this.httpClient.get<TS>( `${this.url}/${item.id}/statistics` ).toPromise();
+    return this.httpClient.get<TS>(`${this.url}/${item.id}/statistics`).toPromise();
   }
 
 
   async refreshStatistics(item: T): Promise<void> {
-    await this.httpClient.put( `${this.url}/${item.id}/statistics`, {}).toPromise();
+    await this.httpClient.put(`${this.url}/${item.id}/statistics`, {}).toPromise();
   }
 
   async addAsync(model: any, queryParams?: any): Promise<T> {
     let result = await this.httpClient.post<T>(this.url, model, {params: queryParams}).toPromise();
     result = this.createFromAny(result);
-    this.cache.put(result.id, result);
+    this.cache.set(result.id, result);
     return result;
   }
 
   async updateAsync(id: TID, model: any, queryParams?: any): Promise<T> {
-    await this.httpClient.put<T>(this.url + "/" + id, model, {params: queryParams}).toPromise();
+    await this.httpClient.put<T>(this.url + '/' + id, model, {params: queryParams}).toPromise();
 
     const item = await this.findAsync(id);
-    this.cache.put(id, item);
+    this.cache.set(id, item);
     return item;
   }
 
   async deleteAsync(id: TID) {
-    this.cache.remove(id);
-    return await this.httpClient.delete(this.url + "/" + id).toPromise();
+    this.cache.delete(id);
+    return await this.httpClient.delete(this.url + '/' + id).toPromise();
   }
 
   async list(queryParams?: any): Promise<List<T>> {
@@ -120,13 +147,13 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
   }
 
   update(id: TID, model: any, queryParams?: any): Promise<T> {
-    return this.httpClient.put<T>(this.url + "/" + id, model, {params: queryParams})
+    return this.httpClient.put<T>(this.url + '/' + id, model, {params: queryParams})
       .pipe(map(value => this.createFromAny(value)))
       .toPromise();
   }
 
   delete(id: TID): Promise<any> {
-    return this.httpClient.delete(this.url + "/" + id).toPromise();
+    return this.httpClient.delete(this.url + '/' + id).toPromise();
   }
 
   static formatDate(date: Date) {

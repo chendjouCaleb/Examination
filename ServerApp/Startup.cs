@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Everest.AspNetStartup.ExceptionTransformers;
+using Exam.Destructors;
+using Exam.Hubs;
 using Exam.Infrastructure;
 using Exam.Persistence;
 using Microsoft.AspNetCore.Builder;
@@ -58,14 +60,16 @@ namespace ServerApp
             {
                 options.AddPolicy("corsPolicy", policy =>
                 {
-                    policy.WithOrigins("http://localhost:9200", "http://localhost:9000", "http://localhost:9100");
-                    //policy.AllowAnyOrigin();
+                    //policy.WithOrigins("http://localhost:9200", "http://localhost:9000", "http://localhost:9100");
+                    policy.AllowAnyOrigin();
                     policy.AllowAnyHeader();
                     policy.AllowAnyMethod();
-                    policy.AllowCredentials();
+                    //policy.AllowCredentials();
                     policy.Build();
                 });
             });
+
+            services.AddTransient<SchoolDestructor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +88,8 @@ namespace ServerApp
                 endpoints.MapHub<StudentHub>("/hubs/students");
                 endpoints.MapHub<TestHub>("hubs/tests");
                 endpoints.MapHub<TestGroupHub>("hubs/testGroups");
+                endpoints.MapHub<SchoolDestructorHub>("hubs/schoolDestructor");
+                endpoints.MapHub<ExaminationBuilderHub>("hubs/examinationBuilder");
                 endpoints.MapDefaultControllerRoute();
             });
 

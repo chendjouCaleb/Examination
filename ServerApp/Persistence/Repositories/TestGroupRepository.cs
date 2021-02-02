@@ -2,12 +2,18 @@
 using Exam.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using MathNet.Numerics.Statistics;
+
 
 namespace Exam.Persistence.Repositories
 {
     public interface ITestGroupRepository : IRepository<TestGroup, long>
     {
-        TestGroupStatistics Statistics(TestGroup testGroup);
+        School GetSchool(TestGroup testGroup);
+
+        Department GetDepartment(TestGroup testGroup);
+
+        TestGroupStatistics GetStatistics(TestGroup testGroup);
 
         UserTestGroup UserTestGroup(TestGroup testGroup, string userId);
     }
@@ -18,21 +24,63 @@ namespace Exam.Persistence.Repositories
         {
         }
 
-        public TestGroupStatistics Statistics(TestGroup testGroup)
+        public TestGroupStatistics GetStatistics(TestGroup testGroup)
         {
+            var papers = context.Set<Paper>().Where(p => testGroup.Equals(p.TestGroup)).ToList();
+
+            var scores = papers.Where(p => p.Score != null).Select(t => t.Score ?? 0).OrderBy(c => c).ToArray();
+            
+            if (scores.Length == 0)
+            {
+                return new TestGroupStatistics();
+            }
+            
+            var statistics = new DescriptiveStatistics(scores);
+
+
             return new TestGroupStatistics
             {
-                Presence = context.Set<Paper>().Count(p => testGroup.Equals(p.TestGroup))
+                Frequency = papers.Count,
+                Mean = statistics.Mean,
+                Median = scores.Median(),
+                Std = statistics.StandardDeviation,
+                Variance = statistics.Variance,
+                Mode = scores.GroupBy(c => c).OrderByDescending(c => c.Count()).Select(c => c.Key).FirstOrDefault(),
+                Min = statistics.Minimum,
+                Max = statistics.Maximum,
+                Skewness = statistics.Skewness,
+
+                Quartile0 = scores.LowerQuartile(),
+                Quartile1 = scores.Median(),
+                Quartile2 = scores.UpperQuartile(),
+
+                MinPaper = papers.First(p => p.Score != null && p.Score.Value <= statistics.Minimum),
+                MaxPaper = papers.First(p => p.Score != null && p.Score.Value >= statistics.Maximum),
+
+                Scores = scores,
+
+                ConsignedFrequency = papers.Count(p => !string.IsNullOrWhiteSpace(p.SecretaryUserId)),
+                CorrectedFrequency = papers.Count(p => p.Score != null),
+                Presence = papers.Count(p => p.IsPresent)
             };
+        }
+
+        public School GetSchool(TestGroup testGroup)
+        {
+            return context.Set<School>().First(s => s.Equals(testGroup.Test.Course.Level.Department.School));
+        }
+
+        public Department GetDepartment(TestGroup testGroup)
+        {
+            return context.Set<Department>().First(s => s.Equals(testGroup.Test.Course.Level.Department));
         }
 
         public UserTestGroup UserTestGroup(TestGroup testGroup, string userId)
         {
             return new UserTestGroup
             {
-                IsStudent = context.Set<Student>().Any(s => userId == s.UserId
-                                                            && testGroup.Test.Examination.Equals(s.Examination)
-                                                            && s.SpecialityId == testGroup.Test.SpecialityId),
+                IsStudent = context.Set<Paper>().Any(s => userId == s.ExaminationStudent.Student.UserId
+                                                          && testGroup.Equals(s.TestGroup)),
 
                 IsCorrector = context.Set<TestGroupCorrector>()
                     .Any(c => c.Corrector.UserId == userId && testGroup.Equals(c.TestGroup)),

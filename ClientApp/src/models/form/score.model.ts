@@ -13,7 +13,7 @@ export class ScoreAddModel {
 
 export class ScorePaperModel {
   @IsNotEmpty()
-  scoreId: number;
+  testScoreId: number;
 
   @IsNotEmpty()
   value: number;

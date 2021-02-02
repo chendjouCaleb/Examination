@@ -12,3 +12,6 @@ export * from './control.module';
 export * from './state-badge.directive';
 export * from './tabs/index';
 export * from './select/index';
+export * from './user-picker';
+export * from './image';
+export * from './pivot';

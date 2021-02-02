@@ -1,0 +1,223 @@
+﻿<div class="ms-pageTitle">
+  <h5>Groupe {{testGroup.index + 1}}</h5>
+  <div>
+    <ng-container *ngIf="testGroup.relation.isPlanner">
+      <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+      <MsfMenu #more>
+        <MsfMenuItem icon="Delete" (click)="service.delete(testGroup)" theme="error">Supprimer</MsfMenuItem>
+      </MsfMenu>
+    </ng-container>
+  </div>
+</div>
+
+<div class="d-flex mt-3">
+  <app-testGroupSupervisorList [testGroup]="testGroup"></app-testGroupSupervisorList>
+  <app-testGroupCorrectorList class="ml-4" [testGroup]="testGroup"></app-testGroupCorrectorList>
+  <app-testGroupSecretaryList class="ml-4" [testGroup]="testGroup"></app-testGroupSecretaryList>
+</div>
+
+
+<div class="d-flex mt-3 p-2 br-2" style="background-color: var(--cardBackgroundColor)">
+  <div class="ms-description-list">
+    <dl>
+      <dt>Cours</dt>
+      <dd>{{testGroup.test?.course.name}} ({{testGroup.test?.course.code}})</dd>
+    </dl>
+    <dl>
+      <dt>Date</dt>
+      <dd>{{testGroup.test?.expectedStartDate | date}}</dd>
+    </dl>
+    <dl>
+      <dt>Horaire</dt>
+      <dd> {{testGroup.test?.expectedStartHour}}  à {{testGroup.test?.expectedEndHour}}
+      </dd>
+    </dl>
+    <dl *ngIf="testGroup.room">
+      <dt>Salle</dt>
+      <dd> {{testGroup.room.name}} ({{testGroup.room.capacity}} places).</dd>
+    </dl>
+  </div>
+
+  <div class="ms-description-list ml-5">
+    <dl>
+      <dt>Étudiants</dt>
+      <dd msFontSize="l" msColor="sharedGreenCyan10">{{testGroup.statistics?.frequency}}</dd>
+    </dl>
+    <dl>
+      <dt>Présence</dt>
+      <dd>{{testGroup.statistics?.presence}}
+        <app-icon *ngIf="testGroup.statistics.isAllPresent"></app-icon>
+        <span msColor="sharedRed10" *ngIf="!testGroup.statistics.isAllPresent">
+          ({{testGroup.statistics.presence - testGroup.statistics.frequency}})
+        </span>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>Consignées</dt>
+      <dd>{{testGroup.statistics?.consignedFrequency}}
+        <app-icon *ngIf="testGroup.statistics.isAllConsigned"></app-icon>
+        <span msColor="sharedRed10" *ngIf="!testGroup.statistics.isAllConsigned">
+          ({{testGroup.statistics.consignedFrequency - testGroup.statistics.frequency}})
+        </span>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>Corrigés</dt>
+      <dd msFontSize="20">{{testGroup.statistics?.correctedFrequency}}
+        <app-icon *ngIf="testGroup.statistics.isAllCorrected"></app-icon>
+        <span msColor="sharedRed10" *ngIf="!testGroup.statistics.isAllCorrected">
+          ({{testGroup.statistics.correctedFrequency - testGroup.statistics.frequency}})
+        </span></dd>
+    </dl>
+  </div>
+
+  <div class="ms-description-list ml-5">
+    <dl>
+      <dt>Moyenne</dt>
+      <dd msFontSize="l" msColor="green">{{testGroup.statistics?.mean | number}}</dd>
+    </dl>
+    <dl>
+      <dt>Mediane</dt>
+      <dd>{{testGroup.statistics?.median | number}}
+        <span style="width: 6px; height: 6px; border-radius: 50%; display: inline-block "
+              class="ms-bgColor-sharedGreenCyan10">
+
+        </span>
+      </dd>
+    </dl>
+    <dl>
+      <dt>Écart-type</dt>
+      <dd>{{testGroup.statistics?.std | number}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Mode</dt>
+      <dd>{{testGroup.statistics?.mode}}</dd>
+    </dl>
+  </div>
+
+  <div class="ms-description-list ml-5">
+    <dl>
+      <dt style="vertical-align: top">Max</dt>
+      <dd>
+        <div>{{testGroup.statistics.maxPaper?.examinationStudent.student.fullName}}
+        ({{testGroup.statistics.maxPaper?.examinationStudent.student.registrationId}})
+        </div>
+        <div msFontSize="l" msColor="green"> {{testGroup.statistics?.maxPaper?.score}}</div>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt style="vertical-align: top">Min</dt>
+      <dd>
+        <div>{{testGroup.statistics.minPaper?.examinationStudent.student.fullName}}
+        ({{testGroup.statistics.minPaper?.examinationStudent.student.registrationId}})
+        </div>
+        <div msFontSize="l" msColor="sharedRed10">{{testGroup.statistics?.minPaper?.score}}</div>
+      </dd>
+    </dl>
+
+  </div>
+
+</div>
+
+<div class="d-flex mt-3 p-2 br-2" style="background-color: var(--cardBackgroundColor)">
+  <div class="ms-description-list">
+    <dl>
+      <dt style="vertical-align: top">1 <sup>er</sup> Quartile</dt>
+      <dd>
+        <div>[{{testGroup.statistics?.min}} - {{testGroup.statistics?.quartile0 | number}}]</div>
+        <div msFontSize="l" msColor="sharedRed10">
+          {{testGroup.statistics.quartile0Scores.length}}
+          ({{testGroup.statistics.quartile0Scores.length / testGroup.statistics.frequency * 100}}%)
+        </div>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt style="vertical-align: top">2 <sup>ème</sup> Quartile</dt>
+      <dd>
+        <div>]{{testGroup.statistics?.quartile0 | number}} - {{testGroup.statistics?.quartile1 | number}}]</div>
+        <div msFontSize="l" msColor="sharedRedOrange10">
+          {{testGroup.statistics.quartile1Scores.length}}
+          ({{testGroup.statistics.quartile1Scores.length / testGroup.statistics.frequency * 100}}%)
+        </div>
+      </dd>
+    </dl>
+  </div>
+  <div class="ms-description-list ml-5">
+    <dl>
+      <dt style="vertical-align: top">3<sup>ème</sup> Quartile</dt>
+      <dd>
+        <div>]{{testGroup.statistics?.quartile1 | number}} - {{testGroup.statistics?.quartile2 | number}}]</div>
+        <div msFontSize="l" msColor="sharedCyanBlue10">
+          {{testGroup.statistics.quartile2Scores.length}}
+          ({{testGroup.statistics.quartile2Scores.length / testGroup.statistics.frequency * 100}}%)
+        </div>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt style="vertical-align: top">4 <sup>ème</sup> Quartile</dt>
+      <dd>
+        <div>]{{testGroup.statistics?.quartile2 | number}}- {{testGroup.statistics?.max}}]</div>
+        <div msFontSize="l" msColor="sharedGreenCyan10">
+          {{testGroup.statistics.quartile3Scores.length}}
+          ({{testGroup.statistics.quartile3Scores.length / testGroup.statistics.frequency * 100}}%)
+        </div>
+      </dd>
+    </dl>
+  </div>
+</div>
+
+
+<div class="d-flex mt-3 p-2 br-2" style="background-color: var(--cardBackgroundColor)">
+  <div class="ms-description-list">
+    <dl>
+      <dt style="vertical-align: top">1 <sup>ère</sup> Marge</dt>
+      <dd>
+        <div>[0 - {{testGroup.statistics?.radical / 4 | number}}]</div>
+        <div msFontSize="l" msColor="sharedRed10">
+          {{testGroup.statistics.range0Scores.length}}
+          ({{testGroup.statistics.range0Scores.length / testGroup.statistics.frequency * 100}}%)
+        </div>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt style="vertical-align: top">2 <sup>ème</sup> Marge</dt>
+      <dd>
+        <div>]{{testGroup.statistics?.radical / 4 | number}} - {{testGroup.statistics?.radical / 2| number}}]</div>
+        <div msFontSize="l" msColor="sharedRedOrange10">
+          {{testGroup.statistics.range1Scores.length}}
+          ({{testGroup.statistics.range1Scores.length / testGroup.statistics.frequency * 100}}%)
+        </div>
+      </dd>
+    </dl>
+  </div>
+  <div class="ms-description-list ml-5">
+    <dl>
+      <dt style="vertical-align: top">3<sup>ème</sup> Marge</dt>
+      <dd>
+        <div>]{{testGroup.statistics?.radical / 2 | number}} - {{testGroup.statistics?.radical * 3 / 4 | number}}]</div>
+        <div msFontSize="l" msColor="sharedCyanBlue10">
+          {{testGroup.statistics.range2Scores.length}}
+          ({{testGroup.statistics.range2Scores.length / testGroup.statistics.frequency * 100}}%)
+        </div>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt style="vertical-align: top">4 <sup>ème</sup> Marge</dt>
+      <dd>
+        <div>]{{testGroup.statistics?.radical * 3 / 4 | number}}- {{testGroup.statistics?.radical}}]</div>
+        <div msFontSize="l" msColor="sharedGreenCyan10">
+          {{testGroup.statistics.range3Scores.length}}
+          ({{testGroup.statistics.range3Scores.length / testGroup.statistics.frequency * 100}}%)
+        </div>
+      </dd>
+    </dl>
+  </div>
+</div>

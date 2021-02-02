@@ -1,13 +1,4 @@
-﻿import {
-  Component,
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  OnInit, Output,
-  ViewEncapsulation
-} from "@angular/core";
+﻿import {Component, Directive, ElementRef, HostBinding, Input, OnInit, ViewEncapsulation} from "@angular/core";
 
 
 export type msAlertTheme = 'info' | 'success' | 'severeWarning' | 'error';

@@ -1,0 +1,98 @@
+﻿<div class="d-flex py-1 justify-content-between align-items-center">
+  <div class="ms-fontSize-24 ms-fontWeight-light">Demandes</div>
+
+  <div class="text-right"> </div>
+
+</div>
+
+
+<div class="ms-table-container">
+  <MsfTable *ngIf="applications">
+    <MsfTableHead>
+      <MsfTableHeadCell>#</MsfTableHeadCell>
+
+      <MsfTableHeadCell sortBy="fullName">Nom</MsfTableHeadCell>
+      <MsfTableHeadCell>Matricule</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="birthDate">Date de naissance</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="gender">Genre</MsfTableHeadCell>
+
+      <MsfTableHeadCell sortBy="levelIndex">Niveau</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="specialityName">Spécialité</MsfTableHeadCell>
+
+      <MsfTableHeadCell sortBy="registrationDate">Date d'envoie</MsfTableHeadCell>
+      <MsfTableHeadCell>Envoyée par</MsfTableHeadCell>
+      <MsfTableHeadCell>Etat</MsfTableHeadCell>
+      <MsfTableHeadCell>Traitée par</MsfTableHeadCell>
+
+      <MsfTableHeadCell style="text-align: right">Actions</MsfTableHeadCell>
+    </MsfTableHead>
+
+    <MsfTableRow #row *ngFor="let item of applications" [value]="item">
+      <MsfTableCell>{{row.index}}</MsfTableCell>
+
+      <MsfTableCell>
+        <div class="ms-fontWeight-semibold text-capitalize">{{item.fullName}}</div>
+      </MsfTableCell>
+
+      <MsfTableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+        {{item.registrationId}}
+      </MsfTableCell>
+
+      <MsfTableCell>
+        {{item.birthDate | amCalendar}}
+      </MsfTableCell>
+
+      <MsfTableCell> {{item.gender}} </MsfTableCell>
+
+      <MsfTableCell>{{item.levelIndex + 1}}</MsfTableCell>
+
+      <MsfTableCell class="ms-fontWeight-semibold">
+        {{item.specialityName}}
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <span class="ms-fontWeight-light ms-fontSize-12">{{item.registrationDate | amTimeAgo}}</span>
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <MsfPersona size="size32" *ngIf="item.user">
+          <MsfPersonaFigure [text]="item.user?.fullName" size="size32"></MsfPersonaFigure>
+          <div class="ml-2">
+            <div class="ms-fontWeight-semibold">{{item.user?.fullName}}</div>
+            <div class="ms-fontSize-12" *ngIf="item.user?.username">@{{item.user?.username}}</div>
+          </div>
+        </MsfPersona>
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <span [appStateBadge]="item.state"></span>
+      </MsfTableCell>
+
+      <MsfTableCell>
+        <MsfPersona size="size32" *ngIf="item.processDate">
+          <MsfPersonaFigure [imageUrl]="item.processUser?.imageUrl" size="size32"></MsfPersonaFigure>
+          <div class="ml-2">
+            <div class="ms-fontWeight-semibold">{{item.processUser?.fullName}}</div>
+            <div class="ms-fontSize-12 ms-fontWeight-light" *ngIf="item.processUser?.username">
+              @{{item.processUser?.username}}
+            </div>
+          </div>
+        </MsfPersona>
+      </MsfTableCell>
+
+
+      <MsfTableCell style="text-align: right">
+        <a MsfButton theme="primary" class="mr-2" (click)="_applicationService.details(item)">Détails</a>
+        <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+        <MsfMenu #more>
+          <MsfMenuItem icon="Edit" (click)="_applicationService.edit(item)">Modifier les informations
+          </MsfMenuItem>
+
+
+          <MsfMenuItem icon="Delete" (click)="_applicationService.delete(item)" theme="error">Supprimer</MsfMenuItem>
+        </MsfMenu>
+      </MsfTableCell>
+    </MsfTableRow>
+  </MsfTable>
+
+</div>

@@ -1,0 +1,47 @@
+﻿<div class="p-3">
+  <div class="ms-pageTitle">
+    <h5>{{room.name}}</h5>
+    <div class="text-right ml-5">
+      <MsfButton LeftIcon="ChevronDown" [MsfMenuTrigger]="roomMenu" theme="primary" [outline]="true">Paramètres
+      </MsfButton>
+      <MsfIconButton icon="Cancel" MsfModalClose class="ml-2"></MsfIconButton>
+      <MsfMenu #roomMenu>
+        <MsfMenuItem icon="Edit" (click)="service.editRoom(room)">Modifier</MsfMenuItem>
+        <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer</MsfMenuItem>
+      </MsfMenu>
+    </div>
+  </div>
+
+
+  <div class="d-flex">
+    <div class="ms-description-list">
+      <dl>
+        <dt>Nom</dt>
+        <dd>{{room.name}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Capacité</dt>
+        <dd>{{room.capacity}} places</dd>
+      </dl>
+
+      <dl>
+        <dt>Addresse</dt>
+        <dd>{{room.address}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Département</dt>
+        <dd>
+          <ng-container *ngIf="room.department">
+            {{room.department.name}}
+          </ng-container>
+          <app-icon *ngIf="!room.department" bgColor="sharedRed10" icon="Cancel"></app-icon>
+
+        </dd>
+      </dl>
+
+
+    </div>
+  </div>
+</div>

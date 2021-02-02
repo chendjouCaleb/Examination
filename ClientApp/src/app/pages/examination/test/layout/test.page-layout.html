@@ -1,0 +1,25 @@
+﻿<app-layout [breadcrumbItems]="breadCrumbItems">
+  <msPivot>
+    <msPivotHeader>
+      <msPivotLabel name="home">Acceuil</msPivotLabel>
+      <msPivotLabel name="groups">Groupes</msPivotLabel>
+      <msPivotLabel name="students">Étudiants</msPivotLabel>
+      <msPivotLabel name="scores">Notes</msPivotLabel>
+    </msPivotHeader>
+    <msPivotBody>
+      <div *msPivotContentDef>
+        <app-test-details [test]="test"></app-test-details>
+      </div>
+      <div *msPivotContentDef>
+        <app-test-groups [test]="test"></app-test-groups>
+      </div>
+      <div *msPivotContentDef>
+        <app-paper-list [test]="test"></app-paper-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-paper-score-list [test]="test"></app-paper-score-list>
+      </div>
+    </msPivotBody>
+  </msPivot>
+
+</app-layout>

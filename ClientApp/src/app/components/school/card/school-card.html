@@ -1,0 +1,10 @@
+﻿<img [src]="school.coverImageUrl" alt="Logo image" height="320" width="320">
+
+<div style="padding: 12px">
+  <div class="ms-fontSize-18" style="line-height: 24px">{{school.name}}  ({{school.acronym | uppercase}})</div>
+  <div>{{school.address}}</div>
+  <div class="ms-fontSize-12">@{{school.identifier}}</div>
+
+  <div class="ms-divider my-2"></div>
+  <button msButton icon="RedEye" (click)="onclick.emit($event)" theme="primary">VOIR</button>
+</div>

@@ -31,7 +31,7 @@ namespace Exam.Authorizers
 
             if (testGroup == null)
             {
-                throw new ArgumentNullException(nameof(testGroup));
+                throw new UnauthorizedException("{authorization.constraints.requireTestGroupCorrector}");
             }
 
             TestGroupCorrector corrector = repository.First(p =>

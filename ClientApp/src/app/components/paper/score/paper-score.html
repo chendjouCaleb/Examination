@@ -1,0 +1,23 @@
+﻿﻿
+<form class="ms-form">
+  <div class="ms-form-header">Noter la copie</div>
+
+
+  <div class="ms-textField">
+    <label for="score" class="msf-label">Note /{{paper.test.radical}}</label>
+    <input type="number" id="score" name="score" class="ms-textField-input" [(ngModel)]="score">
+
+    <div msColor="sharedRed10" *ngIf="!isValid">
+      La note doit être supérieur à 0 et inférieur au radical de l'épreuve.
+    </div>
+  </div>
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
+    <MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="!isValid" (click)="edit()">
+      Noter
+    </MsfButton>
+  </div>
+</form>
+
+

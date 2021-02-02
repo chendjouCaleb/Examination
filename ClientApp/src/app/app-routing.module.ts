@@ -1,94 +1,32 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {OrganisationResolver} from 'examination/app/organisation';
-import {ExaminationResolver} from 'examination/app/examination';
+import {ExaminationResolver, SchoolResolver} from 'examination/app/components';
 
 
 const routes: Routes = [
+  {path: '', redirectTo: '/schools', pathMatch: 'full'},
   {
-    path: 'examinations', loadChildren: () => import('./examination/examination.module').then(m => m.ExaminationModule)
+    path: 'schools', loadChildren: () => import('./pages/organisation/school/school.page.module').then(m => m.SchoolPageModule)
   },
   {
-    path: 'organisations',
-    loadChildren: () => import('./page/organisation/organisation-page.module').then(m => m.OrganisationPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/admins', resolve: [OrganisationResolver],
-    loadChildren: () => import('./page/admin/organisation-admin-page.module').then(m => m.OrganisationAdminPageModule),
+    path: 'schools/:schoolId/departments',
+    loadChildren: () => import('./pages/organisation/department/department.page.module').then(m => m.DepartmentPageModule)
   },
 
   {
-    path: 'organisations/:organisationId/rooms', resolve: [OrganisationResolver],
-    loadChildren: () => import('./page/room/room-page.module').then(m => m.RoomPageModule),
+    path: 'schools/:schoolId/departments/:departmentId/levels',
+    loadChildren: () => import('./pages/organisation/level/level.page.module').then(m => m.LevelPageModule)
   },
 
   {
-    path: 'organisations/:organisationId/examinations', resolve: [OrganisationResolver],
-    loadChildren: () => import('./page/examination/examination-page.module').then(m => m.ExaminationPageModule),
+    path: 'schools/:schoolId/departments/:departmentId/specialities',
+    loadChildren: () => import('./pages/organisation/speciality/speciality.page.module').then(m => m.SpecialityPageModule)
   },
 
   {
-    path: 'organisations/:organisationId/examinations/:examinationId/principals',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/principal/principal-page.module').then(m => m.PrincipalPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/examinations/:examinationId/correctors',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/corrector/corrector-page.module').then(m => m.CorrectorPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/examinations/:examinationId/supervisors',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/supervisor/supervisor-page.module').then(m => m.SupervisorPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/examinations/:examinationId/secretaries',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/secretary/secretary-page.module').then(m => m.SecretaryPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/examinations/:examinationId/specialities',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/speciality/speciality-page.module').then(m => m.SpecialityPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/examinations/:examinationId/groups',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/group/group-page.module').then(m => m.GroupPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/examinations/:examinationId/students',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/student/student-page.module').then(m => m.StudentPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/examinations/:examinationId/tests',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/tests/test-page.module').then(m => m.TestPageModule),
-  },
-
-  {
-    path: 'organisations/:organisationId/examinations/:examinationId/applications',
-    resolve: [OrganisationResolver, ExaminationResolver],
-    loadChildren: () => import('./page/application/application-page.module').then(m => m.ApplicationPageModule),
-  },
-
-  {
-    path: 'users',
-
-    loadChildren: () => import('./page/user/user.page.module').then(m => m.UserPageModule),
-  },
-
-  {path: '', redirectTo: 'organisations', pathMatch: 'full'}
+    path: 'schools/:schoolId/examinations/:examinationId', resolve: [ SchoolResolver, ExaminationResolver],
+    loadChildren: () => import('./pages/examination/examination-routing.module').then(m => m.ExaminationRoutingModule)
+  }
 ];
 
 @NgModule({

@@ -1,0 +1,72 @@
+<div class="d-flex py-1 justify-content-between align-items-center">
+  <div class="ms-fontSize-24 ms-fontWeight-light text-capitalize">{{'étudiants' | ucFirst}}</div>
+</div>
+
+
+<div class="ms-table-container">
+  <MsfTable *ngIf="examinationStudents">
+    <MsfTableHead>
+      <MsfTableHeadCell>#</MsfTableHeadCell>
+
+      <MsfTableHeadCell sortBy="levelIndex">Niveau</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="fullName">Nom</MsfTableHeadCell>
+      <MsfTableHeadCell>Matricule</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="birthDate">Date de naissance</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="gender">Genre</MsfTableHeadCell>
+      <MsfTableHeadCell sortBy="specialityName">Spécialité</MsfTableHeadCell>
+      <MsfTableHeadCell>Utilisateur</MsfTableHeadCell>
+
+
+      <MsfTableHeadCell style="text-align: right">Actions</MsfTableHeadCell>
+    </MsfTableHead>
+
+    <MsfTableRow #row *ngFor="let item of examinationStudents" [value]="item">
+      <MsfTableCell>{{row.index}}</MsfTableCell>
+
+
+      <MsfTableCell>{{item.levelIndex + 1}}</MsfTableCell>
+
+      <MsfTableCell>
+        <div class="ms-fontWeight-semibold text-capitalize">{{item.student.fullName}}</div>
+      </MsfTableCell>
+
+      <MsfTableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+        {{item.student.registrationId}}
+      </MsfTableCell>
+
+      <MsfTableCell>
+        {{item.student.birthDate | amCalendar}}
+      </MsfTableCell>
+
+      <MsfTableCell>
+        {{item.student.gender}}
+      </MsfTableCell>
+
+      <MsfTableCell class="ms-fontWeight-semibold">
+        {{item.specialityName}}
+      </MsfTableCell>
+
+
+      <MsfTableCell>
+        <MsfPersona size="size32" *ngIf="item.student.user">
+          <MsfPersonaFigure [text]="item.student.user?.fullName" size="size32"></MsfPersonaFigure>
+          <div class="ml-2">
+            <div class="ms-fontWeight-semibold">{{item.student.user?.fullName}}</div>
+            <div class="ms-fontSize-12" *ngIf="item.student.user?.username">@{{item.student.user?.username}}</div>
+          </div>
+        </MsfPersona>
+      </MsfTableCell>
+
+
+
+      <MsfTableCell style="text-align: right">
+        <a MsfButton theme="primary" (click)="service.studentsDetails(item)">Détails</a>
+        <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+        <MsfMenu #more>
+
+        </MsfMenu>
+      </MsfTableCell>
+    </MsfTableRow>
+  </MsfTable>
+
+</div>

@@ -1,0 +1,21 @@
+<form class="ms-form ms-depth-8"  style="width: 400px">
+  <div class="ms-form-header">Restreindre le cours</div>
+
+
+  <div class="ms-textField" >
+    <label for="levelSpecialities" class="msf-label">Spécialités </label>
+    <MsfSelect id="levelSpecialities" name="levelSpecialities" [(ngModel)]="levelSpecialities"
+               class="ms-textField-input" [multiple]="true" placeholder="Choisir des spécialités">
+      <MsfSelectOption *ngFor="let item of course.level.levelSpecialities" [value]="item">
+        {{item.speciality.name}}
+      </MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose  class="mr-3">Annuler</MsfButton>
+    <button MsfButton theme="primary" [class.msf-disabled]="levelSpecialities.length < 1" (click)="restrict()">
+      Restreindre
+    </button>
+  </div>
+</form>

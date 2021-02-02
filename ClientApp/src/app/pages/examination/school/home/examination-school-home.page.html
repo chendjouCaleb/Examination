@@ -1,0 +1,118 @@
+<div class="ms-pageTitle">
+  <h5>{{examination.name}}</h5>
+  <div class="text-right ml-5">
+    <MsfButton LeftIcon="ChevronDown" [MsfMenuTrigger]="examinationMenu" theme="primary" [outline]="true">Paramètres
+    </MsfButton>
+    <MsfMenu #examinationMenu>
+      <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
+      <!--
+      <MsfMenuItem theme="primary" icon="Clock" *ngIf="examination.state === 'PENDING'"
+                   (click)="service.start(examination)">
+        Débuter
+      </MsfMenuItem>
+      <MsfMenuItem theme="warning" icon="Lock" *ngIf="examination.state === 'PROGRESS'"
+                   (click)="service.end(examination)">
+        Fermer
+      </MsfMenuItem>
+      <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="examination.state === 'FINISHED'"
+                   (click)="service.relaunch(examination)">Relancer
+      </MsfMenuItem>
+-->
+      <MsfMenuItem icon="Delete" theme="error" (click)="service.delete(examination)">Supprimer</MsfMenuItem>
+    </MsfMenu>
+  </div>
+</div>
+
+<div class="d-flex">
+    <div class="ms-description-list">
+      <dl>
+        <dt>Nom</dt>
+        <dd>{{examination.name}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Ajouté le</dt>
+        <dd>{{examination.registrationDate | date}} </dd>
+      </dl>
+
+      <dl>
+        <dt>Début prévue pour le</dt>
+        <dd>{{examination.expectedStartDate | date}} </dd>
+      </dl>
+
+      <dl>
+        <dt>Fin prévue pour le</dt>
+        <dd>{{examination.expectedEndDate | date}} </dd>
+      </dl>
+    </div>
+
+    <div class="ms-description-list ml-5">
+      <dl>
+        <dt>Départments</dt>
+        <dd>{{examination.statistics.departmentCount}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Niveaux</dt>
+        <dd>{{examination.statistics.levelCount}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Specialités</dt>
+        <dd>{{examination.statistics.specialityCount}}</dd>
+      </dl>
+      <dl>
+        <dt>Étudiants</dt>
+        <dd>{{examination.statistics.studentCount}}</dd>
+      </dl>
+    </div>
+
+  <div class="ms-description-list ml-5">
+    <dl>
+      <dt>Épreuves</dt>
+      <dd>{{examination.statistics.testCount}}</dd>
+    </dl>
+    <dl>
+      <dt>Corrigées</dt>
+      <dd msColor="sharedYellowGreen10">{{examination.statistics.correctedTestCount}}</dd>
+    </dl>
+    <dl>
+      <dt>Publiées</dt>
+      <dd msColor="sharedGreenCyan10">{{examination.statistics.publishedTestCount}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Fermées</dt>
+      <dd msColor="sharedCyanBlue10">{{examination.statistics.closedTestCount}}</dd>
+    </dl>
+
+  </div>
+
+  <div class="ms-description-list ml-5">
+    <dl>
+      <dt>Moyenne générale</dt>
+      <dd>{{examination.statistics.mean | number}}</dd>
+    </dl>
+    <dl>
+      <dt>Moyenne médiane</dt>
+      <dd>{{examination.statistics.median | number}}</dd>
+    </dl>
+    <dl msColor="sharedYellowGreen10">
+      <dt>Réussite</dt>
+      <dd>{{examination.statistics.successCount}}
+        ({{examination.statistics.successCount/examination.statistics.studentCount * 100 | number}}%)</dd>
+    </dl>
+
+    <dl msColor="sharedRed10">
+      <dt>Réussite</dt>
+      <dd>{{examination.statistics.failedCount}}
+        ({{examination.statistics.failedCount/examination.statistics.studentCount * 100 | number}}%)</dd>
+    </dl>
+  </div>
+
+  </div>
+
+
+<div>
+  {{examination.statistics | json}}
+</div>

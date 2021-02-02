@@ -1,27 +1,35 @@
-﻿import {Component} from '@angular/core';
+﻿import {Component, OnInit} from '@angular/core';
 import {AuthorizationManager} from './authorization-manager';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ITokenModel} from './models/token-model';
+
 
 @Component({
   templateUrl: 'authorize-callback.component.html'
 })
-export class AuthorizeCallbackComponent {
+export class AuthorizeCallbackComponent implements OnInit{
   returnUrl: string;
 
   constructor(private _authManager: AuthorizationManager, private route: ActivatedRoute, private router: Router) {
 
   }
 
+  ngOnInit(): void {
+    console.log("callback")
+    this.authorizeCallback();
+  }
+
   async authorizeCallback() {
     const returnUrl = this.route.snapshot.queryParams['redirectUrl'];
 
-    const token: ITokenModel = {
-      accessToken: this.route.snapshot.queryParams['accessToken'],
-      refreshToken: this.route.snapshot.queryParams['refreshToken']
-    };
+    const auth_code = this.route.snapshot.queryParams['auth_code'];
 
-    await this._authManager.refreshAuthorizationToken(token);
-    await this.router.navigateByUrl(returnUrl);
+    await this._authManager.authorize(auth_code);
+
+    if(returnUrl) {
+      this.router.navigateByUrl(returnUrl);
+    }else {
+      this.router.navigateByUrl('/');
+    }
+
   }
 }

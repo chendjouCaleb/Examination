@@ -1,0 +1,73 @@
+﻿<ng-container *ngIf="loaded">
+  <div class="p-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5>{{course.name}}</h5>
+      <div class="text-right">
+        <MsfButton LeftIcon="ChevronDown" [MsfMenuTrigger]="courseMenu" theme="primary" [outline]="true">Paramètres
+        </MsfButton>
+        <MsfMenu #courseMenu>
+          <MsfMenuItem *ngIf="!course.isGeneral" (click)="service.general(course)">Généraliser ce cours</MsfMenuItem>
+          <MsfMenuItem *ngIf="course.isGeneral" (click)="service.restrict(course)">Restreindre ce cours</MsfMenuItem>
+          <MsfMenuItem icon="Edit" (click)="service.editCourse(course)">Modifier</MsfMenuItem>
+          <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer ce cours</MsfMenuItem>
+        </MsfMenu>
+      </div>
+    </div>
+
+
+    <div class="d-flex">
+      <div class="ms-description-list">
+        <dl>
+          <dt>Nom</dt>
+          <dd>{{course.name}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Code</dt>
+          <dd>{{course.code}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Coefficient</dt>
+          <dd>{{course.coefficient}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Description</dt>
+          <dd>{{course.description}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Niveau</dt>
+          <dd>{{course.level.index + 1}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Specialités</dt>
+          <dd *ngIf="!course.isGeneral && course.courseLevelSpecialities">{{course.specialityNames.join(', ')}}</dd>
+          <dd *ngIf="course.isGeneral">
+            <span class="badge ms-bgColor-sharedGreen10">Cours général</span>
+          </dd>
+        </dl>
+
+      </div>
+
+      <div class="ml-3">
+        <div class=" ms-description-list w-100">
+          <dl>
+            <dt>Radical</dt>
+            <dd class="text-right">{{course.radical}} Points</dd>
+          </dl>
+        </div>
+
+        <div style="max-width: 400px; overflow-x: auto; " class="mt-3">
+          <app-score-list [course]="course"></app-score-list>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</ng-container>

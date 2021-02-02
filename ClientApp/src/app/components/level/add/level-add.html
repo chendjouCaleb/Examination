@@ -1,0 +1,20 @@
+<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+  <div class="ms-form-header">Ajouter un niveau</div>
+
+  <div class="br-2 ms-bgColor-info ms-fontColor-info p-2 ms-fontSize-16 ms-fontWeight-semibold" >
+    Ajouter le niveau {{department.levels.length + 1}}
+  </div>
+
+  <div class="ms-textField">
+    <label for="specialities" class="msf-label">Spécialités à ajouter à ce niveau</label>
+    <MsfSelect id="specialities" formControlName="specialities" [multiple]="true" class="ms-textField-input"
+      placeholder="Choisir une spécialité">
+      <MsfSelectOption *ngFor="let item of specialities" [value]="item" >{{item.name}}</MsfSelectOption>
+    </MsfSelect>
+  </div>
+
+  <div class="mt-4 text-right">
+    <MsfButton MsfModalClose  class="mr-3">Annuler</MsfButton>
+    <button MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">Ajouter</button>
+  </div>
+</form>

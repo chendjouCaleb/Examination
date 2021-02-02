@@ -1,4 +1,5 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, HostBinding, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'MsfTabLabel, [MsfTabLabel], msf-tab-label, [msf-tab-label]',
@@ -11,10 +12,22 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
   },
 
 })
-export class TabLabel {
+export class TabLabel implements OnInit{
   @Input()
   icon: string;
 
   @Input()
   iconImage: string;
+
+  @HostBinding('class.active')
+  active: boolean = false;
+
+  constructor(private router: Router, private _routerLink: RouterLink, private _route: ActivatedRoute) {
+
+  }
+
+  ngOnInit(): void {
+    this.active = this.router.isActive(this._routerLink.urlTree, true);
+  }
+
 }
