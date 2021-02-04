@@ -1,12 +1,31 @@
 ﻿<app-layout>
-  <msf-tab>
-    <msf-tab-label routerLinkActive="active" [routerLink]="[speciality.url, 'home']">Accueil</msf-tab-label>
-    <msf-tab-label routerLinkActive="active" [routerLink]="[speciality.url, 'courses']">Cours</msf-tab-label>
-    <msf-tab-label routerLinkActive="active" [routerLink]="[speciality.url, 'students']">étudiants</msf-tab-label>
-    <msf-tab-label routerLinkActive="active" [routerLink]="[speciality.url, 'application']">Demandes</msf-tab-label>
-  </msf-tab>
+  <div class="p-3">
+    <div class="ms-pageTitle">
+      <h2>{{speciality.name}}</h2>
+    </div>
 
-  <div>
-    <ng-content></ng-content>
+    <msPivot>
+      <msPivotHeader>
+        <msPivotLabel>Acceuil</msPivotLabel>
+        <msPivotLabel>Cours</msPivotLabel>
+        <msPivotLabel>Étudiants</msPivotLabel>
+        <msPivotLabel>Demandes</msPivotLabel>
+      </msPivotHeader>
+      <msPivotBody>
+        <div *msPivotContentDef>
+          <app-speciality-home [speciality]="speciality"></app-speciality-home>
+        </div>
+        <div *msPivotContentDef>
+          <app-course-list [speciality]="speciality"></app-course-list>
+        </div>
+        <div *msPivotContentDef>
+          étudiants
+        </div>
+
+        <div *msPivotContentDef>
+          Demandes
+        </div>
+      </msPivotBody>
+    </msPivot>
   </div>
 </app-layout>

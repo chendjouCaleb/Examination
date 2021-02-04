@@ -1,0 +1,10 @@
+﻿<h5>Niveaux</h5>
+<div>
+        <span class="mr-2" *ngFor="let levelSpeciality of speciality.levelSpecialities">
+          Niveau {{levelSpeciality.level.index + 1}}
+
+          <button msIconButton icon="Delete" [rounded]="true"
+                  (click)="service.removeLevelSpeciality(levelSpeciality)"></button>
+
+        </span>
+</div>

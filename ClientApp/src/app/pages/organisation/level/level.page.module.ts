@@ -2,10 +2,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 
 import {CommonModule} from '@angular/common';
-import {MsfButtonModule, MsfMenuModule, MsfTableModule} from 'fabric-docs';
+import {MsfMenuModule} from 'fabric-docs';
 import {LayoutModule} from 'examination/infrastructure';
 import {LevelHomePage} from './home/level-home.page';
-import {ControlModule, MsfTabModule, MsPivotModule} from 'examination/controls';
+import {ControlModule} from 'examination/controls';
 import {
   ApplicationModule,
   CourseModule,
@@ -18,6 +18,8 @@ import {
 } from 'examination/app/components';
 import {LevelPageLayout} from './layout/level.page-layout';
 import {MatRippleModule} from '@angular/material/core';
+import {MsButtonModule} from '@ms-fluent/button';
+import {MsPivotModule} from '@ms-fluent/pivot';
 
 const routes: Routes = [
   {
@@ -29,8 +31,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MsfButtonModule, LevelModule, CourseModule, StudentModule, ApplicationModule,
-    RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule, MsfTabModule, MsfTableModule,
+  imports: [CommonModule, MsButtonModule, LevelModule, CourseModule, StudentModule, ApplicationModule,
+    RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule,
     MatRippleModule, RoomModule, MsPivotModule],
   declarations: [LevelHomePage, LevelPageLayout]
 })
