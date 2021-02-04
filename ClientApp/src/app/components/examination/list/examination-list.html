@@ -2,110 +2,60 @@
 <div class="ms-pageTitle">
     <h4>Examens</h4>
     <div>
-      <MsfButton [MsfMenuTrigger]="disposition">Disposition</MsfButton>
-      <MsfButton class="ml-2" Icon="Add" theme="primary" (click)="service.add(school)">Ajouter un examen</MsfButton>
-      <MsfMenu #disposition>
-        <MsfMenuItem icon="Display">
-          <MsfCheckbox MsfMenuItemCheckbox></MsfCheckbox>
-          Grille
-        </MsfMenuItem>
-        <MsfMenuItem icon="Table">
-          <MsfCheckbox MsfMenuItemCheckbox></MsfCheckbox>
-          Table
-        </MsfMenuItem>
-      </MsfMenu>
+      <button msButton icon="Add" theme="primary" (click)="service.add(school)">
+        Ajouter <span class="ms-hiddenSm">un examen</span></button>
     </div>
 
   </div>
 
+    <ms-table>
+      <ms-tableHead *ms-tableHeadDef>
+        <ms-tableHeadCell name="#" >#</ms-tableHeadCell>
+        <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>
+        <ms-tableHeadCell name="expectedStartDate" [sortBy]="['expectedStartDate', 'date']">Date de début prévué</ms-tableHeadCell>
+        <ms-tableHeadCell name="startDate" [sortBy]="['startDate', 'date']">Date de début effective</ms-tableHeadCell>
+        <ms-tableHeadCell name="expectedEndDate" [sortBy]="['expectedEndDate', 'date']">Date de fin prévue</ms-tableHeadCell>
+        <ms-tableHeadCell name="startDate" [sortBy]="['endDate', 'date']">Date de fin effective</ms-tableHeadCell>
+        <msTableHeadCell name="actions" class="text-right">
+          <i class="ms-Icon ms-Icon--SetAction"></i>
+        </msTableHeadCell>
+      </ms-tableHead>
 
-  <div *ngIf="0" class="d-flex">
-    <div class="ms-card" *ngFor="let item of school.examinations">
-
-
-      <div class="ms-card-title mt-2">{{item.name}}</div>
-
-      <div class="ms-card-text">
-        <div *ngIf="item.expectedStartDate && !item.startDate">
-          <div>Débutera le</div>
-          <div class="ms-fontSize-18">{{item.expectedStartDate | amCalendar}}</div>
-        </div>
-
-        <div *ngIf="item.startDate">
-          <div>A débuté le</div>
-          <div class="ms-fontSize-18">{{item.startDate | amCalendar}}</div>
-        </div>
-
-        <div *ngIf="item.expectedEndDate && !item.endDate">
-          <div>S'achevera le</div>
-          <div class="ms-fontSize-18">{{item.expectedEndDate | amCalendar}}</div>
-        </div>
-
-        <div *ngIf="item.endDate">
-          <div>S'est achevé le</div>
-          <div class="ms-fontSize-18">{{item.endDate | amCalendar}}</div>
-        </div>
-
-      </div>
-
-
-      <div class="ms-card-footer">
-        <MsfButton theme="primary" [routerLink]="item.url">
-          Voir
-        </MsfButton>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="ms-table-container">
-    <MsfTable>
-      <MsfTableHead>
-        <MsfTableHeadCell>#</MsfTableHeadCell>
-        <MsfTableHeadCell>Nom</MsfTableHeadCell>
-        <MsfTableHeadCell>Date de début prévué</MsfTableHeadCell>
-        <MsfTableHeadCell>Date de début effective</MsfTableHeadCell>
-        <MsfTableHeadCell>Date de fin prévue</MsfTableHeadCell>
-        <MsfTableHeadCell>Date de fin effective</MsfTableHeadCell>
-        <MsfTableHeadCell></MsfTableHeadCell>
-      </MsfTableHead>
-
-      <MsfTableRow *ngFor="let item of school.examinations" [value]="item" #line>
-        <MsfTableCell>{{line.index}}</MsfTableCell>
-        <MsfTableCell>{{item.name}}</MsfTableCell>
-        <MsfTableCell>{{item.expectedStartDate | date}}</MsfTableCell>
-        <MsfTableCell>
+      <tr ms-tableRow *ms-tableRowDef="let item of examinations; let i=index">
+        <msTableCell>{{i + 1}}</msTableCell>
+        <msTableCell>{{item.name}}</msTableCell>
+        <msTableCell>{{item.expectedStartDate | date}}</msTableCell>
+        <msTableCell>
           <ng-container *ngIf="item.startDate">{{item.startDate | date}}  </ng-container>
           <span *ngIf="!item.startDate" [appStateBadge]="item.state"> </span>
-        </MsfTableCell>
-        <MsfTableCell>{{item.expectedEndDate | date}}</MsfTableCell>
-        <MsfTableCell>
+        </msTableCell>
+        <msTableCell>{{item.expectedEndDate | date}}</msTableCell>
+        <msTableCell>
           <ng-container *ngIf="item.endDate">
             {{item.endDate | date}}
           </ng-container>
           <span *ngIf="!item.endDate" [appStateBadge]="item.state"> </span>
-        </MsfTableCell>
+        </msTableCell>
 
-        <MsfTableCell>
-          <a href="#" (click)="onClick($event, item)">Aller à la page</a>
-          <MsfButton (click)="service.details(item)" class="ml-2"  style="font-size: 12px">Details</MsfButton>
+        <msTableCell>
+          <a href="#" class="ms-fontSize-12"  [routerLink]="item.url">Aller à la page</a>
+          <button msButton (click)="service.details(item)" class="ml-2" >Details</button>
 
-          <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+          <button msButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
           <MsfMenu #more>
             <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
-            <MsfMenuItem theme="primary" icon="Clock" *ngIf="item.state === 'PENDING'" (click)="service.start(item)">
+            <MsfMenuItem theme="primary" icon="Clock" *ngIf="item.isPending" (click)="service.start(item)">
               Débuter
             </MsfMenuItem>
-            <MsfMenuItem theme="warning" icon="Lock" *ngIf="item.state === 'PROGRESS'" (click)="service.end(item)">
+            <MsfMenuItem theme="warning" icon="Lock" *ngIf="item.isProgress" (click)="service.end(item)">
               Fermer
             </MsfMenuItem>
-            <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="item.state === 'FINISHED'"
+            <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="item.isFinished"
                          (click)="service.relaunch(item)">Relancer
             </MsfMenuItem>
 
             <MsfMenuItem icon="Delete" theme="error" (click)="service.delete(item)">Supprimer</MsfMenuItem>
           </MsfMenu>
-        </MsfTableCell>
-      </MsfTableRow>
-    </MsfTable>
-  </div>
+        </msTableCell>
+      </tr>
+    </ms-table>

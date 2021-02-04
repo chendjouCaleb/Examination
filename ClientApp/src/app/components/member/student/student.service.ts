@@ -1,15 +1,15 @@
-﻿import {StudentEdit} from "./edit/student-edit";
-import {Level, LevelSpeciality, Student, StudentHttpClient, User} from "examination/models";
-import {StudentRegistrationId} from "./registrationId/student-registrationId";
-import {Injectable} from "@angular/core";
-import {MsfModal} from "fabric-docs";
-import {AlertEmitter, Confirmation} from "examination/controls";
-import {StudentUserLink} from "./user-link/student-user-link";
-import {StudentAdd} from "./add/student-add";
-import {IStudentService} from "./student.service.interface";
-import {StudentLevel} from "./level/student-level";
-import {StudentDetails} from "./details/student-details";
-import {StudentSpeciality} from "examination/app/components/member/student/speciality/student-speciality";
+﻿import {StudentEdit} from './edit/student-edit';
+import {Level, LevelSpeciality, Student, StudentHttpClient, User} from 'examination/models';
+import {StudentRegistrationId} from './registrationId/student-registrationId';
+import {Injectable} from '@angular/core';
+import {MsfModal} from 'fabric-docs';
+import {AlertEmitter, Confirmation} from 'examination/controls';
+import {StudentUserLink} from './user-link/student-user-link';
+import {StudentAdd} from './add/student-add';
+import {IStudentService} from './student.service.interface';
+import {StudentLevel} from './level/student-level';
+import {StudentDetails} from './details/student-details';
+import {StudentSpeciality} from 'examination/app/components/member/student/speciality/student-speciality';
 
 @Injectable({providedIn: 'root'})
 export class StudentService implements IStudentService {
@@ -46,7 +46,7 @@ export class StudentService implements IStudentService {
   }
 
   removeUser(student: Student): Promise<void> {
-    const result = this._confirmation.open("Voulez-vous supprimer la liaison entre l'étudiant et l'utilisateur");
+    const result = this._confirmation.open('Voulez-vous supprimer la liaison entre l\'étudiant et l\'utilisateur');
 
     return new Promise<void>(resolve => {
       result.accept.subscribe(async () => {
@@ -109,10 +109,9 @@ export class StudentService implements IStudentService {
         student.level.department.students?.remove(student);
         student.level.students?.remove(student);
         student.levelSpeciality?.students?.remove(student);
-
-
         resolve(true);
       });
+      result.reject.subscribe(() => resolve(false));
     });
   }
 

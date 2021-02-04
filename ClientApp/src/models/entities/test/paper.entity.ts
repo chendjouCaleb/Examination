@@ -103,6 +103,14 @@ export class Paper extends Entity<number> {
   paperFiles = new List<PaperFile>();
   paperFileCount: number;
 
+  get coefficient(): number {
+    return this.test.coefficient;
+  }
+
+  get radical(): number {
+    return this.test.radical;
+  }
+
   get startHour(): LocalTime {
     return LocalTime.of(this.startDate.getHours(), this.startDate.getMinutes());
   }

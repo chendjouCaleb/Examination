@@ -3,10 +3,10 @@ import {Injectable} from '@angular/core';
 import {MsfModal} from 'fabric-docs';
 import {Department, Level, Room, School} from 'examination/entities';
 import {Confirmation} from 'examination/controls';
-import {RoomAdd} from "./add/room-add";
-import {RoomHttpClient } from "examination/models/http";
-import {RoomEdit} from "./edit/room-edit";
-import {RoomDetails} from "./details/room-details";
+import {RoomAdd} from './add/room-add';
+import {RoomHttpClient } from 'examination/models/http';
+import {RoomEdit} from './edit/room-edit';
+import {RoomDetails} from './details/room-details';
 
 
 @Injectable()
@@ -48,6 +48,8 @@ export class RoomService implements IRoomService {
         room.department?.removeRoom(room);
         resolve(true);
       });
+
+      result.reject.subscribe(() => resolve(false));
     });
   }
 

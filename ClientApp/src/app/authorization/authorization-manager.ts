@@ -21,7 +21,8 @@ export class AuthorizationManager {
   private _accessTokenUrl = environment.SERVER_URL + '/authorize/accessToken';
   private _refreshTokenUrl = environment.SERVER_URL + '/authorize/refreshToken';
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient) {
+  }
 
   async init() {
     if (!this.accessToken || !this.authCode) {
@@ -32,12 +33,13 @@ export class AuthorizationManager {
       return;
     }
 
-    if(this.accessToken.expireAt.getDate() < Date.now()) {
+    if (this.accessToken.expireAt.getDate() < Date.now()) {
       console.log('Access token expired');
       await this.refreshAuthorization();
     }
 
     this._connection = await this.getConnection(this.accessToken.connectionId);
+    this._connection.user.imageUrl = `${environment.AUTH_SERVER_URL}/users/${this.user.id}/image`;
     console.log('Authorization manager is initialized!');
     console.log(`${this.user.fullName} is logged!`);
     this._isInitialized = true;
@@ -48,32 +50,32 @@ export class AuthorizationManager {
 
   }
 
-  async refreshAuthorization(){
+  async refreshAuthorization() {
     this.accessToken = await this.requestRefreshToken(this.accessToken, this.authCode);
     console.log('Access token refreshed');
   }
 
 
   async authorize(authCode: string): Promise<void> {
-     this.authCode = authCode;
+    this.authCode = authCode;
 
-     const accessToken = await this.requestAccessToken(authCode);
-     this.accessToken = accessToken;
+    const accessToken = await this.requestAccessToken(authCode);
+    this.accessToken = accessToken;
 
-     const decodedToken = JwtDecode(accessToken.token);
+    const decodedToken = JwtDecode(accessToken.token);
 
     this._connection = await this.getConnection(decodedToken[Claims.ConnectionId]);
 
-     return Promise.resolve();
+    return Promise.resolve();
   }
 
   private _accessToken: AccessToken;
-  get accessToken(): AccessToken{
-    if(this._accessToken){
+  get accessToken(): AccessToken {
+    if (this._accessToken) {
       return this._accessToken;
     }
     const value = localStorage.getItem('AUTH_ACCESS_TOKEN');
-    if(!value) {
+    if (!value) {
       return null;
     }
     this._accessToken = new AccessToken(JSON.parse(value));
@@ -88,7 +90,7 @@ export class AuthorizationManager {
   private _authCode: string;
 
   get authCode(): string {
-    if(this._authCode){
+    if (this._authCode) {
       return this._authCode;
     }
     this._authCode = localStorage.getItem('AUTH_CODE');
@@ -108,7 +110,7 @@ export class AuthorizationManager {
   requestAccessToken(code: string): Promise<AccessToken> {
     const form = new FormData();
     form.append('code', code);
-    return this._httpClient.post<AccessToken>(this._accessTokenUrl,  form).toPromise();
+    return this._httpClient.post<AccessToken>(this._accessTokenUrl, form).toPromise();
   }
 
   requestRefreshToken(accessToken: AccessToken, code: string): Promise<AccessToken> {
@@ -116,14 +118,15 @@ export class AuthorizationManager {
     form.append('code', code);
     form.append('refreshToken', accessToken.refreshToken);
     form.append('accessToken', accessToken.token);
-    return this._httpClient.post<AccessToken>(this._refreshTokenUrl,  form).toPromise();
+    return this._httpClient.post<AccessToken>(this._refreshTokenUrl, form).toPromise();
   }
 
 
-
   async getUser(id: string): Promise<User> {
-    const user = await this._httpClient.get<User>(`${this._userUrl}/${id}`).toPromise();
-    return User.createFromAny(user);
+    const value = await this._httpClient.get<User>(`${this._userUrl}/${id}`).toPromise();
+    const user = User.createFromAny(value);
+    user.imageUrl = `${environment.AUTH_SERVER_URL}/users/${this.user.id}/image`;
+    return user;
   }
 
   async getConnection(id: number): Promise<Connection> {

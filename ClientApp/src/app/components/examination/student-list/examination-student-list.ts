@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {
   Examination,
   ExaminationDepartment,
@@ -9,7 +9,8 @@ import {
 } from 'examination/entities';
 import {ExaminationStudentLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
-import {EXAMINATION_SERVICE_TOKEN, IExaminationService} from "../examination.service.contract";
+import {EXAMINATION_SERVICE_TOKEN, IExaminationService} from '../examination.service.contract';
+import {MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'examination-student-list.html',
@@ -31,34 +32,40 @@ export class ExaminationStudentList implements OnInit {
   @Input()
   examinationLevelSpeciality: ExaminationLevelSpeciality;
 
+  @ViewChild(MsTable)
+  table: MsTable;
+
+  examinationStudents: ExaminationStudent[] = [];
+
   constructor(private _examinationStudentLoader: ExaminationStudentLoader,
               @Inject(EXAMINATION_SERVICE_TOKEN) public service: IExaminationService ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     if (this.examinationLevelSpeciality) {
-      this._examinationStudentLoader.loadByExaminationLevelSpeciality(this.examinationLevelSpeciality);
+      await this._examinationStudentLoader.loadByExaminationLevelSpeciality(this.examinationLevelSpeciality);
     }
 
     if (this.examinationLevel) {
-      this._examinationStudentLoader.loadByExaminationLevel(this.examinationLevel);
+      await this._examinationStudentLoader.loadByExaminationLevel(this.examinationLevel);
     }
 
     if (this.examinationSpeciality) {
-      this._examinationStudentLoader.loadByExaminationSpeciality(this.examinationSpeciality);
+      await this._examinationStudentLoader.loadByExaminationSpeciality(this.examinationSpeciality);
     }
 
     if (this.examinationDepartment) {
-      this._examinationStudentLoader.loadByExaminationDepartment(this.examinationDepartment);
+      await this._examinationStudentLoader.loadByExaminationDepartment(this.examinationDepartment);
     }
 
     if (this.examination) {
-      this._examinationStudentLoader.loadByExamination(this.examination);
+      await this._examinationStudentLoader.loadByExamination(this.examination);
     }
 
+    this.table.unshiftRange(this.getExaminationStudents().toArray());
   }
 
-  get examinationStudents(): List<ExaminationStudent> {
+  getExaminationStudents(): List<ExaminationStudent> {
     if (this.examinationLevelSpeciality) {
       return this.examinationLevelSpeciality.examinationStudents;
     }

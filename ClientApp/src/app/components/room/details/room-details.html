@@ -2,9 +2,9 @@
   <div class="ms-pageTitle">
     <h5>{{room.name}}</h5>
     <div class="text-right ml-5">
-      <MsfButton LeftIcon="ChevronDown" [MsfMenuTrigger]="roomMenu" theme="primary" [outline]="true">Paramètres
-      </MsfButton>
-      <MsfIconButton icon="Cancel" MsfModalClose class="ml-2"></MsfIconButton>
+      <button msButton icon="Settings" secondaryIcon="ChevronDown" [MsfMenuTrigger]="roomMenu" theme="primaryOutline">
+      </button>
+      <button msIconButton theme="transparent" icon="Cancel" MsfModalClose class="ml-2"></button>
       <MsfMenu #roomMenu>
         <MsfMenuItem icon="Edit" (click)="service.editRoom(room)">Modifier</MsfMenuItem>
         <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer</MsfMenuItem>

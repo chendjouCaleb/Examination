@@ -13,15 +13,17 @@ import {DepartmentBanner} from './banner/department-banner';
 import {DepartmentImage} from './image/department-image';
 import {DepartmentCoverImage} from './cover-image/department-cover-image';
 import {DepartmentDelete} from './delete/department-delete';
-import {ApplicationModule} from "examination/app/components/member/application";
+import {ApplicationModule} from 'examination/app/components/member/application';
+import {DepartmentList} from 'examination/app/components/department/list/department-list';
+import {MsButtonModule} from '@ms-fluent/button';
 
 @NgModule({
-  imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, FormsModule,
+  imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsButtonModule, MsfMenuModule, FormsModule,
     ReactiveFormsModule, AppFormModule, ImageFormModule, UserPickerModule, MsfPersonaModule, ApplicationModule],
   declarations: [DepartmentAdd, DepartmentEdit, DepartmentCard, DepartmentBanner, DepartmentImage,
-    DepartmentCoverImage, DepartmentDelete],
+    DepartmentCoverImage, DepartmentDelete, DepartmentList],
   exports: [DepartmentAdd, DepartmentEdit, DepartmentCard, DepartmentBanner, DepartmentImage,
-    DepartmentCoverImage, DepartmentDelete],
+    DepartmentCoverImage, DepartmentDelete, DepartmentList],
   providers: [DepartmentResolver, DepartmentService, {provide: DEPARTMENT_SERVICE_TOKEN, useExisting: DepartmentService}]
 })
 export class DepartmentModule {

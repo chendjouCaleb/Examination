@@ -6,6 +6,10 @@
 @import "ms-Icon-fix";
 @import "~office-ui-fabric-core/dist/sass/Fabric";
 
+$ms-table-border-color: var(--borderColor);
+$ms-table-bgColor: var(--bodyBackgroundColor);
+$ms-table-cell-hover-backgroundColor: var(--cardBackgroundColor);
+
 @import "~@ms-fluent/table/src/styles/table";
 @import "~@ms-fluent/grid/src/styles/grid";
 @import "~@ms-fluent/button/src/styles/ms-button";
@@ -62,6 +66,9 @@ $msf-button-backgroundColor: red;
   }
 }
 
+.ms-table {
+  white-space: nowrap;
+}
 .msf-table {
   width: 100%;
   position: relative;
@@ -97,9 +104,23 @@ $msf-button-backgroundColor: red;
   overflow: hidden;
 }
 
+.flex-center-screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .flex-center-cover {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,6 +167,7 @@ body {
 
 .msf-modal-portal {
   padding: 0;
+  width: 100%;
   background: var(--bodyBackgroundColor);
   backdrop-filter: blur(5px);
 }

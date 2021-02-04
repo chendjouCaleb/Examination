@@ -1,33 +1,34 @@
-﻿<form class="ms-form" [formGroup]="form">
-  <div class="ms-form-header">Ajouter un examen</div>
+﻿<div class="flex-center-cover">
+  <form class="ms-form" [formGroup]="form">
+    <div class="ms-form-header">Ajouter un examen</div>
 
 
-  <div class="ms-textField">
-    <label for="name" class="msf-label">Nom de l'examen</label>
-    <input type="name" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
-    <div class="ms-fontSize-12"> Renseignez un nom unique parmi tous les examens de cet établissement</div>
-    <app-control-error [control]="form.controls['name']"></app-control-error>
-  </div>
+    <div class="ms-textField">
+      <label for="name" class="msf-label">Nom de l'examen</label>
+      <input type="name" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
+      <div class="ms-fontSize-12"> Renseignez un nom unique parmi tous les examens de cet établissement</div>
+      <app-control-error [control]="form.controls['name']"></app-control-error>
+    </div>
 
 
-  <div class="ms-textField">
-    <label for="expectedStartDate" class="msf-label">Date de début</label>
-    <input id="expectedStartDate" DateInput class="ms-textField-input" formControlName="expectedStartDate">
-    <app-control-error [control]="form.controls['expectedStartDate']"></app-control-error>
-  </div>
+    <div class="ms-textField">
+      <label for="expectedStartDate" class="msf-label">Date de début</label>
+      <input id="expectedStartDate" DateInput class="ms-textField-input" formControlName="expectedStartDate">
+      <app-control-error [control]="form.controls['expectedStartDate']"></app-control-error>
+    </div>
 
-  <div class="ms-textField">
-    <label for="expectedEndDate" class="msf-label">Date de fin</label>
-    <input id="expectedEndDate" DateInput class="ms-textField-input" formControlName="expectedEndDate">
-    <app-control-error [control]="form.controls['expectedEndDate']"></app-control-error>
-  </div>
+    <div class="ms-textField">
+      <label for="expectedEndDate" class="msf-label">Date de fin</label>
+      <input id="expectedEndDate" DateInput class="ms-textField-input" formControlName="expectedEndDate">
+      <app-control-error [control]="form.controls['expectedEndDate']"></app-control-error>
+    </div>
 
- <div class="mt-4 text-right">
-    <MsfButton MsfModalClose="" class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">
-      Ajouter
-    </MsfButton>
-  </div>
-</form>
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose="" class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">
+        Ajouter
+      </button>
+    </div>
+  </form>
 
-
+</div>

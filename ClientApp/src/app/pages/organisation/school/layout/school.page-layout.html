@@ -1,14 +1,29 @@
 ﻿<app-layout>
   <app-school-banner [school]="school" (onSchoolDelete)="_router.navigateByUrl('/schools')"></app-school-banner>
-  <msf-tab>
-    <msf-tab-label [routerLink]="[school.url]">Accueil</msf-tab-label>
-    <msf-tab-label [routerLink]="[school.url, 'departments']">Départments</msf-tab-label>
-    <msf-tab-label [routerLink]="[school.url, 'planners']">Planificateurs</msf-tab-label>
-    <msf-tab-label [routerLink]="[school.url, 'rooms']">Salles</msf-tab-label>
-    <msf-tab-label [routerLink]="[school.url, 'examinations']">Examens</msf-tab-label>
-  </msf-tab>
 
-  <div>
-    <ng-content></ng-content>
-  </div>
+  <msPivot>
+    <msPivotHeader>
+      <msPivotLabel>Accueil</msPivotLabel>
+      <msPivotLabel>Départments</msPivotLabel>
+      <msPivotLabel>Planificateurs</msPivotLabel>
+      <msPivotLabel>Salles</msPivotLabel>
+      <msPivotLabel>Examens</msPivotLabel>
+    </msPivotHeader>
+
+    <msPivotBody>
+      <div *msPivotContentDef>Accueil</div>
+      <div *msPivotContentDef>
+        <app-department-list [school]="school"></app-department-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-planner-list [school]="school"></app-planner-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-room-list [school]="school"></app-room-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-examination-list [school]="school"></app-examination-list>
+      </div>
+    </msPivotBody>
+  </msPivot>
 </app-layout>

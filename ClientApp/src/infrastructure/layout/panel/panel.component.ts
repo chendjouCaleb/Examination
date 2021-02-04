@@ -4,7 +4,10 @@ import {getDocumentMaxZIndex} from '../../dom-helpers';
 @Component({
   templateUrl: 'panel.component.html',
   selector: 'app-panel',
-  styleUrls: ['panel.component.scss']
+  styleUrls: ['panel.component.scss'],
+  host: {
+    '(swipeleft)': 'swipe()'
+  }
 })
 export class PanelComponent {
   @Input()
@@ -22,6 +25,9 @@ export class PanelComponent {
   constructor(private _elementRef: ElementRef<HTMLElement>) {
   }
 
+  swipe() {
+    alert('swipe')
+  }
   open() {
     this.isOpen = true;
     this._elementRef.nativeElement.style.zIndex = getDocumentMaxZIndex() + 1 + '';

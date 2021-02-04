@@ -1,21 +1,23 @@
-﻿import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+﻿import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CurrentItems} from 'examination/app/current-items';
 import {Examination, ExaminationLoader, School} from 'examination/models';
 import {Router} from '@angular/router';
 import {MsfModal} from 'fabric-docs';
 import {EXAMINATION_SERVICE_TOKEN, IExaminationService} from '../examination.service.contract';
+import {MsTable} from "@ms-fluent/table";
 
 @Component({
   selector: 'app-examination-list',
   templateUrl: './examination-list.html'
 })
 export class ExaminationList implements OnInit {
-
   @Input()
   school: School;
 
-  @Output()
-  linkClick = new EventEmitter<Examination>();
+  examinations: Examination[] = [];
+
+  @ViewChild(MsTable)
+  table: MsTable;
 
   constructor(private currentItems: CurrentItems,
               private _dialog: MsfModal,
@@ -24,12 +26,8 @@ export class ExaminationList implements OnInit {
               private _router: Router) {
   }
 
-  ngOnInit() {
-    this._examinationLoader.loadBySchool(this.school);
-  }
-
-  onClick(event: Event, item: Examination) {
-    event.preventDefault();
-    this.linkClick.emit(item);
+  async ngOnInit() {
+    await this._examinationLoader.loadBySchool(this.school);
+    this.table.unshift(...this.school.examinations.toArray());
   }
 }

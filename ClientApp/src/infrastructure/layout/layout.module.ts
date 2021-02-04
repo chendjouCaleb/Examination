@@ -13,9 +13,12 @@ import {Theme} from '../preference/theme';
 import {Labelled} from './labelled';
 import {AuthPanelComponent} from './panel/auth-panel/auth-panel.component';
 import {Breadcrumb} from './breadcrumb/breadcrumb';
+import {MsPersonaModule} from '@ms-fluent/persona';
+import {HammerModule} from '@angular/platform-browser';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MsfIconModule, MsfButtonModule, MsfRadioModule, MsfCheckboxModule, MsfPersonaModule],
+  imports: [CommonModule, RouterModule, MsfIconModule, MsfButtonModule, MsfRadioModule, MsfCheckboxModule,
+    MsfPersonaModule, MsPersonaModule],
   declarations: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent, AuthPanelComponent,
     SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent, Labelled, Breadcrumb],
   exports: [NavbarComponent,  PanelComponent, LayoutComponent, SidebarComponent, SidebarItemComponent,

@@ -1,10 +1,10 @@
 ﻿<div class="p-3">
   <div class="ms-pageTitle">
-    <h5>{{examination.name}}</h5>
+    <h2>{{examination.name}}</h2>
     <div class="text-right ml-5">
-      <MsfButton LeftIcon="ChevronDown" [MsfMenuTrigger]="examinationMenu" theme="primary" [outline]="true">Paramètres
-      </MsfButton>
-      <MsfIconButton icon="Cancel" MsfModalClose class="ml-2"></MsfIconButton>
+      <button msButton secondaryIcon="ChevronDown" [MsfMenuTrigger]="examinationMenu" theme="primaryOutline">Paramètres
+      </button>
+      <button msIconButton icon="Cancel" MsfModalClose class="ml-2"></button>
       <MsfMenu #examinationMenu>
         <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
         <MsfMenuItem theme="primary" icon="Clock" *ngIf="examination.state === 'PENDING'"

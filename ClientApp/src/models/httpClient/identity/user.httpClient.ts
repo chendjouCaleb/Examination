@@ -51,6 +51,12 @@ export class UserHttpClient extends GenericHttpClient<User, string> {
   userModel(userId: string): Promise<UserModel> {
     return this.httpClient.get<UserModel>(`${environment.SERVER_URL}/users/${userId}/model`).toPromise();
   }
+
+  setImageUrl(user: User) {
+    if (user.hasImage) {
+      user.imageUrl = `${environment.AUTH_SERVER_URL}/users/${user.id}/image`;
+    }
+  }
 }
 
 export interface Paging<T> {

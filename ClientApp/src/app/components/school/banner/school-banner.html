@@ -11,20 +11,18 @@
       <div class="school-banner-info">
         <div>
           <div class="school-banner-name">{{school.name | ucFirst}}({{school.acronym| uppercase}})</div>
-          <labelled-icon icon="Accounts" [text]="school.identifier"></labelled-icon>
+          <div msFontSize="12">@{{school.identifier}}</div>
+          <div class="my-2 ms-divider" ></div>
           <labelled-icon icon="POISolid" [text]="school.address"></labelled-icon>
-          <div class="mt-2">
-            0 départments, 0 examen
-          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="school-banner-footer">
-    <MsfButton theme="primary" Icon="AddFriend" (click)="sendApplication()">Devenir étudiant</MsfButton>
-    <MsfButton Icon="Settings" theme="standard" LeftIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">
+    <button msButton theme="primary" icon="AddFriend" (click)="sendApplication()">Devenir étudiant</button>
+    <button *ngIf="school.userPrincipal.isPrincipal" msButton icon="Settings" theme="standard" secondaryIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">
       Paramètres
-    </MsfButton>
+    </button>
     <MsfMenu #settingsMenu>
       <MsfMenuItem icon="Edit" (click)="service.edit(school)">Modifier les informations</MsfMenuItem>
       <MsfMenuItem icon="Accounts" (click)="service.changeIdentifier(school)">Change l'identifier</MsfMenuItem>

@@ -16,16 +16,17 @@ export class CorrectorService implements ICorrectorService {
   }
 
 
-  deleteCorrector(corrector: Corrector): Promise<void> {
+  deleteCorrector(corrector: Corrector): Promise<boolean> {
     const result = this._confirmation.open('Voulez-vous Supprimer ce correcteur?');
 
-    return new Promise<void>(resolve => {
+    return new Promise<boolean>(resolve => {
       result.accept.subscribe(async () => {
         await this._httpClient.delete(corrector.id);
         corrector.department.correctors.remove(corrector);
         this._alertEmitter.info('La correcteur a été supprimée!');
+        resolve(true);
       });
-      resolve();
+      resolve(false);
     });
   }
 

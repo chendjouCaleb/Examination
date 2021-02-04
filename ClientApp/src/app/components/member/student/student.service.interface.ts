@@ -1,4 +1,4 @@
-import {Student, Level, Score, LevelSpeciality, User} from 'examination/entities';
+import {Level, LevelSpeciality, Student, User} from 'examination/entities';
 import {InjectionToken} from '@angular/core';
 
 export const STUDENT_SERVICE_TOKEN =

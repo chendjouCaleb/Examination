@@ -8,14 +8,14 @@ import {SchoolIdentifier} from './identifier/school-identifier';
 import {SchoolService} from './school.service';
 import {SCHOOL_SERVICE_TOKEN} from './school.service.interface';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SchoolResolver} from "./school.resolver";
-import {SchoolCard} from "./card/school-card";
-import {SchoolBanner} from "./banner/school-banner";
-import {SchoolImage} from "./image/school-image";
-import {SchoolCoverImage} from "./cover-image/school-cover-image";
-import {SchoolDelete} from "./delete/school-delete";
-import {ApplicationModule} from "../member/application";
-import {MsButtonModule} from "@ms-fluent/button";
+import {SchoolResolver} from './school.resolver';
+import {SchoolCard} from './card/school-card';
+import {SchoolBanner} from './banner/school-banner';
+import {SchoolImage} from './image/school-image';
+import {SchoolCoverImage} from './cover-image/school-cover-image';
+import {SchoolDelete} from './delete/school-delete';
+import {ApplicationModule} from '../member/application';
+import {MsButtonModule} from '@ms-fluent/button';
 
 @NgModule({
   imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, FormsModule,

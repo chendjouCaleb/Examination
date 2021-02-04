@@ -6,8 +6,8 @@ import {ExaminationDepartment} from './examination-department.entity';
 import {ExaminationStudent} from './examination-student.entity';
 import {ExaminationLevel} from './examination-level.entity';
 import {ExaminationSpeciality} from './examination-speciality.entity';
-import {Test} from "../test";
-import {ExaminationStatistics} from "./examination-statistics";
+import {Test} from '../test';
+import {ExaminationStatistics} from './examination-statistics';
 
 export class Examination extends Entity<number> {
 
@@ -76,6 +76,18 @@ export class Examination extends Entity<number> {
     }
 
     return 'PENDING';
+  }
+
+  get isFinished(): boolean {
+    return this.state === 'FINISHED';
+  }
+
+  get isProgress(): boolean {
+    return this.state === 'PROGRESS';
+  }
+
+  get isPending(): boolean {
+    return this.state === 'PENDING';
   }
 }
 

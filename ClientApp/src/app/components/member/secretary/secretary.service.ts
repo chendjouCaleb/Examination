@@ -16,16 +16,18 @@ export class SecretaryService implements ISecretaryService {
   }
 
 
-  deleteSecretary(secretary: Secretary): Promise<void> {
+  deleteSecretary(secretary: Secretary): Promise<boolean> {
     const result = this._confirmation.open('Voulez-vous Supprimer ce sécrétaire?');
 
-    return new Promise<void>(resolve => {
+    return new Promise<boolean>(resolve => {
       result.accept.subscribe(async () => {
         await this._httpClient.delete(secretary.id);
         secretary.department.secretaries.remove(secretary);
         this._alertEmitter.info('Le secrétaire a été supprimé!');
+        resolve(true);
       });
-      resolve();
+
+      result.reject.subscribe(() => resolve(false));
     });
   }
 

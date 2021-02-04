@@ -139,6 +139,8 @@
                   <e p="portal.js.map" t="Include" />
                   <e p="scrolling.js" t="Include" />
                   <e p="scrolling.js.map" t="Include" />
+                  <e p="text-field.js" t="Include" />
+                  <e p="text-field.js.map" t="Include" />
                 </e>
               </e>
               <e p="a11y" t="Include">
@@ -236,6 +238,12 @@
                 <e p="viewport-ruler.d.ts.__ivy_ngcc_bak" t="Include" />
                 <e p="virtual-for-of.d.ts.__ivy_ngcc_bak" t="Include" />
                 <e p="virtual-scroll-viewport.d.ts.__ivy_ngcc_bak" t="Include" />
+              </e>
+              <e p="text-field" t="Include">
+                <e p="autofill.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="autosize.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="index.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="text-field-module.d.ts.__ivy_ngcc_bak" t="Include" />
               </e>
             </e>
             <e p="cli" t="IncludeRecursive">
@@ -372,8 +380,14 @@
                   <e p="button.js.map" t="Include" />
                   <e p="core.js" t="Include" />
                   <e p="core.js.map" t="Include" />
+                  <e p="datepicker.js" t="Include" />
+                  <e p="datepicker.js.map" t="Include" />
                   <e p="dialog.js" t="Include" />
                   <e p="dialog.js.map" t="Include" />
+                  <e p="form-field.js" t="Include" />
+                  <e p="form-field.js.map" t="Include" />
+                  <e p="input.js" t="Include" />
+                  <e p="input.js.map" t="Include" />
                   <e p="snack-bar.js" t="Include" />
                   <e p="snack-bar.js.map" t="Include" />
                 </e>
@@ -417,12 +431,43 @@
                   </e>
                 </e>
               </e>
+              <e p="datepicker" t="Include">
+                <e p="calendar-body.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="calendar.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="datepicker-input.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="datepicker-intl.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="datepicker-module.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="datepicker-toggle.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="datepicker.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="index.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="month-view.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="multi-year-view.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="year-view.d.ts.__ivy_ngcc_bak" t="Include" />
+              </e>
               <e p="dialog" t="Include">
                 <e p="dialog-container.d.ts.__ivy_ngcc_bak" t="Include" />
                 <e p="dialog-content-directives.d.ts.__ivy_ngcc_bak" t="Include" />
                 <e p="dialog-module.d.ts.__ivy_ngcc_bak" t="Include" />
                 <e p="dialog.d.ts.__ivy_ngcc_bak" t="Include" />
                 <e p="index.d.ts.__ivy_ngcc_bak" t="Include" />
+              </e>
+              <e p="form-field" t="Include">
+                <e p="error.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="form-field-control.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="form-field-module.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="form-field.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="hint.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="index.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="label.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="placeholder.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="prefix.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="suffix.d.ts.__ivy_ngcc_bak" t="Include" />
+              </e>
+              <e p="input" t="Include">
+                <e p="autosize.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="index.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="input-module.d.ts.__ivy_ngcc_bak" t="Include" />
+                <e p="input.d.ts.__ivy_ngcc_bak" t="Include" />
               </e>
               <e p="snack-bar" t="Include">
                 <e p="index.d.ts.__ivy_ngcc_bak" t="Include" />
@@ -871,8 +916,24 @@
                 </e>
               </e>
             </e>
-            <e p="persona" t="IncludeRecursive" />
+            <e p="persona" t="IncludeRecursive">
+              <e p="__ivy_ngcc__" t="Include">
+                <e p="fesm2015" t="Include">
+                  <e p="ms-fluent-persona.js" t="Include" />
+                  <e p="ms-fluent-persona.js.map" t="Include" />
+                </e>
+              </e>
+              <e p="ms-fluent-persona.d.ts.__ivy_ngcc_bak" t="Include" />
+              <e p="persona.d.ts.__ivy_ngcc_bak" t="Include" />
+              <e p="persona.module.d.ts.__ivy_ngcc_bak" t="Include" />
+            </e>
             <e p="pivot" t="IncludeRecursive">
+              <e p="__ivy_ngcc__" t="Include">
+                <e p="fesm2015" t="Include">
+                  <e p="ms-fluent-pivot.js" t="Include" />
+                  <e p="ms-fluent-pivot.js.map" t="Include" />
+                </e>
+              </e>
               <e p="bundles" t="Include">
                 <e p="ms-fluent-pivot.umd.js" t="Include" />
                 <e p="ms-fluent-pivot.umd.js.map" t="Include" />
@@ -921,12 +982,15 @@
               </e>
               <e p="header" t="Include">
                 <e p="pivot-header.d.ts" t="Include" />
+                <e p="pivot-header.d.ts.__ivy_ngcc_bak" t="Include" />
               </e>
               <e p="index.d.ts" t="Include" />
               <e p="label" t="Include">
                 <e p="pivot-label.d.ts" t="Include" />
+                <e p="pivot-label.d.ts.__ivy_ngcc_bak" t="Include" />
               </e>
               <e p="ms-fluent-pivot.d.ts" t="Include" />
+              <e p="ms-fluent-pivot.d.ts.__ivy_ngcc_bak" t="Include" />
               <e p="ms-fluent-pivot.metadata.json" t="Include" />
               <e p="node_modules" t="Include">
                 <e p="@angular" t="Include">
@@ -1957,11 +2021,16 @@
               </e>
               <e p="package.json" t="Include" />
               <e p="pivot-active-border.d.ts" t="Include" />
+              <e p="pivot-active-border.d.ts.__ivy_ngcc_bak" t="Include" />
               <e p="pivot-body.d.ts" t="Include" />
+              <e p="pivot-body.d.ts.__ivy_ngcc_bak" t="Include" />
               <e p="pivot-content-context.d.ts" t="Include" />
               <e p="pivot-content.d.ts" t="Include" />
+              <e p="pivot-content.d.ts.__ivy_ngcc_bak" t="Include" />
               <e p="pivot.d.ts" t="Include" />
+              <e p="pivot.d.ts.__ivy_ngcc_bak" t="Include" />
               <e p="pivot.module.d.ts" t="Include" />
+              <e p="pivot.module.d.ts.__ivy_ngcc_bak" t="Include" />
               <e p="README.md" t="Include" />
               <e p="src" t="Include">
                 <e p="styles" t="Include">
@@ -14052,6 +14121,10 @@
                   <e p="department-image.ts" t="Include" />
                 </e>
                 <e p="index.ts" t="Include" />
+                <e p="list" t="Include">
+                  <e p="department-list.html" t="Include" />
+                  <e p="department-list.ts" t="Include" />
+                </e>
               </e>
               <e p="Examination" t="Include">
                 <e p="add" t="Include">
@@ -14499,6 +14572,7 @@
             </e>
             <e p="current-items.ts" t="Include" />
             <e p="element.ts" t="Include" />
+            <e p="global.ts" t="Include" />
             <e p="pages" t="Include">
               <e p="Examination" t="Include">
                 <e p="department" t="Include">
@@ -14614,14 +14688,6 @@
                     <e p="school-add.page.html" t="Include" />
                     <e p="school-add.page.ts" t="Include" />
                   </e>
-                  <e p="departments" t="Include">
-                    <e p="school-departments.page.html" t="Include" />
-                    <e p="school-departments.page.ts" t="Include" />
-                  </e>
-                  <e p="examinations" t="Include">
-                    <e p="school-examinations.page.html" t="Include" />
-                    <e p="school-examinations.page.ts" t="Include" />
-                  </e>
                   <e p="Home" t="Include">
                     <e p="school-home.page.html" t="Include" />
                     <e p="school-home.page.scss" t="Include" />
@@ -14634,14 +14700,6 @@
                   <e p="list" t="Include">
                     <e p="school-list.page.html" t="Include" />
                     <e p="school-list.page.ts" t="Include" />
-                  </e>
-                  <e p="planners" t="Include">
-                    <e p="school-planners.page.html" t="Include" />
-                    <e p="school-planners.page.ts" t="Include" />
-                  </e>
-                  <e p="rooms" t="Include">
-                    <e p="school-rooms.page.html" t="Include" />
-                    <e p="school-rooms.page.ts" t="Include" />
                   </e>
                   <e p="school.page.module.ts" t="Include" />
                 </e>

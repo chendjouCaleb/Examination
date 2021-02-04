@@ -1,4 +1,4 @@
-<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+<form class="ms-form ms-depth-8" [formGroup]="form">
   <div class="ms-form-header">Changer l'identifiant</div>
 
 
@@ -15,7 +15,7 @@
 
 
   <div class="mt-4 text-right">
-    <MsfButton (click)="cancel()" class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">Modifier</MsfButton>
+    <button msButton (click)="cancel()" class="mr-3">Annuler</button>
+    <button msButton theme="primary" icon="Edit" [disabled]="form.invalid" (click)="edit()">Modifier</button>
   </div>
 </form>

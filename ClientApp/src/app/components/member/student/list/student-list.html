@@ -1,55 +1,57 @@
-﻿<div class="d-flex py-1 justify-content-between align-items-center">
-  <div class="ms-fontSize-24 ms-fontWeight-light text-capitalize"> Étudiants </div>
+﻿<div class="ms-pageTitle">
+  <h2> Étudiants </h2>
 
-  <div class="text-right">
-    <div *ngIf="students"  >
+  <div>
+    <div *ngIf="students" >
       <button msButton [MsfMenuTrigger]="columnMenu" secondaryIcon="ChevronDown">Colonnes</button>
       <MsfCheckboxGroup #checkboxGroup  msTableColumnHandler key="StudentList" [table]="table">
-      <MsfMenu #columnMenu>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="#"></MsfCheckbox>#
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="levelIndex"></MsfCheckbox>Niveau
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="fullName"></MsfCheckbox>Nom & prénom
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationId"></MsfCheckbox>Matricule
-        </MsfMenuItem>
+        <MsfMenu #columnMenu>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="#"></MsfCheckbox>#
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="levelIndex"></MsfCheckbox>Niveau
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="fullName"></MsfCheckbox>Nom & prénom
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationId"></MsfCheckbox>Matricule
+          </MsfMenuItem>
 
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox>Date de naissance
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="gender"></MsfCheckbox>Sexe
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="SpecialityName"></MsfCheckbox>Spécialité
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="user"></MsfCheckbox>Utilisateur
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationDate"></MsfCheckbox>Date d'ajout
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="addedBy"></MsfCheckbox>Ajouté par
-        </MsfMenuItem>
-        <MsfMenuItem>
-          <MsfCheckbox MsfMenuItemCheckbox name="column" value="actions"></MsfCheckbox>Actions
-        </MsfMenuItem>
-      </MsfMenu>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox>Date de naissance
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="gender"></MsfCheckbox>Sexe
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="SpecialityName"></MsfCheckbox>Spécialité
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="user"></MsfCheckbox>Utilisateur
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationDate"></MsfCheckbox>Date d'ajout
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="addedBy"></MsfCheckbox>Ajouté par
+          </MsfMenuItem>
+          <MsfMenuItem>
+            <MsfCheckbox MsfMenuItemCheckbox name="column" value="actions"></MsfCheckbox>Actions
+          </MsfMenuItem>
+        </MsfMenu>
       </MsfCheckboxGroup>
     </div>
 
-    <div class="ms-h-divider"></div>
-    <MsfButton Icon="Add" *ngIf="level || levelSpeciality" theme="primary" (click)="addStudent()">
-      Ajouter un étudiant
-    </MsfButton>
+
+    <button msButton icon="Add" *ngIf="level || levelSpeciality" theme="primary" (click)="addStudent()">
+      Ajouter <span class="ms-hiddenSm">un étudiant</span>
+    </button>
   </div>
 </div>
+
+
 
 
 <div class="ms-table-container">
@@ -67,12 +69,12 @@
       <msTableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout</msTableHeadCell>
       <msTableHeadCell name="addedBy">Ajouté par</msTableHeadCell>
 
-      <msTableHeadCell name="actions" >
-        <div style="text-align: right">Actions</div>
+      <msTableHeadCell name="actions" style="text-align: right">
+        <i class="ms-Icon ms-Icon--SetAction"></i>
       </msTableHeadCell>
     </msTableHead>
 
-    <tr ms-tableRow #row *ms-tableRowDef="let item of students; let i=index" [value]="item">
+    <tr ms-tableRow *ms-tableRowDef="let item of students; let i=index" [value]="item">
       <td ms-tableCell>{{i+1}}</td>
 
 
@@ -100,13 +102,7 @@
 
 
       <td ms-tableCell>
-        <MsfPersona size="size32" *ngIf="item.user">
-          <MsfPersonaFigure [text]="item.user?.fullName" size="size32"></MsfPersonaFigure>
-          <div class="ml-2">
-            <div class="ms-fontWeight-semibold">{{item.user?.fullName}}</div>
-            <div class="ms-fontSize-12" *ngIf="item.user?.username">@{{item.user?.username}}</div>
-          </div>
-        </MsfPersona>
+        <user-persona *ngIf="item.user" [user]="item.user"></user-persona>
       </td>
 
       <td ms-tableCell>
@@ -114,15 +110,7 @@
       </td>
 
       <td ms-tableCell>
-        <MsfPersona size="size32">
-          <MsfPersonaFigure [imageUrl]="item.registerUser?.imageUrl" size="size32"></MsfPersonaFigure>
-          <div class="ml-2">
-            <div class="ms-fontWeight-semibold">{{item.registerUser?.fullName}}</div>
-            <div class="ms-fontSize-12 ms-fontWeight-light" *ngIf="item.registerUser?.username">
-              @{{item.registerUser?.username}}
-            </div>
-          </div>
-        </MsfPersona>
+        <user-persona *ngIf="item.registerUser" [user]="item.registerUser"></user-persona>
       </td>
 
 

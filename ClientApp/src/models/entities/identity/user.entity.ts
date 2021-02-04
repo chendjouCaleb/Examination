@@ -1,16 +1,16 @@
 import {Entity} from '../entity';
-import {List} from "@positon/collections";
+import {List} from '@positon/collections';
 
 
-import {Paper, Test, TestGroup} from "../test";
+import {Paper, Test, TestGroup} from '../test';
 
 
-import {TestGroupSecretary} from "../test";
-import {TestGroupCorrector} from "../test";
-import {TestGroupSupervisor} from "../test";
-import {School} from "../organisation";
-import {Application, Corrector, Secretary, Student, Supervisor} from "../member";
-import {Examination, ExaminationSpeciality} from "../examination";
+import {TestGroupSecretary} from '../test';
+import {TestGroupCorrector} from '../test';
+import {TestGroupSupervisor} from '../test';
+import {School} from '../organisation';
+import {Application, Corrector, Secretary, Student, Supervisor} from '../member';
+import {Examination, ExaminationSpeciality} from '../examination';
 
 export class User extends Entity<string> {
   name: string;
@@ -26,6 +26,7 @@ export class User extends Entity<string> {
 
   imageName: string;
   imageUrl: string;
+  hasImage: boolean;
 
   country: string;
   state: string;
@@ -91,6 +92,7 @@ export class User extends Entity<string> {
 
     account.imageName = value.imageName;
     account.imageUrl = value.imageUrl;
+    account.hasImage = value.hasImage;
 
     account.country = value.country;
     account.state = value.state;

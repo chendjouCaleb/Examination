@@ -9,12 +9,12 @@
   right: -300px;
   bottom: 0;
 
-  transition: right .3s;
+  transition: transform .3s;
 
   backdrop-filter: blur(var(--blurSize));
 
   &.panel-visible {
-    right: 0;
+    transform: translateX(-300px);
   }
 }
 

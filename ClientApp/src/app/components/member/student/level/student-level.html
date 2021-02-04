@@ -1,28 +1,31 @@
-﻿﻿<div class="ms-form" >
-  <div class="ms-form-header">Changer le niveau et/ou la spécialité </div>
+﻿<div class="flex-center-cover">
+  ﻿
+  <div class="ms-form">
+    <div class="ms-form-header">Changer le niveau et/ou la spécialité</div>
 
-  <div class="ms-textField">
-    <label for="level" class="msf-label" >Niveau</label>
-    <MsfSelect id="level" class="ms-textField-input" [(ngModel)]="level" (ngModelChange)="loadLevelSpecialities()"
-               placeholder="Choisir un niveau">
-      <MsfSelectOption *ngFor="let item of levels"  [value]="item">Niveau {{item.index}}</MsfSelectOption>
-    </MsfSelect>
-  </div>
+    <div class="ms-textField">
+      <label for="level" class="msf-label">Niveau</label>
+      <MsfSelect id="level" class="ms-textField-input" [(ngModel)]="level" (ngModelChange)="loadLevelSpecialities()"
+                 placeholder="Choisir un niveau">
+        <MsfSelectOption *ngFor="let item of levels" [value]="item">Niveau {{item.index}}</MsfSelectOption>
+      </MsfSelect>
+    </div>
 
-  <div class="ms-textField">
-    <label for="levelSpeciality" class="msf-label" >Spécialité </label>
-    <MsfSelect id="levelSpeciality" class="ms-textField-input" [(ngModel)]="levelSpeciality" placeholder="Choisir une specialité">
-      <MsfSelectOption *ngFor="let item of level.levelSpecialities"  [value]="item">{{item.speciality.name}}</MsfSelectOption>
-    </MsfSelect>
-  </div>
+    <div class="ms-textField">
+      <label for="levelSpeciality" class="msf-label">Spécialité </label>
+      <MsfSelect id="levelSpeciality" class="ms-textField-input" [(ngModel)]="levelSpeciality"
+                 placeholder="Choisir une specialité">
+        <MsfSelectOption *ngFor="let item of level.levelSpecialities"
+                         [value]="item">{{item.speciality.name}}</MsfSelectOption>
+      </MsfSelect>
+    </div>
 
 
-  <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" [class.msf-disabled]="!level"  (click)="change()">
-      Changer
-    </MsfButton>
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" [disabled]="!level" (click)="change()">
+        Changer
+      </button>
+    </div>
   </div>
 </div>
-
-

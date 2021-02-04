@@ -1,72 +1,61 @@
-<div class="d-flex py-1 justify-content-between align-items-center">
-  <div class="ms-fontSize-24 ms-fontWeight-light text-capitalize">{{'étudiants' | ucFirst}}</div>
+<div class="ms-pageTitle">
+  <h2>{{'étudiants' | ucFirst}}</h2>
 </div>
 
 
-<div class="ms-table-container">
-  <MsfTable *ngIf="examinationStudents">
-    <MsfTableHead>
-      <MsfTableHeadCell>#</MsfTableHeadCell>
+  <ms-table>
+    <msTableHead *msTableHeadDef>
+      <msTableHeadCell name="#">#</msTableHeadCell>
+      <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
+      <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom & prénom</msTableHeadCell>
+      <msTableHeadCell name="registrationNumber" [sortBy]="['registrationNumber', 'string']">Matricule</msTableHeadCell>
+      <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
+      <msTableHeadCell name="gender"  [sortBy]="['gender', 'string']">Genre</msTableHeadCell>
+      <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
+      <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
 
-      <MsfTableHeadCell sortBy="levelIndex">Niveau</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="fullName">Nom</MsfTableHeadCell>
-      <MsfTableHeadCell>Matricule</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="birthDate">Date de naissance</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="gender">Genre</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="specialityName">Spécialité</MsfTableHeadCell>
-      <MsfTableHeadCell>Utilisateur</MsfTableHeadCell>
+      <msTableHeadCell name="actions" class="text-right">
+        <i class="ms-Icon ms-Icon--SetAction"></i>
+      </msTableHeadCell>
+    </msTableHead>
 
+    <ms-tableRow *ms-tableRowDef="let item of examinationStudents; let i=index" [value]="item">
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>{{item.levelIndex + 1}}</ms-tableCell>
 
-      <MsfTableHeadCell style="text-align: right">Actions</MsfTableHeadCell>
-    </MsfTableHead>
-
-    <MsfTableRow #row *ngFor="let item of examinationStudents" [value]="item">
-      <MsfTableCell>{{row.index}}</MsfTableCell>
-
-
-      <MsfTableCell>{{item.levelIndex + 1}}</MsfTableCell>
-
-      <MsfTableCell>
+      <ms-tableCell>
         <div class="ms-fontWeight-semibold text-capitalize">{{item.student.fullName}}</div>
-      </MsfTableCell>
+      </ms-tableCell>
 
-      <MsfTableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+      <ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
         {{item.student.registrationId}}
-      </MsfTableCell>
+      </ms-tableCell>
 
-      <MsfTableCell>
+      <ms-tableCell>
         {{item.student.birthDate | amCalendar}}
-      </MsfTableCell>
+      </ms-tableCell>
 
-      <MsfTableCell>
+      <ms-tableCell>
         {{item.student.gender}}
-      </MsfTableCell>
+      </ms-tableCell>
 
-      <MsfTableCell class="ms-fontWeight-semibold">
+      <ms-tableCell class="ms-fontWeight-semibold">
         {{item.specialityName}}
-      </MsfTableCell>
+      </ms-tableCell>
 
 
-      <MsfTableCell>
-        <MsfPersona size="size32" *ngIf="item.student.user">
-          <MsfPersonaFigure [text]="item.student.user?.fullName" size="size32"></MsfPersonaFigure>
-          <div class="ml-2">
-            <div class="ms-fontWeight-semibold">{{item.student.user?.fullName}}</div>
-            <div class="ms-fontSize-12" *ngIf="item.student.user?.username">@{{item.student.user?.username}}</div>
-          </div>
-        </MsfPersona>
-      </MsfTableCell>
+      <ms-tableCell>
+        <user-persona [user]="item.student.user"></user-persona>
+      </ms-tableCell>
 
 
 
-      <MsfTableCell style="text-align: right">
-        <a MsfButton theme="primary" (click)="service.studentsDetails(item)">Détails</a>
-        <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+      <ms-tableCell style="text-align: right">
+        <button msButton theme="primary" (click)="service.studentsDetails(item)">Détails</button>
+        <button msButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
         <MsfMenu #more>
 
         </MsfMenu>
-      </MsfTableCell>
-    </MsfTableRow>
-  </MsfTable>
-
-</div>
+      </ms-tableCell>
+    </ms-tableRow>
+  </ms-table>

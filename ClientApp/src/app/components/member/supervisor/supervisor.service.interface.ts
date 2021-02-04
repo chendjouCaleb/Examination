@@ -8,5 +8,5 @@ export const SUPERVISOR_SERVICE_TOKEN =
 export interface ISupervisorService {
   addSupervisors(department: Department): Promise<List<Supervisor>>;
 
-  deleteSupervisor(supervisor: Supervisor): Promise<void>;
+  deleteSupervisor(supervisor: Supervisor): Promise<boolean>;
 }

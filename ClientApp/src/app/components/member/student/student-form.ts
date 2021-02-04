@@ -1,22 +1,22 @@
-import {EvFormControl, EvFormGroup} from "examination/controls";
+import {EvFormControl, EvFormGroup} from 'examination/controls';
 import {
   Level,
   LevelSpeciality,
   StudentAddModel,
   StudentInfoModel,
   StudentRegistrationIdModel
-} from "examination/models";
+} from 'examination/models';
 
 
 export class StudentAddForm extends EvFormGroup<StudentAddModel> {
   constructor(level: Level, levelSpeciality: LevelSpeciality) {
     super({
-      fullName: new EvFormControl("fullName", ""),
-      registrationId: new EvFormControl("registrationId", ""),
-      gender: new EvFormControl("gender", ""),
-      birthDate: new EvFormControl("birthDate", ""),
-      levelSpeciality: new EvFormControl("levelSpeciality", levelSpeciality),
-      level: new EvFormControl("level", level),
+      fullName: new EvFormControl('fullName', ''),
+      registrationId: new EvFormControl('registrationId', ''),
+      gender: new EvFormControl('gender', ''),
+      birthDate: new EvFormControl('birthDate', ''),
+      levelSpeciality: new EvFormControl('levelSpeciality', levelSpeciality),
+      level: new EvFormControl('level', level),
     });
   }
 
@@ -37,9 +37,9 @@ export class StudentAddForm extends EvFormGroup<StudentAddModel> {
 export class StudentInfoForm extends EvFormGroup<StudentInfoModel> {
   constructor(value: any = {}) {
     super({
-      fullName: new EvFormControl("fullName", value.fullName),
-      gender: new EvFormControl("gender", value.gender),
-      birthDate: new EvFormControl("birthDate", value.birthDate)
+      fullName: new EvFormControl('fullName', value.fullName),
+      gender: new EvFormControl('gender', value.gender),
+      birthDate: new EvFormControl('birthDate', value.birthDate)
     });
   }
 
@@ -56,7 +56,7 @@ export class StudentInfoForm extends EvFormGroup<StudentInfoModel> {
 export class StudentRegistrationIdForm extends EvFormGroup<StudentRegistrationIdModel> {
   constructor(value: any = {}) {
     super({
-      registrationId: new EvFormControl("registrationId", value.registrationId)
+      registrationId: new EvFormControl('registrationId', value.registrationId)
     });
   }
 

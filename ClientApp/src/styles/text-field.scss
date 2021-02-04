@@ -1,4 +1,10 @@
-﻿.ms-textField {
+﻿.ms-form {
+  background: var(--cardBackgroundColor);
+  width: 400px;
+  padding: 30px;
+}
+
+.ms-textField {
 
   & .ms-textField-input, & .ms-textField-textarea {
     width: 100%;
@@ -23,17 +29,12 @@
 }
 
 .ms-form-header {
-  font-size: 22px;
-  margin-bottom: 20px;
+  font-size: 24px;
+  line-height: 32px;
   font-weight: 600;
 }
 
-.ms-form {
-  background: var(--cardBackgroundColor);
-  //width: 400px;
-  max-width: 100%;
-  padding: 30px;
-}
+
 
 .ms-form .ms-textField {
   margin-top: 10px;
@@ -68,5 +69,18 @@
   &:focus {
     outline: 1px solid var(--primaryColor);
     border-color: var(--primaryColor);
+  }
+}
+
+
+@media screen and (max-width: 639px){
+  .ms-form {
+    width: 96vw;
+    overflow: hidden;
+  }
+
+  .ms-form-header {
+    font-size: 20px;
+    line-height: 28px;
   }
 }

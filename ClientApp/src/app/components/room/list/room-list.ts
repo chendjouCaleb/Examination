@@ -1,8 +1,9 @@
-﻿import {Component, Inject, Input, OnInit} from '@angular/core';
+﻿import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Department, Level, Room, School} from 'examination/entities';
 import {RoomLoader} from 'examination/loaders';
 import {IRoomService, ROOM_SERVICE_TOKEN} from '../room.service.interface';
 import {List} from '@positon/collections';
+import {MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'room-list.html',
@@ -18,10 +19,13 @@ export class RoomList implements OnInit {
   @Input()
   level: Level;
 
-  constructor(
-    private _roomLoader: RoomLoader,
-    @Inject(ROOM_SERVICE_TOKEN) public service: IRoomService) {
+  rooms: Array<Room> = [];
 
+  @ViewChild(MsTable)
+  table: MsTable;
+
+  constructor(private _roomLoader: RoomLoader,
+              @Inject(ROOM_SERVICE_TOKEN) public service: IRoomService) {
   }
 
   async ngOnInit() {
@@ -36,26 +40,52 @@ export class RoomList implements OnInit {
     if (this.level) {
       await this._roomLoader.loadByLevel(this.level);
     }
+
+    this.table.unshift(...this.getRooms().toArray())
   }
 
 
   addRoom() {
-    this.service.addRoom(this.school, this.department, this.level);
+    this.service.addRoom(this.school, this.department, this.level).then(room => {
+      this.table.unshift(room);
+    });
   }
 
-  get rooms(): List<Room> {
+  deleteRoom(room: Room) {
+    this.service.deleteRoom(room).then(deleted => {
+      if (deleted) {
+        this.table.remove(room);
+      }
+    });
+  }
+
+  getRooms(): List<Room> {
     if (this.school) {
       return this.school.rooms;
     }
 
-    if(this.department) {
+    if (this.department) {
       return this.department.rooms;
     }
 
-    if(this.level) {
+    if (this.level) {
       return this.level.rooms;
     }
 
     return new List<Room>();
+  }
+
+  get _school(): School {
+    if (this.school) {
+      return this.school;
+    }
+    if (this.department) {
+      return this.department.school;
+    }
+
+    if (this.level) {
+      return this.level.department.school;
+    }
+
   }
 }

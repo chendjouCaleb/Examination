@@ -1,5 +1,5 @@
-﻿﻿import {Application, Department, Level, LevelSpeciality, School} from "examination/models";
-import {InjectionToken} from "@angular/core";
+﻿﻿import {Application, Department, Level, LevelSpeciality, School} from 'examination/models';
+import {InjectionToken} from '@angular/core';
 
 export interface IApplicationLocation {
   school?: School,
@@ -16,7 +16,7 @@ export interface IApplicationService {
 
   add(location: IApplicationLocation): Promise<Application>;
 
-  delete(application: Application): Promise<void>
+  delete(application: Application): Promise<boolean>
 
   details(application: Application): void;
 

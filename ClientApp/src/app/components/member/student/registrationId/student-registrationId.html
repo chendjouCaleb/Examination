@@ -1,21 +1,24 @@
-﻿﻿<form class="ms-form" [formGroup]="form">
-  <div class="ms-form-header">Changer le matricule</div>
+﻿<div class="flex-center-cover">
+  ﻿
+  <form class="ms-form" [formGroup]="form">
+    <div class="ms-form-header">Changer le matricule</div>
 
 
-  <div class="ms-textField">
-    <label for="registrationId" class="msf-label">Matricule de l'étudiant</label>
-    <input id="registrationId" class="ms-textField-input" formControlName="registrationId"
-           (keyup)="checkRegistrationId()">
-    <app-control-error [control]="form.controls['registrationId']"></app-control-error>
-  </div>
+    <div class="ms-textField">
+      <label for="registrationId" class="msf-label">Matricule de l'étudiant</label>
+      <input id="registrationId" class="ms-textField-input" formControlName="registrationId"
+             (keyup)="checkRegistrationId()">
+      <app-control-error [control]="form.controls['registrationId']"></app-control-error>
+    </div>
 
 
-  <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" [class.msf-disabled]="form.invalid"  (click)="change()">
-      Modifier
-    </MsfButton>
-  </div>
-</form>
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" [disabled]="form.invalid" (click)="change()">
+        Modifier
+      </button>
+    </div>
+  </form>
 
 
+</div>

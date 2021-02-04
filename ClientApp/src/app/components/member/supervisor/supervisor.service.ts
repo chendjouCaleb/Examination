@@ -16,16 +16,17 @@ export class SupervisorService implements ISupervisorService {
   }
 
 
-  deleteSupervisor(supervisor: Supervisor): Promise<void> {
+  deleteSupervisor(supervisor: Supervisor): Promise<boolean> {
     const result = this._confirmation.open('Voulez-vous Supprimer ce superviseur?');
 
-    return new Promise<void>(resolve => {
+    return new Promise<boolean>(resolve => {
       result.accept.subscribe(async () => {
         await this._httpClient.delete(supervisor.id);
         supervisor.department.supervisors.remove(supervisor);
         this._alertEmitter.info('Le superviseur a été supprimé!');
+        resolve(true);
       });
-      resolve();
+      result.reject.subscribe(() => resolve(false));
     });
   }
 

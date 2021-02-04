@@ -1,5 +1,6 @@
 import {Component, EventEmitter, HostBinding, Output} from '@angular/core';
-import {AuthorizationManager} from '../../../app/authorization/authorization-manager';
+import {AuthorizationManager} from 'examination/app/authorization/authorization-manager';
+import {User} from 'examination/entities/identity';
 
 @Component({
   templateUrl: 'navbar.component.html',
@@ -17,5 +18,9 @@ export class NavbarComponent {
   buttonClick = new EventEmitter<string>();
 
   constructor(public authManager: AuthorizationManager) {
+  }
+
+  get user(): User {
+    return this.authManager.user;
   }
 }

@@ -1,11 +1,11 @@
-﻿import {Application, ApplicationHttpClient, ApplicationLoader} from "examination/models";
-import {Injectable} from "@angular/core";
-import {MsfModal} from "fabric-docs";
-import {AlertEmitter, Confirmation} from "examination/controls";
-import {IApplicationLocation, IApplicationService} from "./application.service.interface";
-import {ApplicationEdit} from "./edit/application-edit";
-import {ApplicationDetails} from "./details/application-details";
-import {ApplicationAdd} from "./add/application-add";
+﻿import {Application, ApplicationHttpClient, ApplicationLoader} from 'examination/models';
+import {Injectable} from '@angular/core';
+import {MsfModal} from 'fabric-docs';
+import {AlertEmitter, Confirmation} from 'examination/controls';
+import {IApplicationLocation, IApplicationService} from './application.service.interface';
+import {ApplicationEdit} from './edit/application-edit';
+import {ApplicationDetails} from './details/application-details';
+import {ApplicationAdd} from './add/application-add';
 
 
 @Injectable({providedIn: 'root'})
@@ -24,18 +24,19 @@ export class ApplicationService implements IApplicationService {
   }
 
 
-  delete(application: Application): Promise<void> {
+  delete(application: Application): Promise<boolean> {
     const result = this._confirmation.open('Voulez-vous Supprimer cette demande?');
 
-    return new Promise<void>(resolve => {
+    return new Promise<boolean>(resolve => {
       result.accept.subscribe(async () => {
         await this._httpClient.delete(application.id);
         application.level.applications?.remove(application);
         application.level.department?.applications?.remove(application);
         application.levelSpeciality?.applications?.remove(application);
         this._alertEmitter.info('La demande a été supprimée!');
+        resolve(true);
       });
-      resolve();
+      result.reject.subscribe(() => resolve(false));
     });
   }
 

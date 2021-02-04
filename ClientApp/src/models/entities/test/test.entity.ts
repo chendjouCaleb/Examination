@@ -5,11 +5,11 @@ import {List} from '@positon/collections';
 import {TestGroup} from './test-group.entity';
 import {Course} from '../organisation';
 import {ExaminationLevel, ExaminationLevelSpeciality} from '../examination';
-import {TestScore} from "./test-score.entity";
-import {sum} from "../../../controls/array";
-import {TestLevelSpeciality} from "./test-level-speciality.entity";
-import {Paper} from "./paper.entity";
-import {PaperStatistics} from "./paper-statistics";
+import {TestScore} from './test-score.entity';
+import {sum} from '../../../controls/array';
+import {TestLevelSpeciality} from './test-level-speciality.entity';
+import {Paper} from './paper.entity';
+import {PaperStatistics} from './paper-statistics';
 
 export class Test extends Entity<number> {
   constructor(value: any = {}) {
@@ -116,7 +116,7 @@ export class Test extends Entity<number> {
   isPlanner: boolean = false;
 
   removeTestGroup(testGroup: TestGroup) {
-    if(!this.testGroups) {
+    if (!this.testGroups) {
       return;
     }
 
@@ -126,7 +126,7 @@ export class Test extends Entity<number> {
   }
 
   get totalScoreRadical(): number {
-    if(!this.testScores) {return 0;}
+    if (!this.testScores) {return 0; }
     return sum(this.testScores.toArray(), s => s.radical)
   }
 
@@ -170,7 +170,7 @@ export class Test extends Entity<number> {
   }
 
   get specialityNames(): string[] {
-    if(!this.testLevelSpecialities) {return []}
+    if (!this.testLevelSpecialities) {return []}
 
     return this.testLevelSpecialities.toArray().map(t => t.examinationLevelSpeciality.levelSpeciality.speciality.name);
   }

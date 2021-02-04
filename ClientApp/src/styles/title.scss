@@ -5,3 +5,11 @@ h2 {
   color: var(--textColor);
   line-height: 36px;
 }
+
+
+@media screen and (max-width: 639px){
+  h2 {
+    font-size: 22px !important;
+    line-height: 22px;
+  }
+}

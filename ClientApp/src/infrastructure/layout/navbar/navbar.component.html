@@ -18,19 +18,13 @@
   </span>
 
 
-  <span (click)="buttonClick.emit('calendar')" class="navbar-button" id="event-panel-button">
-      <i class="ms-Icon ms-Icon--CalendarDay"></i>
-      <span class="ringer-badge">2</span>
-    </span>
-
   <span (click)="buttonClick.emit('settings')" class="navbar-button" id="settings-panel-button">
       <i class="ms-Icon ms-Icon--Settings"></i>
     </span>
 
-  <span (click)="buttonClick.emit('account')" class="navbar-button navbar-personna" id="account-panel-button">
-    <MsfPersona size="size40">
-      <MsfPersonaFigure [imageUrl]="authManager.user.imageUrl"></MsfPersonaFigure>
-    </MsfPersona>
+  <span (click)="buttonClick.emit('account')" class="navbar-button flex-center" id="account-panel-button">
+    <msPersona size="size40" *ngIf="!user.hasImage" [personIcon]="true"></msPersona>
+    <msPersona size="size40" color="transparent" *ngIf="user.hasImage" [imageUrl]="user.imageUrl"></msPersona>
     </span>
 </div>
 

@@ -1,7 +1,7 @@
 ﻿<div>
-  <div class="d-flex justify-content-between align-items-center">
-    <div class="ms-fontSize-24">Niveaux</div>
-    <MsfButton Icon="Add" theme="primary" (click)="addLevel()">Ajouter un niveau</MsfButton>
+  <div class="ms-pageTitle">
+    <h2>Niveaux</h2>
+    <button msButton icon="Add" theme="primary" (click)="addLevel()">Ajouter un niveau</button>
   </div>
 
   <div>
@@ -11,7 +11,7 @@
 
         <div>
           <a [routerLink]="item.url" class="mr-2">Détails</a>
-          <MsfIconButton icon="More" [MsfMenuTrigger]="levelMenu"></MsfIconButton>
+          <button msIconButton theme="transparent" icon="More" [MsfMenuTrigger]="levelMenu"></button>
           <MsfMenu #levelMenu>
             <MsfMenuItem icon="Add">Ajouter une spécialité</MsfMenuItem>
             <MsfMenuItem *ngIf="item.index === department.levels.length - 1" icon="Delete" theme="error"
@@ -28,8 +28,8 @@
         <span class="mr-2" *ngFor="let levelSpeciality of item.levelSpecialities">
           {{levelSpeciality.speciality.name}}
 
-          <MsfIconButton theme="error" icon="Delete" [rounded]="true"
-                         (click)="service.removeSpeciality(levelSpeciality)"></MsfIconButton>
+          <button msIconButton theme="error" icon="Delete"
+                  (click)="service.removeSpeciality(levelSpeciality)"></button>
         </span>
       </div>
     </div>

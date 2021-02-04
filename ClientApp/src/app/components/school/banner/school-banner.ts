@@ -1,7 +1,7 @@
-﻿import {Component, EventEmitter, Inject, Input, OnInit, Output} from "@angular/core";
-import {School} from "examination/entities";
-import {ISchoolService, SCHOOL_SERVICE_TOKEN} from "../school.service.interface";
-import {ApplicationService} from "../../member/application";
+﻿import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {School} from 'examination/entities';
+import {ISchoolService, SCHOOL_SERVICE_TOKEN} from '../school.service.interface';
+import {ApplicationService} from '../../member/application';
 
 @Component({
   templateUrl: 'school-banner.html',
@@ -19,6 +19,7 @@ export class SchoolBanner implements OnInit {
   imageUrl: string = 'https://cdn.spacetelescope.org/archives/images/wallpaper1/potw1345a.jpg';
 
   constructor(@Inject(SCHOOL_SERVICE_TOKEN) public service: ISchoolService,
+              private _elementRef: ElementRef<HTMLElement>,
               public applicationService: ApplicationService) {
   }
 

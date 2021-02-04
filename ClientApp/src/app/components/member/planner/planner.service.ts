@@ -18,16 +18,17 @@ export class PlannerService implements IPlannerService {
   }
 
 
-  deletePlanner(planner: Planner): Promise<void> {
+  deletePlanner(planner: Planner): Promise<boolean> {
     const result = this._confirmation.open('Voulez-vous Supprimer ce planificateur?');
 
-    return new Promise<void>(resolve => {
+    return new Promise<boolean>(resolve => {
       result.accept.subscribe(async () => {
         await this._httpClient.delete(planner.id);
         planner.school.planners.remove(planner);
         this._alertEmitter.info('Le planificateur a été supprimé!');
+        resolve(true);
       });
-      resolve();
+      result.reject.subscribe(() => resolve(false))
     });
   }
 

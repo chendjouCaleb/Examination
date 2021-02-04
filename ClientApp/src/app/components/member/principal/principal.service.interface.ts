@@ -8,5 +8,5 @@ export const PRINCIPAL_SERVICE_TOKEN =
 export interface IPrincipalService {
   addPrincipals(department: Department): Promise<List<Principal>>;
 
-  deletePrincipal(principal: Principal): Promise<void>;
+  deletePrincipal(principal: Principal): Promise<boolean>;
 }

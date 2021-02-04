@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, HammerModule} from '@angular/platform-browser';
 import {Inject, LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -19,8 +19,9 @@ import localeFrExtra from '@angular/common/locales/extra/fr';
 import {AlertEmitter} from 'examination/controls';
 import {LISTENER_ALERT_SERVICE_TOKEN} from 'examination/listeners';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {HubsModule} from "examination/hubs";
-import {MS_BUTTON_DEFAULT_OPTIONS, MsButtonDefaultOptions} from "@ms-fluent/button";
+import {HubsModule} from 'examination/hubs';
+import {MS_BUTTON_DEFAULT_OPTIONS, MsButtonDefaultOptions} from '@ms-fluent/button';
+import {Global} from 'examination/app/global';
 
 
 moment.locale('fr');
@@ -31,11 +32,11 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   declarations: [
     AppComponent
   ],
-  imports: [MatNativeDateModule, MatSnackBarModule,
+  imports: [MatNativeDateModule, MatSnackBarModule, HammerModule,
     BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule, MsfButtonModule, LayoutModule,
     AppHttpClientModule, HubsModule, BrowserAnimationsModule
   ],
-  providers: [Preference, CurrentItems,
+  providers: [Preference, CurrentItems, Global,
     {provide: LISTENER_ALERT_SERVICE_TOKEN, useExisting: AlertEmitter},
     {provide: LOCALE_ID, useValue: 'fr-FR'},
     {provide: MAT_DATE_LOCALE, useValue: 'fr'}
@@ -43,8 +44,10 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(preference: Preference, @Inject(MS_BUTTON_DEFAULT_OPTIONS) buttonOptions: MsButtonDefaultOptions) {
+  constructor(preference: Preference,
+              global: Global,
+              @Inject(MS_BUTTON_DEFAULT_OPTIONS) buttonOptions: MsButtonDefaultOptions) {
     preference.loadProperties();
-    buttonOptions.size = 'normal';
+    buttonOptions.size = global.isMobile() ? 'small' : 'normal';
   }
 }

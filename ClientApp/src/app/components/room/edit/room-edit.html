@@ -1,4 +1,5 @@
-<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+<div class="flex-center-cover">
+<form class="ms-form ms-depth-8" [formGroup]="form">
   <div class="ms-form-header">Ajouter une salle</div>
 
 
@@ -16,7 +17,7 @@
   </div>
 
   <div class="ms-textField">
-    <label for="address" class="msf-label">Address</label>
+    <label for="address" class="msf-label">Adresse</label>
     <input type="text" id="address" class="ms-textField-input" formControlName="address" >
     <app-control-error [control]="form.controls['address']"></app-control-error>
   </div>
@@ -25,7 +26,8 @@
 
 
   <div class="mt-4 text-right">
-    <MsfButton (click)="cancel()" class="mr-3">Annuler</MsfButton>
-    <button MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">Modifier</button>
+    <button msButton (click)="cancel()" class="mr-3">Annuler</button>
+    <button msButton theme="primary" icon="Edit" [disabled]="form.invalid" (click)="edit()">Modifier</button>
   </div>
 </form>
+</div>

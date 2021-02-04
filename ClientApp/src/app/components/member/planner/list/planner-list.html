@@ -1,36 +1,48 @@
-﻿
-<div class="d-flex justify-content-between align-items-center p-2">
-  <div class="ms-fontSize-24 ms-fontWeight-light py-2">Planificateurs</div>
-  <MsfButton Icon="Add" theme="primary" (click)="_service.addPlanners(school)">Ajouter des planificateurs</MsfButton>
+﻿<div class="ms-pageTitle">
+  <h2>Planificateurs</h2>
+  <button *ngIf="school.userPrincipal.isPrincipal" msButton icon="Add" theme="primary"
+          (click)="addPlanners()">
+    Ajouter <span class="ms-hiddenSm"> des planificateurs</span>
+  </button>
 </div>
 
-<MsfTable *ngIf="school.planners">
-  <MsfTableHead>
-    <MsfTableHeadCell>#</MsfTableHeadCell>
-    <MsfTableHeadCell>Utilisateur</MsfTableHeadCell>
-    <MsfTableHeadCell>Date d'ajout</MsfTableHeadCell>
+<msAlert class="mt-3" *ngIf="school.userPrincipal.isPrincipal">
+  Les planificateurs sont les personnes chargées de <b> dresser les emplois du temps des cours et des examens!</b> <br>
+  Ce sont aussi eux qui <b>ajouteront ou supprimeront les personnes qui surveillent, corrigent, et traitent les
+  épreuves</b>.
+</msAlert>
 
-    <MsfTableHeadCell></MsfTableHeadCell>
-  </MsfTableHead>
-  <MsfTableRow #row *ngFor="let item of school.planners">
-    <MsfTableCell>{{row.index}}</MsfTableCell>
-    <MsfTableCell>
-      <MsfPersona size="size32">
-        <MsfPersonaFigure [text]="item.user?.fullName" size="size32"></MsfPersonaFigure>
+<ms-table #table  class="mt-3">
+  <ms-tableHead *msTableHeadDef>
+    <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+    <ms-tableHeadCell name="user">Utilisateur</ms-tableHeadCell>
+    <ms-tableHeadCell name="registrationDate">Date d'ajout</ms-tableHeadCell>
+    <msTableHeadCell name="actions" class="text-right">
+      <i class="ms-Icon ms-Icon--SetAction"></i>
+    </msTableHeadCell>
+  </ms-tableHead>
+
+  <tr #row *ms-tableRowDef="let item of [] ; let i=index" ms-tableRow>
+    <td ms-tableCell>{{i + 1}} </td>
+
+    <td ms-tableCell>
+      <div class="d-flex">
+        <ms-persona size="size40" *ngIf="item.user.hasImage" [imageUrl]="item.user.imageUrl"></ms-persona>
+        <ms-persona size="size40" *ngIf="!item.user.hasImage" [text]="item.user.name"></ms-persona>
         <div class="ml-2">
           <div class="ms-fontWeight-semibold">{{item.user?.fullName}}</div>
           <div class="ms-fontSize-12" *ngIf="item.user?.username">@{{item.user?.username}}</div>
         </div>
-      </MsfPersona>
-    </MsfTableCell>
-    <MsfTableCell class="ms-fontSize-12">{{item.registrationDate | date}}</MsfTableCell>
+      </div>
+    </td>
+
+    <ms-tableCell class="ms-fontSize-12">{{item.registrationDate | date}}</ms-tableCell>
 
 
-    <MsfTableCell>
-      <MsfIconButton (click)="_service.deletePlanner(item)" icon="Delete" theme="error"
-                     [rounded]="true"></MsfIconButton>
-    </MsfTableCell>
-  </MsfTableRow>
-</MsfTable>
+    <ms-tableCell>
+      <button msIconButton (click)="deletePlanner(item)" icon="Delete" theme="error" [rounded]="true"></button>
+    </ms-tableCell>
+  </tr>
+</ms-table>
 
 

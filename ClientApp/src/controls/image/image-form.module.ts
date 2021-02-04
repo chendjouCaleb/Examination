@@ -1,10 +1,10 @@
-﻿import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {MsfButtonModule} from "fabric-docs";
-import {ImageForm} from "./image-form";
+﻿import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ImageForm} from './image-form';
+import {MsButtonModule} from '@ms-fluent/button';
 
 @NgModule({
-  imports: [ CommonModule, MsfButtonModule ],
+  imports: [ CommonModule, MsButtonModule ],
   declarations: [ ImageForm ],
   exports: [ ImageForm ]
 })

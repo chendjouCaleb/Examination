@@ -7,6 +7,5 @@ export const CORRECTOR_SERVICE_TOKEN =
 
 export interface ICorrectorService {
   addCorrectors(department: Department): Promise<List<Corrector>>;
-
-  deleteCorrector(corrector: Corrector): Promise<void>;
+  deleteCorrector(corrector: Corrector): Promise<boolean>;
 }

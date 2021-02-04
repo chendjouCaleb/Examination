@@ -8,7 +8,7 @@ import {School} from 'examination/entities';
 
 @Component({
   templateUrl: 'department-add.html',
-  selector: 'app-department-add'
+  selector: 'div [app-department-add]'
 })
 export class DepartmentAdd {
   @Input()

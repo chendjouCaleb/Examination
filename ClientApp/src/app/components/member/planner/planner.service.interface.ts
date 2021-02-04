@@ -8,5 +8,5 @@ export const PLANNER_SERVICE_TOKEN =
 export interface IPlannerService {
   addPlanners(school: School): Promise<List<Planner>>;
 
-  deletePlanner(planner: Planner): Promise<void>;
+  deletePlanner(planner: Planner): Promise<boolean>;
 }

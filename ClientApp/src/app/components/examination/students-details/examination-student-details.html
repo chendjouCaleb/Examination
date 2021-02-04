@@ -76,28 +76,31 @@
     </div>
   </div>
 
-  <div class="mt-3">
-    <MsfTable>
-      <MsfTableHead>
-        <MsfTableHeadCell>#</MsfTableHeadCell>
-        <MsfTableHeadCell>Cours</MsfTableHeadCell>
-        <MsfTableHeadCell>Groupe</MsfTableHeadCell>
-        <MsfTableHeadCell>Coefficient</MsfTableHeadCell>
-        <MsfTableHeadCell>Radical</MsfTableHeadCell>
-        <MsfTableHeadCell>Note</MsfTableHeadCell>
-        <MsfTableHeadCell>Présent</MsfTableHeadCell>
-        <MsfTableHeadCell></MsfTableHeadCell>
-      </MsfTableHead>
-      <MsfTableRow *ngFor="let paper of examinationStudent?.papers" #row>
-        <MsfTableCell>{{row.index + 1}}</MsfTableCell>
-        <MsfTableCell>{{paper.test?.course.name}}</MsfTableCell>
-        <MsfTableCell>
-          <a *ngIf="paper.testGroup" [routerLink]="paper.testGroup?.url">{{paper.testGroup?.index + 1}}</a>
-          <app-icon *ngIf="!paper.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
-        </MsfTableCell>
-        <MsfTableCell>{{paper.test?.coefficient}}</MsfTableCell>
-        <MsfTableCell>{{paper.test?.radical}}</MsfTableCell>
-        <MsfTableCell>
+
+  <ms-table>
+    <msTableHead *msTableHeadDef>
+      <msTableHeadCell name="#">#</msTableHeadCell>
+      <msTableHeadCell name="course">Cours</msTableHeadCell>
+      <msTableHeadCell name="groupIndex" [sortBy]="['groupIndex', 'number']">Groupe</msTableHeadCell>
+      <msTableHeadCell name="coefficient" [sortBy]="['coefficient', 'number']">Coefficient</msTableHeadCell>
+      <msTableHeadCell name="radical" [sortBy]="['radical', 'number']">Radical</msTableHeadCell>
+      <msTableHeadCell name="score" [sortBy]="['score', 'number']">Note</msTableHeadCell>
+      <msTableHeadCell name="present" [sortBy]="['present', 'string']">Présent</msTableHeadCell>
+      <msTableHeadCell name="actions" class="text-right">
+        <i class="ms-Icon ms-Icon--SetAction"></i>
+      </msTableHeadCell>
+    </msTableHead>
+
+    <msTableRow *ms-tableRowDef="let paper of papers; let i=index" [value]="paper">
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>{{paper.test?.course.name}}</ms-tableCell>
+      <ms-tableCell>
+        <a *ngIf="paper.testGroup" [routerLink]="paper.testGroup?.url">{{paper.testGroup?.index + 1}}</a>
+        <app-icon *ngIf="!paper.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </ms-tableCell>
+      <ms-tableCell>{{paper.test?.coefficient}}</ms-tableCell>
+      <ms-tableCell>{{paper.test?.radical}}</ms-tableCell>
+      <ms-tableCell>
         <span class="br-2 ms-fontWeight-semibold text-right ms-fontColor-white" *ngIf="paper.isCorrected && paper.test"
               style="padding:3px"
               [class.ms-bgColor-sharedRed20]="paper.is1_5"
@@ -108,18 +111,17 @@
         >
           <ng-container *ngIf="paper.score < 10">0</ng-container>
           {{paper.score}}</span>
-          <app-icon *ngIf="!paper.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
-        </MsfTableCell>
+        <app-icon *ngIf="!paper.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </ms-tableCell>
 
-        <MsfTableCell>
-          <app-icon *ngIf="!paper.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
-          <app-icon *ngIf="paper.isCorrected"></app-icon>
-        </MsfTableCell>
+      <ms-tableCell>
+        <app-icon *ngIf="!paper.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
+        <app-icon *ngIf="paper.isCorrected"></app-icon>
+      </ms-tableCell>
 
-        <MsfTableCell class="text-right">
-          <span class="ms-link" (click)="paperService.details(paper)">Détails</span>
-        </MsfTableCell>
-      </MsfTableRow>
-    </MsfTable>
-  </div>
+      <ms-tableCell class="text-right">
+        <span class="ms-link" (click)="paperService.details(paper)">Détails</span>
+      </ms-tableCell>
+    </msTableRow>
+  </ms-table>
 </div>

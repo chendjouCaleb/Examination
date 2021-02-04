@@ -5,12 +5,12 @@
   ElementRef,
   EventEmitter,
   forwardRef,
-  Input,
+  Input, OnDestroy,
   Output,
   ViewChild
-} from "@angular/core";
-import Cropper from "cropperjs";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+} from '@angular/core';
+import Cropper from 'cropperjs';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 
 export const IMAGE_FORM_VALUE_ACCESSOR: any = {
@@ -30,7 +30,7 @@ export interface ImageFormValue {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [IMAGE_FORM_VALUE_ACCESSOR]
 })
-export class ImageForm implements AfterViewInit, ControlValueAccessor{
+export class ImageForm implements AfterViewInit, OnDestroy, ControlValueAccessor {
   /** The title of the form. */
   @Input()
   title: string;
@@ -45,8 +45,14 @@ export class ImageForm implements AfterViewInit, ControlValueAccessor{
   @Input()
   ratio = 1;
 
+  @Input()
+  autoOpen: boolean = false;
 
-  @ViewChild("imageElement")
+  @ViewChild('inputFile')
+  _inputFile: ElementRef<HTMLInputElement>;
+
+
+  @ViewChild('imageElement')
   _imageElement: ElementRef<HTMLImageElement>;
 
   _cropper: Cropper;
@@ -57,18 +63,22 @@ export class ImageForm implements AfterViewInit, ControlValueAccessor{
 
   _imageUrl: string;
 
-  constructor(private _changeDetector: ChangeDetectorRef) {}
+  constructor(private _changeDetector: ChangeDetectorRef) {
+  }
 
   ngAfterViewInit(): void {
     Promise.resolve().then(() => {
-      if(this.defaultImageUrl) {
+      if (this.defaultImageUrl) {
         this._imageUrl = this.defaultImageUrl;
         this.startResize();
         this._changeDetector.markForCheck();
-        console.log("There are image")
+        console.log('There are image')
       }
+    });
 
-    })
+    if (this.isMobile()) {
+      this._inputFile.nativeElement.click();
+    }
   }
 
 
@@ -79,7 +89,7 @@ export class ImageForm implements AfterViewInit, ControlValueAccessor{
     const file = inputImage.files[0];
     const reader = new FileReader();
 
-    reader.addEventListener("load", (event) => {
+    reader.addEventListener('load', (event) => {
       this._imageUrl = event.target.result.toString();
       this.startResize();
     });
@@ -127,10 +137,12 @@ export class ImageForm implements AfterViewInit, ControlValueAccessor{
   }
 
   /** `View -> model callback called when value changes` */
-  _onChange: (value: any) => void = () => { };
+  _onChange: (value: any) => void = () => {
+  };
 
   /** `View -> model callback called when select has been touched` */
-  _onTouched = () => { };
+  _onTouched = () => {
+  };
 
   registerOnChange(fn: any): void {
 
@@ -141,5 +153,10 @@ export class ImageForm implements AfterViewInit, ControlValueAccessor{
     this._onTouched = fn;
   }
 
-  writeValue(obj: any): void { }
+  writeValue(obj: any): void {
+  }
+
+  isMobile(): boolean {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  }
 }

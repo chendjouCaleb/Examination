@@ -108,10 +108,11 @@
 
 .navbar-button {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 55px;
   width: 55px;
-  line-height: 55px;
 
   border: 1px solid transparent;
   box-sizing: border-box;

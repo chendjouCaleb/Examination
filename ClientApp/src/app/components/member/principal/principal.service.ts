@@ -17,16 +17,17 @@ export class PrincipalService implements IPrincipalService {
   }
 
 
-  deletePrincipal(principal: Principal): Promise<void> {
+  deletePrincipal(principal: Principal): Promise<boolean> {
     const result = this._confirmation.open('Voulez-vous Supprimer ce délégué?');
 
-    return new Promise<void>(resolve => {
+    return new Promise<boolean>(resolve => {
       result.accept.subscribe(async () => {
         await this._httpClient.delete(principal.id);
         principal.department.principals.remove(principal);
         this._alertEmitter.info('Le délégué a été supprimé!');
+        resolve(true);
       });
-      resolve();
+      result.reject.subscribe(() => resolve(false));
     });
   }
 

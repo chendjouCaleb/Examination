@@ -8,5 +8,5 @@ export const SECRETARY_SERVICE_TOKEN =
 export interface ISecretaryService {
   addSecretaries(department: Department): Promise<List<Secretary>>;
 
-  deleteSecretary(secretary: Secretary): Promise<void>;
+  deleteSecretary(secretary: Secretary): Promise<boolean>;
 }
