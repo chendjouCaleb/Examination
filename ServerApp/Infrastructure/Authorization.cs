@@ -41,17 +41,15 @@ namespace Exam.Infrastructure
         {
             Authorization auth = bindingContext.HttpContext.Items["Authorization"] as Authorization;
 
-            if(auth == null)
+            if(auth?.User != null)
             {
-                throw new InvalidOperationException("There are no authorization attribute in http context items");
+                bindingContext.Result = ModelBindingResult.Success(auth.User);
+            }
+            else
+            {
+                bindingContext.Result = ModelBindingResult.Success(null);
             }
 
-            if (auth.User == null)
-            {
-                throw new InvalidOperationException("There are no logged user");
-            }
-
-            bindingContext.Result = ModelBindingResult.Success(auth.User);
             return Task.CompletedTask;
         }
     }

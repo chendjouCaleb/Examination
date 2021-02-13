@@ -5,7 +5,7 @@ import {AlertEmitter} from 'examination/controls';
 import {MsfModalRef} from 'fabric-docs';
 import {LevelLoader, LevelSpecialityLoader} from 'examination/loaders';
 import {Department, Speciality} from 'examination/entities';
-import {List} from "@positon/collections";
+import {List} from '@positon/collections';
 
 @Component({
   templateUrl: 'level-add.html',

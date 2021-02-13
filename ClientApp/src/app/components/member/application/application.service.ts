@@ -41,7 +41,7 @@ export class ApplicationService implements IApplicationService {
   }
 
   details(application: Application) {
-    const modal = this._dialog.open(ApplicationDetails, {minWidth: '750px'});
+    const modal = this._dialog.open(ApplicationDetails);
     modal.componentInstance.application = application;
   }
 

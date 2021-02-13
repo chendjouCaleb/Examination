@@ -1,7 +1,10 @@
 ﻿<app-layout>
-  <div class="p-3">
-    <div class="ms-pageTitle">
-      <h2>{{speciality.name}}</h2>
+  <div>
+    <div class="ms-header">
+      <div class="d-flex align-items-center">
+        <button [routerLink]="speciality.department.url" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <div class="ms-header-title">{{speciality.name}}</div>
+      </div>
     </div>
 
     <msPivot>

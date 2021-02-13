@@ -1,13 +1,15 @@
-﻿import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+﻿import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {School} from 'examination/entities';
 import {ISchoolService, SCHOOL_SERVICE_TOKEN} from '../school.service.interface';
 import {ApplicationService} from '../../member/application';
 
 @Component({
   templateUrl: 'school-banner.html',
-  styleUrls: ['school-banner.scss'],
+  encapsulation: ViewEncapsulation.None,
   selector: 'app-school-banner',
-
+  host: {
+    'class': 'school-banner'
+  }
 })
 export class SchoolBanner implements OnInit {
   @Input()

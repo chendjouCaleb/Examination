@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 
 import {Loader} from '../loader';
 import {StudentLoader} from './student.loader';
-import {Application, Department, Level, LevelSpeciality} from 'examination/entities';
+import {Application, Department, Level, LevelSpeciality, School} from 'examination/entities';
 import {AuthorizationManager} from 'examination/app/authorization';
 import {ApplicationHttpClient, UserHttpClient} from 'examination/models/http';
-import {LevelLoader, LevelSpecialityLoader} from "../organisation";
+import {LevelLoader, LevelSpecialityLoader} from '../organisation';
 
 
 @Injectable({providedIn: 'root'})
@@ -64,6 +64,17 @@ export class ApplicationLoader extends Loader<Application, number> {
         application.department = department;
       }
       department.applications = applications;
+    }
+  }
+
+  async loadBySchool(school: School): Promise<void> {
+    if (school && !school.applications) {
+      const applications = await this.applicationRepository.list({schoolId: school.id});
+      for (const application of applications) {
+        await this.load(application);
+        application.school = school;
+      }
+      school.applications = applications;
     }
   }
 

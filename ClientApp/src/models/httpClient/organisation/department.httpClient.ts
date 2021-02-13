@@ -1,5 +1,5 @@
 import {GenericHttpClient, SERVER_URL} from '../httpClient';
-import {Department, DepartmentUser, School} from 'examination/entities';
+import {Department, DepartmentStatistics, DepartmentUser, School} from 'examination/entities';
 import {Injectable} from '@angular/core';
 import {DepartmentAddModelBody} from 'examination/models';
 
@@ -60,6 +60,10 @@ export class DepartmentHttpClient extends GenericHttpClient<Department, number> 
 
   getImageUrl(department: Department): string {
     return `${this.url}/${department.id}/image`;
+  }
+
+  async statistics(department: Department): Promise<DepartmentStatistics> {
+    return this.httpClient.get<DepartmentStatistics>(`${this.url}/${department.id}/statistics`).toPromise();
   }
 
   async departmentUser(departmentId: number, userId: string) {

@@ -49,6 +49,7 @@ namespace Exam.Controllers
         }
 
 
+
         /// <summary>
         /// Pour ajouter une specialité à un niveau.
         /// 
@@ -61,7 +62,7 @@ namespace Exam.Controllers
         [HttpPost]
         [RequireQueryParameter("levelId")]
         [RequireQueryParameter("specialityId")]
-        [LoadLevel(Source = ParameterSource.Query)]
+        [LoadLevel(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [LoadSpeciality(Source = ParameterSource.Query)]
         [AuthorizeDepartmentPrincipal]
         public ObjectResult Add(Level level, Speciality speciality)

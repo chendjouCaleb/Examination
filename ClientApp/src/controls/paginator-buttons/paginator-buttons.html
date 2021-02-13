@@ -1,0 +1,13 @@
+<div class="ms-paginatorButtons-layout" style="height: 32px">
+  <button size="normal" msIconButton style="position: absolute; left: 0; top: 0"
+          [disabled]="!paginator.hasPreviousPage" (click)="paginator.previousPage()" icon="ChevronLeft" theme="standard"></button>
+  <div class="ms-paginatorButtons-page-layout">
+    <span class="ms-paginatorButtons-page"
+          *ngFor="let page of paginator.pageIndexes" [class.active]="paginator.currentPageIndex === page"
+          (click)="paginator.currentPageIndex = page">
+    {{page}}
+  </span>
+  </div>
+  <button size="normal" msIconButton style="position: absolute; right: 0; top: 0"
+          [disabled]="!paginator.hasNextPage" (click)="paginator.nextPage()" icon="ChevronRight" theme="standard"></button>
+</div>

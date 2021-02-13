@@ -4,7 +4,7 @@ html {
   --opacity: 1;
   --blurSize: 10px;
   --redColor: rgba(209, 52, 56, 1);
-  --pinkColor: #005b70;
+  --pinkColor: #00657c;
   --blueColor: #{$ms-color-blue};
   --greenColor: rgba(16, 124, 16, var(--opacity));
 
@@ -15,16 +15,17 @@ html {
 
 
   --textColor: #{$ms-color-gray190};
-  --navbarBackgroundColor: #{$ms-color-gray40};
+
 
   --sidebarBackgroundColor: #{$ms-color-gray30};
   --sidenavBorderColor: #{$ms-color-sharedRed10};
 
   --bodyBackgroundColor: #{$ms-color-gray10};
 
+  --navbarBackgroundColor: var(--pinkColor);
+  --navbarBackgroundColorSecondary: var(--pinkColor);
+  --navbarColor: #{$ms-color-gray10};
 
-  --navbarBackgroundColorSecondary: #{$ms-color-gray50};
-  --navbarColor: #{$ms-color-gray190};
   --badgeBackgroundColor: #{$ms-color-sharedRed10};
   --badgeColor: #{$ms-color-gray10};
 
@@ -39,7 +40,6 @@ html {
 html[data-theme="light"] {
   --textColor: #{$ms-color-gray190};
 
-
   --bodyBackgroundColor:  #FFF;
   --secondaryBackgroundColor:  #{$ms-color-gray30};
   --hoverBackgroundColor: #{$ms-color-gray40};
@@ -48,14 +48,14 @@ html[data-theme="light"] {
 
   --sidebarBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.2));
 
-
-  --navbarBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.1));
-  --navbarBackgroundColorSecondary: #{$ms-color-gray160};
-  --navbarColor: #{$ms-color-gray190};
-
   --panelBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.5));
 
   --borderColor:  #{$ms-color-gray30};
+  --headerBgColor:  #{$ms-color-gray30};
+
+  --standardColor: #{$ms-color-gray160};
+  --standardBgColor: #{$ms-color-gray30};
+  --standardBgColor--hover: #{$ms-color-gray40};
 }
 
 html[data-theme="dark"] {
@@ -68,16 +68,16 @@ html[data-theme="dark"] {
 
   --sidebarBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.2));
 
-
-  --navbarBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.1));
-  --navbarBackgroundColorSecondary: #{$ms-color-gray160};
-  --navbarColor: #{$ms-color-gray10};
-
   --textFieldBorderColor: #{$ms-color-gray30};
 
   --panelBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.5));
 
   --borderColor:  #{$ms-color-gray150};
+  --headerBgColor:  #{$ms-color-gray150};
+
+  --standardColor: #{$ms-color-gray10};
+  --standardBgColor: #{$ms-color-gray170};
+  --standardBgColor--hover: #{$ms-color-gray200};
 }
 
 

@@ -1,18 +1,18 @@
 ﻿<div class="ms-pageTitle">
-  <h2>Planificateurs</h2>
+  <h4>Planificateurs</h4>
   <button *ngIf="school.userPrincipal.isPrincipal" msButton icon="Add" theme="primary"
           (click)="addPlanners()">
     Ajouter <span class="ms-hiddenSm"> des planificateurs</span>
   </button>
 </div>
 
-<msAlert class="mt-3" *ngIf="school.userPrincipal.isPrincipal">
+<msAlert theme="standard" class="mt-3" *ngIf="school.userPrincipal.isPrincipal">
   Les planificateurs sont les personnes chargées de <b> dresser les emplois du temps des cours et des examens!</b> <br>
   Ce sont aussi eux qui <b>ajouteront ou supprimeront les personnes qui surveillent, corrigent, et traitent les
   épreuves</b>.
 </msAlert>
 
-<ms-table #table  class="mt-3">
+<ms-table #table class="mt-3">
   <ms-tableHead *msTableHeadDef>
     <ms-tableHeadCell name="#">#</ms-tableHeadCell>
     <ms-tableHeadCell name="user">Utilisateur</ms-tableHeadCell>
@@ -40,7 +40,9 @@
 
 
     <ms-tableCell>
-      <button msIconButton (click)="deletePlanner(item)" icon="Delete" theme="error" [rounded]="true"></button>
+      <ng-container *ngIf="school.userPrincipal.isPrincipal">
+        <button msIconButton (click)="deletePlanner(item)" icon="Delete" theme="error" [rounded]="true"></button>
+      </ng-container>
     </ms-tableCell>
   </tr>
 </ms-table>

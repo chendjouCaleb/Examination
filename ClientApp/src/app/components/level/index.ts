@@ -4,3 +4,4 @@ export * from './level.module';
 export * from './level.resolver';
 export * from './level.service.interface';
 export * from './level.service';
+export * from './speciality/level-speciality-add';

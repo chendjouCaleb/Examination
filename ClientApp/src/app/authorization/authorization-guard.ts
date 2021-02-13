@@ -3,6 +3,16 @@ import {Injectable} from '@angular/core';
 import {AuthorizationManager} from './authorization-manager';
 
 @Injectable({providedIn: 'root'})
+export class LoadAuthorizationGuard implements CanActivate {
+  constructor(private _authManager: AuthorizationManager, private _router: Router) {
+  }
+
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    return await this._authManager.getAuthorizationState();
+  }
+}
+
+@Injectable({providedIn: 'root'})
 export class AuthorizedGuard implements CanActivate {
   constructor(private _authManager: AuthorizationManager, private _router: Router) {
   }

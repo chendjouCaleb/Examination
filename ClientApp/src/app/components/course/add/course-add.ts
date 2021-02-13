@@ -72,7 +72,7 @@ export class CourseAdd implements OnInit {
     this.level.addCourse(course);
     await this._courseLevelSpecialityLoader.loadByCourse(course);
 
-    if (course.isGeneral) {
+    if (!course.isGeneral) {
       this.form.getModel().levelSpecialities.forEach(l => {
         l.addCourseLevelSpecialities(course.courseLevelSpecialities);
         l.speciality.addCourse(course);

@@ -47,7 +47,9 @@ export class RoomList implements OnInit {
 
   addRoom() {
     this.service.addRoom(this.school, this.department, this.level).then(room => {
-      this.table.unshift(room);
+      if (room) {
+        this.table.unshift(room);
+      }
     });
   }
 

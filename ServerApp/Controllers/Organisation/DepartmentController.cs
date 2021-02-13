@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Exceptions;
@@ -11,8 +12,11 @@ using Exam.Entities;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
+using Exam.Models.Statistics;
+using Exam.Statistics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 
@@ -23,19 +27,43 @@ namespace Exam.Controllers
     {
         private readonly IRepository<Department, long> _departmentRepository;
         private readonly IConfiguration _configuration;
+        private readonly DbContext _dbContext;
 
         public DepartmentController(IRepository<Department, long> departmentRepository,
+            DbContext dbContext,
             IConfiguration configuration)
         {
             _departmentRepository = departmentRepository;
             _configuration = configuration;
+            _dbContext = dbContext;
         }
 
 
         [LoadDepartment]
         [HttpGet("{departmentId}")]
-        public Department Get(Department department)
+        public Department Get(Department department, User user)
         {
+            Assert.RequireNonNull(department, nameof(department));
+            
+            if (!string.IsNullOrEmpty(user?.Id))
+            {
+                Console.Clear();
+                department.IsPrincipalUser = department.PrincipalUserId == user.Id;
+                department.IsCorrector = _dbContext.Set<Corrector>()
+                    .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);
+                
+                department.IsSecretary = _dbContext.Set<Secretary>()
+                    .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);
+                
+                department.IsSupervisor = _dbContext.Set<Supervisor>()
+                    .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);
+                
+                department.IsPrincipal = _dbContext.Set<Principal>()
+                    .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);
+                
+                department.IsStudent = _dbContext.Set<Student>()
+                    .Any(s => s.UserId != null && s.UserId == user.Id && s.Level.DepartmentId == department.Id);
+            }
             return department;
         }
 
@@ -63,6 +91,14 @@ namespace Exam.Controllers
         public Department FindByAcronym(School school, string acronym)
         {
             return _departmentRepository.First(d => school.Equals(d.School) && d.Acronym == acronym);
+        }
+
+
+        [LoadDepartment]
+        [HttpGet("{departmentId}/statistics")]
+        public DepartmentStatistics Get(Department department)
+        {
+            return new DepartmentStatisticsBuilder(_dbContext).GetStatistics(department);
         }
 
         [HttpGet]

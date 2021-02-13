@@ -1,12 +1,13 @@
 import {ISpecialityService} from './speciality.service.interface';
 import {Injectable} from '@angular/core';
 import {MsfModal} from 'fabric-docs';
-import {Speciality, Department, Level, LevelSpeciality} from 'examination/entities';
+import {Department, LevelSpeciality, Speciality} from 'examination/entities';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {SpecialityAdd} from './add/speciality-add';
 import {SpecialityEdit} from './edit/speciality-edit';
 import {SpecialityDelete} from './delete/speciality-delete';
-import {LevelSpecialityHttpClient} from "examination/models/http";
+import {LevelSpecialityHttpClient} from 'examination/models/http';
+import {SpecialityLevelAdd} from './level/speciality-level-add';
 
 @Injectable()
 export class SpecialityService implements ISpecialityService {
@@ -36,15 +37,11 @@ export class SpecialityService implements ISpecialityService {
     return modalRef.afterClosed().toPromise();
   }
 
-  addLevelSpeciality(speciality: Speciality, level: Level): Promise<LevelSpeciality> {
-    const result = this._confirmation.open(`Ajouter le niveau ${level.index} à la spécialité ${speciality.name}`);
+  addLevelSpeciality(speciality: Speciality): Promise<LevelSpeciality> {
+    const modalRef = this._modal.open(SpecialityLevelAdd, {autoFocus: false});
+    modalRef.componentInstance.speciality = speciality;
 
-    return new Promise<LevelSpeciality>(resolve => {
-      result.accept.subscribe(async () => {
-        const levelSpeciality = await this._levelSpecialityHttpClient.addLevelSpeciality(level, speciality);
-        resolve(levelSpeciality);
-      });
-    });
+    return modalRef.afterClosed().toPromise();
   }
 
   removeLevelSpeciality(levelSpeciality: LevelSpeciality): Promise<boolean> {

@@ -1,19 +1,20 @@
-﻿import {Component, Directive, ElementRef, HostBinding, Input, OnInit, ViewEncapsulation} from "@angular/core";
+﻿import {Component, Directive, ElementRef, HostBinding, Input, OnInit, ViewEncapsulation} from '@angular/core';
 
 
-export type msAlertTheme = 'info' | 'success' | 'severeWarning' | 'error';
+export type msAlertTheme = 'info' | 'success' | 'severeWarning' | 'error' | 'standard';
 export type msAlertDisplay = 'inline-block' | 'inline' | 'block';
 
 
 @Directive({
   selector: '[msAlertFooter]',
-  host: { 'class': 'ms-alert-footer'}
+  host: {'class': 'ms-alert-footer'}
 })
-export class MsAlertFooter {}
+export class MsAlertFooter {
+}
 
 @Directive({
   selector: '[msAlertButton]',
-  host: { 'class': 'ms-alert-button'}
+  host: {'class': 'ms-alert-button'}
 })
 export class MsAlertButton {
   @Input()
@@ -21,29 +22,30 @@ export class MsAlertButton {
 
   @HostBinding('class')
   get className(): string {
-    if(this.action){
-      return  `ms-fontColor-${this.alert.theme} ms-borderColor-${this.alert.theme}`;
+    if (this.action) {
+      return `ms-fontColor-${this.alert.theme} ms-borderColor-${this.alert.theme}`;
     }
-    return  '';
+    return '';
   }
-    constructor(private alert: MsAlert) {
-      if(!alert){
-        throw new Error("The MsAlertButton should be inside a MsAlert")
-      }
+
+  constructor(private alert: MsAlert) {
+    if (!alert) {
+      throw new Error('The MsAlertButton should be inside a MsAlert')
     }
+  }
 }
 
 @Component({
-  selector: "msAlert",
+  selector: 'msAlert, ms-alert',
   templateUrl: 'alert.html',
-  styleUrls: [ 'alert.scss' ],
+  styleUrls: ['alert.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MsAlert implements OnInit{
+export class MsAlert implements OnInit {
   @Input()
   theme: msAlertTheme = 'info';
 
-  @HostBinding("style.display")
+  @HostBinding('style.display')
   @Input()
   display: msAlertDisplay = 'block';
 
@@ -57,12 +59,16 @@ export class MsAlert implements OnInit{
   closeButton: boolean = true;
 
 
-  get visible(): boolean { return this._visible}
+  get visible(): boolean {
+    return this._visible
+  }
+
   private _visible: boolean = false;
 
   private _height;
 
-  constructor(private _elementRef: ElementRef<HTMLElement>) {}
+  constructor(private _elementRef: ElementRef<HTMLElement>) {
+  }
 
   ngOnInit(): void {
     this.className = `ms-alert ms-fontColor-${this.theme} ms-bgColor-${this.theme}`;
@@ -74,7 +80,7 @@ export class MsAlert implements OnInit{
   }
 
 
-  hide():Promise<void> {
+  hide(): Promise<void> {
     return new Promise<void>(resolve => {
 
       this.element.animate([
@@ -89,13 +95,13 @@ export class MsAlert implements OnInit{
     })
   }
 
-  show():Promise<void> {
+  show(): Promise<void> {
     return new Promise<void>(resolve => {
       this.element.style.display = this.display;
       this.element.animate([
         {height: '0'},
         {height: `${this._height}px`}
-        ], {duration: 200, fill: 'both'})
+      ], {duration: 200, fill: 'both'})
         .onfinish = () => {
         this._visible = true;
         resolve();
@@ -104,13 +110,13 @@ export class MsAlert implements OnInit{
   }
 
   get iconName(): string {
-    if(this.theme === 'info' ) {
+    if (this.theme === 'info') {
       return 'Info'
     }
-    if(this.theme === 'success'){
+    if (this.theme === 'success') {
       return 'Completed'
     }
-    if(this.theme === 'severeWarning') {
+    if (this.theme === 'severeWarning') {
       return 'Warning12';
     }
 

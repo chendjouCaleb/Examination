@@ -1,16 +1,21 @@
-﻿import {Component, Input} from '@angular/core';
+﻿import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Department} from 'examination/entities';
-import {CurrentItems} from 'examination/app/current-items';
-import {Router} from '@angular/router';
+import {DepartmentHttpClient} from 'examination/models/http';
 
 @Component({
   templateUrl: 'department-home.page.html',
   selector: 'app-department-home-page',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['department-home.page.scss']
 })
-export class DepartmentHomePage {
+export class DepartmentHomePage implements OnInit {
 
   @Input()
   department: Department;
 
+  constructor(private _httpClient: DepartmentHttpClient) {}
+
+  async ngOnInit() {
+    this.department.statistics = await this._httpClient.statistics(this.department);
+  }
 }

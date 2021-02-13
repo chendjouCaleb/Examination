@@ -2,7 +2,7 @@
 import {CommonModule} from '@angular/common';
 import {MsfButtonModule} from 'fabric-docs';
 import {AuthorizationManager} from './authorization-manager';
-import {AuthorizedGuard, NoAuthorizedGuard} from './authorization-guard';
+import {AuthorizedGuard, LoadAuthorizationGuard, NoAuthorizedGuard} from './authorization-guard';
 import {AuthorizeCallbackComponent} from './authorize-callback.component';
 import {AuthorizeRequestComponent} from './authorize-request.component';
 import {RouterModule, Routes} from '@angular/router';
@@ -19,7 +19,7 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, MsfButtonModule, LayoutModule, RouterModule.forChild(routes)],
   declarations: [AuthorizeCallbackComponent, AuthorizeRequestComponent],
-  providers: [AuthorizationManager, AuthorizedGuard, NoAuthorizedGuard,
+  providers: [AuthorizationManager, AuthorizedGuard, NoAuthorizedGuard, LoadAuthorizationGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true}]
 })
 export class AuthorizationModule {

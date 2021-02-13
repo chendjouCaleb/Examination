@@ -5,7 +5,6 @@ import {IApplicationService, STUDENT_APPLICATION_SERVICE_TOKEN} from "examinatio
 
 @Component({
   templateUrl: 'department-banner.html',
-  styleUrls: ['department-banner.scss'],
   selector: 'app-department-banner',
 
 })

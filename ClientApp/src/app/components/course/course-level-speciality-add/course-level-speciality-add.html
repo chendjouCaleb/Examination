@@ -1,4 +1,5 @@
-<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
+<div class="flex-center-cover">
+<form class="ms-form ms-depth-8" [formGroup]="form">
   <div class="ms-form-header">Ajouter un cours</div>
 
 
@@ -27,7 +28,8 @@
 
 
   <div class="mt-4 text-right">
-    <MsfButton MsfModalClose  class="mr-3">Annuler</MsfButton>
-    <button MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">Ajouter</button>
+    <button msButton MsfModalClose  class="mr-3">Annuler</button>
+    <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
   </div>
 </form>
+</div>

@@ -1,30 +1,28 @@
-﻿<div class="department-banner-layout">
-  <div class="department-banner-cover">
-    <img  [src]="department.coverImageUrl" alt="">
+﻿<div class="school-banner-layout">
+  <div class="school-banner-cover">
+    <img [src]="department.coverImageUrl" alt="">
   </div>
 
-  <div class="department-banner-front">
-    <div class="department-banner-image">
-      <img [src]="imageUrl" alt="">
-    </div>
-    <div class="department-banner-info">
-      <div class="ms-fontSize-24">{{department.name | ucFirst}}({{department.acronym| uppercase}})</div>
-
-
-      <labelled-icon icon="POISolid" [text]="department.address"> </labelled-icon>
-      <MsfPersona size="size32">
-        <MsfPersonaFigure [imageUrl]="department.principalUser.imageUrl"></MsfPersonaFigure>
-        <MsfPersonaText>{{department.principalUser.fullName | titlecase}}</MsfPersonaText>
-      </MsfPersona>
-      <div class="mt-2">
-        0 niveaux, 0 specialités
+  <div>
+    <div class="school-banner-front">
+      <div class="school-banner-image">
+        <img [src]="imageUrl" alt="Logo de l'école">
+      </div>
+      <div class="school-banner-info">
+        <div>
+          <div class="school-banner-name">{{department.name | ucFirst}}({{department.acronym| uppercase}})</div>
+          <div class="my-2 ms-divider" ></div>
+          <labelled-icon icon="POISolid" [text]="department.address"></labelled-icon>
+        </div>
       </div>
     </div>
   </div>
-  <div class="department-banner-footer">
-    <MsfButton theme="primary" Icon="AddFriend" (click)="sendApplication()">Devenir étudiant</MsfButton>
-    <MsfButton Icon="Settings" theme="standard" LeftIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">Paramètres
-    </MsfButton>
+  <div class="school-banner-footer">
+    <button msButton theme="primary" icon="AddFriend" (click)="sendApplication()">Devenir étudiant</button>
+    <button *ngIf="department.userPrincipal.isPrincipal" msButton icon="Settings"
+            theme="standard" secondaryIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">
+      Paramètres
+    </button>
     <MsfMenu #settingsMenu>
       <MsfMenuItem icon="Edit" (click)="service.edit(department)">Modifier les informations</MsfMenuItem>
 

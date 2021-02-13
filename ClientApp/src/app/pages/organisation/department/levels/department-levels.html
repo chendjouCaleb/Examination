@@ -1,7 +1,8 @@
 ﻿<div>
   <div class="ms-pageTitle">
-    <h2>Niveaux</h2>
-    <button msButton icon="Add" theme="primary" (click)="addLevel()">Ajouter un niveau</button>
+    <div class="ms-fontSize-20">Niveaux</div>
+    <button class="ml-5" msButton icon="Add" theme="primary" (click)="addLevel()">Ajouter <span class="ms-hiddenSm">un niveau</span>
+    </button>
   </div>
 
   <div>
@@ -9,26 +10,30 @@
       <div class="d-flex justify-content-between align-items-center">
         <div class="ms-fontSize-18 ms-fontWeight-semibold">Niveau {{item.index + 1}}</div>
 
-        <div>
+        <div class="d-flex align-items-center">
           <a [routerLink]="item.url" class="mr-2">Détails</a>
-          <button msIconButton theme="transparent" icon="More" [MsfMenuTrigger]="levelMenu"></button>
-          <MsfMenu #levelMenu>
-            <MsfMenuItem icon="Add">Ajouter une spécialité</MsfMenuItem>
-            <MsfMenuItem *ngIf="item.index === department.levels.length - 1" icon="Delete" theme="error"
-                         (click)="deleteLevel(item)">
-              Supprimer ce niveau
-            </MsfMenuItem>
-          </MsfMenu>
+
+          <ng-container *ngIf="department.isPrincipalUser">
+            <button msIconButton theme="transparent" icon="More" [MsfMenuTrigger]="levelMenu"></button>
+            <MsfMenu #levelMenu>
+              <MsfMenuItem icon="Add" (click)="service.addSpeciality(item)">Ajouter une spécialité</MsfMenuItem>
+              <MsfMenuItem *ngIf="item.index === department.levels.length - 1" icon="Delete" theme="error"
+                           (click)="deleteLevel(item)">
+                Supprimer ce niveau
+              </MsfMenuItem>
+            </MsfMenu>
+          </ng-container>
         </div>
 
       </div>
 
+      <div class="ms-divider mb-2"></div>
 
       <div>
-        <span class="mr-2" *ngFor="let levelSpeciality of item.levelSpecialities">
+        <span style="border: 1px solid var(--borderColor); border-radius: 15px; display: inline-block" class="p-1 mr-2" *ngFor="let levelSpeciality of item.levelSpecialities">
           {{levelSpeciality.speciality.name}}
 
-          <button msIconButton theme="error" icon="Delete"
+          <button msIconButton theme="transparent" icon="Delete" size="small"
                   (click)="service.removeSpeciality(levelSpeciality)"></button>
         </span>
       </div>

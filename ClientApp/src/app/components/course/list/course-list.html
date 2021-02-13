@@ -1,51 +1,54 @@
-﻿<div class="d-flex justify-content-between align-items-center p-2">
-  <div class="ms-fontSize-24">Cours</div>
-  <MsfButton Icon="Add" theme="primary" *ngIf="level" (click)="addCourse() ">Ajouter un cours</MsfButton>
+﻿<div class="ms-pageTitle">
+  <h2>Cours</h2>
+  <button msButton
+          icon="Add" theme="primary" *ngIf="level && school.userPrincipal.isPlanner" (click)="addCourse() ">
+    Ajouter <span class="ms-hiddenSm">un cours</span></button>
 </div>
 
+
 <div>
+  <ms-table>
+    <ms-tableHead *msTableHeadDef>
+      <ms-tableHeadCell name="">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>
+      <ms-tableHeadCell name="code" [sortBy]="['code', 'string']">code</ms-tableHeadCell>
+      <ms-tableHeadCell name="coefficient" [sortBy]="['coefficient', 'number']">Coefficient</ms-tableHeadCell>
+      <ms-tableHeadCell name="radical" [sortBy]="['radical', 'number']">Radical</ms-tableHeadCell>
+      <ms-tableHeadCell name="multipleScore">Barème</ms-tableHeadCell>
+      <ms-tableHeadCell name="specialities">Spécialités</ms-tableHeadCell>
+      <ms-tableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
+      <ms-tableHeadCell name="registrationDate">Date d'ajout</ms-tableHeadCell>
+      <msTableHeadCell name="actions" class="text-right">
+        <i class="ms-Icon ms-Icon--SetAction"></i>
+      </msTableHeadCell>
+    </ms-tableHead>
 
-  <MsfTable>
-    <MsfTableHead>
-      <MsfTableHeadCell>#</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="name">Nom</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="code">code</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="coefficient">Coefficient</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="radical">Radical</MsfTableHeadCell>
-      <MsfTableHeadCell>Barème</MsfTableHeadCell>
-      <MsfTableHeadCell *ngIf="!speciality">Spécialités</MsfTableHeadCell>
-      <MsfTableHeadCell *ngIf="!level" sortBy="levelIndex">Niveau</MsfTableHeadCell>
-      <MsfTableHeadCell>Date d'ajout</MsfTableHeadCell>
-      <MsfTableHeadCell></MsfTableHeadCell>
-    </MsfTableHead>
+    <ms-tableRow *ms-tableRowDef="let item of courses; let i=index" [value]="item">
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>{{item.name | ucFirst}}</ms-tableCell>
+      <ms-tableCell>{{item.code}}</ms-tableCell>
+      <ms-tableCell>{{item.coefficient}}</ms-tableCell>
+      <ms-tableCell>{{item.radical}}</ms-tableCell>
 
-    <MsfTableRow *ngFor="let item of courses" [value]="item" #row>
-      <MsfTableCell>{{row.index + 1}}</MsfTableCell>
-      <MsfTableCell>{{item.name | ucFirst}}</MsfTableCell>
-      <MsfTableCell>{{item.code}}</MsfTableCell>
-      <MsfTableCell>{{item.coefficient}}</MsfTableCell>
-      <MsfTableCell>{{item.radical}}</MsfTableCell>
-
-      <MsfTableCell>
+      <ms-tableCell>
         <app-icon *ngIf="item.multipleScore" bgColor="greenLight" icon="CheckMark"></app-icon>
         <app-icon *ngIf="!item.multipleScore" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </MsfTableCell>
-      <MsfTableCell  *ngIf="!speciality">
+      </ms-tableCell>
+      <ms-tableCell>
         <ng-container *ngIf="!item.isGeneral && item.courseLevelSpecialities">
           {{item.specialityNames.join(', ')}}
         </ng-container>
 
-        <app-icon *ngIf="item.isGeneral" bgColor="sharedRed10" icon="Cancel"> </app-icon>
-      </MsfTableCell>
+        <app-icon *ngIf="item.isGeneral" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </ms-tableCell>
 
-      <MsfTableCell *ngIf="!level">{{item.levelIndex}}</MsfTableCell>
+      <ms-tableCell>{{item.levelIndex}}</ms-tableCell>
 
-      <MsfTableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</MsfTableCell>
-      <MsfTableCell class="text-right">
-        <a (click)="service.details(item)">Détails1</a>
-        <MsfIconButton class="ml-2" icon="More"></MsfIconButton>
-      </MsfTableCell>
-    </MsfTableRow>
-  </MsfTable>
+      <ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</ms-tableCell>
+      <ms-tableCell class="text-right">
+        <button msButton (click)="service.details(item)">Détails</button>
+      </ms-tableCell>
+    </ms-tableRow>
+  </ms-table>
 
 </div>

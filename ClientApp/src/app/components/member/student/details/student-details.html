@@ -1,37 +1,42 @@
 ﻿<div style="background: var(--cardBackgroundColor)" class="p-3 flex-center-cover">
 
   <div style="max-width: 100%; overflow: auto">
-    <div class="ms-pageTitle">
+    <div class="ms-pageTitle" style="position: sticky; left: 0">
       <h2>{{student.fullName | titlecase}}</h2>
 
       <div class="text-right">
-        <button msButton secondaryIcon="ChevronDown" [MsfMenuTrigger]="more">Paramètres</button>
-        <button msIconButton icon="Cancel" theme="transparent" MsfModalClose class="ml-2"></button>
-        <MsfMenu #more>
-          <MsfMenuItem icon="Contact" (click)="_studentService.editStudent(student)">Modifier les informations
-          </MsfMenuItem>
-          <MsfMenuItem icon="AddFriend" *ngIf="!student.user" (click)="_studentService.link(student)">Lier à un
-            utilisateur
-          </MsfMenuItem>
-          <MsfMenuItem icon="UserSync" *ngIf="student.user" (click)="_studentService.link(student)">Changer l'utilisateur
-          </MsfMenuItem>
-          <MsfMenuItem icon="UserRemove" theme="error" *ngIf="student.user" (click)="_studentService.removeUser(student)">
-            Enlever l'utilisateur
-          </MsfMenuItem>
-          <MsfMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(student)">Changer le matricule
-          </MsfMenuItem>
-          <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
-                       *ngIf="student.levelSpeciality">Changer la spécialité
-          </MsfMenuItem>
-          <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
-                       *ngIf="!student.levelSpeciality">Assigner une spécialité
-          </MsfMenuItem>
-          <MsfMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(student)"
-                       *ngIf="student.levelSpeciality">Enlever la spécialité
-          </MsfMenuItem>
-          <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
-        </MsfMenu>
+        <ng-container *ngIf="student.level.department.isPrincipal">
+          <button msIconButton icon="More" [MsfMenuTrigger]="more"></button>
 
+          <MsfMenu #more>
+            <MsfMenuItem icon="Contact" (click)="_studentService.editStudent(student)">Modifier les informations
+            </MsfMenuItem>
+            <MsfMenuItem icon="AddFriend" *ngIf="!student.user" (click)="_studentService.link(student)">Lier à un
+              utilisateur
+            </MsfMenuItem>
+            <MsfMenuItem icon="UserSync" *ngIf="student.user" (click)="_studentService.link(student)">Changer
+              l'utilisateur
+            </MsfMenuItem>
+            <MsfMenuItem icon="UserRemove" theme="error" *ngIf="student.user"
+                         (click)="_studentService.removeUser(student)">
+              Enlever l'utilisateur
+            </MsfMenuItem>
+            <MsfMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(student)">Changer le matricule
+            </MsfMenuItem>
+            <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
+                         *ngIf="student.levelSpeciality">Changer la spécialité
+            </MsfMenuItem>
+            <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
+                         *ngIf="!student.levelSpeciality">Assigner une spécialité
+            </MsfMenuItem>
+            <MsfMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(student)"
+                         *ngIf="student.levelSpeciality">Enlever la spécialité
+            </MsfMenuItem>
+            <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
+          </MsfMenu>
+        </ng-container>
+
+        <button msIconButton icon="Cancel" theme="transparent" MsfModalClose class="ml-2"></button>
       </div>
     </div>
 
@@ -75,7 +80,7 @@
         </dl>
       </div>
 
-      <div class="ms-description-list ml-5">
+      <div class="ms-description-list ml-5" style="white-space: nowrap">
         <dl>
           <dt>Date d'enregistrement</dt>
           <dd>

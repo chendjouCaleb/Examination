@@ -9,7 +9,7 @@ import {SchoolHomePage} from './home/school-home.page';
 import {OrganisationHttpClientModule} from 'examination/models/http';
 import {ControlModule} from 'examination/controls';
 import {SchoolPageLayout} from './layout/school.page-layout';
-import {DepartmentModule, ExaminationModule, RoomModule} from 'examination/app/components';
+import {ApplicationModule, DepartmentModule, ExaminationModule, RoomModule} from 'examination/app/components';
 import {PlannerModule} from 'examination/app/components/member/planner';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsGridModule} from '@ms-fluent/grid';
@@ -24,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, SchoolModule, DepartmentModule, OrganisationHttpClientModule,
+  imports: [CommonModule, SchoolModule, DepartmentModule, OrganisationHttpClientModule, ApplicationModule,
     OrganisationLoaderModule, RoomModule, ExaminationModule, MsButtonModule, MsGridModule, MsPivotModule,
     RouterModule.forChild(routes), LayoutModule, ControlModule, PlannerModule ],
   declarations: [SchoolListPage, SchoolHomePage, SchoolPageLayout, SchoolAddPage]

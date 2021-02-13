@@ -8,12 +8,14 @@ import {LEVEL_SERVICE_TOKEN} from './level.service.interface';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LevelResolver} from './level.resolver';
 import {LevelDelete} from './delete/level-delete';
+import {MsButtonModule} from '@ms-fluent/button';
+import {LevelSpecialityAdd} from './speciality/level-speciality-add';
 
 @NgModule({
   imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, FormsModule,
-    ReactiveFormsModule, AppFormModule, MsfSelectModule ],
-  declarations: [LevelAdd, LevelDelete],
-  exports: [LevelAdd, LevelDelete],
+    ReactiveFormsModule, AppFormModule, MsfSelectModule, MsButtonModule],
+  declarations: [LevelAdd, LevelDelete, LevelSpecialityAdd],
+  exports: [LevelAdd, LevelDelete, LevelSpecialityAdd],
   providers: [LevelResolver, LevelService, {provide: LEVEL_SERVICE_TOKEN, useExisting: LevelService}]
 })
 export class LevelModule {

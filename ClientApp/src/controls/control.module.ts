@@ -24,18 +24,20 @@ import {MsColorDirective} from './font-color.directive';
 import {TableColumnDirective} from './tablecolumn.directive';
 import {UserPersona} from './user-persona';
 import {MsPersonaModule} from '@ms-fluent/persona';
+import {MsPaginatorButtons} from './paginator-buttons/paginator-buttons';
+import {MsButtonModule} from '@ms-fluent/button';
 
 @NgModule({
-  imports: [CommonModule, MatSnackBarModule, MsPersonaModule, MsfModalModule, MsfButtonModule],
+  imports: [CommonModule, MatSnackBarModule, MsPersonaModule, MsButtonModule, MsfModalModule, MsfButtonModule],
   providers: [AlertEmitter, Confirmation],
   declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
     MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe,
     MsColorDirective, MsFontWeightDirective, MsFontSizeDirective, MsBorderColorDirective, MsBgColorDirective,
-    TableColumnDirective, UserPersona],
+    TableColumnDirective, UserPersona, MsPaginatorButtons],
   exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
     MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe, TableColumnDirective,
     MsFontWeightDirective, MsFontSizeDirective, MsColorDirective, MsBorderColorDirective, MsBgColorDirective,
-    UserPersona],
+    UserPersona, MsPaginatorButtons],
 })
 export class ControlModule {
 

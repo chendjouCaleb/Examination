@@ -16,6 +16,8 @@ import {PanelComponent} from './panel/panel.component';
 import {SidebarComponent} from './sidebar/sidebar.component';
 import {Preference} from '../preference/preference';
 import {BreadcrumbItem} from './breadcrumb/breadcrumb';
+import {NavbarComponent} from './navbar/navbar.component';
+
 
 @Component({
   templateUrl: 'layout.component.html',
@@ -55,6 +57,9 @@ export class LayoutComponent implements AfterContentInit {
   @ViewChild('mainContent')
   mainContent: ElementRef<HTMLElement>;
 
+  @ViewChild(NavbarComponent)
+  navbar: NavbarComponent;
+
 
   @ContentChild(SidebarComponent)
   sidebar: SidebarComponent;
@@ -66,6 +71,7 @@ export class LayoutComponent implements AfterContentInit {
     //     });
     // }
   }
+
 
   open(panelName: string) {
     const panel = this.panels.find(p => p.name === panelName);
@@ -92,5 +98,10 @@ export class LayoutComponent implements AfterContentInit {
     this.preference.observers.get('themeColor').subscribe(color => {
       document.documentElement.setAttribute('data-theme-color', color);
     });
+  }
+
+
+  get mainHost(): HTMLElement {
+    return this.mainContent.nativeElement;
   }
 }

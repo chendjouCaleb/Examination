@@ -1,11 +1,11 @@
-﻿import {Speciality} from "examination/entities";
+﻿import {Speciality} from 'examination/entities';
 
 export class LevelAddParams {
   specialityId: number[]
 }
 
 export class LevelAddModel {
-  specialities: Speciality[];
+  specialities: Speciality[] = [];
 
   get params(): LevelAddParams {
     return {

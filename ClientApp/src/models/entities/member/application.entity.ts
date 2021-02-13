@@ -9,7 +9,7 @@ export class Application extends Entity<number> {
     super();
     if (value) {
       this.id = value.id;
-      this.registrationDate = value.registrationDate ? new Date(value.registrationDate): undefined;
+      this.registrationDate = value.registrationDate ? new Date(value.registrationDate) : undefined;
 
       this.fullName = value.fullName;
       this.registrationId = value.registrationId;

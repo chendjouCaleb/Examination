@@ -1,6 +1,6 @@
 ﻿<div class="ms-pageTitle">
-  <h2>Superviseurs</h2>
-  <button msButton icon="Add" theme="primary" (click)="addSupervisors()">
+  <h4>Superviseurs</h4>
+  <button *ngIf="department.isPrincipalUser" msButton icon="Add" theme="primary" (click)="addSupervisors()">
     Ajouter <span class="ms-hiddenSm">des superviseurs</span></button>
 </div>
 
@@ -20,9 +20,11 @@
       <user-persona [user]="item.user"></user-persona>
     </msTableCell>
     <msTableCell class="ms-fontSize-12">{{item.registrationDate | date}}</msTableCell>
-    <msTableCell>
-      <button msIconButton (click)="deleteSupervisor(item)" icon="Delete" theme="error"
-              [rounded]="true"></button>
+    <msTableCell class="text-right">
+      <ng-container *ngIf="department.isPrincipalUser">
+        <button msIconButton (click)="deleteSupervisor(item)" icon="Delete" theme="error"
+                [rounded]="true"></button>
+      </ng-container>
     </msTableCell>
   </msTableRow>
 </ms-table>

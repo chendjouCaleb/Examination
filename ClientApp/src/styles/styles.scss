@@ -6,6 +6,11 @@
 @import "ms-Icon-fix";
 @import "~office-ui-fabric-core/dist/sass/Fabric";
 
+$ms-pivot-activeColor: var(--primaryColor);
+$ms-pivot-labelFontColor: var(--standardColor);
+$ms-pivot-labelHoverBackgroundColor: var(--standardBgColor);
+$ms-pivot-headerBorderColor: var(--borderColor);
+
 $ms-table-border-color: var(--borderColor);
 $ms-table-bgColor: var(--bodyBackgroundColor);
 $ms-table-cell-hover-backgroundColor: var(--cardBackgroundColor);
@@ -16,15 +21,14 @@ $ms-table-cell-hover-backgroundColor: var(--cardBackgroundColor);
 @import "~@ms-fluent/persona/src/styles/persona";
 @import "~@ms-fluent/pivot/src/styles/ms-pivot";
 
+@import "school-banner";
 @import "title";
 
 $font-family-sans-serif: Metropolis, sans-serif;
-$msf-button-backgroundColor: red;
 @import "~fabric-docs/src/components/msf-core/Msf-Core";
-
-$msf-button-backgroundColor: red;
-
 @import "text-field.scss";
+@import "color";
+@import "header";
 
 @import "card";
 
@@ -36,21 +40,7 @@ $msf-button-backgroundColor: red;
   flex-grow: 2;
 }
 
-.ms-bgColor-transparent {
-  background: transparent;
-}
 
-.ms-borderColor-transparent {
-  border-color: transparent;
-}
-
-.ms-fontColor-transparent {
-  color: transparent;
-}
-
-.ms-fontColor-transparent--hover:hover {
-  color: transparent;
-}
 
 .ms-iconButton.rounded {
   border-radius: 50% !important;
@@ -216,6 +206,8 @@ body {
   font-size: 11px;
   user-select: none;
 
+  display: inline-block;
+
   &.ms-badge-primary {
     background-color: $ms-color-themePrimary;
   }
@@ -272,10 +264,18 @@ body {
 
 .ms-pageTitle {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--borderColor);
   padding: 5px 0;
+}
+
+.ms-sticky-header {
+  background-color: var(--bodyBackgroundColor);
+  position: sticky;
+  z-index: 2;
+  top: 0;
 }
 
 .ms-gridItem {

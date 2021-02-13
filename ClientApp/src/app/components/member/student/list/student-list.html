@@ -1,147 +1,159 @@
 ﻿<div class="ms-pageTitle">
-  <h2> Étudiants </h2>
+  <h4> Étudiants ({{students.length}}) </h4>
 
   <div>
-    <div *ngIf="students" >
-      <button msButton [MsfMenuTrigger]="columnMenu" secondaryIcon="ChevronDown">Colonnes</button>
-      <MsfCheckboxGroup #checkboxGroup  msTableColumnHandler key="StudentList" [table]="table">
-        <MsfMenu #columnMenu>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="#"></MsfCheckbox>#
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="levelIndex"></MsfCheckbox>Niveau
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="fullName"></MsfCheckbox>Nom & prénom
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationId"></MsfCheckbox>Matricule
-          </MsfMenuItem>
+    <!--    <ng-container *ngIf="students" >-->
+    <!--      <button msIconButton theme="standardOutline" icon="TripleColumn" [MsfMenuTrigger]="columnMenu" class="ms-hiddenMdUp mr-2"></button>-->
+    <!--      <button msButton [MsfMenuTrigger]="columnMenu" secondaryIcon="ChevronDown" class="ms-hiddenSm">Colonnes</button>-->
+    <!--      <MsfCheckboxGroup #checkboxGroup  msTableColumnHandler key="StudentList" [table]="table">-->
+    <!--        <MsfMenu #columnMenu>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="#"></MsfCheckbox>#-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="levelIndex"></MsfCheckbox>Niveau-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="fullName"></MsfCheckbox>Nom & prénom-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationId"></MsfCheckbox>Matricule-->
+    <!--          </MsfMenuItem>-->
 
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox>Date de naissance
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="gender"></MsfCheckbox>Sexe
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="SpecialityName"></MsfCheckbox>Spécialité
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="user"></MsfCheckbox>Utilisateur
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationDate"></MsfCheckbox>Date d'ajout
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="addedBy"></MsfCheckbox>Ajouté par
-          </MsfMenuItem>
-          <MsfMenuItem>
-            <MsfCheckbox MsfMenuItemCheckbox name="column" value="actions"></MsfCheckbox>Actions
-          </MsfMenuItem>
-        </MsfMenu>
-      </MsfCheckboxGroup>
-    </div>
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox>Date de naissance-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="gender"></MsfCheckbox>Sexe-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="SpecialityName"></MsfCheckbox>Spécialité-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="user"></MsfCheckbox>Utilisateur-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationDate"></MsfCheckbox>Date d'ajout-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="addedBy"></MsfCheckbox>Ajouté par-->
+    <!--          </MsfMenuItem>-->
+    <!--          <MsfMenuItem>-->
+    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="actions"></MsfCheckbox>Actions-->
+    <!--          </MsfMenuItem>-->
+    <!--        </MsfMenu>-->
+    <!--      </MsfCheckboxGroup>-->
+    <!--    </ng-container>-->
 
 
-    <button msButton icon="Add" *ngIf="level || levelSpeciality" theme="primary" (click)="addStudent()">
-      Ajouter <span class="ms-hiddenSm">un étudiant</span>
-    </button>
+    <ng-container *ngIf="getDepartment()?.isPrincipal">
+      <button msButton icon="Add" *ngIf="level || levelSpeciality" theme="primary" (click)="addStudent()">
+        Ajouter <span class="ms-hiddenSm">un étudiant</span>
+      </button>
+    </ng-container>
   </div>
 </div>
 
+<div *ngIf="_isLoaded">
+  <msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
+
+  <msPaginator #msPaginator pageSize="50" [totalSize]="students.length" [itemsFn]="itemsFn">
+    <div *ms-paginatorPageDef="let data=items; let start=start">
+      <ms-table #table style="max-height: 500px">
+        <msTableHead *ms-tableHeadDef>
+          <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+
+          <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
+          <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom</msTableHeadCell>
+          <msTableHeadCell name="registrationId" [sortBy]="['registrationId', 'string']">Matricule</msTableHeadCell>
+          <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
+          <msTableHeadCell name="gender" [sortBy]="['gender', 'string']">Sexe</msTableHeadCell>
+          <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
+          <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
+          <msTableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout
+          </msTableHeadCell>
+          <msTableHeadCell name="addedBy">Ajouté par</msTableHeadCell>
+
+          <msTableHeadCell name="actions" style="text-align: right">
+            <i class="ms-Icon ms-Icon--SetAction"></i>
+          </msTableHeadCell>
+        </msTableHead>
+
+        <tr ms-tableRow *ms-tableRowDef="let item of data; let i=index" [value]="item">
+          <td ms-tableCell>{{i + start + 1}}</td>
 
 
+          <td ms-tableCell>{{item.levelIndex + 1}}</td>
 
-<div class="ms-table-container">
-  <ms-table #table style="height: 300px">
-    <msTableHead *ms-tableHeadDef>
-      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+          <td ms-tableCell>
+            <div class="ms-fontWeight-semibold text-capitalize">{{item.fullName}}</div>
+          </td>
 
-      <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
-      <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom</msTableHeadCell>
-      <msTableHeadCell name="registrationId" [sortBy]="['registrationId', 'string']" >Matricule</msTableHeadCell>
-      <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
-      <msTableHeadCell name="gender" [sortBy]="['gender', 'string']">Sexe</msTableHeadCell>
-      <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
-      <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
-      <msTableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout</msTableHeadCell>
-      <msTableHeadCell name="addedBy">Ajouté par</msTableHeadCell>
+          <td ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+            {{item.registrationId}}
+          </td>
 
-      <msTableHeadCell name="actions" style="text-align: right">
-        <i class="ms-Icon ms-Icon--SetAction"></i>
-      </msTableHeadCell>
-    </msTableHead>
+          <td ms-tableCell>
+            {{item.birthDate | amCalendar}}
+          </td>
 
-    <tr ms-tableRow *ms-tableRowDef="let item of students; let i=index" [value]="item">
-      <td ms-tableCell>{{i+1}}</td>
+          <td ms-tableCell>
+            {{item.gender}}
+          </td>
+
+          <td ms-tableCell class="ms-fontWeight-semibold">
+            {{item.specialityName}}
+          </td>
 
 
-      <td ms-tableCell>{{item.levelIndex + 1}}</td>
+          <td ms-tableCell>
+            <user-persona *ngIf="item.user" [user]="item.user"></user-persona>
+          </td>
 
-      <td ms-tableCell>
-        <div class="ms-fontWeight-semibold text-capitalize">{{item.fullName}}</div>
-      </td>
+          <td ms-tableCell>
+            <span class="ms-badge ms-badge-info">{{item.registrationDate | amTimeAgo}}</span>
+          </td>
 
-      <td ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
-        {{item.registrationId}}
-      </td>
-
-      <td ms-tableCell>
-        {{item.birthDate | amCalendar}}
-      </td>
-
-      <td ms-tableCell>
-        {{item.gender}}
-      </td>
-
-      <td ms-tableCell class="ms-fontWeight-semibold">
-        {{item.specialityName}}
-      </td>
+          <td ms-tableCell>
+            <user-persona *ngIf="item.registerUser" [user]="item.registerUser"></user-persona>
+          </td>
 
 
-      <td ms-tableCell>
-        <user-persona *ngIf="item.user" [user]="item.user"></user-persona>
-      </td>
-
-      <td ms-tableCell>
-        <span class="ms-badge ms-badge-info">{{item.registrationDate | amTimeAgo}}</span>
-      </td>
-
-      <td ms-tableCell>
-        <user-persona *ngIf="item.registerUser" [user]="item.registerUser"></user-persona>
-      </td>
-
-
-      <td ms-tableCell style="text-align: right">
-        <button msButton class="mr-2" (click)="_studentService.detailsStudent(item)">Détails</button>
-        <button msIconButton [rounded]="true" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
-        <MsfMenu #more>
-          <MsfMenuItem icon="Contact" (click)="_studentService.editStudent(item)">Modifier les informations
-          </MsfMenuItem>
-          <MsfMenuItem icon="AddFriend" *ngIf="!item.user" (click)="_studentService.link(item)">Lier à un utilisateur
-          </MsfMenuItem>
-          <MsfMenuItem icon="UserSync" *ngIf="item.user" (click)="_studentService.link(item)">Changer l'utilisateur
-          </MsfMenuItem>
-          <MsfMenuItem icon="UserRemove" theme="error" *ngIf="item.user" (click)="_studentService.removeUser(item)">
-            Enlever l'utilisateur
-          </MsfMenuItem>
-          <MsfMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(item)">Changer le matricule
-          </MsfMenuItem>
-          <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
-                       *ngIf="item.levelSpeciality">Changer la spécialité
-          </MsfMenuItem>
-          <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
-                       *ngIf="!item.levelSpeciality">Assigner une spécialité
-          </MsfMenuItem>
-          <MsfMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(item)"
-                       *ngIf="item.levelSpeciality">Enlever la spécialité
-          </MsfMenuItem>
-          <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
-        </MsfMenu>
-      </td>
-    </tr>
-  </ms-table>
-
+          <td ms-tableCell style="text-align: right">
+            <button msButton class="mr-2" (click)="_studentService.detailsStudent(item)">Détails</button>
+            <ng-container *ngIf="getDepartment()?.isPrincipal">
+              <button msIconButton [rounded]="true" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
+              <MsfMenu #more>
+                <MsfMenuItem icon="Contact" (click)="_studentService.editStudent(item)">Modifier les informations
+                </MsfMenuItem>
+                <MsfMenuItem icon="AddFriend" *ngIf="!item.user" (click)="_studentService.link(item)">Lier à un
+                  utilisateur
+                </MsfMenuItem>
+                <MsfMenuItem icon="UserSync" *ngIf="item.user" (click)="_studentService.link(item)">Changer
+                  l'utilisateur
+                </MsfMenuItem>
+                <MsfMenuItem icon="UserRemove" theme="error" *ngIf="item.user"
+                             (click)="_studentService.removeUser(item)">
+                  Enlever l'utilisateur
+                </MsfMenuItem>
+                <MsfMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(item)">Changer le
+                  matricule
+                </MsfMenuItem>
+                <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
+                             *ngIf="item.levelSpeciality">Changer la spécialité
+                </MsfMenuItem>
+                <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
+                             *ngIf="!item.levelSpeciality">Assigner une spécialité
+                </MsfMenuItem>
+                <MsfMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(item)"
+                             *ngIf="item.levelSpeciality">Enlever la spécialité
+                </MsfMenuItem>
+                <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
+              </MsfMenu>
+            </ng-container>
+          </td>
+        </tr>
+      </ms-table>
+    </div>
+  </msPaginator>
 </div>

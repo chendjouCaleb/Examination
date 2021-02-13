@@ -1,13 +1,13 @@
-﻿import {EvFormControl, EvFormGroup} from "examination/controls";
-import {SpecialityAddModel, SpecialityEditModel } from "examination/models";
+﻿import {EvFormControl, EvFormGroup} from 'examination/controls';
+import {SpecialityAddModel, SpecialityEditModel } from 'examination/models';
 
 
 export class SpecialityAddForm extends EvFormGroup<SpecialityAddModel> {
   constructor() {
     super({
-      name: new EvFormControl("name", ""),
-      description: new EvFormControl("description", ""),
-      levels: new EvFormControl("levels",  [])
+      name: new EvFormControl('name', ''),
+      description: new EvFormControl('description', ''),
+      levels: new EvFormControl('levels',  [])
     });
   }
 
@@ -24,8 +24,8 @@ export class SpecialityAddForm extends EvFormGroup<SpecialityAddModel> {
 export class SpecialityEditForm extends EvFormGroup<SpecialityEditModel> {
   constructor(value: any = {}) {
     super({
-      name: new EvFormControl("name", value.name),
-      description: new EvFormControl("description", value.description),
+      name: new EvFormControl('name', value.name),
+      description: new EvFormControl('description', value.description),
     });
   }
 

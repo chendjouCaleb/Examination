@@ -18,7 +18,7 @@ import {HammerModule} from '@angular/platform-browser';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MsfIconModule, MsfButtonModule, MsfRadioModule, MsfCheckboxModule,
-    MsfPersonaModule, MsPersonaModule],
+    MsfPersonaModule, MsPersonaModule, HammerModule],
   declarations: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent, AuthPanelComponent,
     SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent, Labelled, Breadcrumb],
   exports: [NavbarComponent,  PanelComponent, LayoutComponent, SidebarComponent, SidebarItemComponent,

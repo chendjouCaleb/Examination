@@ -7,6 +7,7 @@ import {LayoutModule} from 'examination/infrastructure';
 import {DepartmentHomePage} from './home/department-home.page';
 import {ControlModule} from 'examination/controls';
 import {
+  ApplicationModule,
   CorrectorModule,
   LevelModule,
   RoomModule,
@@ -31,6 +32,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, MsButtonModule, MsPivotModule, DepartmentModule, LevelModule, SpecialityModule,
+    ApplicationModule,
     CorrectorModule, SupervisorModule, PrincipalModule, SecretaryModule, StudentModule, RoomModule,
     RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule ],
   declarations: [DepartmentPageLayout, DepartmentHomePage, DepartmentLevels, DepartmentSpecialities]

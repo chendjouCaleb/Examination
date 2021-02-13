@@ -1,9 +1,18 @@
 @import "~office-ui-fabric-core/dist/sass/Fabric";
+:host{
+  //touch-action: pan-y !important;
+}
 .layout-navbar {
   position: fixed;
   top:0;
   left: 0;
   right: 0;
+
+  transition: top .3s ease-in-out;
+
+  &.scroll-layout {
+    top: -55px;
+  }
 }
 
 
@@ -50,6 +59,10 @@
   backdrop-filter: blur(var(--blurSize));
   background-color: var(--bodyBackgroundColor);
 
+  &.scroll-layout {
+    top: 0;
+  }
+
   .app-layout-withSidebar & {
     left: 250px;
   }
@@ -62,7 +75,7 @@
     top: 100px;
   }
 
-  transition: left .2s;
+  transition: left .2s, top .3s ease-in-out;
 }
 
 #layout-background {

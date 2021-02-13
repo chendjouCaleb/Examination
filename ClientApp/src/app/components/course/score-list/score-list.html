@@ -1,42 +1,43 @@
-﻿<div class="d-flex justify-content-between align-items-center">
-  <h5>Barème de notation</h5>
+﻿<div class="ms-pageTitle" style="white-space: nowrap">
+  <h5 >Barème <span class="ms-hiddenSm">de notation</span></h5>
   <div class="text-right">
-    <MsfButton theme="primary" Icon="Add" (click)="add()" class="ml-2" style="font-size: 12px">Ajouter une ligne</MsfButton>
+    <button *ngIf="course.level.department.school.userPrincipal.isPlanner"
+            msButton theme="primary" icon="Add" (click)="add()" class="ml-2" size="small">Ajouter une ligne</button>
   </div>
 </div>
 
 
-
-<msAlert *ngIf="course.multipleScore && course.radical !== course.totalScoreRadical"
-         theme="error" class="my-1" >
-  Le total des radicaux des lignes du barème ne correspondent pas au radical de l'épreuve. Ajouter des lignes supplémentaires
+<msAlert *ngIf="course.multipleScore && course.radical !== course.totalScoreRadical" theme="error" class="my-1">
+  Le total des radicaux des lignes du barème ne correspondent pas au radical de l'épreuve. Ajouter des lignes
+  supplémentaires
   pour compléter les <b> {{course.radical - course.totalScoreRadical}} points </b> manquants!.
 </msAlert>
 
-<MsfTable style="width: 100%">
-  <MsfTableHead>
-    <MsfTableHeadCell>#</MsfTableHeadCell>
-    <MsfTableHeadCell sortBy="name">Nom</MsfTableHeadCell>
-    <MsfTableHeadCell sortBy="radical">Radical</MsfTableHeadCell>
-    <MsfTableHeadCell></MsfTableHeadCell>
-  </MsfTableHead>
-  <ng-container *ngIf="course.scores?.length > 0 ">
-    <MsfTableRow *ngFor="let item of course.scores" [value]="item" #row>
-      <MsfTableCell>{{row.index + 1}}</MsfTableCell>
-      <MsfTableCell>{{item.name}}</MsfTableCell>
-      <MsfTableCell>{{item.radical}} points</MsfTableCell>
+<ms-table style="width: 100%">
+  <ms-tableHead *ms-tableHeadDef>
+    <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+    <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>
+    <ms-tableHeadCell name="radical" [sortBy]="['radical', 'number']">Radical</ms-tableHeadCell>
+    <msTableHeadCell name="actions" class="text-right">
+      <i class="ms-Icon ms-Icon--SetAction"></i>
+    </msTableHeadCell>
+  </ms-tableHead>
 
-      <MsfTableCell class="text-right">
-        <span class="ml-2 ms-Icon ms-Icon--More ms-pointer" [MsfMenuTrigger]="more"
-                       *ngIf="course.level.department?.userPrincipal?.isPrincipal"></span>
-        <MsfMenu #more>
-          <MsfMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsfMenuItem>
-        </MsfMenu>
+  <ms-tableRow *ms-tableRowDef="let item of scores; let i=index" [value]="item">
+    <ms-tableCell>{{i + 1}}</ms-tableCell>
+    <ms-tableCell>{{item.name}}</ms-tableCell>
+    <ms-tableCell>{{item.radical}} points</ms-tableCell>
 
-      </MsfTableCell>
-    </MsfTableRow>
-  </ng-container>
-</MsfTable>
+    <ms-tableCell class="text-right">
+      <button msIconButton icon="More" theme="transparent" class="ml-2" [MsfMenuTrigger]="more"
+              *ngIf="course.level.department?.userPrincipal?.isPrincipal"></button>
+      <MsfMenu #more>
+        <MsfMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsfMenuItem>
+      </MsfMenu>
+
+    </ms-tableCell>
+  </ms-tableRow>
+</ms-table>
 
 <msAlert *ngIf="!course.scores || course.scores.length == 0" theme="severeWarning">
   Ce cours n'a pas de barème détaillé!

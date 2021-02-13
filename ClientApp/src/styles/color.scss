@@ -1,0 +1,36 @@
+.ms-bgColor-transparent {
+  background: transparent;
+}
+
+.ms-borderColor-transparent {
+  border-color: transparent;
+}
+
+.ms-fontColor-transparent {
+  color: var(--textColor);
+}
+
+
+.ms-fontColor-inherit {
+  color: var(--textColor);
+}
+
+.ms-fontColor-transparent--hover:hover {
+  color: transparent;
+}
+
+.ms-fontColor-standard {
+  color: var(--standardColor);
+}
+
+.ms-bgColor-standard {
+  background-color: var(--standardBgColor);
+}
+
+.ms-bgColor-standard--hover {
+  background-color: var(--standardBgColor--hover);
+}
+
+.ms-borderColor-standard {
+  background-color: var(--borderColor);
+}

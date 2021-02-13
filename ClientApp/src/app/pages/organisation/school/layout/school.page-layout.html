@@ -7,6 +7,7 @@
       <msPivotLabel>Départments</msPivotLabel>
       <msPivotLabel>Planificateurs</msPivotLabel>
       <msPivotLabel>Salles</msPivotLabel>
+      <msPivotLabel>Demandes</msPivotLabel>
       <msPivotLabel>Examens</msPivotLabel>
     </msPivotHeader>
 
@@ -20,6 +21,9 @@
       </div>
       <div *msPivotContentDef>
         <app-room-list [school]="school"></app-room-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-application-list [school]="school"></app-application-list>
       </div>
       <div *msPivotContentDef>
         <app-examination-list [school]="school"></app-examination-list>

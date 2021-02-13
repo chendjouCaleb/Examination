@@ -17,13 +17,13 @@ import {StudentResolver} from './student.resolver';
 import {STUDENT_SERVICE_TOKEN} from './student.service.interface';
 import {StudentList} from './list/student-list';
 import {StudentSpeciality} from './speciality/student-speciality';
-import {MsTableModule} from '@ms-fluent/table';
+import {MsPaginatorModule, MsTableModule} from '@ms-fluent/table';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsPivotModule} from '@ms-fluent/pivot';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfSelectModule,
-    AppFormModule, MsfMenuModule, MomentModule, MsfRadioModule, MsTableModule, MsButtonModule,
+    AppFormModule, MsfMenuModule, MomentModule, MsfRadioModule, MsTableModule, MsButtonModule, MsPaginatorModule,
     MatRippleModule, MsfCheckboxModule, UserPickerModule, MsPivotModule, MsfModalModule],
   declarations: [StudentAdd, StudentEdit, StudentUserLink, StudentLevel, StudentRegistrationId,
     StudentDetails, StudentList, StudentSpeciality],

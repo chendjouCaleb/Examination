@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Everest.AspNetStartup.Binding;
-using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
@@ -42,6 +41,7 @@ namespace Exam.Controllers
         [HttpGet]
         public IEnumerable<Application> List([FromQuery] long? levelId,
             [FromQuery] long? departmentId,
+            [FromQuery] long? schoolId,
             [FromQuery] long? levelSpecialityId,
             [FromQuery] long? specialityId,
             [FromQuery] string userId)
@@ -64,6 +64,11 @@ namespace Exam.Controllers
             if (departmentId != null)
             {
                 return _applicationRepository.List(s => s.Level.DepartmentId == departmentId);
+            }
+            
+            if (schoolId != null)
+            {
+                return _applicationRepository.List(s => s.Level.Department.SchoolId == schoolId);
             }
 
             if (!string.IsNullOrWhiteSpace(userId))

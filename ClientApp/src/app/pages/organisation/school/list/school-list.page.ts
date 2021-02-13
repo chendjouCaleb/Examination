@@ -21,6 +21,10 @@ export class SchoolListPage implements OnInit {
     this.title.setTitle('Établissements')
   }
 
+  pan() {
+    console.log('paann')
+  }
+
   async ngOnInit(): Promise<void> {
     const schools = await this._httpClient.list();
     await this._schoolLoader.loadAll(schools);

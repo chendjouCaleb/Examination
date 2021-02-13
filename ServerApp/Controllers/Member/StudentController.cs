@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
@@ -43,9 +44,51 @@ namespace Exam.Controllers
                 schoolId == s.Level.Department.SchoolId && registrationId == s.RegistrationId);
         }
 
+        [HttpGet("count")]
+        public long Count([FromQuery] long? levelId,
+            [FromQuery] long? schoolId,
+            [FromQuery] long? departmentId,
+            [FromQuery] long? levelSpecialityId,
+            [FromQuery] long? specialityId,
+            [FromQuery] string userId)
+        {
+            var query = _studentRepository.Set;
+            if (levelId != null)
+            {
+                query = query.Where(s => s.LevelId == levelId);
+            }
+
+            if (levelSpecialityId != null)
+            {
+                query = query.Where(s => s.LevelSpecialityId == levelSpecialityId);
+            }
+
+            if (specialityId != null)
+            {
+                query = query.Where(s => s.LevelSpeciality.SpecialityId == specialityId);
+            }
+
+            if (departmentId != null)
+            {
+                query = query.Where(s => s.Level.DepartmentId == departmentId);
+            }
+            
+            if (schoolId != null)
+            {
+                query = query.Where(s => s.Level.Department.SchoolId == schoolId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                query = query.Where(s => s.UserId == userId);
+            }
+
+            return query.LongCount();
+        }
 
         [HttpGet]
         public IEnumerable<Student> List([FromQuery] long? levelId,
+            [FromQuery] long? schoolId,
             [FromQuery] long? departmentId,
             [FromQuery] long? levelSpecialityId,
             [FromQuery] long? specialityId,
@@ -69,6 +112,11 @@ namespace Exam.Controllers
             if (departmentId != null)
             {
                 return _studentRepository.List(s => s.Level.DepartmentId == departmentId);
+            }
+            
+            if (schoolId != null)
+            {
+                return _studentRepository.List(s => s.Level.Department.SchoolId == schoolId);
             }
 
             if (!string.IsNullOrWhiteSpace(userId))

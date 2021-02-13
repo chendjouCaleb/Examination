@@ -2,13 +2,15 @@
   <div class="ms-pageTitle">
     <h5>{{room.name}}</h5>
     <div class="text-right ml-5">
-      <button msButton icon="Settings" secondaryIcon="ChevronDown" [MsfMenuTrigger]="roomMenu" theme="primaryOutline">
-      </button>
+      <ng-container *ngIf="room.school.userPrincipal.isPlanner">
+        <button msIconButton icon="More" [MsfMenuTrigger]="roomMenu" theme="primaryOutline"></button>
+        <MsfMenu #roomMenu>
+          <MsfMenuItem icon="Edit" (click)="service.editRoom(room)">Modifier</MsfMenuItem>
+          <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer</MsfMenuItem>
+        </MsfMenu>
+      </ng-container>
       <button msIconButton theme="transparent" icon="Cancel" MsfModalClose class="ml-2"></button>
-      <MsfMenu #roomMenu>
-        <MsfMenuItem icon="Edit" (click)="service.editRoom(room)">Modifier</MsfMenuItem>
-        <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer</MsfMenuItem>
-      </MsfMenu>
+
     </div>
   </div>
 

@@ -8,7 +8,7 @@ import {environment} from 'src/environments/environment';
 import moment from 'moment';
 import {Entity} from '../entities';
 import {ItemListModel, ItemListResult} from './itemList';
-import {HttpClientCache} from "./httpClient-cache";
+import {HttpClientCache} from './httpClient-cache';
 
 export const SERVER_URL = environment.SERVER_URL;
 export const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
@@ -45,9 +45,13 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
     result.forEach(v => {
       const item = this.createFromAny(v);
       items.add(item);
-      this.cache.set(v.id, item);
+      // this.cache.set(v.id, item);
     });
     return items;
+  }
+
+  count(queryParams?: any): Promise<number> {
+   return this.httpClient.get<number>(this.url + '/count', {params: queryParams}).toPromise();
   }
 
   async itemList(queryParams: any, itemParams: ItemListModel = {}): Promise<ItemListResult<T>> {
@@ -61,7 +65,7 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
     result.items.forEach(v => {
       const item = this.createFromAny(v);
       items.add(item);
-      this.cache.set(v.id, item);
+      // this.cache.set(v.id, item);
     });
     result.items = items;
     return result;
@@ -79,13 +83,12 @@ export abstract class GenericHttpClient<T extends Entity<TID>, TID> {
 
   async findAsync(id: TID): Promise<T> {
     if (this.cache.has(id)) {
-      //console.log('Cached');
       return this.cache.get(id);
     }
     const value = await this.httpClient.get<T>(this.url + '/' + id).toPromise();
     const item = this.createFromAny(value);
     this.cache.set(item.id, item);
-    console.log("cached result: " + this.cache.size);
+    console.log('cached result: ' + this.cache.size);
     return item;
   }
 

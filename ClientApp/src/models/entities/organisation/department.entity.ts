@@ -1,12 +1,12 @@
 ﻿import {School} from './school.entity';
 import {Entity} from '../entity';
 import {User} from '../identity/user.entity';
-import {List} from "@positon/collections";
-import {Level} from "./level.entity";
-import {Speciality} from "./speciality.entity";
-import {LevelSpeciality} from "./level-speciality.entity";
-import {Application, Corrector, Principal, Secretary, Student, Supervisor} from "../member";
-import {Room} from "./room.entity";
+import {List} from '@positon/collections';
+import {Level} from './level.entity';
+import {Speciality} from './speciality.entity';
+import {LevelSpeciality} from './level-speciality.entity';
+import {Application, Corrector, Principal, Secretary, Student, Supervisor} from '../member';
+import {Room} from './room.entity';
 
 export class Department extends Entity<number> {
 
@@ -30,6 +30,13 @@ export class Department extends Entity<number> {
 
       this.hasCoverImage = value.hasCoverImage;
       this.coverImageUrl = value.coverImageUrl;
+
+      this.isPrincipalUser = value.isPrincipalUser;
+      this.isSupervisor = value.isSupervisor;
+      this.isSecretary = value.isSecretary;
+      this.isCorrector = value.isCorrector;
+      this.isPrincipal = value.isPrincipal;
+      this.isStudent = value.isStudent;
     }
   }
 
@@ -53,6 +60,8 @@ export class Department extends Entity<number> {
   school: School;
   schoolId: number;
 
+  statistics: DepartmentStatistics;
+
   levels: List<Level>;
 
   specialities: List<Speciality>;
@@ -67,6 +76,13 @@ export class Department extends Entity<number> {
   applications: List<Application>;
 
   rooms: List<Room>;
+
+  isPrincipalUser: boolean;
+  isSupervisor: boolean;
+  isSecretary: boolean;
+  isCorrector: boolean;
+  isPrincipal: boolean;
+  isStudent: boolean;
 
 
   addLevelSpecialities(items: List<LevelSpeciality>) {
@@ -105,4 +121,12 @@ export class Department extends Entity<number> {
 export interface DepartmentUser {
   isPrincipal?: boolean;
   isSchoolPrincipal?: boolean
+}
+
+export class DepartmentStatistics {
+  studentCount: number;
+  levelCount: number;
+  specialityCount: number;
+  courseCount: number;
+  roomCount: number;
 }

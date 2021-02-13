@@ -1,5 +1,5 @@
-import {BrowserModule, HammerModule} from '@angular/platform-browser';
-import {Inject, LOCALE_ID, NgModule} from '@angular/core';
+import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule} from '@angular/platform-browser';
+import {Inject, Injectable, LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -21,7 +21,17 @@ import {LISTENER_ALERT_SERVICE_TOKEN} from 'examination/listeners';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {HubsModule} from 'examination/hubs';
 import {MS_BUTTON_DEFAULT_OPTIONS, MsButtonDefaultOptions} from '@ms-fluent/button';
-import {Global} from 'examination/app/global';
+import {Global} from '../global';
+
+import * as hammer from 'hammerjs'
+
+@Injectable()
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = {
+    swipe: {direction: hammer.DIRECTION_ALL},
+    pan: {direction: hammer.DIRECTION_ALL}
+  };
+}
 
 
 moment.locale('fr');
@@ -39,8 +49,12 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   providers: [Preference, CurrentItems, Global,
     {provide: LISTENER_ALERT_SERVICE_TOKEN, useExisting: AlertEmitter},
     {provide: LOCALE_ID, useValue: 'fr-FR'},
-    {provide: MAT_DATE_LOCALE, useValue: 'fr'}
-    ],
+    {provide: MAT_DATE_LOCALE, useValue: 'fr'},
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -49,5 +63,12 @@ export class AppModule {
               @Inject(MS_BUTTON_DEFAULT_OPTIONS) buttonOptions: MsButtonDefaultOptions) {
     preference.loadProperties();
     buttonOptions.size = global.isMobile() ? 'small' : 'normal';
+    buttonOptions.theme = 'transparent';
+    buttonOptions.colorThemes['standard'] = {
+      fontColor: 'standard',
+      focusBorderColor: 'sharedGray180',
+      bgColor: 'standard',
+      borderColor: 'transparent'
+    }
   }
 }

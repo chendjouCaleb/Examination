@@ -1,7 +1,11 @@
 ﻿<app-layout>
-  <div class="p-3">
-    <div class="ms-pageTitle">
-      <h2>Niveau {{level.index + 1}}</h2>
+  <div>
+    <div class="ms-header">
+      <div class="d-flex align-items-center">
+        <button [routerLink]="level.department.url" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <div class="ms-header-title">Niveau {{level.index + 1}}</div>
+      </div>
+
       <div>
         <button msButton (click)="sendApplication()" icon="AddFriend" theme="primary">Devenir étudiant</button>
       </div>

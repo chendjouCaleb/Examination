@@ -1,6 +1,6 @@
 ﻿<div class="ms-pageTitle">
-  <h2>Délégués</h2>
-  <button msButton icon="Add" theme="primary" (click)="addPrincipals()">
+  <h4>Délégués</h4>
+  <button *ngIf="department.isPrincipalUser" msButton icon="Add" theme="primary" (click)="addPrincipals()">
     Ajouter <span class="ms-hiddenSm">des délégués</span></button>
 </div>
 
@@ -20,9 +20,11 @@
       <user-persona [user]="item.user"></user-persona>
     </msTableCell>
     <msTableCell class="ms-fontSize-12">{{item.registrationDate | date}}</msTableCell>
-    <msTableCell>
-      <button msIconButton (click)="deletePrincipal(item)" icon="Delete" theme="error"
-              [rounded]="true"></button>
+    <msTableCell class="text-right">
+      <ng-container *ngIf="department.isPrincipalUser">
+        <button msIconButton (click)="deletePrincipal(item)" icon="Delete" theme="error"
+                [rounded]="true"></button>
+      </ng-container>
     </msTableCell>
   </msTableRow>
 </ms-table>

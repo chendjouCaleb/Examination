@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Exam.Entities;
 using MathNet.Numerics.Statistics;
 using Microsoft.EntityFrameworkCore;

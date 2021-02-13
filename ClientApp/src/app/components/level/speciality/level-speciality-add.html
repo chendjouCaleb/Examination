@@ -1,0 +1,18 @@
+<div class="flex-center-cover">
+  <form class="ms-form ms-depth-8">
+    <div class="ms-form-header">Ajouter une spécialité</div>
+
+    <div class="ms-textField">
+      <label for="specialities" class="msf-label">Spécialité à ajouter au niveau {{level.index + 1}}</label>
+      <MsfSelect id="specialities" [(ngModel)]="speciality" name="speciality" class="ms-textField-input"
+                 placeholder="Choisir une spécialité">
+        <MsfSelectOption *ngFor="let item of specialities" [value]="item">{{item.name}}</MsfSelectOption>
+      </MsfSelect>
+    </div>
+
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Add" [disabled]="!speciality" (click)="add()">Ajouter</button>
+    </div>
+  </form>
+</div>

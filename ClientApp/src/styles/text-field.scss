@@ -1,7 +1,23 @@
 ﻿.ms-form {
-  background: var(--cardBackgroundColor);
+  background: var(--bodyBackgroundColor);
   width: 400px;
-  padding: 30px;
+  padding: 0 32px 32px;
+
+  max-height: 100% !important;
+  max-width: 100%;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+}
+
+.ms-form-header {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  padding-top: 16px;
+  padding-bottom: 8px;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .ms-textField {
@@ -27,14 +43,6 @@
 .msf-label {
   color: inherit;
 }
-
-.ms-form-header {
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 600;
-}
-
-
 
 .ms-form .ms-textField {
   margin-top: 10px;

@@ -1,82 +1,88 @@
-﻿﻿
-<form class="ms-form" *ngIf="form" [formGroup]="form">
-  <div class="ms-form-header">Envoyer une demande</div>
+﻿<div class="flex-center-cover">﻿
+  <form class="ms-form" *ngIf="form" [formGroup]="form">
+    <div class="ms-form-header ms-sticky-header">
+      <span>Envoyer une demande</span>
+      <button msIconButton icon="Cancel"  MsfModalClose></button>
+    </div>
+
+    <msAlert class="my-2" theme="severeWarning">N'envoyer une demande dans un établissement dont vous en êtes un étudiant.</msAlert>
+
+    <div class="ms-textField">
+      <label for="fullName" class="msf-label">Nom & prénom</label>
+      <input type="text" id="fullName" class="ms-textField-input" formControlName="fullName">
+      <app-control-error [control]="form.controls['fullName']"></app-control-error>
+    </div>
+
+    <div class="ms-textField">
+      <label for="registrationId" class="msf-label">Votre matricule d'étudiant</label>
+      <input id="registrationId" class="ms-textField-input" formControlName="registrationId"
+             (keypress)="checkRegistrationId()">
+      <app-control-error [control]="form.controls['registrationId']"></app-control-error>
+      <msAlert theme="severeWarning" *ngIf="registrationIdIsUsed">
+        Le matricule que vous avez renseigné est déjà utilisé par un autre étudiant de l'établissement!
+      </msAlert>
+    </div>
+
+    <div class="ms-textField">
+      <label for="birthDate" class="msf-label">Date de naissance</label>
+      <input id="birthDate" DateInput class="ms-textField-input" formControlName="birthDate">
+      <app-control-error [control]="form.controls['birthDate']"></app-control-error>
+    </div>
+
+    <div class="ms-textField">
+      <label class="msf-label">Genre</label>
+      <MsfRadioGroup formControlName="gender" name="gender" style="display: flex">
+        <label class="ms-label" for="gender-M">
+          <MsfRadio id="gender-M" value="M" inputId="gender-M-i"></MsfRadio>
+          Homme
+        </label>
+
+        <label for="gender-F" class="ml-2 ms-Label">
+          <MsfRadio id="gender-F" value="F" inputId="gender-F-i"></MsfRadio>
+          Femme
+        </label>
+      </MsfRadioGroup>
+
+      <app-control-error [control]="form.controls['gender']"></app-control-error>
+    </div>
+
+    <div class="ms-textField" *ngIf="school">
+      <label for="department" class="msf-label">Département </label>
+      <MsfSelect id="department" class="ms-textField-input"
+                 placeholder="Choisir un départment" (selectionchange)="loadLevels($event.value)">
+        <MsfSelectOption *ngFor="let item of departments" [value]="item"> {{item.name | ucFirst}}</MsfSelectOption>
+      </MsfSelect>
+      <app-control-error [control]="form.controls['department']"></app-control-error>
+    </div>
+
+    <div class="ms-textField" *ngIf="department">
+      <label for="level" class="msf-label">Niveau </label>
+      <MsfSelect id="level" formControlName="level" class="ms-textField-input"
+                 placeholder="Choisir un niveau" (selectionchange)="loadLevelSpecialities($event.value)">
+        <MsfSelectOption *ngFor="let item of department.levels" [value]="item">
+          Niveau {{item.index + 1}}</MsfSelectOption>
+      </MsfSelect>
+      <app-control-error [control]="form.controls['level']"></app-control-error>
+    </div>
+
+    <div class="ms-textField" *ngIf="level">
+      <label for="levelSpeciality" class="msf-label">Spécialité </label>
+      <MsfSelect id="levelSpeciality" formControlName="levelSpeciality" class="ms-textField-input"
+                 placeholder="Choisir une specialité">
+        <MsfSelectOption *ngFor="let item of level.levelSpecialities"
+                         [value]="item">{{item.speciality.name}}</MsfSelectOption>
+      </MsfSelect>
+      <app-control-error [control]="form.controls['levelSpeciality']"></app-control-error>
+    </div>
 
 
-  <div class="ms-textField">
-    <label for="fullName" class="msf-label">Nom & prénom</label>
-    <input type="text" id="fullName" class="ms-textField-input" formControlName="fullName">
-    <app-control-error [control]="form.controls['fullName']"></app-control-error>
-  </div>
-
-  <div class="ms-textField">
-    <label for="registrationId" class="msf-label">Matricule de l'étudiant</label>
-    <input id="registrationId" class="ms-textField-input" formControlName="registrationId"
-           (keypress)="checkRegistrationId()">
-    <app-control-error [control]="form.controls['registrationId']"></app-control-error>
-    <msAlert theme="severeWarning" *ngIf="registrationIdIsUsed">
-      Le matricule que vous avez renseigné est déjà utilisé par un autre étudiant de l'établissement!
-    </msAlert>
-  </div>
-
-  <div class="ms-textField">
-    <label for="birthDate" class="msf-label">Date de naissance</label>
-    <input id="birthDate" DateInput class="ms-textField-input" formControlName="birthDate">
-    <app-control-error [control]="form.controls['birthDate']"></app-control-error>
-  </div>
-
-  <div class="ms-textField">
-    <label class="msf-label">Genre</label>
-    <MsfRadioGroup formControlName="gender" name="gender" style="display: flex">
-      <label class="ms-label" for="gender-M">
-        <MsfRadio id="gender-M" value="M" inputId="gender-M-i"></MsfRadio>
-        Homme
-      </label>
-
-      <label for="gender-F" class="ml-2 ms-Label">
-        <MsfRadio id="gender-F" value="F" inputId="gender-F-i"></MsfRadio>
-        Femme
-      </label>
-    </MsfRadioGroup>
-
-    <app-control-error [control]="form.controls['gender']"></app-control-error>
-  </div>
-
-  <div class="ms-textField" *ngIf="school">
-    <label for="department" class="msf-label">Département </label>
-    <MsfSelect id="department" class="ms-textField-input"
-               placeholder="Choisir un départment" (selectionchange)="loadLevels($event.value)">
-      <MsfSelectOption *ngFor="let item of departments" [value]="item"> {{item.name | ucFirst}}</MsfSelectOption>
-    </MsfSelect>
-    <app-control-error [control]="form.controls['department']"></app-control-error>
-  </div>
-
-  <div class="ms-textField" *ngIf="department">
-    <label for="level" class="msf-label">Niveau </label>
-    <MsfSelect id="level" formControlName="level" class="ms-textField-input"
-               placeholder="Choisir un niveau" (selectionchange)="loadLevelSpecialities($event.value)">
-      <MsfSelectOption *ngFor="let item of department.levels" [value]="item">Niveau {{item.index + 1}}</MsfSelectOption>
-    </MsfSelect>
-    <app-control-error [control]="form.controls['level']"></app-control-error>
-  </div>
-
-  <div class="ms-textField" *ngIf="level">
-    <label for="levelSpeciality" class="msf-label">Spécialité </label>
-    <MsfSelect id="levelSpeciality" formControlName="levelSpeciality" class="ms-textField-input"
-               placeholder="Choisir une specialité">
-      <MsfSelectOption *ngFor="let item of level.levelSpecialities"
-                       [value]="item">{{item.speciality.name}}</MsfSelectOption>
-    </MsfSelect>
-    <app-control-error [control]="form.controls['levelSpeciality']"></app-control-error>
-  </div>
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3" theme="standard">Annuler</button>
+      <button msButton theme="primary" icon="Add" [disabled]="form.untouched || form.invalid" (click)="add()">
+        Ajouter
+      </button>
+    </div>
+  </form>
 
 
-  <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">
-      Ajouter
-    </MsfButton>
-  </div>
-</form>
-
-
+</div>

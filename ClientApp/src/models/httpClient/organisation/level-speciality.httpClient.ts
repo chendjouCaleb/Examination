@@ -1,12 +1,12 @@
-import {GenericHttpClient, SERVER_URL} from "../httpClient";
-import {Level, LevelSpeciality, Speciality} from "examination/entities";
-import {Injectable} from "@angular/core";
-import {List} from "@positon/collections";
+import {GenericHttpClient, SERVER_URL} from '../httpClient';
+import {Level, LevelSpeciality, Speciality} from 'examination/entities';
+import {Injectable} from '@angular/core';
+import {List} from '@positon/collections';
 
 
 @Injectable()
 export class LevelSpecialityHttpClient extends GenericHttpClient<LevelSpeciality, number> {
-  url: string = SERVER_URL + "/levelSpecialities";
+  url: string = SERVER_URL + '/levelSpecialities';
 
 
   createFromAny(value: any): LevelSpeciality {

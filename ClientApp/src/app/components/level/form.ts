@@ -1,11 +1,11 @@
-﻿import {EvFormControl, EvFormGroup} from "examination/controls";
-import {LevelAddModel} from "examination/models";
+﻿import {EvFormControl, EvFormGroup} from 'examination/controls';
+import {LevelAddModel} from 'examination/models';
 
 
 export class LevelAddForm extends EvFormGroup<LevelAddModel> {
   constructor() {
     super({
-      specialities: new EvFormControl("specialities", "")
+      specialities: new EvFormControl('specialities', [])
     });
   }
 

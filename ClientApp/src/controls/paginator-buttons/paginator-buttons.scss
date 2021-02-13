@@ -1,0 +1,40 @@
+.ms-paginatorButtons {
+  display: block;
+  overflow-x: auto
+}
+
+.ms-paginatorButtons-layout {
+  position: relative;
+}
+
+.ms-paginatorButtons-page-layout{
+  position: absolute;
+  display: block;
+  left: 32px;
+  right: 32px;
+  top: 0;
+  bottom: 0;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.ms-paginatorButtons-page {
+  display: inline-block;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+
+  height: 32px;
+  min-width: 32px;
+  line-height: 32px;
+  text-align: center;
+  padding: 0 8px;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: var(--standardBgColor--hover);
+  }
+
+  &.active {
+    border-color: var(--primaryColor);
+  }
+}

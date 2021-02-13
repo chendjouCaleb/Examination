@@ -1,15 +1,25 @@
 ﻿import {IStudentService, STUDENT_SERVICE_TOKEN} from '../student.service.interface';
-import {AfterViewChecked, AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {Department, Level, LevelSpeciality, Student, StudentHttpClient, StudentLoader} from 'examination/models';
-import {List} from '@positon/collections';
-import {MsfCheckboxGroup, MsfMenu} from "fabric-docs";
-import {MsTable} from "@ms-fluent/table";
+import {AfterViewInit, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  Department,
+  Level,
+  LevelSpeciality,
+  School,
+  Student,
+  StudentHttpClient,
+  StudentLoader
+} from 'examination/models';
+import {MsfCheckboxGroup} from 'fabric-docs';
+import {MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'student-list.html',
   selector: 'app-student-list'
 })
 export class StudentList implements OnInit, AfterViewInit {
+
+  @Input()
+  school: School;
 
   @Input()
   department: Department;
@@ -28,6 +38,11 @@ export class StudentList implements OnInit, AfterViewInit {
 
   students: Array<Student> = [];
 
+  itemsFn: MsPaginatorItemsFn<Student> =
+    (page: number, size: number) => Promise.resolve(this.students.slice(page * size, page * size + size));
+
+  _isLoaded: boolean = false;
+
   constructor(private _studentLoader: StudentLoader,
               private _httpClient: StudentHttpClient,
               @Inject(STUDENT_SERVICE_TOKEN) public _studentService: IStudentService
@@ -40,13 +55,14 @@ export class StudentList implements OnInit, AfterViewInit {
     await this._studentLoader.loadByLevelSpeciality(this.levelSpeciality);
 
     this.students = this.getStudents();
+    this._isLoaded = true;
   }
 
   ngAfterViewInit(): void {
-      this.checkboxGroup.change.subscribe(() => {
-        console.log(this.checkboxGroup._checkboxChildren.filter(c => c.checked).map(c => c.value));
-        //this.table.setVisibleColumns(this.checkboxGroup.values.toArray())
-      })
+    // this.checkboxGroup.change.subscribe(() => {
+    //   console.log(this.checkboxGroup._checkboxChildren.filter(c => c.checked).map(c => c.value));
+    //   // this.table.setVisibleColumns(this.checkboxGroup.values.toArray())
+    // })
   }
 
 
@@ -55,7 +71,11 @@ export class StudentList implements OnInit, AfterViewInit {
   }
 
   delete(student: Student) {
-    this._studentService.deleteStudent(student);
+    this._studentService.deleteStudent(student).then(deleted => {
+      if (deleted) {
+        this.table.remove(student);
+      }
+    });
   }
 
   getStudents(): Array<Student> {
@@ -69,5 +89,16 @@ export class StudentList implements OnInit, AfterViewInit {
   }
 
 
+  getDepartment(): Department {
+    if (this.department) {
+      return this.department;
+    }
+    if (this.level) {
+      return this.level.department;
+    }
+    if (this.levelSpeciality) {
+      return this.levelSpeciality.level.department;
+    }
+  }
 
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationManager} from 'examination/app/authorization';
-import {RouterOutlet} from "@angular/router";
-import {slideInAnimation} from "examination/app/route-animations";
+import {RouterOutlet} from '@angular/router';
+import {slideInAnimation} from 'examination/app/route-animations';
 
 @Component({
   selector: 'app-root',

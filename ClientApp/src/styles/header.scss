@@ -1,0 +1,13 @@
+.ms-header {
+  padding: 8px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: var(--headerBgColor);
+}
+
+.ms-header-title {
+  font-size: 18px;
+  line-height: 24px;
+}

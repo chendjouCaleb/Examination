@@ -1,10 +1,10 @@
-﻿import {Component, Input, OnInit} from "@angular/core";
+﻿import {Component, Input, OnInit} from '@angular/core';
 
-import {AlertEmitter} from "src/controls/alert-emitter";
-import {Department, DepartmentLoader, Level, LevelLoader, RoomHttpClient, RoomLoader, School} from "src/models";
-import {MsfModalRef} from "fabric-docs";
-import {RoomAddForm} from "../room-form";
-import {List} from "@positon/collections";
+import {AlertEmitter} from 'src/controls/alert-emitter';
+import {Department, DepartmentLoader, Level, LevelLoader, RoomHttpClient, RoomLoader, School} from 'src/models';
+import {MsfModalRef} from 'fabric-docs';
+import {RoomAddForm} from '../room-form';
+import {List} from '@positon/collections';
 
 
 @Component({
@@ -37,12 +37,12 @@ export class RoomAdd implements OnInit {
       await this._departmentLoader.loadBySchool(this.school);
     }
 
-    if(this.department) {
+    if (this.department) {
       await this._levelLoader.loadByDepartment(this.department);
       this.levels = this.department.levels;
     }
 
-    if(this.level) {
+    if (this.level) {
       // this.department = this.level.department;
       // this.school = this.department.school;
     }
@@ -51,11 +51,11 @@ export class RoomAdd implements OnInit {
   }
 
   async checkName() {
-    const name = this.form.getControl("name");
+    const name = this.form.getControl('name');
     if (name.value && name.value.match(/^[a-zA-Z0-9 ]+$/)) {
       const room = await this._httpClient.findByName(this.school, name.value);
       if (room && room.id) {
-        name.addError("Le nom est déjà utilisé par une salle");
+        name.addError('Le nom est déjà utilisé par une salle');
       }
     }
   }
@@ -63,7 +63,7 @@ export class RoomAdd implements OnInit {
 
   async add() {
     const model = this.form.getModel();
-    let room = await this._httpClient.addRoom(model.body, model.params);
+    const room = await this._httpClient.addRoom(model.body, model.params);
     await this._loader.load(room);
     this.school?.addRoom(room);
     this.department?.addRoom(room);

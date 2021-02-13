@@ -123,7 +123,7 @@ export class CourseService implements ICourseService {
 
 
   details(course: Course) {
-    const modalRef = this._modal.open(CourseDetails);
+    const modalRef = this._modal.open(CourseDetails, {autoFocus: false});
     modalRef.componentInstance.course = course;
   }
 }

@@ -1,33 +1,34 @@
-<form class="ms-form ms-depth-8" [formGroup]="form" style="width: 400px">
-  <div class="ms-form-header">Ajouter une spécialité</div>
+<div class="flex-center-cover">
+  <form class="ms-form ms-depth-8" [formGroup]="form">
+    <div class="ms-form-header">Ajouter une spécialité</div>
+    <div class="ms-textField">
+      <label for="name" class="msf-label">Nom</label>
+      <input type="text" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
+      <app-control-error [control]="form.controls['name']"></app-control-error>
+    </div>
 
+    <div class="ms-textField">
+      <label for="levels" class="msf-label">Niveaux à ajouter à cette spécialité</label>
+      <MsfSelect id="levels" formControlName="levels" [multiple]="true" class="ms-textField-input"
+                 placeholder="Choisissez des niveaux">
+        <MsfSelectOption *ngFor="let item of department.levels" [value]="item" >Niveau {{item.index + 1}}</MsfSelectOption>
+      </MsfSelect>
+    </div>
 
-  <div class="ms-textField">
-    <label for="name" class="msf-label">Nom</label>
-    <input type="text" id="name" class="ms-textField-input" formControlName="name" (blur)="checkName()">
-    <app-control-error [control]="form.controls['name']"></app-control-error>
-  </div>
-
-  <div class="ms-textField">
-    <label for="levels" class="msf-label">Niveaux à ajouter à cette spécialité</label>
-    <MsfSelect id="levels" formControlName="levels" [multiple]="true" class="ms-textField-input"
-    placeholder="Choisissez des niveaux">
-      <MsfSelectOption *ngFor="let item of department.levels" [value]="item" >Niveau {{item.index + 1}}</MsfSelectOption>
-    </MsfSelect>
-  </div>
-
-  <div class="ms-textField">
-    <label class="msf-label" for="description">Description</label>
-    <textarea  id="description" name="description" formControlName="description" class="ms-textField-textarea">
+    <div class="ms-textField">
+      <label class="msf-label" for="description">Description</label>
+      <textarea  id="description" name="description" formControlName="description" class="ms-textField-textarea">
 
     </textarea>
-    <app-control-error [control]="form.controls['description']"></app-control-error>
-  </div>
+      <app-control-error [control]="form.controls['description']"></app-control-error>
+    </div>
 
 
 
-  <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <button MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.invalid" (click)="add()">Ajouter</button>
-  </div>
-</form>
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
+    </div>
+  </form>
+
+</div>

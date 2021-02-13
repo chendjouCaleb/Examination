@@ -9,7 +9,7 @@ export interface ILevelService {
 
   delete(level: Level): Promise<boolean>;
 
-  addSpeciality(level: Level, speciality: Speciality): Promise<LevelSpeciality>;
+  addSpeciality(level: Level): Promise<LevelSpeciality>;
 
   removeSpeciality(levelSpeciality: LevelSpeciality): Promise<boolean>;
 

@@ -1,4 +1,4 @@
-import {Department, Level, LevelSpeciality, Speciality} from 'examination/entities';
+import {Department, LevelSpeciality, Speciality} from 'examination/entities';
 import {InjectionToken} from '@angular/core';
 
 export const SPECIALITY_SERVICE_TOKEN =
@@ -11,7 +11,7 @@ export interface ISpecialityService {
 
   edit(speciality: Speciality): Promise<void>;
 
-  addLevelSpeciality(speciality: Speciality, level: Level): Promise<LevelSpeciality>;
+  addLevelSpeciality(speciality: Speciality): Promise<LevelSpeciality>;
 
   removeLevelSpeciality(levelSpeciality: LevelSpeciality): Promise<boolean>;
 

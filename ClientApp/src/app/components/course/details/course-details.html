@@ -1,22 +1,26 @@
-﻿<ng-container *ngIf="loaded">
+﻿<div style="max-height: 100%; overflow-y: auto" *ngIf="loaded">
   <div class="p-3">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="ms-pageTitle ms-sticky-header">
       <h5>{{course.name}}</h5>
-      <div class="text-right">
-        <MsfButton LeftIcon="ChevronDown" [MsfMenuTrigger]="courseMenu" theme="primary" [outline]="true">Paramètres
-        </MsfButton>
-        <MsfMenu #courseMenu>
-          <MsfMenuItem *ngIf="!course.isGeneral" (click)="service.general(course)">Généraliser ce cours</MsfMenuItem>
-          <MsfMenuItem *ngIf="course.isGeneral" (click)="service.restrict(course)">Restreindre ce cours</MsfMenuItem>
-          <MsfMenuItem icon="Edit" (click)="service.editCourse(course)">Modifier</MsfMenuItem>
-          <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer ce cours</MsfMenuItem>
-        </MsfMenu>
+      <div>
+        <ng-container *ngIf="course.level.department.school.userPrincipal.isPlanner">
+          <button msIconButton icon="More" [MsfMenuTrigger]="courseMenu" theme="transparent"></button>
+          <MsfMenu #courseMenu>
+            <MsfMenuItem *ngIf="!course.isGeneral" (click)="service.general(course)">Généraliser ce cours</MsfMenuItem>
+            <MsfMenuItem *ngIf="course.isGeneral" (click)="service.restrict(course)">Restreindre ce cours</MsfMenuItem>
+            <MsfMenuItem icon="Edit" (click)="service.editCourse(course)">Modifier</MsfMenuItem>
+            <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer ce cours</MsfMenuItem>
+          </MsfMenu>
+        </ng-container>
+
+        <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+
       </div>
     </div>
 
 
-    <div class="d-flex">
-      <div class="ms-description-list">
+    <div class="ms-Grid-row">
+      <div class="ms-Grid-col ms-sm12 ms-md12  ms-lg6 ms-description-list">
         <dl>
           <dt>Nom</dt>
           <dd>{{course.name}}</dd>
@@ -50,9 +54,14 @@
           </dd>
         </dl>
 
+        <dl>
+          <dt>Ajouté le</dt>
+          <dd class="ms-fontSize-12">{{course.registrationDate | amCalendar}}</dd>
+        </dl>
+
       </div>
 
-      <div class="ml-3">
+      <div class="ms-Grid-col ms-sm12 ms-md12 ms-lg6">
         <div class=" ms-description-list w-100">
           <dl>
             <dt>Radical</dt>
@@ -60,7 +69,7 @@
           </dl>
         </div>
 
-        <div style="max-width: 400px; overflow-x: auto; " class="mt-3">
+        <div style="overflow-x: auto; " class="mt-3">
           <app-score-list [course]="course"></app-score-list>
         </div>
 
@@ -70,4 +79,4 @@
 
   </div>
 
-</ng-container>
+</div>

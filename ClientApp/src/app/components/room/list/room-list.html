@@ -22,35 +22,37 @@
       </msTableHeadCell>
     </msTableHead>
 
-    <tr *ms-tableRowDef="let item of rooms; let i=index" ms-tableRow>
-      <td ms-tableCell>{{i + 1}} </td>
-      <td ms-tableCell>{{item.name | ucFirst}}</td>
-      <td ms-tableCell>{{item.capacity}} places</td>
-      <td ms-tableCell>{{item.address}}</td>
-      <td ms-tableCell>
+    <msTableRow *ms-tableRowDef="let item of rooms; let i=index">
+      <ms-tableCell>{{i + 1}} </ms-tableCell>
+      <ms-tableCell>{{item.name | ucFirst}}</ms-tableCell>
+      <ms-tableCell>{{item.capacity}} places</ms-tableCell>
+      <ms-tableCell>{{item.address}}</ms-tableCell>
+      <ms-tableCell>
         <ng-container *ngIf="item.department">
           {{item.department.name}}
         </ng-container>
         <app-icon *ngIf="!item.department" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </td>
+      </ms-tableCell>
 
-      <td ms-tableCell>
+      <ms-tableCell>
         <ng-container *ngIf="item.level">
           Niveau {{item.level.index + 1}}
         </ng-container>
         <app-icon *ngIf="!item.level" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </td>
+      </ms-tableCell>
 
-      <td ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</td>
-      <td ms-tableCell class="text-right">
-        <a (click)="service.detailsRoom(item)">Détails</a>
-        <button msIconButton class="ml-2" icon="More" theme="transparent" [MsfMenuTrigger]="roomMenu"></button>
-        <MsfMenu #roomMenu>
-          <MsfMenuItem icon="Edit" (click)="service.editRoom(item)">Modifier</MsfMenuItem>
-          <MsfMenuItem icon="Delete" theme="error" (click)="deleteRoom(item)">Supprimer</MsfMenuItem>
-        </MsfMenu>
-      </td>
-    </tr>
+      <ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</ms-tableCell>
+      <ms-tableCell class="text-right">
+        <button msButton (click)="service.detailsRoom(item)">Détails</button>
+        <ng-container *ngIf="_school.userPrincipal.isPlanner">
+          <button msIconButton class="ml-2" icon="More" theme="transparent" [MsfMenuTrigger]="roomMenu"></button>
+          <MsfMenu #roomMenu>
+            <MsfMenuItem icon="Edit" (click)="service.editRoom(item)">Modifier</MsfMenuItem>
+            <MsfMenuItem icon="Delete" theme="error" (click)="deleteRoom(item)">Supprimer</MsfMenuItem>
+          </MsfMenu>
+        </ng-container>
+      </ms-tableCell>
+    </msTableRow>
   </ms-table>
 
 </div>

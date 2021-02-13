@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,7 @@ namespace Exam.Entities
         public string Address { get; set; }
         
         public string PrincipalUserId { get; set; }
-        
-        
         public bool HasImage { get; set; }
-        
-
         public bool HasCoverImage { get; set; }
         
         public virtual School School { get; set; }
@@ -54,6 +51,24 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual List<Secretary> Secretaries { get; set; }
+
+        [NotMapped]
+        public bool IsPrincipalUser { get; set; }
+        
+        [NotMapped]
+        public bool IsStudent { get; set; }
+        
+        [NotMapped]
+        public bool IsPrincipal { get; set; }
+        
+        [NotMapped]
+        public bool IsSupervisor { get; set; }
+        
+        [NotMapped]
+        public bool IsSecretary { get; set; }
+        
+        [NotMapped]
+        public bool IsCorrector { get; set; }
         
     }
 }

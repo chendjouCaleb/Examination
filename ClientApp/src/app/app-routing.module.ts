@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ExaminationResolver, SchoolResolver} from 'examination/app/components';
+import {LoadAuthorizationGuard} from "examination/app/authorization";
 
 
 const routes: Routes = [
@@ -9,17 +10,17 @@ const routes: Routes = [
     path: 'schools', loadChildren: () => import('./pages/organisation/school/school.page.module').then(m => m.SchoolPageModule)
   },
   {
-    path: 'schools/:schoolId/departments',
+    path: 'schools/:schoolId/departments', canActivate: [ LoadAuthorizationGuard ],
     loadChildren: () => import('./pages/organisation/department/department.page.module').then(m => m.DepartmentPageModule)
   },
 
   {
-    path: 'schools/:schoolId/departments/:departmentId/levels',
+    path: 'schools/:schoolId/departments/:departmentId/levels', canActivate: [ LoadAuthorizationGuard ],
     loadChildren: () => import('./pages/organisation/level/level.page.module').then(m => m.LevelPageModule)
   },
 
   {
-    path: 'schools/:schoolId/departments/:departmentId/specialities',
+    path: 'schools/:schoolId/departments/:departmentId/specialities', canActivate: [ LoadAuthorizationGuard ],
     loadChildren: () => import('./pages/organisation/speciality/speciality.page.module').then(m => m.SpecialityPageModule)
   },
 
