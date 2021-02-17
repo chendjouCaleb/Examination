@@ -16,10 +16,12 @@ import {DepartmentDelete} from './delete/department-delete';
 import {ApplicationModule} from 'examination/app/components/member/application';
 import {DepartmentList} from 'examination/app/components/department/list/department-list';
 import {MsButtonModule} from '@ms-fluent/button';
+import {RouterModule} from "@angular/router";
+import {MsGridModule} from "@ms-fluent/grid";
 
 @NgModule({
   imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsButtonModule, MsfMenuModule, FormsModule,
-    ReactiveFormsModule, AppFormModule, ImageFormModule, UserPickerModule, MsfPersonaModule, ApplicationModule],
+    ReactiveFormsModule, AppFormModule, ImageFormModule, UserPickerModule, MsfPersonaModule, ApplicationModule, RouterModule, MsGridModule],
   declarations: [DepartmentAdd, DepartmentEdit, DepartmentCard, DepartmentBanner, DepartmentImage,
     DepartmentCoverImage, DepartmentDelete, DepartmentList],
   exports: [DepartmentAdd, DepartmentEdit, DepartmentCard, DepartmentBanner, DepartmentImage,

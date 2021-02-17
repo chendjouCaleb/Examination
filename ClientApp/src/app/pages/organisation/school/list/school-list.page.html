@@ -19,8 +19,8 @@
     </msAlert>
 
     <div class="py-3">
-      <ms-grid [itemWidth]="320" [itemHeight]="512" yGap="15">
-        <app-school-card style="background-color: var(--cardBackgroundColor)" *msGridItemDef="let school of schools" [school]="school" (onclick)="router.navigateByUrl(school.url)">
+      <ms-grid [itemWidth]="320" [itemHeight]="480" yGap="0">
+        <app-school-card style="background-color: var(--cardBackgroundColor)" *msGridItemDef="let school of schools" [school]="school">
 
         </app-school-card>
       </ms-grid>

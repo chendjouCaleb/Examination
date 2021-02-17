@@ -1,61 +1,64 @@
 <div class="ms-pageTitle">
-  <h2>{{'étudiants' | ucFirst}}</h2>
+  <h4>{{'étudiants' | ucFirst}}</h4>
 </div>
 
+<div *ngIf="_isLoaded">
+  <msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
 
-  <ms-table>
-    <msTableHead *msTableHeadDef>
-      <msTableHeadCell name="#">#</msTableHeadCell>
-      <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
-      <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom & prénom</msTableHeadCell>
-      <msTableHeadCell name="registrationNumber" [sortBy]="['registrationNumber', 'string']">Matricule</msTableHeadCell>
-      <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
-      <msTableHeadCell name="gender"  [sortBy]="['gender', 'string']">Genre</msTableHeadCell>
-      <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
-      <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
+  <msPaginator #msPaginator pageSize="50" [totalSize]="examinationStudents.length" [itemsFn]="itemsFn">
+    <div *ms-paginatorPageDef="let data=items; let start=start">
+      <ms-table #table style="max-height: 500px">
+        <msTableHead *msTableHeadDef>
+          <msTableHeadCell name="#">#</msTableHeadCell>
+          <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
+          <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom & prénom</msTableHeadCell>
+          <msTableHeadCell name="registrationNumber" [sortBy]="['registrationNumber', 'string']">Matricule
+          </msTableHeadCell>
+          <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
+          <msTableHeadCell name="gender" [sortBy]="['gender', 'string']">Genre</msTableHeadCell>
+          <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
+          <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
 
-      <msTableHeadCell name="actions" class="text-right">
-        <i class="ms-Icon ms-Icon--SetAction"></i>
-      </msTableHeadCell>
-    </msTableHead>
+          <msTableHeadCell name="actions" class="text-right">
+            <i class="ms-Icon ms-Icon--SetAction"></i>
+          </msTableHeadCell>
+        </msTableHead>
 
-    <ms-tableRow *ms-tableRowDef="let item of examinationStudents; let i=index" [value]="item">
-      <ms-tableCell>{{i + 1}}</ms-tableCell>
-      <ms-tableCell>{{item.levelIndex + 1}}</ms-tableCell>
+        <ms-tableRow *ms-tableRowDef="let item of data; let i=index" [value]="item">
+          <ms-tableCell>{{i + start + 1}}</ms-tableCell>
+          <ms-tableCell>{{item.levelIndex + 1}}</ms-tableCell>
 
-      <ms-tableCell>
-        <div class="ms-fontWeight-semibold text-capitalize">{{item.student.fullName}}</div>
-      </ms-tableCell>
+          <ms-tableCell>
+            <div class="ms-fontWeight-semibold text-capitalize">{{item.student.fullName}}</div>
+          </ms-tableCell>
 
-      <ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
-        {{item.student.registrationId}}
-      </ms-tableCell>
+          <ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+            {{item.student.registrationId}}
+          </ms-tableCell>
 
-      <ms-tableCell>
-        {{item.student.birthDate | amCalendar}}
-      </ms-tableCell>
+          <ms-tableCell>
+            {{item.student.birthDate | amCalendar}}
+          </ms-tableCell>
 
-      <ms-tableCell>
-        {{item.student.gender}}
-      </ms-tableCell>
+          <ms-tableCell>
+            {{item.student.gender}}
+          </ms-tableCell>
 
-      <ms-tableCell class="ms-fontWeight-semibold">
-        {{item.specialityName}}
-      </ms-tableCell>
-
-
-      <ms-tableCell>
-        <user-persona [user]="item.student.user"></user-persona>
-      </ms-tableCell>
+          <ms-tableCell class="ms-fontWeight-semibold">
+            {{item.specialityName}}
+          </ms-tableCell>
 
 
+          <ms-tableCell>
+            <user-persona *ngIf="item.student.user" [user]="item.student.user"></user-persona>
+          </ms-tableCell>
 
-      <ms-tableCell style="text-align: right">
-        <button msButton theme="primary" (click)="service.studentsDetails(item)">Détails</button>
-        <button msButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
-        <MsfMenu #more>
 
-        </MsfMenu>
-      </ms-tableCell>
-    </ms-tableRow>
-  </ms-table>
+          <ms-tableCell style="text-align: right">
+            <button msButton theme="primary" (click)="service.studentsDetails(item)">Détails</button>
+          </ms-tableCell>
+        </ms-tableRow>
+      </ms-table>
+    </div>
+  </msPaginator>
+</div>

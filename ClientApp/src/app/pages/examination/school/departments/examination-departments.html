@@ -3,8 +3,8 @@
   <h5>Départments</h5>
 </div>
 
-<div class="mt-3">
+<div class="d-flex flex-wrap" >
 <app-examination-department-item *ngFor="let item of examination.examinationDepartments"
-                                 style="width: 275px; margin-right: 10px "
+                                 style="max-width: 98%; margin-right: 10px" class="mt-3"
                                  [item]="item"></app-examination-department-item>
 </div>

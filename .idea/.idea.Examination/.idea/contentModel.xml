@@ -890,8 +890,10 @@
             <e p="icon" t="Include">
               <e p="calendar.png" t="Include" />
               <e p="gear.svg" t="Include" />
+              <e p="no-photos.svg" t="Include" />
               <e p="result.svg" t="Include" />
               <e p="schedule.svg" t="Include" />
+              <e p="school.svg" t="Include" />
             </e>
             <e p="maxresdefault_1.jpg" t="Include" />
           </e>
@@ -1310,13 +1312,6 @@
       <e p="Examination.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="ServerApp" t="IncludeRecursive">
-        <e p=".vs" t="Include">
-          <e p="ServerApp" t="Include">
-            <e p="v16" t="Include">
-              <e p=".suo" t="Include" />
-            </e>
-          </e>
-        </e>
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
         <e p="appsettings.production.json" t="Include" />

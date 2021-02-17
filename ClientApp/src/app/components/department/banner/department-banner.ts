@@ -1,7 +1,8 @@
 ﻿import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {Department} from 'examination/entities';
 import {DEPARTMENT_SERVICE_TOKEN, IDepartmentService} from '../department.service.interface';
-import {IApplicationService, STUDENT_APPLICATION_SERVICE_TOKEN} from "examination/app/components/member/application";
+import {IApplicationService, STUDENT_APPLICATION_SERVICE_TOKEN} from 'examination/app/components/member/application';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: 'department-banner.html',
@@ -15,34 +16,25 @@ export class DepartmentBanner implements OnInit {
   @Output()
   onDepartmentDelete = new EventEmitter();
 
-  imageUrl: string = 'https://cdn.spacetelescope.org/archives/images/wallpaper1/potw1345a.jpg';
-
   constructor(@Inject(DEPARTMENT_SERVICE_TOKEN) public service: IDepartmentService,
+              private _router: Router,
               @Inject(STUDENT_APPLICATION_SERVICE_TOKEN) public applicationService: IApplicationService) {
   }
 
-  ngOnInit(): void {
-    if (this.department.hasImage) {
-      this.imageUrl = this.department.imageUrl;
-    }
-  }
+  ngOnInit(): void { }
 
   changeImage() {
-    this.service.changeImage(this.department).then(changed => {
-      if (changed) {
-        this.imageUrl = this.department.imageUrl;
-      }
-    });
+    this.service.changeImage(this.department).then();
   }
 
   changeCoverImage() {
-    this.service.changeCoverImage(this.department);
+    this.service.changeCoverImage(this.department).then();
   }
 
   delete() {
     this.service.delete(this.department).then(deleted => {
       if (deleted) {
-        this.onDepartmentDelete.emit();
+        this._router.navigateByUrl(this.department.url).then();
       }
     });
   }

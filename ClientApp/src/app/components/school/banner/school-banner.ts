@@ -18,25 +18,15 @@ export class SchoolBanner implements OnInit {
   @Output()
   onSchoolDelete = new EventEmitter();
 
-  imageUrl: string = 'https://cdn.spacetelescope.org/archives/images/wallpaper1/potw1345a.jpg';
-
   constructor(@Inject(SCHOOL_SERVICE_TOKEN) public service: ISchoolService,
               private _elementRef: ElementRef<HTMLElement>,
               public applicationService: ApplicationService) {
   }
 
-  ngOnInit(): void {
-    if (this.school.hasImage) {
-      this.imageUrl = this.school.imageUrl;
-    }
-  }
+  ngOnInit(): void { }
 
   changeImage() {
-    this.service.changeImage(this.school).then(changed => {
-      if (changed) {
-        this.imageUrl = this.school.imageUrl;
-      }
-    })
+    this.service.changeImage(this.school);
   }
 
   changeCoverImage() {

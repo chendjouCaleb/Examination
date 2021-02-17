@@ -12,8 +12,4 @@ import {School} from 'examination/entities';
 export class SchoolCard {
   @Input()
   school: School;
-
-  @Output()
-  onclick = new EventEmitter<MouseEvent>();
-
 }

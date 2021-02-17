@@ -11,6 +11,8 @@ export class ExaminationDepartments implements OnInit{
   @Input()
   examination: Examination;
 
+  isLoaded: boolean = false;
+
   constructor(private _examinationDepartmentLoader: ExaminationDepartmentLoader,
               private _examinationSpecialityLoader: ExaminationSpecialityLoader,
               private _examinationLevelLoader: ExaminationLevelLoader,
@@ -26,6 +28,8 @@ export class ExaminationDepartments implements OnInit{
     this.examination.examinationDepartments.forEach(d => {
       d.examinationLevels = this.examination.examinationLevels.findAll(l => l.examinationDepartmentId === d.id);
       d.examinationSpecialities = this.examination.examinationSpecialities.findAll(l => l.examinationDepartmentId === d.id);
-    })
+    });
+
+    this.isLoaded = true;
   }
 }

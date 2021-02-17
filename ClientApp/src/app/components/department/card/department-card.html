@@ -1,3 +1,12 @@
-﻿{{department.name}}
+﻿<div>
+  <img [src]="department.imageUrl" alt="Logo image" height="320" width="320">
 
-<MsfButton (click)="onclick.emit($event)" theme="primary">VOIR</MsfButton>
+  <div style="padding: 12px">
+    <div class="ms-fontSize-18" style="line-height: 24px">{{department.name}}  ({{department.acronym | uppercase}})</div>
+    <div>{{department.address}}</div>
+
+    <div class="ms-divider my-2"></div>
+    <button msButton icon="RedEye" [routerLink]="department.url" theme="primary">VOIR</button>
+  </div>
+
+</div>

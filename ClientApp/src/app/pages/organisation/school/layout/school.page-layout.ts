@@ -13,4 +13,8 @@ export class SchoolPageLayout {
   constructor(public _router: Router, currentItems: CurrentItems) {
     this.school = currentItems.get('school');
   }
+
+  change(value) {
+    console.log(value);
+  }
 }

@@ -51,7 +51,6 @@
   & img {
     width: 200px;
     height: 200px;
-    border-radius: 50%;
   }
 }
 
@@ -81,7 +80,11 @@
   right: 0;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.7);
-  text-align: right;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 

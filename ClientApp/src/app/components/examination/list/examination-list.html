@@ -2,7 +2,7 @@
 <div class="ms-pageTitle">
     <h4>Examens</h4>
     <div>
-      <button msButton icon="Add" theme="primary" (click)="service.add(school)">
+      <button msButton icon="Add" theme="primary" (click)="add()">
         Ajouter <span class="ms-hiddenSm">un examen</span></button>
     </div>
 
@@ -37,11 +37,11 @@
           <span *ngIf="!item.endDate" [appStateBadge]="item.state"> </span>
         </msTableCell>
 
-        <msTableCell>
+        <msTableCell style="text-align: center">
           <a href="#" class="ms-fontSize-12"  [routerLink]="item.url">Aller à la page</a>
           <button msButton (click)="service.details(item)" class="ml-2" >Details</button>
 
-          <button msButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
+          <button msIconButton theme="transparent" class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
           <MsfMenu #more>
             <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
             <MsfMenuItem theme="primary" icon="Clock" *ngIf="item.isPending" (click)="service.start(item)">

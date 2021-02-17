@@ -70,6 +70,9 @@ namespace Exam.Persistence.Repositories
                 Mean = meanStatistics.Mean,
                 Median = means.Median(),
                 
+                StudentCount = examinationStudents.Count,
+                
+                
                 SuccessCount = means.Count(m => m >= 0.5),
                 FailedCount = means.Count(m => m < 0.5)
             };

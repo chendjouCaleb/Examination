@@ -5,12 +5,12 @@ import {
   ExaminationLevel,
   ExaminationLevelSpeciality,
   ExaminationSpeciality,
-  ExaminationStudent
+  ExaminationStudent, Student
 } from 'examination/entities';
 import {ExaminationStudentLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
 import {EXAMINATION_SERVICE_TOKEN, IExaminationService} from '../examination.service.contract';
-import {MsTable} from '@ms-fluent/table';
+import {MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'examination-student-list.html',
@@ -37,6 +37,12 @@ export class ExaminationStudentList implements OnInit {
 
   examinationStudents: ExaminationStudent[] = [];
 
+  _isLoaded: boolean = false;
+
+  itemsFn: MsPaginatorItemsFn<ExaminationStudent> = (page: number, size: number) => {
+    return Promise.resolve(this.examinationStudents.slice(page * size, page * size + size));
+  };
+
   constructor(private _examinationStudentLoader: ExaminationStudentLoader,
               @Inject(EXAMINATION_SERVICE_TOKEN) public service: IExaminationService ) {
   }
@@ -62,7 +68,9 @@ export class ExaminationStudentList implements OnInit {
       await this._examinationStudentLoader.loadByExamination(this.examination);
     }
 
-    this.table.unshiftRange(this.getExaminationStudents().toArray());
+    this.examinationStudents = this.getExaminationStudents().toArray();
+
+    this._isLoaded = true;
   }
 
   getExaminationStudents(): List<ExaminationStudent> {

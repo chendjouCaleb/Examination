@@ -6,7 +6,7 @@
   <div>
     <div class="school-banner-front">
       <div class="school-banner-image">
-        <img [src]="imageUrl" alt="Logo de l'école">
+        <img [src]="school.imageUrl" alt="Logo de l'école">
       </div>
       <div class="school-banner-info">
         <div>
@@ -19,16 +19,22 @@
     </div>
   </div>
   <div class="school-banner-footer">
-    <button msButton theme="primary" icon="AddFriend" (click)="sendApplication()">Devenir étudiant</button>
-    <button *ngIf="school.userPrincipal.isPrincipal" msButton icon="Settings" theme="standard" secondaryIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">
-      Paramètres
-    </button>
-    <MsfMenu #settingsMenu>
-      <MsfMenuItem icon="Edit" (click)="service.edit(school)">Modifier les informations</MsfMenuItem>
-      <MsfMenuItem icon="Accounts" (click)="service.changeIdentifier(school)">Change l'identifier</MsfMenuItem>
-      <MsfMenuItem icon="EditPhoto" (click)="changeImage()">Changer l'image de profil</MsfMenuItem>
-      <MsfMenuItem icon="EditPhoto" (click)="changeCoverImage()">Changer l'image de couverture</MsfMenuItem>
-      <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
-    </MsfMenu>
+    <div>
+      <button msIconButton theme="transparent" icon="ChevronLeft" routerLink="/schools"></button>
+    </div>
+
+    <div>
+      <button msButton theme="primary" icon="AddFriend" (click)="sendApplication()">Devenir étudiant</button>
+      <button *ngIf="school.userPrincipal.isPrincipal" msButton icon="Settings" theme="standard" secondaryIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">
+        Paramètres
+      </button>
+      <MsfMenu #settingsMenu>
+        <MsfMenuItem icon="Edit" (click)="service.edit(school)">Modifier les informations</MsfMenuItem>
+        <MsfMenuItem icon="Accounts" (click)="service.changeIdentifier(school)">Change l'identifier</MsfMenuItem>
+        <MsfMenuItem icon="EditPhoto" (click)="changeImage()">Changer l'image de profil</MsfMenuItem>
+        <MsfMenuItem icon="EditPhoto" (click)="changeCoverImage()">Changer l'image de couverture</MsfMenuItem>
+        <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
+      </MsfMenu>
+    </div>
   </div>
 </div>

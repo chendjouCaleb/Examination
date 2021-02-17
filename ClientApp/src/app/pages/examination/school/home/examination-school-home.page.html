@@ -1,30 +1,30 @@
 <div class="ms-pageTitle">
-  <h5>{{examination.name}}</h5>
-  <div class="text-right ml-5">
-    <MsfButton LeftIcon="ChevronDown" [MsfMenuTrigger]="examinationMenu" theme="primary" [outline]="true">Paramètres
-    </MsfButton>
+    <div msFontSize="18">{{examination.name}}</div>
+  <div>
+    <button msIconButton icon="Settings"  [MsfMenuTrigger]="examinationMenu" theme="transparent"></button>
     <MsfMenu #examinationMenu>
       <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
-      <!--
-      <MsfMenuItem theme="primary" icon="Clock" *ngIf="examination.state === 'PENDING'"
+      <MsfMenuItem theme="primary" icon="Clock" *ngIf="examination.isPending"
                    (click)="service.start(examination)">
         Débuter
       </MsfMenuItem>
-      <MsfMenuItem theme="warning" icon="Lock" *ngIf="examination.state === 'PROGRESS'"
+      <MsfMenuItem theme="warning" icon="Lock" *ngIf="examination.isProgress"
                    (click)="service.end(examination)">
         Fermer
       </MsfMenuItem>
-      <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="examination.state === 'FINISHED'"
+      <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="examination.isFinished"
                    (click)="service.relaunch(examination)">Relancer
       </MsfMenuItem>
--->
       <MsfMenuItem icon="Delete" theme="error" (click)="service.delete(examination)">Supprimer</MsfMenuItem>
     </MsfMenu>
   </div>
 </div>
 
-<div class="d-flex">
-    <div class="ms-description-list">
+<div>
+  <span class="ms-badge" msBgColor="sharedGreenCyan10" *ngIf="examination.isProgress">En cours</span>
+</div>
+<div class="d-flex justify-content-between flex-wrap">
+    <div class="ms-description-list mt-5">
       <dl>
         <dt>Nom</dt>
         <dd>{{examination.name}}</dd>
@@ -46,28 +46,8 @@
       </dl>
     </div>
 
-    <div class="ms-description-list ml-5">
-      <dl>
-        <dt>Départments</dt>
-        <dd>{{examination.statistics.departmentCount}}</dd>
-      </dl>
 
-      <dl>
-        <dt>Niveaux</dt>
-        <dd>{{examination.statistics.levelCount}}</dd>
-      </dl>
-
-      <dl>
-        <dt>Specialités</dt>
-        <dd>{{examination.statistics.specialityCount}}</dd>
-      </dl>
-      <dl>
-        <dt>Étudiants</dt>
-        <dd>{{examination.statistics.studentCount}}</dd>
-      </dl>
-    </div>
-
-  <div class="ms-description-list ml-5">
+  <div class="ms-description-list mt-5">
     <dl>
       <dt>Épreuves</dt>
       <dd>{{examination.statistics.testCount}}</dd>
@@ -88,14 +68,14 @@
 
   </div>
 
-  <div class="ms-description-list ml-5">
+  <div class="ms-description-list mt-5">
     <dl>
-      <dt>Moyenne générale</dt>
-      <dd>{{examination.statistics.mean | number}}</dd>
+      <dt>Étudiants</dt>
+      <dd>{{examination.statistics.studentCount}}</dd>
     </dl>
     <dl>
-      <dt>Moyenne médiane</dt>
-      <dd>{{examination.statistics.median | number}}</dd>
+      <dt>Moy. générale(médiane)</dt>
+      <dd>{{examination.statistics.mean | number}} &nbsp; ({{examination.statistics.median | number}})</dd>
     </dl>
     <dl msColor="sharedYellowGreen10">
       <dt>Réussite</dt>
@@ -104,7 +84,7 @@
     </dl>
 
     <dl msColor="sharedRed10">
-      <dt>Réussite</dt>
+      <dt>Échec</dt>
       <dd>{{examination.statistics.failedCount}}
         ({{examination.statistics.failedCount/examination.statistics.studentCount * 100 | number}}%)</dd>
     </dl>
@@ -114,5 +94,5 @@
 
 
 <div>
-  {{examination.statistics | json}}
+<!--  {{examination.statistics | json}}-->
 </div>

@@ -1,8 +1,8 @@
 ﻿import {Component, Input} from '@angular/core';
-import {ExaminationHttpClient, ExaminationLoader, School} from "examination/models";
-import {AlertEmitter} from "examination/controls";
-import {MsfModalRef} from "fabric-docs";
-import {ExaminationAddForm} from "examination/app/components/examination/examination-form";
+import {ExaminationHttpClient, ExaminationLoader, School} from 'examination/models';
+import {AlertEmitter} from 'examination/controls';
+import {MsfModalRef} from 'fabric-docs';
+import {ExaminationAddForm} from 'examination/app/components/examination/examination-form';
 
 @Component({
   selector: 'app-examination-add',
@@ -23,18 +23,18 @@ export class ExaminationAdd {
   }
 
   async checkName() {
-    const name = this.form.getControl("name");
+    const name = this.form.getControl('name');
     if (name.value.match(/^[a-zA-Z0-9 ]+$/)) {
       const examination = await this._httpClient.findByName(this.school, name.value);
       if (examination && examination.id) {
-        name.addError("Le nom est déjà utilisé par un examen");
+        name.addError('Le nom est déjà utilisé par un examen');
       }
     }
   }
 
 
   async add() {
-    let examination = await this._httpClient.add(this.form.getModel(), {schoolId: this.school.id});
+    const examination = await this._httpClient.add(this.form.getModel(), {schoolId: this.school.id});
     await this._loader.load(examination);
     this._alertEmitter.info(`L'examen' ${examination.name} a été ajoutée.`);
     this.school.statistics.examinationCount++;

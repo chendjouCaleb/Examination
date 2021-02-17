@@ -27,6 +27,8 @@ export class DepartmentLoader extends Loader<Department, number> {
 
     if (item.hasImage) {
       item.imageUrl = this.httpClient.getImageUrl(item);
+    } else {
+      item.imageUrl = 'assets/icon/school.svg';
     }
 
 

@@ -1,21 +1,20 @@
 <div class="ms-pageTitle">
   <div class="d-flex align-items-center">
     <div class="ms-fontSize-20">Niveau {{examinationLevel.level.index + 1}} </div>
+  </div>
+</div>
 
-    <div *ngIf="examinationLevel.examinationLevelSpecialities" class="ml-3">
+  <div *ngIf="examinationLevel.examinationLevelSpecialities" class="my-2">
     <span *ngFor="let item of examinationLevel.examinationLevelSpecialities"
           [routerLink]="item.url"
-          msColor="white" msBgColor="sharedRedOrange10" class="ms-pointer ml-2 br-2"
+          msColor="white" msBgColor="sharedRedOrange10" class="ms-pointer mr-2 br-2"
           style="padding: 2px; font-size: 12px">
     {{item.levelSpeciality?.speciality?.name}}
   </span>
-    </div>
   </div>
 
-</div>
-
-<div class="d-flex">
-  <div class="ms-description-list">
+<div class="d-flex justify-content-between flex-wrap">
+  <div class="ms-description-list mt-3">
     <dl>
       <dt>Étudiants</dt>
       <dd>{{statistics.studentCount}}</dd>
@@ -40,7 +39,7 @@
     </dl>
   </div>
 
-  <div class="ms-description-list ml-5">
+  <div class="ms-description-list mt-3">
     <dl>
       <dt>Épreuves</dt>
       <dd>{{examinationLevel.statistics.testCount}}</dd>
@@ -63,7 +62,7 @@
 
   </div>
 
-  <div class="ms-description-list ml-5">
+  <div class="ms-description-list mt-3">
     <dl>
       <dt>Moyenne générale</dt>
       <dd msColor="sharedCyan10">{{statistics.mean | number}}</dd>
@@ -85,9 +84,9 @@
     </dl>
   </div>
 
-  <div class="ms-description-list ml-5">
+  <div class="ms-description-list  mt-3">
     <dl>
-      <dt style="vertical-align: top">Max</dt>
+      <dt style="vertical-align: top">Premier</dt>
       <dd>
         <div>{{statistics.maxStudent?.examinationStudent?.student?.fullName}} </div>
         <div>{{statistics.maxStudent?.examinationStudent?.student?.registrationId}}</div>
@@ -96,7 +95,7 @@
     </dl>
 
     <dl>
-      <dt style="vertical-align: top">Min</dt>
+      <dt style="vertical-align: top">Dernier</dt>
       <dd>
         <div>{{statistics.minStudent?.examinationStudent?.student?.fullName}} </div>
         <div>{{statistics.minStudent?.examinationStudent?.student?.registrationId}}</div>
@@ -114,6 +113,6 @@
 
 
 <div>
-  {{examinationLevel.statistics }}
+
 </div>
 

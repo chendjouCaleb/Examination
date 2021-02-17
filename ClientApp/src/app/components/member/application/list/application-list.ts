@@ -1,12 +1,13 @@
 ﻿import {IApplicationService, STUDENT_APPLICATION_SERVICE_TOKEN} from '../application.service.interface';
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {
+  Application,
+  ApplicationHttpClient,
+  ApplicationLoader,
   Department,
   Level,
   LevelSpeciality,
-  Application,
-  ApplicationHttpClient,
-  ApplicationLoader, School, Student
+  School
 } from 'examination/models';
 import {List} from '@positon/collections';
 import {MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
@@ -35,8 +36,9 @@ export class ApplicationList implements OnInit {
 
   _isLoaded: boolean = false;
 
-  itemsFn: MsPaginatorItemsFn<Student> =
-    (page: number, size: number) => Promise.resolve(this.applications.slice(page * size, page * size + size));
+  itemsFn: MsPaginatorItemsFn<Application> = (page: number, size: number) => {
+    return Promise.resolve(this.applications.slice(page * size, page * size + size));
+  };
 
   constructor(private _applicationLoader: ApplicationLoader,
               private _httpClient: ApplicationHttpClient,

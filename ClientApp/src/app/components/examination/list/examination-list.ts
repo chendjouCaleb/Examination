@@ -30,4 +30,12 @@ export class ExaminationList implements OnInit {
     await this._examinationLoader.loadBySchool(this.school);
     this.table.unshift(...this.school.examinations.toArray());
   }
+
+  add() {
+    this.service.add(this.school).then(examination => {
+      if (examination) {
+        this.table.unshift(examination);
+      }
+    })
+  }
 }

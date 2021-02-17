@@ -1,4 +1,4 @@
-﻿import {Component, EventEmitter, Input, Output} from '@angular/core';
+﻿import {Component, Input} from '@angular/core';
 import {Department} from 'examination/entities';
 
 @Component({
@@ -8,8 +8,4 @@ import {Department} from 'examination/entities';
 export class DepartmentCard {
   @Input()
   department: Department;
-
-  @Output()
-  onclick = new EventEmitter<MouseEvent>();
-
 }

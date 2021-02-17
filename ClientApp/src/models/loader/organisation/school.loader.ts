@@ -23,6 +23,8 @@ export class SchoolLoader extends Loader<School, number> {
 
     if (item.hasImage) {
       item.imageUrl = this.httpClient.getImageUrl(item);
+    } else {
+      item.imageUrl = 'assets/icon/school.svg';
     }
 
 

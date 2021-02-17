@@ -16,10 +16,11 @@ import {SchoolCoverImage} from './cover-image/school-cover-image';
 import {SchoolDelete} from './delete/school-delete';
 import {ApplicationModule} from '../member/application';
 import {MsButtonModule} from '@ms-fluent/button';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, FormsModule,
-    ReactiveFormsModule, AppFormModule, ImageFormModule, ApplicationModule, MsButtonModule],
+    ReactiveFormsModule, AppFormModule, ImageFormModule, ApplicationModule, MsButtonModule, RouterModule],
   declarations: [SchoolAdd, SchoolEdit, SchoolIdentifier, SchoolCard, SchoolBanner, SchoolImage,
     SchoolCoverImage, SchoolDelete],
   exports: [SchoolAdd, SchoolEdit, SchoolIdentifier, SchoolCard, SchoolBanner, SchoolImage,

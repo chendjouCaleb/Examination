@@ -31,7 +31,7 @@ export class Examination extends Entity<number> {
     this.isClosed = value.isClosed;
 
     this.statistics = new ExaminationStatistics();
-    Object.assign(this.statistics, JSON.parse(value.statistics));
+    Object.assign(this.statistics, JSON.parse(value.statistics ? value.statistics : '{}'));
 
   }
 
