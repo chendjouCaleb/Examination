@@ -30,10 +30,10 @@ import {TestLevelSpecialityDetails} from './test-level-speciality-details/test-l
 import {TestLevelSpecialityItem} from './test-level-speciality-item/test-level-speciality-item';
 import {TestLevelSpecialityList} from './test-level-speciality-list/test-level-speciality-list';
 import {TestLevelSpecialityResolver} from './test-level-speciality.resolver';
-import {TestGroupModule} from "examination/app/components/test-group";
-import {PaperModule} from "examination/app/components/paper";
-import {TestGroups} from "./test-groups/test-groups";
-import {PublishScore} from "./publish/publish-score";
+import {TestGroupModule} from 'examination/app/components/test-group';
+import {PaperModule} from 'examination/app/components/paper';
+import {TestGroups} from './test-groups/test-groups';
+import {PublishScore} from './publish/publish-score';
 
 @NgModule({
   imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, MsfTableModule,
