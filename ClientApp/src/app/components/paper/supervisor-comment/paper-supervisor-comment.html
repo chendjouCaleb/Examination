@@ -1,7 +1,6 @@
-﻿﻿<form class="ms-form" >
+﻿<div class="flex-center-cover">
+  ﻿<form class="ms-form" >
   <div class="ms-form-header">Commentaire de surveillance</div>
-
-
 
   <div class="ms-textField">
     <label for="comment" class="msf-label">Commentaire</label>
@@ -9,11 +8,12 @@
     </textarea>
   </div>
 
-
   <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" (click)="edit()">Commenter</MsfButton>
+    <button msButton MsfModalClose class="mr-3">Annuler</button>
+    <button msButton theme="primary" (click)="edit()">Commenter</button>
   </div>
 </form>
 
 
+
+</div>

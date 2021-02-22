@@ -28,15 +28,15 @@ export class PaperStatistics {
   scores: number[] = [];
 
   get isAllCorrected(): boolean {
-    return this.correctedFrequency - this.frequency === 0;
+    return this.frequency !== 0 && this.correctedFrequency - this.frequency === 0;
   }
 
   get isAllPresent(): boolean {
-    return this.presence - this.frequency === 0;
+    return this.frequency !== 0 && this.presence - this.frequency === 0;
   }
 
   get isAllConsigned(): boolean {
-    return this.consignedFrequency - this.frequency === 0;
+    return this.frequency !== 0 && this.consignedFrequency - this.frequency === 0;
   }
 
 

@@ -1,7 +1,6 @@
-﻿﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
+﻿<div class="flex-center-cover">
+  ﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
   <div class="ms-form-header">Modifier l'horaire</div>
-
-
 
   <div class="ms-textField" >
     <label for="day" class="msf-label">Date</label>
@@ -23,14 +22,14 @@
     </div>
   </div>
 
-
-
   <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">
+    <button msButton MsfModalClose class="mr-3">Annuler</button>
+    <button msButton theme="primary" icon="Edit" [disabled]="form.invalid" (click)="edit()">
       Modifier
-    </MsfButton>
+    </button>
   </div>
 </form>
 
 
+
+</div>

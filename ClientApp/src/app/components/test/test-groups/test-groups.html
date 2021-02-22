@@ -1,8 +1,11 @@
 ﻿<div class="ms-pageTitle">
-  <div class="ms-fontSize-24">Groupes ({{test.testGroupCount}})</div>
+  <div class="ms-fontSize-20">Groupes ({{test.testGroupCount}})</div>
   <div *ngIf="test.isPlanner">
-    <MsfButton Icon="Group" theme="primary" [outline]="true" (click)="paperService.group(test) ">Grouper les étudiants</MsfButton>
-    <MsfButton Icon="Add" theme="primary" class="ml-2" (click)="service.add(test)">Ajouter un groupe</MsfButton>
+    <button msButton icon="Group" theme="primaryOutline" (click)="paperService.group(test) ">Grouper
+      <span class="ms-hiddenSm">les étudiants</span>
+    </button>
+    <button msButton icon="Add" theme="primary" class="ml-2" (click)="addGroup()">Ajouter
+      <span class="ms-hiddenSm">un groupe</span></button>
   </div>
 </div>
 
@@ -10,6 +13,46 @@
   {{test.notGroupedStudentCount}} étudiants de cette épreuve n'ont pas de groupe. Veuillez les en assigner un.
 </msAlert>
 
-<div>
-  <app-test-group-item *ngFor="let item of testGroups" [testGroup]="item" class="mt-2"></app-test-group-item>
-</div>
+<ms-table>
+  <ms-tableHead *ms-tableHeadDef>
+    <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+    <ms-tableHeadCell name="room">Salles</ms-tableHeadCell>
+    <ms-tableHeadCell name="state" [sortBy]="['state', 'string']">État</ms-tableHeadCell>
+    <ms-tableHeadCell name="hour" [sortBy]="['startDate', 'date']">Horaires</ms-tableHeadCell>
+    <ms-tableHeadCell name="paperCount" [sortBy]="['paperCount', 'number']">Étudiants</ms-tableHeadCell>
+    <ms-tableHeadCell name="presentPaperCount" [sortBy]="['presentPaperCount', 'number']">Présence</ms-tableHeadCell>
+    <ms-tableHeadCell name="correctedPaperCount" [sortBy]="['correctedPaperCount', 'number']">Corrigés
+    </ms-tableHeadCell>
+    <ms-tableHeadCell name="actions" class="text-right">
+      <span class="px-2 ms-Icon ms-Icon--SetAction"></span>
+    </ms-tableHeadCell>
+  </ms-tableHead>
+  <ms-tableRow *ms-tableRowDef="let group of groups; let i=index">
+    <ms-tableCell>{{i + 1}}</ms-tableCell>
+    <ms-tableCell>{{group.room?.name}} ({{group.room?.capacity}} places)</ms-tableCell>
+    <ms-tableCell>
+      <span class="ms-badge" msBgColor="sharedGreenCyan10" *ngIf="group.finished">Terminée</span>
+      <span class="ms-badge" msBgColor="sharedRedOrange10" *ngIf="group.waiting">En attente</span>
+      <span class="ms-badge" msBgColor="sharedBlue10" *ngIf="group.progress">En cours</span>
+    </ms-tableCell>
+    <ms-tableCell>
+      <span class="ms-badge" msBgColor="sharedRedOrange10" *ngIf="group.waiting">En attente</span>
+      <div *ngIf="group.progress">{{group.startHour}}</div>
+      <ng-container *ngIf="group.finished">
+        <div>{{group.startHour}} à {{ group.endHour }}</div>
+      </ng-container>
+    </ms-tableCell>
+
+
+    <ms-tableCell>{{group.paperCount}}</ms-tableCell>
+    <ms-tableCell>{{group.presentPaperCount}}</ms-tableCell>
+    <ms-tableCell>{{group.correctedPaperCount}}</ms-tableCell>
+    <ms-tableCell class="text-right">
+      <span class="ms-link" [routerLink]="group.url">Détails</span>
+      <button msIconButton theme="transparent" class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
+      <MsfMenu #more>
+        <MsfMenuItem icon="Delete" (click)="delete(group)" theme="error">Supprimer</MsfMenuItem>
+      </MsfMenu>
+    </ms-tableCell>
+  </ms-tableRow>
+</ms-table>

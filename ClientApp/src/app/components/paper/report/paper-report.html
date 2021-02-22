@@ -1,4 +1,5 @@
-﻿﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
+﻿<div class="flex-center-cover">
+  ﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
   <div class="ms-form-header">Consigner la copie</div>
 
 
@@ -17,11 +18,11 @@
 
 
   <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" [class.msf-disabled]="form.invalid" (click)="edit()">
-      Consigner
-    </MsfButton>
+    <button msButton MsfModalClose class="mr-3">Annuler</button>
+    <button msButton theme="primary" [disabled]="form.invalid" (click)="edit()">Consigner</button>
   </div>
 </form>
 
 
+
+</div>

@@ -1,8 +1,9 @@
-﻿import {Component, Inject, Input, OnInit} from '@angular/core';
+﻿import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Course, Examination, ExaminationDepartment, ExaminationLevel, Test} from 'examination/entities';
 import {ITestAddParams, ITestService, TEST_SERVICE_TOKEN} from '../test.service.interface';
 import {TestLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
+import {MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'test-list.html',
@@ -21,6 +22,13 @@ export class TestList implements OnInit {
   @Input()
   course: Course;
 
+  @ViewChild(MsTable)
+  table: MsTable<Test>;
+
+  tests: Test[] = [];
+
+  _isLoaded: boolean = false;
+
   constructor(@Inject(TEST_SERVICE_TOKEN) public service: ITestService,
               private _testLoader: TestLoader) {
   }
@@ -34,6 +42,9 @@ export class TestList implements OnInit {
     } else if (this.examinationLevel) {
       await this._testLoader.loadByExaminationLevel(this.examinationLevel);
     }
+
+    this._isLoaded = true;
+    this.tests = this.getTests().toArray();
   }
 
   add() {
@@ -44,11 +55,15 @@ export class TestList implements OnInit {
       course: this.course
     };
 
-    this.service.add(params);
+    this.service.add(params).subscribe(test => {
+      if (test && this.table) {
+        this.table.unshift(test);
+      }
+    });
   }
 
 
-  get tests(): List<Test> {
+  getTests(): List<Test> {
     if (this.examination) {
       return this.examination.tests;
     } else if (this.examinationDepartment) {

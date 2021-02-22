@@ -1,7 +1,7 @@
-﻿﻿import {Component, Input, OnInit} from "@angular/core";
-import {AlertEmitter} from "src/controls/alert-emitter";
-import {MsfModalRef} from "fabric-docs";
-import {List} from "@positon/collections";
+﻿﻿import {Component, Input, OnInit} from '@angular/core';
+import {AlertEmitter} from 'src/controls/alert-emitter';
+import {MsfModalRef} from 'fabric-docs';
+import {List} from '@positon/collections';
 import {
   Department,
   Supervisor,
@@ -10,12 +10,12 @@ import {
   TestGroup,
   TestGroupSupervisorHttpClient,
   TestGroupSupervisorLoader
-} from "examination/models";
+} from 'examination/models';
 
 @Component({
   templateUrl: 'test-group-supervisor-add.html'
 })
-export class TestGroupSupervisorAdd implements OnInit{
+export class TestGroupSupervisorAdd implements OnInit {
   supervisorId: number[] = [];
 
   @Input()
@@ -33,11 +33,11 @@ export class TestGroupSupervisorAdd implements OnInit{
   }
 
   async ngOnInit() {
-    await this._supervisorLoader.loadByDepartment(this.testGroup.test.course.level.department);
+    await this._supervisorLoader.loadByDepartment(this.department);
 
     const supervisors = this.department.supervisors;
-    for(const item of this.testGroup.testGroupSupervisors) {
-      this.supervisors.removeIf(c => c.id === item.supervisorId);
+    for (const item of this.testGroup.testGroupSupervisors) {
+      supervisors.removeIf(c => c.id === item.supervisorId);
     }
     this.supervisors = supervisors;
   }
@@ -45,8 +45,10 @@ export class TestGroupSupervisorAdd implements OnInit{
 
   async add() {
     const supervisors = await this._httpClient.addRange({},
-      {supervisorId: this.supervisorId,
-      testGroupId: this.testGroup.id});
+      {
+        supervisorId: this.supervisorId,
+        testGroupId: this.testGroup.id
+      });
 
     for (const supervisor of supervisors) {
       await this._loader.load(supervisor);

@@ -1,9 +1,9 @@
-﻿import {Entity} from "../entity";
-import {Level} from "./level.entity";
-import {List} from "@positon/collections";
-import {Score} from "./score.entity";
-import {sum} from "../../../controls/array";
-import {CourseLevelSpeciality} from "./course-level-speciality.entity";
+﻿import {Entity} from '../entity';
+import {Level} from './level.entity';
+import {List} from '@positon/collections';
+import {Score} from './score.entity';
+import {sum} from '../../../controls/array';
+import {CourseLevelSpeciality} from './course-level-speciality.entity';
 
 export class Course extends Entity<number> {
   constructor(value: any = {}) {
@@ -42,7 +42,7 @@ export class Course extends Entity<number> {
   scores: List<Score>;
 
   get totalScoreRadical(): number {
-    if(!this.scores) {return 0;}
+    if (!this.scores) {return 0; }
     return sum(this.scores.toArray(), s => s.radical)
   }
 
@@ -55,7 +55,7 @@ export class Course extends Entity<number> {
   }
 
   get specialityNames(): string[] {
-    if(!this.courseLevelSpecialities) {return []}
+    if (!this.courseLevelSpecialities) {return []}
 
     return this.courseLevelSpecialities.toArray().map(t => t.levelSpeciality.speciality.name);
   }

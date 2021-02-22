@@ -29,7 +29,7 @@ $font-family-sans-serif: Metropolis, sans-serif;
 @import "text-field.scss";
 @import "color";
 @import "header";
-
+@import "layout";
 @import "card";
 
 *[tabindex]:focus {
@@ -206,6 +206,7 @@ body {
   font-size: 11px;
   user-select: none;
 
+  text-transform: uppercase;
   display: inline-block;
 
   &.ms-badge-primary {

@@ -43,7 +43,7 @@ export interface ITestService {
 
   delete(test: Test): Promise<boolean>;
 
-  addScore(test: Test): Promise<Score>;
+  addScore(test: Test): Promise<TestScore>;
 
   deleteScore(score: TestScore): Promise<boolean>;
 

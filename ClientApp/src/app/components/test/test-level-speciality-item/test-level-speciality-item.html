@@ -10,33 +10,32 @@
   <div class="d-flex mt-2">
     <div class="app-test-item-states">
       <div class="app-test-item-state-item" *ngIf="test.useAnonymity">
-        <span MsfIcon iconName="Hide3" class="app-test-item-state-icon ms-bgColor-sharedRed20"></span>
+        <span class="ms-Icon ms-Icon--Hide3 app-test-item-state-icon ms-bgColor-sharedRed20"></span>
         <span class="app-test-item-state-icon-text"> Anonymée </span>
       </div>
 
       <div class="app-test-item-state-item  mt-2">
-        <span MsfIcon iconName="CheckMark" class="app-test-item-state-icon ms-bgColor-sharedGreenCyan10"></span>
+        <span class="ms-Icon ms-Icon--CheckMark pp-test-item-state-icon ms-bgColor-sharedGreenCyan10"></span>
         <span class="app-test-item-state-icon-text"> Corrigée</span>
       </div>
 
       <div class="app-test-item-state-item mt-2" *ngIf="!test.isPublished">
-      <span MsfIcon iconName="StatusCircleExclamation"
-            class="app-test-item-state-icon ms-bgColor-sharedRedOrange10"></span>
+      <span class="ms-Icon ms-Icon--StatusCircleExclamation app-test-item-state-icon ms-bgColor-sharedRedOrange10"></span>
         <span class="app-test-item-state-icon-text"> Notes non publiées</span>
       </div>
 
     </div>
 
     <div class="app-test-item-supervisors ml-2">
-      <MsfPersona size="size32" class="d-block">
-        <MsfPersonaFigure textInitial="ND" color="green"></MsfPersonaFigure>
-        <MsfPersonaText class="ms-fontWeight-semibold">Neil deGrasse</MsfPersonaText>
-      </MsfPersona>
+      <div class="d-flex">
+        <ms-persona textInitial="ND" color="green"></ms-persona>
+        <div class=" ml-2 ms-fontWeight-semibold">Neil deGrasse</div>
+      </div>
 
-      <MsfPersona size="size32" class="d-block">
-        <MsfPersonaFigure textInitial="CC"></MsfPersonaFigure>
-        <MsfPersonaText class="ms-fontWeight-semibold">Chendjou Caleb deGrace</MsfPersonaText>
-      </MsfPersona>
+      <div class="d-flex">
+        <ms-persona textInitial="CC"></ms-persona>
+        <div class=" ml-2 ms-fontWeight-semibold">Chendjou Caleb deGrace</div>
+      </div>
     </div>
 
     <div class="app-test-item-infos ml-5">
@@ -44,12 +43,12 @@
         <div>Prévue pour</div>
         <div class="d-flex">
           <div class="icon-label">
-            <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+            <span class="icon-label-icon ms-Icon ms-Icon--Calendar"></span>
             <span class="icon-label-text">{{test.expectedStartDate | date}}</span>
           </div>
 
           <div class="icon-label ml-2">
-            <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+            <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
             <span class="icon-label-text"> {{test.expectedStartHour}} à {{test.expectedEndHour}}</span>
           </div>
         </div>
@@ -58,7 +57,7 @@
       <div *ngIf="test.progress">
         <div>Heure de début</div>
         <div class=" icon-label">
-          <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+          <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
           <span class="icon-label-text"> {{test.startHour}} </span>
         </div>
       </div>
@@ -68,19 +67,19 @@
         <div>Effectuée le</div>
         <div>
           <div class="icon-label">
-            <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+            <span class="icon-label-icon ms-Icon ms-Icon--Calendar"></span>
             <span class="icon-label-text">{{test.startDate | amCalendar}}</span>
           </div>
 
           <div class=" icon-label ml-2">
-            <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+            <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
             <span class="icon-label-text"> {{test.startHour}} à {{test.endHour}}</span>
           </div>
         </div>
       </div>
 
       <div class=" icon-label">
-        <span class="icon-label-icon" MsfIcon iconName="CalculatorMultiply"></span>
+        <span class="icon-label-icon ms-Icon ms-Icon--CalculatorMultiply"></span>
         <span class="icon-label-text"> {{test.coefficient}}</span>
       </div>
 

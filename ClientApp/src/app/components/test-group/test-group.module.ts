@@ -25,10 +25,13 @@ import {TestGroupDetails} from './details/test-group-details';
 import {MomentModule} from 'ngx-moment';
 import {TestGroupItem} from './item/test-group-item';
 import {RouterModule} from '@angular/router';
+import {MsButtonModule} from '@ms-fluent/button';
+import {MsTableModule} from '@ms-fluent/table';
+import {MsPersonaModule} from '@ms-fluent/persona';
 
 @NgModule({
-  imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, FormsModule, MsfTableModule,
-    MsfPersonaModule, MomentModule, RouterModule, MsfIconModule,
+  imports: [CommonModule, ControlModule, MsfModalModule, MsButtonModule, MsfMenuModule, FormsModule, MsTableModule,
+    MsPersonaModule, MomentModule, RouterModule,
     ReactiveFormsModule, AppFormModule, UserPickerModule, MsfSelectModule, MsfCheckboxModule],
 
   declarations: [TestGroupAdd,   TestGroupItem, TestGroupDetails, TestGroupCorrectorAdd,

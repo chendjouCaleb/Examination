@@ -1,10 +1,10 @@
-﻿<div class="d-flex justify-content-between">
+﻿<div class="ms-pageTitle">
   <div>
-    <div class="app-test-item-testName">Groupe {{testGroup.index +1}}</div>
+    <div class="app-test-item-testName">Groupe {{testGroup.index + 1}}</div>
   </div>
   <div class="text-right">
-    <a [routerLink]="testGroup.url">Détails</a>
-    <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+    <span class="ms-link" [routerLink]="testGroup.url">Détails</span>
+    <button msIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
     <MsfMenu #more>
       <MsfMenuItem icon="Delete" (click)="service.delete(testGroup)" theme="error">Supprimer</MsfMenuItem>
     </MsfMenu>
@@ -18,31 +18,31 @@
 
     <div>
       <div>
-        <span msFontWeight="semibold">{{testGroup.paperCount}}</span> Étudiants</div>
+        <span msFontWeight="semibold">{{testGroup.paperCount}}</span> Étudiants
+      </div>
       <div>
-        <span msFontWeight="semibold">{{testGroup.presentPaperCount}}</span> Présences</div>
+        <span msFontWeight="semibold">{{testGroup.presentPaperCount}}</span> Présences
+      </div>
       <div><span msFontWeight="semibold">{{testGroup.correctedPaperCount}}</span> Corrigés</div>
     </div>
 
   </div>
 
   <div class="app-test-item-supervisors ml-5" *ngIf="testGroup.testGroupCorrectors">
-    <MsfPersona size="size32" *ngFor="let item of testGroup.testGroupCorrectors">
-      <MsfPersonaFigure [imageUrl]="item.corrector?.user?.imageUrl" ></MsfPersonaFigure>
-      <MsfPersonaText>{{item.corrector?.user?.fullName}}</MsfPersonaText>
-    </MsfPersona>
+    <user-persona size="size32" *ngFor="let item of testGroup.testGroupCorrectors" [user]="item.corrector?.user">
+    </user-persona>
   </div>
 
   <div class="app-test-item-infos ml-5">
     <div *ngIf="!testGroup.startDate">
-      <div >
+      <div>
         <div class="icon-label">
-          <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+          <span class="icon-label-icon ms-Icon ms-Icon--Calendar"></span>
           <span class="icon-label-text">{{testGroup.test?.expectedStartDate | date}}</span>
         </div>
 
         <div class="icon-label">
-          <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+          <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
           <span class="icon-label-text"> {{testGroup.test?.expectedStartHour}}
             à {{testGroup.test?.expectedEndHour}}
           </span>
@@ -50,7 +50,7 @@
 
       </div>
       <div class="icon-label" *ngIf="testGroup.room">
-        <span class="icon-label-icon" MsfIcon iconName="Bank"></span>
+        <span class="icon-label-icon ms-Icon ms-Icon--Bank"></span>
         <span class="icon-label-text"> {{testGroup.room.name}} ({{testGroup.room.capacity}} places). </span>
       </div>
     </div>
@@ -58,7 +58,7 @@
     <div *ngIf="testGroup.progress">
       <div>Heure de début</div>
       <div class=" icon-label">
-        <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+        <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
         <span class="icon-label-text"> {{testGroup.startHour}} </span>
       </div>
     </div>
@@ -68,12 +68,12 @@
       <div>Effectuée le</div>
       <div>
         <div class="icon-label">
-          <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+          <span class="icon-label-icon ms-Icon ms-Icon--Calendar"></span>
           <span class="icon-label-text">{{testGroup.startDate | amCalendar}}</span>
         </div>
 
         <div class=" icon-label ml-2">
-          <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+          <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
           <span class="icon-label-text"> {{testGroup.startHour}} à {{testGroup.endHour}}</span>
         </div>
       </div>

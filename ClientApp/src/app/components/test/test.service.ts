@@ -196,7 +196,7 @@ export class TestService implements ITestService {
   }
 
 
-  addScore(test: Test): Promise<Score> {
+  addScore(test: Test): Promise<TestScore> {
     const modalRef = this._modal.open(TestScoreAdd, {disableClose: true});
     modalRef.componentInstance.test = test;
     return modalRef.afterClosed().toPromise();

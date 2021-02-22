@@ -16,6 +16,7 @@
           </msTableHeadCell>
           <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
           <msTableHeadCell name="gender" [sortBy]="['gender', 'string']">Genre</msTableHeadCell>
+          <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
           <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
           <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
 
@@ -42,6 +43,10 @@
 
           <ms-tableCell>
             {{item.student.gender}}
+          </ms-tableCell>
+
+          <ms-tableCell class="ms-fontWeight-semibold">
+            {{item.levelIndex + 1}}
           </ms-tableCell>
 
           <ms-tableCell class="ms-fontWeight-semibold">

@@ -1293,6 +1293,7 @@
             <e p="card.scss" t="Include" />
             <e p="color.scss" t="Include" />
             <e p="header.scss" t="Include" />
+            <e p="layout.scss" t="Include" />
             <e p="ms-Icon-fix.scss" t="Include" />
             <e p="school-banner.scss" t="Include" />
             <e p="styles.scss" t="Include" />

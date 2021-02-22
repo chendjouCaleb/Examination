@@ -1,4 +1,5 @@
-﻿﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
+﻿<div class="flex-center-cover">
+  ﻿<form class="ms-form" *ngIf="form" [formGroup]="form">
   <div class="ms-form-header">Noter la copie</div>
 
 
@@ -21,11 +22,13 @@
 
 
   <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">
+    <button msButton MsfModalClose class="mr-3">Annuler</button>
+    <button msButton theme="primary" icon="Edit" [disabled]="form.invalid" (click)="edit()">
       Noter
-    </MsfButton>
+    </button>
   </div>
 </form>
 
 
+
+</div>

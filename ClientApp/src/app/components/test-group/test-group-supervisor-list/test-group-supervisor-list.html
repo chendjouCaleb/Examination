@@ -4,7 +4,7 @@
 
   <div class="text-right ml-5">
     <ng-container *ngIf="testGroup.relation.isPlanner">
-      <MsfButton Icon="Add" (click)="service.addTestGroupSupervisors(testGroup)">Ajouter</MsfButton>
+      <button msButton icon="Add" theme="primaryOutline" (click)="addTestGroupSupervisors(testGroup)">Ajouter</button>
     </ng-container>
   </div>
 </div>
@@ -18,23 +18,18 @@
     Ce groupe n'a pas de surveillant principal. <br>Seul un surveillant principal peut démarrer l'épreuve.
   </msAlert>
 
-  <MsfTable class="mt-2">
-    <MsfTableRow *ngFor="let item of testGroup.testGroupSupervisors" [value]="item">
-      <MsfTableCell class="py-1">
-        <MsfPersona size="size32">
-          <MsfPersonaFigure [imageUrl]="item.supervisor.user.imageUrl"></MsfPersonaFigure>
-          <MsfPersonaText>
-            <div>{{item.supervisor.user.fullName}}</div>
-            <div>
-              <span *ngIf="item.isPrincipal"
-                    class="ms-fontSize-12 ms-fontColor-white ms-bgColor-sharedGreenCyan10 px-1">Principal</span>
-            </div>
-          </MsfPersonaText>
-        </MsfPersona>
-      </MsfTableCell>
-      <MsfTableCell class="py-1">
+  <ms-table class="mt-2">
+    <ms-tableHead *ms-tableHeadDef></ms-tableHead>
+    <ms-tableRow *ms-tableRowDef="let item of supervisors" [value]="item">
+      <ms-tableCell class="px-0">
+        <div class="d-flex">
+          <user-persona [user]="item.supervisor.user"></user-persona>
+          <span *ngIf="item.isPrincipal" msColor="sharedGreenCyan10" msFontSize="24" class="pl-2">&#8226;</span>
+        </div>
+      </ms-tableCell>
+      <ms-tableCell class="px-0 text-right">
         <ng-container *ngIf="testGroup.relation.isPlanner">
-          <i class="ms-Icon ms-Icon--More p-2" [MsfMenuTrigger]="supervisorMore" style="cursor:pointer"></i>
+          <button msIconButton theme="transparent" icon="MoreVertical" [MsfMenuTrigger]="supervisorMore"></button>
           <MsfMenu #supervisorMore>
             <MsfMenuItem icon="CheckMark" *ngIf="!item.isPrincipal" (click)="service.setPrincipal(item)">Donner le
               statut de principal
@@ -43,12 +38,12 @@
               Enlever le statut de principal
             </MsfMenuItem>
 
-            <MsfMenuItem icon="Delete" theme="error" (click)="service.removeTestGroupSupervisor(testGroup, item)">
+            <MsfMenuItem icon="Delete" theme="error" (click)="remove(item)">
               Supprimer
             </MsfMenuItem>
           </MsfMenu>
         </ng-container>
-      </MsfTableCell>
-    </MsfTableRow>
-  </MsfTable>
+      </ms-tableCell>
+    </ms-tableRow>
+  </ms-table>
 </div>

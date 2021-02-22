@@ -137,7 +137,7 @@ namespace Exam.Controllers
 
 
         [HttpDelete("{testGroupSecretaryId}")]
-        [LoadTestGroupSecretary(SchoolItemName = "school", TestItemName = "test")]
+        [LoadTestGroupSecretary(SchoolItemName = "school")]
         [IsPlanner]
         public NoContentResult Delete(TestGroupSecretary testGroupSecretary)
         {

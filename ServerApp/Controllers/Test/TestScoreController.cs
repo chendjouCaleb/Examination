@@ -80,7 +80,7 @@ namespace Exam.Controllers
         [HttpPost]
         [ValidModel]
         [RequireQueryParameter("testId")]
-        [LoadTest(DepartmentItemName = "department", Source = ParameterSource.Query)]
+        [LoadTest(SchoolItemName = "school", Source = ParameterSource.Query)]
         [IsPlanner]
         public CreatedAtActionResult Add(Test test, [FromBody] TestScoreForm form)
         {
@@ -121,7 +121,7 @@ namespace Exam.Controllers
 
 
         [HttpPut("{testScoreId}/name")]
-        [LoadTestScore(DepartmentItemName = "department", TestItemName = "test")]
+        [LoadTestScore(SchoolItemName = "school")]
         [RequireQueryParameter("name")]
         [IsPlanner]
         public StatusCodeResult ChangeName(TestScore testScore, [FromQuery] string name)
@@ -144,8 +144,8 @@ namespace Exam.Controllers
 
 
         [HttpDelete("{testScoreId}")]
-        [LoadTestScore(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [LoadTestScore(SchoolItemName = "school")]
+        [IsPlanner]
         public NoContentResult Delete(TestScore testScore)
         {
             Test test = testScore.Test;

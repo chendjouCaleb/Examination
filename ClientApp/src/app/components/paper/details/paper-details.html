@@ -1,8 +1,8 @@
 ﻿<div class="ms-pageTitle">
-  <h4 class="px-3">Copie</h4>
+  <div msFontSize="20">Copie</div>
   <div>
     <ng-container *ngIf="paper.testGroup && paper.testGroup?.relation">
-      <MsfIconButton [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+      <button msIconButton theme="transparent" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
 
       <MsfMenu #more>
         <MsfMenuItemGroup *ngIf="paper.testGroup?.relation.isSupervisor">
@@ -118,7 +118,7 @@
         <dt>Note obtenue</dt>
         <dd msFontSize="18" >{{paper.score}}/{{paper.test.radical}}
 
-          <MsfIconButton *ngIf="paper.testGroup?.relation.isPlanner" class="ml-3" icon="Edit" (click)="service.scores(paper)"></MsfIconButton>
+          <button msIconButton *ngIf="paper.testGroup?.relation.isPlanner" class="ml-3" icon="Edit" (click)="service.scores(paper)"></button>
           </dd>
       </dl>
 
@@ -134,10 +134,7 @@
       <dl>
         <dt>Copie corrigée par</dt>
         <dd>
-          <MsfPersona *ngIf="paper.correctorUser" size="size32" >
-            <MsfPersonaFigure [imageUrl]="paper.correctorUser.imageUrl"></MsfPersonaFigure>
-            <MsfPersonaText>{{paper.correctorUser.fullName | titlecase}}</MsfPersonaText>
-          </MsfPersona>
+          <user-persona *ngIf="paper.correctorUser" [user]="paper.correctorUser"></user-persona>
           <app-icon *ngIf="!paper.correctorUser" icon="Cancel" bgColor="sharedRed10"></app-icon>
         </dd>
       </dl>
@@ -148,20 +145,14 @@
       <dl>
         <dt>Copie récupérée par</dt>
         <dd>
-          <MsfPersona *ngIf="paper.collectorUser" size="size32">
-            <MsfPersonaFigure [imageUrl]="paper.collectorUser.imageUrl"></MsfPersonaFigure>
-            <MsfPersonaText>{{paper.collectorUser.fullName | titlecase}}</MsfPersonaText>
-          </MsfPersona>
+          <user-persona *ngIf="paper.collectorUser" [user]="paper.collectorUser"></user-persona>
         </dd>
       </dl>
 
       <dl>
         <dt>Admis en salle par</dt>
-        <dd *ngIf="paper.supervisorUser">
-          <MsfPersona size="size32">
-            <MsfPersonaFigure [imageUrl]="paper.supervisorUser.imageUrl"></MsfPersonaFigure>
-            <MsfPersonaText>{{paper.supervisorUser.fullName | titlecase}}</MsfPersonaText>
-          </MsfPersona>
+        <dd>
+          <user-persona *ngIf="paper.supervisorUser" [user]="paper.supervisorUser"></user-persona>
         </dd>
         <dd *ngIf="!paper.supervisorUser">
           <app-icon icon="Cancel" bgColor="sharedRed10"></app-icon>
@@ -179,11 +170,8 @@
 
       <dl>
         <dt>Copie consignée par</dt>
-        <dd *ngIf="paper.secretaryUser">
-          <MsfPersona size="size32">
-            <MsfPersonaFigure [imageUrl]="paper.secretaryUser.imageUrl"></MsfPersonaFigure>
-            <MsfPersonaText>{{paper.secretaryUser.fullName | titlecase}}</MsfPersonaText>
-          </MsfPersona>
+        <dd>
+          <user-persona *ngIf="paper.secretaryUser" [user]="paper.secretaryUser"></user-persona>
         </dd>
         <dd *ngIf="!paper.secretaryUser">
           <app-icon icon="Cancel" bgColor="sharedRed10"></app-icon>

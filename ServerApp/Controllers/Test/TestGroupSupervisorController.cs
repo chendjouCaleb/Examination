@@ -159,7 +159,7 @@ namespace Exam.Controllers
         }
 
         [HttpDelete("{testGroupSupervisorId}")]
-        [LoadTestGroupSupervisor(ExaminationItemName = "examination", TestItemName = "test")]
+        [LoadTestGroupSupervisor(SchoolItemName = "school", TestItemName = "test")]
         [IsPlanner]
         [PeriodHaveState(ItemName = "test", State = "PENDING")]
         public NoContentResult Delete(TestGroupSupervisor testGroupSupervisor)

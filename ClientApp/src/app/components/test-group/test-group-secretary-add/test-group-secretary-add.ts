@@ -1,7 +1,7 @@
-﻿import {Component, Input, OnInit} from "@angular/core";
-import {AlertEmitter} from "src/controls/alert-emitter";
-import {MsfModalRef} from "fabric-docs";
-import {List} from "@positon/collections";
+﻿import {Component, Input, OnInit} from '@angular/core';
+import {AlertEmitter} from 'src/controls/alert-emitter';
+import {MsfModalRef} from 'fabric-docs';
+import {List} from '@positon/collections';
 import {
   Department,
   Secretary,
@@ -10,7 +10,7 @@ import {
   TestGroup,
   TestGroupSecretaryHttpClient,
   TestGroupSecretaryLoader
-} from "examination/models";
+} from 'examination/models';
 
 @Component({
   templateUrl: 'test-group-secretary-add.html'

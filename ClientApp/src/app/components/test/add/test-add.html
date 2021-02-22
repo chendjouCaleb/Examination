@@ -1,4 +1,4 @@
-﻿﻿<ng-container *ngIf="form">
+﻿﻿<div class="flex-center-cover" *ngIf="form">
 <form class="ms-form"  [formGroup]="form">
   <div class="ms-form-header">Ajouter une épreuve</div>
 
@@ -74,12 +74,12 @@
 
   </div>
   <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="form.canDisabledSubmit" (click)="add()">
+    <button msButton MsfModalClose class="mr-3">Annuler</button>
+    <button msButton theme="primary" icon="Add" [disabled]="form.canDisabledSubmit" (click)="add()">
       Ajouter
-    </MsfButton>
+    </button>
   </div>
 </form>
 
 
-</ng-container>
+</div>

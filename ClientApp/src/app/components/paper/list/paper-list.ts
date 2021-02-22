@@ -1,8 +1,9 @@
-import {ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ExaminationStudent, Paper, Test, TestGroup, TestLevelSpeciality} from 'examination/entities';
 import {PaperLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
-import {IPaperService, PAPER_SERVICE_TOKEN} from "../paper.service.interface";
+import {IPaperService, PAPER_SERVICE_TOKEN} from '../paper.service.interface';
+import {MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'paper-list.html',
@@ -21,26 +22,34 @@ export class PaperList implements OnInit {
   @Input()
   testLevelSpeciality: TestLevelSpeciality;
 
+  @ViewChild(MsTable)
+  table: MsTable;
+
+  papers: Paper[] = [];
+
   constructor(private _paperLoader: PaperLoader, private _changeDetector: ChangeDetectorRef,
               @Inject(PAPER_SERVICE_TOKEN) public service: IPaperService) {
   }
 
   async ngOnInit() {
     if (this.test) {
-      this._paperLoader.loadByTest(this.test);
+      await this._paperLoader.loadByTest(this.test);
     }
 
     if (this.examinationStudent) {
-      this._paperLoader.loadByExaminationStudent(this.examinationStudent);
+      await this._paperLoader.loadByExaminationStudent(this.examinationStudent);
     }
 
     if (this.testGroup) {
-      this._paperLoader.loadByTestGroup(this.testGroup);
+      await this._paperLoader.loadByTestGroup(this.testGroup);
     }
 
-    if(this.testLevelSpeciality) {
-      this._paperLoader.loadByTestLevelSpeciality(this.testLevelSpeciality);
+    if (this.testLevelSpeciality) {
+      await this._paperLoader.loadByTestLevelSpeciality(this.testLevelSpeciality);
     }
+
+    this.table.unshift(...this.getPapers().toArray());
+    this.papers.unshift(...this.getPapers().toArray());
   }
 
   async addPapers() {
@@ -52,6 +61,8 @@ export class PaperList implements OnInit {
     this.test.papers = null;
     Promise.resolve().then(async () => {
       await this._paperLoader.loadByTest(this.test);
+      this.table.clear();
+      this.table.unshift(...this.test.papers.toArray());
       this._changeDetector.detectChanges();
     })
   }
@@ -65,7 +76,7 @@ export class PaperList implements OnInit {
     }
   }
 
-  get papers(): List<Paper> {
+  getPapers(): List<Paper> {
     if (this.examinationStudent) {
       return this.examinationStudent.papers;
     }
@@ -77,7 +88,7 @@ export class PaperList implements OnInit {
     if (this.testGroup) {
       return this.testGroup.papers;
     }
-    if(this.testLevelSpeciality) {
+    if (this.testLevelSpeciality) {
       return this.testLevelSpeciality.papers;
     }
 

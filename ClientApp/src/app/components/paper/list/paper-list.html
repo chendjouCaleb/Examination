@@ -1,117 +1,120 @@
 <div class="ms-pageTitle">
   <div class="ms-fontSize-20">Participations</div>
   <div>
-    <MsfButton class="mr-2" Icon="Refresh" (click)="reload()">Recharger</MsfButton>
+    <button msButton class="mr-2 ms-hiddenSm" icon="Refresh" (click)="reload()">Recharger</button>
+    <button msIconButton class="mr-2 ms-hiddenMdUp" icon="Refresh" (click)="reload()"></button>
 
     <ng-container *ngIf="test">
-      <MsfButton Icon="Group" class="mr-2" [outline]="true" theme="primary" (click)="group()">Grouper les étudiants
-      </MsfButton>
-      <MsfButton Icon="Add" theme="primary" *ngIf="test" (click)="addPapers( )">Ajouter les étudiants</MsfButton>
+      <button msButton icon="Group" class="mr-2 ms-hiddenSm" theme="primaryOutline" (click)="group()">Grouper les
+        étudiants
+      </button>
+      <button msIconButton icon="Group" class="mr-2 ms-hiddenMdUp" theme="primaryOutline" (click)="group()"></button>
+      <button msButton icon="Add" theme="primaryOutline" class="ms-hiddenSm" *ngIf="test" (click)="addPapers()">Ajouter
+        les étudiants
+      </button>
+      <button msIconButton icon="Add" theme="primaryOutline" class="ms-hiddenMdUp" *ngIf="test"
+              (click)="addPapers()"></button>
     </ng-container>
   </div>
 </div>
 
 
-<div class="ms-table-container">
-  <MsfTable *ngIf="papers">
-    <MsfTableHead>
-      <MsfTableHeadCell>#</MsfTableHeadCell>
-      <MsfTableHeadCell>Matricule</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="fullName">Nom</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="groupIndex">N°</MsfTableHeadCell>
-      <MsfTableHeadCell>Groupe</MsfTableHeadCell>
-      <MsfTableHeadCell>Specialité</MsfTableHeadCell>
-      <MsfTableHeadCell>Présent</MsfTableHeadCell>
-      <MsfTableHeadCell>Arrivée</MsfTableHeadCell>
-      <MsfTableHeadCell>Départ</MsfTableHeadCell>
-      <MsfTableHeadCell style="text-align: right">Actions</MsfTableHeadCell>
-    </MsfTableHead>
+<ms-table>
+  <ms-tableHead *ms-tableHeadDef>
+    <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+    <ms-tableHeadCell name="registrationNumber">Matricule</ms-tableHeadCell>
+    <ms-tableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom</ms-tableHeadCell>
+    <ms-tableHeadCell name="groupIndex" [sortBy]="['groupIndex', 'number']">N°</ms-tableHeadCell>
+    <ms-tableHeadCell name="group">Groupe</ms-tableHeadCell>
+    <ms-tableHeadCell name="speciality">Specialité</ms-tableHeadCell>
+    <ms-tableHeadCell name="present">Présent</ms-tableHeadCell>
+    <ms-tableHeadCell name="startHour">Arrivée</ms-tableHeadCell>
+    <ms-tableHeadCell name="endHour">Départ</ms-tableHeadCell>
+    <ms-tableHeadCell name="actions" style="text-align: right">
+      <i class="ms-Icon ms-Icon--SetAction px-2"></i>
+    </ms-tableHeadCell>
+  </ms-tableHead>
 
-    <MsfTableRow #row *ngFor="let item of papers" [value]="item">
-      <MsfTableCell>{{row.index}}</MsfTableCell>
+  <ms-tableRow #row *ms-tableRowDef="let item of papers; let i=index" [value]="item">
+    <ms-tableCell>{{i + 1}}</ms-tableCell>
+    <ms-tableCell>{{item.examinationStudent?.student?.registrationId}}</ms-tableCell>
+    <ms-tableCell>
+      <div class="ms-fontWeight-semibold text-capitalize">{{item.examinationStudent?.student.fullName}}</div>
+    </ms-tableCell>
 
+    <ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+      <ng-container *ngIf="item.testGroup">
+        {{item?.groupIndex + 1}}
+      </ng-container>
+      <app-icon *ngIf="!item.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
+    </ms-tableCell>
 
-      <MsfTableCell>{{item.examinationStudent?.student?.registrationId}}</MsfTableCell>
+    <ms-tableCell>
+      <ng-container *ngIf="item.testGroup">
+        {{item.testGroup?.index + 1}}
+      </ng-container>
+      <app-icon *ngIf="!item.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
+    </ms-tableCell>
 
-      <MsfTableCell>
-        <div class="ms-fontWeight-semibold text-capitalize">{{item.examinationStudent?.student.fullName}}</div>
-      </MsfTableCell>
+    <ms-tableCell>
+      <ng-container *ngIf="item.testLevelSpeciality">
+        {{item.testLevelSpeciality.examinationLevelSpeciality?.examinationSpeciality?.speciality.name}}
+      </ng-container>
+      <app-icon *ngIf="!item.testLevelSpeciality" bgColor="sharedRed10" icon="Cancel"></app-icon>
+    </ms-tableCell>
 
-      <MsfTableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
-        <ng-container *ngIf="item.testGroup">
-          {{item?.groupIndex + 1}}
-        </ng-container>
-        <app-icon *ngIf="!item.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </MsfTableCell>
+    <ms-tableCell>
+      <app-icon *ngIf="!item.isPresent" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      <app-icon *ngIf="item.isPresent"></app-icon>
+    </ms-tableCell>
 
-      <MsfTableCell>
-        <ng-container *ngIf="item.testGroup">
-          {{item.testGroup?.index + 1}}
-        </ng-container>
-        <app-icon *ngIf="!item.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </MsfTableCell>
+    <ms-tableCell class="ms-fontWeight-semibold">
+      <ng-container *ngIf="item.startDate">
+        {{item.startHour}}
+      </ng-container>
+      <app-icon *ngIf="!item.startDate" bgColor="sharedRed10" icon="Cancel"></app-icon>
+    </ms-tableCell>
 
-      <MsfTableCell>
-        <ng-container *ngIf="item.testLevelSpeciality">
-          {{item.testLevelSpeciality.examinationLevelSpeciality?.examinationSpeciality?.speciality.name}}
-        </ng-container>
-        <app-icon *ngIf="!item.testLevelSpeciality" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </MsfTableCell>
-
-      <MsfTableCell>
-        <app-icon *ngIf="!item.isPresent" bgColor="sharedRed10" icon="Cancel"></app-icon>
-        <app-icon *ngIf="item.isPresent"></app-icon>
-      </MsfTableCell>
-
-      <MsfTableCell class="ms-fontWeight-semibold">
-        <ng-container *ngIf="item.startDate">
-          {{item.startHour}}
-        </ng-container>
-        <app-icon *ngIf="!item.startDate" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </MsfTableCell>
-
-      <MsfTableCell class="ms-fontWeight-semibold">
-        <ng-container *ngIf="item.endDate">
-          {{item.endHour}}
-        </ng-container>
-        <app-icon *ngIf="!item.endDate" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </MsfTableCell>
+    <ms-tableCell class="ms-fontWeight-semibold">
+      <ng-container *ngIf="item.endDate">
+        {{item.endHour}}
+      </ng-container>
+      <app-icon *ngIf="!item.endDate" bgColor="sharedRed10" icon="Cancel"></app-icon>
+    </ms-tableCell>
 
 
-      <MsfTableCell style="text-align: right">
-        <MsfButton theme="primary" (click)="service.details(item)">Détails</MsfButton>
+    <ms-tableCell style="text-align: right">
+      <button msButton theme="primary" (click)="service.details(item)">Détails</button>
 
-        <ng-container *ngIf="testGroup && testGroup.relation">
-          <MsfIconButton class="ml-2"  [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+      <ng-container *ngIf="testGroup && testGroup.relation">
+        <button msIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
 
-          <MsfMenu #more>
-            <MsfMenuItemGroup *ngIf="testGroup.relation.isSupervisor">
-              <MsfMenuItem icon="CheckMark" *ngIf="!item.isPresent" (click)="service.changePresentState(item)">
-                Marquer comme présent
-              </MsfMenuItem>
-              <MsfMenuItem icon="Cancel" theme="error" *ngIf="item.isPresent"
-                           (click)="service.changePresentState(item)">
-                Marquer comme absent
-              </MsfMenuItem>
-              <MsfMenuItem icon="CheckMark" theme="success" *ngIf="item.isPresent" (click)="service.collect(item)">
-                Récupérer la copie
-              </MsfMenuItem>
-              <MsfMenuItem icon="Calendar" theme="warning" *ngIf="item.isPresent" (click)="service.editDates(item)">
-                Modifier l'horaire
-              </MsfMenuItem>
-              <MsfMenuItem icon="EditNote" (click)="service.supervisorComment(item)">Commentaire du surveillant
-              </MsfMenuItem>
-            </MsfMenuItemGroup>
+        <MsfMenu #more>
+          <MsfMenuItemGroup *ngIf="testGroup.relation.isSupervisor">
+            <MsfMenuItem icon="CheckMark" *ngIf="!item.isPresent" (click)="service.changePresentState(item)">
+              Marquer comme présent
+            </MsfMenuItem>
+            <MsfMenuItem icon="Cancel" theme="error" *ngIf="item.isPresent"
+                         (click)="service.changePresentState(item)">
+              Marquer comme absent
+            </MsfMenuItem>
+            <MsfMenuItem icon="CheckMark" theme="success" *ngIf="item.isPresent" (click)="service.collect(item)">
+              Récupérer la copie
+            </MsfMenuItem>
+            <MsfMenuItem icon="Calendar" theme="warning" *ngIf="item.isPresent" (click)="service.editDates(item)">
+              Modifier l'horaire
+            </MsfMenuItem>
+            <MsfMenuItem icon="EditNote" (click)="service.supervisorComment(item)">Commentaire du surveillant
+            </MsfMenuItem>
+          </MsfMenuItemGroup>
 
-            <MsfMenuItemGroup *ngIf="testGroup.relation.isSecretary">
-              <MsfMenuItem icon="EditNote" (click)="service.report(item)">Consigner la copie</MsfMenuItem>
-            </MsfMenuItemGroup>
+          <MsfMenuItemGroup *ngIf="testGroup.relation.isSecretary">
+            <MsfMenuItem icon="EditNote" (click)="service.report(item)">Consigner la copie</MsfMenuItem>
+          </MsfMenuItemGroup>
 
-          </MsfMenu>
+        </MsfMenu>
 
-        </ng-container>
-      </MsfTableCell>
-    </MsfTableRow>
-  </MsfTable>
-
-</div>
+      </ng-container>
+    </ms-tableCell>
+  </ms-tableRow>
+</ms-table>

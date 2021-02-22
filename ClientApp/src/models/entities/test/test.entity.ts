@@ -158,6 +158,22 @@ export class Test extends Entity<number> {
     return !!this.startDate && !this.endDate;
   }
 
+  get name(): string {
+    return this.course?.name;
+  }
+
+  get departmentName(): string {
+    return this.examinationLevel?.examinationDepartment?.department?.name;
+  }
+
+  get levelIndex(): number {
+    return this.examinationLevel?.level?.index;
+  }
+
+  get code(): string {
+    return this.course?.code;
+  }
+
 
   get state(): string {
     if (this.finished) {

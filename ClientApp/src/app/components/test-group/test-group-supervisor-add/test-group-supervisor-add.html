@@ -1,24 +1,32 @@
-﻿﻿<form class="ms-form">
-  <div class="ms-form-header">Sélectionner des surveillants</div>
+﻿<div class="flex-center-cover">
+  ﻿
+  <form class="ms-form">
+    <div class="ms-form-header">Sélectionner des surveillants</div>
+
+    <msAlert theme="standard">
+      Si vous ne trouver pas utilisateur dans cette liste,
+      rassurez vous de l'avoir ajouter parmi les surveillants de ce département.
+    </msAlert>
+
+    <div class="ms-textField">
+      <label for="supervisor" class="msf-label">Selectionner</label>
+
+      <MsfSelect id="supervisor" name="supervisor" [(ngModel)]="supervisorId" [multiple]="true"
+                 class="ms-textField-input"
+                 placeholder="Choisir les surveillants">
+        <MsfSelectOption *ngFor="let item of supervisors" [value]="item.id">{{item.user.fullName}}</MsfSelectOption>
+      </MsfSelect>
+
+    </div>
 
 
-  <div class="ms-textField">
-    <label for="supervisor" class="msf-label">Selectionner</label>
-
-    <MsfSelect id="supervisor" name="supervisor" [(ngModel)]="supervisorId" [multiple]="true" class="ms-textField-input"
-               placeholder="Choisir les surveillants">
-      <MsfSelectOption *ngFor="let item of supervisors" [value]="item.id">{{item.user.fullName}}</MsfSelectOption>
-    </MsfSelect>
-
-  </div>
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Add" [disabled]="supervisorId.length === 0" (click)="add()">
+        Ajouter
+      </button>
+    </div>
+  </form>
 
 
-  <div class="mt-4 text-right">
-    <MsfButton MsfModalClose class="mr-3">Annuler</MsfButton>
-    <MsfButton theme="primary" Icon="Add" [class.msf-disabled]="supervisorId.length === 0" (click)="add()">
-      Ajouter
-    </MsfButton>
-  </div>
-</form>
-
-
+</div>

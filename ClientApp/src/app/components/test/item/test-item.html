@@ -4,7 +4,7 @@
   </div>
   <div class="text-right">
     <a [routerLink]="test.url">Détails</a>
-    <MsfIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></MsfIconButton>
+    <button msIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
     <MsfMenu #more>
 
       <MsfMenuItem *ngIf="!test.isPublished" icon="RedEye" (click)="service.publish(test)">Publier les notes
@@ -73,12 +73,12 @@
     <div>
 
       <div class="icon-label">
-        <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+        <span class="icon-label-icon ms-Icon ms-Icon--Calendar"></span>
         <span class="icon-label-text">{{test.expectedStartDate | date}}</span>
       </div>
 
       <div class="icon-label">
-        <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+        <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
         <span class="icon-label-text"> {{test.expectedStartHour}} à {{test.expectedEndHour}}</span>
       </div>
 
@@ -87,7 +87,7 @@
     <div *ngIf="test.progress">
       <div>Heure de début</div>
       <div class=" icon-label">
-        <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+        <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
         <span class="icon-label-text"> {{test.startHour}} </span>
       </div>
     </div>
@@ -97,12 +97,12 @@
       <div>Effectuée le</div>
       <div>
         <div class="icon-label">
-          <span class="icon-label-icon" MsfIcon iconName="Calendar"></span>
+          <span class="icon-label-icon ms-Icon ms-Icon--Calendar"></span>
           <span class="icon-label-text">{{test.startDate | amCalendar}}</span>
         </div>
 
         <div class=" icon-label ml-2">
-          <span class="icon-label-icon" MsfIcon iconName="AwayStatus"></span>
+          <span class="icon-label-icon ms-Icon ms-Icon--AwayStatus"></span>
           <span class="icon-label-text"> {{test.startHour}} à {{test.endHour}}</span>
         </div>
 

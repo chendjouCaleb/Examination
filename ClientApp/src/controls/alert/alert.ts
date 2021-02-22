@@ -113,6 +113,9 @@ export class MsAlert implements OnInit {
     if (this.theme === 'info') {
       return 'Info'
     }
+    if (this.theme === 'standard') {
+      return 'Info'
+    }
     if (this.theme === 'success') {
       return 'Completed'
     }

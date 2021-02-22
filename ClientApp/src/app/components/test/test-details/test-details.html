@@ -5,10 +5,10 @@
   </div>
 
   <div class="text-right" *ngIf="test.isPlanner">
-    <MsfButton *ngIf="test.notGroupedStudentCount > 0" Icon="Group" theme="primary" (click)="_paperService.group(test) ">Grouper les étudiants</MsfButton>
-    <MsfButton class="ml-2" LeftIcon="ChevronDown" [MsfMenuTrigger]="testMenu" theme="primary" [outline]="true">
-      Paramètres
-    </MsfButton>
+    <button msButton *ngIf="test.notGroupedStudentCount > 0" icon="Group" theme="primary"
+            (click)="_paperService.group(test) ">Grouper les étudiants
+    </button>
+    <button msIconButton class="ml-2" icon="Settings" [MsfMenuTrigger]="testMenu" theme="transparent"></button>
     <MsfMenu #testMenu>
 
       <MsfMenuItem *ngIf="!test.isPublished" icon="RedEye" (click)="service.publish(test)">Publier les notes
@@ -20,7 +20,8 @@
 
       <MsfMenuItem *ngIf="!test.isClosed" icon="LockSolid" theme="error" (click)="service.changeCloseState(test)">Fermer
       </MsfMenuItem>
-      <MsfMenuItem *ngIf="test.isClosed" icon="UnlockSolid" (click)="service.changeCloseState(test)">Ouvrir</MsfMenuItem>
+      <MsfMenuItem *ngIf="test.isClosed" icon="UnlockSolid" (click)="service.changeCloseState(test)">Ouvrir
+      </MsfMenuItem>
       <MsfMenuItem icon="Edit" (click)="service.edit(test)">Modifier les informations</MsfMenuItem>
       <MsfMenuItem *ngIf="test.useAnonymity" icon="RedEye" (click)="service.unsetAnonymous(test)">Enlever l'anonymat
       </MsfMenuItem>
@@ -37,8 +38,8 @@
   {{test.notGroupedStudentCount}} étudiants de cette épreuve n'ont pas de groupe. Veuillez les en assigner un.
 </msAlert>
 
-<div class="d-flex">
-  <div class="ms-description-list">
+<div class="row mt-3">
+  <div class="col-lg-6 col-12 ms-description-list">
     <dl>
       <dt>Cours</dt>
       <dd>
@@ -86,34 +87,26 @@
 
   </div>
 
-  <div class="ml-3">
-    <div class=" ms-description-list w-100">
-      <dl>
-        <dt>Radical</dt>
-        <dd class="text-right">{{test.radical}} Points</dd>
-      </dl>
-    </div>
-
-    <div style="max-width: 400px; overflow-x: auto; " class="mt-3">
+  <div class="col-lg-6 col-12 mt-3 mt-lg-0">
+    <div>
       <app-test-score-list [test]="test"></app-test-score-list>
     </div>
-
   </div>
 </div>
 
 <div>
-  <div class="d-flex mt-3 p-2 br-2" style="background-color: var(--cardBackgroundColor)">
-    <div class="ms-description-list">
+  <div class="row mt-5" style="background-color: var(--cardBackgroundColor)">
+    <div class="m-2 col-sm-12 col-lg-2 col-md-3 ms-description-list">
       <dl>
         <dt>Étudiants</dt>
-        <dd msFontSize="l" msColor="sharedGreenCyan10">{{test.statistics?.frequency}}</dd>
+        <dd msFontSize="l">{{test.statistics.frequency | number}}</dd>
       </dl>
       <dl>
         <dt>Présence</dt>
         <dd>{{test.statistics?.presence}}
           <app-icon *ngIf="test.statistics.isAllPresent"></app-icon>
           <span msColor="sharedRed10" *ngIf="!test.statistics.isAllPresent">
-          ({{test.statistics.presence - test.statistics.frequency}})
+          ({{test.statistics.presence - test.statistics.frequency  | number}})
         </span>
         </dd>
       </dl>
@@ -123,7 +116,7 @@
         <dd>{{test.statistics?.consignedFrequency}}
           <app-icon *ngIf="test.statistics.isAllConsigned"></app-icon>
           <span msColor="sharedRed10" *ngIf="!test.statistics.isAllConsigned">
-          ({{test.statistics.consignedFrequency - test.statistics.frequency}})
+          ({{test.statistics.consignedFrequency - test.statistics.frequency  | number}})
         </span>
         </dd>
       </dl>
@@ -133,12 +126,11 @@
         <dd msFontSize="l">{{test.statistics?.correctedFrequency}}
           <app-icon *ngIf="test.statistics.isAllCorrected"></app-icon>
           <span msColor="sharedRed10" *ngIf="!test.statistics.isAllCorrected">
-          ({{test.statistics.correctedFrequency - test.statistics.frequency}})
+          ({{test.statistics.correctedFrequency - test.statistics.frequency  | number}})
         </span></dd>
       </dl>
     </div>
-
-    <div class="ms-description-list ml-5">
+    <div class="m-2 col-sm-12 col-lg-2 col-md-3 ms-description-list">
       <dl>
         <dt>Moyenne</dt>
         <dd msFontSize="l" msColor="green">{{test.statistics?.mean | number}}</dd>
@@ -163,25 +155,30 @@
         <dd>{{test.statistics?.mode}}</dd>
       </dl>
     </div>
-
-    <div class="ms-description-list ml-5">
+    <div class="m-2 col-sm-12 col-lg-2 col-md-3 ms-description-list">
       <dl>
-        <dt style="vertical-align: top">Max</dt>
+        <dt style="vertical-align: top">Premier</dt>
         <dd>
-          <div>{{test.statistics.maxPaper?.examinationStudent.student.fullName}}
-            ({{test.statistics.maxPaper?.examinationStudent.student.registrationId}})
-          </div>
-          <div msFontSize="l" msColor="green"> {{test.statistics?.maxPaper?.score}}</div>
+          <ng-container *ngIf="test.statistics.maxPaper">
+            <div>{{test.statistics.maxPaper?.examinationStudent.student.fullName}}
+              ({{test.statistics.maxPaper?.examinationStudent.student.registrationId}})
+            </div>
+            <div msFontSize="l" msColor="green"> {{test.statistics?.maxPaper?.score}}</div>
+          </ng-container>
+          <app-icon bgColor="sharedRed20" icon="Cancel" *ngIf="!test.statistics.maxPaper"></app-icon>
         </dd>
       </dl>
 
       <dl>
-        <dt style="vertical-align: top">Min</dt>
+        <dt style="vertical-align: top">Dernier</dt>
         <dd>
+          <ng-container *ngIf="test.statistics.minPaper">
           <div>{{test.statistics.minPaper?.examinationStudent.student.fullName}}
             ({{test.statistics.minPaper?.examinationStudent.student.registrationId}})
           </div>
           <div msFontSize="l" msColor="sharedRed10">{{test.statistics?.minPaper?.score}}</div>
+          </ng-container>
+          <app-icon bgColor="sharedRed20" icon="Cancel" *ngIf="!test.statistics.minPaper"></app-icon>
         </dd>
       </dl>
 
@@ -189,102 +186,108 @@
 
   </div>
 
-  <div class="d-flex mt-3 p-2 br-2" style="background-color: var(--cardBackgroundColor)">
-    <div class="ms-description-list">
-      <dl>
-        <dt style="vertical-align: top">1 <sup>er</sup> Quartile</dt>
-        <dd>
-          <div>[{{test.statistics?.min}} - {{test.statistics?.quartile0 | number}}]</div>
-          <div msFontSize="l" msColor="sharedRed10">
-            {{test.statistics.quartile0Scores?.length}}
-            ({{test.statistics.quartile0Scores?.length / test.statistics.frequency * 100 | number}}%)
-          </div>
-        </dd>
-      </dl>
+  <div class="mt-3" style="background-color: var(--cardBackgroundColor)">
+    <div class="ms-fontSize-20 p-2">Quartiles</div>
+    <div class="d-flex flex-wrap">
+      <div class="p-2 ms-sm-w100 ms-description-list">
+        <dl>
+          <dt style="vertical-align: top">1 <sup>er</sup> Quartile</dt>
+          <dd>
+            <div>[{{test.statistics?.min}} - {{test.statistics?.quartile0 | number}}]</div>
+            <div msFontSize="l" msColor="sharedRed10">
+              {{test.statistics.quartile0Scores?.length}}
+              ({{test.statistics.quartile0Scores?.length / test.statistics.frequency * 100 | number}}%)
+            </div>
+          </dd>
+        </dl>
 
-      <dl>
-        <dt style="vertical-align: top">2 <sup>ème</sup> Quartile</dt>
-        <dd>
-          <div>]{{test.statistics?.quartile0 | number}} - {{test.statistics?.quartile1 | number}}]</div>
-          <div msFontSize="l" msColor="sharedRedOrange10">
-            {{test.statistics.quartile1Scores?.length}}
-            ({{test.statistics.quartile1Scores?.length / test.statistics.frequency * 100 | number}}%)
-          </div>
-        </dd>
-      </dl>
-    </div>
-    <div class="ms-description-list ml-5">
-      <dl>
-        <dt style="vertical-align: top">3<sup>ème</sup> Quartile</dt>
-        <dd>
-          <div>]{{test.statistics?.quartile1 | number}} - {{test.statistics?.quartile2 | number}}]</div>
-          <div msFontSize="l" msColor="sharedCyanBlue10">
-            {{test.statistics.quartile2Scores.length}}
-            ({{test.statistics.quartile2Scores.length / test.statistics.frequency * 100 | number}}%)
-          </div>
-        </dd>
-      </dl>
+        <dl>
+          <dt style="vertical-align: top">2 <sup>ème</sup> Quartile</dt>
+          <dd>
+            <div>]{{test.statistics?.quartile0 | number}} - {{test.statistics?.quartile1 | number}}]</div>
+            <div msFontSize="l" msColor="sharedRedOrange10">
+              {{test.statistics.quartile1Scores?.length}}
+              ({{test.statistics.quartile1Scores?.length / test.statistics.frequency * 100 | number}}%)
+            </div>
+          </dd>
+        </dl>
+      </div>
+      <div class="p-2 ms-sm-w100 ms-description-list">
+        <dl>
+          <dt style="vertical-align: top">3<sup>ème</sup> Quartile</dt>
+          <dd>
+            <div>]{{test.statistics?.quartile1 | number}} - {{test.statistics?.quartile2 | number}}]</div>
+            <div msFontSize="l" msColor="sharedCyanBlue10">
+              {{test.statistics.quartile2Scores.length}}
+              ({{test.statistics.quartile2Scores.length / test.statistics.frequency * 100 | number}}%)
+            </div>
+          </dd>
+        </dl>
 
-      <dl>
-        <dt style="vertical-align: top">4 <sup>ème</sup> Quartile</dt>
-        <dd>
-          <div>]{{test.statistics?.quartile2 | number}}- {{test.statistics?.max}}]</div>
-          <div msFontSize="l" msColor="sharedGreenCyan10">
-            {{test.statistics.quartile3Scores.length}}
-            ({{test.statistics.quartile3Scores.length / test.statistics.frequency * 100 | number}}%)
-          </div>
-        </dd>
-      </dl>
+        <dl>
+          <dt style="vertical-align: top">4 <sup>ème</sup> Quartile</dt>
+          <dd>
+            <div>]{{test.statistics?.quartile2 | number}}- {{test.statistics?.max}}]</div>
+            <div msFontSize="l" msColor="sharedGreenCyan10">
+              {{test.statistics.quartile3Scores.length}}
+              ({{test.statistics.quartile3Scores.length / test.statistics.frequency * 100 | number}}%)
+            </div>
+          </dd>
+        </dl>
+      </div>
     </div>
   </div>
 
 
-  <div class="d-flex mt-3 p-2 br-2" style="background-color: var(--cardBackgroundColor)">
-    <div class="ms-description-list">
-      <dl>
-        <dt style="vertical-align: top">1 <sup>ère</sup> Marge</dt>
-        <dd>
-          <div>[0 - {{test.statistics?.radical / 4 | number}}]</div>
-          <div msFontSize="l" msColor="sharedRed10">
-            {{test.statistics.range0Scores.length}}
-            ({{test.statistics.range0Scores.length / test.statistics.frequency * 100 | number}}%)
-          </div>
-        </dd>
-      </dl>
+  <div class="mt-5" style="background-color: var(--cardBackgroundColor)">
+    <div class="ms-fontSize-20 p-2">Marges</div>
+    <div class="d-flex flex-wrap">
+      <div class="p-2 ms-sm-w100 ms-description-list">
+        <dl>
+          <dt style="vertical-align: top">1<sup>ère</sup></dt>
+          <dd>
+            <div>[0 - {{test.statistics?.radical / 4 | number}}]</div>
+            <div msFontSize="l" msColor="sharedRed10">
+              {{test.statistics.range0Scores.length}}
+              ({{test.statistics.range0Scores.length / test.statistics.frequency * 100 | number}}%)
+            </div>
+          </dd>
+        </dl>
 
-      <dl>
-        <dt style="vertical-align: top">2 <sup>ème</sup> Marge</dt>
-        <dd>
-          <div>]{{test.statistics?.radical / 4 | number}} - {{test.statistics?.radical / 2| number}}]</div>
-          <div msFontSize="l" msColor="sharedRedOrange10">
-            {{test.statistics.range1Scores.length}}
-            ({{test.statistics.range1Scores.length / test.statistics.frequency * 100 | number}}%)
-          </div>
-        </dd>
-      </dl>
-    </div>
-    <div class="ms-description-list ml-5">
-      <dl>
-        <dt style="vertical-align: top">3<sup>ème</sup> Marge</dt>
-        <dd>
-          <div>]{{test.statistics?.radical / 2 | number}} - {{test.statistics?.radical * 3 / 4 | number}}]</div>
-          <div msFontSize="l" msColor="sharedCyanBlue10">
-            {{test.statistics.range2Scores.length}}
-            ({{test.statistics.range2Scores.length / test.statistics.frequency * 100 | number}}%)
-          </div>
-        </dd>
-      </dl>
+        <dl>
+          <dt style="vertical-align: top">2 <sup>è</sup></dt>
+          <dd>
+            <div>]{{test.statistics?.radical / 4 | number}} - {{test.statistics?.radical / 2| number}}]</div>
+            <div msFontSize="l" msColor="sharedRedOrange10">
+              {{test.statistics.range1Scores.length}}
+              ({{test.statistics.range1Scores.length / test.statistics.frequency * 100 | number}}%)
+            </div>
+          </dd>
+        </dl>
+      </div>
+      <div class="p-2 ms-sm-w100 ms-description-list">
+        <dl>
+          <dt style="vertical-align: top">3<sup>è</sup></dt>
+          <dd>
+            <div>]{{test.statistics?.radical / 2 | number}} - {{test.statistics?.radical * 3 / 4 | number}}]</div>
+            <div msFontSize="l" msColor="sharedCyanBlue10">
+              {{test.statistics.range2Scores.length}}
+              ({{test.statistics.range2Scores.length / test.statistics.frequency * 100 | number}}%)
+            </div>
+          </dd>
+        </dl>
 
-      <dl>
-        <dt style="vertical-align: top">4 <sup>ème</sup> Marge</dt>
-        <dd>
-          <div>]{{test.statistics?.radical * 3 / 4 | number}}- {{test.statistics?.radical}}]</div>
-          <div msFontSize="l" msColor="sharedGreenCyan10">
-            {{test.statistics.range3Scores.length}}
-            ({{test.statistics.range3Scores.length / test.statistics.frequency * 100 | number}}%)
-          </div>
-        </dd>
-      </dl>
+        <dl>
+          <dt style="vertical-align: top">4 <sup>è</sup></dt>
+          <dd>
+            <div>]{{test.statistics?.radical * 3 / 4 | number}}- {{test.statistics?.radical}}]</div>
+            <div msFontSize="l" msColor="sharedGreenCyan10">
+              {{test.statistics.range3Scores.length}}
+              ({{test.statistics.range3Scores.length / test.statistics.frequency * 100 | number}}%)
+            </div>
+          </dd>
+        </dl>
+      </div>
     </div>
   </div>
 </div>

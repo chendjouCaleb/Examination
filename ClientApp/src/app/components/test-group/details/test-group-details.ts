@@ -1,7 +1,7 @@
-﻿import {Component, Inject, Input, OnInit} from "@angular/core";
-import {TestGroup} from "examination/entities";
-import {ITestGroupService, TEST_GROUP_SERVICE_TOKEN} from "../test-group.service.interface";
-import {TestGroupHttpClient} from "examination/models/http";
+﻿import {Component, Inject, Input, OnInit} from '@angular/core';
+import {TestGroup} from 'examination/entities';
+import {ITestGroupService, TEST_GROUP_SERVICE_TOKEN} from '../test-group.service.interface';
+import {TestGroupHttpClient} from 'examination/models/http';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class TestGroupDetails implements OnInit {
   }
 
   async ngOnInit() {
-    const statistics:any = await this._httpClient.getStatistics(this.testGroup);
+    const statistics: any = await this._httpClient.getStatistics(this.testGroup);
     statistics.radical = this.testGroup.test.radical;
     Object.assign(this.testGroup.statistics, statistics);
   }

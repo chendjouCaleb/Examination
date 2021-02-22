@@ -3,7 +3,7 @@
   <div class="ms-fontWeight-light ms-fontSize-18">Correcteurs</div>
 
   <div class="text-right ml-5" *ngIf="testGroup.relation.isPlanner">
-    <MsfButton Icon="Add" [outline]="true" (click)="service.addTestGroupCorrectors(testGroup)">Ajouter</MsfButton>
+    <button msButton theme="primaryOutline" icon="Add" (click)="  addTestGroupCorrectors(testGroup)">Ajouter</button>
   </div>
 </div>
 
@@ -12,25 +12,23 @@
     Ce groupe n'a pas de correcteurs.
   </msAlert>
 
-  <MsfTable class="mt-2">
-    <MsfTableRow *ngFor="let item of testGroup.testGroupCorrectors" [value]="item">
-      <MsfTableCell class="py-1">
-        <MsfPersona size="size32">
-          <MsfPersonaFigure [imageUrl]="item.corrector?.user?.imageUrl"></MsfPersonaFigure>
-          <MsfPersonaText>{{item.corrector?.user?.fullName}}</MsfPersonaText>
-        </MsfPersona>
-      </MsfTableCell>
-      <MsfTableCell class="py-1">
+  <ms-table class="mt-2">
+    <ms-tableHead *ms-tableHeadDef></ms-tableHead>
+    <ms-tableRow *ms-tableRowDef="let item of correctors" [value]="item">
+      <ms-tableCell class="px-0">
+        <user-persona [user]="item.corrector?.user"></user-persona>
+      </ms-tableCell>
+      <ms-tableCell class="px-0 text-right">
         <ng-container *ngIf="testGroup.relation.isPlanner">
-          <i class="ms-Icon ms-Icon--More p-2" [MsfMenuTrigger]="correctorMore" style="cursor:pointer"></i>
+          <button msIconButton icon="MoreVertical" theme="transparent" [MsfMenuTrigger]="correctorMore"></button>
           <MsfMenu #correctorMore>
-            <MsfMenuItem icon="Delete" theme="error" (click)="service.removeTestGroupCorrector(testGroup, item)">
+            <MsfMenuItem icon="Delete" theme="error" (click)="remove(item)">
               Supprimer
             </MsfMenuItem>
           </MsfMenu>
         </ng-container>
-      </MsfTableCell>
+      </ms-tableCell>
 
-    </MsfTableRow>
-  </MsfTable>
+    </ms-tableRow>
+  </ms-table>
 </div>

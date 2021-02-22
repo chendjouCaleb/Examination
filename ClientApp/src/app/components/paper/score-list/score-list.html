@@ -1,45 +1,42 @@
 ﻿<div class="ms-pageTitle">
-  <div class="ms-fontSize-24">Notes</div>
-
+  <div class="ms-fontSize-20">Notes</div>
 </div>
 
+  <ms-table>
+    <ms-tableHead *ms-tableHeadDef>
+      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="registrationNumber">Matricule</ms-tableHeadCell>
+      <ms-tableHeadCell name="fullName">Nom & prénom</ms-tableHeadCell>
+      <ms-tableHeadCell name="group">Groupe</ms-tableHeadCell>
+      <ms-tableHeadCell *ngFor="let score of testScores" [name]="score.name">{{score.name}}</ms-tableHeadCell>
+      <ms-tableHeadCell *ngIf="_test.multipleScore" name="score">Total</ms-tableHeadCell>
+      <ms-tableHeadCell *ngIf="!_test.multipleScore" name="score">Note</ms-tableHeadCell>
+      <ms-tableHeadCell>Correcteur</ms-tableHeadCell>
+      <ms-tableHeadCell style="text-align: right">
+        <i class="ms-Icon ms-Icon--SetAction px-2"></i>
+      </ms-tableHeadCell>
+    </ms-tableHead>
 
-<div class="ms-table-container">
-  <MsfTable *ngIf="papers">
-    <MsfTableHead>
-      <MsfTableHeadCell>#</MsfTableHeadCell>
-      <MsfTableHeadCell>Matricule</MsfTableHeadCell>
-      <MsfTableHeadCell sortBy="fullName">Nom & prénom</MsfTableHeadCell>
-      <MsfTableHeadCell>Groupe</MsfTableHeadCell>
-      <MsfTableHeadCell *ngFor="let score of testScores" >{{score.name}}</MsfTableHeadCell>
-      <MsfTableHeadCell *ngIf="_test.multipleScore" sortBy="score">Total</MsfTableHeadCell>
-      <MsfTableHeadCell *ngIf="!_test.multipleScore" sortBy="score">Note</MsfTableHeadCell>
-      <MsfTableHeadCell>Correcteur</MsfTableHeadCell>
-      <MsfTableHeadCell style="text-align: right">Actions</MsfTableHeadCell>
-    </MsfTableHead>
+    <ms-tableRow *ms-tableRowDef="let item of papers; let i=index" [value]="item">
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>{{item.examinationStudent?.student?.registrationId}}</ms-tableCell>
 
-    <MsfTableRow #row *ngFor="let item of papers" [value]="item">
-      <MsfTableCell>{{row.index}}</MsfTableCell>
-
-
-      <MsfTableCell>{{item.examinationStudent?.student?.registrationId}}</MsfTableCell>
-
-      <MsfTableCell>
+      <ms-tableCell>
         <div class="ms-fontWeight-semibold text-capitalize">{{item.examinationStudent?.student.fullName}}</div>
-      </MsfTableCell>
+      </ms-tableCell>
 
-      <MsfTableCell class="ms-fontWeight-semibold">
+      <ms-tableCell class="ms-fontWeight-semibold">
         <ng-container *ngIf="item.testGroup"> {{item?.testGroup.index + 1}} </ng-container>
         <app-icon *ngIf="!item.testGroup" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </MsfTableCell>
+      </ms-tableCell>
 
 
-      <MsfTableCell *ngFor="let score of testScores; let i=index" class="text-left">
+      <ms-tableCell *ngFor="let score of testScores; let i=index" class="text-left">
         <app-icon *ngIf="!item.hasScores" bgColor="sharedRed10" icon="Cancel"></app-icon>
         <ng-container *ngIf="item.hasScores"> {{item.scorePapers[i].value}}</ng-container>
-      </MsfTableCell>
+      </ms-tableCell>
 
-      <MsfTableCell>
+      <ms-tableCell>
         <span class="br-2 ms-fontWeight-semibold text-right ms-fontColor-white" *ngIf="item.isCorrected && item.test" style="padding:3px"
               [class.ms-bgColor-sharedRed20]="item.is1_5"
               [class.ms-bgColor-sharedRedOrange10]="item.is2_5"
@@ -49,20 +46,15 @@
               >
           <ng-container *ngIf="item.score < 10">0</ng-container>{{item.score}}</span>
         <app-icon *ngIf="!item.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
-      </MsfTableCell>
+      </ms-tableCell>
 
-      <MsfTableCell>
-        <MsfPersona size="size32" *ngIf="item.correctorUser">
-          <MsfPersonaFigure [imageUrl]="item.correctorUser.imageUrl"></MsfPersonaFigure>
-          <MsfPersonaText>{{item.correctorUser.fullName}}</MsfPersonaText>
-        </MsfPersona>
-      </MsfTableCell>
+      <ms-tableCell>
+        <user-persona *ngIf="item.correctorUser" [user]="item.correctorUser"></user-persona>
+      </ms-tableCell>
 
-      <MsfTableCell style="text-align: right">
-        <MsfButton theme="primary" class="mr-2" (click)="service.details(item)">Détails</MsfButton>
-        <MsfIconButton *ngIf="testGroup?.relation.isCorrector" icon="Edit" (click)="service.scores(item)"></MsfIconButton>
-      </MsfTableCell>
-    </MsfTableRow>
-  </MsfTable>
-
-</div>
+      <ms-tableCell style="text-align: right">
+        <button msButton theme="primary" class="mr-2" (click)="service.details(item)">Détails</button>
+        <button msIconButton *ngIf="testGroup?.relation.isCorrector" icon="Edit" (click)="service.scores(item)"></button>
+      </ms-tableCell>
+    </ms-tableRow>
+  </ms-table>

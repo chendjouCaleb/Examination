@@ -34,10 +34,13 @@ import {TestGroupModule} from 'examination/app/components/test-group';
 import {PaperModule} from 'examination/app/components/paper';
 import {TestGroups} from './test-groups/test-groups';
 import {PublishScore} from './publish/publish-score';
+import {MsButtonModule} from '@ms-fluent/button';
+import {MsTableModule} from '@ms-fluent/table';
+import {MsPersonaModule} from '@ms-fluent/persona';
 
 @NgModule({
-  imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, MsfTableModule,
-    FormsModule, RouterModule, CourseModule, MsfIconModule, MsfPersonaModule, MomentModule, ReactiveFormsModule,
+  imports: [CommonModule, ControlModule, MsfModalModule, MsButtonModule, MsfMenuModule, MsTableModule,
+    FormsModule, RouterModule, CourseModule, MomentModule, ReactiveFormsModule, MsPersonaModule,
     AppFormModule, UserPickerModule, MsfSelectModule, MsfCheckboxModule, LayoutModule, TestGroupModule, PaperModule
   ],
 
