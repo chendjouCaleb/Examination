@@ -20,6 +20,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'schools/:schoolId/departments/:departmentId/levels/:levelId/students', canActivate: [ LoadAuthorizationGuard ],
+    loadChildren: () => import('./pages/organisation/student/student.page.module').then(m => m.StudentPageModule)
+  },
+
+  {
     path: 'schools/:schoolId/departments/:departmentId/specialities', canActivate: [ LoadAuthorizationGuard ],
     loadChildren: () => import('./pages/organisation/speciality/speciality.page.module').then(m => m.SpecialityPageModule)
   },

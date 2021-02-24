@@ -20,11 +20,12 @@ import {StudentSpeciality} from './speciality/student-speciality';
 import {MsPaginatorModule, MsTableModule} from '@ms-fluent/table';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsPivotModule} from '@ms-fluent/pivot';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfSelectModule,
     AppFormModule, MsfMenuModule, MomentModule, MsfRadioModule, MsTableModule, MsButtonModule, MsPaginatorModule,
-    MatRippleModule, MsfCheckboxModule, UserPickerModule, MsPivotModule, MsfModalModule],
+    MatRippleModule, MsfCheckboxModule, UserPickerModule, MsPivotModule, MsfModalModule, RouterModule],
   declarations: [StudentAdd, StudentEdit, StudentUserLink, StudentLevel, StudentRegistrationId,
     StudentDetails, StudentList, StudentSpeciality],
   exports: [StudentAdd, StudentEdit, StudentUserLink, StudentLevel, StudentRegistrationId,

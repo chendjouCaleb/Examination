@@ -19,6 +19,7 @@ import {PaperScoreList} from './score-list/score-list';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
 import {MsPersonaModule} from '@ms-fluent/persona';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import {MsPersonaModule} from '@ms-fluent/persona';
   exports: [PaperDetails, PaperEditDate, PaperSupervisorComment, PaperReport, PaperScores, PaperScore,
     PaperList, PaperScoreList],
   imports: [CommonModule, AppFormModule, FormsModule, ReactiveFormsModule,
-    ControlModule, MsButtonModule, MsPersonaModule, MsfModalModule, MsTableModule, MomentModule, MsfMenuModule],
+    ControlModule, MsButtonModule, MsPersonaModule, MsfModalModule, MsTableModule, MomentModule, MsfMenuModule, RouterModule],
   providers: [PaperService, {provide: PAPER_SERVICE_TOKEN, useExisting: PaperService}]
 })
 export class PaperModule {

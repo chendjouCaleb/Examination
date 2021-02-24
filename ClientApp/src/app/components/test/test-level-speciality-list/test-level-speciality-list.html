@@ -1,9 +1,71 @@
 ﻿<div class="ms-pageTitle">
-  <div class="ms-fontSize-24">Épreuves</div>
+  <div class="ms-fontSize-20">Épreuves</div>
 </div>
 
 <div>
-   <app-test-level-speciality-item *ngFor="let item of testLevelSpecialities" [testLevelSpeciality]="item">
+  <ms-table #table>
+    <msTableHead *ms-tableHeadDef>
+      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="course" >Cours</ms-tableHeadCell>
+      <ms-tableHeadCell name="code">Code</ms-tableHeadCell>
+      <ms-tableHeadCell name="state" [sortBy]="['state', 'string']">État</ms-tableHeadCell>
+      <ms-tableHeadCell name="expectedStartDate" [sortBy]="['expectedStartDate', 'date']">Horaire</ms-tableHeadCell>
+      <ms-tableHeadCell name="startDate" [sortBy]="['startDate', 'date']">Horaire eff.</ms-tableHeadCell>
+      <ms-tableHeadCell name="coefficient" [sortBy]="['coefficient', 'number']">Coef.</ms-tableHeadCell>
+      <ms-tableHeadCell name="coefficient" [sortBy]="['radical', 'number']">Radical</ms-tableHeadCell>
 
-   </app-test-level-speciality-item>
+      <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
+      <ms-tableHeadCell name="speciality">Spécialité</ms-tableHeadCell>
+
+
+      <msTableHeadCell name="actions" class="text-right">
+        <button msIconButton icon="SetAction"></button>
+      </msTableHeadCell>
+    </msTableHead>
+
+    <ms-tableRow *ms-tableRowDef="let item of testLevelSpecialities; let i=index">
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>{{item.test.course.name}}</ms-tableCell>
+      <ms-tableCell>{{item.test.course.code}}</ms-tableCell>
+      <ms-tableCell>
+        <span class="ms-badge" msBgColor="sharedGreenCyan10" *ngIf="item.test.finished">Terminée</span>
+        <span class="ms-badge" msBgColor="sharedRedOrange10" *ngIf="item.test.waiting">En attente</span>
+        <span class="ms-badge" msBgColor="sharedBlue10" *ngIf="item.test.progress">En cours</span>
+      </ms-tableCell>
+
+      <ms-tableCell msFontSize="12">
+        <div>{{item.test.expectedStartDate | date}}</div>
+        <div>{{item.test.expectedStartHour}} à {{ item.test.expectedEndHour }}</div>
+      </ms-tableCell>
+
+      <ms-tableCell msFontSize="12">
+        <ng-container *ngIf="item.test.finished">
+          <div>{{item.test.startDate | amCalendar}}</div>
+          <div>{{item.test.startHour}} à {{ item.test.endHour }}</div>
+        </ng-container>
+        <app-icon *ngIf="!item.test.finished" icon="Cancel" bgColor="sharedRedOrange10"></app-icon>
+
+      </ms-tableCell>
+
+      <ms-tableCell>{{item.test.coefficient}}</ms-tableCell>
+      <ms-tableCell><b>/{{item.test.radical}}</b></ms-tableCell>
+
+      <ms-tableCell >
+        {{item.test.levelIndex + 1}}
+      </ms-tableCell>
+
+      <ms-tableCell >
+        <ng-container *ngIf="item.test.isGeneral">
+
+        </ng-container>
+        <span class="ms-badge" msBgColor="sharedBlue10" *ngIf="item.test.isGeneral">Général</span>
+
+      </ms-tableCell>
+
+      <ms-tableCell class="text-right">
+        <span class="ms-link" [routerLink]="item.test.url">Détails</span>
+      </ms-tableCell>
+
+    </ms-tableRow>
+  </ms-table>
 </div>

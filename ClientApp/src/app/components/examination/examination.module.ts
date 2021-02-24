@@ -1,6 +1,6 @@
 ﻿import {ExaminationAdd} from './add/examination-add';
 import {NgModule} from '@angular/core';
-import {MsfCheckboxModule, MsfIconModule, MsfMenuModule, MsfModalModule} from 'fabric-docs';
+import {MsfCheckboxModule, MsfMenuModule, MsfModalModule} from 'fabric-docs';
 import {RouterModule} from '@angular/router';
 import {AppFormModule, ControlModule} from 'examination/controls';
 import {CommonModule} from '@angular/common';
@@ -29,7 +29,7 @@ import {MsPersonaModule} from '@ms-fluent/persona';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MsfModalModule, AppFormModule, ControlModule, MsPersonaModule, PaperModule,
-    MsfIconModule, MsButtonModule, MsTableModule, MsfMenuModule, MsfCheckboxModule, MomentModule, MsPaginatorModule],
+    MsButtonModule, MsTableModule, MsfMenuModule, MsfCheckboxModule, MomentModule, MsPaginatorModule],
   declarations: [ExaminationAdd, ExaminationDelete, ExaminationList, ExaminationDetails, ExaminationDepartmentItem,
     ExaminationStudentList, ExaminationLevelItem, ExaminationSpecialityItem, ExaminationSpecialityLevelItem,
     ExaminationLevelSpecialityItem, ExaminationStudentDetails],

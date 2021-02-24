@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AppFormModule, ControlModule, ImageFormModule} from 'examination/controls';
-import {MsfButtonModule, MsfMenuModule, MsfModalModule} from 'fabric-docs';
+import {MsfMenuModule, MsfModalModule} from 'fabric-docs';
 import {SchoolAdd} from './add/school-add';
 import {SchoolEdit} from './edit/school-edit';
 import {SchoolIdentifier} from './identifier/school-identifier';
@@ -16,10 +16,10 @@ import {SchoolCoverImage} from './cover-image/school-cover-image';
 import {SchoolDelete} from './delete/school-delete';
 import {ApplicationModule} from '../member/application';
 import {MsButtonModule} from '@ms-fluent/button';
-import {RouterModule} from "@angular/router";
+import {RouterModule} from '@angular/router';
 
 @NgModule({
-  imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, FormsModule,
+  imports: [CommonModule, ControlModule, MsfModalModule, MsfMenuModule, FormsModule,
     ReactiveFormsModule, AppFormModule, ImageFormModule, ApplicationModule, MsButtonModule, RouterModule],
   declarations: [SchoolAdd, SchoolEdit, SchoolIdentifier, SchoolCard, SchoolBanner, SchoolImage,
     SchoolCoverImage, SchoolDelete],

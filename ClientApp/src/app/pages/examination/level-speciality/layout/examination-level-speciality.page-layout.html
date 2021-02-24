@@ -1,9 +1,18 @@
-﻿<app-layout [breadcrumbItems]="breadCrumbItems">
+﻿<app-layout>
+  <div class="ms-header">
+    <div class="d-flex align-items-center">
+      <button [routerLink]="examinationLevelSpeciality.examinationLevel.url" msIconButton icon="ChevronLeftSmall"
+              theme="transparent"
+              size="normal" [rounded]="true"></button>
+      <div class="ms-header-title">Niveau {{examinationLevelSpeciality.examinationLevel.level.index + 1}}
+        / {{examinationLevelSpeciality.examinationSpeciality.speciality.name}}</div>
+    </div>
+  </div>
   <msPivot>
     <msPivotHeader>
-      <msPivotLabel name="home">Acceuil</msPivotLabel>
-      <msPivotLabel name="students">Épreuves</msPivotLabel>
-      <msPivotLabel name="tests">Étudiants</msPivotLabel>
+      <msPivotLabel id="home">Acceuil</msPivotLabel>
+      <msPivotLabel id="students">Épreuves</msPivotLabel>
+      <msPivotLabel id="tests">Étudiants</msPivotLabel>
     </msPivotHeader>
     <msPivotBody>
       <div *msPivotContentDef>
@@ -13,11 +22,13 @@
       </div>
 
       <div *msPivotContentDef>
-        <app-test-level-speciality-list [examinationLevelSpeciality]="examinationLevelSpeciality"></app-test-level-speciality-list>
+        <app-test-level-speciality-list
+          [examinationLevelSpeciality]="examinationLevelSpeciality"></app-test-level-speciality-list>
       </div>
 
       <div *msPivotContentDef>
-        <app-examination-student-list [examinationLevelSpeciality]="examinationLevelSpeciality"></app-examination-student-list>
+        <app-examination-student-list
+          [examinationLevelSpeciality]="examinationLevelSpeciality"></app-examination-student-list>
       </div>
 
 

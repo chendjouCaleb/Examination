@@ -1,12 +1,11 @@
-﻿
-import { Department } from './department.entity';
+﻿import { Department } from './department.entity';
 import {Entity} from '../entity';
-import {List} from "@positon/collections";
-import {LevelSpeciality} from "./level-speciality.entity";
-import {Course} from "./course.entity";
-import {Application, Student} from "../member";
-import {ExaminationLevel} from "../examination";
-import {Room} from "./room.entity";
+import {List} from '@positon/collections';
+import {LevelSpeciality} from './level-speciality.entity';
+import {Course} from './course.entity';
+import {Application, Student} from '../member';
+import {ExaminationLevel} from '../examination';
+import {Room} from './room.entity';
 
 export class Level extends Entity<number> {
 
@@ -34,25 +33,25 @@ export class Level extends Entity<number> {
   userPrincipal: LevelUser = {};
 
   addLevelSpeciality(item: LevelSpeciality) {
-    if(item.level.id === this.id) {
+    if (item.level.id === this.id) {
       this.levelSpecialities.add(item);
     }
   }
 
   addCourse(course: Course) {
-    if(this.courses && !this.courses.containsIf(c => c.id === course.id)) {
+    if (this.courses && !this.courses.containsIf(c => c.id === course.id)) {
       this.courses.add(course);
     }
   }
 
   addApplication(application: Application) {
-    if(this.applications) {
+    if (this.applications) {
       this.applications.insert(0, application);
     }
   }
 
   removeCourse(course: Course) {
-    if(this.courses) {
+    if (this.courses) {
       this.courses.remove(course);
     }
   }
@@ -71,7 +70,7 @@ export class Level extends Entity<number> {
 
 
   get url(): string {
-    return `${this.department.url}/levels/${this.id}`;
+    return `${this.department?.url}/levels/${this.id}`;
   }
 
 }

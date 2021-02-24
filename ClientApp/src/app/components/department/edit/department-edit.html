@@ -22,7 +22,7 @@
   </div>
 
   <div class="mt-4 text-right">
-    <MsfButton class="mr-3" MsfModalClose (click)="form.reset(department)">Annuler</MsfButton>
-    <button MsfButton theme="primary" Icon="Edit" [class.msf-disabled]="form.invalid" (click)="edit()">Modifier</button>
+    <button msButton class="mr-3" MsfModalClose (click)="form.reset(department)">Annuler</button>
+    <button msButton theme="primary" icon="Edit" [disabled]="form.invalid" (click)="edit()">Modifier</button>
   </div>
 </form>

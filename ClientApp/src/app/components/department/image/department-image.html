@@ -1,6 +1,6 @@
 ﻿<image-form title="Photo de profil" [defaultImageUrl]="department.imageUrl"  (onchange)="onchange($event)" >
   <div>
-    <MsfButton theme="primary" style="font-size: 12px"   [class.msf-disabled]="!value" (click)="update()">Mettre à jour</MsfButton>
-    <MsfButton style="font-size: 12px" class="ml-2"  MsfModalClose> Annuler</MsfButton>
+    <button msButton theme="primary" [disabled]="!value" (click)="update()">Mettre à jour</button>
+    <button msButton class="ml-2"  MsfModalClose> Annuler</button>
   </div>
 </image-form>

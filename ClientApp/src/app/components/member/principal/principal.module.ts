@@ -1,6 +1,6 @@
 ﻿import {PrincipalAdd} from 'examination/app/components/member/principal/add/principal-add';
 import {NgModule} from '@angular/core';
-import {MsfButtonModule, MsfMenuModule, MsfModalModule, MsfPersonaModule, MsfTableModule} from 'fabric-docs';
+import {MsfMenuModule, MsfModalModule} from 'fabric-docs';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MomentModule} from 'ngx-moment';

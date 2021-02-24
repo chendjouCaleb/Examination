@@ -4,7 +4,6 @@ import {Inject, Injectable, LOCALE_ID, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LayoutModule, Preference} from 'examination/infrastructure';
-import {MsfButtonModule} from 'fabric-docs';
 import {AuthorizationModule} from 'examination/app/authorization';
 import {HttpClientModule} from '@angular/common/http';
 import {AppHttpClientModule} from 'examination/models';
@@ -20,7 +19,7 @@ import {AlertEmitter} from 'examination/controls';
 import {LISTENER_ALERT_SERVICE_TOKEN} from 'examination/listeners';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {HubsModule} from 'examination/hubs';
-import {MS_BUTTON_DEFAULT_OPTIONS, MsButtonDefaultOptions} from '@ms-fluent/button';
+import {MS_BUTTON_DEFAULT_OPTIONS, MsButtonDefaultOptions, MsButtonModule} from '@ms-fluent/button';
 import {Global} from '../global';
 
 import * as hammer from 'hammerjs'
@@ -43,7 +42,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     AppComponent
   ],
   imports: [MatNativeDateModule, MatSnackBarModule, HammerModule,
-    BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule, MsfButtonModule, LayoutModule,
+    BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule, MsButtonModule, LayoutModule,
     AppHttpClientModule, HubsModule, BrowserAnimationsModule
   ],
   providers: [Preference, CurrentItems, Global,

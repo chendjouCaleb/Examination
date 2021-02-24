@@ -1,18 +1,21 @@
- <h4>{{examinationDepartment.department.name}} 1</h4>
 
-  <div>
-    <h5>Niveau</h5>
-    <div *ngIf="examinationDepartment.examinationLevels">
-      <app-examination-level-item *ngFor="let item of examinationDepartment.examinationLevels" [item]="item">
-      </app-examination-level-item>
-    </div>
-  </div>
+ <app-examination-department-item
+                                  style="max-width: 98%; margin-right: 10px" class="mt-3"
+                                  [item]="examinationDepartment"></app-examination-department-item>
 
-  <div>
-    <h5>Specialités</h5>
-    <div *ngIf="examinationDepartment.examinationSpecialities">
-      <app-examination-speciality-item *ngFor="let item of examinationDepartment.examinationSpecialities" [item]="item">
-      </app-examination-speciality-item>
-    </div>
-  </div>
+<!--  <div>-->
+<!--    <h5>Niveau</h5>-->
+<!--    <div *ngIf="examinationDepartment.examinationLevels">-->
+<!--      <app-examination-level-item *ngFor="let item of examinationDepartment.examinationLevels" [item]="item">-->
+<!--      </app-examination-level-item>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div>-->
+<!--    <h5>Specialités</h5>-->
+<!--    <div *ngIf="examinationDepartment.examinationSpecialities">-->
+<!--      <app-examination-speciality-item *ngFor="let item of examinationDepartment.examinationSpecialities" [item]="item">-->
+<!--      </app-examination-speciality-item>-->
+<!--    </div>-->
+<!--  </div>-->
 

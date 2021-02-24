@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ExaminationDepartment} from 'examination/entities';
-import {ExaminationLevelLoader, ExaminationSpecialityLoader} from "examination/loaders";
+import {ExaminationLevelLoader, ExaminationSpecialityLoader} from 'examination/loaders';
 
 @Component({
   templateUrl: 'examination-department-home.page.html',

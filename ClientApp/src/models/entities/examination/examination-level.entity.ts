@@ -1,8 +1,8 @@
 ﻿import {Entity} from '../entity';
 import {Level} from '../organisation';
 import {ExaminationDepartment, ExaminationLevelSpeciality, ExaminationStudent, Test} from 'examination/entities';
-import {List} from "@positon/collections";
-import {ExaminationLevelStatistics} from "./examination-statistics";
+import {List} from '@positon/collections';
+import {ExaminationLevelStatistics} from './examination-statistics';
 
 
 export class ExaminationLevel extends Entity<number> {
@@ -54,7 +54,7 @@ export class ExaminationLevel extends Entity<number> {
   statistics: ExaminationLevelStatistics;
 
   get url(): string {
-    return `${this.examinationDepartment.url}/levels/${this.id}`;
+    return `${this.examinationDepartment?.url}/levels/${this.id}`;
   }
 
 

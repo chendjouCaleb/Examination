@@ -4,33 +4,33 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MsfMenuModule} from 'fabric-docs';
 import {LayoutModule} from 'examination/infrastructure';
-import {SpecialityHome} from './home/speciality-home';
 import {ControlModule} from 'examination/controls';
 import {
   CourseModule,
-  DepartmentResolver,
+  DepartmentResolver, LevelResolver,
   SchoolResolver,
   SpecialityModule,
-  SpecialityResolver,
   StudentModule
 } from 'examination/app/components';
-import {SpecialityPageLayout} from './layout/speciality.page-layout';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsPivotModule} from '@ms-fluent/pivot';
+import {StudentPageLayout} from './layout/student.page-layout';
+import {StudentHomePage} from './home/student-home.page';
+import {MomentModule} from "ngx-moment";
 
 const routes: Routes = [
   {
-    path: ':specialityId',
-    resolve: [SchoolResolver, DepartmentResolver, SpecialityResolver],
-    component: SpecialityPageLayout
+    path: ':studentId',
+    resolve: [SchoolResolver, DepartmentResolver, LevelResolver],
+    component: StudentPageLayout
   }
 ];
 
 @NgModule({
   imports: [CommonModule, MsButtonModule, SpecialityModule, CourseModule, StudentModule, MsPivotModule,
-    RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule, ],
-  declarations: [SpecialityHome, SpecialityPageLayout]
+    RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule, MomentModule],
+  declarations: [StudentPageLayout, StudentHomePage]
 })
-export class SpecialityPageModule {
+export class StudentPageModule {
 
 }

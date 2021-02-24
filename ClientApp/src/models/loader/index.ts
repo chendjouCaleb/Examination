@@ -1,5 +1,4 @@
-﻿
-export * from './entity-loader.interface';
+﻿export * from './entity-loader.interface';
 export * from './loader';
 export * from './loader.module';
 

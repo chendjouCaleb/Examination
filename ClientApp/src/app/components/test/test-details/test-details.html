@@ -5,9 +5,9 @@
   </div>
 
   <div class="text-right" *ngIf="test.isPlanner">
-    <button msButton *ngIf="test.notGroupedStudentCount > 0" icon="Group" theme="primary"
-            (click)="_paperService.group(test) ">Grouper les étudiants
-    </button>
+    <!--    <button msButton *ngIf="test.notGroupedStudentCount > 0" icon="Group" theme="primary"-->
+    <!--            (click)="_paperService.group(test) ">Grouper les étudiants-->
+    <!--    </button>-->
     <button msIconButton class="ml-2" icon="Settings" [MsfMenuTrigger]="testMenu" theme="transparent"></button>
     <MsfMenu #testMenu>
 
@@ -38,12 +38,17 @@
   {{test.notGroupedStudentCount}} étudiants de cette épreuve n'ont pas de groupe. Veuillez les en assigner un.
 </msAlert>
 
+<msAlert theme="severeWarning" *ngIf="test.statistics.frequency === 0">
+  Aucun étudiant n'est engagé pour cet épreuve. Cliquez sur le button <b>ajouter les étudiants</b> de l'onlet <b>étudiant</b>
+  pour ajouter tous les étudiants de ce niveau à cet épreuve.
+</msAlert>
+
 <div class="row mt-3">
   <div class="col-lg-6 col-12 ms-description-list">
     <dl>
       <dt>Cours</dt>
       <dd>
-        <span class="ms-link" (click)="courseService.details(test.course)">{{test.course.name}}</span>
+        <span class="ms-link" (click)="courseService.details(test.course)">{{test.name}}</span>
       </dd>
     </dl>
 
@@ -173,10 +178,10 @@
         <dt style="vertical-align: top">Dernier</dt>
         <dd>
           <ng-container *ngIf="test.statistics.minPaper">
-          <div>{{test.statistics.minPaper?.examinationStudent.student.fullName}}
-            ({{test.statistics.minPaper?.examinationStudent.student.registrationId}})
-          </div>
-          <div msFontSize="l" msColor="sharedRed10">{{test.statistics?.minPaper?.score}}</div>
+            <div>{{test.statistics.minPaper?.examinationStudent.student.fullName}}
+              ({{test.statistics.minPaper?.examinationStudent.student.registrationId}})
+            </div>
+            <div msFontSize="l" msColor="sharedRed10">{{test.statistics?.minPaper?.score}}</div>
           </ng-container>
           <app-icon bgColor="sharedRed20" icon="Cancel" *ngIf="!test.statistics.minPaper"></app-icon>
         </dd>

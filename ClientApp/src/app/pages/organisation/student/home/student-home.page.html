@@ -1,12 +1,10 @@
-﻿<div style="background: var(--cardBackgroundColor)" class="p-3 flex-center-cover">
-
-  <div style="max-width: 100%; overflow: auto">
+<div style="max-width: 100%; overflow: auto">
     <div class="ms-pageTitle" style="position: sticky; left: 0">
       <div msFontSize="20">{{student.fullName | titlecase}}</div>
 
       <div class="text-right">
         <ng-container *ngIf="student.level.department.isPrincipal">
-          <button msIconButton icon="More" [MsfMenuTrigger]="more"></button>
+          <button msIconButton icon="Settings" [MsfMenuTrigger]="more"></button>
 
           <MsfMenu #more>
             <MsfMenuItem icon="Contact" (click)="_studentService.editStudent(student)">Modifier les informations
@@ -35,8 +33,6 @@
             <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
           </MsfMenu>
         </ng-container>
-
-        <button msIconButton icon="Cancel" theme="transparent" MsfModalClose class="ml-2"></button>
       </div>
     </div>
 
@@ -109,5 +105,3 @@
 
     </div>
   </div>
-
-</div>

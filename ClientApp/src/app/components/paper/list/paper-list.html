@@ -25,11 +25,11 @@
     <ms-tableHeadCell name="registrationNumber">Matricule</ms-tableHeadCell>
     <ms-tableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom</ms-tableHeadCell>
     <ms-tableHeadCell name="groupIndex" [sortBy]="['groupIndex', 'number']">N°</ms-tableHeadCell>
-    <ms-tableHeadCell name="group">Groupe</ms-tableHeadCell>
+    <ms-tableHeadCell name="groupNumber" [sortBy]="['groupNumber', 'number']">Groupe</ms-tableHeadCell>
     <ms-tableHeadCell name="speciality">Specialité</ms-tableHeadCell>
-    <ms-tableHeadCell name="present">Présent</ms-tableHeadCell>
-    <ms-tableHeadCell name="startHour">Arrivée</ms-tableHeadCell>
-    <ms-tableHeadCell name="endHour">Départ</ms-tableHeadCell>
+    <ms-tableHeadCell name="present" [sortBy]="['isPresent', 'string']">Présent</ms-tableHeadCell>
+    <ms-tableHeadCell name="startHour" [sortBy]="['startDate', 'date']">Arrivée</ms-tableHeadCell>
+    <ms-tableHeadCell name="endHour" [sortBy]="['endDate', 'date']">Départ</ms-tableHeadCell>
     <ms-tableHeadCell name="actions" style="text-align: right">
       <i class="ms-Icon ms-Icon--SetAction px-2"></i>
     </ms-tableHeadCell>
@@ -39,7 +39,7 @@
     <ms-tableCell>{{i + 1}}</ms-tableCell>
     <ms-tableCell>{{item.examinationStudent?.student?.registrationId}}</ms-tableCell>
     <ms-tableCell>
-      <div class="ms-fontWeight-semibold text-capitalize">{{item.examinationStudent?.student.fullName}}</div>
+      <a [routerLink]="item.examinationStudent.url" class="ms-link text-capitalize">{{item.examinationStudent?.student.fullName}}</a>
     </ms-tableCell>
 
     <ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
@@ -58,7 +58,7 @@
 
     <ms-tableCell>
       <ng-container *ngIf="item.testLevelSpeciality">
-        {{item.testLevelSpeciality.examinationLevelSpeciality?.examinationSpeciality?.speciality.name}}
+        {{item.specialityName}}
       </ng-container>
       <app-icon *ngIf="!item.testLevelSpeciality" bgColor="sharedRed10" icon="Cancel"></app-icon>
     </ms-tableCell>

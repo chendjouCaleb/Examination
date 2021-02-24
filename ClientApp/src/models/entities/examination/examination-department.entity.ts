@@ -1,11 +1,11 @@
 ﻿import {Entity} from '../entity';
 import {Department} from '../organisation';
 import {Examination} from './examination.entity';
-import {List} from "@positon/collections";
-import {ExaminationStudent} from "./examination-student.entity";
-import {ExaminationLevel} from "./examination-level.entity";
-import {ExaminationSpeciality} from "./examination-speciality.entity";
-import {Test} from "../test";
+import {List} from '@positon/collections';
+import {ExaminationStudent} from './examination-student.entity';
+import {ExaminationLevel} from './examination-level.entity';
+import {ExaminationSpeciality} from './examination-speciality.entity';
+import {Test} from '../test';
 
 
 export class ExaminationDepartment extends Entity<number> {
@@ -50,7 +50,7 @@ export class ExaminationDepartment extends Entity<number> {
   tests: List<Test>;
 
   get url(): string {
-    return `${this.examination.url}/departments/${this.id}`;
+    return `${this.examination?.url}/departments/${this.id}`;
   }
 
 

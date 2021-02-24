@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AppFormModule, ControlModule,   MsfSelectModule } from 'examination/controls';
-import {MsfButtonModule, MsfMenuModule, MsfModalModule} from 'fabric-docs';
+import { MsfMenuModule, MsfModalModule} from 'fabric-docs';
 import {LevelAdd} from './add/level-add';
 import {LevelService} from './level.service';
 import {LEVEL_SERVICE_TOKEN} from './level.service.interface';
@@ -12,7 +12,7 @@ import {MsButtonModule} from '@ms-fluent/button';
 import {LevelSpecialityAdd} from './speciality/level-speciality-add';
 
 @NgModule({
-  imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsfMenuModule, FormsModule,
+  imports: [CommonModule, ControlModule, MsfModalModule, MsfMenuModule, FormsModule,
     ReactiveFormsModule, AppFormModule, MsfSelectModule, MsButtonModule],
   declarations: [LevelAdd, LevelDelete, LevelSpecialityAdd],
   exports: [LevelAdd, LevelDelete, LevelSpecialityAdd],

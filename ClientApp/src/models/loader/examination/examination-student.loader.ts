@@ -29,11 +29,10 @@ export class ExaminationStudentLoader extends Loader<ExaminationStudent, number>
 
   async load(item: ExaminationStudent): Promise<ExaminationStudent> {
     await this._examinationLevelLoader.load(item.examinationLevel);
-
     if (item.examinationLevelSpecialityId) {
       item.examinationLevelSpeciality = await this._examinationLevelSpecialityLoader.loadById(item.examinationLevelSpecialityId);
-
     }
+    await this._studentLoader.load(item.student);
     return item;
   }
 

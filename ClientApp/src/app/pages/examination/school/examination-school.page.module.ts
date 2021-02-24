@@ -6,10 +6,10 @@ import {ExaminationModule, TestModule} from 'examination/app/components';
 import {ExaminationSchoolPageLayout} from './layout/examination-school.page-layout';
 import {LayoutModule} from 'examination/infrastructure';
 import {ControlModule} from 'examination/controls';
-import {MsfButtonModule, MsfMenuModule} from 'fabric-docs';
+import {MsfMenuModule} from 'fabric-docs';
 import {ExaminationDepartments} from 'examination/app/pages/examination/school/departments/examination-departments';
 import {MsPivotModule} from '@ms-fluent/pivot';
-import {MsButtonModule} from "@ms-fluent/button";
+import {MsButtonModule} from '@ms-fluent/button';
 
 export const routes: Routes = [
   {path: '', component: ExaminationSchoolPageLayout}
@@ -17,8 +17,8 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), ExaminationModule, TestModule, LayoutModule,
-    MsfMenuModule, MsPivotModule, MsfButtonModule, ControlModule, MsButtonModule],
-  declarations: [ExaminationSchoolPageLayout, ExaminationSchoolHomePage, ExaminationDepartments ]
+    MsfMenuModule, MsPivotModule, ControlModule, MsButtonModule],
+  declarations: [ExaminationSchoolPageLayout, ExaminationSchoolHomePage, ExaminationDepartments]
 })
 export class ExaminationSchoolPageModule {
 }

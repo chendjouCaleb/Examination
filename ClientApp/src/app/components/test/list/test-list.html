@@ -22,8 +22,6 @@
 
       <ms-tableHeadCell name="department" [sortBy]="['departmentName', 'string']">Département</ms-tableHeadCell>
       <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
-      <ms-tableHeadCell name="speciality">Spécialités</ms-tableHeadCell>
-
 
       <msTableHeadCell name="actions" class="text-right">
         <button msIconButton icon="SetAction"></button>
@@ -65,13 +63,6 @@
         {{test.levelIndex + 1}}
       </ms-tableCell>
 
-      <ms-tableCell >
-        <ng-container *ngIf="test.isGeneral">
-
-        </ng-container>
-        <span class="ms-badge" msBgColor="sharedBlue10" *ngIf="test.isGeneral">Général</span>
-
-      </ms-tableCell>
 
       <ms-tableCell class="text-right">
         <span class="ms-link" [routerLink]="test.url">Plus</span>

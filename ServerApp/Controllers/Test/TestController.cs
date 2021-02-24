@@ -96,7 +96,7 @@ namespace Exam.Controllers
             {
                 tests = tests.Where(t => t.ExaminationLevelId == examinationLevelId);
             }
-
+            
 
             if (examinationDepartmentId != null)
             {

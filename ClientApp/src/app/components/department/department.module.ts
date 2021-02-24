@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AppFormModule, ControlModule, ImageFormModule, UserPickerModule} from 'examination/controls';
-import {MsfButtonModule, MsfMenuModule, MsfModalModule, MsfPersonaModule} from 'fabric-docs';
+import {MsfMenuModule, MsfModalModule, MsfPersonaModule} from 'fabric-docs';
 import {DepartmentAdd} from './add/department-add';
 import {DepartmentEdit} from './edit/department-edit';
 import {DepartmentService} from './department.service';
@@ -16,11 +16,11 @@ import {DepartmentDelete} from './delete/department-delete';
 import {ApplicationModule} from 'examination/app/components/member/application';
 import {DepartmentList} from 'examination/app/components/department/list/department-list';
 import {MsButtonModule} from '@ms-fluent/button';
-import {RouterModule} from "@angular/router";
-import {MsGridModule} from "@ms-fluent/grid";
+import {RouterModule} from '@angular/router';
+import {MsGridModule} from '@ms-fluent/grid';
 
 @NgModule({
-  imports: [CommonModule, ControlModule, MsfModalModule, MsfButtonModule, MsButtonModule, MsfMenuModule, FormsModule,
+  imports: [CommonModule, ControlModule, MsfModalModule, MsButtonModule, MsfMenuModule, FormsModule,
     ReactiveFormsModule, AppFormModule, ImageFormModule, UserPickerModule, MsfPersonaModule, ApplicationModule, RouterModule, MsGridModule],
   declarations: [DepartmentAdd, DepartmentEdit, DepartmentCard, DepartmentBanner, DepartmentImage,
     DepartmentCoverImage, DepartmentDelete, DepartmentList],

@@ -17,7 +17,6 @@ export class TestDetails implements OnInit {
   test: Test;
 
   constructor(@Inject(TEST_SERVICE_TOKEN) public service: ITestService,
-              @Inject(PAPER_SERVICE_TOKEN) public _paperService: IPaperService,
               @Inject(COURSE_SERVICE_TOKEN) public courseService: ICourseService,
               private _testLevelSpecialityLoader: TestLevelSpecialityLoader,
               private _httpClient: TestHttpClient,

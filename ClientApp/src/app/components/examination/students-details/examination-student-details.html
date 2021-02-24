@@ -9,7 +9,9 @@
     <div class="ms-description-list">
       <dl>
         <dt>Nom & prénom</dt>
-        <dd>{{examinationStudent.student.fullName}}</dd>
+        <dd>
+          <a [routerLink]="examinationStudent.student?.url">{{examinationStudent.student.fullName}}</a>
+        </dd>
       </dl>
       <dl>
         <dt>Matricule</dt>

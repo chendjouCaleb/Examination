@@ -1,8 +1,9 @@
-﻿import {Component, Inject, Input, OnInit} from '@angular/core';
+﻿import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {CourseLevelSpeciality, ExaminationLevelSpeciality, ExaminationSpeciality, Test, TestLevelSpeciality} from 'examination/entities';
 import {ITestService, TEST_SERVICE_TOKEN} from '../test.service.interface';
 import {TestLevelSpecialityLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
+import {MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'test-level-speciality-list.html',
@@ -22,6 +23,13 @@ export class TestLevelSpecialityList implements OnInit {
   @Input()
   test: Test;
 
+  @ViewChild(MsTable)
+  table: MsTable;
+
+  testLevelSpecialities: TestLevelSpeciality[] = [];
+
+  _isLoaded: boolean = false;
+
   constructor(@Inject(TEST_SERVICE_TOKEN) public service: ITestService,
               private _testLevelSpecialityLoader: TestLevelSpecialityLoader) {
   }
@@ -37,9 +45,13 @@ export class TestLevelSpecialityList implements OnInit {
     } else if (this.test) {
       await this._testLevelSpecialityLoader.loadByTest(this.test);
     }
+
+    this._isLoaded = true;
+    this.testLevelSpecialities = this.getTestLevelSpecialities().toArray();
+    this.table.unshift(...this.testLevelSpecialities)
   }
 
-  get testLevelSpecialities(): List<TestLevelSpeciality> {
+  getTestLevelSpecialities(): List<TestLevelSpeciality> {
     if (this.examinationSpeciality) {
       return this.examinationSpeciality.testLevelSpecialities;
     } else if (this.examinationLevelSpeciality) {

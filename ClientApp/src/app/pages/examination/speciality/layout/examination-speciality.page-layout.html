@@ -1,15 +1,24 @@
-﻿<app-layout [breadcrumbItems]="breadCrumbItems">
+﻿<app-layout>
+  <div class="ms-header">
+    <div class="d-flex align-items-center">
+      <button [routerLink]="examinationSpeciality.examinationDepartment.url" msIconButton icon="ChevronLeftSmall"
+              theme="transparent"
+              size="normal" [rounded]="true"></button>
+      <div class="ms-header-title">Spécialités
+        / {{examinationSpeciality.speciality.name}}</div>
+    </div>
+  </div>
+
   <msPivot>
     <msPivotHeader>
-      <msPivotLabel name="home">Accueil</msPivotLabel>
-      <msPivotLabel name="tests">Épreuves</msPivotLabel>
-      <msPivotLabel name="students">Étudiants</msPivotLabel>
+      <msPivotLabel id="home">Accueil</msPivotLabel>
+      <msPivotLabel id="tests">Épreuves</msPivotLabel>
+      <msPivotLabel id="students">Étudiants</msPivotLabel>
     </msPivotHeader>
 
     <msPivotBody>
       <div *msPivotContentDef>
         <app-examination-speciality-home [examinationSpeciality]="examinationSpeciality">
-
         </app-examination-speciality-home>
       </div>
       <div *msPivotContentDef>

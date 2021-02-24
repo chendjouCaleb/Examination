@@ -86,7 +86,7 @@
           <td ms-tableCell>{{item.levelIndex + 1}}</td>
 
           <td ms-tableCell>
-            <div class="ms-fontWeight-semibold text-capitalize">{{item.fullName}}</div>
+            <a [routerLink]="item.url" class="ms-fontWeight-semibold text-capitalize">{{item.fullName}}</a>
           </td>
 
           <td ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
@@ -120,7 +120,7 @@
 
 
           <td ms-tableCell style="text-align: right">
-            <button msButton class="mr-2" (click)="_studentService.detailsStudent(item)">Détails</button>
+            <button msButton (click)="_studentService.detailsStudent(item)">Détails</button>
             <ng-container *ngIf="getDepartment()?.isPrincipal">
               <button msIconButton [rounded]="true" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
               <MsfMenu #more>

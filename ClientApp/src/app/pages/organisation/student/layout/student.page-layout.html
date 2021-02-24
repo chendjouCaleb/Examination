@@ -1,0 +1,21 @@
+﻿<app-layout>
+  <div *ngIf="student">
+    <div class="ms-header">
+      <div class="d-flex align-items-center">
+        <button [routerLink]="student.level?.url" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <div class="ms-header-title">{{student.fullName}}</div>
+      </div>
+    </div>
+
+    <msPivot>
+      <msPivotHeader>
+        <msPivotLabel>Détails</msPivotLabel>
+      </msPivotHeader>
+      <msPivotBody>
+        <div *msPivotContentDef>
+          <app-student-home-page [student]="student"></app-student-home-page>
+        </div>
+      </msPivotBody>
+    </msPivot>
+  </div>
+</app-layout>

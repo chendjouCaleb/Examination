@@ -23,15 +23,22 @@ export class PaperList implements OnInit {
   testLevelSpeciality: TestLevelSpeciality;
 
   @ViewChild(MsTable)
-  table: MsTable;
+  table: MsTable<Paper>;
 
   papers: Paper[] = [];
 
-  constructor(private _paperLoader: PaperLoader, private _changeDetector: ChangeDetectorRef,
+  constructor(private _paperLoader: PaperLoader,
+              private _changeDetector: ChangeDetectorRef,
               @Inject(PAPER_SERVICE_TOKEN) public service: IPaperService) {
   }
 
   async ngOnInit() {
+    await this.load();
+  }
+
+
+
+  async load() {
     if (this.test) {
       await this._paperLoader.loadByTest(this.test);
     }
@@ -48,6 +55,8 @@ export class PaperList implements OnInit {
       await this._paperLoader.loadByTestLevelSpeciality(this.testLevelSpeciality);
     }
 
+    this.table.clear();
+    this.papers = [];
     this.table.unshift(...this.getPapers().toArray());
     this.papers.unshift(...this.getPapers().toArray());
   }
@@ -58,13 +67,23 @@ export class PaperList implements OnInit {
   }
 
   async reload() {
-    this.test.papers = null;
-    Promise.resolve().then(async () => {
-      await this._paperLoader.loadByTest(this.test);
-      this.table.clear();
-      this.table.unshift(...this.test.papers.toArray());
-      this._changeDetector.detectChanges();
-    })
+    if (this.test) {
+      this.test.papers = null;
+    }
+
+    if (this.examinationStudent) {
+      this.examinationStudent.papers = null;
+    }
+
+    if (this.testGroup) {
+      this.testGroup.papers = null;
+    }
+
+    if (this.testLevelSpeciality) {
+      this.testLevelSpeciality.papers = null;
+    }
+
+    this.load();
   }
 
   async group() {

@@ -1,4 +1,16 @@
-﻿<app-layout [breadcrumbItems]="breadCrumbItems">
+﻿<app-layout>
+
+  <div class="ms-header">
+    <div class="d-flex align-items-center">
+      <button [routerLink]="testGroup.test.url" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+      <div class="ms-header-title">Groupe {{testGroup.index + 1}}</div>
+    </div>
+
+    <div>
+
+    </div>
+  </div>
+
   <msPivot *ngIf="_isOk">
     <msPivotHeader>
       <msPivotLabel id="home">Acceuil</msPivotLabel>

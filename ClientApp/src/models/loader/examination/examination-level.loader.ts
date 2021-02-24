@@ -1,17 +1,17 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
-import {List} from "@positon/collections";
-import {AuthorizationManager} from "examination/app/authorization";
+import {List} from '@positon/collections';
+import {AuthorizationManager} from 'examination/app/authorization';
 
-import {Examination, ExaminationDepartment, ExaminationLevel, Level} from "examination/entities";
-import {ExaminationLevelHttpClient, UserHttpClient} from "examination/models/http";
+import {Examination, ExaminationDepartment, ExaminationLevel, Level} from 'examination/entities';
+import {ExaminationLevelHttpClient, UserHttpClient} from 'examination/models/http';
 
-import {ExaminationDepartmentLoader} from "./examination-department.loader";
-import {Loader} from "../loader";
-import {LevelLoader} from "../organisation";
+import {ExaminationDepartmentLoader} from './examination-department.loader';
+import {Loader} from '../loader';
+import {LevelLoader} from '../organisation';
 
 
-@Injectable({providedIn: "root"})
+@Injectable({providedIn: 'root'})
 export class ExaminationLevelLoader extends Loader<ExaminationLevel, number> {
 
   constructor(private httpClient: ExaminationLevelHttpClient,

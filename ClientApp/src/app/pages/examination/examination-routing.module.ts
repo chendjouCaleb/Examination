@@ -6,8 +6,8 @@ import {
   ExaminationDepartmentResolver,
   ExaminationLevelResolver, ExaminationLevelSpecialityResolver,
   ExaminationSpecialityResolver, TestResolver
-} from "examination/app/components";
-import {MsfModalModule} from "fabric-docs";
+} from 'examination/app/components';
+import {MsfModalModule} from 'fabric-docs';
 
 export const routes: Routes = [
   {
@@ -45,7 +45,7 @@ export const routes: Routes = [
     path: 'departments/:examinationDepartmentId/levels/:examinationLevelId/specialities/:examinationLevelSpecialityId',
     resolve: [ExaminationDepartmentResolver, ExaminationLevelResolver, ExaminationLevelSpecialityResolver],
     loadChildren: () => import('./level-speciality/examination-level-speciality.page.module')
-      .then(e=> e.ExaminationLevelSpecialityPageModule)
+      .then(e => e.ExaminationLevelSpecialityPageModule)
   },
 
   {

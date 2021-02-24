@@ -1,9 +1,9 @@
-<h4> {{examinationSpeciality.speciality.name}} </h4>
+<div msFontSize="18"> {{examinationSpeciality.speciality.name}} </div>
 
 <div *ngIf="examinationSpeciality.examinationLevelSpecialities">
-  <app-examination-speciality-level-item *ngFor="let item of examinationSpeciality.examinationLevelSpecialities"
-                                         [item]="item">
-
-  </app-examination-speciality-level-item>
+  <span class="mr-2 ms-badge ms-pointer" msBgColor="sharedCyanBlue10" [routerLink]="item.url"
+        *ngFor="let item of examinationSpeciality.examinationLevelSpecialities">
+    Niveau {{item.examinationLevel?.level?.index + 1}}
+  </span>
 </div>
 

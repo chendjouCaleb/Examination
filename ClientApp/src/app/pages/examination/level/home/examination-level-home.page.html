@@ -4,14 +4,14 @@
   </div>
 </div>
 
-  <div *ngIf="examinationLevel.examinationLevelSpecialities" class="my-2">
+<div *ngIf="examinationLevel.examinationLevelSpecialities" class="my-2">
     <span *ngFor="let item of examinationLevel.examinationLevelSpecialities"
           [routerLink]="item.url"
           msColor="white" msBgColor="sharedRedOrange10" class="ms-pointer mr-2 br-2"
           style="padding: 2px; font-size: 12px">
     {{item.levelSpeciality?.speciality?.name}}
   </span>
-  </div>
+</div>
 
 <div class="d-flex justify-content-between flex-wrap">
   <div class="ms-description-list mt-3">
@@ -88,7 +88,8 @@
     <dl>
       <dt style="vertical-align: top">Premier</dt>
       <dd>
-        <div>{{statistics.maxStudent?.examinationStudent?.student?.fullName}} </div>
+        <div class="ms-link" [routerLink]="statistics.maxStudent?.examinationStudent?.url">
+          {{statistics.maxStudent?.examinationStudent?.student?.fullName}} </div>
         <div>{{statistics.maxStudent?.examinationStudent?.student?.registrationId}}</div>
         <div msColor="sharedYellowGreen10"> {{statistics.maxStudent.mean}}</div>
       </dd>
@@ -97,7 +98,8 @@
     <dl>
       <dt style="vertical-align: top">Dernier</dt>
       <dd>
-        <div>{{statistics.minStudent?.examinationStudent?.student?.fullName}} </div>
+        <div class="ms-link" [routerLink]="statistics.minStudent?.examinationStudent?.url">
+          {{statistics.minStudent?.examinationStudent?.student?.fullName}} </div>
         <div>{{statistics.minStudent?.examinationStudent?.student?.registrationId}}</div>
         <div msColor="sharedRed10">{{statistics.minStudent?.mean}}</div>
       </dd>

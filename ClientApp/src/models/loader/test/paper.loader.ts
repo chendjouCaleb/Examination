@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 
 import {TestLoader} from './test.loader';
 
-import {TestGroupLoader} from "./test-group.loader";
-import {TestGroupCorrectorLoader} from "./test-group-corrector.loader";
-import {TestGroupSupervisorLoader} from "./test-group-supervisor.loader";
-import {TestGroupSecretaryLoader} from "./test-group-secretary.loader";
-import {ExaminationStudent, Paper, Test, TestGroup, TestLevelSpeciality} from "examination/entities";
-import {Loader} from "../loader";
-import {PaperHttpClient, UserHttpClient} from "examination/models/http";
-import {StudentLoader} from "../member";
-import {ExaminationStudentLoader} from "../examination";
-import {TestLevelSpecialityLoader} from "./test-level-speciality.loader";
+import {TestGroupLoader} from './test-group.loader';
+import {TestGroupCorrectorLoader} from './test-group-corrector.loader';
+import {TestGroupSupervisorLoader} from './test-group-supervisor.loader';
+import {TestGroupSecretaryLoader} from './test-group-secretary.loader';
+import {ExaminationStudent, Paper, Test, TestGroup, TestLevelSpeciality} from 'examination/entities';
+import {Loader} from '../loader';
+import {PaperHttpClient, UserHttpClient} from 'examination/models/http';
+import {StudentLoader} from '../member';
+import {ExaminationStudentLoader} from '../examination';
+import {TestLevelSpecialityLoader} from './test-level-speciality.loader';
 
 
 @Injectable({providedIn: 'root'})
@@ -34,12 +34,13 @@ export class PaperLoader extends Loader<Paper, number> {
 
   async load(item: Paper): Promise<Paper> {
 
+    await this._examinationStudentLoader.load(item.examinationStudent);
     if (item.testGroupId) {
       item.testGroup = await this._testGroupLoader.loadById(item.testGroupId);
     }
 
     if (item.testId) {
-      item.test= await this._testLoader.loadById(item.testId);
+      item.test = await this._testLoader.loadById(item.testId);
     }
 
     if (item.testGroupSupervisorId) {
@@ -70,7 +71,7 @@ export class PaperLoader extends Loader<Paper, number> {
       item.secretaryUser = await this._userHttClient.findAsync(item.secretaryUserId);
     }
 
-    if(item.testLevelSpecialityId) {
+    if (item.testLevelSpecialityId) {
       item.testLevelSpeciality = await this._testLevelSpecialityLoader.loadById(item.testLevelSpecialityId);
     }
 

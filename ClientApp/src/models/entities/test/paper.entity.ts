@@ -10,7 +10,7 @@ import {User} from '../identity/user.entity';
 import {LocalTime} from '@js-joda/core';
 import {Test} from './test.entity';
 import {ExaminationStudent} from '../examination';
-import {TestLevelSpeciality} from "./test-level-speciality.entity";
+import {TestLevelSpeciality} from './test-level-speciality.entity';
 
 export class Paper extends Entity<number> {
 
@@ -103,6 +103,12 @@ export class Paper extends Entity<number> {
   paperFiles = new List<PaperFile>();
   paperFileCount: number;
 
+  assignScore() {
+    const obj: any = {};
+    this.scorePapers.forEach(s => obj['score_' + s.scoreName] = s.value);
+    Object.assign(this, obj);
+  }
+
   get coefficient(): number {
     return this.test.coefficient;
   }
@@ -127,6 +133,13 @@ export class Paper extends Entity<number> {
     return this.groupIndex;
   }
 
+  get groupNumber(): number {
+    return this.testGroup.index;
+  }
+
+  get specialityName(): string {
+    return this.testLevelSpeciality.examinationLevelSpeciality?.examinationSpeciality?.speciality.name;
+  }
   get fullName(): string {
     return this.examinationStudent.student.fullName;
   }

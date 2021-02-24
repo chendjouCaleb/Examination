@@ -46,7 +46,7 @@ export class Student extends Entity<number> {
 
 
   get url(): string {
-    return `${this.level.url}/students/${this.id}`;
+    return `${this.level?.url}/students/${this.id}`;
   }
 
   get apiUrl(): string {

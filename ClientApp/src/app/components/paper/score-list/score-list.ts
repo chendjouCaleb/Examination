@@ -49,8 +49,13 @@ export class PaperScoreList implements OnInit {
       await this._testScoreLoader.loadByTest(this.testLevelSpeciality.test);
     }
 
+
+
     this.papers.unshift(...this.getPapers().toArray());
-    this.table.unshift(...this.getPapers().toArray());
+
+    this.papers.forEach(p => p.assignScore());
+
+    this.table.unshift(...this.papers);
   }
 
   getPapers(): List<Paper> {

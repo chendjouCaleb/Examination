@@ -1,14 +1,12 @@
-﻿@import "~office-ui-fabric-core/dist/sass/Fabric";
-@import "~office-ui-fabric-core/dist/sass/variables/Font.Variables";
-.app-test-item, :host {
+﻿.app-test-item, :host {
   backdrop-filter: brightness(130%);
   display: block;
   padding: 10px;
 }
 
 .app-test-item-testName {
-  font-size: $ms-font-size-18;
-  font-weight: $ms-font-weight-semibold;
+  font-size: 18px;
+  font-weight: 500;
   text-transform: capitalize;
 }
 
@@ -23,7 +21,7 @@
   border-radius: 20px;
   line-height: 20px;
   text-align: center;
-  color: $ms-color-white;
+  color: #FFF;
 }
 
 

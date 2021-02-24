@@ -1,15 +1,7 @@
 ﻿import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AppFormModule, ControlModule, MsfSelectModule, UserPickerModule} from 'examination/controls';
-import {
-  MsfButtonModule,
-  MsfCheckboxModule,
-  MsfIconModule,
-  MsfMenuModule,
-  MsfModalModule,
-  MsfPersonaModule,
-  MsfTableModule
-} from 'fabric-docs';
+import {MsfCheckboxModule, MsfMenuModule, MsfModalModule} from 'fabric-docs';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TestGroupAdd} from './add/test-group-add';
 import {TestGroupResolver} from './test-group.resolver';
