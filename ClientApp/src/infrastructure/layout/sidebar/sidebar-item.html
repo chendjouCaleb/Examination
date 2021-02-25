@@ -1,8 +1,5 @@
 <span class="flex-layout" >
-  <span *ngIf="icon" MsfIcon [iconName]="icon" class="app-sidenav-icon"></span>
-    <span *ngIf="iconImage"  class="app-sidenav-icon" >
-      <span MsfIconImage [source]="iconImage" size="lg" class="app-sidenav-icon-image"></span>
-    </span>
+  <span *ngIf="icon" class="app-sidenav-icon ms-Icon ms-Icon--{{icon}}"></span>
       <span class="app-sidebar-item-label" #label>
         <ng-content></ng-content>
       </span>

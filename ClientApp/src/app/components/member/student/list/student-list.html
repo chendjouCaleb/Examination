@@ -1,6 +1,5 @@
 ﻿<div class="ms-pageTitle">
-  <h4> Étudiants ({{students.length}}) </h4>
-
+  <div class="ms-fontSize-20"> Étudiants ({{items.length}})</div>
   <div>
     <!--    <ng-container *ngIf="students" >-->
     <!--      <button msIconButton theme="standardOutline" icon="TripleColumn" [MsfMenuTrigger]="columnMenu" class="ms-hiddenMdUp mr-2"></button>-->
@@ -54,6 +53,12 @@
   </div>
 </div>
 
+<div class="d-flex align-items-center my-2" style="min-width: 200px; width: 300px">
+  <input style="flex-grow: 1" [(ngModel)]="filterValue" placeholder="Nom ou matricule d'un étudiant" type="text"
+         class="ms-textField-input">
+  <button msIconButton icon="Search" theme="primary" (click)="search()"></button>
+</div>
+
 <div *ngIf="_isLoaded">
   <msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
 
@@ -75,7 +80,7 @@
           <msTableHeadCell name="addedBy">Ajouté par</msTableHeadCell>
 
           <msTableHeadCell name="actions" style="text-align: right">
-            <i class="ms-Icon ms-Icon--SetAction"></i>
+            <i class="ms-Icon ms-Icon--SetAction px-2"></i>
           </msTableHeadCell>
         </msTableHead>
 
@@ -94,7 +99,7 @@
           </td>
 
           <td ms-tableCell>
-            {{item.birthDate | amCalendar}}
+            {{item.birthDate | date}}
           </td>
 
           <td ms-tableCell>
@@ -111,7 +116,7 @@
           </td>
 
           <td ms-tableCell>
-            <span class="ms-badge ms-badge-info">{{item.registrationDate | amTimeAgo}}</span>
+            <span msFontSize="12" style="opacity: 0.8">{{item.registrationDate | date}}</span>
           </td>
 
           <td ms-tableCell>

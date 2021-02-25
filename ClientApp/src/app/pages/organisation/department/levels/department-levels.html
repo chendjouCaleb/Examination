@@ -1,7 +1,8 @@
 ﻿<div>
   <div class="ms-pageTitle">
     <div class="ms-fontSize-20">Niveaux</div>
-    <button class="ml-5" msButton icon="Add" theme="primary" (click)="addLevel()">Ajouter <span class="ms-hiddenSm">un niveau</span>
+    <button *ngIf="department.isPrincipalUser" class="ml-5" msButton icon="Add" theme="primary" (click)="addLevel()">
+      Ajouter <span class="ms-hiddenSm">un niveau</span>
     </button>
   </div>
 
@@ -30,10 +31,12 @@
       <div class="ms-divider mb-2"></div>
 
       <div>
-        <span style="border: 1px solid var(--borderColor); border-radius: 15px; display: inline-block" class="p-1 mr-2" *ngFor="let levelSpeciality of item.levelSpecialities">
+        <span style="border: 1px solid var(--borderColor); border-radius: 15px; display: inline-block" class="p-1 mr-2"
+              *ngFor="let levelSpeciality of item.levelSpecialities"
+              [routerLink]="levelSpeciality.url">
           {{levelSpeciality.speciality.name}}
 
-          <button msIconButton theme="transparent" icon="Delete" size="small"
+          <button *ngIf="department.isPrincipalUser" msIconButton theme="transparent" icon="Delete" size="small"
                   (click)="service.removeSpeciality(levelSpeciality)"></button>
         </span>
       </div>

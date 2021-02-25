@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {List} from '@positon/collections';
 import {AuthorizationManager} from 'examination/app/authorization';
 import {
   Examination,
   ExaminationDepartment,
-  ExaminationLevel, ExaminationLevelSpeciality,
+  ExaminationLevel,
+  ExaminationLevelSpeciality,
   ExaminationSpeciality,
-  ExaminationStudent
+  ExaminationStudent, Student
 } from 'examination/entities';
 import {ExaminationStudentHttpClient, UserHttpClient} from 'examination/models/http';
 import {ExaminationLevelLoader} from './examination-level.loader';
@@ -97,6 +97,19 @@ export class ExaminationStudentLoader extends Loader<ExaminationStudent, number>
       {examinationLevelSpecialityId: examinationLevelSpeciality.id}
     );
     examinationLevelSpeciality.examinationStudents = students;
+    for (const item of students) {
+      await this.load(item);
+    }
+  }
+
+  async loadByStudent(student: Student): Promise<void> {
+    if (student.examinationStudents) {
+      return;
+    }
+    const students = await this._httpClient.listAsync(
+      {studentId: student.id}
+    );
+    student.examinationStudents = students;
     for (const item of students) {
       await this.load(item);
     }

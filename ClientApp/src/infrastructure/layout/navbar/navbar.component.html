@@ -1,9 +1,9 @@
 <div style="height:100%; align-items: center; display: flex">
-  <div class="navbar-brand ms-fontSize-20 px-3">{{global.appName()}}</div>
+  <div class="navbar-brand ms-fontSize-20 px-3" routerLink="/schools">{{global.appName()}}</div>
 </div>
 
-<div [class.search-bar-active]="activeSearchBar" class="navbar-search-bar search-bar ms-hiddenLgDown" id="search-bar">
-  <span MsfIcon class="search-bar-icon" iconName="Search"></span>
+<div [class.search-bar-active]="activeSearchBar" class="ms-disabled navbar-search-bar search-bar ms-hiddenLgDown" id="search-bar">
+  <span class="search-bar-icon ms-Icon ms-Icon--Search"></span>
   <div class="search-bar-input-container">
     <input (blur)="activeSearchBar = false" (focus)="activeSearchBar = true" autocomplete="off" class="search-bar-input"
            type="text">
@@ -12,8 +12,8 @@
 
 <div class="navbar-action" *ngIf="authManager.isAuthorized">
 
-<span (click)="buttonClick.emit('notification')" class="navbar-button" id="notification-panel-button">
-    <i MsfIcon iconName="Ringer"></i>
+<span (click)="buttonClick.emit('notification')" class="ms-disabled navbar-button" id="notification-panel-button">
+    <i class="ms-Icon ms-Icon--Ringer"></i>
     <span class="ringer-badge">1</span>
   </span>
 
@@ -29,5 +29,5 @@
 </div>
 
 <div *ngIf="!authManager.isAuthorized" class="px-3">
-  <a MsfButton Icon="Contact" theme="standard" (click)="authManager.requestAuthorizationCode()">Connexion</a>
+  <button msButton icon="Contact" theme="standard" (click)="authManager.requestAuthorizationCode()">Connexion</button>
 </div>

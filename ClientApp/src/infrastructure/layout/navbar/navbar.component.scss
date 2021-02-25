@@ -13,6 +13,10 @@
   backdrop-filter: blur(var(--blurSize));
 }
 
+.navbar-brand{
+  cursor: pointer;
+}
+
 .search-bar {
   display: flex;
   height: 25px;

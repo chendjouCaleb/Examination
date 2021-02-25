@@ -56,6 +56,11 @@ $font-family-sans-serif: Metropolis, sans-serif;
   }
 }
 
+.ms-disabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
 .ms-table {
   white-space: nowrap;
 }

@@ -1,0 +1,48 @@
+<div class="ms-pageTitle">
+  <div class="ms-fontSize-20">Examens</div>
+</div>
+
+      <ms-table #table>
+        <msTableHead *msTableHeadDef>
+          <msTableHeadCell name="#">#</msTableHeadCell>
+          <msTableHeadCell name="name" [sortBy]="['examinationName', 'string']">Nom de l'examen</msTableHeadCell>
+          <msTableHeadCell name="date"> Dates</msTableHeadCell>
+          <msTableHeadCell name="department">Département</msTableHeadCell>
+          <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
+          <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
+          <msTableHeadCell name="actions" class="text-right">
+            <i class="ms-Icon ms-Icon--SetAction px-2"></i>
+          </msTableHeadCell>
+        </msTableHead>
+
+        <ms-tableRow *ms-tableRowDef="let item of examinationStudents; let i=index" [value]="item">
+          <ms-tableCell>{{i + 1}}</ms-tableCell>
+          <ms-tableCell>
+            <a [routerLink]="item.examination.url">{{item.examinationName}}</a>
+          </ms-tableCell>
+
+          <ms-tableCell>
+            <div msFontSize="12">
+              Du {{item.examination.expectedStartDate | amDateFormat: 'dddd LL' | ucFirst}}, <br>
+              au {{item.examination.expectedEndDate | amDateFormat: 'dddd LL' | ucFirst}}
+            </div>
+          </ms-tableCell>
+
+          <ms-tableCell>
+            {{item.examinationLevel.examinationDepartment.department.name}}
+          </ms-tableCell>
+
+          <ms-tableCell>
+            {{item.examinationLevel.level.index + 1}}
+          </ms-tableCell>
+
+
+          <ms-tableCell>
+            {{item.specialityName}}
+          </ms-tableCell>
+
+          <ms-tableCell style="text-align: right">
+            <button msButton theme="primary" (click)="service.studentsDetails(item)">Détails</button>
+          </ms-tableCell>
+        </ms-tableRow>
+      </ms-table>

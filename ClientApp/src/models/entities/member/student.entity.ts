@@ -1,6 +1,8 @@
 ﻿import {Entity} from '../entity';
 import {User} from '../identity/user.entity';
 import {Level, LevelSpeciality} from '../organisation';
+import {List} from '@positon/collections';
+import {ExaminationStudent} from '../examination';
 
 
 export class Student extends Entity<number> {
@@ -44,6 +46,7 @@ export class Student extends Entity<number> {
   level: Level;
   levelId: number;
 
+  examinationStudents: List<ExaminationStudent>;
 
   get url(): string {
     return `${this.level?.url}/students/${this.id}`;

@@ -9,7 +9,7 @@
 </div>
 
   <div style="display: flex; flex-wrap: wrap">
-    <div class="ms-description-list m-2" *ngIf="department.statistics">
+    <div class=" ms-sm-w100 ms-description-list m-2" *ngIf="department.statistics">
       <dl>
         <dt>Étudiants</dt>
         <dd>{{department.statistics.studentCount}}</dd>
@@ -35,10 +35,10 @@
         <dd>{{department.statistics.roomCount}}</dd>
       </dl>
     </div>
-    <div class="m-2">
+    <div class="m-2 ms-sm-w100" style="min-width: 300px">
       <app-department-levels [department]="department"></app-department-levels>
     </div>
-    <div class="m-2">
+    <div class="m-2 ms-sm-w100" style="min-width: 300px">
       <app-department-specialities [department]="department"></app-department-specialities>
     </div>
   </div>

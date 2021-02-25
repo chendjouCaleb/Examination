@@ -1,13 +1,14 @@
 ﻿<div class="ms-pageTitle">
-  <h2>Cours</h2>
+  <h4>Cours</h4>
   <button msButton
           icon="Add" theme="primary" *ngIf="level && school.userPrincipal.isPlanner" (click)="addCourse() ">
     Ajouter <span class="ms-hiddenSm">un cours</span></button>
 </div>
 
 
+
 <div>
-  <ms-table>
+  <ms-table #msTable>
     <ms-tableHead *msTableHeadDef>
       <ms-tableHeadCell name="">#</ms-tableHeadCell>
       <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>
@@ -19,7 +20,7 @@
       <ms-tableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
       <ms-tableHeadCell name="registrationDate">Date d'ajout</ms-tableHeadCell>
       <msTableHeadCell name="actions" class="text-right">
-        <i class="ms-Icon ms-Icon--SetAction"></i>
+        <i class="ms-Icon ms-Icon--SetAction px-2"></i>
       </msTableHeadCell>
     </ms-tableHead>
 

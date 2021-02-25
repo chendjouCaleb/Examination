@@ -9,11 +9,15 @@
 
     <msPivot>
       <msPivotHeader>
-        <msPivotLabel>Détails</msPivotLabel>
+        <msPivotLabel id="details">Détails</msPivotLabel>
+        <msPivotLabel id="examinations">Examens</msPivotLabel>
       </msPivotHeader>
       <msPivotBody>
         <div *msPivotContentDef>
           <app-student-home-page [student]="student"></app-student-home-page>
+        </div>
+        <div *msPivotContentDef>
+          <app-student-examinations [student]="student"></app-student-examinations>
         </div>
       </msPivotBody>
     </msPivot>

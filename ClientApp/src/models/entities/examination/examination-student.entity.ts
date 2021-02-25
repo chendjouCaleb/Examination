@@ -4,6 +4,7 @@ import {ExaminationLevelSpeciality} from './examination-level-speciality.entity'
 import {ExaminationLevel} from './examination-level.entity';
 import {List} from '@positon/collections';
 import {Paper} from '../test';
+import {Examination} from "./examination.entity";
 
 
 export class ExaminationStudent extends Entity<number> {
@@ -56,6 +57,14 @@ export class ExaminationStudent extends Entity<number> {
 
   get specialityName(): string {
     return this.examinationLevelSpeciality?.examinationSpeciality.speciality.name;
+  }
+
+  get examinationName(): string {
+    return this.examination?.name;
+  }
+
+  get examination(): Examination {
+    return this.examinationLevel.examinationDepartment.examination;
   }
 
   get levelIndex(): number {

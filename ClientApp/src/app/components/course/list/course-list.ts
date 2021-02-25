@@ -1,5 +1,5 @@
 ﻿import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {Course, Level, School, Speciality} from 'examination/entities';
+import {Course, Level, LevelSpeciality, School, Speciality} from 'examination/entities';
 import {CourseLevelSpecialityLoader, CourseLoader, LevelSpecialityLoader} from 'examination/loaders';
 import {COURSE_SERVICE_TOKEN, ICourseService} from '../course.service.interface';
 import {List} from '@positon/collections';
@@ -15,6 +15,9 @@ export class CourseList implements OnInit {
 
   @Input()
   speciality: Speciality;
+
+  @Input()
+  levelSpeciality: LevelSpeciality;
 
   @ViewChild(MsTable)
   table: MsTable;
@@ -38,6 +41,10 @@ export class CourseList implements OnInit {
     if (this.speciality) {
       await this._courseLoader.loadBySpeciality(this.speciality);
     }
+
+    if (this.levelSpeciality) {
+      await this._courseLevelSpeciality.loadByLevelSpeciality(this.levelSpeciality);
+    }
     for (const course of this.courses) {
       await this._courseLevelSpeciality.loadByCourse(course);
     }
@@ -58,7 +65,12 @@ export class CourseList implements OnInit {
     if (this.level) {
       return this.level.courses;
     }
-    return this.speciality.courses;
+
+    if (this.speciality) {
+      return this.speciality.courses;
+    }
+
+    return this.levelSpeciality.courseLevelSpecialities.convertAll(l => l.course);
   }
 
   get school(): School {

@@ -1,9 +1,9 @@
 ﻿import {Entity} from '../entity';
 import {Speciality} from './speciality.entity';
 import {Level} from './level.entity';
-import {List} from "@positon/collections";
-import {CourseLevelSpeciality} from "./course-level-speciality.entity";
-import {Application, Student} from "../member";
+import {List} from '@positon/collections';
+import {CourseLevelSpeciality} from './course-level-speciality.entity';
+import {Application, Student} from '../member';
 
 
 export class LevelSpeciality extends Entity<number> {
@@ -28,15 +28,18 @@ export class LevelSpeciality extends Entity<number> {
   students: List<Student>;
   applications: List<Application>;
 
+  get url(): string {
+    return `${this.level.url}/specialities/${this.id}`;
+  }
+
   addApplication(application: Application) {
-    if(this.applications) {
+    if (this.applications) {
       this.applications.insert(0, application);
     }
   }
 
   addCourseLevelSpeciality(item: CourseLevelSpeciality) {
-
-    if (this.courseLevelSpecialities && item.levelSpecialityId == this.id) {
+    if (this.courseLevelSpecialities && item.levelSpecialityId === this.id) {
       this.courseLevelSpecialities.add(item);
     }
   }
@@ -46,7 +49,7 @@ export class LevelSpeciality extends Entity<number> {
       return;
     }
     items.forEach(item => {
-      if (item.levelSpecialityId == this.id) {
+      if (item.levelSpecialityId === this.id) {
         this.courseLevelSpecialities.add(item);
       }
     })

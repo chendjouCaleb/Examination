@@ -65,7 +65,7 @@ namespace Exam.Controllers
 
             if (specialityId != null)
             {
-                query = query.Where(s => s.LevelSpeciality.SpecialityId == specialityId);
+                query = query.Where(s => s.LevelSpecialityId != null && s.LevelSpeciality.SpecialityId == specialityId);
             }
 
             if (departmentId != null)
@@ -106,7 +106,7 @@ namespace Exam.Controllers
 
             if (specialityId != null)
             {
-                return _studentRepository.List(s => s.LevelSpeciality.SpecialityId == specialityId);
+                return _studentRepository.List(s => s.LevelSpecialityId != null && s.LevelSpeciality.SpecialityId == specialityId);
             }
 
             if (departmentId != null)

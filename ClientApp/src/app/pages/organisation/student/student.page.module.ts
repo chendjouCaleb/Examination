@@ -7,7 +7,7 @@ import {LayoutModule} from 'examination/infrastructure';
 import {ControlModule} from 'examination/controls';
 import {
   CourseModule,
-  DepartmentResolver, LevelResolver,
+  DepartmentResolver, ExaminationModule, LevelResolver,
   SchoolResolver,
   SpecialityModule,
   StudentModule
@@ -16,7 +16,9 @@ import {MsButtonModule} from '@ms-fluent/button';
 import {MsPivotModule} from '@ms-fluent/pivot';
 import {StudentPageLayout} from './layout/student.page-layout';
 import {StudentHomePage} from './home/student-home.page';
-import {MomentModule} from "ngx-moment";
+import {MomentModule} from 'ngx-moment';
+import {StudentExaminations} from './examinations/student-examinations';
+import {MsTableModule} from '@ms-fluent/table';
 
 const routes: Routes = [
   {
@@ -27,9 +29,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MsButtonModule, SpecialityModule, CourseModule, StudentModule, MsPivotModule,
+  imports: [CommonModule, MsButtonModule, MsTableModule, SpecialityModule, CourseModule, ExaminationModule, StudentModule, MsPivotModule,
     RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule, MomentModule],
-  declarations: [StudentPageLayout, StudentHomePage]
+  declarations: [StudentPageLayout, StudentHomePage, StudentExaminations]
 })
 export class StudentPageModule {
 

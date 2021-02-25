@@ -7,6 +7,7 @@ import {ExaminationDepartmentHomePage} from './home/examination-department-home.
 import {ExaminationDepartmentPageLayout} from './layout/examination-department.page-layout';
 import { MsPivotModule } from '@ms-fluent/pivot';
 import {MsButtonModule} from "@ms-fluent/button";
+import {ControlModule} from "examination/controls";
 
 export const routes: Routes = [
   {path: '', component: ExaminationDepartmentPageLayout}
@@ -14,7 +15,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), ExaminationModule, TestModule, LayoutModule,
-    MsPivotModule, MsButtonModule],
+    MsPivotModule, MsButtonModule, ControlModule],
   declarations: [ExaminationDepartmentPageLayout, ExaminationDepartmentHomePage, ]
 })
 export class ExaminationDepartmentPageModule {

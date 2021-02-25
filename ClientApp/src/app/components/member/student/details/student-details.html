@@ -100,7 +100,7 @@
           <dt>Lié à l'utilisateur</dt>
           <dd>
             <user-persona *ngIf="student.user" [user]="student.user"></user-persona>
-            <span class="ms-badge ms-badge-error">Aucune liaison</span>
+            <span *ngIf="student.user" class="ms-badge ms-badge-error">Aucune liaison</span>
           </dd>
 
         </dl>

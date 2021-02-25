@@ -80,7 +80,7 @@
         <dl>
           <dt>Date d'enregistrement</dt>
           <dd>
-            <span class="ms-badge ms-badge-info">{{student.registrationDate | amTimeAgo}}</span>
+            <span class="ms-opacity-7 ms-fontSize-12">{{student.registrationDate | amDateFormat: 'dddd, LL' | ucFirst}}</span>
           </dd>
         </dl>
 
@@ -96,7 +96,7 @@
           <dt>Lié à l'utilisateur</dt>
           <dd>
             <user-persona *ngIf="student.user" [user]="student.user"></user-persona>
-            <span class="ms-badge ms-badge-error">Aucune liaison</span>
+            <span *ngIf="!student.user" class="ms-badge ms-badge-error">Aucune liaison</span>
           </dd>
 
         </dl>

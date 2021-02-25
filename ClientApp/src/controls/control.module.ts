@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MsfButtonModule, MsfModalModule} from 'fabric-docs';
+import {MsfModalModule} from 'fabric-docs';
 import {LabelledIcon} from './labelled/labelled-icon';
 import {Labelled} from './labelled/labelled';
 import {FloatButton} from './float-button/float-button';
@@ -26,18 +26,20 @@ import {UserPersona} from './user-persona';
 import {MsPersonaModule} from '@ms-fluent/persona';
 import {MsPaginatorButtons} from './paginator-buttons/paginator-buttons';
 import {MsButtonModule} from '@ms-fluent/button';
+import {HistoryBack} from './history-back';
+import {MsIcon} from './ms-icon';
 
 @NgModule({
-  imports: [CommonModule, MatSnackBarModule, MsPersonaModule, MsButtonModule, MsfModalModule, MsfButtonModule],
+  imports: [CommonModule, MatSnackBarModule, MsPersonaModule, MsButtonModule, MsfModalModule],
   providers: [AlertEmitter, Confirmation],
   declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
     MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe,
     MsColorDirective, MsFontWeightDirective, MsFontSizeDirective, MsBorderColorDirective, MsBgColorDirective,
-    TableColumnDirective, UserPersona, MsPaginatorButtons],
+    TableColumnDirective, UserPersona, MsPaginatorButtons, HistoryBack, MsIcon],
   exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
     MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe, TableColumnDirective,
     MsFontWeightDirective, MsFontSizeDirective, MsColorDirective, MsBorderColorDirective, MsBgColorDirective,
-    UserPersona, MsPaginatorButtons],
+    UserPersona, MsPaginatorButtons, HistoryBack, MsIcon],
 })
 export class ControlModule {
 

@@ -1,10 +1,10 @@
-﻿
-import {Department} from './department.entity';
+﻿import {Department} from './department.entity';
 import {Entity} from '../entity';
-import {List} from "@positon/collections";
-import {LevelSpeciality} from "./level-speciality.entity";
-import {Course} from "./course.entity";
-import {ExaminationSpeciality} from "../examination";
+import {List} from '@positon/collections';
+import {LevelSpeciality} from './level-speciality.entity';
+import {Course} from './course.entity';
+import {ExaminationSpeciality} from '../examination';
+import {Student} from '../member';
 
 export class Speciality extends Entity<number> {
 
@@ -28,9 +28,10 @@ export class Speciality extends Entity<number> {
   levelSpecialities: List<LevelSpeciality>;
   examinationSpecialities: List<ExaminationSpeciality>;
   courses: List<Course>;
+  students: List<Student>;
 
   addLevelSpeciality(item: LevelSpeciality) {
-    if(item.specialityId === this.id) {
+    if (item.specialityId === this.id) {
       this.levelSpecialities.add(item);
     }
   }
@@ -40,13 +41,13 @@ export class Speciality extends Entity<number> {
   }
 
   addCourse(course: Course) {
-    if(this.courses) {
+    if (this.courses) {
       this.courses.add(course);
     }
   }
 
   removeCourse(course: Course) {
-    if(this.courses) {
+    if (this.courses) {
       this.courses.remove(course);
     }
   }

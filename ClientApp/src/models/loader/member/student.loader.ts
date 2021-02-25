@@ -3,7 +3,7 @@ import {LevelLoader, LevelSpecialityLoader} from '../organisation';
 import {Loader} from '../loader';
 
 import {StudentHttpClient, UserHttpClient} from 'examination/models/http';
-import {Department, Level, LevelSpeciality, Student} from 'examination/entities';
+import {Department, Level, LevelSpeciality, Speciality, Student} from 'examination/entities';
 
 
 
@@ -64,6 +64,17 @@ export class StudentLoader extends Loader<Student, number> {
         await this.load(student);
       }
       levelSpeciality.students = students;
+    }
+  }
+
+
+  async loadBySpeciality(speciality: Speciality): Promise<void> {
+    if (speciality && !speciality.students) {
+      const students = await this.studentRepository.list({specialityId: speciality.id});
+      for (const student of students) {
+        await this.load(student);
+      }
+      speciality.students = students;
     }
   }
 }

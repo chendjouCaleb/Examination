@@ -3,7 +3,10 @@
     <div class="ms-header">
       <div class="d-flex align-items-center">
         <button [routerLink]="speciality.department.url" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
-        <div class="ms-header-title">{{speciality.name}}</div>
+        <div class="ms-header-title">
+          <a [routerLink]="speciality.department.url">{{speciality.department.name}}</a> /
+          {{speciality.name}}
+        </div>
       </div>
     </div>
 
@@ -22,7 +25,7 @@
           <app-course-list [speciality]="speciality"></app-course-list>
         </div>
         <div *msPivotContentDef>
-          étudiants
+          <app-student-list [speciality]="speciality"></app-student-list>
         </div>
 
         <div *msPivotContentDef>

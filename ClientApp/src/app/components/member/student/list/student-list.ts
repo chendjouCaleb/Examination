@@ -4,13 +4,13 @@ import {
   Department,
   Level,
   LevelSpeciality,
-  School,
+  School, Speciality,
   Student,
   StudentHttpClient,
   StudentLoader
 } from 'examination/models';
 import {MsfCheckboxGroup} from 'fabric-docs';
-import {MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
+import {MsPaginator, MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'student-list.html',
@@ -28,6 +28,9 @@ export class StudentList implements OnInit, AfterViewInit {
   level: Level;
 
   @Input()
+  speciality: Speciality;
+
+  @Input()
   levelSpeciality: LevelSpeciality;
 
   @ViewChild('checkboxGroup')
@@ -36,10 +39,14 @@ export class StudentList implements OnInit, AfterViewInit {
   @ViewChild('table')
   table: MsTable;
 
+  @ViewChild(MsPaginator)
+  paginator: MsPaginator<Student>;
+
   students: Array<Student> = [];
+  filterValue: string = '';
 
   itemsFn: MsPaginatorItemsFn<Student> =
-    (page: number, size: number) => Promise.resolve(this.students.slice(page * size, page * size + size));
+    (page: number, size: number) => Promise.resolve(this.items.slice(page * size, page * size + size));
 
   _isLoaded: boolean = false;
 
@@ -53,6 +60,7 @@ export class StudentList implements OnInit, AfterViewInit {
     await this._studentLoader.loadByDepartment(this.department);
     await this._studentLoader.loadByLevel(this.level);
     await this._studentLoader.loadByLevelSpeciality(this.levelSpeciality);
+    await this._studentLoader.loadBySpeciality(this.speciality);
 
     this.students = this.getStudents();
     this._isLoaded = true;
@@ -86,6 +94,14 @@ export class StudentList implements OnInit, AfterViewInit {
     } else if (this.levelSpeciality) {
       return this.levelSpeciality.students?.toArray();
     }
+    if (this.speciality) {
+      return this.speciality.students?.toArray();
+    }
+  }
+
+  search() {
+    this.paginator.totalSize = this.items.length;
+    this.paginator.reset(0);
   }
 
 
@@ -101,4 +117,12 @@ export class StudentList implements OnInit, AfterViewInit {
     }
   }
 
+  get items(): Student[] {
+    if (this.filterValue) {
+      return this.students.filter(s =>
+        s.fullName.toLocaleLowerCase().indexOf(this.filterValue.toLocaleLowerCase()) > -1
+        || s.registrationId.toLocaleLowerCase().indexOf(this.filterValue.toLocaleLowerCase()) > -1);
+    }
+    return this.students.slice();
+  }
 }

@@ -76,6 +76,7 @@ describe('LayoutComponent', () => {
     collapseElement.click();
     fixture.detectChanges();
 
+    // @ts-ignore
     expect(layoutElement.classList.contains('app-layout-withCollapsedSidebar')).toBeTruthy();
   });
 });
@@ -84,7 +85,7 @@ describe('LayoutComponent', () => {
   template: `
       <app-layout>
           <app-sidebar *ngIf="sidebar">
-              <i MsfIcon appSidebarCollapse iconName="GlobalNavButton"></i>
+              <i appSidebarCollapse class="ms-Icon ms-Icon--GlobalNavButton"></i>
               <app-sidebar-item icon="Add">Item1</app-sidebar-item>
           </app-sidebar>
 

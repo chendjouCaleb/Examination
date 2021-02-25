@@ -92,7 +92,7 @@ describe('SidebarComponent', () => {
 @Component({
   template: `
       <app-sidebar>
-          <i MsfIcon appSidebarCollapse iconName="GlobalNavButton"></i>
+          <i appSidebarCollapse class="ms-Icon ms-Icon--GlobalNavButton"></i>
           <app-sidebar-item icon="Add">Item1</app-sidebar-item>
           <app-sidebar-item icon="Add">Item1</app-sidebar-item>
           <app-sidebar-item icon="Add">Item1</app-sidebar-item>

@@ -1,6 +1,5 @@
-<span class="msf-tabLabel-layout" >
-    <span *ngIf="icon" MsfIcon class="msf-tabLabel-icon" [iconName]="icon"></span>
-   <MsfIconImage *ngIf="iconImage" class="msf-tabLabel-icon" [source]="iconImage"></MsfIconImage>
+<span class="msf-tabLabel-layout">
+    <span *ngIf="icon" [msIcon]="icon" class="msf-tabLabel-icon"></span>
 
   <span #Label class="msf-tabLabel-label">
         <ng-content></ng-content>
