@@ -10,6 +10,17 @@
             /
             <a [routerLink]="levelSpeciality.speciality.url">{{levelSpeciality.speciality.name}}</a></div>
         </div>
+
+        <div class="mr-1">
+          <ng-container *ngIf="levelSpeciality.level.department.isPrincipalUser">
+            <button msIconButton theme="transparent" icon="MoreVertical" [MsfMenuTrigger]="levelMenu"></button>
+            <MsfMenu #levelMenu>
+              <MsfMenuItem  icon="Delete" theme="error" (click)="delete()">
+                Supprimer
+              </MsfMenuItem>
+            </MsfMenu>
+          </ng-container>
+        </div>
       </div>
 
       <msPivot>

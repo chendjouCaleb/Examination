@@ -47,7 +47,6 @@ namespace Exam.Controllers
             
             if (!string.IsNullOrEmpty(user?.Id))
             {
-                Console.Clear();
                 department.IsPrincipalUser = department.PrincipalUserId == user.Id;
                 department.IsCorrector = _dbContext.Set<Corrector>()
                     .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);

@@ -26,6 +26,12 @@ namespace Exam.Entities
 
         public bool HasImage { get; set; }
 
+        [NotMapped]
+        public bool IsPlanner { get; set; }
+
+        [NotMapped]
+        public bool IsPrincipalUser { get; set; }
+
         [NotMapped] public Uri ImageUrl { get; set; }
 
         public bool HasCoverImage { get; set; }

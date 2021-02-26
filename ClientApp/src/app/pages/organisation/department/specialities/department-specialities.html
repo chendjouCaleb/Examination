@@ -15,28 +15,15 @@
 
         <div class="d-flex align-items-center">
           <a [routerLink]="item.url" class="mr-2">Détails</a>
-          <ng-container *ngIf="department.isPrincipalUser">
-            <button msIconButton theme="transparent" icon="More" [MsfMenuTrigger]="levelMenu"></button>
-            <MsfMenu #levelMenu>
-              <MsfMenuItem icon="Add" (click)="service.addLevelSpeciality(item)">Ajouter un niveau</MsfMenuItem>
-              <MsfMenuItem icon="Delete" theme="error" (click)="service.delete(item)">
-                Supprimer cette specialité
-              </MsfMenuItem>
-            </MsfMenu>
-          </ng-container>
         </div>
       </div>
 
       <div class="ms-divider mb-3"></div>
 
       <div>
-        <span style="border: 1px solid var(--borderColor); border-radius: 15px" class="p-1
-        mr-2" *ngFor="let levelSpeciality of item.levelSpecialities"
+        <span style="border: 1px solid var(--borderColor); border-radius: 15px" class="ms-pointer p-1 mr-2" *ngFor="let levelSpeciality of item.levelSpecialities"
               [routerLink]="levelSpeciality.url">
           Niveau {{levelSpeciality.level.index + 1}}
-          <button *ngIf="department.isPrincipalUser" msIconButton theme="transparent" icon="Delete" size="small"
-                  [rounded]="true"
-                  (click)="service.removeLevelSpeciality(levelSpeciality)"></button>
         </span>
       </div>
       <div class="mt-3 ">{{item.description}}</div>

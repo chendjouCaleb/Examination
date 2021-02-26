@@ -1028,6 +1028,7 @@
               <e p="labelled.ts" t="Include" />
             </e>
             <e p="local-time.directive.ts" t="Include" />
+            <e p="ms-icon.ts" t="Include" />
             <e p="paginator-buttons" t="Include">
               <e p="paginator-buttons.html" t="Include" />
               <e p="paginator-buttons.scss" t="Include" />

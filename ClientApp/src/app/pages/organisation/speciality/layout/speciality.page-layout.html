@@ -8,6 +8,18 @@
           {{speciality.name}}
         </div>
       </div>
+
+      <div class="mr-2">
+        <ng-container *ngIf="speciality.department.isPrincipalUser">
+          <button msIconButton theme="transparent" icon="MoreVertical" [MsfMenuTrigger]="levelMenu"></button>
+          <MsfMenu #levelMenu>
+            <MsfMenuItem icon="Add" (click)="service.addLevelSpeciality(speciality)">Ajouter un niveau</MsfMenuItem>
+            <MsfMenuItem icon="Delete" theme="error" (click)="delete()">
+              Supprimer cette specialité
+            </MsfMenuItem>
+          </MsfMenu>
+        </ng-container>
+      </div>
     </div>
 
     <msPivot>

@@ -3,11 +3,22 @@
     <div class="ms-header">
       <div class="d-flex align-items-center">
         <button historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
-        <div class="ms-header-title">Niveau {{level.index + 1}}</div>
+        <div class="ms-header-title">
+          <a [routerLink]="level.department.url">{{level.department.name}}</a> /
+          Niveau {{level.index + 1}}</div>
       </div>
 
       <div>
-        <button msButton (click)="sendApplication()" icon="AddFriend" theme="primary">Devenir étudiant</button>
+        <button *ngIf="!level.department.isStudent" msButton (click)="sendApplication()" icon="AddFriend" theme="primary">Devenir étudiant</button>
+        <ng-container *ngIf="level.department.isPrincipalUser">
+          <button msIconButton theme="transparent" icon="MoreVertical" [MsfMenuTrigger]="levelMenu"></button>
+          <MsfMenu #levelMenu>
+            <MsfMenuItem icon="Add" (click)="levelService.addSpeciality(level)">Ajouter une spécialité</MsfMenuItem>
+            <MsfMenuItem  icon="Delete" theme="error" (click)="delete()">
+              Supprimer ce niveau
+            </MsfMenuItem>
+          </MsfMenu>
+        </ng-container>
       </div>
     </div>
 

@@ -1,7 +1,7 @@
 ﻿<div class="ms-pageTitle">
-  <h4>Cours</h4>
+  <div msFontSize="18">Cours</div>
   <button msButton
-          icon="Add" theme="primary" *ngIf="level && school.userPrincipal.isPlanner" (click)="addCourse() ">
+          icon="Add" theme="primary" *ngIf="level && level.department.school.isPlanner" (click)="addCourse() ">
     Ajouter <span class="ms-hiddenSm">un cours</span></button>
 </div>
 
@@ -10,7 +10,7 @@
 <div>
   <ms-table #msTable>
     <ms-tableHead *msTableHeadDef>
-      <ms-tableHeadCell name="">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
       <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>
       <ms-tableHeadCell name="code" [sortBy]="['code', 'string']">code</ms-tableHeadCell>
       <ms-tableHeadCell name="coefficient" [sortBy]="['coefficient', 'number']">Coefficient</ms-tableHeadCell>
@@ -47,7 +47,8 @@
 
       <ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</ms-tableCell>
       <ms-tableCell class="text-right">
-        <button msButton (click)="service.details(item)">Détails</button>
+        <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary" (click)="service.details(item)"></button>
+        <button msButton [routerLink]="item.url">Détails</button>
       </ms-tableCell>
     </ms-tableRow>
   </ms-table>

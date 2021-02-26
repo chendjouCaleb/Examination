@@ -26,6 +26,9 @@ export class School extends Entity<number> {
       this.hasImage = value.hasImage;
       this.imageUrl = value.imageUrl;
 
+      this.isPlanner = value.isPlanner;
+      this.isPrincipalUser = value.isPrincipalUser;
+
       this.hasCoverImage = value.hasCoverImage;
       this.coverImageUrl = value.coverImageUrl;
     }
@@ -42,6 +45,9 @@ export class School extends Entity<number> {
 
   hasImage: boolean;
   imageUrl: string;
+
+  isPlanner: boolean;
+  isPrincipalUser: boolean;
 
   hasCoverImage: boolean;
   coverImageUrl: string;

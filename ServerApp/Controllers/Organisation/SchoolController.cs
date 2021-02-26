@@ -17,6 +17,7 @@ using Exam.Models.Statistics;
 using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -29,11 +30,12 @@ namespace Exam.Controllers
         private MemberController _memberController;
         private ILogger<SchoolController> _logger;
         private SchoolDestructor _schoolDestructor;
+        private DbContext _dbContext;
         private IConfiguration _configuration;
 
 
         public SchoolController(ISchoolRepository schoolRepository, MemberController memberController,
-            SchoolDestructor schoolDestructor,
+            SchoolDestructor schoolDestructor, DbContext dbContext,
             ILogger<SchoolController> logger, IConfiguration configuration)
         {
             _schoolRepository = schoolRepository;
@@ -41,21 +43,40 @@ namespace Exam.Controllers
             _logger = logger;
             _configuration = configuration;
             _schoolDestructor = schoolDestructor;
+            _dbContext = dbContext;
         }
 
         [HttpGet("{schoolId}")]
         [LoadSchool]
-        public School Find(School school)
+        public School Find(School school, User user)
         {
-            school.ImageUrl =
-                new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/schools/{school.Id}.png");
+            Get(school, user);
             school.Statistics = Statistics(school);
             return school;
         }
 
         [HttpGet("find/identifier/{identifier}")]
-        public School FindByIdentifier(string identifier) =>
-            _schoolRepository.First(o => o.Identifier == identifier);
+        public School FindByIdentifier(string identifier, User user)
+        {
+            School school = _schoolRepository.First(o => o.Identifier == identifier);
+            Get(school, user);
+            return school;
+        }
+
+        public School Get(School school, User user)
+        {
+            if (user != null && !string.IsNullOrEmpty(user?.Id))
+            {
+                school.IsPrincipalUser = school.PrincipalUserId == user.Id;
+                school.IsPlanner = _dbContext.Set<Planner>()
+                    .Any(c => c.UserId == user.Id && c.SchoolId == school.Id);
+            }
+            
+            school.ImageUrl =
+                new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/schools/{school.Id}.png");
+
+            return school;
+        }
 
         [HttpGet]
         public IEnumerable<School> List([FromQuery] int start = 0, [FromQuery] int take = 20)

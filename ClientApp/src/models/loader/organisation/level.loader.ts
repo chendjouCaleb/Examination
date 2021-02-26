@@ -1,13 +1,13 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
-import {AuthorizationManager} from "examination/app/authorization";
-import {DepartmentLoader} from "./department.loader";
-import {Loader} from "../loader";
-import {Department, Level} from "examination/entities";
-import {LevelHttpClient, UserHttpClient} from "examination/models/http";
+import {AuthorizationManager} from 'examination/app/authorization';
+import {DepartmentLoader} from './department.loader';
+import {Loader} from '../loader';
+import {Department, Level} from 'examination/entities';
+import {LevelHttpClient, UserHttpClient} from 'examination/models/http';
 
 
-@Injectable({providedIn: "root"})
+@Injectable({providedIn: 'root'})
 export class LevelLoader extends Loader<Level, number> {
 
   constructor( _httpClient: LevelHttpClient,
@@ -32,7 +32,7 @@ export class LevelLoader extends Loader<Level, number> {
   }
 
   async loadByDepartment(department: Department): Promise<void> {
-    if(!department.levels) {
+    if (!department.levels) {
       const levels = await this._httpClient.listAsync({departmentId: department.id});
       for (const item of levels) {
         await this.load(item);

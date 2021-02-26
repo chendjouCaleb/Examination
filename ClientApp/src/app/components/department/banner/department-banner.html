@@ -19,10 +19,10 @@
   </div>
   <div class="school-banner-footer">
     <div>
-      <button msIconButton theme="transparent" icon="ChevronLeft" [routerLink]="department.school.url"></button>
+      <button style="color: #FFF" msIconButton theme="transparent" icon="ChevronLeft" [routerLink]="department.school.url"></button>
     </div>
     <div>
-      <button msButton theme="primary" icon="AddFriend" (click)="sendApplication()">Devenir étudiant</button>
+      <button *ngIf="!department.isStudent" msButton theme="primary" icon="AddFriend" (click)="sendApplication()">Devenir étudiant</button>
       <button *ngIf="department.userPrincipal.isPrincipal" msButton icon="Settings"
               theme="standard" secondaryIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">
         Paramètres
