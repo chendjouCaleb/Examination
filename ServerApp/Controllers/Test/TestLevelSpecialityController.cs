@@ -4,6 +4,7 @@ using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Persistence.Repositories;

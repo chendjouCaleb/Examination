@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,11 +49,14 @@ namespace Exam.Controllers
                     ).ToList();
             }
 
-            var testScores = _testScoreController.Copy(Test, course);
-
-
             _dbContext.Set<Test>().Add(Test);
-            _dbContext.Set<TestScore>().AddRange(testScores);
+
+            if (course.MultipleScore)
+            {
+                var testScores = _testScoreController.Copy(Test, course);
+                _dbContext.Set<TestScore>().AddRange(testScores);
+            }
+            
             _dbContext.Set<TestLevelSpeciality>().AddRange(TestLevelSpecialities);
 
             _dbContext.SaveChanges();

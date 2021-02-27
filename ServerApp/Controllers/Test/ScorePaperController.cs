@@ -89,6 +89,12 @@ namespace Exam.Controllers
 
         public ScorePaper AddOrUpdatePaperScore(Paper paper, TestScore testScore, double value)
         {
+            ScorePaper scorePaper = _AddOrUpdatePaperScore(paper, testScore, value);
+            _dbContext.SaveChanges();
+            return scorePaper;
+        }
+        public ScorePaper _AddOrUpdatePaperScore(Paper paper, TestScore testScore, double value)
+        {
             if (!testScore.Test.Equals(paper.Test))
             {
                 throw new IncompatibleEntityException<TestScore, Paper>(testScore, paper);
@@ -100,7 +106,7 @@ namespace Exam.Controllers
             }
 
             ScorePaper paperScore =
-                _scorePaperRepository.First(s => paper.Equals(s.Paper) && testScore.Equals(s.TestScore));
+                _scorePaperRepository.First(s => paper.Id == s.PaperId && testScore.Id == s.TestScoreId);
 
             if (paperScore == null)
             {

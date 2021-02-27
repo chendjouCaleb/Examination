@@ -143,6 +143,7 @@ namespace ServerAppTest.Controllers
         {
             ExaminationStudent examinationStudent =
                 _controller._Add(_student, _examinationLevel, _examinationLevelSpeciality);
+            _examinationStudentRepository.Save(examinationStudent);
 
             _controller.Delete(examinationStudent);
             Assert.False(_examinationStudentRepository.Exists(examinationStudent));

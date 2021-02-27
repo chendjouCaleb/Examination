@@ -76,6 +76,8 @@ namespace ServerAppTest.Controllers
         public void Delete()
         {
             ExaminationSpeciality examinationSpeciality = _controller._Add(_examinationDepartment, _speciality);
+            _examinationSpecialityRepository.Save(examinationSpeciality);
+            
             _controller.Delete(examinationSpeciality);
             _departmentRepository.Refresh(_department);
 

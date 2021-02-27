@@ -5,7 +5,7 @@ using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace Exam.Entities
+namespace Exam.Entities.Courses
 {
     /// <summary>
     /// Represente une décomposition de la note d'une épreuve.

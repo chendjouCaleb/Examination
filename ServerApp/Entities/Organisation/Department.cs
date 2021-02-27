@@ -25,6 +25,9 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<Student> Students { get; set; }
         
+        [JsonIgnore]
+        public virtual List<Teacher> Teachers { get; set; }
+        
         [JsonIgnore] 
         public virtual List<Application> Applications { get; set; }
 

@@ -4,7 +4,7 @@ using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace Exam.Entities
+namespace Exam.Entities.Courses
 {
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class CourseLevelSpeciality:Entity<long>

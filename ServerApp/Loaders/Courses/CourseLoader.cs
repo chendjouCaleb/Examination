@@ -7,16 +7,16 @@ using Exam.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Exam.Loaders
+namespace Exam.Loaders.Courses
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class LoadCourseLevelSpeciality : Attribute, IResourceFilter
+    public class LoadCourse : Attribute, IResourceFilter
     {
-        public string ItemName { get; set; } = "courseLevelSpeciality";
+        public string ItemName { get; set; } = "course";
         public string DepartmentItemName { get; set; }
-        
+        public string SchoolItemName { get; set; }
 
-        public string ParameterName { get; set; } = "courseLevelSpecialityId";
+        public string ParameterName { get; set; } = "courseId";
 
         public ParameterSource Source { get; set; } = ParameterSource.Route;
 
@@ -27,25 +27,32 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<CourseLevelSpeciality, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<CourseLevelSpeciality, long>>();
+            IRepository<Course, long> repository =
+                context.HttpContext.RequestServices.GetRequiredService<IRepository<Course, long>>();
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
                 return;
             }
-            CourseLevelSpeciality courseLevelSpeciality = repository.Find(long.Parse(id));
+            Course course = repository.Find(long.Parse(id));
 
-            context.HttpContext.Items[ItemName] = courseLevelSpeciality;
+            context.HttpContext.Items[ItemName] = course;
 
             if (!string.IsNullOrWhiteSpace(DepartmentItemName))
             {
                 IRepository<Department, long> departmentRepository =
                     context.HttpContext.RequestServices.GetRequiredService<IRepository<Department, long>>();
                 context.HttpContext.Items[DepartmentItemName] =
-                    departmentRepository.First(d => d.Id == courseLevelSpeciality.Course.Level.DepartmentId);
+                    departmentRepository.First(d => d.Id == course.Level.DepartmentId);
             }
             
+            if (!string.IsNullOrWhiteSpace(SchoolItemName))
+            {
+                IRepository<School, long> schoolRepository =
+                    context.HttpContext.RequestServices.GetRequiredService<IRepository<School, long>>();
+                context.HttpContext.Items[SchoolItemName] =
+                    schoolRepository.First(d => d.Id == course.Level.Department.SchoolId);
+            }
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
-using Exam.Controllers;
+using Exam.Controllers.Courses;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Models;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;

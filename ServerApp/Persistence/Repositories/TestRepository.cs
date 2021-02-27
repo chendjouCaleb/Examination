@@ -1,9 +1,9 @@
-﻿using System;
+﻿using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Exam.Entities.Courses;
 using MathNet.Numerics.Statistics;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Persistence.Repositories
 {

@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-
         <IsPackable>false</IsPackable>
+        <RootNamespace>ServerAppTest</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,6 +26,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ServerApp\ServerApp.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="appsettings.test.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

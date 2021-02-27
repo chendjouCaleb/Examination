@@ -1,4 +1,5 @@
 ﻿using Exam.Entities;
+using Exam.Entities.Courses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Persistence
@@ -10,7 +11,11 @@ namespace Exam.Persistence
         public DbSet<Level> Levels { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<LevelSpeciality> LevelSpecialities { get; set; }
+        
         public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseTeacher> CourseTeachers { get; set; }
+        public DbSet<CourseSession> CourseSessions { get; set; }
+        public DbSet<CourseHour> CourseHours { get; set; }
         public DbSet<CourseLevelSpeciality> CourseLevelSpecialities { get; set; }
         public DbSet<Score> Scores { get; set; }
         public DbSet<Room> Rooms { get; set; }
@@ -23,6 +28,7 @@ namespace Exam.Persistence
         public DbSet<Supervisor> Supervisors { get; set; }
         public DbSet<Secretary> Secretaries { get; set; }
         public DbSet<Planner> Planners { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
         
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<ExaminationStudent> ExaminationStudents { get; set; }

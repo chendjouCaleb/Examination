@@ -4,6 +4,7 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Destructors;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Exam.Models;
 using Microsoft.EntityFrameworkCore;

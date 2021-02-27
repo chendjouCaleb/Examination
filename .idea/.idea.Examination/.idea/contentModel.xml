@@ -1414,6 +1414,14 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="AuthorizeController.cs" t="Include" />
+          <e p="Courses" t="Include">
+            <e p="CourseController.cs" t="Include" />
+            <e p="CourseHourController.cs" t="Include" />
+            <e p="CourseLevelSpecialityController.cs" t="Include" />
+            <e p="CourseSessionController.cs" t="Include" />
+            <e p="CourseTeacherController.cs" t="Include" />
+            <e p="ScoreController.cs" t="Include" />
+          </e>
           <e p="Examination" t="Include">
             <e p="ExaminationBuilder.cs" t="Include" />
             <e p="ExaminationController.cs" t="Include" />
@@ -1433,16 +1441,14 @@
             <e p="SecretaryController.cs" t="Include" />
             <e p="StudentController.cs" t="Include" />
             <e p="SupervisorController.cs" t="Include" />
+            <e p="TeacherController.cs" t="Include" />
           </e>
           <e p="organisation" t="Include">
-            <e p="CourseController.cs" t="Include" />
-            <e p="CourseLevelSpecialityController.cs" t="Include" />
             <e p="DepartmentController.cs" t="Include" />
             <e p="LevelController.cs" t="Include" />
             <e p="LevelSpecialityController.cs" t="Include" />
             <e p="RoomController.cs" t="Include" />
             <e p="SchoolController.cs" t="Include" />
-            <e p="ScoreController.cs" t="Include" />
             <e p="SpecialityController.cs" t="Include" />
           </e>
           <e p="SchoolBuilder.cs" t="Include" />
@@ -1473,6 +1479,14 @@
         <e p="Dockerfile" t="Include" />
         <e p="Entities" t="Include">
           <e p="Contest.cs" t="Include" />
+          <e p="Courses" t="Include">
+            <e p="Course.cs" t="Include" />
+            <e p="CourseHour.cs" t="Include" />
+            <e p="CourseLevelSpeciality.cs" t="Include" />
+            <e p="CourseSession.cs" t="Include" />
+            <e p="CourseTeacher.cs" t="Include" />
+            <e p="Score.cs" t="Include" />
+          </e>
           <e p="Examination" t="Include">
             <e p="Examination.cs" t="Include" />
             <e p="ExaminationDepartment.cs" t="Include" />
@@ -1492,16 +1506,14 @@
             <e p="Secretary.cs" t="Include" />
             <e p="Student.cs" t="Include" />
             <e p="Supervisor.cs" t="Include" />
+            <e p="Teacher.cs" t="Include" />
           </e>
           <e p="organisation" t="Include">
-            <e p="Course.cs" t="Include" />
-            <e p="CourseLevelSpeciality.cs" t="Include" />
             <e p="Department.cs" t="Include" />
             <e p="Level.cs" t="Include" />
             <e p="LevelSpeciality.cs" t="Include" />
             <e p="Room.cs" t="Include" />
             <e p="School.cs" t="Include" />
-            <e p="Score.cs" t="Include" />
             <e p="Speciality.cs" t="Include" />
           </e>
           <e p="PeriodState.cs" t="Include" />
@@ -1554,6 +1566,12 @@
           <e p="RefreshTokenForm.cs" t="Include" />
         </e>
         <e p="Loaders" t="Include">
+          <e p="Courses" t="Include">
+            <e p="CourseHourLoader.cs" t="Include" />
+            <e p="CourseLoader.cs" t="Include" />
+            <e p="CourseSessionLoader.cs" t="Include" />
+            <e p="CourseTeacherLoader.cs" t="Include" />
+          </e>
           <e p="Examination" t="Include">
             <e p="ExaminationDepartmentLoader.cs" t="Include" />
             <e p="ExaminationLevelLoader.cs" t="Include" />
@@ -1569,10 +1587,10 @@
             <e p="SecretaryLoader.cs" t="Include" />
             <e p="StudentLoader.cs" t="Include" />
             <e p="SupervisorLoader.cs" t="Include" />
+            <e p="TeacherLoader.cs" t="Include" />
           </e>
           <e p="organisation" t="Include">
             <e p="CourseLevelSpecialityLoadercs.cs" t="Include" />
-            <e p="CourseLoader.cs" t="Include" />
             <e p="DepartmentLoader.cs" t="Include" />
             <e p="LevelLoader.cs" t="Include" />
             <e p="LevelSpecialityLoader.cs" t="Include" />
@@ -1641,6 +1659,8 @@
           <e p="Repositories" t="Include">
             <e p="CourseLevelSpecialityRepository.cs" t="Include" />
             <e p="CourseRepository.cs" t="Include" />
+            <e p="CourseSessionRepository.cs" t="Include" />
+            <e p="CourseTeacherRepository.cs" t="Include" />
             <e p="ExaminationRepository.cs" t="Include" />
             <e p="MemberRepository.cs" t="Include" />
             <e p="PrincipalRepository.cs" t="Include" />
@@ -1659,7 +1679,6 @@
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
         </e>
-        <e p="s.Level.DepartmentId" t="Include" />
         <e p="ServerApp.csproj" t="IncludeRecursive" />
         <e p="ServerApp.csproj.DotSettings" t="Include" />
         <e p="Startup.cs" t="Include" />
@@ -1681,9 +1700,14 @@
         </e>
       </e>
       <e p="ServerAppTest" t="IncludeRecursive">
-        <e p="appsettings.json" t="Include" />
+        <e p="appsettings.test.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="Courses" t="Include">
+            <e p="CourseControllerTests.cs" t="Include" />
+            <e p="CourseLevelSpecialityControllerTests.cs" t="Include" />
+            <e p="CourseTeacherControllerTests.cs" t="Include" />
+          </e>
           <e p="Examination" t="Include">
             <e p="ExaminationConstructorTests.cs" t="Include" />
             <e p="ExaminationControllerTests.cs" t="Include" />
@@ -1703,10 +1727,9 @@
             <e p="SecretaryControllerTests.cs" t="Include" />
             <e p="StudentControllerTests.cs" t="Include" />
             <e p="SupervisorControllerTests.cs" t="Include" />
+            <e p="TeacherControllerTests.cs" t="Include" />
           </e>
           <e p="organisation" t="Include">
-            <e p="CourseControllerTests.cs" t="Include" />
-            <e p="CourseLevelSpecialityControllerTests.cs" t="Include" />
             <e p="DepartmentControllerTests.cs" t="Include" />
             <e p="LevelControllerTests.cs" t="Include" />
             <e p="LevelSpecialityControllerTests.cs" t="Include" />

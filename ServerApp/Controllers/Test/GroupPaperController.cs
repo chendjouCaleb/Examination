@@ -62,7 +62,7 @@ namespace Exam.Controllers
             List<Paper> papers = _paperRepository.Set
                 .Where(p => test.Equals(p.Test))
                 .OrderBy(p => p.ExaminationStudent.Student.FullName).ToList();
-
+            
             List<TestGroup> testGroups = _testGroupRepository.Set
                 .Where(g => test.Equals(g.Test))
                 .OrderBy(s => s.Index).ToList();
@@ -121,7 +121,8 @@ namespace Exam.Controllers
             int count = 0;
             foreach (TestGroup testGroup in testGroups)
             {
-                int capacity = (int) testGroup.Capacity;
+                int capacity = (int) testGroup.Room.Capacity;
+                Console.WriteLine("Capacity:" + capacity);
 
                 if (capacity > papers.Count - index)
                 {
@@ -142,7 +143,7 @@ namespace Exam.Controllers
                 testGroup.PaperCount = (uint)groupPapers.Count;
                 _dbContext.Update(testGroup);
 
-                index += (int) testGroup.Capacity;
+                index += (int) testGroup.Room.Capacity;
                 if (index >= papers.Count)
                 {
                     break;
@@ -171,7 +172,7 @@ namespace Exam.Controllers
         public int CanGroupPapers(Test test)
         {
             long testCapacity = _paperRepository.Count(p => test.Equals(p.Test));
-            long available = _testGroupRepository.List(t => test.Equals(t.Test)).Sum(t => t.Capacity);
+            long available = _testGroupRepository.List(t => test.Equals(t.Test)).Sum(t => t.Room.Capacity);
 
             return (int) (available - testCapacity);
         }

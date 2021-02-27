@@ -3,6 +3,7 @@ using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Models;
 using Exam.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -86,16 +87,15 @@ namespace ServerAppTest.Controllers
 
             Assert.False(_test.MultipleScore);
 
-            _controller.Copy(_test, course);
-            _testRepository.Refresh(_test);
+            var testScores = _controller.Copy(_test, course);
             Assert.True(_test.MultipleScore);
 
-            Assert.AreEqual(5, _test.TestScores);
+            Assert.AreEqual(5, testScores.Count);
             for (int i = 0; i < 5; i++)
             {
-                var ai = i;
-                Assert.True(_testScoreRepository.Exists(t =>
-                    t.Test.Equals(_test) && t.Name == $"score {ai}" && (int) t.Radical == ai));
+                Assert.AreEqual(testScores[i].Name, course.Scores[i].Name);
+                Assert.AreEqual(testScores[i].Radical, course.Scores[i].Radical);
+                Assert.AreEqual(testScores[i].Test, _test);
             }
         }
 

@@ -1,5 +1,7 @@
-﻿using Everest.AspNetStartup.Binding;
+﻿using System.Collections.Generic;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Courses;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -25,6 +27,10 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual Level Level  { get; set; }
         public long? LevelId { get; set; }
+        
+        [JsonIgnore] public virtual List<CourseHour> CourseHours { get; set; }
+        [JsonIgnore] public virtual List<CourseSession> CourseSessions { get; set; }
+        
         
     }
 }

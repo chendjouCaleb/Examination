@@ -21,7 +21,7 @@ namespace Exam.Controllers
         private readonly ITestGroupRepository _testGroupRepository;
         private readonly IRepository<TestGroupCorrector, long> _testGroupCorrectorRepository;
         private readonly IRepository<Corrector, long> _correctorRepository;
-        private readonly DbContext _dbContext;
+        public readonly DbContext dbContext;
         private readonly ILogger<TestGroupCorrectorController> _logger;
 
         public TestGroupCorrectorController(ITestGroupRepository testGroupRepository,
@@ -33,7 +33,7 @@ namespace Exam.Controllers
             _testGroupRepository = testGroupRepository;
             _testGroupCorrectorRepository = testGroupCorrectorRepository;
             _correctorRepository = correctorRepository;
-            _dbContext = dbContext;
+            this.dbContext = dbContext;
             _logger = logger;
         }
 
@@ -95,7 +95,7 @@ namespace Exam.Controllers
                 correctors.Add(_Add(testGroup, id));
             }
 
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
 
             return StatusCode(StatusCodes.Status201Created, correctors);
         }
@@ -131,7 +131,7 @@ namespace Exam.Controllers
                 TestGroup = testGroup
             };
 
-             testGroupCorrector = _dbContext.Set<TestGroupCorrector>().Add(testGroupCorrector).Entity;
+             testGroupCorrector = dbContext.Set<TestGroupCorrector>().Add(testGroupCorrector).Entity;
 
             _logger.LogInformation($"New testGroupCorrector: {testGroupCorrector}");
             return testGroupCorrector;
@@ -144,17 +144,17 @@ namespace Exam.Controllers
         public NoContentResult Delete(TestGroupCorrector testGroupCorrector)
         {
             Assert.RequireNonNull(testGroupCorrector, nameof(testGroupCorrector));
-            var papers = _dbContext.Set<Paper>().Where(p => testGroupCorrector.Equals(p.TestGroupCorrector)).ToList();
+            var papers = dbContext.Set<Paper>().Where(p => testGroupCorrector.Equals(p.TestGroupCorrector)).ToList();
             
             foreach (Paper paper in papers)
             {
                 paper.TestGroupCorrector = null;
                 paper.TestGroupCorrectorId = null;
-                _dbContext.Set<Paper>().Update(paper);
+                dbContext.Set<Paper>().Update(paper);
             }
 
-            _dbContext.Set<TestGroupCorrector>().Remove(testGroupCorrector);
-            _dbContext.SaveChanges();
+            dbContext.Set<TestGroupCorrector>().Remove(testGroupCorrector);
+            dbContext.SaveChanges();
             return NoContent();
         }
     }

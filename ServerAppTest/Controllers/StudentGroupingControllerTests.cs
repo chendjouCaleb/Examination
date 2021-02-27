@@ -58,6 +58,8 @@ namespace ServerAppTest.Controllers
             _schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
             _paperRepository = serviceProvider.GetRequiredService<IRepository<Paper, long>>();
             _examinationRepository = serviceProvider.GetRequiredService<IRepository<Examination, long>>();
+            _testRepository = serviceProvider.GetRequiredService<IRepository<Test, long>>();
+            _testGroupRepository = serviceProvider.GetRequiredService<IRepository<TestGroup, long>>();
             var examinationStudentRepository =
                 serviceProvider.GetRequiredService<IRepository<ExaminationStudent, long>>();
 
@@ -66,6 +68,7 @@ namespace ServerAppTest.Controllers
             var examinationLevelRepository = serviceProvider.GetRequiredService<IRepository<ExaminationLevel, long>>();
 
             _paperRepository.DeleteAll();
+            _papers.Clear();
             _school = _schoolRepository.Save(new School
             {
                 Name = "Org name"
@@ -91,18 +94,21 @@ namespace ServerAppTest.Controllers
             _testGroup0 = _testGroupRepository.Save(new TestGroup
             {
                 Test = _test,
+                Index = 0,
                 Room = _roomRepository.Save(new Room {School = _school, Capacity = 4})
             });
 
             _testGroup1 = _testGroupRepository.Save(new TestGroup
             {
                 Test = _test,
+                Index = 1,
                 Room = _roomRepository.Save(new Room {School = _school, Capacity = 5})
             });
 
             _testGroup2 = _testGroupRepository.Save(new TestGroup
             {
                 Test = _test,
+                Index = 2,
                 Room = _roomRepository.Save(new Room {School = _school, Capacity = 5})
             });
 
@@ -114,12 +120,17 @@ namespace ServerAppTest.Controllers
                 {
                     Student = student
                 });
-                _papers.Add(_paperRepository.Save(new Paper
+                var paper = _paperRepository.Save(new Paper
                 {
                     ExaminationStudent = examinationStudent,
                     Test = _test
-                }));
+                });
+                
+                _paperRepository.Refresh(paper);
+                _papers.Add(paper);
             }
+
+            
         }
 
 
@@ -136,13 +147,13 @@ namespace ServerAppTest.Controllers
         {
             _controller.Group(_test);
 
-
             List<Paper> papers = _papers.OrderBy(u => u.ExaminationStudent.Student.FullName).ToList();
             papers.ForEach(s => _paperRepository.Refresh(s));
+            
 
             for (int i = 0; i < 4; i++)
             {
-                Assert.AreEqual(_testGroup0, papers[i].TestGroup);
+                Assert.AreEqual(_testGroup0.Id, papers[i].TestGroup.Id);
                 Assert.AreEqual(i, papers[i].GroupIndex);
             }
 

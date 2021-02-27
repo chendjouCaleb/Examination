@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Models.Statistics;
 using Microsoft.EntityFrameworkCore;
 

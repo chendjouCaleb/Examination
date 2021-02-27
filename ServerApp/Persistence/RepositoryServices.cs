@@ -1,5 +1,6 @@
 ﻿using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +21,11 @@ namespace Exam.Persistence
             
             services.AddTransient<IRepository<Score, long>, Repository<Score, long>>();
             services.AddTransient<IRepository<Course, long>, CourseRepository>();
+            services.AddTransient<IRepository<CourseTeacher, long>, CourseTeacherRepository>();
+            services.AddTransient<IRepository<CourseSession, long>, CourseSessionRepository>();
             services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddTransient<IRepository<CourseHour, long>, Repository<CourseHour, long>>();
+
             services.AddTransient<IRepository<CourseLevelSpeciality, long>, CourseLevelSpecialityRepository>();
             services.AddTransient<ICourseLevelSpecialityRepository, CourseLevelSpecialityRepository>();
             
@@ -41,6 +46,7 @@ namespace Exam.Persistence
             services.AddTransient<IRepository<Supervisor, long>, Repository<Supervisor, long>>();
             services.AddTransient<IRepository<Secretary, long>, Repository<Secretary, long>>();
             services.AddTransient<IRepository<Planner, long>, Repository<Planner, long>>();
+            services.AddTransient<IRepository<Teacher, long>, Repository<Teacher, long>>();
             services.AddTransient<IRepository<Application, long>, Repository<Application, long>>();
             
             services.AddTransient<IRepository<Contest, long>, Repository<Contest, long>>();

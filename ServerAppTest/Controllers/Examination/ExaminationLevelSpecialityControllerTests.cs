@@ -120,6 +120,9 @@ namespace ServerAppTest.Controllers
         {
             ExaminationLevelSpeciality examinationLevelSpeciality =
                 _controller._Add(_examinationLevel, _examinationSpeciality);
+
+            _examinationLevelSpecialityRepository.Save(examinationLevelSpeciality);
+            
             _controller.Delete(examinationLevelSpeciality);
             
             Assert.False(_examinationLevelSpecialityRepository.Exists(examinationLevelSpeciality));

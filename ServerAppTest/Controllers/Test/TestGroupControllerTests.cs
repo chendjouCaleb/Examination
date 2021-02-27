@@ -2,6 +2,7 @@
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Exam.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;

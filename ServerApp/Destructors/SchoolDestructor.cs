@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -208,7 +209,7 @@ namespace Exam.Destructors
         private void Log(School school, string message)
         {
             _logger.LogInformation(message);
-            _hub.Clients.All.Log(school, message);
+            _hub?.Clients?.All?.Log(school, message);
         }
     }
 }

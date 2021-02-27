@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Exam.Loaders;
+using Exam.Loaders.Courses;
 using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Exam.Controllers
+namespace Exam.Controllers.Courses
 {
     [Route("api/courseLevelSpecialities")]
     public class CourseLevelSpecialityController : Controller

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Persistence.Repositories

@@ -3,6 +3,7 @@ using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -142,6 +143,8 @@ namespace ServerAppTest.Controllers
         public void Try_AddSameCorrectorTwoTime_ShouldThrowError()
         {
             TestGroupCorrector corrector1 = _controller._Add(_testGroup, _corrector);
+            _controller.dbContext.SaveChanges();
+
             TestGroupCorrector corrector2 = _controller._Add(_testGroup, _corrector);
 
             Assert.AreEqual(corrector1, corrector2);
@@ -152,6 +155,7 @@ namespace ServerAppTest.Controllers
         public void Delete()
         {
             TestGroupCorrector testGroupCorrector = _controller._Add(_testGroup, _corrector);
+            _controller.dbContext.SaveChanges();
 
             _controller.Delete(testGroupCorrector);
             Assert.False(_testGroupCorrectorRepository.Exists(testGroupCorrector));

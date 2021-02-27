@@ -2,6 +2,7 @@
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -141,6 +142,8 @@ namespace ServerAppTest.Controllers
         public void Try_AddSameSupervisorTwoTime_ShouldThrowError()
         {
             TestGroupSupervisor supervisor1 = _controller._Add(_testGroup, _supervisor);
+            _controller.dbContext.SaveChanges();
+            
             TestGroupSupervisor supervisor2 = _controller._Add(_testGroup, _supervisor);
 
             Assert.AreEqual(supervisor1, supervisor2);
@@ -151,6 +154,7 @@ namespace ServerAppTest.Controllers
         public void Delete()
         {
             TestGroupSupervisor testGroupSupervisor = _controller._Add(_testGroup, _supervisor);
+            _controller.dbContext.SaveChanges();
 
             _controller.Delete(testGroupSupervisor);
             Assert.False(_testGroupSupervisorRepository.Exists(testGroupSupervisor));

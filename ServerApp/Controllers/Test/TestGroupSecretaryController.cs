@@ -22,7 +22,7 @@ namespace Exam.Controllers
         private readonly ITestGroupRepository _testGroupRepository;
         private readonly IRepository<Secretary, long> _secretaryRepository;
         private readonly ILogger<TestGroupSecretaryController> _logger;
-        private readonly DbContext _dbContext;
+        public readonly DbContext dbContext;
 
 
         public TestGroupSecretaryController(IRepository<TestGroupSecretary, long> testGroupSecretaryRepository,
@@ -34,7 +34,7 @@ namespace Exam.Controllers
             _testGroupSecretaryRepository = testGroupSecretaryRepository;
             _testGroupRepository = testGroupRepository;
             _secretaryRepository = secretaryRepository;
-            _dbContext = dbContext;
+            this.dbContext = dbContext;
             _logger = logger;
         }
 
@@ -96,7 +96,7 @@ namespace Exam.Controllers
                 secretarys.Add(Add(testGroup, id));
             }
 
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
 
             return StatusCode(StatusCodes.Status201Created, secretarys);
         }
@@ -116,20 +116,20 @@ namespace Exam.Controllers
                 throw new IncompatibleEntityException<TestGroup, Secretary>(testGroup, secretary);
             }
 
-
-            if (_testGroupSecretaryRepository.Exists(
-                p => testGroup.Equals(p.TestGroup) && secretary.Equals(p.Secretary)))
+            TestGroupSecretary testGroupSecretary = _testGroupSecretaryRepository.First(
+                p => testGroup.Equals(p.TestGroup) && secretary.Equals(p.Secretary));
+            if (testGroupSecretary != null)
             {
-                throw new InvalidValueException("{testGroupSecretary.constraints.uniqueSecretary}");
+                return testGroupSecretary;
             }
 
-            TestGroupSecretary testGroupSecretary = new TestGroupSecretary
+            testGroupSecretary = new TestGroupSecretary
             {
                 Secretary = secretary,
                 TestGroup = testGroup
             };
 
-            testGroupSecretary = _dbContext.Set<TestGroupSecretary>().Add(testGroupSecretary).Entity;
+            testGroupSecretary = dbContext.Set<TestGroupSecretary>().Add(testGroupSecretary).Entity;
 
             _logger.LogInformation($"New testGroupSecretary: {testGroupSecretary}");
             return testGroupSecretary;
@@ -142,17 +142,17 @@ namespace Exam.Controllers
         public NoContentResult Delete(TestGroupSecretary testGroupSecretary)
         {
             Assert.RequireNonNull(testGroupSecretary, nameof(testGroupSecretary));
-            var papers = _dbContext.Set<Paper>().Where(p => testGroupSecretary.Equals(p.TestGroupSecretary)).ToList();
+            var papers = dbContext.Set<Paper>().Where(p => testGroupSecretary.Equals(p.TestGroupSecretary)).ToList();
             
             foreach (Paper paper in papers)
             {
                 paper.TestGroupSecretary = null;
                 paper.TestGroupSecretaryId = null;
-                _dbContext.Set<Paper>().Update(paper);
+                dbContext.Set<Paper>().Update(paper);
             }
 
-            _dbContext.Set<TestGroupSecretary>().Remove(testGroupSecretary);
-            _dbContext.SaveChanges();
+            dbContext.Set<TestGroupSecretary>().Remove(testGroupSecretary);
+            dbContext.SaveChanges();
             return NoContent();
         }
     }

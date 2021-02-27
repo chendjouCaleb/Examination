@@ -57,7 +57,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            ExaminationDepartment examinationDepartment = _controller._Add(_examination, _department);
+            ExaminationDepartment examinationDepartment = _controller._Add(_examination, _department, true);
 
             _examinationDepartmentRepository.Refresh(examinationDepartment);
 
@@ -79,7 +79,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Delete()
         {
-            ExaminationDepartment examinationDepartment = _controller._Add(_examination, _department);
+            ExaminationDepartment examinationDepartment = _controller._Add(_examination, _department, true);
             _controller.Delete(examinationDepartment);
             _schoolRepository.Refresh(_school);
 

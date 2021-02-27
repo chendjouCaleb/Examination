@@ -48,9 +48,7 @@ namespace ServerAppTest.Controllers
         public void Add()
         {
             Examination examination = _controller._Add(_model, _school);
-
-            _examinationRepository.Refresh(examination);
-
+            
             Assert.NotNull(examination);
             Assert.AreEqual(_model.Name, examination.Name);
             Assert.AreEqual(_model.ExpectedStartDate, examination.ExpectedStartDate);
@@ -62,7 +60,9 @@ namespace ServerAppTest.Controllers
         [Test]
         public void TryAdd_WithUsedName_ShouldThrow()
         {
-            _controller._Add(_model, _school);
+            Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
+            
             Exception ex = Assert.Throws<InvalidValueException>(() => _controller._Add(_model, _school));
 
             Assert.AreEqual("{examination.constraints.uniqueName}", ex.Message);
@@ -82,6 +82,7 @@ namespace ServerAppTest.Controllers
         public void ChangeName()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
 
             string name = "INFO-L3-2015/2016-S2";
             _controller.ChangeName(examination, name);
@@ -96,9 +97,11 @@ namespace ServerAppTest.Controllers
         public void TryChangeName_WithUsedName_ShouldThrow()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
 
             _model.Name = "INFO-L3-2015/2016-S2";
-            _controller._Add(_model, _school);
+            examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
 
             Exception ex = Assert.Throws<InvalidValueException>(
                 () => _controller.ChangeName(examination, _model.Name)
@@ -111,6 +114,7 @@ namespace ServerAppTest.Controllers
         public void ChangeStartDate()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
             DateTime startDate = DateTime.Now.AddMonths(2);
 
             _controller.ChangeStartDate(examination, startDate);
@@ -123,6 +127,7 @@ namespace ServerAppTest.Controllers
         public void Try_ChangeStartDate_WithDateAfterEndDate_ShouldThrow()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
             DateTime startDate = DateTime.Now.AddMonths(4);
 
             Exception ex = Assert.Throws<InvalidValueException>(
@@ -137,6 +142,7 @@ namespace ServerAppTest.Controllers
         public void ChangeEndDate()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
 
             DateTime endDate = DateTime.Now.AddMonths(4);
 
@@ -151,6 +157,8 @@ namespace ServerAppTest.Controllers
         public void Try_ChangeEndDate_WithDateBeforeStartDate_ShouldThrow()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
+            
             DateTime endDate = DateTime.Now.AddDays(2);
 
             Exception ex = Assert.Throws<InvalidValueException>(
@@ -165,6 +173,8 @@ namespace ServerAppTest.Controllers
         public void StartExamination()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
+            
             _controller.Start(examination);
             _examinationRepository.Refresh(examination);
             
@@ -178,6 +188,8 @@ namespace ServerAppTest.Controllers
         public void CloseExamination()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
+            
             _controller.Start(examination);
             _controller.End(examination);
             _examinationRepository.Refresh(examination);
@@ -192,6 +204,8 @@ namespace ServerAppTest.Controllers
         public void RelaunchExamination()
         {
             Examination examination = _controller._Add(_model, _school);
+            _examinationRepository.Save(examination);
+            
             _controller.Start(examination);
             _controller.End(examination);
             _controller.Relaunch(examination);

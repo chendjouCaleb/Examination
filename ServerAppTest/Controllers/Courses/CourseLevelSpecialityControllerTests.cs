@@ -1,12 +1,13 @@
 ﻿using System;
 using Everest.AspNetStartup.Persistence;
-using Exam.Controllers;
+using Exam.Controllers.Courses;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace ServerAppTest.Controllers
+namespace ServerAppTest.Controllers.Courses
 {
     public class CourseLevelSpecialityControllerTests
     {

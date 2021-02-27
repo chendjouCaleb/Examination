@@ -39,7 +39,7 @@ namespace Exam.Controllers
         }
 
 
-        public ExaminationDepartment _Add(Examination examination, Department department)
+        public ExaminationDepartment _Add(Examination examination, Department department, bool persist = false)
         {
             Assert.RequireNonNull(examination, nameof(department));
             Assert.RequireNonNull(department, nameof(department));
@@ -60,7 +60,10 @@ namespace Exam.Controllers
                     Department = department
                 };
 
-                //_repository.Save(examinationDepartment);
+                if (persist)
+                {
+                    _repository.Save(examinationDepartment);   
+                }
             }
 
             return examinationDepartment;

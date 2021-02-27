@@ -5,15 +5,17 @@ using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Exceptions;
 using Exam.Infrastructure;
 using Exam.Loaders;
+using Exam.Loaders.Courses;
 using Exam.Models;
 using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Exam.Controllers
+namespace Exam.Controllers.Courses
 {
     [RouteAttribute("api/courses")]
     public class CourseController : Controller

@@ -77,6 +77,8 @@ namespace ServerAppTest.Controllers
         public void Delete()
         {
             ExaminationLevel examinationLevel = _controller._Add(_examinationDepartment, _level);
+            _examinationLevelRepository.Save(examinationLevel);
+            
             _controller.Delete(examinationLevel);
             _departmentRepository.Refresh(_department);
 

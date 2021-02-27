@@ -2,6 +2,7 @@
 using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using MathNet.Numerics.Statistics;
 using Microsoft.EntityFrameworkCore;
 

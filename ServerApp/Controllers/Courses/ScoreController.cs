@@ -6,13 +6,15 @@ using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Exam.Loaders;
+using Exam.Loaders.Courses;
 using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Exam.Controllers
+namespace Exam.Controllers.Courses
 {
     [Route("api/scores")]
     public class ScoreController : Controller

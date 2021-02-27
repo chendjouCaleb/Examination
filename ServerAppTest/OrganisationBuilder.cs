@@ -18,7 +18,7 @@ namespace ServerAppTest
 
         School CreateSchool()
         {
-            var repository = _serviceProvider.GetService<ISchoolRepository>();
+            var repository = _serviceProvider.GetRequiredService<ISchoolRepository>();
             return repository.Save(new School
             {
                 Name = "school",

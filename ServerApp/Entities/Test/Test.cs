@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Courses;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

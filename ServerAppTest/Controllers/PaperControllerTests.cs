@@ -4,6 +4,7 @@ using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Exam.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -393,12 +394,15 @@ namespace ServerAppTest.Controllers
 
             ScorePaper scorePaper1 = _controller.AddOrUpdatePaperScore(paper, score, 5);
             ScorePaper scorePaper2 = _controller.AddOrUpdatePaperScore(paper, score, 1);
+
+            
             _scorePaperRepository.Refresh(scorePaper1);
             _scorePaperRepository.Refresh(scorePaper2);
 
+            Assert.True(_scorePaperRepository.Exists(scorePaper1));
             Assert.NotNull(scorePaper1);
             Assert.NotNull(scorePaper2);
-            Assert.AreEqual(scorePaper1, scorePaper2);
+            Assert.AreEqual(scorePaper1.Id, scorePaper2.Id);
             Assert.AreEqual(1, scorePaper2.Value);
         }
         

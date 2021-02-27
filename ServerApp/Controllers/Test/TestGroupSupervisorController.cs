@@ -22,7 +22,7 @@ namespace Exam.Controllers
         private readonly ITestGroupRepository _testGroupRepository;
         private readonly IRepository<Supervisor, long> _supervisorRepository;
         private readonly ILogger<TestGroupSupervisorController> _logger;
-        private readonly DbContext _dbContext;
+        public readonly DbContext dbContext;
 
 
         public TestGroupSupervisorController(IRepository<TestGroupSupervisor, long> testGroupSupervisorRepository,
@@ -34,7 +34,7 @@ namespace Exam.Controllers
             _testGroupSupervisorRepository = testGroupSupervisorRepository;
             _testGroupRepository = testGroupRepository;
             _supervisorRepository = supervisorRepository;
-            _dbContext = dbContext;
+            this.dbContext = dbContext;
             _logger = logger;
         }
 
@@ -102,7 +102,7 @@ namespace Exam.Controllers
                 supervisors.Add(_Add(testGroup, id));
             }
 
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created, supervisors);
         }
 
@@ -138,7 +138,7 @@ namespace Exam.Controllers
                 IsPrincipal = isPrincipal
             };
 
-            testGroupSupervisor = _dbContext.Set<TestGroupSupervisor>().Add(testGroupSupervisor).Entity;
+            testGroupSupervisor = dbContext.Set<TestGroupSupervisor>().Add(testGroupSupervisor).Entity;
 
             _logger.LogInformation($"New testGroupSupervisor: {testGroupSupervisor}");
             return testGroupSupervisor;
@@ -165,17 +165,17 @@ namespace Exam.Controllers
         public NoContentResult Delete(TestGroupSupervisor testGroupSupervisor)
         {
             Assert.RequireNonNull(testGroupSupervisor, nameof(testGroupSupervisor));
-            var papers = _dbContext.Set<Paper>().Where(p => testGroupSupervisor.Equals(p.TestGroupSupervisor)).ToList();
+            var papers = dbContext.Set<Paper>().Where(p => testGroupSupervisor.Equals(p.TestGroupSupervisor)).ToList();
             
             foreach (Paper paper in papers)
             {
                 paper.TestGroupSupervisor = null;
                 paper.TestGroupSupervisorId = null;
-                _dbContext.Set<Paper>().Update(paper);
+                dbContext.Set<Paper>().Update(paper);
             }
 
-            _dbContext.Set<TestGroupSupervisor>().Remove(testGroupSupervisor);
-            _dbContext.SaveChanges();
+            dbContext.Set<TestGroupSupervisor>().Remove(testGroupSupervisor);
+            dbContext.SaveChanges();
             return NoContent();
         }
     }

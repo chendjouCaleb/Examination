@@ -1,6 +1,10 @@
 ﻿using System;
+using System.IO;
 using Exam.Controllers;
+using Exam.Controllers.Courses;
+using Exam.Destructors;
 using Exam.Entities;
+using Exam.Hubs;
 using Exam.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -37,7 +41,11 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<LevelController>();
             ServiceCollection.AddTransient<LevelSpecialityController>();
             ServiceCollection.AddTransient<ScoreController>();
+            
             ServiceCollection.AddTransient<CourseController>();
+            ServiceCollection.AddTransient<CourseTeacherController>();
+            ServiceCollection.AddTransient<CourseHourController>();
+            ServiceCollection.AddTransient<CourseSessionController>();
             ServiceCollection.AddTransient<CourseLevelSpecialityController>();
             ServiceCollection.AddTransient<RoomController>();
             
@@ -57,6 +65,7 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<SupervisorController>();
             ServiceCollection.AddTransient<SecretaryController>();
             ServiceCollection.AddTransient<StudentController>();
+            ServiceCollection.AddTransient<TeacherController>();
             
             ServiceCollection.AddTransient<ApplicationController>();
             
@@ -74,18 +83,23 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<ScorePaperController>();
             ServiceCollection.AddTransient<PaperController>();
             ServiceCollection.AddTransient<GroupPaperController>();
+
+            ServiceCollection.AddTransient<SchoolDestructor>();
             
             IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.test.json")
                 .Build();
 
             ServiceCollection.AddSingleton(configuration);
 
             var testHubMock = new Mock<IHubContext<TestHub, ITestHub>>();
             var testGroupHubMock = new Mock<IHubContext<TestGroupHub, ITestGroupHub>>();
+            var schoolDestructorHubMock = new Mock<IHubContext<SchoolDestructorHub, ISchoolDestructorHub>>();
             
             ServiceCollection.AddSingleton(testHubMock.Object);
             ServiceCollection.AddSingleton(testGroupHubMock.Object);
+            ServiceCollection.AddSingleton(schoolDestructorHubMock.Object);
             return ServiceCollection;
         }
 

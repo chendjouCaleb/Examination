@@ -3,6 +3,7 @@ using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -128,11 +129,7 @@ namespace ServerAppTest.Controllers
         [Test]
         public void Add()
         {
-            TestGroupSecretary testGroupSecretary =
-                _controller._Add(_testGroup, _secretary);
-
-            _testGroupSecretaryRepository.Refresh(testGroupSecretary);
-
+            TestGroupSecretary testGroupSecretary = _controller._Add(_testGroup, _secretary);
             Assert.NotNull(testGroupSecretary);
             Assert.AreEqual(_testGroup, testGroupSecretary.TestGroup);
             Assert.AreEqual(_secretary, testGroupSecretary.Secretary);
@@ -142,6 +139,8 @@ namespace ServerAppTest.Controllers
         public void Try_AddSameSecretaryTwoTime_ShouldThrowError()
         {
             TestGroupSecretary secretary1 = _controller._Add(_testGroup, _secretary);
+            _controller.dbContext.SaveChanges();
+
             TestGroupSecretary secretary2 = _controller._Add(_testGroup, _secretary);
 
             Assert.AreEqual(secretary1, secretary2);
@@ -152,6 +151,7 @@ namespace ServerAppTest.Controllers
         public void Delete()
         {
             TestGroupSecretary testGroupSecretary = _controller._Add(_testGroup, _secretary);
+            _controller.dbContext.SaveChanges();
 
             _controller.Delete(testGroupSecretary);
             Assert.False(_testGroupSecretaryRepository.Exists(testGroupSecretary));
