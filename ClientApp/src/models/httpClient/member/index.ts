@@ -7,3 +7,4 @@ export * from './application.httpClient';
 export * from './member.httpClient';
 export * from './planner.httpClient';
 export * from './member.httpClient.module';
+export * from './teacher.httpClient';

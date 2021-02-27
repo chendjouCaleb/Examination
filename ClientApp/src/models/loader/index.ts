@@ -7,3 +7,4 @@ export * from './test';
 export * from './identity';
 export * from './organisation';
 export * from './member';
+export * from './course';

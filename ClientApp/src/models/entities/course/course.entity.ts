@@ -1,9 +1,12 @@
 ﻿import {Entity} from '../entity';
-import {Level} from './level.entity';
+import {Level} from '../organisation';
 import {List} from '@positon/collections';
-import {Score} from './score.entity';
+import {Score} from '../organisation';
 import {sum} from '../../../controls/array';
 import {CourseLevelSpeciality} from './course-level-speciality.entity';
+import {CourseTeacher} from './course-teacher.entity';
+import {CourseHour} from './course-hour.entity';
+import {CourseSession} from './course-session.entity';
 
 export class Course extends Entity<number> {
   constructor(value: any = {}) {
@@ -38,6 +41,9 @@ export class Course extends Entity<number> {
   level: Level;
 
   courseLevelSpecialities: List<CourseLevelSpeciality>;
+  courseTeachers: List<CourseTeacher>;
+  courseHours: List<CourseHour>;
+  courseSessions: List<CourseSession>;
 
   scores: List<Score>;
 

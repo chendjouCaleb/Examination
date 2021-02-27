@@ -1,5 +1,6 @@
 import {IsNotEmpty, IsNumber, MinLength} from 'class-validator';
-import {Course, Level, LevelSpeciality} from "examination/entities";
+import {Course, Level, LevelSpeciality} from 'examination/entities';
+import {LocalTime} from '@js-joda/core';
 
 export interface CourseBodyModel {
   name: string;
@@ -55,9 +56,9 @@ export class CourseAddModel {
   }
 
   get params(): CourseAddParams {
-    const params: CourseAddParams= {levelId: this.level.id};
+    const params: CourseAddParams = {levelId: this.level.id};
 
-    if(!this.isGeneral && this.levelSpecialities) {
+    if (!this.isGeneral && this.levelSpecialities) {
       params.levelSpecialityId = this.levelSpecialities.map(l => l.id);
     }
 
@@ -123,4 +124,39 @@ export class CourseLevelSpecialityAddModel {
       levelSpecialityId: this.levelSpeciality.id
     }
   }
+}
+
+
+
+export class CourseTeacherAddBodyModel {
+  tutorial: boolean;
+  lecture: boolean;
+  isPrincipal: boolean;
+}
+
+
+export class CourseHourAddBodyModel {
+  dayOfWeek: number;
+  startHour: LocalTime;
+  endHour: LocalTime;
+  lecture: boolean;
+}
+
+export class CourseSessionAddBodyModel {
+  expectedStartDate: Date;
+  expectedEndDate: Date;
+  objective: boolean;
+  lecture: boolean;
+}
+
+export class CourseSessionHourBodyModel {
+  expectedStartDate: Date;
+  expectedEndDate: Date;
+}
+
+export class CourseSessionReportBodyModel {
+  startDate: Date;
+  endDate: Date;
+  report: string;
+  presence: number;
 }

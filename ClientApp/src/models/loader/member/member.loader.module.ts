@@ -8,11 +8,12 @@ import {PlannerLoader} from './planner.loader';
 import {PrincipalLoader} from './principal.loader';
 import {SecretaryLoader} from './secretary.loader';
 import {SupervisorLoader} from './supervisor.loader';
+import {TeacherLoader} from "./teacher.loader";
 
 @NgModule({
   imports: [MemberHttpClientModule],
   providers: [ApplicationLoader, StudentLoader, MemberLoader, CorrectorLoader, PlannerLoader,
-    PrincipalLoader, SecretaryLoader, SupervisorLoader]
+    PrincipalLoader, SecretaryLoader, SupervisorLoader, TeacherLoader]
 })
 export class MemberLoaderModule {
 }

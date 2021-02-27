@@ -1,7 +1,7 @@
 ﻿import {Entity} from '../entity';
-import {Course} from "./course.entity";
-import {LevelSpeciality, TestLevelSpeciality} from "examination/entities";
-import {List} from "@positon/collections";
+import {Course} from './course.entity';
+import {LevelSpeciality, TestLevelSpeciality} from 'examination/entities';
+import {List} from '@positon/collections';
 
 
 export class CourseLevelSpeciality extends Entity<number> {

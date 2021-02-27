@@ -1,4 +1,4 @@
-﻿import {Course} from './course.entity';
+﻿import {Course} from '../course/course.entity';
 import {Entity} from '../entity';
 
 export class Score extends Entity<number> {

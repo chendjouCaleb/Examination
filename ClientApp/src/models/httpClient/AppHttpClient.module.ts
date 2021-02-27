@@ -5,9 +5,10 @@ import {ExaminationHttpClientModule} from './examination';
 import {MemberHttpClientModule} from './member';
 import {OrganisationHttpClientModule} from './organisation';
 import {TestHttpClientModule} from './test';
+import {CourseHttpClientModule} from './course';
 
 @NgModule({
-  imports: [IdentityHttpClientModule, ExaminationHttpClientModule, MemberHttpClientModule,
+  imports: [IdentityHttpClientModule, ExaminationHttpClientModule, MemberHttpClientModule, CourseHttpClientModule,
     OrganisationHttpClientModule, TestHttpClientModule, IdentityHttpClientModule]
 
 })

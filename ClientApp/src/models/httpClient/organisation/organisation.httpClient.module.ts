@@ -6,8 +6,8 @@ import {LevelSpecialityHttpClient} from './level-speciality.httpClient';
 import {LevelHttpClient} from './level.httpClient';
 import {RoomHttpClient} from './room.httpClient';
 import {ScoreHttpClient} from './score.httpClient';
-import {CourseHttpClient} from './course.httpClient';
-import {CourseLevelSpecialityHttpClient} from "./course-level-speciality.httpClient";
+import {CourseHttpClient} from '../course/course.httpClient';
+import {CourseLevelSpecialityHttpClient} from "../course/course-level-speciality.httpClient";
 
 
 @NgModule({

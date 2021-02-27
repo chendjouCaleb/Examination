@@ -2,7 +2,7 @@
 import {Speciality} from './speciality.entity';
 import {Level} from './level.entity';
 import {List} from '@positon/collections';
-import {CourseLevelSpeciality} from './course-level-speciality.entity';
+import {CourseLevelSpeciality} from '../course/course-level-speciality.entity';
 import {Application, Student} from '../member';
 
 

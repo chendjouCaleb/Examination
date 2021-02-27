@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {CourseLoader} from './course.loader';
+import {CourseLoader} from '../course/course.loader';
 import {List} from "@positon/collections";
 import {Loader} from "../loader";
 import {Course, Score} from "examination/entities";

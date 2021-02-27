@@ -2,7 +2,9 @@
 import {School} from './school.entity';
 import {Department} from './department.entity';
 import {User} from '../identity/user.entity';
-import {Level} from "./level.entity";
+import {Level} from './level.entity';
+import {List} from '@positon/collections';
+import {CourseHour, CourseSession} from '../course';
 
 
 export class Room extends Entity<number> {
@@ -41,6 +43,9 @@ export class Room extends Entity<number> {
 
   registerUserId: string;
   registerUser: User;
+
+  courseHours: List<CourseHour>;
+  courseSessions: List<CourseSession>;
 
   get url(): string {
     return `/schools/${this.schoolId}/rooms/${this.id}`;

@@ -1154,6 +1154,14 @@
           <e p="main.ts" t="Include" />
           <e p="models" t="Include">
             <e p="Entities" t="Include">
+              <e p="course" t="Include">
+                <e p="course-hour.entity.ts" t="Include" />
+                <e p="course-level-speciality.entity.ts" t="Include" />
+                <e p="course-session.entity.ts" t="Include" />
+                <e p="course-teacher.entity.ts" t="Include" />
+                <e p="course.entity.ts" t="Include" />
+                <e p="index.ts" t="Include" />
+              </e>
               <e p="entity.ts" t="Include" />
               <e p="Examination" t="Include">
                 <e p="examination-department.entity.ts" t="Include" />
@@ -1184,10 +1192,9 @@
                 <e p="secretary.entity.ts" t="Include" />
                 <e p="student.entity.ts" t="Include" />
                 <e p="supervisor.entity.ts" t="Include" />
+                <e p="teacher.entity.ts" t="Include" />
               </e>
               <e p="organisation" t="Include">
-                <e p="course-level-speciality.entity.ts" t="Include" />
-                <e p="course.entity.ts" t="Include" />
                 <e p="department.entity.ts" t="Include" />
                 <e p="index.ts" t="Include" />
                 <e p="level-speciality.entity.ts" t="Include" />
@@ -1234,6 +1241,15 @@
             </e>
             <e p="httpClient" t="Include">
               <e p="AppHttpClient.module.ts" t="Include" />
+              <e p="course" t="Include">
+                <e p="course-hour.httpClient.ts" t="Include" />
+                <e p="course-level-speciality.httpClient.ts" t="Include" />
+                <e p="course-session.httpClient.ts" t="Include" />
+                <e p="course-teacher.httpClient.ts" t="Include" />
+                <e p="course.httpClient.module.ts" t="Include" />
+                <e p="course.httpClient.ts" t="Include" />
+                <e p="index.ts" t="Include" />
+              </e>
               <e p="Examination" t="Include">
                 <e p="examination-department.httpClient.ts" t="Include" />
                 <e p="examination-level-speciality.httpClient.ts" t="Include" />
@@ -1265,10 +1281,9 @@
                 <e p="secretary.httpClient.ts" t="Include" />
                 <e p="student.httpClient.ts" t="Include" />
                 <e p="supervisor.httpClient.ts" t="Include" />
+                <e p="teacher.httpClient.ts" t="Include" />
               </e>
               <e p="organisation" t="Include">
-                <e p="course-level-speciality.httpClient.ts" t="Include" />
-                <e p="course.httpClient.ts" t="Include" />
                 <e p="department.httpClient.ts" t="Include" />
                 <e p="index.ts" t="Include" />
                 <e p="level-speciality.httpClient.ts" t="Include" />
@@ -1309,6 +1324,14 @@
               <e p="test.listener.ts" t="Include" />
             </e>
             <e p="loader" t="Include">
+              <e p="course" t="Include">
+                <e p="course-hour.loader.ts" t="Include" />
+                <e p="course-level-speciality.loader.ts" t="Include" />
+                <e p="course-teacher.loader.ts" t="Include" />
+                <e p="course.loader.module.ts" t="Include" />
+                <e p="course.loader.ts" t="Include" />
+                <e p="index.ts" t="Include" />
+              </e>
               <e p="entity-loader.interface.ts" t="Include" />
               <e p="Examination" t="Include">
                 <e p="examination-department.loader.ts" t="Include" />
@@ -1340,10 +1363,9 @@
                 <e p="secretary.loader.ts" t="Include" />
                 <e p="student.loader.ts" t="Include" />
                 <e p="supervisor.loader.ts" t="Include" />
+                <e p="teacher.loader.ts" t="Include" />
               </e>
               <e p="organisation" t="Include">
-                <e p="course-level-speciality.loader.ts" t="Include" />
-                <e p="course.loader.ts" t="Include" />
                 <e p="department.loader.ts" t="Include" />
                 <e p="index.ts" t="Include" />
                 <e p="level-speciality.loader.ts" t="Include" />

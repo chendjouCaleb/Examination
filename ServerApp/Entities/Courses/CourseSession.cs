@@ -29,7 +29,6 @@ namespace Exam.Entities.Courses
         public string Objective { get; set; }
         public string Report { get; set; }
         public int? Presence { get; set; }
-        
         public bool Lecture { get; set; }
     }
 }

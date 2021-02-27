@@ -5,7 +5,7 @@ import {List} from '@positon/collections';
 import {Level} from './level.entity';
 import {Speciality} from './speciality.entity';
 import {LevelSpeciality} from './level-speciality.entity';
-import {Application, Corrector, Principal, Secretary, Student, Supervisor} from '../member';
+import {Application, Corrector, Principal, Secretary, Student, Supervisor, Teacher} from '../member';
 import {Room} from './room.entity';
 
 export class Department extends Entity<number> {
@@ -67,6 +67,7 @@ export class Department extends Entity<number> {
   specialities: List<Speciality>;
 
   correctors: List<Corrector>;
+  teachers: List<Teacher>;
   supervisors: List<Supervisor>;
   principals: List<Principal>;
   secretaries: List<Secretary>;

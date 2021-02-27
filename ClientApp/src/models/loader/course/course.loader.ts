@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LevelLoader} from './level.loader';
+import {LevelLoader} from '../organisation/level.loader';
 import {Loader} from "../loader";
 import {Course, Level, Speciality} from "examination/entities";
 import {CourseHttpClient, UserHttpClient} from "examination/models/http";

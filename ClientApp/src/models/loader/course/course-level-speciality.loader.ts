@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Loader} from "../loader";
 import {Course, CourseLevelSpeciality, LevelSpeciality} from "examination/entities";
 import {CourseLevelSpecialityHttpClient, UserHttpClient} from "examination/models/http";
-import { LevelSpecialityLoader} from "./level-speciality.loader";
+import { LevelSpecialityLoader} from "../organisation/level-speciality.loader";
 import {CourseLoader } from "./course.loader";
 
 

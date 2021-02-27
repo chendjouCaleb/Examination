@@ -2,10 +2,11 @@
 import {Entity} from '../entity';
 import {List} from '@positon/collections';
 import {LevelSpeciality} from './level-speciality.entity';
-import {Course} from './course.entity';
+import {Course} from '../course/course.entity';
 import {Application, Student} from '../member';
 import {ExaminationLevel} from '../examination';
 import {Room} from './room.entity';
+import {CourseHour, CourseSession} from '../course';
 
 export class Level extends Entity<number> {
 
@@ -29,6 +30,8 @@ export class Level extends Entity<number> {
   rooms: List<Room>;
   levelSpecialities: List<LevelSpeciality>;
   examinationLevels: List<ExaminationLevel>;
+  courseHours: List<CourseHour>;
+  courseSessions: List<CourseSession>;
 
   userPrincipal: LevelUser = {};
 
