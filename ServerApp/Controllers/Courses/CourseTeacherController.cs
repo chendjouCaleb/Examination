@@ -85,7 +85,8 @@ namespace Exam.Controllers.Courses
         public NoContentResult Delete(CourseTeacher courseTeacher, [FromQuery] bool courseHour,
             [FromQuery] bool courseSession)
         {
-            throw new NotImplementedException();
+            _courseTeacherRepository.Delete(courseTeacher);
+            return NoContent();
         }
     }
 }
