@@ -1707,6 +1707,7 @@
             <e p="CourseControllerTests.cs" t="Include" />
             <e p="CourseHourControllerTests.cs" t="Include" />
             <e p="CourseLevelSpecialityControllerTests.cs" t="Include" />
+            <e p="CourseSessionControllerTests.cs" t="Include" />
             <e p="CourseTeacherControllerTests.cs" t="Include" />
           </e>
           <e p="Examination" t="Include">

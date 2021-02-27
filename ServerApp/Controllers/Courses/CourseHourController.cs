@@ -4,6 +4,7 @@ using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
+using Exam.Entities;
 using Exam.Entities.Courses;
 using Exam.Loaders;
 using Exam.Loaders.Courses;
@@ -73,43 +74,49 @@ namespace Exam.Controllers.Courses
         [HttpPost]
         [RequireQueryParameter("roomId")]
         [RequireQueryParameter("courseTeacherId")]
+        [RequireQueryParameter("courseId")]
         [LoadCourseTeacher(Source = ParameterSource.Query)]
+        [LoadCourse(Source = ParameterSource.Query)]
         [LoadRoom(Source = ParameterSource.Query, SchoolItemName = "school")]
         [IsPlanner]
-        public CreatedAtActionResult Add([FromQuery] long? roomId, [FromQuery] long? courseTeacherId,
-            [FromBody] AddCourseHour form)
+        public CreatedAtActionResult Add(Course course, Room room, CourseTeacher courseTeacher,
+            [FromBody] AddCourseHourForm form)
         {
             throw new NotImplementedException();
         }
 
         
-        [HttpPut("{courseHour}/teacher")]
+        [HttpPut("{courseHourId}/teacher")]
         [RequireQueryParameter("courseTeacherId")]
         [LoadCourseHour(SchoolItemName = "school")]
+        [LoadCourseTeacher(Source = ParameterSource.Query)]
         [IsPlanner]
-        public StatusCodeResult Teacher(CourseHour courseHour, [FromQuery] long courseTeacherId)
+        public StatusCodeResult Teacher(CourseHour courseHour, CourseTeacher courseTeacher)
         {
             throw new NotImplementedException();
         }
         
-        [HttpPut("{courseHour}/room")]
+        
+        
+        [HttpPut("{courseHourId}/room")]
         [RequireQueryParameter("roomId")]
         [LoadCourseHour(SchoolItemName = "school")]
+        [LoadRoom(Source = ParameterSource.Query)]
         [IsPlanner]
-        public StatusCodeResult Room(CourseHour courseHour, [FromQuery] long roomId)
+        public StatusCodeResult Room(CourseHour courseHour, Room room)
         {
             throw new NotImplementedException();
         }
         
-        [HttpPut("{courseHour}/lecture")]
+        [HttpPut("{courseHourId}/lecture")]
         [LoadCourseHour(SchoolItemName = "school")]
         [IsPlanner]
-        public StatusCodeResult Lecture(CourseHour courseHour, [FromQuery] long roomId)
+        public StatusCodeResult Lecture(CourseHour courseHour)
         {
             throw new NotImplementedException();
         }
 
-        [HttpPut("{courseHour}/lecture")]
+        [HttpPut("{courseHourId}/lecture")]
         [LoadCourseHour(SchoolItemName = "school")]
         [IsPlanner]
         public NoContentResult Delete(CourseHour courseHour, [FromQuery] bool courseSession) 

@@ -35,14 +35,11 @@ namespace Exam.Models
     }
 
 
-    public class AddCourseHour
+    public class AddCourseHourForm
     {
         public DayOfWeek DayOfWeek { get; set; }
-
         public TimeSpan StartHour { get; set; }
-
         public TimeSpan EndHour { get; set; }
-        
         public bool Lecture { get; set; }
     }
     
@@ -57,8 +54,8 @@ namespace Exam.Models
 
     public class AddCourseSessionForm
     {
-        public DateTime ExpectedStartDate { get; set; }
-        public DateTime ExpectedEndDate { get; set; }
+        public DateTime? ExpectedStartDate { get; set; }
+        public DateTime? ExpectedEndDate { get; set; }
 
         public string Objective { get; set; }
         public bool Lecture { get; set; }
@@ -66,16 +63,16 @@ namespace Exam.Models
 
     public class CourseSessionHourForm
     {
-        public DateTime ExpectedStartDate { get; set; }
-        public DateTime ExpectedEndDate { get; set; }
+        public DateTime? ExpectedStartDate { get; set; }
+        public DateTime? ExpectedEndDate { get; set; }
     }
 
     public class CourseSessionReportForm
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string Report { get; set; }
-        public int Presence { get; set; }
+        public int? Presence { get; set; }
     }
 
 

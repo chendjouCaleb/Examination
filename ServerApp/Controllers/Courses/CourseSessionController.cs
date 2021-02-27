@@ -5,7 +5,9 @@ using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
+using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Loaders;
 using Exam.Loaders.Courses;
 using Exam.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -80,11 +82,14 @@ namespace Exam.Controllers.Courses
         [HttpPost]
         [RequireQueryParameter("courseId")]
         [RequireQueryParameter("courseTeacherId")]
+        [RequireQueryParameter("roomId")]
         [LoadCourse(Source = ParameterSource.Query, SchoolItemName = "school")]
-        [LoadCourseTeacher]
+        [LoadCourseTeacher(Source = ParameterSource.Query)]
+        [LoadRoom(Source = ParameterSource.Query)]
         [IsPlanner]
         public CreatedAtActionResult Add(Course course,
             CourseTeacher courseTeacher,
+            Room room,
             [FromQuery] long? courseHourId,
             [FromBody] AddCourseSessionForm form)
         {
@@ -115,6 +120,27 @@ namespace Exam.Controllers.Courses
         {
             throw new NotImplementedException();
         }
+        
+        [HttpPut("{courseSessionId}/room")]
+        [RequireQueryParameter("roomId")]
+        [LoadCourseSession(SchoolItemName = "school")]
+        [LoadRoom(Source = ParameterSource.Query)]
+        [IsPlanner]
+        public StatusCodeResult Room(CourseSession courseSession, Room room)
+        {
+            throw new NotImplementedException();
+        }
+        
+        [HttpPut("{courseSessionId}/teacher")]
+        [RequireQueryParameter("courseTeacherId")]
+        [LoadCourseHour(SchoolItemName = "school")]
+        [LoadCourseTeacher(Source = ParameterSource.Query)]
+        [IsPlanner]
+        public StatusCodeResult Teacher(CourseSession courseSession, CourseTeacher courseTeacher)
+        {
+            throw new NotImplementedException();
+        }
+
         
         [HttpPut("{courseSessionId}/lecture")]
         [LoadCourseSession(SchoolItemName = "school")]

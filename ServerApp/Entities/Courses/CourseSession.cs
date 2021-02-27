@@ -20,15 +20,15 @@ namespace Exam.Entities.Courses
         public virtual Room Room { get; set; }
         public long? RoomId { get; set; }
 
-        public DateTime ExpectedStartDate { get; set; }
-        public DateTime ExpectedEndDate { get; set; }
+        public DateTime? ExpectedStartDate { get; set; }
+        public DateTime? ExpectedEndDate { get; set; }
         
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public string Objective { get; set; }
         public string Report { get; set; }
-        public int Presence { get; set; }
+        public int? Presence { get; set; }
         
         public bool Lecture { get; set; }
     }
