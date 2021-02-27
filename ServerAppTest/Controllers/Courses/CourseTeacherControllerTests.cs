@@ -181,8 +181,8 @@ namespace ServerAppTest.Controllers.Courses
             _controller.IsPrincipal(courseTeacher);
 
             Assert.True(courseTeacher.IsPrincipal);
-            Assert.True(courseTeacher2.IsPrincipal);
-            Assert.True(courseTeacher3.IsPrincipal);
+            Assert.False(courseTeacher2.IsPrincipal);
+            Assert.False(courseTeacher3.IsPrincipal);
         }
         
     }

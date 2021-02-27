@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Loaders.Courses;
 using Exam.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Exam.Controllers.Courses
 {
@@ -19,7 +20,12 @@ namespace Exam.Controllers.Courses
     {
         private DbContext _dbContext;
         private IRepository<CourseTeacher, long> _courseTeacherRepository;
-        private ILogger<CourseTeacherController> _logger;
+
+        public CourseTeacherController(DbContext dbContext, IRepository<CourseTeacher, long> courseTeacherRepository)
+        {
+            _dbContext = dbContext;
+            _courseTeacherRepository = courseTeacherRepository;
+        }
 
         [HttpGet("{courseTeacherId}")]
         public CourseTeacher Get(long courseTeacherId)
@@ -52,7 +58,38 @@ namespace Exam.Controllers.Courses
         public CreatedAtActionResult Add(Course course, Teacher teacher,
             [FromBody] AddCourseTeacherForm form)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(course, nameof(course));
+            Assert.RequireNonNull(teacher, nameof(teacher));
+            Assert.RequireNonNull(form, nameof(form));
+
+            if (!teacher.Department.Equals(course.Level.Department))
+            {
+                throw new IncompatibleEntityException(course, teacher);
+            }
+
+            if (_courseTeacherRepository.Exists(c => course.Equals(c.Course) && teacher.Equals(c.Teacher)))
+            {
+                throw new InvalidOperationException("{courseTeacher.constraints.unique}");
+            }
+
+            CourseTeacher courseTeacher = new CourseTeacher
+            {
+                Course = course,
+                Teacher = teacher,
+                Tutorial = form.Tutorial,
+                Lecture = form.Lecture
+            };
+
+            if (form.IsPrincipal)
+            {
+                _RemoveAllPrincipalRole(course);
+                courseTeacher.IsPrincipal = true;
+            }
+
+            _dbContext.Add(courseTeacher);
+            _dbContext.SaveChanges();
+
+            return CreatedAtAction("Get", new {courseTeacherId = courseTeacher.IsPrincipal}, courseTeacher);
         }
 
         [HttpPut("{courseTeacherId}/tutorial")]
@@ -60,7 +97,11 @@ namespace Exam.Controllers.Courses
         [AuthorizeDepartmentPrincipal]
         public StatusCodeResult Tutorial(CourseTeacher courseTeacher)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
+            courseTeacher.Tutorial = !courseTeacher.Tutorial;
+            _courseTeacherRepository.Update(courseTeacher);
+
+            return Ok();
         }
         
         [HttpPut("{courseTeacherId}/lecture")]
@@ -68,7 +109,11 @@ namespace Exam.Controllers.Courses
         [AuthorizeDepartmentPrincipal]
         public StatusCodeResult Lecture(CourseTeacher courseTeacher)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
+            courseTeacher.Lecture = !courseTeacher.Lecture;
+            _courseTeacherRepository.Update(courseTeacher);
+
+            return Ok();
         }
         
         [HttpPut("{courseTeacherId}/principal")]
@@ -76,7 +121,26 @@ namespace Exam.Controllers.Courses
         [AuthorizeDepartmentPrincipal]
         public StatusCodeResult IsPrincipal(CourseTeacher courseTeacher)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
+            _RemoveAllPrincipalRole(courseTeacher.Course);
+
+            courseTeacher.IsPrincipal = true;
+            _dbContext.Update(courseTeacher);
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
+
+        private void _RemoveAllPrincipalRole(Course course)
+        {
+            IList<CourseTeacher> courseTeachers = _dbContext.Set<CourseTeacher>()
+                .Where(c => c.CourseId == course.Id).ToArray();
+
+            foreach (var item in courseTeachers)
+            {
+                item.IsPrincipal = false;
+                _dbContext.Update(item);
+            }
         }
 
         [HttpDelete("{courseTeacherId}")]

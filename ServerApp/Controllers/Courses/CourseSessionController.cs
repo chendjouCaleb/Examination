@@ -7,6 +7,7 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Loaders.Courses;
 using Exam.Models;
@@ -21,6 +22,11 @@ namespace Exam.Controllers.Courses
         private DbContext _dbContext;
         private IRepository<CourseSession, long> _courseSessionRepository;
 
+        public CourseSessionController(DbContext dbContext, IRepository<CourseSession, long> courseSessionRepository)
+        {
+            _dbContext = dbContext;
+            _courseSessionRepository = courseSessionRepository;
+        }
 
         [HttpGet("{courseSessionId")]
         public CourseSession Get(long courseSessionId)
@@ -93,7 +99,50 @@ namespace Exam.Controllers.Courses
             [FromQuery] long? courseHourId,
             [FromBody] AddCourseSessionForm form)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(course, nameof(course));
+            Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
+            Assert.RequireNonNull(room, nameof(room));
+            Assert.RequireNonNull(form, nameof(form));
+            Assert.RequireNonNull(form, nameof(form));
+
+            CourseHour courseHour = null;
+
+            if (courseHourId != null)
+            {
+                courseHour = _dbContext.Set<CourseHour>().Find(courseHourId);
+            }
+
+            if (!course.Equals(courseTeacher.Course))
+            {
+                throw new IncompatibleEntityException(course, courseTeacher);
+            }
+
+            if (!room.School.Equals(course.Level?.Department?.School))
+            {
+                throw new IncompatibleEntityException(room, course);
+            }
+
+            if (courseHour != null && !course.Equals(courseHour.Course))
+            {
+                throw new IncompatibleEntityException(course, courseHour);
+            }
+
+
+            CourseSession courseSession = new CourseSession
+            {
+                Course = course,
+                CourseHour = courseHour,
+                Room = room,
+                CourseTeacher = courseTeacher,
+                ExpectedStartDate = form.ExpectedStartDate,
+                ExpectedEndDate = form.ExpectedEndDate,
+                Objective = form.Objective,
+                Lecture = form.Lecture
+            };
+
+            _courseSessionRepository.Save(courseSession);
+
+            return CreatedAtAction("Get", new {courseSessionId = courseSession.Id}, courseSession);
         }
 
         
@@ -102,15 +151,32 @@ namespace Exam.Controllers.Courses
         [IsPlanner]
         public StatusCodeResult Hour(CourseSession courseSession, [FromBody] CourseSessionHourForm form)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseSession, nameof(courseSession));
+            Assert.RequireNonNull(form, nameof(form));
+
+            courseSession.ExpectedStartDate = form.ExpectedStartDate;
+            courseSession.ExpectedEndDate = form.ExpectedEndDate;
+            
+            _courseSessionRepository.Update(courseSession);
+
+            return Ok();
         }
         
         [HttpPut("{courseSessionId}/report")]
         [LoadCourseSession(SchoolItemName = "school")]
         [IsPlanner]
-        public StatusCodeResult Report(CourseSession courseSession, [FromBody] CourseSessionReportForm form)
+        public OkObjectResult Report(CourseSession courseSession, [FromBody] CourseSessionReportForm form)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseSession, nameof(courseSession));
+            Assert.RequireNonNull(form, nameof(form));
+
+            courseSession.Report = form.Report;
+            courseSession.Presence = form.Presence;
+            courseSession.StartDate = form.StartDate;
+            courseSession.EndDate = form.EndDate;
+            _courseSessionRepository.Update(courseSession);
+
+            return Ok(courseSession);
         }
         
         [HttpPut("{courseSessionId}/objective")]
@@ -118,7 +184,11 @@ namespace Exam.Controllers.Courses
         [IsPlanner]
         public StatusCodeResult Objective(CourseSession courseSession, [FromForm] string objective)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseSession, nameof(courseSession));
+            courseSession.Objective = objective;
+            
+            _courseSessionRepository.Update(courseSession);
+            return Ok();
         }
         
         [HttpPut("{courseSessionId}/room")]
@@ -128,7 +198,18 @@ namespace Exam.Controllers.Courses
         [IsPlanner]
         public StatusCodeResult Room(CourseSession courseSession, Room room)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseSession, nameof(courseSession));
+            Assert.RequireNonNull(room, nameof(room));
+
+            if (!room.School.Equals(courseSession.Room?.School))
+            {
+                throw new IncompatibleEntityException(courseSession, room);
+            }
+
+            courseSession.Room = room;
+            _courseSessionRepository.Update(courseSession);
+
+            return Ok();
         }
         
         [HttpPut("{courseSessionId}/teacher")]
@@ -138,7 +219,18 @@ namespace Exam.Controllers.Courses
         [IsPlanner]
         public StatusCodeResult Teacher(CourseSession courseSession, CourseTeacher courseTeacher)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseSession, nameof(courseSession));
+            Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
+
+            if (!courseSession.Course.Equals(courseTeacher.Course))
+            {
+                throw new IncompatibleEntityException(courseSession, courseTeacher);
+            }
+
+            courseSession.CourseTeacher = courseTeacher;
+            _courseSessionRepository.Update(courseSession);
+
+            return Ok();
         }
 
         
@@ -147,7 +239,11 @@ namespace Exam.Controllers.Courses
         [IsPlanner]
         public StatusCodeResult Lecture(CourseSession courseSession)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseSession, nameof(courseSession));
+            courseSession.Lecture = !courseSession.Lecture;
+
+            _courseSessionRepository.Update(courseSession);
+            return Ok();
         }
         
         [HttpDelete("{courseSessionId}")]
@@ -155,7 +251,10 @@ namespace Exam.Controllers.Courses
         [IsPlanner]
         public NoContentResult Delete(CourseSession courseSession)
         {
-            throw new NotImplementedException();
+            Assert.RequireNonNull(courseSession, nameof(courseSession));
+            _courseSessionRepository.Delete(courseSession);
+
+            return NoContent();
         }
         
     }
