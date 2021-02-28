@@ -38,4 +38,12 @@ export class CourseTeacher extends Entity<number> {
     return `${this.course.url}/teachers/${this.id}`;
   }
 
+  get courseName(): string {
+    return this.course.name;
+  }
+
+  get levelIndex(): number {
+    return this.course.level.index;
+  }
+
 }

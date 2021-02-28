@@ -12,10 +12,11 @@ import {RoomList} from './list/room-list';
 import {RoomDetails} from './details/room-details';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsButtonModule,
-    MsfSelectModule, MsTableModule, ControlModule, MsfMenuModule, MsfModalModule],
+    MsfSelectModule, MsTableModule, ControlModule, MsfMenuModule, MsfModalModule, RouterModule],
   declarations: [RoomAdd, RoomEdit, RoomList, RoomDetails],
   exports: [RoomAdd, RoomEdit, RoomList, RoomDetails],
   providers: [RoomService, RoomResolver, {provide: ROOM_SERVICE_TOKEN, useExisting: RoomService}]

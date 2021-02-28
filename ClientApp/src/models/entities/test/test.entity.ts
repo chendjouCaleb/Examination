@@ -9,7 +9,7 @@ import {sum} from '../../../controls/array';
 import {TestLevelSpeciality} from './test-level-speciality.entity';
 import {Paper} from './paper.entity';
 import {PaperStatistics} from './paper-statistics';
-import {Course} from "../course";
+import {Course} from '../course';
 
 export class Test extends Entity<number> {
   constructor(value: any = {}) {

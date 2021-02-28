@@ -24,8 +24,6 @@ export class CourseHour extends Entity<number> {
     this.endHour = LocalTime.parse(value.endHour);
   }
 
-  lecture: boolean;
-
   courseTeacherId: number;
   courseTeacher: CourseTeacher;
 
@@ -35,6 +33,8 @@ export class CourseHour extends Entity<number> {
   courseId: number;
   course: Course;
 
+  lecture: boolean;
+
   dayOfWeek: DayOfWeek;
   startHour: LocalTime;
   endHour: LocalTime;
@@ -43,6 +43,14 @@ export class CourseHour extends Entity<number> {
 
   get url(): string {
     return `${this.course.url}/hours/${this.id}`;
+  }
+
+  get courseName(): string {
+    return this.course.name;
+  }
+
+  get levelIndex(): number {
+    return this.course.level.index;
   }
 
 }

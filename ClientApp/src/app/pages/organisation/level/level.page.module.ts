@@ -7,8 +7,8 @@ import {LayoutModule} from 'examination/infrastructure';
 import {LevelHomePage} from './home/level-home.page';
 import {ControlModule} from 'examination/controls';
 import {
-  ApplicationModule,
-  CourseModule,
+  ApplicationModule, CourseHourModule,
+  CourseModule, CourseSessionModule,
   DepartmentResolver,
   LevelModule,
   LevelResolver,
@@ -33,7 +33,7 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, MsButtonModule, LevelModule, CourseModule, StudentModule, ApplicationModule,
     RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule,
-    MatRippleModule, RoomModule, MsPivotModule],
+    MatRippleModule, RoomModule, MsPivotModule, CourseHourModule, CourseSessionModule],
   declarations: [LevelHomePage, LevelPageLayout]
 })
 export class LevelPageModule {

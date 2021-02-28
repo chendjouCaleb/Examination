@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Controllers.Courses
 {
-    [Route("api/coursesSessions")]
+    [Route("api/courseSessions")]
     public class CourseSessionController:Controller
     {
         private DbContext _dbContext;

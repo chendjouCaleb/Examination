@@ -296,6 +296,45 @@
                   <e p="score-list.ts" t="Include" />
                 </e>
               </e>
+              <e p="course-hour" t="Include">
+                <e p="course-hour.module.ts" t="Include" />
+                <e p="course-hour.service.interface.ts" t="Include" />
+                <e p="course-hour.service.ts" t="Include" />
+                <e p="index.ts" t="Include" />
+                <e p="list" t="Include">
+                  <e p="course-hour-list.html" t="Include" />
+                  <e p="course-hour-list.ts" t="Include" />
+                </e>
+              </e>
+              <e p="course-session" t="Include">
+                <e p="course-session.module.ts" t="Include" />
+                <e p="course-session.service.interface.ts" t="Include" />
+                <e p="course-session.service.ts" t="Include" />
+                <e p="index.ts" t="Include" />
+                <e p="list" t="Include">
+                  <e p="course-session-list.html" t="Include" />
+                  <e p="course-session-list.ts" t="Include" />
+                </e>
+              </e>
+              <e p="course-teacher" t="Include">
+                <e p="add" t="Include">
+                  <e p="course-teacher-add.html" t="Include" />
+                  <e p="course-teacher-add.ts" t="Include" />
+                </e>
+                <e p="course-teacher.form.ts" t="Include" />
+                <e p="course-teacher.module.ts" t="Include" />
+                <e p="course-teacher.service.interface.ts" t="Include" />
+                <e p="course-teacher.service.ts" t="Include" />
+                <e p="details" t="Include">
+                  <e p="course-teacher-details.html" t="Include" />
+                  <e p="course-teacher-details.ts" t="Include" />
+                </e>
+                <e p="index.ts" t="Include" />
+                <e p="list" t="Include">
+                  <e p="course-teacher-list.html" t="Include" />
+                  <e p="course-teacher-list.ts" t="Include" />
+                </e>
+              </e>
               <e p="department" t="Include">
                 <e p="add" t="Include">
                   <e p="department-add.html" t="Include" />
@@ -938,6 +977,17 @@
                     <e p="level-speciality.page-layout.ts" t="Include" />
                   </e>
                   <e p="level-speciality.page.module.ts" t="Include" />
+                </e>
+                <e p="room" t="Include">
+                  <e p="Home" t="Include">
+                    <e p="room-home.page.html" t="Include" />
+                    <e p="room-home.page.ts" t="Include" />
+                  </e>
+                  <e p="layout" t="Include">
+                    <e p="room.page-layout.html" t="Include" />
+                    <e p="room.page-layout.ts" t="Include" />
+                  </e>
+                  <e p="room.page.module.ts" t="Include" />
                 </e>
                 <e p="school" t="Include">
                   <e p="add" t="Include">

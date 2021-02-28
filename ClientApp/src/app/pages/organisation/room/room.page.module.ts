@@ -6,35 +6,31 @@ import {MsfMenuModule} from 'fabric-docs';
 import {LayoutModule} from 'examination/infrastructure';
 import {ControlModule} from 'examination/controls';
 import {
-  CourseHourModule,
-  CourseModule, CourseSessionModule,
+  CourseModule,
   DepartmentResolver,
   ExaminationModule,
   SchoolResolver,
-  SpecialityModule, TestModule
+  SpecialityModule,
+  RoomModule, CourseHourModule, CourseSessionModule
 } from 'examination/app/components';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsPivotModule} from '@ms-fluent/pivot';
-import {CoursePageLayout} from './layout/course.page-layout';
-import {CourseHomePage} from './home/course-home.page';
+import {RoomPageLayout} from './layout/room.page-layout';
+import {RoomHomePage} from './home/room-home.page';
 import {MomentModule} from 'ngx-moment';
 import {MsTableModule} from '@ms-fluent/table';
-import {CourseTeacherModule} from 'examination/app/components/course-teacher';
 
 const routes: Routes = [
-  {
-    path: ':courseId',
-    resolve: [SchoolResolver, DepartmentResolver],
-    component: CoursePageLayout
-  }
+  { path: ':roomId', resolve: [SchoolResolver], component: RoomPageLayout }
 ];
 
 @NgModule({
   imports: [CommonModule, MsButtonModule, MsTableModule, SpecialityModule, CourseModule, ExaminationModule,
-    CourseModule, MsPivotModule, TestModule, CourseTeacherModule,
-    RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule, MomentModule, CourseHourModule, CourseSessionModule],
-  declarations: [CoursePageLayout, CourseHomePage]
+    RoomModule, MsPivotModule,
+    RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule, MomentModule, CourseHourModule,
+  CourseSessionModule],
+  declarations: [RoomPageLayout, RoomHomePage]
 })
-export class CoursePageModule {
+export class RoomPageModule {
 
 }

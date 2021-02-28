@@ -26,6 +26,8 @@
       <msPivotHeader>
         <msPivotLabel>Acceuil</msPivotLabel>
         <msPivotLabel>Cours</msPivotLabel>
+        <msPivotLabel>Horaires</msPivotLabel>
+        <msPivotLabel>Séances</msPivotLabel>
         <msPivotLabel>Étudiants</msPivotLabel>
         <msPivotLabel>Salles</msPivotLabel>
         <msPivotLabel>Demandes</msPivotLabel>
@@ -36,6 +38,13 @@
         </div>
         <div *msPivotContentDef>
           <app-course-list [level]="level"></app-course-list>
+        </div>
+        <div *msPivotContentDef>
+          <app-course-hour-list [level]="level" [hiddenColumns]="['level']"></app-course-hour-list>
+        </div>
+        <div *msPivotContentDef>
+          <app-course-session-list [level]="level" [hiddenColumns]="['level']"></app-course-session-list>
+
         </div>
         <div *msPivotContentDef>
           <app-student-list [level]="level"></app-student-list>

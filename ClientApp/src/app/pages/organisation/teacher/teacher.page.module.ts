@@ -6,7 +6,8 @@ import {MsfMenuModule} from 'fabric-docs';
 import {LayoutModule} from 'examination/infrastructure';
 import {ControlModule} from 'examination/controls';
 import {
-  CourseModule,
+  CourseHourModule,
+  CourseModule, CourseSessionModule,
   DepartmentResolver,
   ExaminationModule,
   SchoolResolver,
@@ -19,6 +20,7 @@ import {TeacherPageLayout} from './layout/teacher.page-layout';
 import {TeacherHomePage} from './home/teacher-home.page';
 import {MomentModule} from 'ngx-moment';
 import {MsTableModule} from '@ms-fluent/table';
+import {CourseTeacherModule} from 'examination/app/components/course-teacher';
 
 const routes: Routes = [
   {
@@ -31,7 +33,8 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, MsButtonModule, MsTableModule, SpecialityModule, CourseModule, ExaminationModule,
     TeacherModule, MsPivotModule,
-    RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule, MomentModule],
+    RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule, MomentModule, CourseTeacherModule,
+    CourseHourModule, CourseSessionModule],
   declarations: [TeacherPageLayout, TeacherHomePage]
 })
 export class TeacherPageModule {

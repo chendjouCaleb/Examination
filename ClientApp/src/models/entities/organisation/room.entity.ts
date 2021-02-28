@@ -50,4 +50,16 @@ export class Room extends Entity<number> {
   get url(): string {
     return `/schools/${this.schoolId}/rooms/${this.id}`;
   }
+
+  get forSchool(): boolean {
+    return !this.department && !this.level;
+  }
+
+  get forDepartment(): boolean {
+    return this.department && !this.level;
+  }
+
+  get forLevel(): boolean {
+    return this.level;
+  }
 }

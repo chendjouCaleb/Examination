@@ -1,0 +1,42 @@
+<div class="flex-center-cover" *ngIf="form">
+  <form class="ms-form" [formGroup]="form">
+    <div class="ms-form-header ms-sticky-header">
+      <div msFontSize="18">Ajouter un enseignat un cours</div>
+      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+    </div>
+
+
+    <div class="ms-textField">
+      <label for="teacher" class="msf-label">Choisir un enseignant</label>
+      <MsfSelect id="teacher" formControlName="teacher" class="ms-textField-input" placeholder="">
+        <MsfSelectOption *ngFor="let item of teachers" [value]="item">
+          {{item.user.fullName}}
+        </MsfSelectOption>
+      </MsfSelect>
+    </div>
+
+    <div class="ms-textField" [class.ms-disabled]="course.courseTeachers?.length === 0">
+      <label class="ms-label" labelled text="Enseignant principal" for="isPrincipal">
+        <MsfCheckbox id="isPrincipal" formControlName="isPrincipal"></MsfCheckbox>
+      </label>
+    </div>
+
+    <div class="ms-textField">
+      <label class="ms-label ms-pointer" labelled text="Cours magistral" for="lecture">
+        <MsfCheckbox id="lecture" formControlName="lecture"></MsfCheckbox>
+      </label>
+    </div>
+
+    <div class="ms-textField d-flex align-items-center ms-pointer">
+      <MsfCheckbox id="tutorial" formControlName="tutorial"></MsfCheckbox>
+      <label class="ml-2 ms-label" for="tutorial">Travaux dirigés</label>
+    </div>
+
+
+
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
+    </div>
+  </form>
+</div>

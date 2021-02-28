@@ -1,34 +1,32 @@
 ﻿<app-layout>
-  <div *ngIf="course">
+  <div *ngIf="room">
     <div class="ms-header">
       <div class="d-flex align-items-center">
         <button historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
         <div class="ms-header-title ms-fontWeight-semibold">
-          <a [routerLink]="course.level.url" [queryParams]="{tab: 'courses'}">Niveau {{course.level.index + 1}}</a> /
-          {{course.name}}</div>
+          <a *ngIf="room.forSchool" [routerLink]="room.school.url" [queryParams]="{tab: 'rooms'}">Salles</a>
+          <a *ngIf="room.forDepartment" [routerLink]="room.department.url" [queryParams]="{tab: 'rooms'}">Salles</a>
+          <a *ngIf="room.forLevel" [routerLink]="room.school.url" [queryParams]="{tab: 'rooms'}">Salles</a>
+          /
+          {{room.name}}</div>
       </div>
     </div>
 
     <msPivot>
-      <msPivotHeader class="text-uppercase">
+      <msPivotHeader>
         <msPivotLabel id="details">Détails</msPivotLabel>
         <msPivotLabel id="hours">Horaires</msPivotLabel>
         <msPivotLabel id="sessions">Séances de cours</msPivotLabel>
-        <msPivotLabel id="tests">épreuves</msPivotLabel>
       </msPivotHeader>
       <msPivotBody>
         <div *msPivotContentDef>
-          <app-course-home-page [course]="course"></app-course-home-page>
+          <app-room-home-page [room]="room"></app-room-home-page>
         </div>
         <div *msPivotContentDef>
-          <app-course-hour-list [course]="course" [hiddenColumns]="['course']"></app-course-hour-list>
+          <app-course-hour-list [room]="room" [hiddenColumns]="['room']"></app-course-hour-list>
         </div>
         <div *msPivotContentDef>
-          <app-course-session-list [course]="course" [hiddenColumns]="['course']"></app-course-session-list>
-        </div>
-
-        <div *msPivotContentDef>
-          <app-test-list [course]="course" [columns]="['course', 'code', 'level', 'department']"></app-test-list>
+          <app-course-session-list [room]="room" [hiddenColumns]="['room']"></app-course-session-list>
         </div>
       </msPivotBody>
     </msPivot>

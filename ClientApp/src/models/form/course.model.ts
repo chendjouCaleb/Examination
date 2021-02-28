@@ -127,7 +127,6 @@ export class CourseLevelSpecialityAddModel {
 }
 
 
-
 export class CourseTeacherAddBodyModel {
   tutorial: boolean;
   lecture: boolean;

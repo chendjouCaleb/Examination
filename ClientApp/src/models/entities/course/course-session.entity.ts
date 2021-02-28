@@ -3,6 +3,7 @@ import {Entity} from '../entity';
 import {CourseTeacher} from './course-teacher.entity';
 import {Room} from '../organisation';
 import {Course} from './course.entity';
+import {LocalTime} from "@js-joda/core";
 
 export class CourseSession extends Entity<number> {
   constructor(value: any = {}) {
@@ -48,6 +49,42 @@ export class CourseSession extends Entity<number> {
 
   startDate: Date;
   endDate: Date;
+
+  get courseName(): string {
+    return this.course.name;
+  }
+
+  get levelIndex(): number {
+    return this.course.level.index;
+  }
+
+  get expectedStartHour(): LocalTime {
+    return LocalTime.of(this.expectedStartDate.getHours(), this.expectedStartDate.getMinutes());
+  }
+
+  get expectedEndHour(): LocalTime {
+    return LocalTime.of(this.expectedEndDate.getHours(), this.expectedEndDate.getMinutes());
+  }
+
+  get startHour(): LocalTime {
+    return LocalTime.of(this.startDate.getHours(), this.startDate.getMinutes());
+  }
+
+  get endHour(): LocalTime {
+    return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes());
+  }
+
+  get waiting(): boolean {
+    return !this.startDate;
+  }
+
+  get finished(): boolean {
+    return !!this.endDate;
+  }
+
+  get progress(): boolean {
+    return !!this.startDate && !this.endDate;
+  }
 
 
   get url(): string {

@@ -11,3 +11,7 @@ export * from './examination';
 export * from './test';
 export * from './test-group';
 export * from './paper';
+
+export * from './course-hour';
+export * from './course-session';
+export * from './course-teacher';

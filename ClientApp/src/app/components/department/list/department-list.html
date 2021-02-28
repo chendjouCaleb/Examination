@@ -1,6 +1,6 @@
 <ng-container *ngIf="school.departments">
   <div class="ms-pageTitle">
-    <h2> Départements ({{school.departments.size()}})</h2>
+    <div msFontSize="20"> Départements ({{school.departments.size()}})</div>
     <div *ngIf="_auth.isAuthorized && school.userPrincipal.isPrincipal">
       <button class="ms-hiddenSm" msButton icon="Add" theme="primary" (click)="add()">Ajouter un département</button>
       <button class="ms-hiddenMdUp" msButton icon="Add" theme="primary" (click)="add()">Ajouter</button>

@@ -1,0 +1,65 @@
+<div class="ms-pageTitle">
+  <div msFontSize="18">Horaires</div>
+  <button msButton
+          icon="Add" theme="primary" *ngIf="course && course.level.department.school.isPlanner"
+          (click)="addCourseHour() ">
+    Ajouter<span class="ms-hiddenSm"> un horaire</span></button>
+</div>
+
+
+<div>
+  <ms-table #msTable [hiddenColumns]="hiddenColumns">
+    <ms-tableHead *msTableHeadDef>
+      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="teacher">Enseignant</ms-tableHeadCell>
+      <ms-tableHeadCell name="course" [sortBy]="['courseName', 'string']">Cours</ms-tableHeadCell>
+      <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
+      <ms-tableHeadCell name="room">Salle</ms-tableHeadCell>
+      <ms-tableHeadCell name="hour">Horaire</ms-tableHeadCell>
+      <ms-tableHeadCell name="registrationDate">Date d'ajout</ms-tableHeadCell>
+      <msTableHeadCell name="actions" class="text-right">
+        <i class="ms-Icon ms-Icon--SetAction px-2"></i>
+      </msTableHeadCell>
+    </ms-tableHead>
+
+    <ms-tableRow *ms-tableRowDef="let item of courseHours; let i=index" [value]="item">
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>
+        <div style="position: relative">
+          <user-persona class="ms-pointer" [routerLink]="item.courseTeacher.teacher.url"
+                        [user]="item.courseTeacher.teacher.user"></user-persona>
+          <app-icon style="position: absolute; left: 24px; top: 24px"
+                    *ngIf="item.courseTeacher.isPrincipal" bgColor="sharedYellowGreen10" icon="CheckMark"></app-icon>
+        </div>
+
+      </ms-tableCell>
+      <ms-tableCell>
+        <a [routerLink]="item.course.url">{{item.courseName}}({{item.course.code}})</a>
+      </ms-tableCell>
+      <ms-tableCell>
+        <a [routerLink]="item.course.level.url">Niveau {{item.levelIndex + 1}}</a>
+      </ms-tableCell>
+      <ms-tableCell>
+        <span *ngIf="item.lecture" class="ms-badge mr-2" msBgColor="sharedCyanBlue20">CM</span>
+        <span *ngIf="!item.lecture" class="ms-badge" msBgColor="sharedRedOrange10">TD</span>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <a [routerLink]="item.room.url">{{item.room.name}}</a>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <div>{{item.dayOfWeek}}</div>
+        <div>{{item.startHour}} - {{item.endHour}}</div>
+      </ms-tableCell>
+
+      <ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</ms-tableCell>
+      <ms-tableCell class="text-right">
+        <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary"
+                (click)="service.details(item)"></button>
+        <button msIconButton icon="Delete" [rounded]="true" theme="errorOutline" (click)="delete(item)"></button>
+      </ms-tableCell>
+    </ms-tableRow>
+  </ms-table>
+
+</div>

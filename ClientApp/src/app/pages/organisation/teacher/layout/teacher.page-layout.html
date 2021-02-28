@@ -20,10 +20,10 @@
           <app-teacher-home-page [teacher]="teacher"></app-teacher-home-page>
         </div>
         <div *msPivotContentDef>
-          horaires
+          <app-course-hour-list [teacher]="teacher" [hiddenColumns]="['teacher']"></app-course-hour-list>
         </div>
         <div *msPivotContentDef>
-          séances
+          <app-course-session-list [teacher]="teacher" [hiddenColumns]="['teacher']"></app-course-session-list>
         </div>
       </msPivotBody>
     </msPivot>
