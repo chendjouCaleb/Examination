@@ -13,7 +13,7 @@ import {
   RoomModule,
   SchoolResolver,
   SpecialityModule,
-  StudentModule
+  StudentModule, TeacherModule
 } from 'examination/app/components';
 import {DepartmentLevels} from './levels/department-levels';
 import {DepartmentSpecialities} from './specialities/department-specialities';
@@ -32,7 +32,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, MsButtonModule, MsPivotModule, DepartmentModule, LevelModule, SpecialityModule,
-    ApplicationModule,
+    ApplicationModule, TeacherModule,
     CorrectorModule, SupervisorModule, PrincipalModule, SecretaryModule, StudentModule, RoomModule,
     RouterModule.forChild(routes), LayoutModule, ControlModule, MsfMenuModule ],
   declarations: [DepartmentPageLayout, DepartmentHomePage, DepartmentLevels, DepartmentSpecialities]

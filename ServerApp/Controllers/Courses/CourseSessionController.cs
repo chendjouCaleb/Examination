@@ -27,7 +27,7 @@ namespace Exam.Controllers.Courses
             _courseSessionRepository = courseSessionRepository;
         }
 
-        [HttpGet("{courseSessionId")]
+        [HttpGet("{courseSessionId}")]
         public CourseSession Get(long courseSessionId)
         {
             CourseSession courseSession = _courseSessionRepository.Find(courseSessionId);

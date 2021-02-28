@@ -1,16 +1,18 @@
 import {Injectable} from '@angular/core';
-import {Loader} from "../loader";
+import {Loader} from '../loader';
 import {
+  Course,
   Examination,
   ExaminationDepartment,
   ExaminationLevel,
   ExaminationLevelSpeciality,
   ExaminationSpeciality,
   Test
-} from "examination/entities";
-import {TestHttpClient, UserHttpClient} from "examination/models/http";
-import {CourseLoader, SpecialityLoader} from "../organisation";
-import {ExaminationLevelLoader, ExaminationLevelSpecialityLoader} from "../examination";
+} from 'examination/entities';
+import {TestHttpClient, UserHttpClient} from 'examination/models/http';
+import {SpecialityLoader} from '../organisation';
+import {ExaminationLevelLoader, ExaminationLevelSpecialityLoader} from '../examination';
+import {CourseLoader} from '../course';
 
 
 @Injectable({providedIn: 'root'})
@@ -105,6 +107,17 @@ export class TestLoader extends Loader<Test, number> {
     }
     const tests = await this.testRepository.listAsync({examinationLevelSpecialityId: examinationLevelSpeciality.id});
     examinationLevelSpeciality.tests = tests;
+    for (const test of tests) {
+      await this.load(test);
+    }
+  }
+
+  async loadByCourse(course: Course): Promise<void> {
+    if (course.tests) {
+      return;
+    }
+    const tests = await this.testRepository.listAsync({courseId: course.id});
+    course.tests = tests;
     for (const test of tests) {
       await this.load(test);
     }

@@ -1,5 +1,8 @@
-import {Course, CourseTeacher, Entity, Room} from 'examination/entities';
 import {CourseHour} from './course-hour.entity';
+import {Entity} from '../entity';
+import {CourseTeacher} from './course-teacher.entity';
+import {Room} from '../organisation';
+import {Course} from './course.entity';
 
 export class CourseSession extends Entity<number> {
   constructor(value: any = {}) {

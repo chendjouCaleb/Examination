@@ -1,0 +1,36 @@
+﻿<app-layout>
+  <div *ngIf="course">
+    <div class="ms-header">
+      <div class="d-flex align-items-center">
+        <button historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <div class="ms-header-title ms-fontWeight-semibold">
+          <a [routerLink]="course.level.url" [queryParams]="{tab: 'courses'}">Niveau {{course.level.index + 1}}</a> /
+          {{course.name}}</div>
+      </div>
+    </div>
+
+    <msPivot>
+      <msPivotHeader class="text-uppercase">
+        <msPivotLabel id="details">Détails</msPivotLabel>
+        <msPivotLabel id="hours">Horaires</msPivotLabel>
+        <msPivotLabel id="sessions">Séances de cours</msPivotLabel>
+        <msPivotLabel id="tests">épreuves</msPivotLabel>
+      </msPivotHeader>
+      <msPivotBody>
+        <div *msPivotContentDef>
+          <app-course-home-page [course]="course"></app-course-home-page>
+        </div>
+        <div *msPivotContentDef>
+          horaires
+        </div>
+        <div *msPivotContentDef>
+          séances
+        </div>
+
+        <div *msPivotContentDef>
+          <app-test-list [course]="course" [columns]="['course', 'code', 'level', 'department']"></app-test-list>
+        </div>
+      </msPivotBody>
+    </msPivot>
+  </div>
+</app-layout>

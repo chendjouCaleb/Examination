@@ -550,6 +550,20 @@
                   <e p="supervisor.service.interface.ts" t="Include" />
                   <e p="supervisor.service.ts" t="Include" />
                 </e>
+                <e p="teacher" t="Include">
+                  <e p="add" t="Include">
+                    <e p="teacher-add.html" t="Include" />
+                    <e p="teacher-add.ts" t="Include" />
+                  </e>
+                  <e p="index.ts" t="Include" />
+                  <e p="list" t="Include">
+                    <e p="teacher-list.html" t="Include" />
+                    <e p="teacher-list.ts" t="Include" />
+                  </e>
+                  <e p="teacher.module.ts" t="Include" />
+                  <e p="teacher.service.interface.ts" t="Include" />
+                  <e p="teacher.service.ts" t="Include" />
+                </e>
               </e>
               <e p="paper" t="Include">
                 <e p="date" t="Include">
@@ -872,6 +886,17 @@
                 </e>
               </e>
               <e p="organisation" t="Include">
+                <e p="course" t="Include">
+                  <e p="course.page.module.ts" t="Include" />
+                  <e p="Home" t="Include">
+                    <e p="course-home.page.html" t="Include" />
+                    <e p="course-home.page.ts" t="Include" />
+                  </e>
+                  <e p="layout" t="Include">
+                    <e p="course.page-layout.html" t="Include" />
+                    <e p="course.page-layout.ts" t="Include" />
+                  </e>
+                </e>
                 <e p="department" t="Include">
                   <e p="department.page.module.ts" t="Include" />
                   <e p="Home" t="Include">
@@ -959,6 +984,17 @@
                     <e p="student.page-layout.ts" t="Include" />
                   </e>
                   <e p="student.page.module.ts" t="Include" />
+                </e>
+                <e p="teacher" t="Include">
+                  <e p="Home" t="Include">
+                    <e p="teacher-home.page.html" t="Include" />
+                    <e p="teacher-home.page.ts" t="Include" />
+                  </e>
+                  <e p="layout" t="Include">
+                    <e p="teacher.page-layout.html" t="Include" />
+                    <e p="teacher.page-layout.ts" t="Include" />
+                  </e>
+                  <e p="teacher.page.module.ts" t="Include" />
                 </e>
               </e>
             </e>
@@ -1327,6 +1363,7 @@
               <e p="course" t="Include">
                 <e p="course-hour.loader.ts" t="Include" />
                 <e p="course-level-speciality.loader.ts" t="Include" />
+                <e p="course-session.loader.ts" t="Include" />
                 <e p="course-teacher.loader.ts" t="Include" />
                 <e p="course.loader.module.ts" t="Include" />
                 <e p="course.loader.ts" t="Include" />
@@ -1641,6 +1678,8 @@
           <e p="20200929143756_Update2.Designer.cs" t="Include" />
           <e p="20200930055043_Update3.cs" t="Include" />
           <e p="20200930055043_Update3.Designer.cs" t="Include" />
+          <e p="20210228052614_AddCourses.cs" t="Include" />
+          <e p="20210228052614_AddCourses.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

@@ -1,6 +1,10 @@
-import {Course, CourseSession, CourseTeacher, Entity, Room} from 'examination/entities';
 import {DayOfWeek, LocalTime} from '@js-joda/core';
-import {List} from "@positon/collections";
+import {List} from '@positon/collections';
+import {Entity} from '../entity';
+import {CourseTeacher} from './course-teacher.entity';
+import {Course} from './course.entity';
+import {Room} from '../organisation';
+import {CourseSession} from './course-session.entity';
 
 export class CourseHour extends Entity<number> {
   constructor(value: any = {}) {

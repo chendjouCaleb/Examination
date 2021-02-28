@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ExaminationResolver, SchoolResolver} from 'examination/app/components';
-import {LoadAuthorizationGuard} from "examination/app/authorization";
+import {LoadAuthorizationGuard} from 'examination/app/authorization';
 
 
 const routes: Routes = [
@@ -21,6 +21,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'schools/:schoolId/departments/:departmentId/teachers', canActivate: [LoadAuthorizationGuard],
+    loadChildren: () => import('./pages/organisation/teacher/teacher.page.module').then(m => m.TeacherPageModule)
+  },
+
+  {
     path: 'schools/:schoolId/departments/:departmentId/levels/:levelId/specialities',
     canActivate: [LoadAuthorizationGuard],
     loadChildren: () => import('./pages/organisation/level-speciality/level-speciality.page.module').then(m => m.LevelSpecialityPageModule)
@@ -29,6 +34,11 @@ const routes: Routes = [
   {
     path: 'schools/:schoolId/departments/:departmentId/levels/:levelId/students', canActivate: [LoadAuthorizationGuard],
     loadChildren: () => import('./pages/organisation/student/student.page.module').then(m => m.StudentPageModule)
+  },
+
+  {
+    path: 'schools/:schoolId/departments/:departmentId/levels/:levelId/courses', canActivate: [LoadAuthorizationGuard],
+    loadChildren: () => import('./pages/organisation/course/course.page.module').then(m => m.CoursePageModule)
   },
 
   {

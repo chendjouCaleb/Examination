@@ -9,7 +9,7 @@
     <app-test-item *ngFor="let item of tests" [test]="item" class="mt-2"></app-test-item>
   </div>
 
-  <ms-table #table *ngIf="_isLoaded">
+  <ms-table #table [hiddenColumns]="columns">
     <msTableHead *ms-tableHeadDef>
       <ms-tableHeadCell name="#">#</ms-tableHeadCell>
       <ms-tableHeadCell name="course" [sortBy]="['name', 'string']">Cours</ms-tableHeadCell>
@@ -18,7 +18,7 @@
       <ms-tableHeadCell name="expectedStartDate" [sortBy]="['expectedStartDate', 'date']">Horaire</ms-tableHeadCell>
       <ms-tableHeadCell name="startDate" [sortBy]="['startDate', 'date']">Horaire eff.</ms-tableHeadCell>
       <ms-tableHeadCell name="coefficient" [sortBy]="['coefficient', 'number']">Coef.</ms-tableHeadCell>
-      <ms-tableHeadCell name="coefficient" [sortBy]="['radical', 'number']">Radical</ms-tableHeadCell>
+      <ms-tableHeadCell name="radical" [sortBy]="['radical', 'number']">Radical</ms-tableHeadCell>
 
       <ms-tableHeadCell name="department" [sortBy]="['departmentName', 'string']">Département</ms-tableHeadCell>
       <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>

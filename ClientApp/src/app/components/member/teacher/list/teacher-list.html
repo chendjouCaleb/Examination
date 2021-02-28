@@ -1,0 +1,31 @@
+﻿<div class="ms-pageTitle">
+  <h4>Enseignants</h4>
+  <button *ngIf="department.isPrincipalUser" msButton icon="Add" theme="primary" (click)="addTeachers()">
+    Ajouter <span class="ms-hiddenSm">des enseignants</span></button>
+</div>
+
+<ms-table>
+  <msTableHead *ms-tableHeadDef>
+    <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+    <ms-tableHeadCell name="user">Utilisateur</ms-tableHeadCell>
+    <ms-tableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout</ms-tableHeadCell>
+    <msTableHeadCell name="actions" class="text-right">
+      <i class="ms-Icon ms-Icon--SetAction"></i>
+    </msTableHeadCell>
+  </msTableHead>
+
+  <msTableRow *ms-tableRowDef="let item of teachers; let i=index">
+    <msTableCell>{{i + 1}}</msTableCell>
+    <msTableCell>
+      <user-persona [user]="item.user"></user-persona>
+    </msTableCell>
+    <msTableCell class="ms-fontSize-12">{{item.registrationDate | date}}</msTableCell>
+    <msTableCell class="text-right">
+      <ng-container *ngIf="department.isPrincipalUser">
+        <button msButton theme="standard" [routerLink]="item.url" class="mr-2">Détails</button>
+        <button msIconButton (click)="deleteTeacher(item)" icon="Delete" theme="error"
+                [rounded]="true"></button>
+      </ng-container>
+    </msTableCell>
+  </msTableRow>
+</ms-table>

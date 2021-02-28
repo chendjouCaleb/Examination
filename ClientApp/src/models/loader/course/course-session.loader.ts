@@ -3,8 +3,9 @@ import {Loader} from '../loader';
 import {Course, CourseHour, CourseSession, CourseTeacher, Level, Room, Teacher} from 'examination/entities';
 import {CourseSessionHttpClient, UserHttpClient} from 'examination/models/http';
 import {CourseLoader} from './course.loader';
-import {RoomLoader} from 'examination/loaders';
 import {CourseTeacherLoader} from './course-teacher.loader';
+import {RoomLoader} from '../organisation';
+import {CourseHourLoader} from './course-hour.loader';
 
 
 @Injectable({providedIn: 'root'})
@@ -14,6 +15,7 @@ export class CourseSessionLoader extends Loader<CourseSession, number> {
               private _userHttClient: UserHttpClient,
               private _roomLoader: RoomLoader,
               private _courseLoader: CourseLoader,
+              private _courseHourLoader: CourseHourLoader,
               private _courseTeacherLoader: CourseTeacherLoader) {
     super(courseSessionRepository);
   }
@@ -22,6 +24,10 @@ export class CourseSessionLoader extends Loader<CourseSession, number> {
     item.room = await this._roomLoader.loadById(item.roomId);
     item.course = await this._courseLoader.loadById(item.courseId);
     item.courseTeacher = await this._courseTeacherLoader.loadById(item.courseTeacherId);
+
+    if (item.courseHourId) {
+      item.courseHour = await this._courseHourLoader.loadById(item.courseHourId);
+    }
     return item;
   }
 

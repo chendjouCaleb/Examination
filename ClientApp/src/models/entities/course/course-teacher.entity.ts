@@ -1,5 +1,9 @@
-import {Course, CourseHour, CourseSession, Entity, Teacher} from "examination/entities";
-import {List} from "@positon/collections";
+import {List} from '@positon/collections';
+import {Teacher} from '../member';
+import {Course} from './course.entity';
+import {CourseHour} from './course-hour.entity';
+import {CourseSession} from './course-session.entity';
+import {Entity} from '../entity';
 
 
 export class CourseTeacher extends Entity<number> {

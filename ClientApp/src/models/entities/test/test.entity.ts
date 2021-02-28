@@ -3,13 +3,13 @@ import {User} from '../identity/user.entity';
 import {LocalTime} from '@js-joda/core';
 import {List} from '@positon/collections';
 import {TestGroup} from './test-group.entity';
-import {Course} from '../organisation';
 import {ExaminationLevel, ExaminationLevelSpeciality} from '../examination';
 import {TestScore} from './test-score.entity';
 import {sum} from '../../../controls/array';
 import {TestLevelSpeciality} from './test-level-speciality.entity';
 import {Paper} from './paper.entity';
 import {PaperStatistics} from './paper-statistics';
+import {Course} from "../course";
 
 export class Test extends Entity<number> {
   constructor(value: any = {}) {

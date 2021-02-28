@@ -6,3 +6,4 @@ export * from './student.loader';
 export * from './application.loader';
 export * from './member.loader.module';
 export * from './planner.loader';
+export * from './teacher.loader';

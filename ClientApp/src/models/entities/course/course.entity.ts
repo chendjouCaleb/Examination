@@ -7,6 +7,7 @@ import {CourseLevelSpeciality} from './course-level-speciality.entity';
 import {CourseTeacher} from './course-teacher.entity';
 import {CourseHour} from './course-hour.entity';
 import {CourseSession} from './course-session.entity';
+import {Test} from "../test";
 
 export class Course extends Entity<number> {
   constructor(value: any = {}) {
@@ -46,6 +47,7 @@ export class Course extends Entity<number> {
   courseSessions: List<CourseSession>;
 
   scores: List<Score>;
+  tests: List<Test>;
 
   get totalScoreRadical(): number {
     if (!this.scores) {return 0; }

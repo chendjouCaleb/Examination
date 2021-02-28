@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
 
-import {Loader} from "../loader";
+import {Loader} from '../loader';
 import {
   CourseLevelSpeciality,
   ExaminationLevelSpeciality,
   ExaminationSpeciality,
   Test,
   TestLevelSpeciality
-} from "examination/entities";
-import {TestLevelSpecialityHttpClient, UserHttpClient} from "examination/models/http";
-import {TestLoader} from "./test.loader";
-import {CourseLevelSpecialityLoader, LevelSpecialityLoader} from "../organisation";
-import {ExaminationLevelSpecialityLoader} from "../examination";
+} from 'examination/entities';
+import {TestLevelSpecialityHttpClient, UserHttpClient} from 'examination/models/http';
+import {TestLoader} from './test.loader';
+import { LevelSpecialityLoader} from '../organisation';
+import {ExaminationLevelSpecialityLoader} from '../examination';
+import {CourseLevelSpecialityLoader} from '../course';
 
 
 @Injectable({providedIn: 'root'})

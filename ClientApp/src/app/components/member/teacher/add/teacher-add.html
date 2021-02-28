@@ -1,0 +1,16 @@
+﻿<div class="flex-center-cover">
+  ﻿
+  <form class="ms-form">
+    <div class="ms-form-header">Ajouter des enseignants</div>
+
+    <div class="ms-textField">
+      <label class="msf-label" for="user">Choisir les utilisateurs</label>
+      <user-picker id="user" name="user" [(ngModel)]="users"></user-picker>
+    </div>
+
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton (click)="addAll()" icon="Add" [disabled]="users.length < 1" theme="primary">Ajouter</button>
+    </div>
+  </form>
+</div>

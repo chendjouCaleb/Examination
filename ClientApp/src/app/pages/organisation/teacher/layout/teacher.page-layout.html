@@ -1,0 +1,31 @@
+﻿<app-layout>
+  <div *ngIf="teacher">
+    <div class="ms-header">
+      <div class="d-flex align-items-center">
+        <button historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <div class="ms-header-title ms-fontWeight-semibold">
+          <a [routerLink]="teacher.department.url" [queryParams]="{tab: 'teachers'}">{{teacher.department.name}}</a> /
+          {{teacher.user.fullName}}</div>
+      </div>
+    </div>
+
+    <msPivot>
+      <msPivotHeader>
+        <msPivotLabel id="details">Détails</msPivotLabel>
+        <msPivotLabel id="hours">Horaires</msPivotLabel>
+        <msPivotLabel id="sessions">Séances de cours</msPivotLabel>
+      </msPivotHeader>
+      <msPivotBody>
+        <div *msPivotContentDef>
+          <app-teacher-home-page [teacher]="teacher"></app-teacher-home-page>
+        </div>
+        <div *msPivotContentDef>
+          horaires
+        </div>
+        <div *msPivotContentDef>
+          séances
+        </div>
+      </msPivotBody>
+    </msPivot>
+  </div>
+</app-layout>

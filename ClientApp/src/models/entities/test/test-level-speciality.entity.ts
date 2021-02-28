@@ -1,11 +1,11 @@
 ﻿import {Entity} from '../entity';
-import {Test} from "./test.entity";
+import {Test} from './test.entity';
 
-import {List} from "@positon/collections";
-import {CourseLevelSpeciality} from "../organisation";
-import {ExaminationLevelSpeciality, ExaminationSpeciality} from "../examination";
-import {PaperStatistics} from "./paper-statistics";
-import {Paper} from "./paper.entity";
+import {List} from '@positon/collections';
+import {ExaminationLevelSpeciality, ExaminationSpeciality} from '../examination';
+import {PaperStatistics} from './paper-statistics';
+import {Paper} from './paper.entity';
+import {CourseLevelSpeciality} from "../course";
 
 
 export class TestLevelSpeciality extends Entity<number> {

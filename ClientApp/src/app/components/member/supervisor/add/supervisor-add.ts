@@ -28,7 +28,7 @@ export class SupervisorAdd {
     }
 
     this.department.supervisors.insertRange(supervisors, 0);
-    this._alertEmitter.info(`${supervisors.size()} superviseurs(s) ont été ajouté(s).`);
+    this._alertEmitter.info(`${supervisors.size()} superviseur(s) ont été ajouté(s).`);
 
     if (this._dialogRef) {
       this._dialogRef.close(supervisors);

@@ -9,6 +9,7 @@
       <msPivotLabel>Acceuil</msPivotLabel>
       <msPivotLabel>Salles</msPivotLabel>
       <msPivotLabel>Étudiants</msPivotLabel>
+      <msPivotLabel>Enseignants</msPivotLabel>
       <msPivotLabel>Demandes</msPivotLabel>
       <msPivotLabel>Délégués</msPivotLabel>
       <msPivotLabel>Correcteurs</msPivotLabel>
@@ -24,6 +25,9 @@
       </div>
       <div *msPivotContentDef>
         <app-student-list  [department]="department"></app-student-list>
+      </div>
+      <div *msPivotContentDef>
+        <app-teacher-list  [department]="department"></app-teacher-list>
       </div>
       <div *msPivotContentDef>
         <app-application-list [department]="department"></app-application-list>

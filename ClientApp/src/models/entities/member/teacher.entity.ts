@@ -40,6 +40,10 @@ export class Teacher extends Entity<number> {
   courseHours: List<CourseHour>;
   courseSessions: List<CourseSession>;
   courseTeachers: List<CourseTeacher>;
+
+  get url(): string {
+    return `${this.department.url}/teachers/${this.id}`;
+  }
 }
 
 

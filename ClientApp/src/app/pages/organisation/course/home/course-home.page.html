@@ -1,0 +1,19 @@
+<div style="max-width: 100%; overflow: auto">
+    <div class="ms-pageTitle" style="position: sticky; left: 0">
+      <div msFontSize="20">{{course.name}} ({{course.name}})</div>
+
+      <div class="text-right">
+        <ng-container *ngIf="course.level.department.isPrincipal">
+          <button msIconButton icon="Settings" [MsfMenuTrigger]="more"></button>
+
+          <MsfMenu #more>
+            <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
+          </MsfMenu>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="d-flex mt-4">
+
+    </div>
+  </div>

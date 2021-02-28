@@ -3,7 +3,7 @@ import {Loader} from '../loader';
 import {Course, CourseTeacher, Teacher} from 'examination/entities';
 import {CourseTeacherHttpClient, UserHttpClient} from 'examination/models/http';
 import {CourseLoader} from './course.loader';
-import {TeacherLoader} from '../member/teacher.loader';
+import {TeacherLoader} from '../member';
 
 
 @Injectable({providedIn: 'root'})
