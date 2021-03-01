@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~9.0.1",
     "@angular/router": "~9.0.1",
     "@js-joda/core": "^2.0.0",
+    "@js-joda/locale_fr": "^3.2.2",
     "@microsoft/signalr": "^3.1.5",
     "@ms-fluent/button": "0.0.14",
     "@ms-fluent/grid": "0.0.2",

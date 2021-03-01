@@ -3,7 +3,7 @@ import {List} from '@positon/collections';
 import {Entity} from '../entity';
 import {CourseTeacher} from './course-teacher.entity';
 import {Course} from './course.entity';
-import {Room} from '../organisation';
+import {Room, School} from '../organisation';
 import {CourseSession} from './course-session.entity';
 
 export class CourseHour extends Entity<number> {
@@ -53,4 +53,11 @@ export class CourseHour extends Entity<number> {
     return this.course.level.index;
   }
 
+  get school(): School {
+    return this.room?.school;
+  }
+
+  get startTime(): number {
+    return this.dayOfWeek.value() * 24 * 60 + this.startHour.hour() * 60 + this.startHour.minute();
+  }
 }

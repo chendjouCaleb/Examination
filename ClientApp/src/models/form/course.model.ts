@@ -136,8 +136,8 @@ export class CourseTeacherAddBodyModel {
 
 export class CourseHourAddBodyModel {
   dayOfWeek: number;
-  startHour: LocalTime;
-  endHour: LocalTime;
+  startHour: string;
+  endHour: string;
   lecture: boolean;
 }
 

@@ -1,21 +1,23 @@
 <div class="ms-pageTitle">
   <div msFontSize="18">Horaires</div>
   <button msButton
-          icon="Add" theme="primary" *ngIf="course && course.level.department.school.isPlanner"
+          icon="Add" theme="primary" *ngIf="canAdd"
           (click)="addCourseHour() ">
     Ajouter<span class="ms-hiddenSm"> un horaire</span></button>
 </div>
 
 
 <div>
-  <ms-table #msTable [hiddenColumns]="hiddenColumns">
+  <ms-table #msTable [hiddenColumns]="hiddenColumns" >
     <ms-tableHead *msTableHeadDef>
       <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="hour" [sortBy]="['startTime', 'number']">Horaire</ms-tableHeadCell>
       <ms-tableHeadCell name="teacher">Enseignant</ms-tableHeadCell>
       <ms-tableHeadCell name="course" [sortBy]="['courseName', 'string']">Cours</ms-tableHeadCell>
       <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
+      <ms-tableHeadCell name="type">Type</ms-tableHeadCell>
       <ms-tableHeadCell name="room">Salle</ms-tableHeadCell>
-      <ms-tableHeadCell name="hour">Horaire</ms-tableHeadCell>
+
       <ms-tableHeadCell name="registrationDate">Date d'ajout</ms-tableHeadCell>
       <msTableHeadCell name="actions" class="text-right">
         <i class="ms-Icon ms-Icon--SetAction px-2"></i>
@@ -24,6 +26,10 @@
 
     <ms-tableRow *ms-tableRowDef="let item of courseHours; let i=index" [value]="item">
       <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>
+        <div>{{item.dayOfWeek | dayOfWeek | ucFirst}}</div>
+        <div>{{item.startHour}} - {{item.endHour}}</div>
+      </ms-tableCell>
       <ms-tableCell>
         <div style="position: relative">
           <user-persona class="ms-pointer" [routerLink]="item.courseTeacher.teacher.url"
@@ -48,10 +54,7 @@
         <a [routerLink]="item.room.url">{{item.room.name}}</a>
       </ms-tableCell>
 
-      <ms-tableCell>
-        <div>{{item.dayOfWeek}}</div>
-        <div>{{item.startHour}} - {{item.endHour}}</div>
-      </ms-tableCell>
+
 
       <ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</ms-tableCell>
       <ms-tableCell class="text-right">

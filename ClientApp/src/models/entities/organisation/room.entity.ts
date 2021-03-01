@@ -60,6 +60,6 @@ export class Room extends Entity<number> {
   }
 
   get forLevel(): boolean {
-    return this.level;
+    return !!this.level;
   }
 }

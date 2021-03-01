@@ -11,11 +11,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MsfCheckboxModule, MsfModalModule} from 'fabric-docs';
 import {LayoutModule} from 'examination/infrastructure';
 import {CourseTeacherDetails} from './details/course-teacher-details';
-import {RouterModule} from "@angular/router";
+import {RouterModule} from '@angular/router';
+import {MsPivotModule} from '@ms-fluent/pivot';
+import {CourseHourModule} from '../course-hour';
 
 @NgModule({
   imports: [CommonModule, ControlModule, MsTableModule, MsButtonModule, FormsModule, ReactiveFormsModule,
-    MsfCheckboxModule, MsfSelectModule, LayoutModule, MsfModalModule, RouterModule],
+    MsfCheckboxModule, MsfSelectModule, LayoutModule, MsfModalModule, RouterModule, MsPivotModule, CourseHourModule],
   declarations: [ CourseTeacherList, CourseTeacherAdd, CourseTeacherDetails ],
   exports: [ CourseTeacherList, CourseTeacherAdd, CourseTeacherDetails ],
   providers: [ CourseTeacherService, { provide: COURSE_TEACHER_SERVICE_TOKEN, useExisting: CourseTeacherService }]

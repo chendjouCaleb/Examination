@@ -4,6 +4,8 @@ import {MsTable} from '@ms-fluent/table';
 import {CourseHourLoader} from 'examination/loaders';
 import {COURSE_HOUR_SERVICE_TOKEN, ICourseHourService} from '../course-hour.service.interface';
 import {List} from '@positon/collections';
+import {Locale} from '@js-joda/locale_fr';
+import {DayOfWeek, TextStyle} from "@js-joda/core";
 
 @Component({
   templateUrl: 'course-hour-list.html',
@@ -33,6 +35,8 @@ export class CourseHourList implements OnInit {
 
   courseHours: CourseHour[] = [];
 
+  sortFn = (c1: CourseHour, c2: CourseHour) => c1.startTime - c2.startTime;
+
   constructor(private _courseHourLoader: CourseHourLoader,
               @Inject(COURSE_HOUR_SERVICE_TOKEN) public service: ICourseHourService) {
   }
@@ -58,12 +62,14 @@ export class CourseHourList implements OnInit {
       await this._courseHourLoader.loadByLevel(this.level);
     }
 
-    this.table.unshift(...this.getCourseHours().toArray());
+    let coursesHours = this.getCourseHours().toArray();
+    coursesHours = coursesHours.sort(this.sortFn);
+    this.table.unshift(...coursesHours);
   }
 
 
   addCourseHour() {
-    this.service.addCourseHour(this.course).then(course => {
+    this.service.addCourseHour(this.level).then(course => {
       if (course) {
         this.table.unshift(course);
         this.table.hiddenColumns = (this.hiddenColumns);
@@ -101,5 +107,13 @@ export class CourseHourList implements OnInit {
     }
 
     return new List<CourseHour>();
+  }
+
+  get canAdd(): boolean {
+    return (this.level && this.level.department.school.isPlanner)
+  }
+
+  day(v: DayOfWeek) {
+    return v.getDisplayName(TextStyle.FULL_STANDALONE, Locale.FRANCE);
   }
 }

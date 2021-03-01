@@ -28,6 +28,7 @@ import {MsPaginatorButtons} from './paginator-buttons/paginator-buttons';
 import {MsButtonModule} from '@ms-fluent/button';
 import {HistoryBack} from './history-back';
 import {MsIcon} from './ms-icon';
+import {DayOfWeekPipe} from "./dayOfWeek.pipe";
 
 @NgModule({
   imports: [CommonModule, MatSnackBarModule, MsPersonaModule, MsButtonModule, MsfModalModule],
@@ -35,11 +36,11 @@ import {MsIcon} from './ms-icon';
   declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
     MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe,
     MsColorDirective, MsFontWeightDirective, MsFontSizeDirective, MsBorderColorDirective, MsBgColorDirective,
-    TableColumnDirective, UserPersona, MsPaginatorButtons, HistoryBack, MsIcon],
+    TableColumnDirective, UserPersona, MsPaginatorButtons, HistoryBack, MsIcon, DayOfWeekPipe],
   exports: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
     MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe, TableColumnDirective,
     MsFontWeightDirective, MsFontSizeDirective, MsColorDirective, MsBorderColorDirective, MsBgColorDirective,
-    UserPersona, MsPaginatorButtons, HistoryBack, MsIcon],
+    UserPersona, MsPaginatorButtons, HistoryBack, MsIcon, DayOfWeekPipe],
 })
 export class ControlModule {
 

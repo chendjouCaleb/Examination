@@ -54,7 +54,7 @@ export class CourseTeacherList implements OnInit {
     this.service.addCourseTeacher(this.course).then(course => {
       if (course) {
         this.table.unshift(course);
-        this.table.hiddenColumns = (this.hiddenColumns);
+        this.table.hiddenColumns = this.hiddenColumns;
       }
     });
   }

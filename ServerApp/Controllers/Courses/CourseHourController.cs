@@ -164,7 +164,7 @@ namespace Exam.Controllers.Courses
             return Ok();
         }
 
-        [HttpPut("{courseHourId}/lecture")]
+        [HttpDelete("{courseHourId}")]
         [LoadCourseHour(SchoolItemName = "school")]
         [IsPlanner]
         public NoContentResult Delete(CourseHour courseHour, [FromQuery] bool courseSession) 

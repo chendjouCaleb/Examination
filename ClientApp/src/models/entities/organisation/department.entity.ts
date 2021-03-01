@@ -116,6 +116,10 @@ export class Department extends Entity<number> {
     return `/schools/${this.schoolId}/departments/${this.id}`;
   }
 
+  get isDirector(): boolean {
+    return this.isPrincipalUser;
+  }
+
 }
 
 

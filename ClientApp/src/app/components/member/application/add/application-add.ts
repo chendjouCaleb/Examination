@@ -1,6 +1,6 @@
-﻿import {Component, Input, OnInit} from "@angular/core";
+﻿import {Component, Input, OnInit} from '@angular/core';
 
-import {AlertEmitter} from "src/controls/alert-emitter";
+import {AlertEmitter} from 'src/controls/alert-emitter';
 import {
   ApplicationHttpClient,
   ApplicationLoader,
@@ -12,11 +12,11 @@ import {
   LevelSpecialityLoader,
   School,
   SpecialityHttpClient, StudentHttpClient
-} from "src/models";
-import {ApplicationAddForm} from "../form";
-import {MsfModalRef} from "fabric-docs";
-import {List} from "@positon/collections";
-import {AuthorizationManager} from "examination/app/authorization";
+} from 'src/models';
+import {ApplicationAddForm} from '../form';
+import {MsfModalRef} from 'fabric-docs';
+import {List} from '@positon/collections';
+import {AuthorizationManager} from 'examination/app/authorization';
 
 
 @Component({
@@ -62,7 +62,7 @@ export class ApplicationAdd implements OnInit {
     } else if (this.levelSpeciality) {
       this.level = this.levelSpeciality.level;
     } else {
-      throw new Error("The are no location. You must provider school or department or level or speciality");
+      throw new Error('The are no location. You must provider school or department or level or speciality');
     }
     this.form = new ApplicationAddForm(this._identity.user, this.level, this.levelSpeciality);
   }
@@ -91,7 +91,7 @@ export class ApplicationAdd implements OnInit {
 
   registrationIdIsUsed: boolean = false;
   async checkRegistrationId() {
-    const registrationId = this.form.getControl("registrationId");
+    const registrationId = this.form.getControl('registrationId');
     if (registrationId.value.length > 2) {
       const student = await this._studentHttpClient.findByRegistrationId(this.getSchool(), registrationId.value);
 
@@ -103,7 +103,7 @@ export class ApplicationAdd implements OnInit {
   async add() {
     const model = this.form.getModel();
 
-    let application = await this._httpClient.addApplication(model.body, model.params);
+    const application = await this._httpClient.addApplication(model.body, model.params);
     await this._loader.load(application);
     model.level.addApplication(application);
     model.level.department.addApplication(application);
@@ -116,11 +116,11 @@ export class ApplicationAdd implements OnInit {
   }
 
   getSchool(): School {
-    if(this.school) {
+    if (this.school) {
       return this.school;
-    }else if(this.department) {
+    } else if (this.department) {
       return this.department.school;
-    }else if(this.level) {
+    } else if (this.level) {
       return this.level.department.school;
     }
     return this.levelSpeciality.level.department.school;

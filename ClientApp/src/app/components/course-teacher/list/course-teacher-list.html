@@ -46,7 +46,8 @@
       <ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</ms-tableCell>
       <ms-tableCell class="text-right">
         <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary" (click)="service.details(item)"></button>
-        <button msIconButton icon="Delete" [rounded]="true" theme="errorOutline" (click)="delete(item)"></button>
+        <button *ngIf="item.teacher.department.isDirector" msIconButton icon="Delete" [rounded]="true"
+                theme="errorOutline" (click)="delete(item)"></button>
       </ms-tableCell>
     </ms-tableRow>
   </ms-table>
