@@ -60,7 +60,7 @@
       <ms-tableCell class="text-right">
         <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary"
                 (click)="service.details(item)"></button>
-        <button msIconButton icon="Delete" [rounded]="true" theme="errorOutline" (click)="delete(item)"></button>
+        <button *ngIf="item.room.school.isPlanner" msIconButton icon="Delete" [rounded]="true" theme="errorOutline" (click)="delete(item)"></button>
       </ms-tableCell>
     </ms-tableRow>
   </ms-table>

@@ -125,7 +125,11 @@
 
 
           <td ms-tableCell style="text-align: right">
-            <button msButton (click)="_studentService.detailsStudent(item)">Détails</button>
+            <a [routerLink]="item.url">
+              <button msButton>Détails</button>
+            </a>
+
+            <button msIconButton (click)="_studentService.detailsStudent(item)" icon="MiniExpand" theme="primary"></button>
             <ng-container *ngIf="getDepartment()?.isPrincipal">
               <button msIconButton [rounded]="true" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
               <MsfMenu #more>

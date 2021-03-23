@@ -46,7 +46,8 @@
 
     <div class="ms-textField">
       <label for="day" class="msf-label">Date</label>
-      <input type="text" id="day" name="day" class="ms-textField-input" DateInput formControlName="day">
+      <input type="text" id="day" name="day" class="ms-textField-input" DateInput formControlName="day"
+             placeholder="JJ/MM/AAAA">
       <app-control-error controlName="day"></app-control-error>
     </div>
 
@@ -54,14 +55,14 @@
       <div class="ms-textField">
         <label for="startHour" class="msf-label">Heure de début</label>
         <input type="text" id="startHour" name="startHour" class="ms-textField-input" autocomplete="off" LocalTimeInput
-               formControlName="startHour">
+               formControlName="startHour" placeholder="HH:mm">
         <app-control-error controlName="startHour"></app-control-error>
       </div>
 
       <div class="ms-textField ml-2">
         <label for="endHour" class="msf-label">Heure de fin</label>
         <input type="text" id="endHour" name="endHour" class="ms-textField-input" autocomplete="off"
-               formControlName="endHour" LocalTimeInput>
+               formControlName="endHour" placeholder="HH:mm" LocalTimeInput>
         <app-control-error controlName="endHour"></app-control-error>
       </div>
     </div>

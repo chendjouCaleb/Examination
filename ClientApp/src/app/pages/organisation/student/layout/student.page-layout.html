@@ -2,19 +2,30 @@
   <div *ngIf="student">
     <div class="ms-header">
       <div class="d-flex align-items-center">
-        <button [routerLink]="student.level?.url" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
-        <div class="ms-header-title">{{student.fullName}}</div>
+        <button  historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <div class="ms-header-title">
+          <a [routerLink]="student.level.url" [queryParams]="{pivot: 'students'}">{{'étudiants' | ucFirst }}</a> /
+          {{student.fullName}}
+        </div>
       </div>
     </div>
 
     <msPivot>
       <msPivotHeader>
         <msPivotLabel id="details">Détails</msPivotLabel>
+        <msPivotLabel id="courseHour">Emploi du temps</msPivotLabel>
+        <msPivotLabel id="courseSessions">Séances de cours</msPivotLabel>
         <msPivotLabel id="examinations">Examens</msPivotLabel>
       </msPivotHeader>
       <msPivotBody>
         <div *msPivotContentDef>
           <app-student-home-page [student]="student"></app-student-home-page>
+        </div>
+        <div *msPivotContentDef>
+          <msAlert>En cours de développement</msAlert>
+        </div>
+        <div *msPivotContentDef>
+          <msAlert>En cours de développement</msAlert>
         </div>
         <div *msPivotContentDef>
           <app-student-examinations [student]="student"></app-student-examinations>

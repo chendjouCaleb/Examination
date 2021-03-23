@@ -1,0 +1,34 @@
+﻿[
+  {
+    "name": "Analyse mathématique 2",
+    "description": "étude des fonctions mathématiques",
+    "code": "223",
+    "radical": 20,
+    "coefficient": 4,
+    "isGeneral":true
+  },
+  {
+    "name": "Algèbre 2",
+    "description": "étude des matrices",
+    "code": "243",
+    "radical": 20,
+    "coefficient": 5,
+    "isGeneral":true
+  },
+  {
+    "name": "Topologie",
+    "description": "étude des espaces",
+    "code": "253",
+    "radical": 20,
+    "coefficient": 5,
+    "isGeneral":true
+  },
+  {
+    "name": "Nombres complexes et trigonométrie",
+    "description": "Calcul sur des nombres complexes, et étude des fonctions complexes et trigonométriques.",
+    "code": "263",
+    "radical": 20,
+    "coefficient": 7,
+    "isGeneral":true
+  }
+]

@@ -2,7 +2,7 @@
 <div class="d-flex justify-content-between align-items-center">
   <div class="ms-fontWeight-light ms-fontSize-18">Correcteurs</div>
 
-  <div class="text-right ml-5" *ngIf="testGroup.relation.isPlanner">
+  <div class="text-right ml-5" *ngIf="testGroup.isPlanner">
     <button msButton theme="primaryOutline" icon="Add" (click)="  addTestGroupCorrectors(testGroup)">Ajouter</button>
   </div>
 </div>
@@ -19,7 +19,7 @@
         <user-persona [user]="item.corrector?.user"></user-persona>
       </ms-tableCell>
       <ms-tableCell class="px-0 text-right">
-        <ng-container *ngIf="testGroup.relation.isPlanner">
+        <ng-container *ngIf="testGroup.isPlanner">
           <button msIconButton icon="MoreVertical" theme="transparent" [MsfMenuTrigger]="correctorMore"></button>
           <MsfMenu #correctorMore>
             <MsfMenuItem icon="Delete" theme="error" (click)="remove(item)">

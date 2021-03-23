@@ -10,7 +10,9 @@ import {Title} from "@angular/platform-browser";
   templateUrl: 'school-list.page.html'
 })
 export class SchoolListPage implements OnInit {
-  schools: Array<School>;
+  schools: Array<School> = [];
+
+  isLoading: boolean = true;
 
   constructor(private _httpClient: SchoolHttpClient,
               private _schoolService: SchoolService,
@@ -26,10 +28,15 @@ export class SchoolListPage implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const schools = await this._httpClient.list();
-    await this._schoolLoader.loadAll(schools);
+    try {
+      const schools = await this._httpClient.list();
+      await this._schoolLoader.loadAll(schools);
+      this.schools = schools.toArray();
+    }catch (e) {
+    }finally {
+      this.isLoading = false;
+    }
 
-    this.schools = schools.toArray();
   }
 
   add() {

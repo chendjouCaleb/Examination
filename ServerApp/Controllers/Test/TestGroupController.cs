@@ -40,8 +40,12 @@ namespace Exam.Controllers
 
         [HttpGet("{testGroupId}")]
         [LoadTestGroup]
-        public TestGroup Find(TestGroup testGroup)
+        public TestGroup Find(TestGroup testGroup, User user)
         {
+            if (user != null)
+            {
+                testGroup.Relation = _testGroupRepository.UserTestGroup(testGroup, user.Id);
+            }
             return testGroup;
         }
 

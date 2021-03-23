@@ -1,0 +1,51 @@
+<div class="flex-center-cover" *ngIf="form">
+  <form class="ms-form" [formGroup]="form">
+    <div class="ms-form-header ms-sticky-header">
+      <div msFontSize="20">Rapport de la séance</div>
+      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+    </div>
+
+
+
+    <div class="ms-textField">
+      <label for="day" class="ms-label">Jour</label>
+      <input type="text" id="day" name="day" class="ms-textField-input" autocomplete="off" DateInput
+             formControlName="day" placeholder="JJ/MM/AAAA">
+      <app-control-error controlName="day"></app-control-error>
+    </div>
+
+    <div class="ms-textFieldGroup">
+      <div class="ms-textField">
+        <label for="startHour" class="msf-label">Heure de début</label>
+        <input type="text" id="startHour" name="startHour" class="ms-textField-input" autocomplete="off" LocalTimeInput
+               formControlName="startHour" placeholder="HH:mm">
+        <app-control-error controlName="startHour"></app-control-error>
+      </div>
+
+      <div class="ms-textField ml-2">
+        <label for="endHour" class="ms-label">Heure de fin</label>
+        <input type="text" id="endHour" name="endHour" class="ms-textField-input" autocomplete="off"
+               formControlName="endHour" LocalTimeInput placeholder="HH:mm">
+        <app-control-error controlName="endHour"></app-control-error>
+      </div>
+    </div>
+
+    <div class="ms-textField">
+      <label for="presence" class="ms-label">Nombre d'étudiants présents</label>
+      <input type="text" id="presence" name="presence" class="ms-textField-input" autocomplete="off"
+             formControlName="presence">
+      <app-control-error controlName="presence"></app-control-error>
+    </div>
+
+    <div class="ms-textField">
+      <label for="report" class="ms-label">Commentaire sur la séance séance</label>
+      <textarea formControlName="report" id="report" class="ms-textField-textarea" rows="7"></textarea>
+      <app-control-error controlName="report"></app-control-error>
+    </div>
+
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Save" [disabled]="form.invalid" (click)="change()">Enregistrer</button>
+    </div>
+  </form>
+</div>

@@ -37,6 +37,9 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual List<Paper> Papers { get; set; }
+
+        [NotMapped]
+        public UserTestGroup Relation { get; set; }
         
 
         [JsonIgnore]

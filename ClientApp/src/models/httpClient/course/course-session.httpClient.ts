@@ -42,7 +42,7 @@ export class CourseSessionHttpClient extends GenericHttpClient<CourseSession, nu
   changeObjective(courseSession: CourseSession, objective: string): Promise<void> {
     const form = new FormData();
     form.append('objective', objective);
-    return this.httpClient.put<void>(`${this.url}/${courseSession.id}/objective`, objective).toPromise();
+    return this.httpClient.put<void>(`${this.url}/${courseSession.id}/objective`, form).toPromise();
   }
 
   isLecture(courseSession: CourseSession): Promise<void> {

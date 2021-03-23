@@ -6,13 +6,13 @@ const host = isMobile() ? '192.168.43.24' : 'localhost';
 const authUrl = `http://${host}:4000`;
 export const environment = {
   production: false,
-  HUB_URL: `http://${host}:9000/hubs`,
-  SERVER_URL: `http://${host}:9000/api`,
+  HUB_URL: `/hubs`,
+  SERVER_URL: `/api`,
   AUTH_APP_URL: authUrl,
   AUTH_SERVER_URL: authUrl + '/api',
   AUTH_CODE_URL: authUrl + '/oauth/authorize',
   AUTH_CALLBACK_URL: `http://${host}:9000/authorize/callback`,
-  AUTH_CLIENT_ID: '7cad825d-3465-4ce4-9290-db2637f14f6e',
+  AUTH_CLIENT_ID: 'a7d8c8e3-f4b7-41f6-9499-8f0f832ebfb5',
   AUTH_RETURN_URL: '/home'
 };
 

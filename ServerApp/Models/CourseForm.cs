@@ -37,40 +37,60 @@ namespace Exam.Models
 
     public class AddCourseHourForm
     {
+        [Required]
         public DayOfWeek DayOfWeek { get; set; }
+        
+        [Required]
         public TimeSpan StartHour { get; set; }
+        
+        [Required]
         public TimeSpan EndHour { get; set; }
         public bool Lecture { get; set; }
     }
     
     public class EditCourseHour
     {
+        [Required]
         public DayOfWeek DayOfWeek { get; set; }
-
+        
+        [Required]
         public TimeSpan StartHour { get; set; }
-
+        
+        [Required]
         public TimeSpan EndHour { get; set; }
     }
 
     public class AddCourseSessionForm
     {
+        [Required]
         public DateTime? ExpectedStartDate { get; set; }
+        
+        [Required]
         public DateTime? ExpectedEndDate { get; set; }
 
+        [Required]
         public string Objective { get; set; }
         public bool Lecture { get; set; }
     }
 
     public class CourseSessionHourForm
     {
+        [Required]
         public DateTime? ExpectedStartDate { get; set; }
+        
+        [Required]
         public DateTime? ExpectedEndDate { get; set; }
     }
 
     public class CourseSessionReportForm
     {
+        [Required]
         public DateTime? StartDate { get; set; }
+        
+        [Required]
         public DateTime? EndDate { get; set; }
+        
+        [Required]
         public string Report { get; set; }
         public int? Presence { get; set; }
     }

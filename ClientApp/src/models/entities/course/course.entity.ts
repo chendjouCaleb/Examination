@@ -7,7 +7,7 @@ import {CourseLevelSpeciality} from './course-level-speciality.entity';
 import {CourseTeacher} from './course-teacher.entity';
 import {CourseHour} from './course-hour.entity';
 import {CourseSession} from './course-session.entity';
-import {Test} from "../test";
+import {Test} from '../test';
 
 export class Course extends Entity<number> {
   constructor(value: any = {}) {
@@ -25,6 +25,8 @@ export class Course extends Entity<number> {
     this.description = value.description;
     this.multipleScore = value.multipleScore;
 
+    this.chapterText = value.chapterText;
+
     this.levelId = value.levelId;
   }
 
@@ -41,6 +43,8 @@ export class Course extends Entity<number> {
   levelId: number;
   level: Level;
 
+  chapterText: string;
+
   courseLevelSpecialities: List<CourseLevelSpeciality>;
   courseTeachers: List<CourseTeacher>;
   courseHours: List<CourseHour>;
@@ -48,6 +52,8 @@ export class Course extends Entity<number> {
 
   scores: List<Score>;
   tests: List<Test>;
+
+  chapters: CourseChapter[] = [];
 
   get totalScoreRadical(): number {
     if (!this.scores) {return 0; }
@@ -71,4 +77,10 @@ export class Course extends Entity<number> {
   get levelIndex(): number {
     return this.level.index + 1;
   }
+}
+
+
+export class CourseChapter {
+  title: string;
+  description: string;
 }

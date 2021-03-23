@@ -11,6 +11,7 @@ import {CourseLevelSpecialityAdd} from './course-level-speciality-add/course-lev
 import {CourseRestrict} from './restrict/course-restrict';
 import {CourseDetails} from './details/course-details';
 import {List} from '@positon/collections';
+import {CourseChapterText} from "examination/app/components/course/chapterText/course-chapterText";
 
 
 @Injectable()
@@ -33,6 +34,12 @@ export class CourseService implements ICourseService {
 
   editCourse(course: Course): Promise<void> {
     const modalRef = this._modal.open(CourseEdit);
+    modalRef.componentInstance.course = course;
+    return modalRef.afterClosed().toPromise();
+  }
+
+  chapterText(course: Course): Promise<void> {
+    const modalRef = this._modal.open(CourseChapterText);
     modalRef.componentInstance.course = course;
     return modalRef.afterClosed().toPromise();
   }

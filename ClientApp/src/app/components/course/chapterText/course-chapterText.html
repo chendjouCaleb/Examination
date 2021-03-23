@@ -1,0 +1,17 @@
+<div class="flex-center-cover">
+  <form class="ms-form ms-depth-8">
+    <div class="ms-form-header">Modifier les chapitres</div>
+
+
+    <div class="ms-textField">
+      <label class="ms-label" for="chapterText">Chapitres</label>
+      <textarea id="chapterText" name="chapterText" [(ngModel)]="chapterText" rows="10" class="ms-textField-textarea"></textarea>
+    </div>
+
+
+    <div class="mt-4 text-right">
+      <button msButton (click)="cancel()" class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Edit" [disabled]="!chapterText" (click)="edit()">Modifier</button>
+    </div>
+  </form>
+</div>

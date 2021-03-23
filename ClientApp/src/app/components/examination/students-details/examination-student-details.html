@@ -8,7 +8,7 @@
   </div>
 
 
-  <div class="d-flex flex-wrap">
+  <div class="d-flex flex-wrap justify-content-between">
     <div class="m-2 ms-sm-w100 ms-description-list">
       <dl>
         <dt>Nom & prénom</dt>
@@ -114,8 +114,7 @@
               [class.ms-bgColor-sharedCyan30]="paper.is4_5"
               [class.ms-bgColor-sharedGreen10]="paper.is5_5"
         >
-          <ng-container *ngIf="paper.score < 10">0</ng-container>
-          {{paper.score}}</span>
+          <ng-container *ngIf="paper.score < 10">0</ng-container>{{paper.score}}</span>
           <app-icon *ngIf="!paper.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
         </ms-tableCell>
 

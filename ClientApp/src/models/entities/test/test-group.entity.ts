@@ -5,9 +5,9 @@ import {List} from '@positon/collections';
 import {TestGroupCorrector} from './test-group-corrector.entity';
 import {TestGroupSupervisor} from './test-group-supervisor.entity';
 import {TestGroupSecretary} from './test-group-secretary.entity';
-import {Room} from '../organisation';
-import {Paper} from "./paper.entity";
-import {PaperStatistics} from "./paper-statistics";
+import {Department, Room} from '../organisation';
+import {Paper} from './paper.entity';
+import {PaperStatistics} from './paper-statistics';
 
 export class TestGroup extends Entity<number> {
   constructor(value: any = {}) {
@@ -32,6 +32,12 @@ export class TestGroup extends Entity<number> {
     this.roomId = value.roomId;
     this.testId = value.testId;
 
+    this.relation.isCorrector = value.relation?.isCorrector;
+    this.relation.isSupervisor = value.relation?.isSupervisor;
+    this.relation.isSecretary = value.relation?.isSecretary;
+    this.relation.isStudent = value.relation?.isStudent;
+
+
     this.statistics = new PaperStatistics();
   }
 
@@ -42,6 +48,10 @@ export class TestGroup extends Entity<number> {
   get isClosed(): boolean {
     return !!this.closingDate;
   };
+
+  get department(): Department {
+    return this.test.examinationLevel.level.department;
+  }
 
   closingDate: Date;
 
@@ -85,6 +95,10 @@ export class TestGroup extends Entity<number> {
 
   get endHour(): LocalTime {
     return LocalTime.of(this.endDate.getHours(), this.endDate.getMinutes());
+  }
+
+  get isPlanner(): boolean {
+    return this.department.school.userPrincipal.isPlanner;
   }
 
   get waiting(): boolean {

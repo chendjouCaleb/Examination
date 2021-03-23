@@ -1,6 +1,6 @@
-﻿import {Component, Input, OnInit} from "@angular/core";
-import {AlertEmitter} from "src/controls/alert-emitter";
-import {MsfModalRef} from "fabric-docs";
+﻿import {Component, Input, OnInit} from '@angular/core';
+import {AlertEmitter} from 'src/controls/alert-emitter';
+import {MsfModalRef} from 'fabric-docs';
 import {
   Corrector,
   CorrectorHttpClient,
@@ -8,12 +8,12 @@ import {
   TestGroup,
   TestGroupCorrectorHttpClient,
   TestGroupCorrectorLoader
-} from "examination/models";
+} from 'examination/models';
 
 @Component({
   templateUrl: 'test-group-corrector-add.html'
 })
-export class TestGroupCorrectorAdd implements OnInit{
+export class TestGroupCorrectorAdd implements OnInit {
   correctorId: number[] = [];
 
   @Input()

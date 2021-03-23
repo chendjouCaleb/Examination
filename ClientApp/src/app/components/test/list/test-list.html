@@ -38,9 +38,11 @@
         <span class="ms-badge" msBgColor="sharedBlue10" *ngIf="test.progress">En cours</span>
       </ms-tableCell>
 
-      <ms-tableCell msFontSize="12">
-        <div>{{test.expectedStartDate | date}}</div>
-        <div>{{test.expectedStartHour}} à {{ test.expectedEndHour }}</div>
+      <ms-tableCell >
+        <div msFontSize="12">
+          <div>{{test.expectedStartDate | amDateFormat: 'dddd, LL' | ucFirst}}</div>
+          <div>{{test.expectedStartHour}} à {{ test.expectedEndHour }}</div>
+        </div>
       </ms-tableCell>
 
       <ms-tableCell msFontSize="12">
@@ -65,8 +67,8 @@
 
 
       <ms-tableCell class="text-right">
-        <span class="ms-link" [routerLink]="test.url">Plus</span>
-        <button msIconButton icon="MoreVertical"></button>
+        <button msButton theme="primary" [routerLink]="test.url">Détails</button>
+        <button msIconButton icon="MoreVertical" theme="transparent"></button>
       </ms-tableCell>
 
     </ms-tableRow>

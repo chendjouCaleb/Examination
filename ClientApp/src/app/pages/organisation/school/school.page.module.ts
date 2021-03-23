@@ -16,6 +16,7 @@ import {MsGridModule} from '@ms-fluent/grid';
 import {SchoolAddPage} from './add/school-add.page';
 import {AuthorizedGuard} from 'examination/app/authorization';
 import {MsPivotModule} from '@ms-fluent/pivot';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 const routes: Routes = [
   {path: '', component: SchoolListPage},
@@ -26,7 +27,7 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, SchoolModule, DepartmentModule, OrganisationHttpClientModule, ApplicationModule,
     OrganisationLoaderModule, RoomModule, ExaminationModule, MsButtonModule, MsGridModule, MsPivotModule,
-    RouterModule.forChild(routes), LayoutModule, ControlModule, PlannerModule ],
+    RouterModule.forChild(routes), LayoutModule, ControlModule, PlannerModule, MsSpinnerModule ],
   declarations: [SchoolListPage, SchoolHomePage, SchoolPageLayout, SchoolAddPage]
 })
 export class SchoolPageModule {

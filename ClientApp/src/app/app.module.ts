@@ -1,5 +1,5 @@
 import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule} from '@angular/platform-browser';
-import {Inject, Injectable, LOCALE_ID, NgModule} from '@angular/core';
+import {ErrorHandler, Inject, Injectable, LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -23,6 +23,7 @@ import {MS_BUTTON_DEFAULT_OPTIONS, MsButtonDefaultOptions, MsButtonModule} from 
 import {Global} from '../global';
 
 import * as hammer from 'hammerjs'
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -41,7 +42,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   declarations: [
     AppComponent
   ],
-  imports: [MatNativeDateModule, MatSnackBarModule, HammerModule,
+  imports: [MatNativeDateModule, MatSnackBarModule, HammerModule, MsSpinnerModule,
     BrowserModule, AppRoutingModule, HttpClientModule, AuthorizationModule, MsButtonModule, LayoutModule,
     AppHttpClientModule, HubsModule, BrowserAnimationsModule
   ],

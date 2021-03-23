@@ -6,6 +6,7 @@ import {CourseLoader} from './course.loader';
 import {CourseTeacherLoader} from './course-teacher.loader';
 import {RoomLoader} from '../organisation';
 import {CourseHourLoader} from './course-hour.loader';
+import {AuthorizationManager} from "examination/app/authorization";
 
 
 @Injectable({providedIn: 'root'})
@@ -16,6 +17,7 @@ export class CourseSessionLoader extends Loader<CourseSession, number> {
               private _roomLoader: RoomLoader,
               private _courseLoader: CourseLoader,
               private _courseHourLoader: CourseHourLoader,
+              private _auth: AuthorizationManager,
               private _courseTeacherLoader: CourseTeacherLoader) {
     super(courseSessionRepository);
   }
@@ -24,6 +26,8 @@ export class CourseSessionLoader extends Loader<CourseSession, number> {
     item.room = await this._roomLoader.loadById(item.roomId);
     item.course = await this._courseLoader.loadById(item.courseId);
     item.courseTeacher = await this._courseTeacherLoader.loadById(item.courseTeacherId);
+
+    item.isTeacher = item.courseTeacher.teacher.userId === this._auth.user?.id;
 
     if (item.courseHourId) {
       item.courseHour = await this._courseHourLoader.loadById(item.courseHourId);

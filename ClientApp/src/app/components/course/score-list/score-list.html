@@ -7,9 +7,9 @@
 </div>
 
 
-<msAlert *ngIf="course.multipleScore && course.radical !== course.totalScoreRadical" theme="error" class="my-1">
-  Le total des radicaux des lignes du barème ne correspondent pas au radical de l'épreuve. Ajouter des lignes
-  supplémentaires
+<msAlert style="max-width: 500px" *ngIf="course.multipleScore && course.radical !== course.totalScoreRadical" theme="error" class="my-1">
+  Le total des radicaux des lignes du barème ne correspondent pas au radical de l'épreuve.
+  Ajouter des lignes supplémentaires
   pour compléter les <b> {{course.radical - course.totalScoreRadical}} points </b> manquants!.
 </msAlert>
 

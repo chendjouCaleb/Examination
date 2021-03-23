@@ -1,6 +1,6 @@
 ﻿<div style="max-height: 100%; overflow-y: auto" *ngIf="loaded">
-  <div class="p-3">
-    <div class="ms-pageTitle ms-sticky-header">
+  <div >
+    <div class="p-2 ms-pageTitle ms-sticky-header">
       <h5>{{course.name}}</h5>
       <div>
         <ng-container *ngIf="course.level.department.school.userPrincipal.isPlanner">
@@ -13,14 +13,14 @@
           </MsfMenu>
         </ng-container>
 
-        <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+        <button *ngIf="_modalRef" msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
 
       </div>
     </div>
 
 
-    <div class="ms-Grid-row">
-      <div class="ms-Grid-col ms-sm12 ms-md12  ms-lg6 ms-description-list">
+    <div class="d-flex flex-wrap">
+      <div class="p-2 ms-sm-w100 ms-description-list">
         <dl>
           <dt>Nom</dt>
           <dd>{{course.name}}</dd>
@@ -61,7 +61,7 @@
 
       </div>
 
-      <div class="ms-Grid-col ms-sm12 ms-md12 ms-lg6">
+      <div class="p-2 ms-sm-w100">
         <div class=" ms-description-list w-100">
           <dl>
             <dt>Radical</dt>

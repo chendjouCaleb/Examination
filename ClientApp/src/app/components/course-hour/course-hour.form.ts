@@ -41,7 +41,6 @@ export class CourseHourAddForm extends EvFormGroup<CourseHourAddFormModel> {
       course: new EvFormControl('course', value.course),
       room: new EvFormControl('room', value.room),
       type: new EvFormControl('type', value.type),
-      tutorial: new EvFormControl('lecture', value.tutorial),
       dayOfWeek: new EvFormControl('dayOfWeek', value.dayOfWeek),
       startHour: new EvFormControl('startHour', value.startHour),
       endHour: new EvFormControl('endHour', value.endHour)

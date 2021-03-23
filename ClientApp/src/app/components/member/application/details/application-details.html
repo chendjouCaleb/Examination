@@ -2,10 +2,12 @@
 <div class="flex-center-cover" style="max-height: 98%">
   <div class="p-3" style=" max-height: 98%; overflow-y: auto; ">
     <div class="ms-pageTitle ms-sticky-header">
-         <h2>Demande
+         <div msFontSize="18" class="d-flex">Demande
             <app-icon *ngIf="application.isAuthor" class="ml-1" icon="Contact"></app-icon>
-            <span [appStateBadge]="application.state"></span>
-          </h2>
+            <div class="ml-2">
+              <span [appStateBadge]="application.state"></span>
+            </div>
+          </div>
 
       <button msIconButton icon="Cancel" MsfModalClose>Fermer</button>
     </div>

@@ -2,7 +2,7 @@
   <div>
     <div class="ms-header">
       <div class="d-flex align-items-center">
-        <button historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <button historyBack="2" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
         <div class="ms-header-title">
           <a [routerLink]="level.department.url">{{level.department.name}}</a> /
           Niveau {{level.index + 1}}</div>
@@ -24,13 +24,13 @@
 
     <msPivot>
       <msPivotHeader>
-        <msPivotLabel>Acceuil</msPivotLabel>
-        <msPivotLabel>Cours</msPivotLabel>
-        <msPivotLabel>Horaires</msPivotLabel>
-        <msPivotLabel>Séances</msPivotLabel>
-        <msPivotLabel>Étudiants</msPivotLabel>
-        <msPivotLabel>Salles</msPivotLabel>
-        <msPivotLabel>Demandes</msPivotLabel>
+        <msPivotLabel id="home">Acceuil</msPivotLabel>
+        <msPivotLabel id="course">Cours</msPivotLabel>
+        <msPivotLabel id="courseHours">Horaires</msPivotLabel>
+        <msPivotLabel id="courseSessions">Séances</msPivotLabel>
+        <msPivotLabel id="students">Étudiants</msPivotLabel>
+        <msPivotLabel id="rooms">Salles</msPivotLabel>
+        <msPivotLabel id="applications">Demandes</msPivotLabel>
       </msPivotHeader>
       <msPivotBody>
         <div *msPivotContentDef>

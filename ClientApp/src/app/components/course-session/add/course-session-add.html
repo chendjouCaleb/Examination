@@ -1,0 +1,94 @@
+<div class="flex-center-cover" *ngIf="form">
+  <form class="ms-form" [formGroup]="form">
+    <div class="ms-form-header ms-sticky-header">
+      <div msFontSize="20">Ajouter un horaire</div>
+      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+    </div>
+
+
+    <div class="ms-textField" *ngIf="level">
+      <label for="course" class="ms-label">Choisir un cours</label>
+      <MsfSelect id="course" formControlName="course" class="ms-textField-input" placeholder=""
+                 (selectionchange)="loadCourseTeachers($event.value)">
+        <MsfSelectOption *ngFor="let item of courses" [value]="item">
+          {{item.name}}({{item.code}})
+        </MsfSelectOption>
+      </MsfSelect>
+      <app-control-error controlName="course"></app-control-error>
+    </div>
+
+    <div class="ms-textField">
+      <label for="courseTeacher" class="msf-label">Choisir un enseignant</label>
+      <MsfSelect id="courseTeacher" formControlName="courseTeacher" class="ms-textField-input" placeholder="">
+        <MsfSelectOption *ngFor="let item of courseTeachers" [value]="item">
+          {{item.teacher.user.fullName}}
+        </MsfSelectOption>
+      </MsfSelect>
+      <app-control-error controlName="courseTeacher"></app-control-error>
+    </div>
+    <div class="ms-fontSize-12">Si vous ne voyez un enseignant particulier dans cette liste,
+      rassurez vous de l'avoir ajouté au cours sélectionné.</div>
+
+    <div class="ms-textField">
+      <label for="room" class="msf-label">Choisir une salle</label>
+      <MsfSelect id="room" formControlName="room" class="ms-textField-input" placeholder="">
+        <MsfSelectOption *ngFor="let item of rooms" [value]="item">
+          {{item.name}}({{item.capacity}} places)
+        </MsfSelectOption>
+      </MsfSelect>
+      <app-control-error controlName="room"></app-control-error>
+    </div>
+
+
+    <MsfRadioGroup formControlName="type">
+      <div class="ms-textField d-flex align-items-center ms-pointer">
+        <MsfRadio id="lecture" [value]="'lecture'" [checked]="true"></MsfRadio>
+        <label class="ml-2 ms-label" for="lecture">Cours magistral</label>
+      </div>
+      <div class="ms-textField d-flex align-items-center ms-pointer">
+        <MsfRadio id="tutorial" [value]="'tutorial'" ></MsfRadio>
+        <label class="ml-2 ms-label" for="tutorial">Travaux dirigés</label>
+      </div>
+
+    </MsfRadioGroup>
+
+
+
+    <div>
+      <div class="d-flex">
+        <div class="ms-textField" style="width: 33%">
+          <label for="day" class="ms-label">Jour</label>
+          <input type="text" id="day" name="day" class="ms-textField-input" autocomplete="off" DateInput
+                 formControlName="day" placeholder="JJ/MM/AAAA">
+        </div>
+        <div class="ms-textField mx-1" style="width: 33%">
+          <label for="startHour" class="ms-label">Débute à</label>
+          <input type="text" id="startHour" name="startHour" class="ms-textField-input" autocomplete="off" LocalTimeInput
+                 formControlName="startHour" placeholder="HH:mm">
+        </div>
+
+        <div class="ms-textField" style="width: 33%">
+          <label for="endHour" class="ms-label">Heure de fin</label>
+          <input type="text" id="endHour" name="endHour" class="ms-textField-input" autocomplete="off"
+                 formControlName="endHour" LocalTimeInput placeholder="HH:mm">
+        </div>
+      </div>
+      <div>
+        <app-control-error controlName="day"></app-control-error>
+        <app-control-error controlName="startHour"></app-control-error>
+        <app-control-error controlName="endHour"></app-control-error>
+      </div>
+    </div>
+
+    <div class="ms-textField">
+      <label for="objective" class="ms-label">Objet de séance</label>
+      <textarea formControlName="objective" id="objective" class="ms-textField-textarea" rows="5"></textarea>
+      <app-control-error controlName="objective"></app-control-error>
+    </div>
+
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
+    </div>
+  </form>
+</div>

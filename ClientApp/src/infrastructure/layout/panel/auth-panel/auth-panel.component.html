@@ -1,10 +1,8 @@
 ﻿<div *ngIf="identity.isAuthorized">
 
   <div class="d-flex">
-    <MsfPersona size="size100">
-      <MsfPersonaFigure [imageUrl]="identity.user.imageUrl" color="darkBlue"></MsfPersonaFigure>
-
-    </MsfPersona>
+    <msPersona *ngIf="!identity.user.hasImage" [personIcon]="true" size="size100" color="sharedCyanBlue20"></msPersona>
+    <msPersona *ngIf="identity.user.hasImage"  [imageUrl]="identity.user.imageUrl" color="blueDark" size="size100"></msPersona>
 
     <div class="ml-2">
       <div class="ms-fontSize-18 ms-fontWeight-semibold text-capitalize">{{identity.user.fullName}}</div>
@@ -13,9 +11,15 @@
         <div>{{identity.user.email}}</div>
 
         <div class="mt-1">
-          <a href="http://www.google.com">Mon compte</a></div>
-        <div class="mt-2">
+          <a [href]="identity.profileUrl">Mon compte</a></div>
+        <!--<div class="mt-2">
           <button msButton theme="primary" icon="AccountActivity" [routerLink]="identity.user.url">Mon activité</button>
+        </div>-->
+
+        <div class="mt-2">
+          <a [href]="identity.logoutUrl">
+            <button icon="SignOut" msButton theme="errorOutline">Déconnexion</button>
+          </a>
         </div>
 
       </div>

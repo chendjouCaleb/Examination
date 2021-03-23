@@ -7,6 +7,7 @@ import {ExaminationLevelSpecialityPageLayout} from './layout/examination-level-s
 import {ExaminationLevelSpecialityHomePage} from './home/examination-level-speciality-home.page';
 import {MsPivotModule} from '@ms-fluent/pivot';
 import {MsButtonModule} from '@ms-fluent/button';
+import {ControlModule} from "examination/controls";
 
 
 export const routes: Routes = [
@@ -15,7 +16,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), ExaminationModule, TestModule, LayoutModule,
-    MsPivotModule, MsButtonModule],
+    MsPivotModule, MsButtonModule, ControlModule],
   exports: [
     ExaminationLevelSpecialityHomePage
   ],

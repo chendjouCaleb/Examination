@@ -6,7 +6,10 @@
     <div>{{department.address}}</div>
 
     <div class="ms-divider my-2"></div>
-    <button msButton icon="RedEye" [routerLink]="department.url" theme="primary">VOIR</button>
+    <a [routerLink]="department.url">
+      <button msButton icon="RedEye"  theme="primary">VOIR</button>
+    </a>
+
   </div>
 
 </div>

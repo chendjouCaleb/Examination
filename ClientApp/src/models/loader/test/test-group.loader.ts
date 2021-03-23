@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 
 import {TestLoader} from './test.loader';
-import {Loader} from "../loader";
-import {Test, TestGroup} from "examination/entities";
-import {TestGroupHttpClient, UserHttpClient} from "examination/models/http";
-import {RoomLoader} from "../organisation";
+import {Loader} from '../loader';
+import {Test, TestGroup} from 'examination/entities';
+import {TestGroupHttpClient, UserHttpClient} from 'examination/models/http';
+import {RoomLoader} from '../organisation';
 
 @Injectable({providedIn: 'root'})
 export class TestGroupLoader extends Loader<TestGroup, number> {
@@ -32,7 +32,7 @@ export class TestGroupLoader extends Loader<TestGroup, number> {
   }
 
   async loadByTest(test: Test): Promise<void> {
-    if(test.testGroups) {
+    if (test.testGroups) {
       return;
     }
     test.testGroups = await this.testGroupRepository.listAsync({testId: test.id});

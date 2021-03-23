@@ -1,9 +1,9 @@
 import {CourseHour} from './course-hour.entity';
 import {Entity} from '../entity';
 import {CourseTeacher} from './course-teacher.entity';
-import {Room} from '../organisation';
+import {Room, School} from '../organisation';
 import {Course} from './course.entity';
-import {LocalTime} from "@js-joda/core";
+import {LocalTime} from '@js-joda/core';
 
 export class CourseSession extends Entity<number> {
   constructor(value: any = {}) {
@@ -23,8 +23,8 @@ export class CourseSession extends Entity<number> {
 
     this.expectedStartDate = new Date(value.expectedStartDate);
     this.expectedEndDate = new Date(value.expectedEndDate);
-    this.startDate = new Date(value.startDate);
-    this.endDate = new Date(value.endDate);
+    this.startDate = value.startDate ? new Date(value.startDate) : undefined;
+    this.endDate = value.endDate ? new Date(value.endDate) : undefined;
   }
 
   lecture: boolean;
@@ -49,6 +49,8 @@ export class CourseSession extends Entity<number> {
 
   startDate: Date;
   endDate: Date;
+
+  isTeacher: boolean = false;
 
   get courseName(): string {
     return this.course.name;
@@ -84,6 +86,14 @@ export class CourseSession extends Entity<number> {
 
   get progress(): boolean {
     return !!this.startDate && !this.endDate;
+  }
+
+  get school(): School {
+    return this.room.school;
+  }
+
+  get canEdit() {
+    return !this.finished && this.school.isPlanner;
   }
 
 

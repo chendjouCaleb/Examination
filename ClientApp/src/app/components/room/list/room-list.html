@@ -43,16 +43,9 @@
 
       <ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</ms-tableCell>
       <ms-tableCell class="text-right">
-        <button msButton [routerLink]="item.url">Détails</button>
+        <button msButton theme="primary" class="mr-2" [routerLink]="item.url">Détails</button>
         <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary" class="ml-2"
                 (click)="service.detailsRoom(item)"></button>
-        <ng-container *ngIf="_school.userPrincipal.isPlanner">
-          <button msIconButton class="ml-2" icon="More" theme="transparent" [MsfMenuTrigger]="roomMenu"></button>
-          <MsfMenu #roomMenu>
-            <MsfMenuItem icon="Edit" (click)="service.editRoom(item)">Modifier</MsfMenuItem>
-            <MsfMenuItem icon="Delete" theme="error" (click)="deleteRoom(item)">Supprimer</MsfMenuItem>
-          </MsfMenu>
-        </ng-container>
       </ms-tableCell>
     </msTableRow>
   </ms-table>

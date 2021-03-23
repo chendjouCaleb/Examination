@@ -49,7 +49,7 @@ export class CourseSessionList implements OnInit {
       await this._courseSessionLoader.loadByCourse(this.course);
     }
 
-    if (this.course) {
+    if (this.courseHour) {
       await this._courseSessionLoader.loadByCourseHour(this.courseHour);
     }
 
@@ -65,14 +65,17 @@ export class CourseSessionList implements OnInit {
       await this._courseSessionLoader.loadByLevel(this.level);
     }
 
-    this.table.unshift(...this.getCourseSessions().toArray());
+    const coursessions = this.getCourseSessions().toArray()
+      .sort((c1, c2) => c1.expectedStartDate.getTime() - c2.expectedStartDate.getTime());
+
+    this.table.unshift(...coursessions);
   }
 
 
-  addCourseHour() {
-    this.service.addCourseSession(this.course).then(course => {
-      if (course) {
-        this.table.unshift(course);
+  addCourseSession() {
+    this.service.addCourseSession(this.level, this.course).then(courseSession => {
+      if (courseSession) {
+        this.table.unshift(courseSession);
         this.table.hiddenColumns = (this.hiddenColumns);
       }
     });
@@ -112,5 +115,11 @@ export class CourseSessionList implements OnInit {
     }
 
     return new List<CourseSession>();
+  }
+
+  get canAdd(): boolean {
+    return (this.course && this.course.level.department.school.isPlanner)
+    || (this.level && this.level.department.school.isPlanner)
+
   }
 }

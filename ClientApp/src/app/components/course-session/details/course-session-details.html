@@ -1,0 +1,139 @@
+<div class="modal-container p-3">
+  <div>
+    <div class="d-flex justify-content-between align-items-center">
+      <div></div>
+      <div>
+        <button msIconButton theme="transparent" icon="Cancel" MsfModalClose></button>
+      </div>
+    </div>
+
+
+    <div class="d-flex flex-wrap justify-content-between">
+      <div class="ms-description-list m-3">
+        <dl>
+          <dt>Cours</dt>
+          <dd>{{courseSession.course.name}} ({{courseSession.course.code}})</dd>
+        </dl>
+        <dl>
+          <dt style="vertical-align: top">Horaire prévue</dt>
+          <dd>
+            <div class="d-flex">
+              <div>
+                <div>{{courseSession.expectedStartDate | amDateFormat: 'dddd, LL' | ucFirst}}</div>
+                <div>{{courseSession.expectedStartHour}} - {{courseSession.expectedEndHour}}</div>
+              </div>
+              <div>
+                <button class="ml-3" *ngIf="courseSession.canEdit" (click)="service.changeHour(courseSession)"
+                        msIconButton theme="standard" [rounded]="true" icon="Edit"></button>
+              </div>
+            </div>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt style="vertical-align: top">Enseignant</dt>
+          <dd>
+            <div class="d-flex">
+              <div>
+                <user-persona class="ms-pointer" [routerLink]="courseSession.courseTeacher.teacher.url"
+                              [user]="courseSession.courseTeacher.teacher.user"></user-persona>
+              </div>
+              <button class="ml-3" *ngIf="courseSession.canEdit" (click)="service.changeTeacher(courseSession)"
+                      msIconButton theme="standard" [rounded]="true" icon="Edit"></button>
+            </div>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>Salle</dt>
+          <dd>
+            <div class="d-flex">
+              <div>
+                {{courseSession.room.name}}({{courseSession.room.capacity}} places)
+              </div>
+              <button class="ml-3" *ngIf="courseSession.canEdit" (click)="service.changeRoom(courseSession)"
+                      msIconButton theme="standard" [rounded]="true" icon="Edit"></button>
+            </div>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>Niveau</dt>
+          <dd>
+             Niveau {{courseSession.levelIndex + 1}}
+          </dd>
+        </dl>
+
+        <dl>
+          <dt style="vertical-align: top">Type de séance</dt>
+          <dd>
+            <div>
+              <span *ngIf="courseSession.lecture" class="ms-badge mr-2" msBgColor="sharedCyanBlue20">Cours magistral</span>
+              <span *ngIf="!courseSession.lecture" class="ms-badge" msBgColor="sharedRedOrange10">Travaux dirigés</span>
+            </div>
+
+            <div class="mt-3" *ngIf="courseSession.canEdit">
+              <MsfRadioGroup (change)="lectureChange($event)">
+                <div class="ms-textField d-flex align-items-center ms-pointer">
+                  <MsfRadio id="lecture" [value]="'lecture'" [checked]="courseSession.lecture"></MsfRadio>
+                  <label class="ml-2 ms-label" for="lecture">Cours magistral</label>
+                </div>
+                <div class="mt-2 ms-textField d-flex align-items-center ms-pointer">
+                  <MsfRadio id="tutorial" [value]="'tutorial'" [checked]="!courseSession.lecture" ></MsfRadio>
+                  <label class="ml-2 ms-label" for="tutorial">Travaux dirigés</label>
+                </div>
+              </MsfRadioGroup>
+            </div>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt style="vertical-align: top">Objectif du cours</dt>
+          <dd>
+            <div class="d-flex">
+              <div style="max-width: 400px">
+                {{courseSession.objective}}
+              </div>
+              <button class="ml-3" *ngIf="courseSession.canEdit" (click)="service.objective(courseSession)"
+                      msIconButton theme="standard" [rounded]="true" icon="Edit"></button>
+            </div>
+          </dd>
+        </dl>
+
+      </div>
+
+      <div class="m-3 ms-sm-w100">
+        <div class="ms-pageTitle">
+          <div class="ms-fontSize-18">Rapport</div>
+          <div class="ml-5">
+            <button *ngIf="courseSession.isTeacher" msButton icon="EditNote" theme="info" (click)="service.report(courseSession)">Faire le rapport</button>
+          </div>
+        </div>
+        <div class="ms-description-list" *ngIf="courseSession.startDate">
+          <dl>
+            <dt class="v-align-top">Horaire effectif</dt>
+            <dd>
+              <div>
+                <div>{{courseSession?.startDate | amDateFormat: 'dddd, LL' | ucFirst}}</div>
+                <div>{{courseSession?.startHour}} - {{courseSession?.endHour}}</div>
+              </div>
+            </dd>
+          </dl>
+          <dl>
+            <dt>Présence</dt>
+            <dd>{{courseSession.presence}}</dd>
+          </dl>
+          <dl>
+            <dt class="v-align-top">Résumé</dt>
+            <dd>
+              <div style="max-width: 300px">
+                {{courseSession.report}}
+              </div>
+            </dd>
+          </dl>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

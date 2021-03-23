@@ -1,25 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using Everest.AspNetStartup.Persistence;
+using System.IO;
+using Exam.Controllers.Courses;
 using Exam.Entities;
+using Exam.Entities.Courses;
 using Exam.Infrastructure;
 using Exam.Models;
-using Exam.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Exam.Controllers
 {
     public class SchoolBuilder
     {
-        private static string userId = "87cdaff0-bc80-4e7e-a2e6-34cc98c1cb03";
+        private static string schoolAdminUserId = "2799facb-25fe-46db-8b50-f21514e5ae3b";
         private IServiceProvider _serviceProvider;
         private ILogger<SchoolBuilder> _logger;
+
+        private Speciality statisticsSpeciality;
+
+        private StudentController _studentController;
+        private CourseController _courseController;
+        private LevelController _levelController;
+        private LevelSpecialityController _levelSpecialityController;
 
         public SchoolBuilder(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _logger = serviceProvider.GetRequiredService<ILogger<SchoolBuilder>>();
+            _studentController = _serviceProvider.GetRequiredService<StudentController>();
+            _courseController = _serviceProvider.GetRequiredService<CourseController>();
+            _levelController = _serviceProvider.GetRequiredService<LevelController>();
+            _levelSpecialityController = _serviceProvider.GetRequiredService<LevelSpecialityController>();
         }
 
         public School CreateSchool()
@@ -29,46 +43,48 @@ namespace Exam.Controllers
             var form = new SchoolForm
             {
                 Name = "Faculté des sciences",
-                Identifier = "facultescience",
+                Identifier = "facultedesscience",
                 Acronym = "FS",
                 Address = "Yaoundé, UY1"
             };
-            School school = controller.Add(form, new User {Id = "87cdaff0-bc80-4e7e-a2e6-34cc98c1cb03"})
+            School school = controller.Add(form, new User {Id = schoolAdminUserId})
                 .Value as School;
 
-            school.Departments = CreateDepartments(school, 2);
+            school.Departments = CreateDepartment(school);
 
             return school;
         }
 
-        List<Department> CreateDepartments(School school, int number)
+        List<Department> CreateDepartment(School school)
         {
             var controller = _serviceProvider.GetService<DepartmentController>();
             var principalController = _serviceProvider.GetService<PrincipalController>();
             List<Department> departments = new List<Department>();
-            for (int i = 0; i < number; i++)
+            
             {
                 _logger.LogInformation("Creating Department");
                 var form = new AddDepartmentForm
                 {
-                    Name = $"Department {i}",
-                    Acronym = $"DEPT{i}",
+                    Name = $"Mathématiques",
+                    Acronym = $"MATH",
                     Address = "Department address",
-                    UserId = "87cdaff0-bc80-4e7e-a2e6-34cc98c1cb03"
+                    UserId = schoolAdminUserId
                 };
                 var department = controller.Add(school, form).Value as Department;
                 _logger.LogInformation($"Department {department.Name} is created");
 
-                Principal principal = principalController._Add(department, userId);
+                Principal principal = principalController._Add(department, schoolAdminUserId);
                 department.Principals = new List<Principal>(new[] {principal});
+                
+                department.Specialities = new List<Speciality>();
+                statisticsSpeciality = CreateSpeciality(department);
+                department.Specialities.Add(statisticsSpeciality);
 
-                department.Levels = CreateLevels(department, 2);
-                department.Specialities = CreateSpecialities(department, 3);
-
-                foreach (var level in department.Levels)
-                {
-                    CreateLevelSpecialities(level, department.Specialities);
-                }
+                department.Levels = new List<Level>();
+                department.Levels.Add(CreateLevel1(department));
+                department.Levels.Add(CreateLevel2(department));
+                
+                
 
                 departments.Add(department);
             }
@@ -76,105 +92,92 @@ namespace Exam.Controllers
             return departments;
         }
 
-        public List<Speciality> CreateSpecialities(Department department, int number)
+        public Speciality CreateSpeciality(Department department)
         {
             var controller = _serviceProvider.GetService<SpecialityController>();
-            List<Speciality> specialities = new List<Speciality>();
-            for (int i = 0; i < number; i++)
-            {
+            
                 var form = new SpecialityForm
                 {
-                    Name = $"Speciality {i}",
-                    Description = "speciality description"
+                    Name = $"Statistiques",
+                    Description = "Analyse et description des données"
                 };
                 var speciality = controller.Add(department, form);
-                specialities.Add(speciality);
-            }
 
-            return specialities;
+                return speciality;
         }
 
 
-        public List<Level> CreateLevels(Department department, int number)
+        public Level CreateLevel1(Department department)
         {
-            var controller = _serviceProvider.GetService<LevelController>();
-            List<Level> levels = new List<Level>();
-            for (int i = 0; i < number; i++)
+            var level = _levelController.Add(department);
+            
+            level.Courses = _CreateLevelCourse(level, new long[] { }, "level1-courses.json");
+            
+            var statisticsLevelSpeciality = _levelSpecialityController.Add(level, statisticsSpeciality).Value as LevelSpeciality;
+            _CreateLevelCourse(level, new[] {statisticsLevelSpeciality.Id}, "level1-statistics-courses.json");
+
+
+            List<StudentForm> studentForms = GetStudentForms("students-level1.json");
+
+            for (int i = 0; i < studentForms.Count; i++)
             {
-                _logger.LogInformation("Creating Level");
-                var level = controller.Add(department);
-
-                level.Students = CreateStudents(level, 25);
-                levels.Add(level);
-                _logger.LogInformation($"The level {level.Index} is created");
-            }
-
-            return levels;
-        }
-
-        public List<LevelSpeciality> CreateLevelSpecialities(Level level, List<Speciality> specialities)
-        {
-            var controller = _serviceProvider.GetService<LevelSpecialityController>();
-            List<LevelSpeciality> levelSpecialities = new List<LevelSpeciality>();
-
-            foreach (var speciality in specialities)
-            {
-                _logger.LogInformation("Creating LevelSpeciality");
-                LevelSpeciality levelSpeciality = controller.Add(level, speciality).Value as LevelSpeciality;
-
-                levelSpecialities.Add(levelSpeciality);
-                levelSpeciality.Students = CreateStudents(levelSpeciality, 25);
-
-                _logger.LogInformation($"LevelSpeciality: {levelSpeciality.Id} is created");
-            }
-
-            return levelSpecialities;
-        }
-
-        List<Student> CreateStudents(Level level, int number)
-        {
-            var controller = _serviceProvider.GetService<StudentController>();
-            List<Student> students = new List<Student>();
-            for (int i = 0; i < number; i++)
-            {
-                var form = new StudentForm
-                {
-                    FullName = "Student Name",
-                    BirthDate = DateTime.Now.AddYears(-20).AddDays(i),
-                    Gender = i % 2 == 0 ? 'F' : 'M',
-                    RegistrationId = $"SL-{level.Id}-{level.Index}-{i}"
-                };
-                var student = controller.Add(form, level, null, level.Department.Principals[0])
+                studentForms[i].RegistrationId = ("1" + i + studentForms[i].RegistrationId).ToUpper();;
+                var student = _studentController.Add(studentForms[i], level, 
+                        i%3 == 0 ? statisticsLevelSpeciality : null
+                        , level.Department.Principals[0])
                     .Value as Student;
-                students.Add(student);
             }
 
-            return students;
+            return level;
+        }
+        
+        public Level CreateLevel2(Department department)
+        {
+            var level = _levelController.Add(department);
+
+            level.Courses = _CreateLevelCourse(level, new long[] { }, "level2-courses.json");
+            
+            List<StudentForm> studentForms = GetStudentForms("students-level2.json");
+            level.Students = new List<Student>();
+
+            for (int i = 0; i < studentForms.Count; i++)
+            {
+                studentForms[i].RegistrationId = ("2" + i + studentForms[i].RegistrationId).ToUpper();
+                var student = _studentController.Add(studentForms[i], level,  null
+                        , level.Department.Principals[0])
+                    .Value as Student;
+                level.Students.Add(student);
+            }
+
+            return level;
         }
 
-
-        public List<Student> CreateStudents(LevelSpeciality levelSpeciality, int number)
+        private List<Course> _CreateLevelCourse(Level level, long[] levelSpecialityId, string fileName)
         {
-            var controller = _serviceProvider.GetService<StudentController>();
-            List<Student> students = new List<Student>();
-            for (int i = 0; i < number; i++)
+            List<CourseForm> forms = GetCourseForms(fileName);
+            var courses = new List<Course>();
+
+            foreach (var form in forms)
             {
-                var form = new StudentForm
-                {
-                    FullName = $"LS Student {i} ",
-                    BirthDate = DateTime.Now.AddYears(-20).AddDays(i),
-                    Gender = i % 2 == 0 ? 'F' : 'M',
-                    RegistrationId = $"SLS{levelSpeciality.Level.Index}-{levelSpeciality.Id}-{i}"
-                };
-                var level = levelSpeciality.Level;
-                var student = controller.Add(form, level, levelSpeciality, level.Department.Principals[0])
-                    .Value as Student;
-
-
-                students.Add(student);
+                Course  course = _courseController.Add(form, level, levelSpecialityId).Value as Course;
+                courses.Add(course);
             }
 
-            return students;
+            return courses;
+        }
+        
+
+        List<StudentForm> GetStudentForms(string fileName)
+        {
+            string text = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), fileName));
+            return JsonConvert.DeserializeObject<List<StudentForm>>( text);
+        }
+        
+        
+        List<CourseForm> GetCourseForms(string fileName)
+        {
+            string text = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), fileName));
+            return JsonConvert.DeserializeObject<List<CourseForm>>( text);
         }
     }
 }

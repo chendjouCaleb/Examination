@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
@@ -92,6 +93,7 @@ namespace Exam.Controllers.Courses
         [LoadCourseTeacher(Source = ParameterSource.Query)]
         [LoadRoom(Source = ParameterSource.Query)]
         [IsPlanner]
+        [ValidModel]
         public CreatedAtActionResult Add(Course course,
             CourseTeacher courseTeacher,
             Room room,
@@ -148,6 +150,7 @@ namespace Exam.Controllers.Courses
         [HttpPut("{courseSessionId}/hour")]
         [LoadCourseSession(SchoolItemName = "school")]
         [IsPlanner]
+        [ValidModel]
         public StatusCodeResult Hour(CourseSession courseSession, [FromBody] CourseSessionHourForm form)
         {
             Assert.RequireNonNull(courseSession, nameof(courseSession));
@@ -164,6 +167,7 @@ namespace Exam.Controllers.Courses
         [HttpPut("{courseSessionId}/report")]
         [LoadCourseSession(SchoolItemName = "school")]
         [IsPlanner]
+        [ValidModel]
         public OkObjectResult Report(CourseSession courseSession, [FromBody] CourseSessionReportForm form)
         {
             Assert.RequireNonNull(courseSession, nameof(courseSession));
@@ -213,7 +217,7 @@ namespace Exam.Controllers.Courses
         
         [HttpPut("{courseSessionId}/teacher")]
         [RequireQueryParameter("courseTeacherId")]
-        [LoadCourseHour(SchoolItemName = "school")]
+        [LoadCourseSession(SchoolItemName = "school")]
         [LoadCourseTeacher(Source = ParameterSource.Query)]
         [IsPlanner]
         public StatusCodeResult Teacher(CourseSession courseSession, CourseTeacher courseTeacher)

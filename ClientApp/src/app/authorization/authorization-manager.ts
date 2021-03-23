@@ -9,6 +9,9 @@ import {Connection} from './models/connection.entity';
 import {Subject} from 'rxjs';
 import {User} from 'src/models/entities';
 
+const AUTH_CODE_KEY = 'AUTH_CODE';
+const ACCESS_TOKEN_KEY = 'AUTH_ACCESS_TOKEN';
+
 @Injectable()
 export class AuthorizationManager {
   private _isInitialized: boolean = false;
@@ -21,8 +24,19 @@ export class AuthorizationManager {
   private _accessTokenUrl = environment.SERVER_URL + '/authorize/accessToken';
   private _refreshTokenUrl = environment.SERVER_URL + '/authorize/refreshToken';
 
-  constructor(private _httpClient: HttpClient) {
+  get profileUrl(): string {
+    return environment.AUTH_APP_URL + '/profile';
   }
+
+  get logoutUrl(): string {
+    return `${environment.AUTH_APP_URL}/logout?redirectUri=${this.logoutCallbackUri}&restoreUri=${window.location.href}`;
+  }
+
+  get logoutCallbackUri(): string {
+    return `${window.location.href}/logout/callback`
+  }
+
+  constructor(private _httpClient: HttpClient) {}
 
   async init() {
     if (!this.accessToken || !this.authCode) {
@@ -33,17 +47,37 @@ export class AuthorizationManager {
       return;
     }
 
+    let connection: Connection;
+    try {
+      connection = await this.getConnection(this.accessToken.connectionId);
+
+
+
+    if (connection.isClosed) {
+      this.removeAuthorizationTokens();
+      return;
+    }
+
+
     if (this.accessToken.expireAt.getDate() < Date.now()) {
       console.log('Access token expired');
       await this.refreshAuthorization();
     }
 
-    this._connection = await this.getConnection(this.accessToken.connectionId);
+
+    this._connection = connection;
     this._connection.user.imageUrl = `${environment.AUTH_SERVER_URL}/users/${this.user.id}/image`;
     console.log('Authorization manager is initialized!');
     console.log(`${this.user.fullName} is logged!`);
     this._isInitialized = true;
     this._stateChange.next(true);
+
+    }catch (error) {
+      this._isInitialized = true;
+      this._stateChange.next(false);
+      console.error(error);
+      return ;
+    }
   }
 
   async validateAccessToken() {
@@ -125,7 +159,6 @@ export class AuthorizationManager {
   async getUser(id: string): Promise<User> {
     const value = await this._httpClient.get<User>(`${this._userUrl}/${id}`).toPromise();
     const user = User.createFromAny(value);
-    user.imageUrl = `${environment.AUTH_SERVER_URL}/users/${this.user.id}/image`;
     return user;
   }
 
@@ -145,6 +178,11 @@ export class AuthorizationManager {
         resolve(result);
       }, () => resolve(false));
     });
+  }
+
+  removeAuthorizationTokens() {
+    localStorage.removeItem(AUTH_CODE_KEY);
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
   }
 
 

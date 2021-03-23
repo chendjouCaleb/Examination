@@ -8,7 +8,8 @@ export class LoadAuthorizationGuard implements CanActivate {
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    return await this._authManager.getAuthorizationState();
+    await this._authManager.getAuthorizationState();
+    return true;
   }
 }
 

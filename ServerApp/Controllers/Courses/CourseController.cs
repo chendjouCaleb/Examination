@@ -169,6 +169,21 @@ namespace Exam.Controllers.Courses
             _courseRepository.Update(course);
             return Ok();
         }
+        
+        
+        [HttpPut("{courseId}/chapterText")]
+        [LoadCourse(DepartmentItemName = "department", SchoolItemName = "school")]
+        [IsPlanner]
+        public StatusCodeResult ChapterText(Course course, [FromForm] string chapterText)
+        {
+            Assert.RequireNonNull(course, nameof(course));
+            Assert.RequireNonNull(chapterText, nameof(chapterText));
+
+            course.ChapterText = chapterText;
+
+            _courseRepository.Update(course);
+            return Ok();
+        }
 
         [HttpPut("{courseId}/restrict")]
         [LoadCourse(DepartmentItemName = "department")]

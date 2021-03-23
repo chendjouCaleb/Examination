@@ -26,7 +26,11 @@ export class TestGroupSupervisorList implements OnInit {
   }
 
   addTestGroupSupervisors(testGroup: TestGroup) {
-    this.service.addTestGroupSupervisors(testGroup).subscribe(items => this.table.unshift(...items.toArray()));
+    this.service.addTestGroupSupervisors(testGroup).subscribe(items => {
+      if (items) {
+        this.table.unshift(...items.toArray());
+      }
+    });
   }
 
   remove(supervisor: TestGroupSupervisor) {

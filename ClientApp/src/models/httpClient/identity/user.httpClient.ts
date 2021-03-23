@@ -15,16 +15,14 @@ export class UserHttpClient extends GenericHttpClient<User, string> {
     return User.createFromAny(value);
   }
 
-  searchFn: (filter: string) => Promise<User[]> = async (filter: string) => (await this.paging(filter)).items;
+  searchFn: (filter: string, take: number) => Promise<User[]> = async (filter: string, take) => (await this.paging(filter, take));
 
-  async paging(filter: string): Promise<Paging<User>> {
-    const paging = await this.httpClient
-      .get<Paging<User>>(this.url + '/paging', {params: {filter}})
+  async paging(filter: string, take: number = 5): Promise<Array<User>> {
+    const itemResult = await this.httpClient
+      .get<Array<User>>(this.url, {params: {filter, take: String(take)}})
       .toPromise();
 
-    paging.items = paging.items.map(i => User.createFromAny(i));
-
-    return paging;
+    return itemResult.map(i => User.createFromAny(i));
   }
 
   async findByEmail(email: string): Promise<User> {

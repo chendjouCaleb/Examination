@@ -7,7 +7,7 @@ import {LoadAuthorizationGuard} from 'examination/app/authorization';
 const routes: Routes = [
   {path: '', redirectTo: '/schools', pathMatch: 'full'},
   {
-    path: 'schools',
+    path: 'schools', canActivate: [LoadAuthorizationGuard],
     loadChildren: () => import('./pages/organisation/school/school.page.module').then(m => m.SchoolPageModule)
   },
   {

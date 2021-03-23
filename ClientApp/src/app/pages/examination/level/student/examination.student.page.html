@@ -4,7 +4,9 @@
     <div class="d-flex align-items-center">
       <button historyBack msIconButton icon="ChevronLeftSmall" theme="transparent"
               size="normal" [rounded]="true"></button>
-      <div class="ms-header-title">étudiants / {{examinationStudent.student.fullName}}</div>
+      <div class="ms-header-title">
+        <a [routerLink]="examinationStudent.examinationLevel.url" [queryParams]="{pivot: 'students'}">Étudiants </a>
+        / {{examinationStudent.student.fullName}}</div>
     </div>
     <div>
 

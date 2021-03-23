@@ -38,24 +38,10 @@
         </msTableCell>
 
         <msTableCell style="text-align: center">
-          <a href="#" class="ms-fontSize-12"  [routerLink]="item.url">Aller à la page</a>
-          <button msButton (click)="service.details(item)" class="ml-2" >Details</button>
 
-          <button msIconButton theme="transparent" class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
-          <MsfMenu #more>
-            <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
-            <MsfMenuItem theme="primary" icon="Clock" *ngIf="item.isPending" (click)="service.start(item)">
-              Débuter
-            </MsfMenuItem>
-            <MsfMenuItem theme="warning" icon="Lock" *ngIf="item.isProgress" (click)="service.end(item)">
-              Fermer
-            </MsfMenuItem>
-            <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="item.isFinished"
-                         (click)="service.relaunch(item)">Relancer
-            </MsfMenuItem>
+<!--          <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary" (click)="service.details(item)" ></button>-->
+          <button msButton theme="primaryOutline" [routerLink]="item.url">Details</button>
 
-            <MsfMenuItem icon="Delete" theme="error" (click)="service.delete(item)">Supprimer</MsfMenuItem>
-          </MsfMenu>
         </msTableCell>
       </tr>
     </ms-table>

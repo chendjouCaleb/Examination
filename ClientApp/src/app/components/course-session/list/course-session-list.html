@@ -1,9 +1,8 @@
 <div class="ms-pageTitle">
-  <div msFontSize="18">Séances de cours</div>
-  <button msButton
-          icon="Add" theme="primary" *ngIf="course && course.level.department.school.isPlanner"
-          (click)="addCourseHour() ">
-    Ajouter<span class="ms-hiddenSm"> un horaire</span></button>
+  <div msFontSize="20">Séances de cours</div>
+  <button msButton icon="Add" theme="primary" *ngIf="canAdd"
+          (click)="addCourseSession() ">
+    Programmer<span class="ms-hiddenSm"> une séance</span></button>
 </div>
 
 
@@ -11,14 +10,14 @@
   <ms-table #msTable [hiddenColumns]="hiddenColumns">
     <ms-tableHead *msTableHeadDef>
       <ms-tableHeadCell name="#">#</ms-tableHeadCell>
-      <ms-tableHeadCell name="hour">Horaire</ms-tableHeadCell>
-      <ms-tableHeadCell name="state">{{'état' | ucFirst }}</ms-tableHeadCell>
+      <ms-tableHeadCell name="hour" [sortBy]="['expectedStartDate', 'date']">Horaire</ms-tableHeadCell>
+      <ms-tableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Programmée le</ms-tableHeadCell>
+      <ms-tableHeadCell name="type" [sortBy]="['lecture', 'string']">Type</ms-tableHeadCell>
+      <ms-tableHeadCell name="state" [sortBy]="['finished', 'string']">{{'état' | ucFirst }}</ms-tableHeadCell>
       <ms-tableHeadCell name="teacher">Enseignant</ms-tableHeadCell>
       <ms-tableHeadCell name="course" [sortBy]="['courseName', 'string']">Cours</ms-tableHeadCell>
       <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
       <ms-tableHeadCell name="room">Salle</ms-tableHeadCell>
-
-      <ms-tableHeadCell name="registrationDate">Date d'ajout</ms-tableHeadCell>
       <msTableHeadCell name="actions" class="text-right">
         <i class="ms-Icon ms-Icon--SetAction px-2"></i>
       </msTableHeadCell>
@@ -26,9 +25,20 @@
 
     <ms-tableRow *ms-tableRowDef="let item of courseSessions; let i=index" [value]="item">
       <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell msFontSize="12">
+        <div msFontSize="12">{{item.expectedStartDate | amDateFormat: 'dddd, LL' | ucFirst}}</div>
+        <div msFontSize="12">{{item.expectedStartHour}} - {{item.expectedEndHour}}</div>
+      </ms-tableCell>
+
       <ms-tableCell>
-        <div>{{item.expectedStartDate | amDateFormat: 'dddd, LL'}}</div>
-        <div>{{item.expectedStartHour}} - {{item.expectedEndHour}}</div>
+        <span msFontSize="12">
+          {{item.registrationDate | amDateFormat: 'dddd, LL' | ucFirst}}
+        </span>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <span *ngIf="item.lecture" class="ms-badge mr-2" msBgColor="sharedCyanBlue20">CM</span>
+        <span *ngIf="!item.lecture" class="ms-badge" msBgColor="sharedRedOrange10">TD</span>
       </ms-tableCell>
 
       <ms-tableCell>
@@ -51,16 +61,12 @@
       <ms-tableCell>
         <a [routerLink]="item.course.level.url">Niveau {{item.levelIndex + 1}}</a>
       </ms-tableCell>
-      <ms-tableCell>
-        <span *ngIf="item.lecture" class="ms-badge mr-2" msBgColor="sharedCyanBlue20">CM</span>
-        <span *ngIf="!item.lecture" class="ms-badge" msBgColor="sharedRedOrange10">TD</span>
-      </ms-tableCell>
 
       <ms-tableCell>
         <a [routerLink]="item.room.url">{{item.room.name}}</a>
       </ms-tableCell>
 
-      <ms-tableCell class="ms-fontSize-12"> {{item.registrationDate | date}}</ms-tableCell>
+
       <ms-tableCell class="text-right">
         <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary"
                 (click)="service.details(item)"></button>

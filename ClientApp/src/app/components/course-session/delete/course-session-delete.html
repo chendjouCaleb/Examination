@@ -1,0 +1,27 @@
+<div class="flex-center-cover">
+  <form class="ms-form">
+    <div class="ms-form-header ms-sticky-header">
+      <div msFontSize="14"></div>
+      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+    </div>
+
+    <div class="d-flex align-items-center">
+      <div>
+        <div class="d-flex align-items-center justify-content-center ms-fontColor-white ms-fontSize-42" msBgColor="sharedRed10"
+             style="width: 80px; height: 80px; border-radius: 50%">
+          <i class="ms-Icon ms-Icon--Delete"></i>
+        </div>
+      </div>
+
+      <div class="ml-3 ms-fontSize-16">
+        Êtes-vous sur de vouloir supprimer cette session de cours?
+      </div>
+    </div>
+
+
+    <div class="mt-4 text-right" style="var(--cardBackgroundColor)">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="error" icon="Delete" (click)="delete()">Supprimer</button>
+    </div>
+  </form>
+</div>

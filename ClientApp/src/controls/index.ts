@@ -15,3 +15,4 @@ export * from './select/index';
 export * from './user-picker';
 export * from './image';
 export * from './pivot';
+export * from './prev-location';

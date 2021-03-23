@@ -2,7 +2,7 @@
   <div>
     <div class="ms-header">
       <div class="d-flex align-items-center">
-        <button [routerLink]="speciality.department.url" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <button  historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
         <div class="ms-header-title">
           <a [routerLink]="speciality.department.url">{{speciality.department.name}}</a> /
           {{speciality.name}}
@@ -24,10 +24,10 @@
 
     <msPivot>
       <msPivotHeader>
-        <msPivotLabel>Acceuil</msPivotLabel>
-        <msPivotLabel>Cours</msPivotLabel>
-        <msPivotLabel>Étudiants</msPivotLabel>
-        <msPivotLabel>Demandes</msPivotLabel>
+        <msPivotLabel id="home">Acceuil</msPivotLabel>
+        <msPivotLabel id="courses">Cours</msPivotLabel>
+        <msPivotLabel id="students">Étudiants</msPivotLabel>
+        <msPivotLabel id="applications">Demandes</msPivotLabel>
       </msPivotHeader>
       <msPivotBody>
         <div *msPivotContentDef>

@@ -62,7 +62,7 @@ export class User extends Entity<string> {
   testGroupSupervisors = new List<TestGroupSupervisor>();
 
   get fullName() {
-    return this.name + ' ' + this.surname;
+    return this.name.trim() + ' ' + this.surname.trim();
   }
 
   get url(): string {

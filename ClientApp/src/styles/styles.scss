@@ -315,4 +315,12 @@ body {
   background-color: var(--borderColor);
 }
 
+.v-align-top {
+  vertical-align: top !important;
+}
 
+.modal-container {
+  max-height: 100% !important;
+  max-width: 100%;
+  overflow-y: auto !important;
+}

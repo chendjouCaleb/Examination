@@ -1,0 +1,19 @@
+<div class="flex-center-cover">
+  <form class="ms-form">
+    <div class="ms-form-header ms-sticky-header">
+      <div msFontSize="20">Changer l'objectif</div>
+      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+    </div>
+
+    <div class="ms-textField">
+      <label for="objective" class="ms-label">Objet de séance</label>
+      <textarea name="objective" id="objective" class="ms-textField-textarea" [(ngModel)]="objective" rows="7"></textarea>
+
+    </div>
+
+    <div class="mt-4 text-right">
+      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" [disabled]="!objective" (click)="change()">Changer</button>
+    </div>
+  </form>
+</div>

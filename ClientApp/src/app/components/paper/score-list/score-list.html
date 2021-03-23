@@ -47,8 +47,7 @@
               [class.ms-bgColor-sharedCyan30]="item.is4_5"
               [class.ms-bgColor-sharedGreen10]="item.is5_5"
         >
-          <ng-container *ngIf="item.score < 10">0</ng-container>
-          {{item.score}}</span>
+          <ng-container *ngIf="item.score < 10">0</ng-container>{{item.score}}</span>
       <app-icon *ngIf="!item.isCorrected" bgColor="sharedRed10" icon="Cancel"></app-icon>
     </ms-tableCell>
 
@@ -57,8 +56,9 @@
     </ms-tableCell>
 
     <ms-tableCell style="text-align: right">
+      <button msIconButton *ngIf="item.testGroup?.relation.isCorrector" theme="infoOutline" class="mr-2" [rounded]="true"
+              icon="Edit" (click)="service.scores(item)"></button>
       <button msButton theme="primary" class="mr-2" (click)="service.details(item)">Détails</button>
-      <button msIconButton *ngIf="testGroup?.relation.isCorrector" icon="Edit" (click)="service.scores(item)"></button>
     </ms-tableCell>
   </ms-tableRow>
 </ms-table>

@@ -11,4 +11,4 @@ export * from './course-level-speciality-add/course-level-speciality-add';
 export * from './restrict/course-restrict';
 export * from './details/course-details';
 export * from './list/course-list';
-
+export * from './chapterText-parser';

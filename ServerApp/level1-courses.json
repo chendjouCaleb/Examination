@@ -1,0 +1,34 @@
+﻿[
+  {
+    "name": "Analyse mathématique",
+    "description": "étude des fonctions mathématiques",
+    "code": "123",
+    "radical": 20,
+    "coefficient": 6,
+    "isGeneral":true
+  },
+  {
+    "name": "Algèbre",
+    "description": "étude des matrices",
+    "code": "133",
+    "radical": 20,
+    "coefficient": 5,
+    "isGeneral":true
+  },
+  {
+    "name": "Calcul différentiel",
+    "description": "étude des équations différentielles",
+    "code": "153",
+    "radical": 20,
+    "coefficient": 5,
+    "isGeneral":true
+  },
+  {
+    "name": "Programmation",
+    "description": "Programmation informatique",
+    "code": "163",
+    "radical": 20,
+    "coefficient": 7,
+    "isGeneral":true
+  }
+]

@@ -1,0 +1,16 @@
+﻿[
+  {
+    "name": "Statistiques et analyse des données",
+    "description": "étude Statistiques et analyse des données",
+    "code": "173",
+    "radical": 20,
+    "coefficient": 8
+  },
+  {
+    "name": "Apprentissage machine",
+    "description": "Utilisation des statistique et des données pour créer des algorithmes d'apprentissage",
+    "code": "183",
+    "radical": 20,
+    "coefficient": 8
+  }
+]

@@ -39,8 +39,10 @@ namespace Exam.Controllers
             
             HttpContent content = new FormUrlEncodedContent(body);
 
-            HttpClient httpClient = new HttpClient(); 
-            var response = await httpClient.PostAsync(_configuration.BaseUri + "/accessToken", content);
+            HttpClient httpClient = new HttpClient();
+            string uri = _configuration.BaseUri + "/accessToken";
+            Console.WriteLine("Access token uri: " + uri + "/accessToken");
+            var response = await httpClient.PostAsync(uri, content);
 
             if (response.IsSuccessStatusCode)
             {

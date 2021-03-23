@@ -9,6 +9,7 @@ export interface ICourseService {
   deleteCourse(course: Course): Promise<boolean>;
 
   editCourse(course: Course): Promise<void>;
+  chapterText(course: Course): Promise<void>;
 
   addScore(course: Course): Promise<Score>;
 

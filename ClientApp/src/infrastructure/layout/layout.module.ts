@@ -16,10 +16,11 @@ import {Breadcrumb} from './breadcrumb/breadcrumb';
 import {MsPersonaModule} from '@ms-fluent/persona';
 import {HammerModule} from '@angular/platform-browser';
 import {MsButtonModule} from '@ms-fluent/button';
+import {ControlModule} from "examination/controls";
 
 @NgModule({
   imports: [CommonModule, RouterModule, MsfRadioModule, MsfCheckboxModule,
-    MsfPersonaModule, MsPersonaModule, HammerModule, MsButtonModule],
+    MsfPersonaModule, MsPersonaModule, HammerModule, MsButtonModule, ControlModule],
   declarations: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent, AuthPanelComponent,
     SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent, Labelled, Breadcrumb],
   exports: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent, SidebarItemComponent,

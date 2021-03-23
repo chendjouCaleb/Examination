@@ -105,7 +105,7 @@ export class Paper extends Entity<number> {
 
   assignScore() {
     const obj: any = {};
-    this.scorePapers.forEach(s => obj['score_' + s.scoreName] = s.value);
+    this.scorePapers.forEach(s => obj['score_' + s.scoreName] = s.value ? s.value : 0);
     Object.assign(this, obj);
   }
 

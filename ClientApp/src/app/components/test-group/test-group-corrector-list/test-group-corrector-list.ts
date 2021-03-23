@@ -18,7 +18,8 @@ export class TestGroupCorrectorList implements OnInit {
 
   constructor(@Inject(TEST_GROUP_SERVICE_TOKEN) public service: ITestGroupService,
               private _testGroupCorrectorLoader: TestGroupCorrectorLoader
-  ) { }
+  ) {
+  }
 
   async ngOnInit() {
     await this._testGroupCorrectorLoader.loadByTestGroup(this.testGroup);
@@ -26,7 +27,11 @@ export class TestGroupCorrectorList implements OnInit {
   }
 
   addTestGroupCorrectors(testGroup: TestGroup) {
-    this.service.addTestGroupCorrectors(testGroup).subscribe(items => this.table.unshift(...items.toArray()));
+    this.service.addTestGroupCorrectors(testGroup).subscribe(items => {
+      if (items) {
+        this.table.unshift(...items?.toArray());
+      }
+    });
   }
 
   remove(corrector: TestGroupCorrector) {

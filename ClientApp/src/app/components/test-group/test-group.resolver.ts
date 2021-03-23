@@ -1,11 +1,11 @@
 ﻿﻿
-import {TestGroup, TestGroupLoader} from "examination/models";
-import {ActivatedRouteSnapshot} from "@angular/router";
-import {Injectable} from "@angular/core";
-import {CurrentItems} from "examination/app/current-items";
+import {TestGroup, TestGroupLoader} from 'examination/models';
+import {ActivatedRouteSnapshot} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {CurrentItems} from 'examination/app/current-items';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class TestGroupResolver {
 
@@ -13,10 +13,10 @@ export class TestGroupResolver {
   }
 
   async resolve(route: ActivatedRouteSnapshot): Promise<TestGroup> {
-    const id = +route.paramMap.get("testGroupId");
+    const id = +route.paramMap.get('testGroupId');
 
     const item = await this._loader.loadById(id);
-    this.items.put("testGroup", item);
+    this.items.put('testGroup', item);
     return item;
   }
 }

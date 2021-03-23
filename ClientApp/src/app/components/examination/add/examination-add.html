@@ -13,13 +13,15 @@
 
     <div class="ms-textField">
       <label for="expectedStartDate" class="msf-label">Date de début</label>
-      <input id="expectedStartDate" DateInput class="ms-textField-input" formControlName="expectedStartDate">
+      <input id="expectedStartDate" DateInput class="ms-textField-input" formControlName="expectedStartDate"
+             placeholder="JJ/MM/AAAA">
       <app-control-error [control]="form.controls['expectedStartDate']"></app-control-error>
     </div>
 
     <div class="ms-textField">
       <label for="expectedEndDate" class="msf-label">Date de fin</label>
-      <input id="expectedEndDate" DateInput class="ms-textField-input" formControlName="expectedEndDate">
+      <input id="expectedEndDate" DateInput class="ms-textField-input" formControlName="expectedEndDate"
+             placeholder="JJ/MM/AAAA">
       <app-control-error [control]="form.controls['expectedEndDate']"></app-control-error>
     </div>
 

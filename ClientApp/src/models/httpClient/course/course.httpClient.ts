@@ -39,6 +39,12 @@ export class CourseHttpClient extends GenericHttpClient<Course, number> {
     return this.add(model, params);
   }
 
+  chapterText(course: Course, chapterText: string): Promise<void> {
+    const form = new FormData();
+    form.append('chapterText', chapterText);
+    return this.httpClient.put<void>(`${this.url}/${course.id}/chapterText`, form).toPromise();
+  }
+
   general(course: Course): Promise<void> {
     return this.httpClient.put<void>(`${this.url}/${course.id}/general`, {}).toPromise();
   }

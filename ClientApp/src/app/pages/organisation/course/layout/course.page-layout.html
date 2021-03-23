@@ -2,7 +2,7 @@
   <div *ngIf="course">
     <div class="ms-header">
       <div class="d-flex align-items-center">
-        <button historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <button historyBack="2" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
         <div class="ms-header-title ms-fontWeight-semibold">
           <a [routerLink]="course.level.url" [queryParams]="{tab: 'courses'}">Niveau {{course.level.index + 1}}</a> /
           {{course.name}}</div>
@@ -12,6 +12,7 @@
     <msPivot>
       <msPivotHeader class="text-uppercase" msFontSize="12">
         <msPivotLabel style="font-size: 12px" id="details">Détails</msPivotLabel>
+        <msPivotLabel style="font-size: 12px" id="chapters">Chapitres</msPivotLabel>
         <msPivotLabel style="font-size: 12px" id="hours">Horaires</msPivotLabel>
         <msPivotLabel style="font-size: 12px" id="sessions">Séances de cours</msPivotLabel>
         <msPivotLabel style="font-size: 12px" id="tests">épreuves</msPivotLabel>
@@ -19,6 +20,9 @@
       <msPivotBody>
         <div *msPivotContentDef>
           <app-course-home-page [course]="course"></app-course-home-page>
+        </div>
+        <div *msPivotContentDef>
+          <app-course-chapters [course]="course"></app-course-chapters>
         </div>
         <div *msPivotContentDef>
           <app-course-hour-list [course]="course" [hiddenColumns]="['course']"></app-course-hour-list>

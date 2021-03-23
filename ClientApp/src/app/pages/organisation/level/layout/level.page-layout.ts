@@ -10,6 +10,7 @@ import {
 import {CurrentItems} from 'examination/app/current-items';
 import {LevelSpecialityLoader} from 'examination/loaders';
 import {MsPivot} from '@ms-fluent/pivot';
+import {PreviousLocation} from "examination/controls";
 
 @Component({
   templateUrl: 'level.page-layout.html',
@@ -22,6 +23,7 @@ export class LevelPageLayout implements OnInit, AfterViewInit {
   pivot: MsPivot;
 
   constructor(public _router: Router, private _items: CurrentItems,
+              private _lastUrl: PreviousLocation,
               private _levelSpecialityLoader: LevelSpecialityLoader,
               @Inject(LEVEL_SERVICE_TOKEN) public levelService: LevelService,
               @Inject(STUDENT_APPLICATION_SERVICE_TOKEN) public applicationService: IApplicationService) {
@@ -29,12 +31,11 @@ export class LevelPageLayout implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log('Last url: ' + this._lastUrl.previousUrl);
     this._levelSpecialityLoader.loadByLevel(this.level);
   }
 
-  ngAfterViewInit(): void {
-    this.pivot.activeAt(1, false);
-  }
+  ngAfterViewInit(): void {}
 
   sendApplication() {
     this.applicationService.add({level: this.level});

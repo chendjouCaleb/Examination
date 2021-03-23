@@ -1,5 +1,5 @@
 <app-layout>
-  <div class="p-3" *ngIf="schools">
+  <div class="p-3">
     <div class="ms-pageTitle">
         <h2> Établissements ({{schools.length}}) </h2>
         <div class="ms-hiddenSm">
@@ -18,7 +18,11 @@
 
     </msAlert>
 
-    <div class="py-3">
+    <div *ngIf="isLoading">
+      <msSpinnerInlineDot></msSpinnerInlineDot>
+    </div>
+
+    <div class="py-3" *ngIf="schools && schools.length > 0">
       <ms-grid [itemWidth]="320" [itemHeight]="480" yGap="0">
         <app-school-card style="background-color: var(--cardBackgroundColor)" *msGridItemDef="let school of schools" [school]="school">
 

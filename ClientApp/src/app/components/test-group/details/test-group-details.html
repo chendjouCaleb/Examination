@@ -137,7 +137,7 @@
         <div>[{{testGroup.statistics?.min}} - {{testGroup.statistics?.quartile0 | number}}]</div>
         <div msFontSize="l" msColor="sharedRed10">
           {{testGroup.statistics.quartile0Scores.length}}
-          ({{testGroup.statistics.quartile0Scores.length / testGroup.statistics.frequency * 100 || 0}}%)
+          ({{(testGroup.statistics.quartile0Scores.length / testGroup.statistics.frequency * 100 || 0) | number}}%)
         </div>
       </dd>
     </dl>
@@ -148,7 +148,7 @@
         <div>]{{testGroup.statistics?.quartile0 | number}} - {{testGroup.statistics?.quartile1 | number}}]</div>
         <div msFontSize="l" msColor="sharedRedOrange10">
           {{testGroup.statistics.quartile1Scores.length}}
-          ({{testGroup.statistics.quartile1Scores.length / testGroup.statistics.frequency * 100 || 0}}%)
+          ({{(testGroup.statistics.quartile1Scores.length / testGroup.statistics.frequency * 100 || 0) | number}}%)
         </div>
       </dd>
     </dl>
@@ -160,7 +160,7 @@
         <div>]{{testGroup.statistics?.quartile1 | number}} - {{testGroup.statistics?.quartile2 | number}}]</div>
         <div msFontSize="l" msColor="sharedCyanBlue10">
           {{testGroup.statistics.quartile2Scores.length}}
-          ({{testGroup.statistics.quartile2Scores.length / testGroup.statistics.frequency * 100 || 0}}%)
+          ({{(testGroup.statistics.quartile2Scores.length / testGroup.statistics.frequency * 100 || 0) | number}}%)
         </div>
       </dd>
     </dl>
@@ -171,7 +171,7 @@
         <div>]{{testGroup.statistics?.quartile2 | number}}- {{testGroup.statistics?.max}}]</div>
         <div msFontSize="l" msColor="sharedGreenCyan10">
           {{testGroup.statistics.quartile3Scores.length}}
-          ({{testGroup.statistics.quartile3Scores.length / testGroup.statistics.frequency * 100 || 0}}%)
+          ({{(testGroup.statistics.quartile3Scores.length / testGroup.statistics.frequency * 100 || 0) | number}}%)
         </div>
       </dd>
     </dl>
@@ -209,7 +209,7 @@
         <div>]{{testGroup.statistics?.radical / 2 | number}} - {{testGroup.statistics?.radical * 3 / 4 | number}}]</div>
         <div msFontSize="l" msColor="sharedCyanBlue10">
           {{testGroup.statistics.range2Scores.length}}
-          ({{testGroup.statistics.range2Scores.length / testGroup.statistics.frequency * 100 || 0.0}}%)
+          ({{(testGroup.statistics.range2Scores.length / testGroup.statistics.frequency * 100 || 0.0) | number}}%)
         </div>
       </dd>
     </dl>
@@ -220,7 +220,7 @@
         <div>]{{testGroup.statistics?.radical * 3 / 4 | number}}- {{testGroup.statistics?.radical}}]</div>
         <div msFontSize="l" msColor="sharedGreenCyan10">
           {{testGroup.statistics.range3Scores.length}}
-          ({{testGroup.statistics.range3Scores.length / testGroup.statistics.frequency * 100 || 0.0}}%)
+          ({{(testGroup.statistics.range3Scores.length / testGroup.statistics.frequency * 100 || 0.0) | number}}%)
         </div>
       </dd>
     </dl>

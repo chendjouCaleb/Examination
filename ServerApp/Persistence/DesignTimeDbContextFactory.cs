@@ -20,7 +20,8 @@ namespace Exam.Persistence
             var builder = new DbContextOptionsBuilder<PersistenceContext>();
 
 
-            builder.UseSqlServer(configuration["Data:ConnectionStrings:Database"]);
+            //builder.UseSqlServer(configuration["Data:ConnectionStrings:Database"]);
+            builder.UseSqlite("SQLiteConnectionStrings");
 
             return new PersistenceContext(builder.Options);
         }

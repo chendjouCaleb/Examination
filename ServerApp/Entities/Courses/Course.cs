@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,13 @@ namespace Exam.Entities.Courses
         public string Name { get; set; }
         public string Description { get; set; }
 
+
         /// <summary>
         /// Formatted string to represent all chapters.
         /// Chapter title begin with a #
         /// Chapter description begin with a ##
         /// </summary>
-        public string Chapters { get; set; }
+        public string ChapterText { get; set; }
         
         public bool PracticalWork { get; set; }
 

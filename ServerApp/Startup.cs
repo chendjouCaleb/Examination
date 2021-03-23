@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Everest.AspNetStartup.ExceptionTransformers;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using ServerApp.Hubs;
 
@@ -32,6 +34,7 @@ namespace ServerApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            Console.WriteLine("Auth url: " + _configuration["Authorization:Url"]);
             services
                 .AddMvc(options => { })
                 .AddControllersAsServices()
@@ -39,12 +42,14 @@ namespace ServerApp
                 {
                     options.SerializerSettings.DateFormatString = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
                 });
-
+            
+                services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
             services.AddDbContext<DbContext, PersistenceContext>(options =>
             {
                 options.UseLazyLoadingProxies();
                 options.EnableSensitiveDataLogging();
-                options.UseSqlServer(_configuration["Data:ConnectionStrings:Database"]);
+                options.UseSqlite(_configuration["Data:SQLiteConnectionStrings"]);
+                //options.UseSqlServer(_configuration["Data:ConnectionStrings:Database"]);
             });
 
             services.AddExceptionTransformerFactory();
@@ -78,9 +83,22 @@ namespace ServerApp
             app.UseExceptionTransformer();
             app.UseCors("corsPolicy");
 
+            app.UseStaticFiles();
+            
+            if (env.IsProduction())
+            {
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    RequestPath = "",
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "./wwwroot/app"))
+                });
+            }
+
             app.ParseAuthorization();
 
             app.UseRouting();
+            
+            
 
 
             app.UseEndpoints(endpoints =>
@@ -91,22 +109,20 @@ namespace ServerApp
                 endpoints.MapHub<SchoolDestructorHub>("hubs/schoolDestructor");
                 endpoints.MapHub<ExaminationBuilderHub>("hubs/examinationBuilder");
                 endpoints.MapDefaultControllerRoute();
+                if (!env.IsDevelopment())
+                {
+                    endpoints.MapFallbackToController("Index", "Home");
+                }
             });
 
-            app.UseSpa(spa =>
+            if (env.IsDevelopment())
             {
-                string strategy = _configuration.GetValue<string>("DevTools:ConnectionStrategy");
-
-                if (strategy == "proxy")
+                app.UseSpa(spa =>
                 {
                     spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:9200");
-                }
-                else if (strategy == "managed")
-                {
-                    spa.Options.SourcePath = "../ClientApp";
-                    spa.UseAngularCliServer("start");
-                }
-            });
+                });
+            }
+            
         }
     }
 }

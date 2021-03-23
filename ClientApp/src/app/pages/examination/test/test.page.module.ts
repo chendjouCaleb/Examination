@@ -10,6 +10,7 @@ import {TestGroupModule, TestGroupResolver} from 'examination/app/components/tes
 import {PaperModule} from 'examination/app/components/paper';
 import {MsPivotModule} from "@ms-fluent/pivot";
 import {MsButtonModule} from "@ms-fluent/button";
+import {ControlModule} from "examination/controls";
 
 export const routes: Routes = [
   {path: '', component: TestPageLayout},
@@ -23,7 +24,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsPivotModule,
-    TestModule, TestGroupModule, PaperModule, MsButtonModule],
+    TestModule, TestGroupModule, PaperModule, MsButtonModule, ControlModule],
   declarations: [TestPageLayout, TestGroupPageLayout, TestLevelSpecialityPageLayout]
 })
 export class TestPageModule {

@@ -62,49 +62,49 @@ namespace Exam.Controllers
 
             if (testId != null)
             {
-                queryable = queryable.Where(p => p.TestId == testId.Value);
+                queryable = queryable.Where(p => p.TestId == testId);
             }
 
             if (testGroupId != null)
             {
-                queryable = queryable.Where(p => p.TestGroupId == testGroupId.Value);
+                queryable = queryable.Where(p => p.TestGroupId == testGroupId);
             }
 
             if (secretaryId != null)
             {
                 queryable = queryable.Where(p =>
-                    p.TestGroupSecretary != null && p.TestGroupSecretary.SecretaryId == secretaryId.Value
+                    p.TestGroupSecretary != null && p.TestGroupSecretary.SecretaryId == secretaryId
                 );
             }
 
             if (correctorId != null)
             {
                 queryable = queryable.Where(p =>
-                    p.TestGroupCorrector != null && p.TestGroupCorrector.CorrectorId == correctorId.Value
+                    p.TestGroupCorrector != null && p.TestGroupCorrector.CorrectorId == correctorId
                 );
             }
 
             if (supervisorId != null)
             {
                 queryable = queryable.Where(p =>
-                    p.TestGroupSupervisor != null && p.TestGroupSupervisor.SupervisorId == supervisorId.Value
+                    p.TestGroupSupervisor != null && p.TestGroupSupervisor.SupervisorId == supervisorId
                 );
             }
 
 
             if (testGroupSecretaryId != null)
             {
-                queryable = queryable.Where(p => p.TestGroupSecretaryId == testGroupSecretaryId.Value);
+                queryable = queryable.Where(p => p.TestGroupSecretaryId == testGroupSecretaryId);
             }
 
             if (testGroupCorrectorId != null)
             {
-                queryable = queryable.Where(p => p.TestGroupCorrectorId == testGroupCorrectorId.Value);
+                queryable = queryable.Where(p => p.TestGroupCorrectorId == testGroupCorrectorId);
             }
 
             if (testGroupSupervisorId != null)
             {
-                queryable = queryable.Where(p => p.TestGroupSupervisorId == testGroupSupervisorId.Value);
+                queryable = queryable.Where(p => p.TestGroupSupervisorId == testGroupSupervisorId);
             }
 
             if (examinationStudentId != null)
@@ -134,7 +134,7 @@ namespace Exam.Controllers
                 return collection;
             }
 
-            bool isCorrector = _dbContext.Set<TestGroupCorrector>()
+            bool isCorrector = user!= null && !string.IsNullOrEmpty(user.Id) && _dbContext.Set<TestGroupCorrector>()
                 .Any(c => c.Corrector.UserId == user.Id && test.Equals(c.TestGroup.Test));
 
             if (!isCorrector)

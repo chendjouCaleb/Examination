@@ -28,7 +28,11 @@ export class TestGroupSecretaryList implements OnInit {
   }
 
   addTestGroupSecretaries(testGroup: TestGroup) {
-    this.service.addTestGroupSecretaries(testGroup).subscribe(items => this.table.unshift(...items.toArray()));
+    this.service.addTestGroupSecretaries(testGroup).subscribe(items => {
+      if (items) {
+        this.table.unshift(...items.toArray());
+      }
+    });
   }
 
   remove(secretary: TestGroupSecretary) {

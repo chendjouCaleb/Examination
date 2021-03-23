@@ -62,7 +62,7 @@ export class StudentList implements OnInit, AfterViewInit {
     await this._studentLoader.loadByLevelSpeciality(this.levelSpeciality);
     await this._studentLoader.loadBySpeciality(this.speciality);
 
-    this.students = this.getStudents();
+    this.students = this.getStudents().sort((a, b) => a.fullName.localeCompare(b.fullName));
     this._isLoaded = true;
   }
 

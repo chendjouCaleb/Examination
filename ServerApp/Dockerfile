@@ -1,16 +1,9 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:3.1 as build
+﻿FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+
+COPY dist /app 
+
 WORKDIR /app
 
-COPY ["ServerApp.csproj", "./"]
-RUN dotnet restore 
+EXPOSE 9000/tcp
 
-COPY . .
-RUN dotnet build -o build
-
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 as base
-EXPOSE 9000
-EXPOSE 9001
-EXPOSE 90
-WORKDIR /app
-COPY --from=build /app/build .
 ENTRYPOINT ["dotnet", "ServerApp.dll"]

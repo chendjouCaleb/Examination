@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
@@ -55,6 +56,7 @@ namespace Exam.Controllers.Courses
         [LoadCourse(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [LoadTeacher(Source = ParameterSource.Query)]
         [AuthorizeDepartmentPrincipal]
+        [ValidModel]
         public CreatedAtActionResult Add(Course course, Teacher teacher,
             [FromBody] AddCourseTeacherForm form)
         {

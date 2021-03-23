@@ -17,15 +17,22 @@ import {CourseList} from './list/course-list';
 import {LayoutModule} from 'examination/infrastructure';
 import {MsTableModule} from '@ms-fluent/table';
 import {MsButtonModule} from '@ms-fluent/button';
-import {MomentModule} from "ngx-moment";
-import {RouterModule} from "@angular/router";
+import {MomentModule} from 'ngx-moment';
+import {RouterModule} from '@angular/router';
+import {CourseChapters} from './chapters/course-chapters';
+import {CourseChapterText} from './chapterText/course-chapterText';
 
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule,
-    MsButtonModule, MsfSelectModule, MsfModalModule, MsfMenuModule, MsTableModule, ControlModule, LayoutModule, MsfCheckboxModule, MomentModule, RouterModule],
-  declarations: [CourseDetails, CourseList, CourseAdd, CourseLevelSpecialityAdd, CourseRestrict, CourseEdit, ScoreAdd, ScoreList],
-  exports: [CourseDetails, CourseList, CourseAdd, CourseLevelSpecialityAdd, CourseRestrict, CourseEdit, ScoreAdd, ScoreList],
+    MsButtonModule, MsfSelectModule, MsfModalModule, MsfMenuModule, MsTableModule, ControlModule, LayoutModule,
+    MsfCheckboxModule, MomentModule, RouterModule],
+  declarations: [CourseDetails, CourseList, CourseAdd, CourseLevelSpecialityAdd, CourseRestrict, CourseEdit,
+    CourseChapters, CourseChapterText,
+    ScoreAdd, ScoreList],
+  exports: [CourseDetails, CourseList, CourseAdd, CourseLevelSpecialityAdd, CourseRestrict, CourseEdit,
+    CourseChapters, CourseChapterText,
+    ScoreAdd, ScoreList],
   providers: [CourseResolver, CourseService, {provide: COURSE_SERVICE_TOKEN, useExisting: CourseService}]
 })
 export class CourseModule {

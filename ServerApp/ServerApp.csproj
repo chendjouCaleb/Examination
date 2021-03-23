@@ -25,8 +25,16 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0" />
 
         <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.18" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Home" />
+      <Folder Include="wwwroot\app" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="examination.db">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 </Project>

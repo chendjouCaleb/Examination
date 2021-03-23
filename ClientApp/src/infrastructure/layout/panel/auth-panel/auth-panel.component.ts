@@ -12,6 +12,10 @@ export class AuthPanelComponent implements OnInit {
   user: User;
   isAuth: boolean;
 
+  profileUrl: string = '';
+
+  logoutUri: string = '';
+
   constructor(public identity: AuthorizationManager, private router: Router) { }
 
   ngOnInit(): void {

@@ -1,11 +1,14 @@
 <div class="user-picker-layout" [class.user-picker-focus]="openPanel">
   <span class="user-picker-value" *ngFor="let value of values" (click)="removeValue(value)">
-    <MsfPersona size="size24" >
-      <MsfPersonaFigure size="size24" [text]="value.fullName"></MsfPersonaFigure>
-      <span style="margin-left: 2px">{{value.fullName}}</span>
+    <span class="d-flex">
+      <msPersona size="size24" *ngIf="value.hasImage" [imageUrl]="value.imageUrl"></msPersona>
+      <msPersona size="size24" *ngIf="!value.hasImage"  [textInitial]="getInitial(value.fullName)"></msPersona>
+      <span class="ml-2">
+        <span style="margin-left: 2px">{{value.fullName}}</span>
 
       <button class="user-picker-value-button"><i class="ms-Icon ms-Icon--Cancel"></i></button>
-    </MsfPersona>
+      </span>
+    </span>
 
   </span>
 <input type="text" class="user-picker-input" (focus)="_inputFocus()"
@@ -30,12 +33,13 @@
       <span *ngIf="!_items || _items.length === 0" style="padding: 10px">No results found</span>
       <ng-container *ngIf="_items.length > 0">
         <div *ngFor="let item of _items" class="user-picker-panel-item" (click)="select(item)">
-          <MsfPersona [size]="personaSize">
-            <MsfPersonaFigure [text]="item.fullName" ></MsfPersonaFigure>
-          </MsfPersona>
-          <div style="margin-left: 10px">
-            <div class="ms-fontWeight-semibold">{{item.fullName}}</div>
-            <div *ngIf="item.username" class="ms-fontSize-12">@{{item.username}}</div>
+          <div class="d-flex">
+            <msPersona size="size32" *ngIf="item.hasImage" [imageUrl]="item.imageUrl"></msPersona>
+            <msPersona size="size32" *ngIf="!item.hasImage" [textInitial]="getInitial(item.fullName)"></msPersona>
+            <div style="margin-left: 10px">
+              <div class="ms-fontWeight-semibold">{{item.fullName}}</div>
+              <div *ngIf="item.username" class="ms-fontSize-12">@{{item.username}}</div>
+            </div>
           </div>
 
         </div>

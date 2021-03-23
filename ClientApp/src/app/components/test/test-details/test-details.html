@@ -100,8 +100,8 @@
 </div>
 
 <div>
-  <div class="row mt-5" style="background-color: var(--cardBackgroundColor)">
-    <div class="m-2 col-sm-12 col-lg-2 col-md-3 ms-description-list">
+  <div class="mt-3 d-flex flex-wrap" style="background-color: var(--cardBackgroundColor)">
+    <div class="m-3 ms-sm-w100 ms-description-list">
       <dl>
         <dt>Étudiants</dt>
         <dd msFontSize="l">{{test.statistics.frequency | number}}</dd>
@@ -135,7 +135,7 @@
         </span></dd>
       </dl>
     </div>
-    <div class="m-2 col-sm-12 col-lg-2 col-md-3 ms-description-list">
+    <div class="m-3 ms-sm-w100 ms-description-list">
       <dl>
         <dt>Moyenne</dt>
         <dd msFontSize="l" msColor="green">{{test.statistics?.mean | number}}</dd>
@@ -152,7 +152,7 @@
       </dl>
       <dl>
         <dt>Écart-type</dt>
-        <dd>{{test.statistics?.std | number}}</dd>
+        <dd>{{(test.statistics?.std || 0) | number}}</dd>
       </dl>
 
       <dl>
@@ -160,13 +160,16 @@
         <dd>{{test.statistics?.mode}}</dd>
       </dl>
     </div>
-    <div class="m-2 col-sm-12 col-lg-2 col-md-3 ms-description-list">
+    <div class="m-3 ms-sm-w100 ms-description-list">
       <dl>
         <dt style="vertical-align: top">Premier</dt>
         <dd>
           <ng-container *ngIf="test.statistics.maxPaper">
-            <div>{{test.statistics.maxPaper?.examinationStudent.student.fullName}}
-              ({{test.statistics.maxPaper?.examinationStudent.student.registrationId}})
+            <div>
+              <a [routerLink]="test.statistics.maxPaper?.examinationStudent.url">
+                {{test.statistics.maxPaper?.examinationStudent.student.fullName}}
+                ({{test.statistics.maxPaper?.examinationStudent.student.registrationId}})
+              </a>
             </div>
             <div msFontSize="l" msColor="green"> {{test.statistics?.maxPaper?.score}}</div>
           </ng-container>
@@ -178,8 +181,12 @@
         <dt style="vertical-align: top">Dernier</dt>
         <dd>
           <ng-container *ngIf="test.statistics.minPaper">
-            <div>{{test.statistics.minPaper?.examinationStudent.student.fullName}}
-              ({{test.statistics.minPaper?.examinationStudent.student.registrationId}})
+            <div>
+              {{test.statistics.minPaper?.examinationStudent.url}}
+              <a [routerLink]="test.statistics.minPaper?.examinationStudent.url">
+                {{test.statistics.minPaper?.examinationStudent.student.fullName}}
+                ({{test.statistics.minPaper?.examinationStudent.student.registrationId}})
+              </a>
             </div>
             <div msFontSize="l" msColor="sharedRed10">{{test.statistics?.minPaper?.score}}</div>
           </ng-container>

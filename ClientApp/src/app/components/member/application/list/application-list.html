@@ -28,7 +28,7 @@
           </msTableHeadCell>
         </ms-tableHead>
 
-        <msTableRow *ms-tableRowDef="let item of data; let i=index" (click)="_applicationService.details(item)">
+        <msTableRow *ms-tableRowDef="let item of data; let i=index">
           <ms-tableCell>{{start + i + 1}}</ms-tableCell>
 
           <ms-tableCell>
@@ -69,17 +69,7 @@
 
 
           <msTableCell style="text-align: right">
-            <button msButton theme="transparent" class="mr-2" (click)="_applicationService.details(item)">Détails
-            </button>
-
-            <ng-container >
-              <button [MsfMenuTrigger]="more" msIconButton icon="More"></button>
-              <MsfMenu #more>
-                <MsfMenuItem icon="Edit" (click)="_applicationService.edit(item)">Modifier les informations
-                </MsfMenuItem>
-                <MsfMenuItem icon="Delete" (click)="deleteApplication(item)" theme="error">Supprimer</MsfMenuItem>
-              </MsfMenu>
-            </ng-container>
+            <button msButton theme="primary" class="mr-2" (click)="_applicationService.details(item)">Détails</button>
           </msTableCell>
         </msTableRow>
       </ms-table>

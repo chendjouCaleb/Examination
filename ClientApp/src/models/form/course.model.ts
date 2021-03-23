@@ -144,7 +144,7 @@ export class CourseHourAddBodyModel {
 export class CourseSessionAddBodyModel {
   expectedStartDate: Date;
   expectedEndDate: Date;
-  objective: boolean;
+  objective: string;
   lecture: boolean;
 }
 

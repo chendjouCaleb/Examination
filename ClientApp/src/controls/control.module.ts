@@ -29,10 +29,11 @@ import {MsButtonModule} from '@ms-fluent/button';
 import {HistoryBack} from './history-back';
 import {MsIcon} from './ms-icon';
 import {DayOfWeekPipe} from "./dayOfWeek.pipe";
+import {PreviousLocation} from "./prev-location";
 
 @NgModule({
   imports: [CommonModule, MatSnackBarModule, MsPersonaModule, MsButtonModule, MsfModalModule],
-  providers: [AlertEmitter, Confirmation],
+  providers: [AlertEmitter, Confirmation, PreviousLocation],
   declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
     MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe,
     MsColorDirective, MsFontWeightDirective, MsFontSizeDirective, MsBorderColorDirective, MsBgColorDirective,

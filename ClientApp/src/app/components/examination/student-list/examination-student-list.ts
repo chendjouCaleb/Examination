@@ -10,7 +10,7 @@ import {
 import {ExaminationStudentLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
 import {EXAMINATION_SERVICE_TOKEN, IExaminationService} from '../examination.service.contract';
-import {MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
+import {MsPaginator, MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
 
 @Component({
   templateUrl: 'examination-student-list.html',
@@ -35,12 +35,16 @@ export class ExaminationStudentList implements OnInit {
   @ViewChild(MsTable)
   table: MsTable;
 
+  @ViewChild(MsPaginator)
+  paginator: MsPaginator<Student>;
+
   examinationStudents: ExaminationStudent[] = [];
+  filterValue: string = '';
 
   _isLoaded: boolean = false;
 
   itemsFn: MsPaginatorItemsFn<ExaminationStudent> = (page: number, size: number) => {
-    return Promise.resolve(this.examinationStudents.slice(page * size, page * size + size));
+    return Promise.resolve(this.items.slice(page * size, page * size + size));
   };
 
   constructor(private _examinationStudentLoader: ExaminationStudentLoader,
@@ -68,9 +72,15 @@ export class ExaminationStudentList implements OnInit {
       await this._examinationStudentLoader.loadByExamination(this.examination);
     }
 
-    this.examinationStudents = this.getExaminationStudents().toArray();
+    this.examinationStudents = this.getExaminationStudents().toArray()
+      .sort((a, b) => a.student.fullName.localeCompare(b.student.fullName));
 
     this._isLoaded = true;
+  }
+
+  search() {
+    this.paginator.totalSize = this.items.length;
+    this.paginator.reset(0);
   }
 
   getExaminationStudents(): List<ExaminationStudent> {
@@ -93,5 +103,14 @@ export class ExaminationStudentList implements OnInit {
     if (this.examination) {
       return this.examination.examinationStudents;
     }
+  }
+
+  get items(): ExaminationStudent[] {
+    if (this.filterValue) {
+      return this.examinationStudents.filter(s =>
+        s.student.fullName.toLocaleLowerCase().indexOf(this.filterValue.toLocaleLowerCase()) > -1
+        || s.student.registrationId.toLocaleLowerCase().indexOf(this.filterValue.toLocaleLowerCase()) > -1);
+    }
+    return this.examinationStudents.slice();
   }
 }

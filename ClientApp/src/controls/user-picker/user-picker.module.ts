@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MsfPersonaModule} from 'fabric-docs';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {UserPicker} from './user-picker';
+import {MsPersonaModule} from "@ms-fluent/persona";
 
 @NgModule({
-  imports: [ CommonModule, MsfPersonaModule, OverlayModule ],
+  imports: [ CommonModule, MsPersonaModule, OverlayModule ],
   declarations: [ UserPicker ],
   exports: [ UserPicker ]
 })

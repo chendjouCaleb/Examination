@@ -61,6 +61,9 @@ export class Student extends Entity<number> {
   }
 
   get specialityName(): string {
-    return this.levelSpeciality?.speciality.name;
+    if(this.levelSpeciality) {
+      return this.levelSpeciality?.speciality.name;
+    }
+    return '';
   }
 }

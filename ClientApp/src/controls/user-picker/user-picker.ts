@@ -28,6 +28,8 @@ export interface UserPickerItem {
   id: string;
   fullName: string;
   username: string;
+  hasImage: boolean;
+  imageUrl: string;
 }
 
 let uniqueId = 0;
@@ -49,7 +51,7 @@ let uniqueId = 0;
 })
 export class UserPicker implements OnInit, ControlValueAccessor {
   @Input()
-  searchFn: (input: string) => Promise<UserPickerItem[]> = this._userHttpClient.searchFn;
+  searchFn: (input: string, take: number) => Promise<UserPickerItem[]> = this._userHttpClient.searchFn;
 
   @Input()
   maxSize: number;
@@ -103,7 +105,7 @@ export class UserPicker implements OnInit, ControlValueAccessor {
   }
 
   async searchItems(value: string) {
-    let _result = await this.searchFn(value);
+    let _result = await this.searchFn(value, 5);
     _result = _result.filter(item => this.values.findIndex(v => v.id === item.id) < 0);
     _result = _result.slice(0, this.itemSize);
     this._items = _result;
@@ -172,5 +174,14 @@ export class UserPicker implements OnInit, ControlValueAccessor {
       return this.value;
     }
     return this.values;
+  }
+
+  getInitial(name: string) {
+    const values = name.trim().split(' ');
+    let initial = values[0][0] || '';
+    if(values.length > 1) {
+      initial += values[1][0] || '';
+    }
+    return initial.toUpperCase();
   }
 }

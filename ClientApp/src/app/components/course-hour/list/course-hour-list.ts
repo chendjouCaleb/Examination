@@ -1,5 +1,5 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {Course, CourseHour, CourseTeacher, Level, Room, Teacher} from 'examination/entities';
+import {Course, CourseHour, CourseTeacher, Level, Room, Student, Teacher} from 'examination/entities';
 import {MsTable} from '@ms-fluent/table';
 import {CourseHourLoader} from 'examination/loaders';
 import {COURSE_HOUR_SERVICE_TOKEN, ICourseHourService} from '../course-hour.service.interface';
@@ -26,6 +26,9 @@ export class CourseHourList implements OnInit {
 
   @Input()
   level: Level;
+
+  @Input()
+  student: Student;
 
   @Input()
   hiddenColumns: string[] = [];
@@ -61,6 +64,7 @@ export class CourseHourList implements OnInit {
     if (this.level) {
       await this._courseHourLoader.loadByLevel(this.level);
     }
+
 
     let coursesHours = this.getCourseHours().toArray();
     coursesHours = coursesHours.sort(this.sortFn);

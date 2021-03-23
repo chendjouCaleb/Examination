@@ -3,7 +3,7 @@
     <div>
       <div class="ms-header">
         <div class="d-flex align-items-center">
-          <button historyBack msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal"
+          <button historyBack="2" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal"
                   [rounded]="true"></button>
           <div class="ms-header-title">
             <a [routerLink]="levelSpeciality.level.url">Niveau {{levelSpeciality.level.index + 1}}</a>
@@ -25,9 +25,9 @@
 
       <msPivot>
         <msPivotHeader>
-          <msPivotLabel>Acceuil</msPivotLabel>
-          <msPivotLabel>Cours</msPivotLabel>
-          <msPivotLabel>Étudiants</msPivotLabel>
+          <msPivotLabel id="home">Acceuil</msPivotLabel>
+          <msPivotLabel id="courses">Cours</msPivotLabel>
+          <msPivotLabel id="students">Étudiants</msPivotLabel>
         </msPivotHeader>
         <msPivotBody>
           <div *msPivotContentDef>
