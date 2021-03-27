@@ -12,7 +12,11 @@
   épreuves</b>.
 </msAlert>
 
-<ms-table #table class="mt-3">
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
+
+<ms-table [class.ms-opacity-0]="isLoading" #table class="mt-3">
   <ms-tableHead *msTableHeadDef>
     <ms-tableHeadCell name="#">#</ms-tableHeadCell>
     <ms-tableHeadCell name="user">Utilisateur</ms-tableHeadCell>

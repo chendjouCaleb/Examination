@@ -35,6 +35,7 @@ export class ApplicationList implements OnInit {
   applications: Application[] = [];
 
   _isLoaded: boolean = false;
+  isLoading: boolean = true;
 
   itemsFn: MsPaginatorItemsFn<Application> = (page: number, size: number) => {
     return Promise.resolve(this.applications.slice(page * size, page * size + size));
@@ -47,13 +48,18 @@ export class ApplicationList implements OnInit {
   }
 
   async ngOnInit() {
-    await this._applicationLoader.loadByDepartment(this.department);
-    await this._applicationLoader.loadByLevel(this.level);
-    await this._applicationLoader.loadByLevelSpeciality(this.levelSpeciality);
-    await this._applicationLoader.loadBySchool(this.school);
+    try {
+      await this._applicationLoader.loadByDepartment(this.department);
+      await this._applicationLoader.loadByLevel(this.level);
+      await this._applicationLoader.loadByLevelSpeciality(this.levelSpeciality);
+      await this._applicationLoader.loadBySchool(this.school);
 
-    this.applications = this.applicationList.toArray();
-    this._isLoaded = true;
+      this.applications = this.applicationList.toArray();
+      this._isLoaded = true;
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
   }
 
   get applicationList(): List<Application> {

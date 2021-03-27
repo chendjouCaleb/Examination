@@ -17,14 +17,22 @@ export class ExaminationStudentDetails  implements OnInit {
   @ViewChild(MsTable)
   table: MsTable;
 
+  isPaperLoading: boolean = true;
+
   constructor(private _paperLoader: PaperLoader,
               private _loader: ExaminationStudentLoader,
               @Inject(PAPER_SERVICE_TOKEN) public paperService: IPaperService) {}
 
   async ngOnInit() {
-    await this._loader.load(this.examinationStudent);
-    await this._paperLoader.loadByExaminationStudent(this.examinationStudent);
-    this.table.unshiftRange(this.examinationStudent.papers.toArray());
+    try {
+      await this._loader.load(this.examinationStudent);
+      await this._paperLoader.loadByExaminationStudent(this.examinationStudent);
+      this.table.unshiftRange(this.examinationStudent.papers.toArray());
+      this.isPaperLoading = false;
+    }catch (e) {
+      this.isPaperLoading = false;
+    }
+
   }
 
   get student(): Student {

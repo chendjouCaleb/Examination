@@ -21,9 +21,10 @@ import {MsPaginatorModule, MsTableModule} from '@ms-fluent/table';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsPivotModule} from '@ms-fluent/pivot';
 import {RouterModule} from "@angular/router";
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfSelectModule,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsfSelectModule, MsSpinnerModule,
     AppFormModule, MsfMenuModule, MomentModule, MsfRadioModule, MsTableModule, MsButtonModule, MsPaginatorModule,
     MatRippleModule, MsfCheckboxModule, UserPickerModule, MsPivotModule, MsfModalModule, RouterModule],
   declarations: [StudentAdd, StudentEdit, StudentUserLink, StudentLevel, StudentRegistrationId,

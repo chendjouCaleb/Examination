@@ -4,7 +4,11 @@
     Ajouter <span class="ms-hiddenSm">des délégués</span></button>
 </div>
 
-<ms-table>
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
+
+<ms-table [class.ms-opacity-0]="isLoading">
   <msTableHead *ms-tableHeadDef>
     <ms-tableHeadCell name="#">#</ms-tableHeadCell>
     <ms-tableHeadCell name="user">Utilisateur</ms-tableHeadCell>

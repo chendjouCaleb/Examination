@@ -18,8 +18,11 @@
   </div>
 </div>
 
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
 
-<ms-table>
+<ms-table [class.ms-opacity-0]="isLoading">
   <ms-tableHead *ms-tableHeadDef>
     <ms-tableHeadCell name="#">#</ms-tableHeadCell>
     <ms-tableHeadCell name="registrationNumber">Matricule</ms-tableHeadCell>

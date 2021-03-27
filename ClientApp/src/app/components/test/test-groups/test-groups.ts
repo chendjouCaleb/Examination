@@ -22,6 +22,8 @@ export class TestGroups implements OnInit {
   @ViewChild(MsTable)
   table: MsTable;
 
+  isLoading: boolean = true;
+
   constructor(@Inject(TEST_GROUP_SERVICE_TOKEN) public service: ITestGroupService,
               @Inject(TEST_SERVICE_TOKEN) public testService: ITestService,
               @Inject(PAPER_SERVICE_TOKEN) public paperService: IPaperService,
@@ -30,9 +32,15 @@ export class TestGroups implements OnInit {
 
 
   async ngOnInit() {
-    await this._testGroupLoader.loadByTest(this.test);
-    this.isLoaded = true;
-    this.table.unshift(...this.getTestGroups().toArray())
+    try {
+      await this._testGroupLoader.loadByTest(this.test);
+      this.isLoaded = true;
+      this.table.unshift(...this.getTestGroups().toArray());
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
+
   }
 
   getTestGroups(): List<TestGroup> {

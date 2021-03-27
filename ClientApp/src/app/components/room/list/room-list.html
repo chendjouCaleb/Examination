@@ -4,10 +4,15 @@
     Ajouter <span class="ms-hiddenSm"> une salle</span>
   </button>
 </div>
-
 <div>
 
-  <ms-table #table>
+  <div *ngIf="isLoading">
+    <msSpinnerInlineDot></msSpinnerInlineDot>
+  </div>
+
+
+
+  <ms-table [class.ms-opacity-0]="isLoading" #table>
     <msTableHead *ms-tableHeadDef>
       <msTableHeadCell name="#">#</msTableHeadCell>
       <msTableHeadCell name="name" [sortBy]="['name', 'string']">Nom</msTableHeadCell>

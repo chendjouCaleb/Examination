@@ -40,35 +40,19 @@ export class CourseHourList implements OnInit {
 
   sortFn = (c1: CourseHour, c2: CourseHour) => c1.startTime - c2.startTime;
 
+  isLoading: boolean = true;
+
   constructor(private _courseHourLoader: CourseHourLoader,
               @Inject(COURSE_HOUR_SERVICE_TOKEN) public service: ICourseHourService) {
   }
 
   async ngOnInit() {
-    if (this.room) {
-      await this._courseHourLoader.loadByRoom(this.room);
+    try {
+      await this.loadCourseHours();
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
     }
-
-    if (this.course) {
-      await this._courseHourLoader.loadByCourse(this.course);
-    }
-
-    if (this.courseTeacher) {
-      await this._courseHourLoader.loadByCourseTeacher(this.courseTeacher);
-    }
-
-    if (this.teacher) {
-      await this._courseHourLoader.loadByTeacher(this.teacher);
-    }
-
-    if (this.level) {
-      await this._courseHourLoader.loadByLevel(this.level);
-    }
-
-
-    let coursesHours = this.getCourseHours().toArray();
-    coursesHours = coursesHours.sort(this.sortFn);
-    this.table.unshift(...coursesHours);
   }
 
 
@@ -111,6 +95,33 @@ export class CourseHourList implements OnInit {
     }
 
     return new List<CourseHour>();
+  }
+
+  async loadCourseHours() {
+    if (this.room) {
+      await this._courseHourLoader.loadByRoom(this.room);
+    }
+
+    if (this.course) {
+      await this._courseHourLoader.loadByCourse(this.course);
+    }
+
+    if (this.courseTeacher) {
+      await this._courseHourLoader.loadByCourseTeacher(this.courseTeacher);
+    }
+
+    if (this.teacher) {
+      await this._courseHourLoader.loadByTeacher(this.teacher);
+    }
+
+    if (this.level) {
+      await this._courseHourLoader.loadByLevel(this.level);
+    }
+
+
+    let coursesHours = this.getCourseHours().toArray();
+    coursesHours = coursesHours.sort(this.sortFn);
+    this.table.unshift(...coursesHours);
   }
 
   get canAdd(): boolean {

@@ -42,6 +42,7 @@ export class ExaminationStudentList implements OnInit {
   filterValue: string = '';
 
   _isLoaded: boolean = false;
+  _isLoading: boolean = true;
 
   itemsFn: MsPaginatorItemsFn<ExaminationStudent> = (page: number, size: number) => {
     return Promise.resolve(this.items.slice(page * size, page * size + size));
@@ -52,6 +53,7 @@ export class ExaminationStudentList implements OnInit {
   }
 
   async ngOnInit() {
+    try {
     if (this.examinationLevelSpeciality) {
       await this._examinationStudentLoader.loadByExaminationLevelSpeciality(this.examinationLevelSpeciality);
     }
@@ -76,6 +78,10 @@ export class ExaminationStudentList implements OnInit {
       .sort((a, b) => a.student.fullName.localeCompare(b.student.fullName));
 
     this._isLoaded = true;
+      this._isLoading = false;
+    }catch (e) {
+      this._isLoading = false;
+    }
   }
 
   search() {

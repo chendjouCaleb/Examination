@@ -16,6 +16,7 @@ export class PlannerList implements AfterViewInit {
   @ViewChild(MsTable)
   table: MsTable;
 
+  isLoading: boolean = true;
 
   constructor(private _plannerLoader: PlannerLoader,
               @Inject(PLANNER_SERVICE_TOKEN) public _service: IPlannerService) {
@@ -23,9 +24,15 @@ export class PlannerList implements AfterViewInit {
 
 
   async ngAfterViewInit(): Promise<void> {
-    AssertHelpers.isNotNull(this.school);
-    await this._plannerLoader.loadBySchool(this.school);
-    this.table.unshift(...this.school.planners.toArray());
+    try {
+      AssertHelpers.isNotNull(this.school);
+      await this._plannerLoader.loadBySchool(this.school);
+      this.table.unshift(...this.school.planners.toArray());
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
+
   }
 
   addPlanners() {

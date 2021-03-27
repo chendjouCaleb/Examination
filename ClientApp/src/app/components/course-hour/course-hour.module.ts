@@ -15,11 +15,12 @@ import {CourseHourDetails} from './details/course-hour-details';
 import {CourseHourRoom} from './room/course-hour-room';
 import {CourseHourTeacher} from './teacher/course-hour-teacher';
 import {CourseHourDelete} from './delete/course-hour-delete';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 @NgModule({
   imports: [CommonModule, RouterModule, ControlModule, FormsModule, ReactiveFormsModule, MsButtonModule, MsTableModule,
     MsfCheckboxModule, MsfRadioModule, MsfSelectModule, AppFormModule, MsfModalModule, MsPivotModule,
-    MsPivotModule],
+    MsPivotModule, MsSpinnerModule],
 
   declarations: [CourseHourList, CourseHourAdd, CourseHourDetails, CourseHourRoom, CourseHourTeacher, CourseHourDelete],
   exports: [CourseHourList, CourseHourAdd, CourseHourDetails, CourseHourRoom, CourseHourTeacher, CourseHourDelete],

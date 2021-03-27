@@ -2,7 +2,11 @@
   <div class="ms-fontSize-20">Notes</div>
 </div>
 
-<ms-table>
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
+
+<ms-table [class.ms-opacity-0]="isLoading">
   <ms-tableHead *ms-tableHeadDef>
     <ms-tableHeadCell name="#">#</ms-tableHeadCell>
     <ms-tableHeadCell name="registrationNumber">Matricule</ms-tableHeadCell>

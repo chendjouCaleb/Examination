@@ -18,14 +18,22 @@ export class CorrectorList implements OnInit {
 
   correctors: Corrector[] = [];
 
+  isLoading: boolean = true;
+
   constructor( private _correctorLoader: CorrectorLoader,
                @Inject(CORRECTOR_SERVICE_TOKEN) public _service: ICorrectorService) {
   }
 
   async ngOnInit() {
-    AssertHelpers.isNotNull(this.department);
-    await this._correctorLoader.loadByDepartment(this.department);
-    this.table.unshift(...this.department.correctors);
+    try {
+      AssertHelpers.isNotNull(this.department);
+      await this._correctorLoader.loadByDepartment(this.department);
+      this.table.unshift(...this.department.correctors);
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
+
   }
 
   addCorrectors() {

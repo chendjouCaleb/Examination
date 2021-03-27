@@ -6,9 +6,12 @@
     Ajouter<span class="ms-hiddenSm"> un horaire</span></button>
 </div>
 
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
 
 <div>
-  <ms-table #msTable [hiddenColumns]="hiddenColumns" >
+  <ms-table [class.ms-opacity-0]="isLoading" #msTable [hiddenColumns]="hiddenColumns" >
     <ms-tableHead *msTableHeadDef>
       <ms-tableHeadCell name="#">#</ms-tableHeadCell>
       <ms-tableHeadCell name="hour" [sortBy]="['startTime', 'number']">Horaire</ms-tableHeadCell>

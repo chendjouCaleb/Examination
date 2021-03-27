@@ -24,11 +24,22 @@ export class RoomList implements OnInit {
   @ViewChild(MsTable)
   table: MsTable;
 
+  isLoading: boolean = true;
+
   constructor(private _roomLoader: RoomLoader,
               @Inject(ROOM_SERVICE_TOKEN) public service: IRoomService) {
   }
 
   async ngOnInit() {
+    try {
+      await this.loadRooms();
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
+  }
+
+  async loadRooms() {
     if (this.department) {
       await this._roomLoader.loadByDepartment(this.department);
     }
@@ -41,7 +52,7 @@ export class RoomList implements OnInit {
       await this._roomLoader.loadByLevel(this.level);
     }
 
-    this.table.unshift(...this.getRooms().toArray())
+    this.table.unshift(...this.getRooms().toArray());
   }
 
 

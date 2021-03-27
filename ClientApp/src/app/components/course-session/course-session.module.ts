@@ -18,9 +18,11 @@ import {CourseSessionObjective} from './objective/course-session-objective';
 import {CourseSessionReport} from './report/course-session-report';
 import {CourseSessionRoom} from './room/course-session-room';
 import {CourseSessionTeacher} from './teacher/course-session-teacher';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 @NgModule({
   imports: [CommonModule, RouterModule, MomentModule, ControlModule, FormsModule, ReactiveFormsModule, MsButtonModule,
+    MsSpinnerModule,
     MsTableModule, MsfCheckboxModule, MsfRadioModule, MsfSelectModule, MomentModule, AppFormModule, MsfModalModule],
 
   declarations: [CourseSessionList, CourseSessionAdd, CourseSessionDate, CourseSessionDelete, CourseSessionDetails,

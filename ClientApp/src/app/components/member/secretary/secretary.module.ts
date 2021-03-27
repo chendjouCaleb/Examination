@@ -10,11 +10,12 @@ import {SECRETARY_SERVICE_TOKEN} from './secretary.service.interface';
 import {SecretaryList} from './list/secretary-list';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, MomentModule, AppFormModule, MsfModalModule, UserPickerModule, MsTableModule,
-    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule],
+    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule, MsSpinnerModule],
   declarations: [SecretaryAdd, SecretaryList],
   exports: [SecretaryAdd, SecretaryList],
   providers: [ SecretaryService, { provide: SECRETARY_SERVICE_TOKEN, useExisting: SecretaryService}]

@@ -5,10 +5,12 @@
     Ajouter <span class="ms-hiddenSm">un cours</span></button>
 </div>
 
-
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
 
 <div>
-  <ms-table #msTable>
+  <ms-table [class.ms-opacity-0]="isLoading" #msTable>
     <ms-tableHead *msTableHeadDef>
       <ms-tableHeadCell name="#">#</ms-tableHeadCell>
       <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>

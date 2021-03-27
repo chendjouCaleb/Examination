@@ -29,10 +29,11 @@ import {PublishScore} from './publish/publish-score';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
 import {MsPersonaModule} from '@ms-fluent/persona';
+import {MsSpinnerModule} from '@ms-fluent/spinner';
 
 @NgModule({
   imports: [CommonModule, ControlModule, MsfModalModule, MsButtonModule, MsfMenuModule, MsTableModule,
-    FormsModule, RouterModule, CourseModule, MomentModule, ReactiveFormsModule, MsPersonaModule,
+    FormsModule, RouterModule, CourseModule, MomentModule, ReactiveFormsModule, MsPersonaModule, MsSpinnerModule,
     AppFormModule, UserPickerModule, MsfSelectModule, MsfCheckboxModule, LayoutModule, TestGroupModule, PaperModule
   ],
 

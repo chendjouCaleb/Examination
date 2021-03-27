@@ -17,12 +17,13 @@ import {MsButtonModule} from '@ms-fluent/button';
 import {MsPersonaModule} from '@ms-fluent/persona';
 import {MsPaginatorModule, MsTableModule} from '@ms-fluent/table';
 import {MsPivotModule} from '@ms-fluent/pivot';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsButtonModule, MsfSelectModule,
     AppFormModule, MsPersonaModule, MsfMenuModule, MomentModule, MsfRadioModule, MsfCheckboxModule,
-    MsPivotModule, MsfModalModule, MsTableModule, MsPaginatorModule, RouterModule],
+    MsPivotModule, MsfModalModule, MsTableModule, MsPaginatorModule, RouterModule, MsSpinnerModule],
 
   declarations: [ApplicationAdd, ApplicationEdit, ApplicationDetails, ApplicationList],
   exports: [ApplicationAdd, ApplicationEdit, ApplicationDetails, ApplicationList],

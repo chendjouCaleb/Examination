@@ -48,7 +48,8 @@ export class StudentList implements OnInit, AfterViewInit {
   itemsFn: MsPaginatorItemsFn<Student> =
     (page: number, size: number) => Promise.resolve(this.items.slice(page * size, page * size + size));
 
-  _isLoaded: boolean = false;
+  isLoading: boolean = true;
+  isLoaded: boolean = false;
 
   constructor(private _studentLoader: StudentLoader,
               private _httpClient: StudentHttpClient,
@@ -57,13 +58,13 @@ export class StudentList implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    await this._studentLoader.loadByDepartment(this.department);
-    await this._studentLoader.loadByLevel(this.level);
-    await this._studentLoader.loadByLevelSpeciality(this.levelSpeciality);
-    await this._studentLoader.loadBySpeciality(this.speciality);
-
-    this.students = this.getStudents().sort((a, b) => a.fullName.localeCompare(b.fullName));
-    this._isLoaded = true;
+    try {
+      await this.loadStudents();
+      this.isLoading = false;
+      this.isLoaded = true;
+    }catch (e) {
+      this.isLoading = false;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -71,6 +72,15 @@ export class StudentList implements OnInit, AfterViewInit {
     //   console.log(this.checkboxGroup._checkboxChildren.filter(c => c.checked).map(c => c.value));
     //   // this.table.setVisibleColumns(this.checkboxGroup.values.toArray())
     // })
+  }
+
+  async loadStudents() {
+    await this._studentLoader.loadByDepartment(this.department);
+    await this._studentLoader.loadByLevel(this.level);
+    await this._studentLoader.loadByLevelSpeciality(this.levelSpeciality);
+    await this._studentLoader.loadBySpeciality(this.speciality);
+
+    this.students = this.getStudents().sort((a, b) => a.fullName.localeCompare(b.fullName));
   }
 
 

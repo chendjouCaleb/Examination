@@ -11,7 +11,7 @@
       <div>
         <button *ngIf="!level.department.isStudent" msButton (click)="sendApplication()" icon="AddFriend" theme="primary">Devenir étudiant</button>
         <ng-container *ngIf="level.department.isPrincipalUser">
-          <button msIconButton theme="transparent" icon="MoreVertical" [MsfMenuTrigger]="levelMenu"></button>
+          <button msIconButton theme="transparent" icon="Settings" [MsfMenuTrigger]="levelMenu"></button>
           <MsfMenu #levelMenu>
             <MsfMenuItem icon="Add" (click)="levelService.addSpeciality(level)">Ajouter une spécialité</MsfMenuItem>
             <MsfMenuItem  icon="Delete" theme="error" (click)="delete()">

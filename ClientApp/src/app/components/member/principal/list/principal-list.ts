@@ -18,14 +18,21 @@ export class PrincipalList implements OnInit {
 
   correctors: Principal[] = [];
 
+  isLoading: boolean = true;
+
   constructor( private _principalLoader: PrincipalLoader,
                @Inject(PRINCIPAL_SERVICE_TOKEN) public _service: IPrincipalService) {
   }
 
   async ngOnInit() {
-    AssertHelpers.isNotNull(this.department);
-    await this._principalLoader.loadByDepartment(this.department);
-    this.table.unshift(...this.department.principals);
+    try {
+      AssertHelpers.isNotNull(this.department);
+      await this._principalLoader.loadByDepartment(this.department);
+      this.table.unshift(...this.department.principals);
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
   }
 
   addPrincipals() {

@@ -1,14 +1,16 @@
-﻿
-<div class="ms-pageTitle">
+﻿<div class="ms-pageTitle">
     <h4>Examens</h4>
     <div>
       <button msButton icon="Add" theme="primary" (click)="add()">
         Ajouter <span class="ms-hiddenSm">un examen</span></button>
     </div>
+</div>
 
-  </div>
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
 
-    <ms-table>
+    <ms-table [class.ms-opacity-0]="isLoading">
       <ms-tableHead *ms-tableHeadDef>
         <ms-tableHeadCell name="#" >#</ms-tableHeadCell>
         <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>
@@ -37,7 +39,7 @@
           <span *ngIf="!item.endDate" [appStateBadge]="item.state"> </span>
         </msTableCell>
 
-        <msTableCell style="text-align: center">
+        <msTableCell style="text-align: right">
 
 <!--          <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary" (click)="service.details(item)" ></button>-->
           <button msButton theme="primaryOutline" [routerLink]="item.url">Details</button>

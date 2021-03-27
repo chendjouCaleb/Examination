@@ -29,6 +29,7 @@ export class CourseList implements OnInit {
   table: MsTable;
 
   courses: Course[] = [];
+  isLoading: boolean = true;
 
   columns: Column[] = [
     {name: '#', display: '#'},
@@ -52,23 +53,12 @@ export class CourseList implements OnInit {
   }
 
   async ngOnInit() {
-    if (this.level) {
-      await this._levelSpecialityLoader.loadByLevel(this.level);
-      await this._courseLoader.loadByLevel(this.level);
-
+    try {
+      await this.loadCourses();
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
     }
-    if (this.speciality) {
-      await this._courseLoader.loadBySpeciality(this.speciality);
-    }
-
-    if (this.levelSpeciality) {
-      await this._courseLevelSpeciality.loadByLevelSpeciality(this.levelSpeciality);
-    }
-    for (const course of this.courses) {
-      await this._courseLevelSpeciality.loadByCourse(course);
-    }
-
-    this.table.unshift(...this.getCourses().toArray());
   }
 
 
@@ -104,5 +94,25 @@ export class CourseList implements OnInit {
     if (this.levelSpeciality) {
       return this.levelSpeciality.level?.department?.school;
     }
+  }
+
+  async loadCourses() {
+    if (this.level) {
+      await this._levelSpecialityLoader.loadByLevel(this.level);
+      await this._courseLoader.loadByLevel(this.level);
+
+    }
+    if (this.speciality) {
+      await this._courseLoader.loadBySpeciality(this.speciality);
+    }
+
+    if (this.levelSpeciality) {
+      await this._courseLevelSpeciality.loadByLevelSpeciality(this.levelSpeciality);
+    }
+    for (const course of this.courses) {
+      await this._courseLevelSpeciality.loadByCourse(course);
+    }
+
+    this.table.unshift(...this.getCourses().toArray());
   }
 }

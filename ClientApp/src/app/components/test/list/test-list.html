@@ -4,11 +4,11 @@
     <span class="ms-hiddenSm"> une épreuve</span></button>
 </div>
 
-<div>
-  <div *ngIf="0">
-    <app-test-item *ngFor="let item of tests" [test]="item" class="mt-2"></app-test-item>
-  </div>
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
 
+<div *ngIf="_isLoaded">
   <ms-table #table [hiddenColumns]="columns">
     <msTableHead *ms-tableHeadDef>
       <ms-tableHeadCell name="#">#</ms-tableHeadCell>

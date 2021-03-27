@@ -5,9 +5,12 @@
     Programmer<span class="ms-hiddenSm"> une séance</span></button>
 </div>
 
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
 
 <div>
-  <ms-table #msTable [hiddenColumns]="hiddenColumns">
+  <ms-table [class.ms-opacity-0]="isLoading" #msTable [hiddenColumns]="hiddenColumns">
     <ms-tableHead *msTableHeadDef>
       <ms-tableHeadCell name="#">#</ms-tableHeadCell>
       <ms-tableHeadCell name="hour" [sortBy]="['expectedStartDate', 'date']">Horaire</ms-tableHeadCell>
@@ -70,7 +73,7 @@
       <ms-tableCell class="text-right">
         <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary"
                 (click)="service.details(item)"></button>
-        <button msIconButton icon="Delete" [rounded]="true" theme="errorOutline" (click)="delete(item)"></button>
+        <button msIconButton icon="Delete" [rounded]="true" theme="error" (click)="delete(item)"></button>
       </ms-tableCell>
     </ms-tableRow>
   </ms-table>

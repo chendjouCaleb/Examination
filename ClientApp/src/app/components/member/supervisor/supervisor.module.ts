@@ -10,11 +10,12 @@ import {SUPERVISOR_SERVICE_TOKEN} from './supervisor.service.interface';
 import {SupervisorList} from './list/supervisor-list';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, MomentModule, AppFormModule, MsfModalModule, UserPickerModule, MsTableModule,
-    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule],
+    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule, MsSpinnerModule],
   declarations: [SupervisorAdd, SupervisorList],
   exports: [SupervisorAdd, SupervisorList],
   providers: [ SupervisorService, { provide: SUPERVISOR_SERVICE_TOKEN, useExisting: SupervisorService}]

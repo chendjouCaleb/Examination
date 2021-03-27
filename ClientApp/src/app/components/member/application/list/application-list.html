@@ -3,6 +3,12 @@
   <div class="text-right"></div>
 </div>
 
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
+
+
+
 <div *ngIf="_isLoaded">
   <msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
 

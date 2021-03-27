@@ -34,6 +34,8 @@ export class CourseSessionList implements OnInit {
   @ViewChild(MsTable)
   table: MsTable;
 
+  isLoading: boolean = true;
+
   courseSessions: CourseSession[] = [];
 
   constructor(private _courseSessionLoader: CourseSessionLoader,
@@ -41,6 +43,15 @@ export class CourseSessionList implements OnInit {
   }
 
   async ngOnInit() {
+    try {
+      await this.loadCourseSessions();
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
+  }
+
+  async loadCourseSessions() {
     if (this.room) {
       await this._courseSessionLoader.loadByRoom(this.room);
     }
@@ -70,7 +81,6 @@ export class CourseSessionList implements OnInit {
 
     this.table.unshift(...coursessions);
   }
-
 
   addCourseSession() {
     this.service.addCourseSession(this.level, this.course).then(courseSession => {

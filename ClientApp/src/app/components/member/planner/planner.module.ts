@@ -11,11 +11,12 @@ import {PlannerList} from './list/planner-list';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
 import {MsPersonaModule} from '@ms-fluent/persona';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, MomentModule, AppFormModule, MsfModalModule, UserPickerModule, MsTableModule,
-    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsPersonaModule, MsButtonModule],
+    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsPersonaModule, MsButtonModule, MsSpinnerModule],
   declarations: [PlannerAdd, PlannerList],
   exports: [PlannerAdd, PlannerList],
   providers: [ PlannerService, { provide: PLANNER_SERVICE_TOKEN, useExisting: PlannerService}]

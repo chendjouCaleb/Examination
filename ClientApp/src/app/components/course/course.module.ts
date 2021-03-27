@@ -21,12 +21,13 @@ import {MomentModule} from 'ngx-moment';
 import {RouterModule} from '@angular/router';
 import {CourseChapters} from './chapters/course-chapters';
 import {CourseChapterText} from './chapterText/course-chapterText';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule,
     MsButtonModule, MsfSelectModule, MsfModalModule, MsfMenuModule, MsTableModule, ControlModule, LayoutModule,
-    MsfCheckboxModule, MomentModule, RouterModule],
+    MsfCheckboxModule, MomentModule, RouterModule, MsSpinnerModule],
   declarations: [CourseDetails, CourseList, CourseAdd, CourseLevelSpecialityAdd, CourseRestrict, CourseEdit,
     CourseChapters, CourseChapterText,
     ScoreAdd, ScoreList],

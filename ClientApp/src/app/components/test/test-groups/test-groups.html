@@ -13,7 +13,11 @@
   {{test.notGroupedStudentCount}} étudiants de cette épreuve n'ont pas de groupe. Veuillez les en assigner un.
 </msAlert>
 
-<ms-table>
+<div *ngIf="isLoading">
+  <msSpinnerInlineDot></msSpinnerInlineDot>
+</div>
+
+<ms-table [class.ms-opacity-0]="isLoading">
   <ms-tableHead *ms-tableHeadDef>
     <ms-tableHeadCell name="#">#</ms-tableHeadCell>
     <ms-tableHeadCell name="room">Salles</ms-tableHeadCell>
@@ -48,7 +52,9 @@
     <ms-tableCell>{{group.presentPaperCount}}</ms-tableCell>
     <ms-tableCell>{{group.correctedPaperCount}}</ms-tableCell>
     <ms-tableCell class="text-right">
-      <span class="ms-link" [routerLink]="group.url">Détails</span>
+      <a [routerLink]="group.url">
+        <button msButton theme="primary">Détails</button>
+      </a>
       <button msIconButton theme="transparent" class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
       <MsfMenu #more>
         <MsfMenuItem icon="Delete" (click)="delete(group)" theme="error">Supprimer</MsfMenuItem>

@@ -16,14 +16,21 @@ export class SecretaryList implements OnInit {
   @ViewChild(MsTable)
   table: MsTable;
 
+  isLoading: boolean = true;
+
   constructor(private _secretaryLoader: SecretaryLoader,
               @Inject(SECRETARY_SERVICE_TOKEN) public _service: ISecretaryService) {
   }
 
   async ngOnInit() {
-    AssertHelpers.isNotNull(this.department);
-    await this._secretaryLoader.loadByDepartment(this.department);
-    this.table.unshiftRange(this.department.secretaries.toArray());
+    try {
+      AssertHelpers.isNotNull(this.department);
+      await this._secretaryLoader.loadByDepartment(this.department);
+      this.table.unshiftRange(this.department.secretaries.toArray());
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
   }
 
   addSecretaries() {

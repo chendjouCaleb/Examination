@@ -27,13 +27,20 @@ export class PaperList implements OnInit {
 
   papers: Paper[] = [];
 
+  isLoading: boolean = true;
+
   constructor(private _paperLoader: PaperLoader,
               private _changeDetector: ChangeDetectorRef,
               @Inject(PAPER_SERVICE_TOKEN) public service: IPaperService) {
   }
 
   async ngOnInit() {
-    await this.load();
+    try {
+      await this.load();
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
   }
 
 

@@ -10,11 +10,12 @@ import {PRINCIPAL_SERVICE_TOKEN} from './principal.service.interface';
 import {PrincipalList} from './list/principal-list';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, MomentModule, AppFormModule, MsfModalModule, UserPickerModule, MsTableModule,
-    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule],
+    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule, MsSpinnerModule],
   declarations: [PrincipalAdd, PrincipalList],
   exports: [PrincipalAdd, PrincipalList],
   providers: [ PrincipalService, { provide: PRINCIPAL_SERVICE_TOKEN, useExisting: PrincipalService}]

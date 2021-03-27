@@ -17,15 +17,21 @@ export class SupervisorList implements OnInit {
   table: MsTable;
 
   supervisors: Supervisor[] = [];
+  isLoading: boolean = true;
 
   constructor( private _supervisorLoader: SupervisorLoader,
                @Inject(SUPERVISOR_SERVICE_TOKEN) public _service: ISupervisorService) {
   }
 
   async ngOnInit() {
-    AssertHelpers.isNotNull(this.department);
-    await this._supervisorLoader.loadByDepartment(this.department);
-    this.table.unshift(...this.department.supervisors.toArray());
+    try {
+      AssertHelpers.isNotNull(this.department);
+      await this._supervisorLoader.loadByDepartment(this.department);
+      this.table.unshift(...this.department.supervisors.toArray());
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
   }
 
   addSupervisors() {

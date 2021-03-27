@@ -13,9 +13,10 @@ import {RoomDetails} from './details/room-details';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
 import {RouterModule} from "@angular/router";
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsButtonModule,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule, MsButtonModule, MsSpinnerModule,
     MsfSelectModule, MsTableModule, ControlModule, MsfMenuModule, MsfModalModule, RouterModule],
   declarations: [RoomAdd, RoomEdit, RoomList, RoomDetails],
   exports: [RoomAdd, RoomEdit, RoomList, RoomDetails],

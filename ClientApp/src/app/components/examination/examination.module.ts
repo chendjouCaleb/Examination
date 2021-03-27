@@ -25,11 +25,13 @@ import {PaperModule} from 'examination/app/components/paper';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsPaginatorModule, MsTableModule} from '@ms-fluent/table';
 import {MsPersonaModule} from '@ms-fluent/persona';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, RouterModule, MsfModalModule, AppFormModule, ControlModule, MsPersonaModule, PaperModule,
-    MsButtonModule, MsTableModule, MsfMenuModule, MsfCheckboxModule, MomentModule, MsPaginatorModule],
+    MsButtonModule, MsTableModule, MsfMenuModule, MsfCheckboxModule, MomentModule, MsPaginatorModule,
+  MsSpinnerModule],
   declarations: [ExaminationAdd, ExaminationDelete, ExaminationList, ExaminationDetails, ExaminationDepartmentItem,
     ExaminationStudentList, ExaminationLevelItem, ExaminationSpecialityItem, ExaminationSpecialityLevelItem,
     ExaminationLevelSpecialityItem, ExaminationStudentDetails],

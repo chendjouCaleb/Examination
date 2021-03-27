@@ -27,6 +27,7 @@ export class PaperScoreList implements OnInit {
 
   papers: Paper[] = [];
 
+  isLoading: boolean = true;
 
   constructor(private _paperLoader: PaperLoader, private _changeDetector: ChangeDetectorRef,
               private _testScoreLoader: TestScoreLoader,
@@ -34,6 +35,16 @@ export class PaperScoreList implements OnInit {
   }
 
   async ngOnInit() {
+    try {
+      await this.loadScores();
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
+
+  }
+
+  async loadScores() {
     if (this.test) {
       await this._paperLoader.loadByTest(this.test);
       await this._testScoreLoader.loadByTest(this.test);
@@ -49,12 +60,8 @@ export class PaperScoreList implements OnInit {
       await this._testScoreLoader.loadByTest(this.testLevelSpeciality.test);
     }
 
-
-
     this.papers.unshift(...this.getPapers().toArray());
-
     this.papers.forEach(p => p.assignScore());
-
     this.table.unshift(...this.papers);
   }
 

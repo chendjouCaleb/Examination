@@ -80,8 +80,11 @@
     </div>
   </div>
 
+  <div *ngIf="isPaperLoading">
+    <msSpinnerInlineDot></msSpinnerInlineDot>
+  </div>
 
-  <div>
+  <div [class.ms-opacity-0]="isPaperLoading">
     <ms-table>
       <msTableHead *msTableHeadDef>
         <msTableHeadCell name="#">#</msTableHeadCell>
@@ -124,7 +127,7 @@
         </ms-tableCell>
 
         <ms-tableCell class="text-right">
-          <span class="ms-link" (click)="paperService.details(paper)">Détails</span>
+          <button msIconButton icon="MiniExpand" theme="primary" [rounded]="true" (click)="paperService.details(paper)"></button>
         </ms-tableCell>
       </msTableRow>
     </ms-table>

@@ -9,11 +9,12 @@ import {CORRECTOR_SERVICE_TOKEN} from './corrector.service.interface';
 import {CorrectorList} from 'examination/app/components/member/corrector/list/corrector-list';
 import {MsTableModule} from '@ms-fluent/table';
 import {MsButtonModule} from '@ms-fluent/button';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, AppFormModule, MsfModalModule, UserPickerModule, MsTableModule,
-    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule],
+    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule, MsSpinnerModule],
   declarations: [CorrectorAdd, CorrectorList],
   exports: [CorrectorAdd, CorrectorList],
   providers: [CorrectorService, {provide: CORRECTOR_SERVICE_TOKEN, useExisting: CorrectorService}]

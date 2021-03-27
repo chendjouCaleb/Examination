@@ -11,11 +11,12 @@ import {TeacherList} from './list/teacher-list';
 import {MsButtonModule} from '@ms-fluent/button';
 import {MsTableModule} from '@ms-fluent/table';
 import {RouterModule} from '@angular/router';
+import {MsSpinnerModule} from "@ms-fluent/spinner";
 
 
 @NgModule({
   imports: [CommonModule, MomentModule, AppFormModule, MsfModalModule, UserPickerModule, MsTableModule,
-    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule, RouterModule],
+    FormsModule, ReactiveFormsModule, ControlModule, MsfMenuModule, MsButtonModule, RouterModule, MsSpinnerModule],
   declarations: [TeacherAdd, TeacherList],
   exports: [TeacherAdd, TeacherList],
   providers: [ TeacherService, { provide: TEACHER_SERVICE_TOKEN, useExisting: TeacherService}]

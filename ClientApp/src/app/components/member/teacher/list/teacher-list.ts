@@ -18,14 +18,22 @@ export class TeacherList implements OnInit {
 
   teachers: Teacher[] = [];
 
+  isLoading: boolean = true;
+
   constructor( private _teacherLoader: TeacherLoader,
                @Inject(TEACHER_SERVICE_TOKEN) public _service: ITeacherService) {
   }
 
   async ngOnInit() {
-    AssertHelpers.isNotNull(this.department);
-    await this._teacherLoader.loadByDepartment(this.department);
-    this.table.unshift(...this.department.teachers.toArray());
+    try {
+      AssertHelpers.isNotNull(this.department);
+      await this._teacherLoader.loadByDepartment(this.department);
+      this.table.unshift(...this.department.teachers.toArray());
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
+    }
+
   }
 
   addTeachers() {

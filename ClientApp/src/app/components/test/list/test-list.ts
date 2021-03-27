@@ -31,6 +31,7 @@ export class TestList implements OnInit, AfterViewInit {
   columns: string[] = [];
 
   _isLoaded: boolean = false;
+  isLoading: boolean = true;
 
   constructor(@Inject(TEST_SERVICE_TOKEN) public service: ITestService,
               private _testLoader: TestLoader) {
@@ -38,20 +39,24 @@ export class TestList implements OnInit, AfterViewInit {
 
 
   async ngOnInit() {
-    if (this.examination) {
-      await this._testLoader.loadByExamination(this.examination);
-    } else if (this.examinationDepartment) {
-      await this._testLoader.loadByExaminationDepartment(this.examinationDepartment);
-    } else if (this.examinationLevel) {
-      await this._testLoader.loadByExaminationLevel(this.examinationLevel);
-    } else if (this.course) {
-      await this._testLoader.loadByCourse(this.course);
+    try {
+      if (this.examination) {
+        await this._testLoader.loadByExamination(this.examination);
+      } else if (this.examinationDepartment) {
+        await this._testLoader.loadByExaminationDepartment(this.examinationDepartment);
+      } else if (this.examinationLevel) {
+        await this._testLoader.loadByExaminationLevel(this.examinationLevel);
+      } else if (this.course) {
+        await this._testLoader.loadByCourse(this.course);
+      }
+
+      this._isLoaded = true;
+      this.tests = this.getTests().toArray();
+      this.table.unshift(...this.tests);
+      this.isLoading = false;
+    }catch (e) {
+      this.isLoading = false;
     }
-
-    this._isLoaded = true;
-    this.tests = this.getTests().toArray();
-
-    this.table.unshift(...this.tests);
   }
 
   ngAfterViewInit(): void {
