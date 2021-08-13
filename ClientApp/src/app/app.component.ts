@@ -35,9 +35,8 @@ export class AppComponent implements OnInit {
       await this._auth.init();
       this.initialized = true;
       console.log('Authorization manager is ok!');
-    }catch (e) {
+    } catch (e) {
       this.initialized = true;
     }
-
   }
 }
