@@ -1,6 +1,7 @@
 import {ReplaySubject} from 'rxjs';
 import {Dictionary} from '@positon/collections';
 import {IPreference} from './preference.interface';
+import { Injectable } from "@angular/core";
 
 export const APP_PREFERENCE_KEY = 'app-preference';
 
@@ -14,6 +15,7 @@ export const DEFAULT_PREFERENCES = {
 };
 
 
+@Injectable()
 export class Preference implements IPreference {
   constructor() {
     // this._loadProperties();

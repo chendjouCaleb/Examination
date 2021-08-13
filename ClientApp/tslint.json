@@ -1,16 +1,31 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "align": {
+      "options": [
+        "parameters",
+        "statements"
+      ]
+    },
     "ordered-imports": false,
     "semicolon": false,
+    "arrow-return-shorthand": true,
     "array-type": false,
     "arrow-parens": false,
     "variable-name": false,
+    "curly": true,
     "deprecation": {
       "severity": "warning"
     },
     "component-class-suffix": false,
+    "eofline": true,
     "contextual-lifecycle": true,
+    "import-spacing": true,
+    "indent": {
+      "options": [
+        "spaces"
+      ]
+    },
     "directive-selector": [
       true,
       "attribute"
@@ -80,12 +95,49 @@
     "no-inputs-metadata-property": true,
     "no-output-native": false,
     "no-output-on-prefix": true,
+    "space-before-function-paren": {
+      "options": {
+        "anonymous": "never",
+        "asyncArrow": "always",
+        "constructor": "never",
+        "method": "never",
+        "named": "never"
+      }
+    },
     "no-output-rename": true,
     "no-outputs-metadata-property": true,
     "template-banana-in-box": true,
+    "typedef-whitespace": {
+      "options": [
+        {
+          "call-signature": "nospace",
+          "index-signature": "nospace",
+          "parameter": "nospace",
+          "property-declaration": "nospace",
+          "variable-declaration": "nospace"
+        },
+        {
+          "call-signature": "onespace",
+          "index-signature": "onespace",
+          "parameter": "onespace",
+          "property-declaration": "onespace",
+          "variable-declaration": "onespace"
+        }
+      ]
+    },
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
+    "use-pipe-transform-interface": true,
+    "whitespace": {
+      "options": [
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-separator",
+        "check-type",
+        "check-typecast"
+      ]
+    }
   },
   "rulesDirectory": [
     "codelyzer"
