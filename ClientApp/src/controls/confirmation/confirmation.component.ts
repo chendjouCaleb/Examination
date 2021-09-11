@@ -1,5 +1,5 @@
 ﻿import {Component, Input} from '@angular/core';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   template: `
@@ -16,7 +16,7 @@ export class ConfirmationComponent {
   @Input()
   message: string = '';
 
-  constructor(private dialogRef: MsfModalRef<ConfirmationComponent>) {  }
+  constructor(private dialogRef: MsDialogRef<ConfirmationComponent>) {  }
 
   close(value: boolean) {
     this.dialogRef.close(value);

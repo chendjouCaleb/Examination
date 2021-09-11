@@ -1,15 +1,14 @@
-﻿import {Directive, Input, OnInit} from "@angular/core";
-import {MsTable} from "@ms-fluent/table";
-import {MsfCheckboxGroup} from "fabric-docs";
-export interface TableColumn {
+﻿import {Directive, Input, OnInit} from '@angular/core';
+import {MsCheckboxGroup, MsTable} from '@ms-fluent/components';
 
-}
+
 const STORAGE_KEY = 'TABLE_COLUMNS';
+
 @Directive({
   selector: 'MsfCheckboxGroup[msTableColumnHandler]',
 
 })
-export class TableColumnDirective {
+export class TableColumnDirective implements OnInit {
   @Input()
   key: string;
 
@@ -20,36 +19,36 @@ export class TableColumnDirective {
   checkedColumns: string[];
 
 
-  constructor(private checkboxGroup: MsfCheckboxGroup) {
+  constructor(private checkboxGroup: MsCheckboxGroup) {
     const value = localStorage.getItem(STORAGE_KEY);
 
     try {
       this.tableColumns = JSON.parse(value);
-    }catch (e) {
+    } catch (e) {
       this.tableColumns = {};
     }
-    if(!this.tableColumns) {
+    if (!this.tableColumns) {
       this.tableColumns = {};
     }
   }
 
   ngOnInit(): void {
-    if(this.tableColumns[this.key]) {
+    if (this.tableColumns[this.key]) {
       this.checkedColumns = this.tableColumns[this.key];
     }
 
     setTimeout(() => {
-      if(!this.checkedColumns) {
+      if (!this.checkedColumns) {
         this.checkboxGroup._checkboxChildren.forEach(item => item.checked = true);
         this.checkedColumns = this.checkboxGroup._checkboxChildren.map(item => item.value);
-      }else {
+      } else {
         const checked = this.checkboxGroup._checkboxChildren.filter(c => this.checkedColumns.indexOf(c.value) > -1);
-          checked.forEach(item => item.checked = true);
+        checked.forEach(item => item.checked = true);
         this.table.visibleColumns = checked.map(item => item.value);
       }
     }, 100);
     this.checkboxGroup.change.subscribe(() => {
-      if(this.table) {
+      if (this.table) {
         this.table.setVisibleColumns(this.getVisibleColumns());
         this.persist();
       }
@@ -57,7 +56,8 @@ export class TableColumnDirective {
   }
 
   getVisibleColumns() {
-    return this.checkboxGroup.checkboxItems.items.findAll(i => i.checked).convertAll(i => i.value).toArray()
+    return [];
+    // return this.checkboxGroup.items.findAll(i => i.checked).convertAll(i => i.value).toArray()
   }
 
   persist() {

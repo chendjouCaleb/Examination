@@ -1,11 +1,10 @@
-﻿import {Component, Input, OnInit} from "@angular/core";
-import {AlertEmitter} from "src/controls/alert-emitter";
+﻿import {Component, Input, OnInit} from '@angular/core';
+import {AlertEmitter} from 'src/controls/alert-emitter';
 
-import {MsfModalRef} from "fabric-docs";
-import {Paper} from "examination/entities";
-import {PaperHttpClient, ScoreHttpClient, ScorePaperLoader} from "examination/models";
-import {FormBuilder} from "@angular/forms";
-import {AuthorizationManager} from "examination/app/authorization";
+import {MsDialogRef} from '@ms-fluent/components';
+import {Paper} from 'examination/entities';
+import {PaperHttpClient} from 'examination/models';
+import {AuthorizationManager} from 'examination/app/authorization';
 
 
 @Component({
@@ -19,7 +18,7 @@ export class PaperScore implements OnInit {
 
   constructor(private _httpClient: PaperHttpClient,
               private _authorization: AuthorizationManager,
-              private _dialogRef: MsfModalRef<PaperScore>,
+              private _dialogRef: MsDialogRef<PaperScore>,
               private _alertEmitter: AlertEmitter) {
   }
 
@@ -36,7 +35,7 @@ export class PaperScore implements OnInit {
     this.paper.score = this.score;
     this.paper.correctorUser = this._authorization.user;
     this.paper.correctorUserId = this._authorization.user.id;
-    this._alertEmitter.info("La copie a été notée");
+    this._alertEmitter.info('La copie a été notée');
     this._dialogRef.close();
   }
 

@@ -1,10 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AppFormModule, ControlModule, MsfSelectModule} from 'examination/controls';
+import {AppFormModule, ControlModule } from 'examination/controls';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MsfCheckboxModule, MsfModalModule, MsfRadioModule} from 'fabric-docs';
-import {MsButtonModule} from '@ms-fluent/button';
-import {MsTableModule} from '@ms-fluent/table';
 import {CourseSessionList} from './list/course-session-list';
 import {RouterModule} from '@angular/router';
 import {CourseSessionService} from './course-session.service';
@@ -18,12 +15,20 @@ import {CourseSessionObjective} from './objective/course-session-objective';
 import {CourseSessionReport} from './report/course-session-report';
 import {CourseSessionRoom} from './room/course-session-room';
 import {CourseSessionTeacher} from './teacher/course-session-teacher';
-import {MsSpinnerModule} from "@ms-fluent/spinner";
+import {
+  MsButtonModule, MsCheckboxModule,
+  MsDialogModule,
+  MsRadioModule,
+  MsSelectModule,
+  MsSpinnerModule,
+  MsTableModule
+} from '@ms-fluent/components';
+import {MsDatePickerModule, MsTimeLineModule} from '@ms-fluent/date-ui';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MomentModule, ControlModule, FormsModule, ReactiveFormsModule, MsButtonModule,
-    MsSpinnerModule,
-    MsTableModule, MsfCheckboxModule, MsfRadioModule, MsfSelectModule, MomentModule, AppFormModule, MsfModalModule],
+  imports: [CommonModule, RouterModule, MomentModule, ControlModule, FormsModule, ReactiveFormsModule,
+    MsSpinnerModule, MsTableModule, MsCheckboxModule, MsRadioModule, MsSelectModule, MomentModule, AppFormModule,
+    MsButtonModule, MsDialogModule, MsDatePickerModule, MsTimeLineModule],
 
   declarations: [CourseSessionList, CourseSessionAdd, CourseSessionDate, CourseSessionDelete, CourseSessionDetails,
     CourseSessionObjective, CourseSessionObjective, CourseSessionReport, CourseSessionRoom, CourseSessionTeacher],

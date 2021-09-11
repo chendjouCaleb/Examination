@@ -1,7 +1,7 @@
 ﻿import {Component, Inject, Input} from '@angular/core';
 import {Room} from 'examination/entities';
 import {ROOM_SERVICE_TOKEN, IRoomService} from '../room.service.interface';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'room-details.html',
@@ -13,7 +13,7 @@ export class RoomDetails {
 
 
   constructor(@Inject(ROOM_SERVICE_TOKEN) public service: IRoomService,
-              private _modalRef: MsfModalRef<RoomDetails>) {
+              private _modalRef: MsDialogRef<RoomDetails>) {
   }
 
   delete() {

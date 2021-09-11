@@ -2,28 +2,28 @@
   <form class="ms-form" [formGroup]="form">
     <div class="ms-form-header ms-sticky-header">
       <div msFontSize="20">Ajouter un horaire</div>
-      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+      <button msIconButton icon="Cancel" class="ml-2" msDialogContent theme="transparent" size="normal"></button>
     </div>
 
 
     <div class="ms-textField" *ngIf="level">
       <label for="course" class="ms-label">Choisir un cours</label>
-      <MsfSelect id="course" formControlName="course" class="ms-textField-input" placeholder=""
+      <MsSelect id="course" formControlName="course" class="ms-textField-input" placeholder=""
                  (selectionchange)="loadCourseTeachers($event.value)">
-        <MsfSelectOption *ngFor="let item of courses" [value]="item">
+        <MsSelectOption *ngFor="let item of courses" [value]="item">
           {{item.name}}({{item.code}})
-        </MsfSelectOption>
-      </MsfSelect>
+        </MsSelectOption>
+      </MsSelect>
       <app-control-error controlName="course"></app-control-error>
     </div>
 
     <div class="ms-textField">
       <label for="courseTeacher" class="msf-label">Choisir un enseignant</label>
-      <MsfSelect id="courseTeacher" formControlName="courseTeacher" class="ms-textField-input" placeholder="">
-        <MsfSelectOption *ngFor="let item of courseTeachers" [value]="item">
+      <MsSelect id="courseTeacher" formControlName="courseTeacher" class="ms-textField-input" placeholder="">
+        <MsSelectOption *ngFor="let item of courseTeachers" [value]="item">
           {{item.teacher.user.fullName}}
-        </MsfSelectOption>
-      </MsfSelect>
+        </MsSelectOption>
+      </MsSelect>
       <app-control-error controlName="courseTeacher"></app-control-error>
     </div>
     <div class="ms-fontSize-12">Si vous ne voyez un enseignant particulier dans cette liste,
@@ -31,26 +31,26 @@
 
     <div class="ms-textField">
       <label for="room" class="msf-label">Choisir une salle</label>
-      <MsfSelect id="room" formControlName="room" class="ms-textField-input" placeholder="">
-        <MsfSelectOption *ngFor="let item of rooms" [value]="item">
+      <MsSelect id="room" formControlName="room" class="ms-textField-input" placeholder="">
+        <MsSelectOption *ngFor="let item of rooms" [value]="item">
           {{item.name}}({{item.capacity}} places)
-        </MsfSelectOption>
-      </MsfSelect>
+        </MsSelectOption>
+      </MsSelect>
       <app-control-error controlName="room"></app-control-error>
     </div>
 
 
-    <MsfRadioGroup formControlName="type">
+    <MsRadioGroup formControlName="type">
       <div class="ms-textField d-flex align-items-center ms-pointer">
-        <MsfRadio id="lecture" [value]="'lecture'" [checked]="true"></MsfRadio>
+        <MsRadio id="lecture" [value]="'lecture'" [checked]="true"></MsRadio>
         <label class="ml-2 ms-label" for="lecture">Cours magistral</label>
       </div>
       <div class="ms-textField d-flex align-items-center ms-pointer">
-        <MsfRadio id="tutorial" [value]="'tutorial'" ></MsfRadio>
+        <MsRadio id="tutorial" [value]="'tutorial'" ></MsRadio>
         <label class="ml-2 ms-label" for="tutorial">Travaux dirigés</label>
       </div>
 
-    </MsfRadioGroup>
+    </MsRadioGroup>
 
 
 
@@ -87,7 +87,7 @@
     </div>
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
     </div>
   </form>

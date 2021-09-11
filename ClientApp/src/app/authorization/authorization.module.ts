@@ -7,8 +7,8 @@ import {AuthorizeRequestComponent} from './authorize-request.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthorizationInterceptor} from './authorization-interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {MsButtonModule} from '@ms-fluent/button';
-import {LogoutCallback} from "./logout-callback";
+import {LogoutCallback} from './logout-callback';
+import {MsButtonModule} from '@ms-fluent/components';
 
 
 const routes: Routes = [

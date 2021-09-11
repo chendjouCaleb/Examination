@@ -1,8 +1,8 @@
 <div class="user-picker-layout" [class.user-picker-focus]="openPanel">
   <span class="user-picker-value" *ngFor="let value of values" (click)="removeValue(value)">
     <span class="d-flex">
-      <msPersona size="size24" *ngIf="value.hasImage" [imageUrl]="value.imageUrl"></msPersona>
-      <msPersona size="size24" *ngIf="!value.hasImage"  [textInitial]="getInitial(value.fullName)"></msPersona>
+      <MsImagePersona size="size24" *ngIf="value.hasImage" [imageUrl]="value.imageUrl"></MsImagePersona>
+      <MsTextPersona size="size24" *ngIf="!value.hasImage"  [initialText]="getInitial(value.fullName)"></MsTextPersona>
       <span class="ml-2">
         <span style="margin-left: 2px">{{value.fullName}}</span>
 
@@ -34,8 +34,8 @@
       <ng-container *ngIf="_items.length > 0">
         <div *ngFor="let item of _items" class="user-picker-panel-item" (click)="select(item)">
           <div class="d-flex">
-            <msPersona size="size32" *ngIf="item.hasImage" [imageUrl]="item.imageUrl"></msPersona>
-            <msPersona size="size32" *ngIf="!item.hasImage" [textInitial]="getInitial(item.fullName)"></msPersona>
+            <MsImagePersona size="size32" *ngIf="item.hasImage" [imageUrl]="item.imageUrl"></MsImagePersona>
+            <MsTextPersona size="size32" *ngIf="!item.hasImage" [initialText]="getInitial(item.fullName)"></MsTextPersona>
             <div style="margin-left: 10px">
               <div class="ms-fontWeight-semibold">{{item.fullName}}</div>
               <div *ngIf="item.username" class="ms-fontSize-12">@{{item.username}}</div>

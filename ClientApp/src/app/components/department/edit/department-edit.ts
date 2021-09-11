@@ -3,7 +3,7 @@ import {Department} from 'examination/entities';
 import {DepartmentEditForm} from 'examination/app/components/department/form';
 import {DepartmentHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'department-edit.html'
@@ -17,7 +17,7 @@ export class DepartmentEdit implements OnInit {
 
   constructor(private _httpClient: DepartmentHttpClient,
               private _alertEmitter: AlertEmitter,
-              private _modalRef: MsfModalRef<DepartmentEdit>) {
+              private _modalRef: MsDialogRef<DepartmentEdit>) {
   }
 
   ngOnInit(): void {

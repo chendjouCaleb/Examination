@@ -9,14 +9,17 @@ import {SchoolHomePage} from './home/school-home.page';
 import {OrganisationHttpClientModule} from 'examination/models/http';
 import {ControlModule} from 'examination/controls';
 import {SchoolPageLayout} from './layout/school.page-layout';
-import {ApplicationModule, DepartmentModule, ExaminationModule, RoomModule} from 'examination/app/components';
+import {
+  ApplicationModule,
+  DepartmentModule,
+  ExaminationModule,
+  RoomModule,
+  StudentModule
+} from 'examination/app/components';
 import {PlannerModule} from 'examination/app/components/member/planner';
-import {MsButtonModule} from '@ms-fluent/button';
-import {MsGridModule} from '@ms-fluent/grid';
 import {SchoolAddPage} from './add/school-add.page';
 import {AuthorizedGuard} from 'examination/app/authorization';
-import {MsPivotModule} from '@ms-fluent/pivot';
-import {MsSpinnerModule} from "@ms-fluent/spinner";
+import {MsButtonModule, MsPivotModule, MsSpinnerModule} from '@ms-fluent/components';
 
 const routes: Routes = [
   {path: '', component: SchoolListPage},
@@ -26,8 +29,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, SchoolModule, DepartmentModule, OrganisationHttpClientModule, ApplicationModule,
-    OrganisationLoaderModule, RoomModule, ExaminationModule, MsButtonModule, MsGridModule, MsPivotModule,
-    RouterModule.forChild(routes), LayoutModule, ControlModule, PlannerModule, MsSpinnerModule ],
+    OrganisationLoaderModule, RoomModule, ExaminationModule, MsButtonModule, MsPivotModule,
+    RouterModule.forChild(routes), LayoutModule, ControlModule, PlannerModule, MsSpinnerModule, StudentModule],
   declarations: [SchoolListPage, SchoolHomePage, SchoolPageLayout, SchoolAddPage]
 })
 export class SchoolPageModule {

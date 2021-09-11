@@ -3,7 +3,6 @@ import {CourseAdd} from './add/course-add';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppFormModule, ControlModule, MsfSelectModule} from 'examination/controls';
-import {MsfCheckboxModule, MsfMenuModule, MsfModalModule} from 'fabric-docs';
 import {CourseEdit} from './edit/course-edit';
 import {ScoreAdd} from './score-add/score-add';
 import {CourseService} from './course.service';
@@ -15,19 +14,22 @@ import {CourseRestrict} from './restrict/course-restrict';
 import {CourseDetails} from './details/course-details';
 import {CourseList} from './list/course-list';
 import {LayoutModule} from 'examination/infrastructure';
-import {MsTableModule} from '@ms-fluent/table';
-import {MsButtonModule} from '@ms-fluent/button';
+import {
+  MsTableModule,
+  MsButtonModule,
+  MsDialogModule,
+  MsCheckboxModule,
+  MsDropdownModule, MsContextMenuModule, MsSpinnerModule
+} from '@ms-fluent/components';
 import {MomentModule} from 'ngx-moment';
 import {RouterModule} from '@angular/router';
 import {CourseChapters} from './chapters/course-chapters';
 import {CourseChapterText} from './chapterText/course-chapterText';
-import {MsSpinnerModule} from "@ms-fluent/spinner";
-
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AppFormModule,
-    MsButtonModule, MsfSelectModule, MsfModalModule, MsfMenuModule, MsTableModule, ControlModule, LayoutModule,
-    MsfCheckboxModule, MomentModule, RouterModule, MsSpinnerModule],
+    MsButtonModule, MsfSelectModule, MsDialogModule, MsContextMenuModule, MsTableModule, ControlModule, LayoutModule,
+    MsCheckboxModule, MomentModule, RouterModule, MsDropdownModule, MsSpinnerModule],
   declarations: [CourseDetails, CourseList, CourseAdd, CourseLevelSpecialityAdd, CourseRestrict, CourseEdit,
     CourseChapters, CourseChapterText,
     ScoreAdd, ScoreList],

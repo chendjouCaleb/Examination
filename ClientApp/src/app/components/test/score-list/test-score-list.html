@@ -34,10 +34,13 @@
         <ms-tableCell>{{item.radical}} points</ms-tableCell>
 
         <ms-tableCell class="text-right" *ngIf="test.isPlanner">
-          <span class="ml-2 ms-Icon ms-Icon--More ms-pointer" [MsfMenuTrigger]="more"></span>
-          <MsfMenu #more>
-            <MsfMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsfMenuItem>
-          </MsfMenu>
+          <span class="ml-2 ms-Icon ms-Icon--More ms-pointer" [MsDropdownTrigger]="more"></span>
+
+          <MsDropdown #more>
+            <MsContextMenu>
+              <MsContextMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsContextMenuItem>
+            </MsContextMenu>
+          </MsDropdown>
 
         </ms-tableCell>
       </ms-tableRow>

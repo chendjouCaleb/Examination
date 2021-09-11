@@ -1,15 +1,15 @@
 ﻿﻿import {Component, Inject, Input, OnInit} from '@angular/core';
-import {Application, ApplicationHttpClient, StudentHttpClient} from "examination/models";
-import {AlertEmitter, Confirmation} from "examination/controls";
-import {MsfModalRef} from "fabric-docs";
-import {List} from "@positon/collections";
-import {IApplicationService, STUDENT_APPLICATION_SERVICE_TOKEN} from "../application.service.interface";
+import {Application, ApplicationHttpClient, StudentHttpClient} from 'examination/models';
+import {AlertEmitter, Confirmation} from 'examination/controls';
+import {MsDialogRef} from '@ms-fluent/components';
+import {List} from '@positon/collections';
+import {IApplicationService, STUDENT_APPLICATION_SERVICE_TOKEN} from '../application.service.interface';
 
 @Component({
   templateUrl: 'application-details.html',
   selector: 'app-application'
 })
-export class ApplicationDetails  implements OnInit{
+export class ApplicationDetails implements OnInit {
   @Input()
   application: Application;
 
@@ -21,7 +21,7 @@ export class ApplicationDetails  implements OnInit{
               private _httpClient: ApplicationHttpClient,
               private _studentHttpClient: StudentHttpClient,
               private _alertEmitter: AlertEmitter,
-              private _modalRef: MsfModalRef<ApplicationDetails>) {
+              private _modalRef: MsDialogRef<ApplicationDetails>) {
   }
 
   ngOnInit(): void {
@@ -39,11 +39,12 @@ export class ApplicationDetails  implements OnInit{
   }
 
   registrationIdIsUsed: boolean = false;
+
   async checkRegistrationId() {
     const student = await this._studentHttpClient
       .findByRegistrationId(this.application.level.department.school, this.application.registrationId);
 
-      this.registrationIdIsUsed = !!(student && student.id);
+    this.registrationIdIsUsed = !!(student && student.id);
 
   }
 

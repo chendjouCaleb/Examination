@@ -2,14 +2,14 @@
   <h5  class="ms-fontWeight-light">Mode</h5>
 
   <div>
-    <MsfRadioGroup (change)="changeThemeMode($event.value)">
+    <MsRadioGroup (change)="changeThemeMode($event.value)">
       <label class="color-label " for="dark" [style.backgroundColor]="getThemeColor('dark')">
-        <MsfRadio id="dark" value="dark" [checked]="_themeMode === 'dark'"></MsfRadio>
+        <MsRadio id="dark" value="dark" [checked]="_themeMode === 'dark'"></MsRadio>
       </label>
       <label class="color-label" for="light" [style.backgroundColor]="getThemeColor('light')">
-        <MsfRadio id="light" value="light" [checked]="_themeMode === 'light'"></MsfRadio>
+        <MsRadio id="light" value="light" [checked]="_themeMode === 'light'"></MsRadio>
       </label>
-    </MsfRadioGroup>
+    </MsRadioGroup>
   </div>
 </div>
 
@@ -17,20 +17,20 @@
   <h5 class="ms-fontWeight-light">Color de thème</h5>
 
   <div>
-    <MsfRadioGroup (change)="changeThemeColor($event.value)">
+    <MsRadioGroup (change)="changeThemeColor($event.value)">
       <label class="color-label color-theme" *ngFor="let color of theme.themes" for="{{color}}" [style.backgroundColor]="getThemeColor(color)">
-        <MsfRadio [forLabel]="color" id="{{color}}" [value]="color" [checked]="_themeColor === color"></MsfRadio>
+        <MsRadio id="{{color}}" [value]="color" [checked]="_themeColor === color"></MsRadio>
       </label>
-    </MsfRadioGroup>
+    </MsRadioGroup>
   </div>
 </div>
 
 <div class="mt-3">
 
-    <label labelled text="Navigation réduite" for="collapseSidebar">
-      <MsfCheckbox id="collapseSidebar"
+    <MsLabel labelled text="Navigation réduite" htmlFor="collapseSidebar">
+      <MsCheckbox id="collapseSidebar"
                    [checked]="_collapseSidebar"
-                   (change)="sidebarCollapseState($event.checked)"></MsfCheckbox>
-    </label>
+                   (change)="sidebarCollapseState($event.checked)"></MsCheckbox>
+    </MsLabel>
 
 </div>

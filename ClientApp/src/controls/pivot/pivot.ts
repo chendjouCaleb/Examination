@@ -61,7 +61,7 @@ export class MsPivot implements AfterViewInit, AfterContentInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private parentInjector: Injector,
-              @Optional()private _router: Router,
+              @Optional() private _router: Router,
               private _route: ActivatedRoute) {
   }
 
@@ -73,7 +73,6 @@ export class MsPivot implements AfterViewInit, AfterContentInit {
     if (this.header.labels.length !== this.body.contents.length) {
       throw new Error(`The pivot should have the same number of labels and contents.`);
     }
-
 
 
     this.labels.forEach((label, index) => label._index = index);
@@ -88,7 +87,7 @@ export class MsPivot implements AfterViewInit, AfterContentInit {
   _getInitialLabelIndex(): number {
     const fragment = this._route.snapshot.fragment;
     const activeLabel = this.labels.find(l => l.name === fragment);
-    if(activeLabel) {
+    if (activeLabel) {
       return this.labels.indexOf(activeLabel);
     }
     return this._selectedIndex;
@@ -148,7 +147,7 @@ export class MsPivot implements AfterViewInit, AfterContentInit {
     };
 
     if (this._selectedLabel._contentRef) {
-      //this._selectedContentRef.destroy();
+      // this._selectedContentRef.destroy();
     } else {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(MsPivotContent);
       this._selectedLabel._contentRef = container.createComponent<MsPivotContent>(componentFactory, 0, injector);

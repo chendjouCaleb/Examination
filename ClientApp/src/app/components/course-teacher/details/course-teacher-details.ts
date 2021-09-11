@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {CourseTeacher} from 'examination/entities';
 import {AlertEmitter} from 'examination/controls';
 import {CourseTeacherHttpClient} from 'examination/models/http';
-import {MsfCheckboxChange} from "fabric-docs";
+import {MsCheckboxChange} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'course-teacher-details.html',
@@ -17,7 +17,7 @@ export class CourseTeacherDetails {
   }
 
 
-  principalChange(event: MsfCheckboxChange) {
+  principalChange(event: MsCheckboxChange) {
     this._httpClient.isPrincipal(this.courseTeacher).then(() => {
       if (event.checked) {
         this.courseTeacher.course.courseTeachers?.forEach(item => item.isPrincipal = false);
@@ -30,14 +30,14 @@ export class CourseTeacherDetails {
   }
 
 
-  tutorialChange(event: MsfCheckboxChange) {
+  tutorialChange(event: MsCheckboxChange) {
     this._httpClient.isTutorial(this.courseTeacher).then(() => {
       this.courseTeacher.tutorial = event.checked;
       this._alertEmitter.info(`Opération effectuée`);
     });
   }
 
-  lectureChange(event: MsfCheckboxChange) {
+  lectureChange(event: MsCheckboxChange) {
     this._httpClient.isLecture(this.courseTeacher).then(() => {
       this.courseTeacher.lecture = event.checked;
       this._alertEmitter.info(`Opération effectuée`);

@@ -1,16 +1,16 @@
 import {ILevelService} from './level.service.interface';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {Department, Level, LevelSpeciality} from 'examination/entities';
 import {Confirmation} from 'examination/controls';
 import {LevelAdd} from './add/level-add';
 import {LevelDelete} from './delete/level-delete';
 import {LevelSpecialityHttpClient} from 'examination/models/http';
 import {LevelSpecialityAdd} from './speciality/level-speciality-add';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable()
 export class LevelService implements ILevelService {
-  constructor(private _modal: MsfModal,
+  constructor(private _modal: MsDialog,
               private _levelSpecialityHttpClient: LevelSpecialityHttpClient,
               private _confirmation: Confirmation) {
   }

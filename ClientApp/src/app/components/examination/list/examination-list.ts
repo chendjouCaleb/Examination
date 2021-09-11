@@ -2,9 +2,8 @@
 import {CurrentItems} from 'examination/app/current-items';
 import {Examination, ExaminationLoader, School} from 'examination/models';
 import {Router} from '@angular/router';
-import {MsfModal} from 'fabric-docs';
 import {EXAMINATION_SERVICE_TOKEN, IExaminationService} from '../examination.service.contract';
-import {MsTable} from "@ms-fluent/table";
+import {MsDialog, MsTable} from '@ms-fluent/components';
 
 @Component({
   selector: 'app-examination-list',
@@ -22,7 +21,7 @@ export class ExaminationList implements OnInit {
   isLoading: boolean = true;
 
   constructor(private currentItems: CurrentItems,
-              private _dialog: MsfModal,
+              private _dialog: MsDialog,
               @Inject(EXAMINATION_SERVICE_TOKEN) public service: IExaminationService,
               private _examinationLoader: ExaminationLoader,
               private _router: Router) {

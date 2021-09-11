@@ -1,8 +1,8 @@
 ﻿<div *ngIf="identity.isAuthorized">
 
   <div class="d-flex">
-    <msPersona *ngIf="!identity.user.hasImage" [personIcon]="true" size="size100" color="sharedCyanBlue20"></msPersona>
-    <msPersona *ngIf="identity.user.hasImage"  [imageUrl]="identity.user.imageUrl" color="blueDark" size="size100"></msPersona>
+    <MsIconPersona *ngIf="!identity.user.hasImage" size="size100" color="sharedCyanBlue20"></MsIconPersona>
+    <MsImagePersona *ngIf="identity.user.hasImage" [imageUrl]="identity.user.imageUrl" size="size100"></MsImagePersona>
 
     <div class="ml-2">
       <div class="ms-fontSize-18 ms-fontWeight-semibold text-capitalize">{{identity.user.fullName}}</div>

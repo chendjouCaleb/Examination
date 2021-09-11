@@ -1,10 +1,10 @@
 ﻿import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
 import {PaperStatistics, TestLevelSpeciality} from 'examination/entities';
 import {ITestService, TEST_SERVICE_TOKEN} from '../test.service.interface';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {TestLevelSpecialityLoader} from 'examination/loaders';
 import {COURSE_SERVICE_TOKEN, ICourseService} from 'examination/app/components/course';
-import {TestLevelSpecialityHttpClient} from "examination/models/http";
+import {TestLevelSpecialityHttpClient} from 'examination/models/http';
 
 @Component({
   templateUrl: 'test-level-speciality-details.html',
@@ -19,11 +19,11 @@ export class TestLevelSpecialityDetails implements OnInit {
               @Inject(COURSE_SERVICE_TOKEN) public courseService: ICourseService,
               private _httpClient: TestLevelSpecialityHttpClient,
               private _testLevelSpecialityLoader: TestLevelSpecialityLoader,
-              @Optional() private _modalRef: MsfModalRef<TestLevelSpecialityDetails>) {
+              @Optional() private _modalRef: MsDialogRef<TestLevelSpecialityDetails>) {
   }
 
   async ngOnInit() {
-    const statistics:any = await this._httpClient.getStatistics(this.testLevelSpeciality);
+    const statistics: any = await this._httpClient.getStatistics(this.testLevelSpeciality);
     statistics.radical = this.testLevelSpeciality.test.radical;
     Object.assign(this.testLevelSpeciality.statistics, statistics);
   }

@@ -1,5 +1,5 @@
 import {Component, HostBinding, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'MsfTabLabel, [MsfTabLabel], msf-tab-label, [msf-tab-label]',

@@ -1,8 +1,8 @@
 ﻿import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {Corrector, CorrectorLoader, Department, Supervisor} from 'src/models';
+import {Corrector, CorrectorLoader, Department} from 'src/models';
 import {CORRECTOR_SERVICE_TOKEN, ICorrectorService} from '../corrector.service.interface';
 import {AssertHelpers} from '@positon/collections/dist/helpers/assert-helpers';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'corrector-list.html',

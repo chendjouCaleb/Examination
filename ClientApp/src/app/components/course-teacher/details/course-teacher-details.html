@@ -3,7 +3,7 @@
     <div class="ms-pageTitle">
       <div></div>
       <div>
-        <button msIconButton icon="Cancel" theme="transparent" MsfModalClose></button>
+        <button msIconButton icon="Cancel" theme="transparent" msDialogContent></button>
       </div>
     </div>
     <msPivot>
@@ -51,23 +51,23 @@
 
             <div class="mt-3" *ngIf="courseTeacher.course.level.department.isPrincipalUser">
               <div class="ms-textField">
-                <label class="ms-label" labelled text="Enseignant principal" for="isPrincipal">
-                  <MsfCheckbox [checked]="courseTeacher.isPrincipal" id="isPrincipal" name="isPrincipal"
-                               (change)="principalChange($event)"></MsfCheckbox>
-                </label>
+                <MsLabel class="ms-label" labelled text="Enseignant principal" htmlFor="isPrincipal">
+                  <MsCheckbox [checked]="courseTeacher.isPrincipal" id="isPrincipal" name="isPrincipal"
+                               (change)="principalChange($event)"></MsCheckbox>
+                </MsLabel>
               </div>
 
               <div class="ms-textField mt-2">
-                <label class="ms-label ms-pointer" labelled text="Cours magistral" for="lecture">
-                  <MsfCheckbox [checked]="courseTeacher.lecture" (change)="lectureChange($event)" id="lecture"
-                               name="lecture"></MsfCheckbox>
-                </label>
+                <MsLabel class="ms-label ms-pointer" labelled text="Cours magistral" htmlFor="lecture">
+                  <MsCheckbox [checked]="courseTeacher.lecture" (change)="lectureChange($event)" id="lecture"
+                               name="lecture"></MsCheckbox>
+                </MsLabel>
               </div>
 
               <div class="ms-textField mt-2 d-flex align-items-center ms-pointer">
-                <MsfCheckbox [checked]="courseTeacher.tutorial" (change)="tutorialChange($event)" id="tutorial"
-                             name="tutorial"></MsfCheckbox>
-                <label class="ml-2 ms-label" for="tutorial">Travaux dirigés</label>
+                <MsCheckbox [checked]="courseTeacher.tutorial" (change)="tutorialChange($event)" id="tutorial"
+                             name="tutorial"></MsCheckbox>
+                <MsLabel class="ml-2 ms-label" htmlFor="tutorial">Travaux dirigés</MsLabel>
               </div>
             </div>
           </div>

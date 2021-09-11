@@ -4,35 +4,37 @@
       <div msFontSize="18">Copie</div>
       <div>
         <ng-container *ngIf="paper.testGroup && paper.testGroup?.relation">
-          <button msIconButton theme="transparent" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
+          <button msIconButton theme="transparent" [MsDropdownTrigger]="more" icon="MoreVertical"></button>
 
-          <MsfMenu #more>
-            <MsfMenuItemGroup *ngIf="paper.testGroup?.relation.isSupervisor">
-              <MsfMenuItem icon="CheckMark" *ngIf="!paper.isPresent" (click)="service.changePresentState(paper)">
+          <MsDropdown #more>
+          <MsContextMenu>
+            <ng-container *ngIf="paper.testGroup?.relation.isSupervisor">
+              <MsContextMenuItem icon="CheckMark" *ngIf="!paper.isPresent" (click)="service.changePresentState(paper)">
                 Marquer comme présent
-              </MsfMenuItem>
-              <MsfMenuItem icon="Cancel" theme="error" *ngIf="paper.isPresent && paper.endDate"
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="Cancel" theme="error" *ngIf="paper.isPresent && paper.endDate"
                            (click)="service.changePresentState(paper)">
                 Marquer comme absent
-              </MsfMenuItem>
-              <MsfMenuItem icon="CheckMark" theme="success" *ngIf="paper.isPresent && !paper.endDate" (click)="service.collect(paper)">
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="CheckMark" theme="success" *ngIf="paper.isPresent && !paper.endDate" (click)="service.collect(paper)">
                 Récupérer la copie
-              </MsfMenuItem>
-              <MsfMenuItem icon="Calendar" theme="warning" *ngIf="paper.isPresent" (click)="service.editDates(paper)">
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="Calendar" theme="warning" *ngIf="paper.isPresent" (click)="service.editDates(paper)">
                 Modifier l'horaire
-              </MsfMenuItem>
-              <MsfMenuItem icon="EditNote" (click)="service.supervisorComment(paper)">Commentaire du surveillant
-              </MsfMenuItem>
-            </MsfMenuItemGroup>
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="EditNote" (click)="service.supervisorComment(paper)">Commentaire du surveillant
+              </MsContextMenuItem>
+            </ng-container>
 
-            <MsfMenuItemGroup *ngIf="paper.testGroup?.relation.isSecretary">
-              <MsfMenuItem icon="EditNote" (click)="service.report(paper)">Consigner la copie</MsfMenuItem>
-            </MsfMenuItemGroup>
+            <ng-container *ngIf="paper.testGroup?.relation.isSecretary">
+              <MsContextMenuItem icon="EditNote" (click)="service.report(paper)">Consigner la copie</MsContextMenuItem>
+            </ng-container>
 
-          </MsfMenu>
+          </MsContextMenu>
+          </MsDropdown>
 
         </ng-container>
-        <button msIconButton icon="Cancel" theme="transparent" MsfModalClose></button>
+        <button msIconButton icon="Cancel" theme="transparent" msDialogContent></button>
       </div>
     </div>﻿
 

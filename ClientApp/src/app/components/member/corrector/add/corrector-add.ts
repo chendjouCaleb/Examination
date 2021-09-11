@@ -1,7 +1,7 @@
 ﻿import {Component, Input} from '@angular/core';
 import {AlertEmitter} from 'src/controls/alert-emitter';
 import {CorrectorHttpClient, CorrectorLoader, Department, User, UserHttpClient} from 'examination/models';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class CorrectorAdd{
 
   constructor(private _httpClient: CorrectorHttpClient, private _loader: CorrectorLoader,
               private _userHttpClient: UserHttpClient,
-              private _dialogRef: MsfModalRef<CorrectorAdd>,
+              private _dialogRef: MsDialogRef<CorrectorAdd>,
               private _alertEmitter: AlertEmitter) {
   }
 

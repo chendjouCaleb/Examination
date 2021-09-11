@@ -23,8 +23,8 @@ export class CourseSession extends Entity<number> {
 
     this.expectedStartDate = new Date(value.expectedStartDate);
     this.expectedEndDate = new Date(value.expectedEndDate);
-    this.startDate = value.startDate ? new Date(value.startDate) : undefined;
-    this.endDate = value.endDate ? new Date(value.endDate) : undefined;
+    this.realStartDate = value.startDate ? new Date(value.startDate) : undefined;
+    this.realEndDate = value.endDate ? new Date(value.endDate) : undefined;
   }
 
   lecture: boolean;
@@ -47,8 +47,16 @@ export class CourseSession extends Entity<number> {
   expectedStartDate: Date;
   expectedEndDate: Date;
 
-  startDate: Date;
-  endDate: Date;
+  realStartDate: Date;
+  realEndDate: Date;
+
+  get startDate(): Date {
+    return this.realStartDate || this.expectedStartDate;
+  }
+
+  get endDate(): Date {
+    return this.realEndDate || this.expectedEndDate;
+  }
 
   isTeacher: boolean = false;
 
@@ -77,15 +85,15 @@ export class CourseSession extends Entity<number> {
   }
 
   get waiting(): boolean {
-    return !this.startDate;
+    return !this.realStartDate;
   }
 
   get finished(): boolean {
-    return !!this.endDate;
+    return !!this.realEndDate;
   }
 
   get progress(): boolean {
-    return !!this.startDate && !this.endDate;
+    return !!this.realStartDate && !this.realEndDate;
   }
 
   get school(): School {

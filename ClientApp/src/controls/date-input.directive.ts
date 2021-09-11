@@ -1,6 +1,6 @@
-﻿import {Directive, ElementRef, forwardRef, OnDestroy, OnInit} from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import Cleave from "cleave.js";
+﻿import {Directive, ElementRef, forwardRef, OnDestroy, OnInit} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import Cleave from 'cleave.js';
 import moment from 'moment';
 
 export const LOCALTIME_CONTROL_VALUE_ACCESSOR: any = {
@@ -13,7 +13,7 @@ export const LOCALTIME_CONTROL_VALUE_ACCESSOR: any = {
   selector: '[DateInput]',
   providers: [LOCALTIME_CONTROL_VALUE_ACCESSOR],
   host: {
-    '[attr.autocomplete]': "'off'"
+    '[attr.autocomplete]': '\'off\''
   }
 
 })
@@ -31,7 +31,7 @@ export class DateInputDirective implements ControlValueAccessor, OnInit, OnDestr
       datePattern: ['d', 'm', 'Y'],
 
       onValueChanged: (event: any): void => {
-        let time: string = event.target.value;
+        const time: string = event.target.value;
         const date = moment(time, 'DD-MM-YYYY');
         this._onChange(date.toDate());
       }
@@ -57,7 +57,7 @@ export class DateInputDirective implements ControlValueAccessor, OnInit, OnDestr
   }
 
   writeValue(obj: Date): void {
-    if(obj) {
+    if (obj) {
       const value = obj.toLocaleDateString();
       this._mask.setRawValue(value);
     }

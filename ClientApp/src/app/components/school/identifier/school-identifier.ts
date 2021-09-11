@@ -3,7 +3,7 @@ import {School} from 'examination/entities';
 import {SchoolIdentifierForm} from 'examination/app/components/school/form';
 import {SchoolHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from "fabric-docs";
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'school-identifier.html'
@@ -14,7 +14,7 @@ export class SchoolIdentifier implements OnInit {
   form: SchoolIdentifierForm;
 
   constructor(private _httpClient: SchoolHttpClient,
-              private _modalRef: MsfModalRef<SchoolIdentifier>,
+              private _modalRef: MsDialogRef<SchoolIdentifier>,
               private _alertEmitter: AlertEmitter) {
   }
 
@@ -39,13 +39,13 @@ export class SchoolIdentifier implements OnInit {
     this.school.identifier = identifier;
     this._alertEmitter.info(`L'identifiant a été modifié.`);
 
-    if(this._modalRef) {
+    if (this._modalRef) {
       this._modalRef.close();
     }
   }
 
   cancel() {
-    if(this._modalRef) {
+    if (this._modalRef) {
       this._modalRef.close();
     }
   }

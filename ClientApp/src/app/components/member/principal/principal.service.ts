@@ -1,16 +1,16 @@
-﻿import {Principal, PrincipalHttpClient, PrincipalLoader, Department} from 'examination/models';
+﻿import {Department, Principal, PrincipalHttpClient, PrincipalLoader} from 'examination/models';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {IPrincipalService} from './principal.service.interface';
 import {PrincipalAdd} from './add/principal-add';
 import {List} from '@positon/collections';
+import {MsDialog} from '@ms-fluent/components';
 
 
 @Injectable({providedIn: 'root'})
 export class PrincipalService implements IPrincipalService {
 
-  constructor(private _dialog: MsfModal, private _confirmation: Confirmation,
+  constructor(private _dialog: MsDialog, private _confirmation: Confirmation,
               private _loader: PrincipalLoader,
               private _httpClient: PrincipalHttpClient,
               private _alertEmitter: AlertEmitter) {

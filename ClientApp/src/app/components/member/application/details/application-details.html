@@ -2,14 +2,14 @@
 <div class="flex-center-cover" style="max-height: 98%">
   <div class="p-3" style=" max-height: 98%; overflow-y: auto; ">
     <div class="ms-pageTitle ms-sticky-header">
-         <div msFontSize="18" class="d-flex">Demande
-            <app-icon *ngIf="application.isAuthor" class="ml-1" icon="Contact"></app-icon>
-            <div class="ml-2">
-              <span [appStateBadge]="application.state"></span>
-            </div>
-          </div>
+      <div msFontSize="18" class="d-flex">Demande
+        <app-icon *ngIf="application.isAuthor" class="ml-1" icon="Contact"></app-icon>
+        <div class="ml-2">
+          <span [appStateBadge]="application.state"></span>
+        </div>
+      </div>
 
-      <button msIconButton icon="Cancel" MsfModalClose>Fermer</button>
+      <button msIconButton icon="Cancel" msDialogContent>Fermer</button>
     </div>
 
     <div class="text-right my-2">
@@ -19,15 +19,18 @@
       </ng-container>
 
       <ng-container *ngIf="application.isAuthor && application.waiting">
-        <button msButton [MsfMenuTrigger]="more" icon="Edit" secondaryIcon="ChevronDown" theme="primary" class="ml-2">
+        <button msButton [MsDropdownTrigger]="more" icon="Edit" secondaryIcon="ChevronDown" theme="primary"
+                class="ml-2">
           Modifier
         </button>
 
-        <MsfMenu #more>
-          <MsfMenuItem icon="Contact" (click)="_applicationService.edit(application)">Modifier les informations
-          </MsfMenuItem>
+        <MsDropdown #more>
+          <MsContextMenu>
+            <MsContextMenuItem icon="Contact" (click)="_applicationService.edit(application)">Modifier les informations
+            </MsContextMenuItem>
 
-        </MsfMenu>
+          </MsContextMenu>
+        </MsDropdown>
       </ng-container>
 
       <button msButton *ngIf="application.isAuthor" icon="Delete" (click)="delete()" theme="errorOutline"
@@ -90,7 +93,7 @@
         <dl>
           <dt>Envoyée par</dt>
           <dd>
-            <user-persona style="white-space: nowrap"  [user]="application.user" *ngIf="application.user"></user-persona>
+            <user-persona style="white-space: nowrap" [user]="application.user" *ngIf="application.user"></user-persona>
           </dd>
         </dl>
 

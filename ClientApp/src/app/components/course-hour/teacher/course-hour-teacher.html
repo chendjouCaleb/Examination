@@ -2,16 +2,16 @@
   <form class="ms-form">
     <div class="ms-form-header ms-sticky-header">
       <div msFontSize="20">Changer l'enseignant</div>
-      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+      <button msIconButton icon="Cancel" class="ml-2" msDialogClose theme="transparent" size="normal"></button>
     </div>
 
     <div class="ms-textField">
       <label for="courseTeacher" class="msf-label">Choisir un enseignant</label>
-      <MsfSelect id="courseTeacher" name="courseTeacher" [(ngModel)]="courseTeacher" class="ms-textField-input" placeholder="">
-        <MsfSelectOption *ngFor="let item of courseTeachers" [value]="item">
+      <MsSelect id="courseTeacher" name="courseTeacher" [(ngModel)]="courseTeacher" class="ms-textField-input" placeholder="">
+        <MsSelectOption *ngFor="let item of courseTeachers" [value]="item">
           {{item.teacher.user.fullName}}
-        </MsfSelectOption>
-      </MsfSelect>
+        </MsSelectOption>
+      </MsSelect>
     </div>
     <div class="ms-fontSize-12">Si vous ne voyez un enseignant particulier dans cette liste,
       rassurez vous de l'avoir ajouté au cours sélectionné.</div>
@@ -19,7 +19,7 @@
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogClose class="mr-3">Annuler</button>
       <button msButton theme="primary" [disabled]="!courseTeacher" (click)="change()">Changer</button>
     </div>
   </form>

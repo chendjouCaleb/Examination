@@ -9,10 +9,10 @@
 
     <div class="ms-textField">
       <label for="levels" class="msf-label">Niveaux à ajouter à cette spécialité</label>
-      <MsfSelect id="levels" formControlName="levels" [multiple]="true" class="ms-textField-input"
+      <MsSelect id="levels" formControlName="levels" [multiple]="true" class="ms-textField-input"
                  placeholder="Choisissez des niveaux">
-        <MsfSelectOption *ngFor="let item of department.levels" [value]="item" >Niveau {{item.index + 1}}</MsfSelectOption>
-      </MsfSelect>
+        <MsSelectOption *ngFor="let item of department.levels" [value]="item" >Niveau {{item.index + 1}}</MsSelectOption>
+      </MsSelect>
     </div>
 
     <div class="ms-textField">
@@ -26,7 +26,7 @@
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
     </div>
   </form>

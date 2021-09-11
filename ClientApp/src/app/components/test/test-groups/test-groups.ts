@@ -5,7 +5,7 @@ import {List} from '@positon/collections';
 import {ITestGroupService, TEST_GROUP_SERVICE_TOKEN} from 'examination/app/components/test-group';
 import {ITestService, TEST_SERVICE_TOKEN} from '../test.service.interface';
 import {IPaperService, PAPER_SERVICE_TOKEN} from 'examination/app/components/paper';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from '@ms-fluent/components';
 
 
 @Component({

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
@@ -12,6 +14,7 @@ using Exam.Loaders;
 using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Exam.Controllers
@@ -20,13 +23,16 @@ namespace Exam.Controllers
     public class StudentController : Controller
     {
         private IRepository<Student, long> _studentRepository;
+        private IConfiguration _configuration;
         private ILogger<StudentController> _logger;
 
         public StudentController(
             IRepository<Student, long> studentRepository,
+            IConfiguration configuration,
             ILogger<StudentController> logger)
         {
             _studentRepository = studentRepository;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -134,7 +140,7 @@ namespace Exam.Controllers
         [LoadLevel(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [LoadLevelSpeciality(Source = ParameterSource.Query)]
         [IsPrincipal]
-        public CreatedAtActionResult Add([FromBody] StudentForm form, Level level,
+        public CreatedAtActionResult Add([FromForm] StudentForm form, Level level,
             LevelSpeciality levelSpeciality, Principal principal)
         {
             Assert.RequireNonNull(principal, nameof(principal));
@@ -159,13 +165,22 @@ namespace Exam.Controllers
                 FullName = form.FullName,
                 RegistrationId = form.RegistrationId,
                 BirthDate = form.BirthDate,
+                BirthPlace = form.BirthPlace,
                 Level = level,
                 LevelSpeciality = levelSpeciality,
                 RegisterUserId = principal.UserId,
-                Gender = form.Gender
+                Gender = form.Gender,
+                PhoneNumber = form.PhoneNumber,
+                Email = form.Email,
+                Address = form.Address
             };
 
             student = _studentRepository.Save(student);
+
+            if (form.Image == null)
+            {
+                ChangeImage(student, form.Image).ConfigureAwait(false);   
+            }
 
             _logger.LogInformation($"New Student: {student}");
             return CreatedAtAction("Get", new {student.Id}, student);
@@ -180,6 +195,7 @@ namespace Exam.Controllers
             student.BirthDate = form.BirthDate;
             student.FullName = form.FullName;
             student.Gender = form.Gender;
+            student.BirthPlace = form.BirthPlace;
 
             _studentRepository.Update(student);
             return student;
@@ -290,6 +306,56 @@ namespace Exam.Controllers
             student.UserId = null;
             _studentRepository.Update(student);
             return StatusCode(StatusCodes.Status202Accepted);
+        }
+        
+      
+        [HttpGet("{studentId}/image")]
+        public async Task<IActionResult> DownloadImage(long? studentId)
+        {
+            Assert.RequireNonNull(studentId, nameof(studentId));
+
+            string path = Path.Combine(_configuration["File:Paths:StudentImages"], $"{studentId}.png");
+            Stream memory = new MemoryStream();
+
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+            string mime = MimeTypes.GetMimeType(Path.GetExtension(path));
+            return File(memory, mime);
+        }
+
+
+        [HttpPut("{studentId}/image")]
+        [LoadStudent]
+        [IsPrincipal]
+        public async Task<StatusCodeResult> ChangeImage(Student student, IFormFile image)
+        {
+            if (student == null)
+            {
+                throw new ArgumentNullException(nameof(student));
+            }
+
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
+            }
+
+            string fileName = $"{student.Id}{Path.GetExtension(image.FileName)}";
+
+            string path = Path.Combine(_configuration["File:Paths:StudentImages"], fileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await image.CopyToAsync(stream).ConfigureAwait(false);
+            }
+
+            student.HasImage = true;
+
+            _studentRepository.Update(student);
+            return Ok();
         }
 
 

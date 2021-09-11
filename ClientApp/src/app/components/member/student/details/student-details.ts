@@ -1,7 +1,7 @@
 ﻿import {IStudentService, STUDENT_SERVICE_TOKEN} from '../student.service.interface';
 import {Component, Inject, Input, Optional} from '@angular/core';
 import {Student} from 'examination/models';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'student-details.html',
@@ -12,7 +12,7 @@ export class StudentDetails {
   student: Student;
 
   constructor(@Inject(STUDENT_SERVICE_TOKEN) public _studentService: IStudentService,
-              @Optional() private _modal: MsfModalRef<StudentDetails>) {
+              @Optional() private _modal: MsDialogRef<StudentDetails>) {
   }
 
   delete() {

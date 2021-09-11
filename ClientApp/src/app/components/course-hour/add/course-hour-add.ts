@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, Optional} from '@angular/core';
 import {CourseHourHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
 import {CourseHourLoader, CourseLoader, CourseTeacherLoader, RoomLoader} from 'examination/loaders';
 import {Course, CourseTeacher, Department, Level, Room, School} from 'examination/entities';
 import {CourseHourAddForm} from '../course-hour.form';
-import {DateTimeFormatter, DayOfWeek, LocalDateTime, TextStyle} from '@js-joda/core';
-import { Locale } from '@js-joda/locale_fr'
+import {DayOfWeek, TextStyle} from '@js-joda/core';
+import {Locale} from '@js-joda/locale_fr'
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'course-hour-add.html',
@@ -34,7 +34,7 @@ export class CourseHourAdd implements OnInit {
               private _courseLoader: CourseLoader,
               private _alertEmitter: AlertEmitter,
               private _loader: CourseHourLoader,
-              @Optional() private _modal: MsfModalRef<CourseHourAdd>) {
+              @Optional() private _modal: MsDialogRef<CourseHourAdd>) {
   }
 
   async ngOnInit() {

@@ -2,16 +2,16 @@
   <form class="ms-form">
     <div class="ms-form-header ms-sticky-header">
       <div msFontSize="20">Changer la salle</div>
-      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+      <button msIconButton icon="Cancel" class="ml-2" msDialogContent theme="transparent" size="normal"></button>
     </div>
 
     <div class="ms-textField" *ngIf="rooms">
       <label for="room" class="msf-label">Choisir une salle</label>
-      <MsfSelect [(ngModel)]="room" id="room" name="room" class="ms-textField-input" placeholder="">
-        <MsfSelectOption *ngFor="let item of rooms" [value]="item" >
+      <MsSelect [(ngModel)]="room" id="room" name="room" class="ms-textField-input" placeholder="">
+        <MsSelectOption *ngFor="let item of rooms" [value]="item" >
           {{item.name}}({{item.capacity}} places)
-        </MsfSelectOption>
-      </MsfSelect>
+        </MsSelectOption>
+      </MsSelect>
     </div>
 
 
@@ -19,7 +19,7 @@
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" [disabled]="!room" (click)="change()">Changer</button>
     </div>
   </form>

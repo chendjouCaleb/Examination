@@ -14,7 +14,7 @@ import {
   SpecialityHttpClient, StudentHttpClient
 } from 'src/models';
 import {ApplicationAddForm} from '../form';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {List} from '@positon/collections';
 import {AuthorizationManager} from 'examination/app/authorization';
 
@@ -47,7 +47,7 @@ export class ApplicationAdd implements OnInit {
               private _specialityHttpClient: SpecialityHttpClient,
               private _studentHttpClient: StudentHttpClient,
               private _loader: ApplicationLoader,
-              private _dialogRef: MsfModalRef<ApplicationAdd>,
+              private _dialogRef: MsDialogRef<ApplicationAdd>,
               private _alertEmitter: AlertEmitter) {
 
   }

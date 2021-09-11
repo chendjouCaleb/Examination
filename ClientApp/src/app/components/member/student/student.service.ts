@@ -2,32 +2,32 @@
 import {Level, LevelSpeciality, Student, StudentHttpClient, User} from 'examination/models';
 import {StudentRegistrationId} from './registrationId/student-registrationId';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {StudentUserLink} from './user-link/student-user-link';
 import {StudentAdd} from './add/student-add';
 import {IStudentService} from './student.service.interface';
 import {StudentLevel} from './level/student-level';
 import {StudentDetails} from './details/student-details';
-import {StudentSpeciality} from 'examination/app/components/member/student/speciality/student-speciality';
+import {StudentSpeciality} from './speciality/student-speciality';
+import {MsDialog} from '@ms-fluent/components';
+import {StudentAddOptions} from './add/student-add-options';
 
 @Injectable({providedIn: 'root'})
 export class StudentService implements IStudentService {
 
-  constructor(private _dialog: MsfModal, private _confirmation: Confirmation,
+  constructor(private _dialog: MsDialog, private _confirmation: Confirmation,
               private _httpClient: StudentHttpClient, private _alertEmitter: AlertEmitter) {
   }
 
-  addStudent(level: Level, levelSpeciality: LevelSpeciality): Promise<Student> {
-    const modal = this._dialog.open(StudentAdd, {disableClose: false});
-    modal.componentInstance.level = level;
-    modal.componentInstance.levelSpeciality = levelSpeciality;
+  addStudent(options: StudentAddOptions): Promise<Student> {
+    const modal = this._dialog.open(StudentAdd, {disableClose: false, width: '540px'});
+    modal.componentInstance.options = options;
 
     return modal.afterClosed().toPromise();
 
   }
 
-  detailsStudent(student: Student)  {
+  detailsStudent(student: Student) {
     const modal = this._dialog.open(StudentDetails, {disableClose: false});
     modal.componentInstance.student = student;
   }

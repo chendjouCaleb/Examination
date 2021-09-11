@@ -6,76 +6,72 @@
 </div>
 
 <div *ngIf="isLoading">
-  <msSpinnerInlineDot></msSpinnerInlineDot>
+  <MsSpinner></MsSpinner>
 </div>
 
-<div>
-  <ms-table [class.ms-opacity-0]="isLoading" #msTable [hiddenColumns]="hiddenColumns">
-    <ms-tableHead *msTableHeadDef>
-      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
-      <ms-tableHeadCell name="hour" [sortBy]="['expectedStartDate', 'date']">Horaire</ms-tableHeadCell>
-      <ms-tableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Programmée le</ms-tableHeadCell>
-      <ms-tableHeadCell name="type" [sortBy]="['lecture', 'string']">Type</ms-tableHeadCell>
-      <ms-tableHeadCell name="state" [sortBy]="['finished', 'string']">{{'état' | ucFirst }}</ms-tableHeadCell>
-      <ms-tableHeadCell name="teacher">Enseignant</ms-tableHeadCell>
-      <ms-tableHeadCell name="course" [sortBy]="['courseName', 'string']">Cours</ms-tableHeadCell>
-      <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
-      <ms-tableHeadCell name="room">Salle</ms-tableHeadCell>
-      <msTableHeadCell name="actions" class="text-right">
-        <i class="ms-Icon ms-Icon--SetAction px-2"></i>
-      </msTableHeadCell>
-    </ms-tableHead>
+<div class="d-flex" *ngIf="isLoaded">
 
-    <ms-tableRow *ms-tableRowDef="let item of courseSessions; let i=index" [value]="item">
-      <ms-tableCell>{{i + 1}}</ms-tableCell>
-      <ms-tableCell msFontSize="12">
-        <div msFontSize="12">{{item.expectedStartDate | amDateFormat: 'dddd, LL' | ucFirst}}</div>
-        <div msFontSize="12">{{item.expectedStartHour}} - {{item.expectedEndHour}}</div>
-      </ms-tableCell>
+  <div class="m-2">
+    <MsDatePicker>
+      <div *ms-date-picker-day-def="let item; let ex=extra" [class.ms-opacity-7]="ex" class="ms-date-picker-day-plus">
+        <div class="text-center">
+          {{item.getDate()}}
+        </div>
+        <div class="date-picker-dots">
+        <span class="date-picker-dot" *ngFor="let session of getDateCourseSession(item)"
+              [class.ms-bgColor-sharedCyanBlue20]="session.lecture"
+              [class.ms-bgColor-sharedRedOrange10]="!session.lecture"
+        ></span>
+        </div>
+      </div>
+    </MsDatePicker>
+  </div>
 
-      <ms-tableCell>
-        <span msFontSize="12">
-          {{item.registrationDate | amDateFormat: 'dddd, LL' | ucFirst}}
-        </span>
-      </ms-tableCell>
+  <MsTimeLine #timeline [items]="courseSessions" style="flex-grow: 1;" class="m-2">
+    <div *MsTimeLineItemDef="let item;" class="time-line-item" (click)="service.details(item)">
+      <div>
+        <div>
+          {{formatDate(item.startDate)}}
+        </div>
+        <div>
+          {{formatDate(item.endDate)}}
+        </div>
+      </div>
 
-      <ms-tableCell>
-        <span *ngIf="item.lecture" class="ms-badge mr-2" msBgColor="sharedCyanBlue20">CM</span>
-        <span *ngIf="!item.lecture" class="ms-badge" msBgColor="sharedRedOrange10">TD</span>
-      </ms-tableCell>
+      <div class="time-line-border"
+      [class.ms-bgColor-sharedCyanBlue20]="cast(item).lecture"
+      [class.ms-bgColor-sharedRedOrange10]="!item.lecture"></div>
 
-      <ms-tableCell>
-        <span class="ms-badge" msBgColor="sharedGreenCyan10" *ngIf="item.finished">Terminée</span>
-        <span class="ms-badge" msBgColor="sharedRedOrange10" *ngIf="item.waiting">En attente</span>
-        <span class="ms-badge" msBgColor="sharedBlue10" *ngIf="item.progress">En cours</span>
-      </ms-tableCell>
-      <ms-tableCell>
-        <div style="position: relative">
-          <user-persona class="ms-pointer" [routerLink]="item.courseTeacher.teacher.url"
-                        [user]="item.courseTeacher.teacher.user"></user-persona>
-          <app-icon style="position: absolute; left: 24px; top: 24px"
-                    *ngIf="item.courseTeacher.isPrincipal" bgColor="sharedYellowGreen10" icon="CheckMark"></app-icon>
+      <div style="flex-grow: 1;">
+        <div class="ms-fontSize-16 ms-fontWeight-semibold">
+          {{item.courseName}}({{item.course.code}})
         </div>
 
-      </ms-tableCell>
-      <ms-tableCell>
-        <a [routerLink]="item.course.url">{{item.courseName}}({{item.course.code}})</a>
-      </ms-tableCell>
-      <ms-tableCell>
-        <a [routerLink]="item.course.level.url">Niveau {{item.levelIndex + 1}}</a>
-      </ms-tableCell>
+        <div class="d-flex align-items-center mt-2">
+          <div class="d-flex align-items-center">
+            <i class="ms-Icon ms-Icon--Bank"></i>
+            <span class="ml-2">{{item.room.name}}</span>
+          </div>
 
-      <ms-tableCell>
-        <a [routerLink]="item.room.url">{{item.room.name}}</a>
-      </ms-tableCell>
+          <div class="ml-2">
+            <span *ngIf="item.lecture" class="ms-badge" msBgColor="sharedCyanBlue20">CM</span>
+            <span *ngIf="!item.lecture" class="ms-badge" msBgColor="sharedRedOrange10">TD</span>
+          </div>
 
+          <div class="ml-2">
+            <span class="ms-badge" msBgColor="sharedGreenCyan10" *ngIf="item.finished">Terminée</span>
+            <span class="ms-badge" msBgColor="sharedRedOrange10" *ngIf="item.waiting">En attente</span>
+            <span class="ms-badge" msBgColor="sharedBlue10" *ngIf="item.progress">En cours</span>
+          </div>
+        </div>
 
-      <ms-tableCell class="text-right">
-        <button msIconButton icon="MiniExpand" [rounded]="true" theme="primary"
-                (click)="service.details(item)"></button>
-        <button msIconButton icon="Delete" [rounded]="true" theme="error" (click)="delete(item)"></button>
-      </ms-tableCell>
-    </ms-tableRow>
-  </ms-table>
+        <div class="d-flex align-items-center">
+          <i class="ms-Icon ms-Icon--Contact"></i>
+          <span class="ml-2">{{item.courseTeacher.teacher.user.fullName}}</span>
+        </div>
+      </div>
+    </div>
+  </MsTimeLine>
+
 
 </div>

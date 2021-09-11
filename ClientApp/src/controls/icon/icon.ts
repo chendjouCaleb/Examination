@@ -1,7 +1,7 @@
-﻿import {Component, ElementRef, Input, ViewEncapsulation} from "@angular/core";
-import {msColor} from "../colors";
+﻿import {Component, ElementRef, Input, ViewEncapsulation} from '@angular/core';
+import {msColor} from '../colors';
 
-export type IconSize = "small" | "normal" | "large";
+export type IconSize = 'small' | 'normal' | 'large';
 
 
 @Component({

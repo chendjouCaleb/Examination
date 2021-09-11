@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Optional, Output} from '@angular/core';
 import {SchoolAddForm} from 'examination/app/components/school/form';
 import {SchoolHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {SchoolLoader} from 'examination/loaders';
 import {School} from 'examination/entities';
 
@@ -22,7 +22,7 @@ export class SchoolAdd {
   constructor(private _httpClient: SchoolHttpClient,
               private _alertEmitter: AlertEmitter,
               private _loader: SchoolLoader,
-              @Optional() private _modal: MsfModalRef<SchoolAdd>) {
+              @Optional() private _modal: MsDialogRef<SchoolAdd>) {
   }
 
   async checkIdentifier() {

@@ -19,15 +19,17 @@
     </msAlert>
 
     <div *ngIf="isLoading">
-      <msSpinnerInlineDot></msSpinnerInlineDot>
+      <MsSpinner></MsSpinner>
     </div>
 
     <div class="py-3" *ngIf="schools && schools.length > 0">
-      <ms-grid [itemWidth]="320" [itemHeight]="480" yGap="0">
-        <app-school-card style="background-color: var(--cardBackgroundColor)" *msGridItemDef="let school of schools" [school]="school">
+      <div>
+        <app-school-card style="background-color: var(--cardBackgroundColor); width: 320px; height: 480px"
+
+                         *ngFor="let school of schools" [school]="school">
 
         </app-school-card>
-      </ms-grid>
+      </div>
     </div>
 
   </div>

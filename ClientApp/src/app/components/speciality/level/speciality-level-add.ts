@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Optional} from '@angular/core';
 import {LevelSpecialityHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {LevelLoader, LevelSpecialityLoader} from 'examination/loaders';
 import {Level, Speciality} from 'examination/entities';
 import {List} from '@positon/collections';
@@ -22,7 +22,7 @@ export class SpecialityLevelAdd implements OnInit {
               private _levelLoader: LevelLoader,
               private _alertEmitter: AlertEmitter,
               private _levelSpecialityLoader: LevelSpecialityLoader,
-              @Optional() private _modal: MsfModalRef<SpecialityLevelAdd>) {
+              @Optional() private _modal: MsDialogRef<SpecialityLevelAdd>) {
   }
 
   async ngOnInit(): Promise<void> {

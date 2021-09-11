@@ -11,17 +11,17 @@
     <div class="ms-textField">
       <label for="supervisor" class="msf-label">Selectionner</label>
 
-      <MsfSelect id="supervisor" name="supervisor" [(ngModel)]="supervisorId" [multiple]="true"
+      <MsSelect id="supervisor" name="supervisor" [(ngModel)]="supervisorId" [multiple]="true"
                  class="ms-textField-input"
                  placeholder="Choisir les surveillants">
-        <MsfSelectOption *ngFor="let item of supervisors" [value]="item.id">{{item.user.fullName}}</MsfSelectOption>
-      </MsfSelect>
+        <MsSelectOption *ngFor="let item of supervisors" [value]="item.id">{{item.user.fullName}}</MsSelectOption>
+      </MsSelect>
 
     </div>
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" icon="Add" [disabled]="supervisorId.length === 0" (click)="add()">
         Ajouter
       </button>

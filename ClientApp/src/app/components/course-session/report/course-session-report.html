@@ -2,7 +2,7 @@
   <form class="ms-form" [formGroup]="form">
     <div class="ms-form-header ms-sticky-header">
       <div msFontSize="20">Rapport de la séance</div>
-      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+      <button msIconButton icon="Cancel" class="ml-2" msDialogContent theme="transparent" size="normal"></button>
     </div>
 
 
@@ -44,7 +44,7 @@
     </div>
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" icon="Save" [disabled]="form.invalid" (click)="change()">Enregistrer</button>
     </div>
   </form>

@@ -10,7 +10,7 @@ import {
   School
 } from 'examination/models';
 import {List} from '@positon/collections';
-import {MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
+import {MsPaginatorItemsFn, MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'application-list.html',

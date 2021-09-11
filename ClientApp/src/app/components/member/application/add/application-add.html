@@ -1,8 +1,8 @@
-﻿<div class="flex-center-cover">﻿
+﻿<div>﻿
   <form class="ms-form" *ngIf="form" [formGroup]="form">
-    <div class="ms-form-header ms-sticky-header">
+    <div class="ms-form-header">
       <span>Envoyer une demande</span>
-      <button msIconButton icon="Cancel"  MsfModalClose></button>
+      <button msIconButton icon="Cancel"  msDialogContent></button>
     </div>
 
     <msAlert class="my-2" theme="severeWarning">N'envoyer une demande dans un établissement dont vous en êtes un étudiant.</msAlert>
@@ -31,53 +31,53 @@
 
     <div class="ms-textField">
       <label class="msf-label">Genre</label>
-      <MsfRadioGroup formControlName="gender" name="gender" style="display: flex">
-        <label class="ms-label" for="gender-M">
-          <MsfRadio id="gender-M" value="M" inputId="gender-M-i"></MsfRadio>
+      <MsRadioGroup formControlName="gender" name="gender" style="display: flex">
+        <MsLabel class="ms-label" htmlFor="gender-M">
+          <MsRadio id="gender-M" value="M" inputId="gender-M-i"></MsRadio>
           Homme
-        </label>
+        </MsLabel>
 
-        <label for="gender-F" class="ml-2 ms-Label">
-          <MsfRadio id="gender-F" value="F" inputId="gender-F-i"></MsfRadio>
+        <MsLabel htmlFor="gender-F" class="ml-2 ms-Label">
+          <MsRadio id="gender-F" value="F" inputId="gender-F-i"></MsRadio>
           Femme
-        </label>
-      </MsfRadioGroup>
+        </MsLabel>
+      </MsRadioGroup>
 
       <app-control-error [control]="form.controls['gender']"></app-control-error>
     </div>
 
     <div class="ms-textField" *ngIf="school">
       <label for="department" class="msf-label">Département </label>
-      <MsfSelect id="department" class="ms-textField-input"
+      <MsSelect id="department" class="ms-textField-input"
                  placeholder="Choisir un départment" (selectionchange)="loadLevels($event.value)">
-        <MsfSelectOption *ngFor="let item of departments" [value]="item"> {{item.name | ucFirst}}</MsfSelectOption>
-      </MsfSelect>
+        <MsSelectOption *ngFor="let item of departments" [value]="item"> {{item.name | ucFirst}}</MsSelectOption>
+      </MsSelect>
       <app-control-error [control]="form.controls['department']"></app-control-error>
     </div>
 
     <div class="ms-textField" *ngIf="department">
       <label for="level" class="msf-label">Niveau </label>
-      <MsfSelect id="level" formControlName="level" class="ms-textField-input"
+      <MsSelect id="level" formControlName="level" class="ms-textField-input"
                  placeholder="Choisir un niveau" (selectionchange)="loadLevelSpecialities($event.value)">
-        <MsfSelectOption *ngFor="let item of department.levels" [value]="item">
-          Niveau {{item.index + 1}}</MsfSelectOption>
-      </MsfSelect>
+        <MsSelectOption *ngFor="let item of department.levels" [value]="item">
+          Niveau {{item.index + 1}}</MsSelectOption>
+      </MsSelect>
       <app-control-error [control]="form.controls['level']"></app-control-error>
     </div>
 
     <div class="ms-textField" *ngIf="level">
       <label for="levelSpeciality" class="msf-label">Spécialité </label>
-      <MsfSelect id="levelSpeciality" formControlName="levelSpeciality" class="ms-textField-input"
+      <MsSelect id="levelSpeciality" formControlName="levelSpeciality" class="ms-textField-input"
                  placeholder="Choisir une specialité">
-        <MsfSelectOption *ngFor="let item of level.levelSpecialities"
-                         [value]="item">{{item.speciality.name}}</MsfSelectOption>
-      </MsfSelect>
+        <MsSelectOption *ngFor="let item of level.levelSpecialities"
+                         [value]="item">{{item.speciality.name}}</MsSelectOption>
+      </MsSelect>
       <app-control-error [control]="form.controls['levelSpeciality']"></app-control-error>
     </div>
 
 
-    <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3" theme="standard">Annuler</button>
+    <div msDialogActions align="right">
+      <button msButton msDialogClose class="mr-3" theme="standard">Annuler</button>
       <button msButton theme="primary" icon="Add" [disabled]="form.untouched || form.invalid" (click)="add()">
         Ajouter
       </button>

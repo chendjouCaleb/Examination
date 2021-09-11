@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Optional} from '@angular/core';
 import {CourseSessionHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {CourseSession, School} from 'examination/entities';
 import {CourseSessionReportForm} from '../course-session.form';
 
@@ -18,7 +18,7 @@ export class CourseSessionReport implements OnInit {
 
   constructor(private _httpClient: CourseSessionHttpClient,
               private _alertEmitter: AlertEmitter,
-              @Optional() private _modal: MsfModalRef<CourseSessionReport>) {
+              @Optional() private _modal: MsDialogRef<CourseSessionReport>) {
   }
 
   ngOnInit(): void {
@@ -32,8 +32,8 @@ export class CourseSessionReport implements OnInit {
   async change() {
     const model = this.form.getModel();
     await this._httpClient.changeReport(this.courseSession, model.body);
-    this.courseSession.startDate = model.body.startDate;
-    this.courseSession.endDate = model.body.endDate;
+    this.courseSession.realStartDate = model.body.startDate;
+    this.courseSession.realEndDate = model.body.endDate;
     this.courseSession.presence = model.body.presence;
     this.courseSession.report = model.body.report;
 

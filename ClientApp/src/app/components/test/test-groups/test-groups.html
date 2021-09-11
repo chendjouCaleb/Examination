@@ -14,7 +14,7 @@
 </msAlert>
 
 <div *ngIf="isLoading">
-  <msSpinnerInlineDot></msSpinnerInlineDot>
+  <MsSpinner></MsSpinner>
 </div>
 
 <ms-table [class.ms-opacity-0]="isLoading">
@@ -55,10 +55,14 @@
       <a [routerLink]="group.url">
         <button msButton theme="primary">Détails</button>
       </a>
-      <button msIconButton theme="transparent" class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
-      <MsfMenu #more>
-        <MsfMenuItem icon="Delete" (click)="delete(group)" theme="error">Supprimer</MsfMenuItem>
-      </MsfMenu>
+      <button msIconButton theme="transparent" class="ml-2" [MsDropdownTrigger]="more" icon="MoreVertical"></button>
+
+      <MsDropdown #more>
+        <MsContextMenu>
+          <MsContextMenuItem icon="Delete" (click)="delete(group)" theme="error">Supprimer</MsContextMenuItem>
+        </MsContextMenu>
+      </MsDropdown>
+
     </ms-tableCell>
   </ms-tableRow>
 </ms-table>

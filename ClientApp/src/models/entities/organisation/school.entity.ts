@@ -1,6 +1,6 @@
 ﻿import {Entity} from '../entity';
 import {User} from '../identity/user.entity';
-import {Application, Planner} from '../member';
+import {Application, Planner, Student} from '../member';
 import {List} from '@positon/collections';
 import {Department} from './department.entity';
 import {Room} from './room.entity';
@@ -61,6 +61,8 @@ export class School extends Entity<number> {
   rooms: List<Room>;
 
   examinations: List<Examination>;
+
+  students: List<Student>;
 
   userPrincipal: SchoolUser = {};
 

@@ -2,19 +2,19 @@ import {Injectable} from '@angular/core';
 import {ICourseHourService} from 'examination/app/components';
 import {CourseHour, Level, Room} from 'examination/entities';
 import {CourseHourHttpClient} from 'examination/models/http';
-import {MsfModal} from 'fabric-docs';
 import {CourseHourAdd} from './add/course-hour-add';
 import {AlertEmitter} from 'examination/controls';
 import {CourseHourDetails} from './details/course-hour-details';
 import {CourseHourRoom} from './room/course-hour-room';
 import {CourseHourTeacher} from './teacher/course-hour-teacher';
 import {CourseHourDelete} from './delete/course-hour-delete';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable()
 export class CourseHourService implements ICourseHourService {
   constructor(private _httpClient: CourseHourHttpClient,
               private _alertEmitter: AlertEmitter,
-              private _modal: MsfModal) {}
+              private _modal: MsDialog) {}
 
   addCourseHour(level: Level): Promise<CourseHour> {
     const modalRef = this._modal.open(CourseHourAdd, {autoFocus: false});

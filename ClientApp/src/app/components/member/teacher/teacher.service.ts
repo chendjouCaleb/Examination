@@ -1,16 +1,16 @@
 ﻿import {Teacher, TeacherHttpClient, TeacherLoader, Department} from 'examination/models';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {ITeacherService} from './teacher.service.interface';
 import {TeacherAdd} from './add/teacher-add';
 import {List} from '@positon/collections';
+import {MsDialog} from '@ms-fluent/components';
 
 
 @Injectable({providedIn: 'root'})
 export class TeacherService implements ITeacherService {
 
-  constructor(private _dialog: MsfModal, private _confirmation: Confirmation,
+  constructor(private _dialog: MsDialog, private _confirmation: Confirmation,
               private _loader: TeacherLoader,
               private _httpClient: TeacherHttpClient, private _alertEmitter: AlertEmitter) {
   }

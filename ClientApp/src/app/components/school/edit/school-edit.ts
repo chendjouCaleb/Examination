@@ -3,7 +3,7 @@ import {School} from 'examination/entities';
 import {SchoolEditForm} from 'examination/app/components/school/form';
 import {SchoolHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from "fabric-docs";
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'school-edit.html'
@@ -17,7 +17,7 @@ export class SchoolEdit implements OnInit {
 
   constructor(private _httpClient: SchoolHttpClient,
               private _alertEmitter: AlertEmitter,
-              private _modalRef: MsfModalRef<SchoolEdit>) {
+              private _modalRef: MsDialogRef<SchoolEdit>) {
   }
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class SchoolEdit implements OnInit {
 
     this._alertEmitter.info(`Les informations ont été modifiée.`);
 
-    if(this._modalRef) {
+    if (this._modalRef) {
       this._modalRef.close();
     }
   }

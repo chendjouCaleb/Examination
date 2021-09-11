@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ICourseSessionService} from 'examination/app/components';
 import {Course, CourseSession, CourseTeacher, Level, Room} from 'examination/entities';
-import {MsfModal} from 'fabric-docs';
 import {CourseSessionAdd} from './add/course-session-add';
 import {CourseSessionDate} from './date/course-session-date';
 import {CourseSessionRoom} from './room/course-session-room';
@@ -12,11 +11,12 @@ import {CourseSessionObjective} from './objective/course-session-objective';
 import {CourseSessionReport} from './report/course-session-report';
 import {CourseSessionHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable()
 export class CourseSessionService implements ICourseSessionService {
 
-  constructor(private _modal: MsfModal,
+  constructor(private _modal: MsDialog,
               private _alertEmitter: AlertEmitter,
               private _httpClient: CourseSessionHttpClient) {
   }

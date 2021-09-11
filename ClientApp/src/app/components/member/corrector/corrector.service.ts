@@ -1,16 +1,16 @@
 ﻿import {Corrector, CorrectorHttpClient, CorrectorLoader, Department} from 'examination/models';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {ICorrectorService} from './corrector.service.interface';
 import {CorrectorAdd} from './add/corrector-add';
 import {List} from '@positon/collections';
+import {MsDialog} from '@ms-fluent/components';
 
 
 @Injectable({providedIn: 'root'})
 export class CorrectorService implements ICorrectorService {
 
-  constructor(private _dialog: MsfModal, private _confirmation: Confirmation,
+  constructor(private _dialog: MsDialog, private _confirmation: Confirmation,
               private _loader: CorrectorLoader,
               private _httpClient: CorrectorHttpClient, private _alertEmitter: AlertEmitter) {
   }

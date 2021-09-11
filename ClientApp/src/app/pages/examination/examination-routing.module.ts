@@ -7,7 +7,7 @@ import {
   ExaminationLevelResolver, ExaminationLevelSpecialityResolver,
   ExaminationSpecialityResolver, TestResolver
 } from 'examination/app/components';
-import {MsfModalModule} from 'fabric-docs';
+import {MsDialogModule} from '@ms-fluent/components';
 
 export const routes: Routes = [
   {
@@ -58,6 +58,6 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), MsfModalModule]
+  imports: [RouterModule.forChild(routes), MsDialogModule]
 })
 export class ExaminationRoutingModule { }

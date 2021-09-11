@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {User} from 'examination/entities/identity';
-import {MsPersonaSize} from '@ms-fluent/persona';
+import {MsPersonaSize} from '@ms-fluent/components';
 
 @Component({
   selector: 'user-persona',
@@ -8,8 +8,8 @@ import {MsPersonaSize} from '@ms-fluent/persona';
     class: 'd-flex'
   },
   template: `
-      <ms-persona size="size40" *ngIf="user.hasImage" [imageUrl]="user.imageUrl"></ms-persona>
-      <ms-persona size="size40" *ngIf="!user.hasImage" [text]="user.name"></ms-persona>
+      <MsImagePersona size="size40" *ngIf="user.hasImage" [imageUrl]="user.imageUrl"></MsImagePersona>
+      <MsTextPersona size="size40" *ngIf="!user.hasImage" [text]="user.name"></MsTextPersona>
       <div class="ml-2">
           <div class="ms-fontWeight-semibold">{{user?.fullName}}</div>
           <div class="ms-fontSize-12" *ngIf="user?.username">@{{user?.username}}</div>

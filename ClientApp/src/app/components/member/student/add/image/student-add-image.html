@@ -1,0 +1,6 @@
+<image-form title="Photo 4x4" (onchange)="onchange($event)">
+  <div>
+    <button msButton class="ml-2" msDialogContent> Annuler</button>
+    <button msButton theme="primary" [disabled]="!value" (click)="select()">Terminer</button>
+  </div>
+</image-form>

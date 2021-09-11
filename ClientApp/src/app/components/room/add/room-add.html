@@ -24,23 +24,23 @@
 
     <div class="ms-textField" *ngIf="school">
       <label for="department" class="msf-label">Département</label>
-      <MsfSelect id="department" formControlName="department" class="ms-textField-input"
+      <MsSelect id="department" formControlName="department" class="ms-textField-input"
                  (selectionchange)="updateLevels($event.value)"
                  placeholder="Choisir un département">
-        <MsfSelectOption *ngFor="let item of school.departments" [value]="item">
+        <MsSelectOption *ngFor="let item of school.departments" [value]="item">
           {{item.name | ucFirst}}
-        </MsfSelectOption>
-      </MsfSelect>
+        </MsSelectOption>
+      </MsSelect>
     </div>
 
     <div class="ms-textField" *ngIf="department && levels">
       <label for="department" class="msf-label">Niveau</label>
-      <MsfSelect id="level" formControlName="level" class="ms-textField-input"
+      <MsSelect id="level" formControlName="level" class="ms-textField-input"
                  placeholder="Choisir un niveau">
-        <MsfSelectOption *ngFor="let item of levels" [value]="item">
+        <MsSelectOption *ngFor="let item of levels" [value]="item">
           Niveau {{item.index + 1}}({{item.department.name}})
-        </MsfSelectOption>
-      </MsfSelect>
+        </MsSelectOption>
+      </MsSelect>
     </div>
 
 

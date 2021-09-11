@@ -31,10 +31,5 @@
       "examination/controls": ["src/controls"],
       "examination/infrastructure": ["src/infrastructure"]
     }
-  },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-
   }
 }

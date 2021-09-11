@@ -3,16 +3,17 @@
 
   <msPivot>
     <msPivotHeader>
-<!--      <msPivotLabel>Accueil</msPivotLabel>-->
+      <msPivotLabel id="home">Accueil</msPivotLabel>
       <msPivotLabel id="departments">Départments</msPivotLabel>
       <msPivotLabel id="planificators">Planificateurs</msPivotLabel>
       <msPivotLabel id="rooms">Salles</msPivotLabel>
       <msPivotLabel id="applications">Demandes</msPivotLabel>
+      <MsPivotLabel id="students">Étudiants</MsPivotLabel>
       <msPivotLabel id="examens">Examens</msPivotLabel>
     </msPivotHeader>
 
     <msPivotBody>
-<!--      <div *msPivotContentDef>Accueil</div>-->
+      <div *msPivotContentDef>Accueil</div>
       <div *msPivotContentDef>
         <app-department-list [school]="school"></app-department-list>
       </div>
@@ -25,6 +26,11 @@
       <div *msPivotContentDef>
         <app-application-list [school]="school"></app-application-list>
       </div>
+
+      <div *msPivotContentDef>
+        <app-student-list [school]="school"></app-student-list>
+      </div>
+
       <div *msPivotContentDef>
         <app-examination-list [school]="school"></app-examination-list>
       </div>

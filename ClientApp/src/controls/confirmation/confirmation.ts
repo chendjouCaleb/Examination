@@ -1,11 +1,11 @@
 ﻿import {Injectable} from '@angular/core';
 import {ConfirmationComponent} from './confirmation.component';
 import {Subject} from 'rxjs';
-import {MsfModal} from 'fabric-docs';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable({providedIn: 'root'})
 export class Confirmation {
-    constructor(private dialog: MsfModal) {}
+    constructor(private dialog: MsDialog) {}
 
     open(message: string): ConfirmationInstance {
       const result = new ConfirmationInstance();

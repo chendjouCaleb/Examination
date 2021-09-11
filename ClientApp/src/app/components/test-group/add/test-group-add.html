@@ -4,16 +4,16 @@
 
   <div class="ms-textField">
     <label for="room" class="msf-label">Salle</label>
-    <MsfSelect id="room" [(ngModel)]="room" class="ms-textField-input" name="name"
+    <MsSelect id="room" [(ngModel)]="room" class="ms-textField-input" name="name"
                placeholder="Choisir une salle">
-      <MsfSelectOption *ngFor="let item of school.rooms" [value]="item">{{item.name}} ({{item.capacity}} places)</MsfSelectOption>
-    </MsfSelect>
+      <MsSelectOption *ngFor="let item of school.rooms" [value]="item">{{item.name}} ({{item.capacity}} places)</MsSelectOption>
+    </MsSelect>
   </div>
 
 
 
   <div class="mt-4 text-right">
-    <button msButton MsfModalClose class="mr-3">Annuler</button>
+    <button msButton msDialogContent class="mr-3">Annuler</button>
     <button msButton theme="primary" icon="Add" [disabled]="!room" (click)="add()">
       Ajouter
     </button>

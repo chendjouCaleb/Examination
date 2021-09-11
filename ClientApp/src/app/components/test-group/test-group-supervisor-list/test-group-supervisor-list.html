@@ -29,19 +29,24 @@
       </ms-tableCell>
       <ms-tableCell class="px-0 text-right">
         <ng-container *ngIf="testGroup.isPlanner">
-          <button msIconButton theme="transparent" icon="MoreVertical" [MsfMenuTrigger]="supervisorMore"></button>
-          <MsfMenu #supervisorMore>
-            <MsfMenuItem icon="CheckMark" *ngIf="!item.isPrincipal" (click)="service.setPrincipal(item)">Donner le
-              statut de principal
-            </MsfMenuItem>
-            <MsfMenuItem icon="Cancel" theme="error" *ngIf="item.isPrincipal" (click)="service.setPrincipal(item)">
-              Enlever le statut de principal
-            </MsfMenuItem>
+          <button msIconButton theme="transparent" icon="MoreVertical" [MsDropdownTrigger]="supervisorMore"></button>
+          2
+          <MsDropdown>
+            <MsContextMenu #supervisorMore>
+              <MsContextMenuItem icon="CheckMark" *ngIf="!item.isPrincipal" (click)="service.setPrincipal(item)">Donner
+                le
+                statut de principal
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="Cancel" theme="error" *ngIf="item.isPrincipal"
+                                 (click)="service.setPrincipal(item)">
+                Enlever le statut de principal
+              </MsContextMenuItem>
 
-            <MsfMenuItem icon="Delete" theme="error" (click)="remove(item)">
-              Supprimer
-            </MsfMenuItem>
-          </MsfMenu>
+              <MsContextMenuItem icon="Delete" theme="error" (click)="remove(item)">
+                Supprimer
+              </MsContextMenuItem>
+            </MsContextMenu>
+          </MsDropdown>
         </ng-container>
       </ms-tableCell>
     </ms-tableRow>

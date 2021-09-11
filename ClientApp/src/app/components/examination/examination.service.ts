@@ -1,18 +1,18 @@
-﻿import {Injectable} from "@angular/core";
-import {Examination, ExaminationHttpClient, ExaminationStudent, School} from "examination/models";
-import {AlertEmitter, Confirmation} from "examination/controls";
-import {MsfModal} from "fabric-docs";
-import {ExaminationAdd} from "./add/examination-add";
-import {ExaminationDelete} from "./delete/examination-delete";
-import {ExaminationDetails} from "./details/examination-details";
-import {ExaminationStudentDetails} from "examination/app/components/examination/students-details/examination-student-details";
+﻿import {Injectable} from '@angular/core';
+import {Examination, ExaminationHttpClient, ExaminationStudent, School} from 'examination/models';
+import {AlertEmitter, Confirmation} from 'examination/controls';
+import {ExaminationAdd} from './add/examination-add';
+import {ExaminationDelete} from './delete/examination-delete';
+import {ExaminationDetails} from './details/examination-details';
+import {ExaminationStudentDetails} from 'examination/app/components/examination/students-details/examination-student-details';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExaminationService {
 
-  constructor(private _modal: MsfModal,
+  constructor(private _modal: MsDialog,
               private _alertEmitter: AlertEmitter,
               private _confirmation: Confirmation,
               private _httpClient: ExaminationHttpClient) { }

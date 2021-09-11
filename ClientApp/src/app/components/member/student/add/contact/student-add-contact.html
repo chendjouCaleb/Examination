@@ -1,0 +1,33 @@
+<form [formGroup]="form" >
+
+  <h4>Informations de contact</h4>
+
+  <MsFormField label="Adresse" class="mt-2">
+    <input type="text" id="address" MsInputField formControlName="address">
+    <MsFormFieldContent>
+      <app-control-error [control]="form.controls['address']"></app-control-error>
+    </MsFormFieldContent>
+  </MsFormField>
+
+  <MsFormField label="Numéro de téléphone" class="mt-2">
+    <input id="phoneNumber" MsDateMask MsInputField formControlName="phoneNumber">
+
+    <MsFormFieldContent>
+      <app-control-error [control]="form.controls['phoneNumber']"></app-control-error>
+    </MsFormFieldContent>
+  </MsFormField>
+
+  <MsFormField label="Adresse électronique" class="mt-2">
+    <input id="email" MsInputField formControlName="email">
+
+    <MsFormFieldContent>
+      <app-control-error [control]="form.controls['email']"></app-control-error>
+    </MsFormFieldContent>
+  </MsFormField>
+
+
+  <div class="mt-3 text-right">
+    <button msButton theme="primary" (click)="next()" [disabled]="form.invalid">Continuer</button>
+  </div>
+
+</form>

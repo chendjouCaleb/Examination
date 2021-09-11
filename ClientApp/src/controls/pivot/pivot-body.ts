@@ -13,7 +13,6 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {MsPivotContentDef} from './pivot-content';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   templateUrl: 'pivot-body.html',

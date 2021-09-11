@@ -2,7 +2,7 @@
 
 import {AlertEmitter} from 'src/controls/alert-emitter';
 import {Department, DepartmentLoader, Level, LevelLoader, RoomHttpClient, RoomLoader, School} from 'src/models';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {RoomAddForm} from '../room-form';
 import {List} from '@positon/collections';
 
@@ -28,7 +28,7 @@ export class RoomAdd implements OnInit {
               private _loader: RoomLoader,
               private _levelLoader: LevelLoader,
               private _departmentLoader: DepartmentLoader,
-              private _dialogRef: MsfModalRef<RoomAdd>,
+              private _dialogRef: MsDialogRef<RoomAdd>,
               private _alertEmitter: AlertEmitter) {
   }
 

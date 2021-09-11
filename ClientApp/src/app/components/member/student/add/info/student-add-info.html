@@ -1,0 +1,54 @@
+<form [formGroup]="form" >
+
+  <h4>Informations</h4>
+
+  <MsFormField label="Nom & prénom" class="mt-2">
+    <input type="text" id="fullName" MsInputField formControlName="fullName">
+    <MsFormFieldContent>
+      <app-control-error [control]="form.controls['fullName']"></app-control-error>
+    </MsFormFieldContent>
+  </MsFormField>
+
+  <MsFormField label="Date de naissance" class="mt-2">
+    <input id="birthDate" MsDateMask MsInputField formControlName="birthDate">
+
+    <MsFormFieldContent>
+      <app-control-error [control]="form.controls['birthDate']"></app-control-error>
+    </MsFormFieldContent>
+  </MsFormField>
+
+  <MsFormField label="Lieu de naissance" class="mt-2">
+    <input id="birthPlace" MsInputField formControlName="birthPlace">
+
+    <MsFormFieldContent>
+      <app-control-error [control]="form.controls['birthPlace']"></app-control-error>
+    </MsFormFieldContent>
+  </MsFormField>
+
+  <div class="mt-2">
+    <div>
+      <MsLabel>Genre</MsLabel>
+    </div>
+
+    <div>
+      <MsRadioGroup formControlName="gender" class="d-flex">
+        <div class="d-flex align-items-center">
+          <MsRadio id="gender-M" value="M" inputId="gender-M-i"></MsRadio>
+          <MsLabel htmlFor="gender-M" class="ml-2"> Homme</MsLabel>
+        </div>
+
+        <div class="ml-5 d-flex align-items-center">
+          <MsRadio id="gender-F" value="F" inputId="gender-F-i"></MsRadio>
+          <MsLabel htmlFor="gender-F" class="ml-2"> Femme</MsLabel>
+        </div>
+      </MsRadioGroup>
+    </div>
+
+    <app-control-error [control]="form.controls['gender']"></app-control-error>
+  </div>
+
+  <div class="mt-3 text-right">
+    <button msButton theme="primary" (click)="next()" [disabled]="form.invalid">Continuer</button>
+  </div>
+
+</form>

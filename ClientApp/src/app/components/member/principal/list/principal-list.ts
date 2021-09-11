@@ -2,7 +2,7 @@
 import {Department, Principal, PrincipalLoader} from 'src/models';
 import {IPrincipalService, PRINCIPAL_SERVICE_TOKEN} from '../principal.service.interface';
 import {AssertHelpers} from '@positon/collections/dist/helpers/assert-helpers';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'principal-list.html',

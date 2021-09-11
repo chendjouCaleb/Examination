@@ -19,7 +19,7 @@
 </div>
 
 <div *ngIf="isLoading">
-  <msSpinnerInlineDot></msSpinnerInlineDot>
+  <MsSpinner></MsSpinner>
 </div>
 
 <ms-table [class.ms-opacity-0]="isLoading">
@@ -42,7 +42,8 @@
     <ms-tableCell>{{i + 1}}</ms-tableCell>
     <ms-tableCell>{{item.examinationStudent?.student?.registrationId}}</ms-tableCell>
     <ms-tableCell>
-      <a [routerLink]="item.examinationStudent.url" class="ms-link text-capitalize">{{item.examinationStudent?.student.fullName}}</a>
+      <a [routerLink]="item.examinationStudent.url"
+         class="ms-link text-capitalize">{{item.examinationStudent?.student.fullName}}</a>
     </ms-tableCell>
 
     <ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
@@ -90,33 +91,36 @@
       <button msButton theme="primary" (click)="service.details(item)">Détails</button>
 
       <ng-container *ngIf="testGroup && testGroup.relation">
-        <button msIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
+        <button msIconButton class="ml-2" [MsDropdownTrigger]="more" icon="MoreVertical"></button>
 
-        <MsfMenu #more>
-          <MsfMenuItemGroup *ngIf="testGroup.relation.isSupervisor">
-            <MsfMenuItem icon="CheckMark" *ngIf="!item.isPresent" (click)="service.changePresentState(item)">
-              Marquer comme présent
-            </MsfMenuItem>
-            <MsfMenuItem icon="Cancel" theme="error" *ngIf="item.isPresent"
-                         (click)="service.changePresentState(item)">
-              Marquer comme absent
-            </MsfMenuItem>
-            <MsfMenuItem icon="CheckMark" theme="success" *ngIf="item.isPresent" (click)="service.collect(item)">
-              Récupérer la copie
-            </MsfMenuItem>
-            <MsfMenuItem icon="Calendar" theme="warning" *ngIf="item.isPresent" (click)="service.editDates(item)">
-              Modifier l'horaire
-            </MsfMenuItem>
-            <MsfMenuItem icon="EditNote" (click)="service.supervisorComment(item)">Commentaire du surveillant
-            </MsfMenuItem>
-          </MsfMenuItemGroup>
+        <MsDropdown #more>
+          <MsContextMenu>
+            <ng-container *ngIf="testGroup.relation.isSupervisor">
+              <MsContextMenuItem icon="CheckMark" *ngIf="!item.isPresent" (click)="service.changePresentState(item)">
+                Marquer comme présent
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="Cancel" theme="error" *ngIf="item.isPresent"
+                                 (click)="service.changePresentState(item)">
+                Marquer comme absent
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="CheckMark" theme="success" *ngIf="item.isPresent"
+                                 (click)="service.collect(item)">
+                Récupérer la copie
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="Calendar" theme="warning" *ngIf="item.isPresent"
+                                 (click)="service.editDates(item)">
+                Modifier l'horaire
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="EditNote" (click)="service.supervisorComment(item)">Commentaire du surveillant
+              </MsContextMenuItem>
+            </ng-container>
 
-          <MsfMenuItemGroup *ngIf="testGroup.relation.isSecretary">
-            <MsfMenuItem icon="EditNote" (click)="service.report(item)">Consigner la copie</MsfMenuItem>
-          </MsfMenuItemGroup>
+            <ng-container *ngIf="testGroup.relation.isSecretary">
+              <MsContextMenuItem icon="EditNote" (click)="service.report(item)">Consigner la copie</MsContextMenuItem>
+            </ng-container>
 
-        </MsfMenu>
-
+          </MsContextMenu>
+        </MsDropdown>
       </ng-container>
     </ms-tableCell>
   </ms-tableRow>

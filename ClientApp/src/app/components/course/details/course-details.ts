@@ -1,7 +1,7 @@
 ﻿import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
 import {Course} from 'examination/entities';
 import {COURSE_SERVICE_TOKEN, ICourseService} from '../course.service.interface';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {CourseLevelSpecialityLoader} from 'examination/loaders';
 
 @Component({
@@ -16,7 +16,7 @@ export class CourseDetails implements OnInit {
 
   constructor(@Inject(COURSE_SERVICE_TOKEN) public service: ICourseService,
               private _courseLevelSpecialityLoader: CourseLevelSpecialityLoader,
-              @Optional() public _modalRef: MsfModalRef<CourseDetails>) {
+              @Optional() public _modalRef: MsDialogRef<CourseDetails>) {
   }
 
   delete() {

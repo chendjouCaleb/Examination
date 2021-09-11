@@ -2,7 +2,7 @@
   <form class="ms-form" style="max-height: 100%; overflow-y: auto" [formGroup]="form">
     <div class="ms-form-header ms-sticky-header">
       <div>Ajouter un cours</div>
-      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+      <button msIconButton icon="Cancel" class="ml-2" msDialogContent theme="transparent" size="normal"></button>
     </div>
 
 
@@ -31,9 +31,9 @@
     </div>
 
     <div class="ms-textField">
-      <div labelled text="Cours général" for="isGeneral">
-        <MsfCheckbox id="isGeneral" formControlName="isGeneral" (change)="toggleGeneral()"></MsfCheckbox>
-      </div>
+      <MsLabel labelled text="Cours général" htmlFor="isGeneral">
+        <MsCheckbox id="isGeneral" formControlName="isGeneral" (change)="toggleGeneral()"></MsCheckbox>
+      </MsLabel>
     </div>
 
     <div class="ms-textField" *ngIf="!isGeneral && !levelSpeciality">
@@ -55,7 +55,7 @@
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
     </div>
   </form>

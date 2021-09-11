@@ -1,7 +1,8 @@
 ﻿import {ITestGroupService, TEST_GROUP_SERVICE_TOKEN} from '../test-group.service.interface';
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {TestGroup, TestGroupCorrector, TestGroupCorrectorLoader, TestGroupSecretary} from 'examination/models';
-import {MsTable} from '@ms-fluent/table';
+import {TestGroup, TestGroupCorrector, TestGroupCorrectorLoader} from 'examination/models';
+import {MsTable} from '@ms-fluent/components';
+
 
 @Component({
   selector: 'app-testGroupCorrectorList, [app-testGroupCorrectorList]',

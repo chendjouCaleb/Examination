@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MsfModalModule} from 'fabric-docs';
 import {LabelledIcon} from './labelled/labelled-icon';
 import {Labelled} from './labelled/labelled';
 import {FloatButton} from './float-button/float-button';
@@ -23,16 +22,15 @@ import {MsBgColorDirective} from './bg-color.directive';
 import {MsColorDirective} from './font-color.directive';
 import {TableColumnDirective} from './tablecolumn.directive';
 import {UserPersona} from './user-persona';
-import {MsPersonaModule} from '@ms-fluent/persona';
 import {MsPaginatorButtons} from './paginator-buttons/paginator-buttons';
-import {MsButtonModule} from '@ms-fluent/button';
 import {HistoryBack} from './history-back';
 import {MsIcon} from './ms-icon';
-import {DayOfWeekPipe} from "./dayOfWeek.pipe";
-import {PreviousLocation} from "./prev-location";
+import {DayOfWeekPipe} from './dayOfWeek.pipe';
+import {PreviousLocation} from './prev-location';
+import {MsButtonModule, MsDialogModule, MsPersonaModule} from '@ms-fluent/components';
 
 @NgModule({
-  imports: [CommonModule, MatSnackBarModule, MsPersonaModule, MsButtonModule, MsfModalModule],
+  imports: [CommonModule, MatSnackBarModule, MsPersonaModule, MsButtonModule, MsDialogModule],
   providers: [AlertEmitter, Confirmation, PreviousLocation],
   declarations: [LabelledIcon, Labelled, FloatButton, ConfirmationComponent, StateBadgeDirective, Icon, StatsItem,
     MsAlert, MsAlertFooter, MsAlertButton, LocalTimeDirective, DateInputDirective, UcFirstPipe,

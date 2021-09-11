@@ -21,7 +21,7 @@ namespace Exam.Persistence
 
 
             //builder.UseSqlServer(configuration["Data:ConnectionStrings:Database"]);
-            builder.UseSqlite("SQLiteConnectionStrings");
+            builder.UseSqlite(configuration["Data:SQLiteConnectionStrings"]);
 
             return new PersistenceContext(builder.Options);
         }

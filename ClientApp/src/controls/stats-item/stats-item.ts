@@ -1,5 +1,5 @@
-﻿import {Component, Input, ViewEncapsulation} from "@angular/core";
-import {sharedColor, sharedColors} from "../colors";
+﻿import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {sharedColor} from '../colors';
 
 @Component({
   templateUrl: 'stats-item.html',
@@ -7,7 +7,7 @@ import {sharedColor, sharedColors} from "../colors";
   selector: '[statsItem], stats-item',
   encapsulation: ViewEncapsulation.None,
   host: {
-    '[class]': "'ms-statsItem ms-borderColor-shared' + color"
+    '[class]': '\'ms-statsItem ms-borderColor-shared\' + color'
   }
 })
 export class StatsItem {

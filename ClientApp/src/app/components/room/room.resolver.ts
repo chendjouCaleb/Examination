@@ -1,11 +1,11 @@
-﻿import {ActivatedRouteSnapshot} from "@angular/router";
-import {Injectable} from "@angular/core";
-import {RoomLoader} from "examination/loaders";
-import {CurrentItems} from "examination/app/current-items";
-import {Room} from "examination/entities";
+﻿import {ActivatedRouteSnapshot} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {RoomLoader} from 'examination/loaders';
+import {CurrentItems} from 'examination/app/current-items';
+import {Room} from 'examination/entities';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class RoomResolver {
 
@@ -14,10 +14,10 @@ export class RoomResolver {
   }
 
   async resolve(route: ActivatedRouteSnapshot): Promise<Room> {
-    const id = +route.paramMap.get("roomId");
+    const id = +route.paramMap.get('roomId');
 
     const item = await this._loader.loadById(id);
-    this.items.put("room", item);
+    this.items.put('room', item);
 
     return item;
 

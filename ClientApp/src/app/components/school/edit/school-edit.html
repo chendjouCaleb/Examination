@@ -1,31 +1,28 @@
-<div class="flex-center-cover">
-
-  <form class="ms-form ms-depth-8" [formGroup]="form">
-    <div class="ms-form-header"> Modifier les informations</div>
+<form class="ms-dialog-form" [formGroup]="form">
+    <div class="ms-fontSize-24 ms-fontWeight-semibold"> Modifier les informations</div>
 
 
     <div class="ms-textField">
-      <label for="name" class="msf-label">Nom</label>
+      <label for="name" class="ms-label">Nom</label>
       <input type="text" id="name" class="ms-textField-input" formControlName="name">
       <app-control-error [control]="form.controls['name']"></app-control-error>
     </div>
 
     <div class="ms-textField">
-      <label for="acronym" class="msf-label">Acronyme</label>
+      <label for="acronym" class="ms-label">Acronyme</label>
       <input type="text" id="acronym" class="ms-textField-input" formControlName="acronym">
       <app-control-error [control]="form.controls['acronym']"></app-control-error>
     </div>
 
 
     <div class="ms-textField">
-      <label for="address" class="msf-label">Addresse</label>
+      <label for="address" class="ms-label">Addresse</label>
       <input id="address" class="ms-textField-input" formControlName="address">
       <app-control-error [control]="form.controls['address']"></app-control-error>
     </div>
 
     <div class="mt-4 text-right">
-      <button class="mr-2" msButton MsfModalClose (click)="form.reset(school)">Annuler</button>
-      <button msButton theme="primary" icon="Edit" [disabled]="form.invalid" (click)="edit()">Modifier</button>
+      <button class="mr-2" icon="Cancel" msButton msDialogClose theme="standardOutline" (click)="form.reset(school)">Annuler</button>
+      <button msButton theme="primaryOutline" icon="Edit" [disabled]="form.invalid" (click)="edit()">Modifier</button>
     </div>
   </form>
-</div>

@@ -1,18 +1,18 @@
-﻿import {IPaperService} from "./paper.service.interface";
-import {Paper, Test} from "examination/entities";
-import {Injectable} from "@angular/core";
-import {AlertEmitter, Confirmation} from "examination/controls";
-import {PaperHttpClient} from "examination/models/http";
-import {MsfModal} from "fabric-docs";
-import {AuthorizationManager} from "examination/app/authorization";
-import {Observable} from "rxjs";
-import {PaperEditDate} from "./date/paper-edit-date";
-import {PaperSupervisorComment} from "./supervisor-comment/paper-supervisor-comment";
-import {PaperReport} from "./report/paper-report";
-import {PaperScores} from "./scores/paper-scores";
-import {PaperDetails} from "./details/paper-details";
-import {PaperLoader} from "examination/loaders";
-import {PaperScore} from "examination/app/components/paper/score/paper-score";
+﻿import {IPaperService} from './paper.service.interface';
+import {Paper, Test} from 'examination/entities';
+import {Injectable} from '@angular/core';
+import {AlertEmitter, Confirmation} from 'examination/controls';
+import {PaperHttpClient} from 'examination/models/http';
+import {AuthorizationManager} from 'examination/app/authorization';
+import {Observable} from 'rxjs';
+import {PaperEditDate} from './date/paper-edit-date';
+import {PaperSupervisorComment} from './supervisor-comment/paper-supervisor-comment';
+import {PaperReport} from './report/paper-report';
+import {PaperScores} from './scores/paper-scores';
+import {PaperDetails} from './details/paper-details';
+import {PaperLoader} from 'examination/loaders';
+import {PaperScore} from 'examination/app/components/paper/score/paper-score';
+import {MsDialog} from '@ms-fluent/components';
 
 
 @Injectable()
@@ -20,7 +20,7 @@ export class PaperService implements IPaperService {
   constructor(private _confirmation: Confirmation,
               private _httpClient: PaperHttpClient,
               private _loader: PaperLoader,
-              private _modal: MsfModal,
+              private _modal: MsDialog,
               private _auth: AuthorizationManager,
               private _alertEmitter: AlertEmitter) {
   }
@@ -31,10 +31,10 @@ export class PaperService implements IPaperService {
 
     return new Promise<number>(resolve => {
       result.accept.subscribe(async () => {
-        const result = await this._httpClient.group(test);
-        this._alertEmitter.success( `${result} étudiants de cette épreuve ont été classés en groupe`);
-        test.notGroupedStudentCount = test.paperCount - result;
-        resolve( result);
+        const groupResult = await this._httpClient.group(test);
+        this._alertEmitter.success( `${groupResult} étudiants de cette épreuve ont été classés en groupe`);
+        test.notGroupedStudentCount = test.paperCount - groupResult;
+        resolve( groupResult);
       });
     });
   }
@@ -50,38 +50,39 @@ export class PaperService implements IPaperService {
   }
 
   editDates(paper: Paper): Observable<Paper> {
-    const modalRef = this._modal.open(PaperEditDate, {disableClose: true});
+    const modalRef = this._modal.open<PaperEditDate, Paper>(PaperEditDate, {disableClose: true});
     modalRef.componentInstance.paper = paper;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<Paper>;
   }
 
   supervisorComment(paper: Paper): Observable<Paper> {
     const modalRef = this._modal.open(PaperSupervisorComment, {disableClose: true});
     modalRef.componentInstance.paper = paper;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<Paper>;
   }
 
   report(paper: Paper): Observable<Paper> {
     const modalRef = this._modal.open(PaperReport, {disableClose: true});
     modalRef.componentInstance.paper = paper;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<Paper>;
   }
 
   scores(paper: Paper): Observable<Paper> {
-    if(paper.test.multipleScore) {
+    if (paper.test.multipleScore) {
+      // tslint:disable-next-line:no-shadowed-variable
       const modalRef = this._modal.open(PaperScores, {disableClose: true});
       modalRef.componentInstance.paper = paper;
-      return modalRef.afterClosed();
+      return modalRef.afterClosed() as unknown as Observable<Paper>;
     }
 
     const modalRef = this._modal.open(PaperScore, {disableClose: true});
     modalRef.componentInstance.paper = paper;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<Paper>;
 
   }
 
   collect(paper: Paper): Promise<void> {
-    let message = `Récupérer la copie de cet étudiant?`;
+    const message = `Récupérer la copie de cet étudiant?`;
 
 
     return new Promise<void>(resolve => {

@@ -10,7 +10,7 @@ import {
 import {ExaminationStudentLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
 import {EXAMINATION_SERVICE_TOKEN, IExaminationService} from '../examination.service.contract';
-import {MsPaginator, MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
+import {MsPaginator, MsPaginatorItemsFn, MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'examination-student-list.html',
@@ -49,37 +49,37 @@ export class ExaminationStudentList implements OnInit {
   };
 
   constructor(private _examinationStudentLoader: ExaminationStudentLoader,
-              @Inject(EXAMINATION_SERVICE_TOKEN) public service: IExaminationService ) {
+              @Inject(EXAMINATION_SERVICE_TOKEN) public service: IExaminationService) {
   }
 
   async ngOnInit() {
     try {
-    if (this.examinationLevelSpeciality) {
-      await this._examinationStudentLoader.loadByExaminationLevelSpeciality(this.examinationLevelSpeciality);
-    }
+      if (this.examinationLevelSpeciality) {
+        await this._examinationStudentLoader.loadByExaminationLevelSpeciality(this.examinationLevelSpeciality);
+      }
 
-    if (this.examinationLevel) {
-      await this._examinationStudentLoader.loadByExaminationLevel(this.examinationLevel);
-    }
+      if (this.examinationLevel) {
+        await this._examinationStudentLoader.loadByExaminationLevel(this.examinationLevel);
+      }
 
-    if (this.examinationSpeciality) {
-      await this._examinationStudentLoader.loadByExaminationSpeciality(this.examinationSpeciality);
-    }
+      if (this.examinationSpeciality) {
+        await this._examinationStudentLoader.loadByExaminationSpeciality(this.examinationSpeciality);
+      }
 
-    if (this.examinationDepartment) {
-      await this._examinationStudentLoader.loadByExaminationDepartment(this.examinationDepartment);
-    }
+      if (this.examinationDepartment) {
+        await this._examinationStudentLoader.loadByExaminationDepartment(this.examinationDepartment);
+      }
 
-    if (this.examination) {
-      await this._examinationStudentLoader.loadByExamination(this.examination);
-    }
+      if (this.examination) {
+        await this._examinationStudentLoader.loadByExamination(this.examination);
+      }
 
-    this.examinationStudents = this.getExaminationStudents().toArray()
-      .sort((a, b) => a.student.fullName.localeCompare(b.student.fullName));
+      this.examinationStudents = this.getExaminationStudents().toArray()
+        .sort((a, b) => a.student.fullName.localeCompare(b.student.fullName));
 
-    this._isLoaded = true;
+      this._isLoaded = true;
       this._isLoading = false;
-    }catch (e) {
+    } catch (e) {
       this._isLoading = false;
     }
   }

@@ -1,9 +1,8 @@
-﻿﻿import {Component, Input, OnInit} from "@angular/core";
-import {AlertEmitter} from "src/controls/alert-emitter";
-
-import {MsfModalRef} from "fabric-docs";
-import {Paper} from "examination/entities";
-import {PaperHttpClient} from "examination/models";
+﻿﻿import {Component, Input, OnInit} from '@angular/core';
+import {AlertEmitter} from 'src/controls/alert-emitter';
+import {MsDialogRef} from '@ms-fluent/components';
+import {Paper} from 'examination/entities';
+import {PaperHttpClient} from 'examination/models';
 
 
 @Component({
@@ -16,7 +15,7 @@ export class PaperSupervisorComment implements OnInit {
   paper: Paper;
 
   constructor(private _httpClient: PaperHttpClient,
-              private _dialogRef: MsfModalRef<PaperSupervisorComment>,
+              private _dialogRef: MsDialogRef<PaperSupervisorComment>,
               private _alertEmitter: AlertEmitter) {
   }
 

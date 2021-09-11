@@ -2,7 +2,7 @@
 import {Planner, PlannerLoader, School} from 'src/models';
 import {IPlannerService, PLANNER_SERVICE_TOKEN} from '../planner.service.interface';
 import {AssertHelpers} from '@positon/collections/dist/helpers/assert-helpers';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'planner-list.html',
@@ -29,7 +29,7 @@ export class PlannerList implements AfterViewInit {
       await this._plannerLoader.loadBySchool(this.school);
       this.table.unshift(...this.school.planners.toArray());
       this.isLoading = false;
-    }catch (e) {
+    } catch (e) {
       this.isLoading = false;
     }
 
@@ -37,7 +37,9 @@ export class PlannerList implements AfterViewInit {
 
   addPlanners() {
     this._service.addPlanners(this.school).then(planners => {
-      this.table.unshift(...planners.toArray())
+      if (planners) {
+        this.table.unshift(...planners.toArray());
+      }
     })
   }
 

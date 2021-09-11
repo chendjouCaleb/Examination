@@ -2,26 +2,26 @@ import {Component, Input, OnInit, Optional} from '@angular/core';
 import {SpecialityEditForm} from 'examination/app/components/speciality/form';
 import {SpecialityHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {SpecialityLoader} from 'examination/loaders';
-import {Department, Speciality} from 'examination/entities';
+import {Speciality} from 'examination/entities';
 
 @Component({
   templateUrl: 'speciality-edit.html',
   selector: 'app-speciality-edit'
 })
-export class SpecialityEdit implements OnInit{
+export class SpecialityEdit implements OnInit {
   @Input()
   speciality: Speciality;
 
-  form:SpecialityEditForm;
+  form: SpecialityEditForm;
 
   oncancel: () => any;
 
   constructor(private _httpClient: SpecialityHttpClient,
               private _alertEmitter: AlertEmitter,
               private _loader: SpecialityLoader,
-              @Optional() private _modal: MsfModalRef<SpecialityEdit>) {
+              @Optional() private _modal: MsDialogRef<SpecialityEdit>) {
   }
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class SpecialityEdit implements OnInit{
     const name = this.form.getControl('name');
     if (name.value.match(/^[a-zA-Z0-9]+$/)) {
       const speciality = await this._httpClient.findByName(this.speciality.department, name.value);
-      if (speciality.id && speciality.id != this.speciality.id) {
+      if (speciality.id && speciality.id !== this.speciality.id) {
         name.addError('Ce nom est déjà utilisé par une autre spécialité du département.');
       }
     }

@@ -1,8 +1,8 @@
-﻿import {Component, Input} from "@angular/core";
-import {Test} from "examination/entities";
-import {TestHttpClient} from "examination/models/http";
-import {AlertEmitter} from "examination/controls";
-import {MsfModalRef} from "fabric-docs";
+﻿import {Component, Input} from '@angular/core';
+import {Test} from 'examination/entities';
+import {TestHttpClient} from 'examination/models/http';
+import {AlertEmitter} from 'examination/controls';
+import {MsDialogRef} from '@ms-fluent/components';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class PublishScore {
 
   constructor(private _httpClient: TestHttpClient,
               private _alertEmitter: AlertEmitter,
-              private _modalRef: MsfModalRef<PublishScore>) {
+              private _modalRef: MsDialogRef<PublishScore>) {
   }
 
 

@@ -3,7 +3,7 @@ import {Course, Examination, ExaminationDepartment, ExaminationLevel, Test} from
 import {ITestAddParams, ITestService, TEST_SERVICE_TOKEN} from '../test.service.interface';
 import {TestLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'test-list.html',

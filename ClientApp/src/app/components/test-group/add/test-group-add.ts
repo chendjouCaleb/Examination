@@ -1,7 +1,7 @@
-﻿import {Component, Input, OnInit} from "@angular/core";
-import {AlertEmitter} from "src/controls/alert-emitter";
-import {Room, RoomLoader, School, Test, TestGroupHttpClient, TestGroupLoader} from "src/models";
-import {MsfModalRef} from "fabric-docs";
+﻿import {Component, Input, OnInit} from '@angular/core';
+import {AlertEmitter} from 'src/controls/alert-emitter';
+import {Room, RoomLoader, School, Test, TestGroupHttpClient, TestGroupLoader} from 'src/models';
+import {MsDialogRef} from '@ms-fluent/components';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class TestGroupAdd implements OnInit {
   constructor(private _httpClient: TestGroupHttpClient,
               private _roomLoader: RoomLoader,
               private _loader: TestGroupLoader,
-              private _dialogRef: MsfModalRef<TestGroupAdd>,
+              private _dialogRef: MsDialogRef<TestGroupAdd>,
               private _alertEmitter: AlertEmitter) {
 
   }
@@ -26,7 +26,7 @@ export class TestGroupAdd implements OnInit {
   }
 
   async add() {
-    let testGroup = await this._httpClient.addTestGroup(this.test, this.room);
+    const testGroup = await this._httpClient.addTestGroup(this.test, this.room);
     await this._loader.load(testGroup);
     this.test.testGroupCount++;
     this.test.testGroups?.insert(0, testGroup);

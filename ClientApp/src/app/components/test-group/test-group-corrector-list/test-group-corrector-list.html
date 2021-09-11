@@ -20,12 +20,15 @@
       </ms-tableCell>
       <ms-tableCell class="px-0 text-right">
         <ng-container *ngIf="testGroup.isPlanner">
-          <button msIconButton icon="MoreVertical" theme="transparent" [MsfMenuTrigger]="correctorMore"></button>
-          <MsfMenu #correctorMore>
-            <MsfMenuItem icon="Delete" theme="error" (click)="remove(item)">
-              Supprimer
-            </MsfMenuItem>
-          </MsfMenu>
+          <button msIconButton icon="MoreVertical" theme="transparent" [MsDropdownTrigger]="correctorMore"></button>
+
+          <MsDropdown #correctorMore>
+            <MsContextMenu>
+              <MsContextMenuItem icon="Delete" theme="error" (click)="remove(item)">
+                Supprimer
+              </MsContextMenuItem>
+            </MsContextMenu>
+          </MsDropdown>
         </ng-container>
       </ms-tableCell>
 

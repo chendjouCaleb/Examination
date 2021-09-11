@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "outDir": "./out-tsc/app",
     "types": []
   },
@@ -11,5 +10,6 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
+  "paths": { "@angular/*": [ "../node_modules/@angular/*" ] }
 }

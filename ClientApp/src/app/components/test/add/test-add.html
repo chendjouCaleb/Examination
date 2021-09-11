@@ -5,34 +5,34 @@
   <div class="ms-textField" *ngIf="examination && !examinationDepartment">
     <label for="examinationDepartment" class="msf-label">Département</label>
 
-    <MsfSelect id="examinationDepartment" formControlName="examinationDepartment"
+    <MsSelect id="examinationDepartment" formControlName="examinationDepartment"
                class="ms-textField-input" placeholder="Choisir un département"
                (selectionchange)="changeExaminationDepartment($event.value)">
-      <MsfSelectOption *ngFor="let item of examination.examinationDepartments" [value]="item">{{item.department?.name}}
-      </MsfSelectOption>
-    </MsfSelect>
+      <MsSelectOption *ngFor="let item of examination.examinationDepartments" [value]="item">{{item.department?.name}}
+      </MsSelectOption>
+    </MsSelect>
   </div>
 
   <div class="ms-textField" *ngIf="examinationLevels">
     <label for="examinationLevel" class="msf-label">Niveau</label>
 
-    <MsfSelect *ngIf="!examinationLevel" id="examinationLevel"
+    <MsSelect *ngIf="!examinationLevel" id="examinationLevel"
                formControlName="examinationLevel" class="ms-textField-input"
                placeholder="Choisir un niveau" (selectionchange)="changeExaminationLevel($event.value)">
-      <MsfSelectOption *ngFor="let item of examinationLevels"
+      <MsSelectOption *ngFor="let item of examinationLevels"
                        [value]="item">Niveau {{item.level?.index + 1}}
-      </MsfSelectOption>
-    </MsfSelect>
+      </MsSelectOption>
+    </MsSelect>
   </div>
 
 
   <div class="ms-textField" *ngIf="courses">
     <label for="course" class="msf-label">Matière</label>
-    <MsfSelect id="course" formControlName="course" class="ms-textField-input"
+    <MsSelect id="course" formControlName="course" class="ms-textField-input"
                (selectionchange)="changeCourse($event.value)"
                placeholder="Choisir un cours">
-      <MsfSelectOption *ngFor="let item of courses" [value]="item">{{item.name}} ({{item.code}})</MsfSelectOption>
-    </MsfSelect>
+      <MsSelectOption *ngFor="let item of courses" [value]="item">{{item.name}} ({{item.code}})</MsSelectOption>
+    </MsSelect>
 
   </div>
 
@@ -69,13 +69,13 @@
 
     <div class="ms-textField">
       <div labelled text="Utiliser des anonymats" for="useAnonymity">
-        <MsfCheckbox id="useAnonymity" formControlName="useAnonymity"></MsfCheckbox>
+        <MsCheckbox id="useAnonymity" formControlName="useAnonymity"></MsCheckbox>
       </div>
     </div>
 
   </div>
   <div class="mt-4 text-right">
-    <button msButton MsfModalClose class="mr-3">Annuler</button>
+    <button msButton msDialogContent class="mr-3">Annuler</button>
     <button msButton theme="primary" icon="Add" [disabled]="form.canDisabledSubmit" (click)="add()">
       Ajouter
     </button>

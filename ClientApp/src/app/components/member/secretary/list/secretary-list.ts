@@ -1,8 +1,8 @@
 ﻿import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Department, Secretary, SecretaryLoader} from 'src/models';
-import {ISecretaryService, SECRETARY_SERVICE_TOKEN} from "../secretary.service.interface";
-import {AssertHelpers} from "@positon/collections/dist/helpers/assert-helpers";
-import {MsTable} from "@ms-fluent/table";
+import {ISecretaryService, SECRETARY_SERVICE_TOKEN} from '../secretary.service.interface';
+import {AssertHelpers} from '@positon/collections/dist/helpers/assert-helpers';
+import {MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'secretary-list.html',

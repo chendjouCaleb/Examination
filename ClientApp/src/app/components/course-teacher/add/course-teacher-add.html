@@ -2,40 +2,40 @@
   <form class="ms-form" [formGroup]="form">
     <div class="ms-form-header ms-sticky-header">
       <div msFontSize="18">Ajouter un enseignat un cours</div>
-      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+      <button msIconButton icon="Cancel" class="ml-2" msDialogContent theme="transparent" size="normal"></button>
     </div>
 
 
     <div class="ms-textField">
       <label for="teacher" class="msf-label">Choisir un enseignant</label>
-      <MsfSelect id="teacher" formControlName="teacher" class="ms-textField-input" placeholder="">
-        <MsfSelectOption *ngFor="let item of teachers" [value]="item">
+      <MsSelect id="teacher" formControlName="teacher" class="ms-textField-input" placeholder="">
+        <MsSelectOption *ngFor="let item of teachers" [value]="item">
           {{item.user.fullName}}
-        </MsfSelectOption>
-      </MsfSelect>
+        </MsSelectOption>
+      </MsSelect>
     </div>
 
     <div class="ms-textField" [class.ms-disabled]="course.courseTeachers?.length === 0">
-      <label class="ms-label" labelled text="Enseignant principal" for="isPrincipal">
-        <MsfCheckbox id="isPrincipal" formControlName="isPrincipal"></MsfCheckbox>
-      </label>
+      <MsLabel class="ms-label" labelled text="Enseignant principal" htmlFor="isPrincipal">
+        <MsCheckbox id="isPrincipal" formControlName="isPrincipal"></MsCheckbox>
+      </MsLabel>
     </div>
 
     <div class="ms-textField">
-      <label class="ms-label ms-pointer" labelled text="Cours magistral" for="lecture">
-        <MsfCheckbox id="lecture" formControlName="lecture"></MsfCheckbox>
-      </label>
+      <MsLabel class="ms-label ms-pointer" labelled text="Cours magistral" htmlFor="lecture">
+        <MsCheckbox id="lecture" formControlName="lecture"></MsCheckbox>
+      </MsLabel>
     </div>
 
     <div class="ms-textField d-flex align-items-center ms-pointer">
-      <MsfCheckbox id="tutorial" formControlName="tutorial"></MsfCheckbox>
-      <label class="ml-2 ms-label" for="tutorial">Travaux dirigés</label>
+      <MsCheckbox id="tutorial" formControlName="tutorial"></MsCheckbox>
+      <MsLabel class="ml-2 ms-label" htmlFor="tutorial">Travaux dirigés</MsLabel>
     </div>
 
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
     </div>
   </form>

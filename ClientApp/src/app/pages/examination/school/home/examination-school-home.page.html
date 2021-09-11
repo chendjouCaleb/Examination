@@ -1,22 +1,25 @@
 <div class="ms-pageTitle">
-    <div msFontSize="18">{{examination.name}}</div>
+  <div msFontSize="18">{{examination.name}}</div>
   <div>
-    <button msIconButton icon="Settings"  [MsfMenuTrigger]="examinationMenu" theme="transparent"></button>
-    <MsfMenu #examinationMenu>
-      <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
-      <MsfMenuItem theme="primary" icon="Clock" *ngIf="examination.isPending"
-                   (click)="service.start(examination)">
-        Débuter
-      </MsfMenuItem>
-      <MsfMenuItem theme="warning" icon="Lock" *ngIf="examination.isProgress"
-                   (click)="service.end(examination)">
-        Fermer
-      </MsfMenuItem>
-      <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="examination.isFinished"
-                   (click)="service.relaunch(examination)">Relancer
-      </MsfMenuItem>
-      <MsfMenuItem icon="Delete" theme="error" (click)="service.delete(examination)">Supprimer</MsfMenuItem>
-    </MsfMenu>
+    <button msIconButton icon="Settings" [MsDropdownTrigger]="examinationMenu" theme="transparent"></button>
+    <MsDropdown #examinationMenu>
+      <MsContextMenu>
+        <MsContextMenuItem icon="Reload">Actualiser</MsContextMenuItem>
+        <MsContextMenuItem theme="primary" icon="Clock" *ngIf="examination.isPending"
+                           (click)="service.start(examination)">
+          Débuter
+        </MsContextMenuItem>
+        <MsContextMenuItem theme="warning" icon="Lock" *ngIf="examination.isProgress"
+                           (click)="service.end(examination)">
+          Fermer
+        </MsContextMenuItem>
+        <MsContextMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="examination.isFinished"
+                           (click)="service.relaunch(examination)">Relancer
+        </MsContextMenuItem>
+        <MsContextMenuItem icon="Delete" theme="error" (click)="service.delete(examination)">Supprimer
+        </MsContextMenuItem>
+      </MsContextMenu>
+    </MsDropdown>
   </div>
 </div>
 
@@ -24,27 +27,27 @@
   <span class="ms-badge" msBgColor="sharedGreenCyan10" *ngIf="examination.isProgress">En cours</span>
 </div>
 <div class="d-flex justify-content-between flex-wrap">
-    <div class="ms-description-list mt-5">
-      <dl>
-        <dt>Nom</dt>
-        <dd>{{examination.name}}</dd>
-      </dl>
+  <div class="ms-description-list mt-5">
+    <dl>
+      <dt>Nom</dt>
+      <dd>{{examination.name}}</dd>
+    </dl>
 
-      <dl>
-        <dt>Ajouté le</dt>
-        <dd>{{examination.registrationDate | date}} </dd>
-      </dl>
+    <dl>
+      <dt>Ajouté le</dt>
+      <dd>{{examination.registrationDate | date}} </dd>
+    </dl>
 
-      <dl>
-        <dt>Début prévue pour le</dt>
-        <dd>{{examination.expectedStartDate | date}} </dd>
-      </dl>
+    <dl>
+      <dt>Début prévue pour le</dt>
+      <dd>{{examination.expectedStartDate | date}} </dd>
+    </dl>
 
-      <dl>
-        <dt>Fin prévue pour le</dt>
-        <dd>{{examination.expectedEndDate | date}} </dd>
-      </dl>
-    </div>
+    <dl>
+      <dt>Fin prévue pour le</dt>
+      <dd>{{examination.expectedEndDate | date}} </dd>
+    </dl>
+  </div>
 
 
   <div class="ms-description-list mt-5">
@@ -80,19 +83,21 @@
     <dl msColor="sharedYellowGreen10">
       <dt>Réussite</dt>
       <dd>{{examination.statistics.successCount}}
-        ({{examination.statistics.successCount/examination.statistics.studentCount * 100 | number}}%)</dd>
+        ({{examination.statistics.successCount / examination.statistics.studentCount * 100 | number}}%)
+      </dd>
     </dl>
 
     <dl msColor="sharedRed10">
       <dt>Échec</dt>
       <dd>{{examination.statistics.failedCount}}
-        ({{examination.statistics.failedCount/examination.statistics.studentCount * 100 | number}}%)</dd>
+        ({{examination.statistics.failedCount / examination.statistics.studentCount * 100 | number}}%)
+      </dd>
     </dl>
   </div>
 
-  </div>
+</div>
 
 
 <div>
-<!--  {{examination.statistics | json}}-->
+  <!--  {{examination.statistics | json}}-->
 </div>

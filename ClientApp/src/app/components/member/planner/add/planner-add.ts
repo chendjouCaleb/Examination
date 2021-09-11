@@ -1,7 +1,7 @@
 ﻿import {Component, Input} from '@angular/core';
 import {AlertEmitter} from 'src/controls/alert-emitter';
 import {PlannerHttpClient, PlannerLoader, School, User, UserHttpClient} from 'examination/models';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class PlannerAdd {
 
   constructor(private _httpClient: PlannerHttpClient, private _loader: PlannerLoader,
               private _userHttpClient: UserHttpClient,
-              private _dialogRef: MsfModalRef<PlannerAdd>,
+              private _dialogRef: MsDialogRef<PlannerAdd>,
               private _alertEmitter: AlertEmitter) {
   }
 

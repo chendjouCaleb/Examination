@@ -1,6 +1,5 @@
 import {ICourseService} from './course.service.interface';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {Course, CourseLevelSpeciality, Level, LevelSpeciality, Score} from 'examination/entities';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {CourseAdd} from './add/course-add';
@@ -11,12 +10,13 @@ import {CourseLevelSpecialityAdd} from './course-level-speciality-add/course-lev
 import {CourseRestrict} from './restrict/course-restrict';
 import {CourseDetails} from './details/course-details';
 import {List} from '@positon/collections';
-import {CourseChapterText} from "examination/app/components/course/chapterText/course-chapterText";
+import {CourseChapterText} from 'examination/app/components/course/chapterText/course-chapterText';
+import {MsDialog} from '@ms-fluent/components';
 
 
 @Injectable()
 export class CourseService implements ICourseService {
-  constructor(private _modal: MsfModal,
+  constructor(private _modal: MsDialog,
               private _courseHttpClient: CourseHttpClient,
               private _courseLevelSpecialityHttpClient: CourseLevelSpecialityHttpClient,
               private _scoreHttpClient: ScoreHttpClient,
@@ -74,7 +74,7 @@ export class CourseService implements ICourseService {
       result.accept.subscribe(async () => {
         await this._scoreHttpClient.delete(score.id);
         score.course.scores.remove(score);
-        if (score.course.scores.length == 0) {
+        if (score.course.scores.length === 0) {
           score.course.multipleScore = false;
         }
         resolve(true);

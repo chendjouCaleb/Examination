@@ -18,7 +18,7 @@ export class RoomHomePage {
   delete() {
     this._roomService.deleteRoom(this.room).then(result => {
       if (result) {
-        this.router.navigateByUrl(`${this.room.url}`, { queryParams: {tab: 'rooms'}}).then();
+        this.router.navigate([`${this.room.url}`], { queryParams: {tab: 'rooms'}}).then();
       }
     })
   }

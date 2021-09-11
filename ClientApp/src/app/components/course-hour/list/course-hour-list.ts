@@ -1,11 +1,11 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Course, CourseHour, CourseTeacher, Level, Room, Student, Teacher} from 'examination/entities';
-import {MsTable} from '@ms-fluent/table';
 import {CourseHourLoader} from 'examination/loaders';
 import {COURSE_HOUR_SERVICE_TOKEN, ICourseHourService} from '../course-hour.service.interface';
 import {List} from '@positon/collections';
 import {Locale} from '@js-joda/locale_fr';
-import {DayOfWeek, TextStyle} from "@js-joda/core";
+import {DayOfWeek, TextStyle} from '@js-joda/core';
+import {MsTable} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'course-hour-list.html',

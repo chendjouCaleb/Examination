@@ -1,7 +1,7 @@
 ﻿import {Component, Input} from '@angular/core';
 import {ExaminationHttpClient, ExaminationLoader, School} from 'examination/models';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {ExaminationAddForm} from 'examination/app/components/examination/examination-form';
 
 @Component({
@@ -17,7 +17,7 @@ export class ExaminationAdd {
 
   constructor(private _httpClient: ExaminationHttpClient,
               private _loader: ExaminationLoader,
-              private _dialogRef: MsfModalRef<ExaminationAdd>,
+              private _dialogRef: MsDialogRef<ExaminationAdd>,
               private _alertEmitter: AlertEmitter) {
 
   }

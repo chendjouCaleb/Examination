@@ -3,7 +3,7 @@ import {Department, Level, Room, School} from 'examination/entities';
 import {RoomLoader} from 'examination/loaders';
 import {IRoomService, ROOM_SERVICE_TOKEN} from '../room.service.interface';
 import {List} from '@positon/collections';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'room-list.html',

@@ -2,7 +2,7 @@
 import {AlertEmitter} from 'src/controls/alert-emitter';
 import {Test, TestHttpClient} from 'src/models';
 import {TestEditDateForm} from '../form';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class TestEditDate implements OnInit {
   test: Test;
 
   constructor(private _httpClient: TestHttpClient,
-              private _dialogRef: MsfModalRef<TestEditDate>,
+              private _dialogRef: MsDialogRef<TestEditDate>,
               private _alertEmitter: AlertEmitter) {
 
   }

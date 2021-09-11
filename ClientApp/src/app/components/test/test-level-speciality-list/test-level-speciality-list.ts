@@ -3,7 +3,7 @@ import {CourseLevelSpeciality, ExaminationLevelSpeciality, ExaminationSpeciality
 import {ITestService, TEST_SERVICE_TOKEN} from '../test.service.interface';
 import {TestLevelSpecialityLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'test-level-speciality-list.html',

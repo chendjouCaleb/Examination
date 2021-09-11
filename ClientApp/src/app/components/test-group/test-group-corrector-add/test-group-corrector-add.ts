@@ -1,6 +1,6 @@
 ﻿import {Component, Input, OnInit} from '@angular/core';
 import {AlertEmitter} from 'src/controls/alert-emitter';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {
   Corrector,
   CorrectorHttpClient,
@@ -25,7 +25,7 @@ export class TestGroupCorrectorAdd implements OnInit {
               private _correctorHttpClient: CorrectorHttpClient,
               private _correctorLoader: CorrectorLoader,
               private _loader: TestGroupCorrectorLoader,
-              private _dialogRef: MsfModalRef<TestGroupCorrectorAdd>,
+              private _dialogRef: MsDialogRef<TestGroupCorrectorAdd>,
               private _alertEmitter: AlertEmitter) {
 
   }

@@ -1,7 +1,7 @@
 ﻿import {Component, Input} from '@angular/core';
 import {Level} from 'examination/entities';
 import {LevelHttpClient} from 'examination/models/http';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'level-delete.html'
@@ -11,7 +11,7 @@ export class LevelDelete {
   level: Level;
 
   constructor(private _httpClient: LevelHttpClient,
-              private _modalRef: MsfModalRef<LevelDelete>) {
+              private _modalRef: MsDialogRef<LevelDelete>) {
   }
 
   async delete() {

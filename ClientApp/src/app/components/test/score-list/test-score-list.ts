@@ -1,7 +1,7 @@
 ﻿import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ScoreHttpClient, Test, TestScore, TestScoreLoader} from 'examination/models';
 import {ITestService, TEST_SERVICE_TOKEN} from '../test.service.interface';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from '@ms-fluent/components';
 
 
 @Component({

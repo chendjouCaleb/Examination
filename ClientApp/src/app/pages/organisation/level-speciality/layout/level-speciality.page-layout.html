@@ -13,12 +13,15 @@
 
         <div class="mr-1">
           <ng-container *ngIf="levelSpeciality.level.department.isPrincipalUser">
-            <button msIconButton theme="transparent" icon="MoreVertical" [MsfMenuTrigger]="levelMenu"></button>
-            <MsfMenu #levelMenu>
-              <MsfMenuItem  icon="Delete" theme="error" (click)="delete()">
-                Supprimer
-              </MsfMenuItem>
-            </MsfMenu>
+            <button msIconButton theme="transparent" icon="MoreVertical" [MsDropdownTrigger]="levelMenu"></button>
+            <MsDropdown #levelMenu>
+              <MsContextMenu>
+                <MsContextMenuItem  icon="Delete" theme="error" (click)="delete()">
+                  Supprimer
+                </MsContextMenuItem>
+              </MsContextMenu>
+            </MsDropdown>
+
           </ng-container>
         </div>
       </div>

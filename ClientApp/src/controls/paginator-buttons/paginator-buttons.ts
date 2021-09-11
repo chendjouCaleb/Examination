@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {MsPaginator} from '@ms-fluent/table';
+import {MsPaginator} from '@ms-fluent/components';
 
 @Component({
   selector: 'ms-paginatorButtons, msPaginatorButtons',

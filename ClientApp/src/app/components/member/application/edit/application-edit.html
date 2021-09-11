@@ -2,7 +2,7 @@
   <form class="ms-form" *ngIf="form" [formGroup]="form">
     <div class="ms-form-header ms-sticky-header">
       <span>Modifier votre demande</span>
-      <button msIconButton icon="Cancel" MsfModalClose></button>
+      <button msIconButton icon="Cancel" msDialogContent></button>
     </div>
     ﻿
 
@@ -28,24 +28,24 @@
 
     <div class="ms-textField">
       <label class="msf-label">Genre</label>
-      <MsfRadioGroup formControlName="gender" name="gender" style="display: flex">
+      <MsRadioGroup formControlName="gender" name="gender" style="display: flex">
         <label class="ms-label" for="gender-M">
-          <MsfRadio id="gender-M" value="M" inputId="g-M-i" [checked]="application.gender == 'M'"></MsfRadio>
+          <MsRadio id="gender-M" value="M" inputId="g-M-i" [checked]="application.gender == 'M'"></MsRadio>
           Homme
         </label>
 
         <label for="gender-F" class="ml-2 ms-Label">
-          <MsfRadio id="gender-F" value="F" inputId="g-F-i" [checked]="application.gender == 'F'"></MsfRadio>
+          <MsRadio id="gender-F" value="F" inputId="g-F-i" [checked]="application.gender == 'F'"></MsRadio>
           Femme
         </label>
-      </MsfRadioGroup>
+      </MsRadioGroup>
 
       <app-control-error [control]="form.controls['gender']"></app-control-error>
     </div>
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" [disabled]="form.invalid" (click)="edit()">
         Modifier
       </button>

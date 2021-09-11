@@ -1,6 +1,5 @@
 import {ISchoolService} from './school.service.interface';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {School} from 'examination/entities';
 import {Confirmation} from 'examination/controls';
 import {SchoolAdd} from './add/school-add';
@@ -9,10 +8,11 @@ import {SchoolEdit} from './edit/school-edit';
 import {SchoolImage} from './image/school-image';
 import {SchoolCoverImage} from 'examination/app/components/school/cover-image/school-cover-image';
 import {SchoolDelete} from 'examination/app/components/school/delete/school-delete';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable()
 export class SchoolService implements ISchoolService {
-  constructor(private _modal: MsfModal, private _confirmation: Confirmation) {
+  constructor(private _modal: MsDialog, private _confirmation: Confirmation) {
   }
 
 

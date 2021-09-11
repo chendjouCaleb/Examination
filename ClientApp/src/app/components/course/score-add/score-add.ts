@@ -1,7 +1,7 @@
 ﻿import {Component, Input} from '@angular/core';
 import {AlertEmitter} from 'src/controls/alert-emitter';
 import {Course, ScoreHttpClient, ScoreLoader} from 'src/models';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {ScoreAddForm} from '../score-form';
 
 
@@ -16,7 +16,7 @@ export class ScoreAdd {
 
   constructor(private _httpClient: ScoreHttpClient,
               private _loader: ScoreLoader,
-              private _dialogRef: MsfModalRef<ScoreAdd>,
+              private _dialogRef: MsDialogRef<ScoreAdd>,
               private _alertEmitter: AlertEmitter) {
 
   }

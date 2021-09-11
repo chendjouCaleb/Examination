@@ -1,6 +1,5 @@
 import {ISpecialityService} from './speciality.service.interface';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {Department, LevelSpeciality, Speciality} from 'examination/entities';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {SpecialityAdd} from './add/speciality-add';
@@ -8,10 +7,11 @@ import {SpecialityEdit} from './edit/speciality-edit';
 import {SpecialityDelete} from './delete/speciality-delete';
 import {LevelSpecialityHttpClient} from 'examination/models/http';
 import {SpecialityLevelAdd} from './level/speciality-level-add';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable()
 export class SpecialityService implements ISpecialityService {
-  constructor(private _modal: MsfModal,
+  constructor(private _modal: MsDialog,
               private _alertEmitter: AlertEmitter,
               private _levelSpecialityHttpClient: LevelSpecialityHttpClient,
               private _confirmation: Confirmation) {

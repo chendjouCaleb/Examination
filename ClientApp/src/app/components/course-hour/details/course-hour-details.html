@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <div></div>
       <div>
-        <button msIconButton theme="transparent" icon="Cancel" MsfModalClose></button>
+        <button msIconButton theme="transparent" icon="Cancel" msDialogContent></button>
       </div>
     </div>
 
@@ -70,16 +70,16 @@
             </div>
 
             <div class="mt-3" *ngIf="courseHour.school.isPlanner">
-              <MsfRadioGroup (change)="lectureChange($event)">
+              <MsRadioGroup (change)="lectureChange($event)">
                 <div class="ms-textField d-flex align-items-center ms-pointer">
-                  <MsfRadio id="lecture" [value]="'lecture'" [checked]="courseHour.lecture"></MsfRadio>
+                  <MsRadio id="lecture" [value]="'lecture'" [checked]="courseHour.lecture"></MsRadio>
                   <label class="ml-2 ms-label" for="lecture">Cours magistral</label>
                 </div>
                 <div class="mt-2 ms-textField d-flex align-items-center ms-pointer">
-                  <MsfRadio id="tutorial" [value]="'tutorial'" [checked]="!courseHour.lecture" ></MsfRadio>
+                  <MsRadio id="tutorial" [value]="'tutorial'" [checked]="!courseHour.lecture" ></MsRadio>
                   <label class="ml-2 ms-label" for="tutorial">Travaux dirigés</label>
                 </div>
-              </MsfRadioGroup>
+              </MsRadioGroup>
             </div>
           </dd>
         </dl>

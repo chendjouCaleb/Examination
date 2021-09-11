@@ -7,9 +7,8 @@ import {ControlModule, MsfTabModule } from 'examination/controls';
 import {ExaminationLevelHomePage} from './home/examination-level-home.page';
 import {ExaminationLevelPageLayout} from './layout/examination-level.page-layout';
 import {TestModule} from 'examination/app/components/test/test.module';
-import {MsPivotModule} from '@ms-fluent/pivot';
 import {ExaminationStudentPage} from './student/examination.student.page';
-import {MsButtonModule} from "@ms-fluent/button";
+import {MsButtonModule, MsPivotModule} from '@ms-fluent/components';
 
 export const routes: Routes = [
   {path: '', component: ExaminationLevelPageLayout},

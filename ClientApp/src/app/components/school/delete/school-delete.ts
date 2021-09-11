@@ -1,8 +1,8 @@
-﻿import {Component, Input} from "@angular/core";
-import {School} from "examination/entities";
-import {SchoolHttpClient} from "examination/models/http";
-import {MsfModalRef} from "fabric-docs";
-import {SchoolDestructorHub} from "examination/hubs";
+﻿import {Component, Input} from '@angular/core';
+import {School} from 'examination/entities';
+import {SchoolHttpClient} from 'examination/models/http';
+import {MsDialogRef} from '@ms-fluent/components';
+import {SchoolDestructorHub} from 'examination/hubs';
 
 @Component({
   templateUrl: 'school-delete.html'
@@ -15,7 +15,7 @@ export class SchoolDelete {
 
   constructor(private _httpClient: SchoolHttpClient,
               private _hub: SchoolDestructorHub,
-              private _modalRef: MsfModalRef<SchoolDelete>) {
+              private _modalRef: MsDialogRef<SchoolDelete>) {
 
     _hub.log.subscribe((e) => {
       if (e.school.id === this.school.id) {

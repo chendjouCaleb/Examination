@@ -4,14 +4,14 @@
 
     <div class="ms-textField">
       <label for="levels" class="msf-label">Niveau à ajouter à la spécialité {{speciality.name}}</label>
-      <MsfSelect id="levels" [(ngModel)]="level" name="level" class="ms-textField-input"
+      <MsSelect id="levels" [(ngModel)]="level" name="level" class="ms-textField-input"
                  placeholder="Choisir un niveau">
-        <MsfSelectOption *ngFor="let item of levels" [value]="item">Niveau {{item.index + 1}}</MsfSelectOption>
-      </MsfSelect>
+        <MsSelectOption *ngFor="let item of levels" [value]="item">Niveau {{item.index + 1}}</MsSelectOption>
+      </MsSelect>
     </div>
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" icon="Add" [disabled]="!level" (click)="add()">Ajouter</button>
     </div>
   </form>

@@ -3,7 +3,7 @@ import {ExaminationStudent, Paper, Test, TestGroup, TestLevelSpeciality} from 'e
 import {PaperLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
 import {IPaperService, PAPER_SERVICE_TOKEN} from '../paper.service.interface';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'paper-list.html',

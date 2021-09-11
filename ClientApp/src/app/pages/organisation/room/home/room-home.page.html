@@ -1,37 +1,39 @@
 <div style="max-width: 100%; overflow: auto">
-    <div class="ms-pageTitle" style="position: sticky; left: 0">
-      <div msFontSize="20">{{room.name | titlecase}}</div>
+  <div class="ms-pageTitle" style="position: sticky; left: 0">
+    <div msFontSize="20">{{room.name | titlecase}}</div>
 
-      <div class="text-right">
-        <ng-container *ngIf="room.department.isPrincipal">
-          <button msIconButton icon="Settings" [MsfMenuTrigger]="more"></button>
-
-          <MsfMenu #more>
-            <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
-          </MsfMenu>
-        </ng-container>
-      </div>
-    </div>
-
-    <div class="d-flex mt-4">
-
-      <div class="ms-description-list" style="white-space: nowrap">
-        <dl>
-          <dt>Date d'ajout</dt>
-          <dd>
-            <span class="ms-opacity-7 ms-fontSize-12">{{room.registrationDate | amDateFormat: 'dddd, LL' | ucFirst}}</span>
-          </dd>
-        </dl>
-
-        <dl>
-          <dt>Capacité</dt>
-          <dd>{{room.capacity}} places</dd>
-        </dl>
-        <dl>
-          <dt>Adresse</dt>
-          <dd>{{room.address}}</dd>
-        </dl>
-      </div>
-
+    <div class="text-right">
+      <ng-container *ngIf="room.department.isPrincipal">
+        <button msIconButton icon="Settings" [MsDropdownTrigger]="more"></button>
+        <MsDropdown #more>
+          <MsContextMenu>
+            <MsContextMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsContextMenuItem>
+          </MsContextMenu>
+        </MsDropdown>
+      </ng-container>
     </div>
   </div>
+
+  <div class="d-flex mt-4">
+
+    <div class="ms-description-list" style="white-space: nowrap">
+      <dl>
+        <dt>Date d'ajout</dt>
+        <dd>
+          <span
+            class="ms-opacity-7 ms-fontSize-12">{{room.registrationDate | amDateFormat: 'dddd, LL' | ucFirst}}</span>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Capacité</dt>
+        <dd>{{room.capacity}} places</dd>
+      </dl>
+      <dl>
+        <dt>Adresse</dt>
+        <dd>{{room.address}}</dd>
+      </dl>
+    </div>
+
+  </div>
+</div>

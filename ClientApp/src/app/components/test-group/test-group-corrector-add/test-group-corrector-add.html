@@ -11,16 +11,16 @@
     <div class="ms-textField">
       <label for="corrector" class="msf-label">Selectionner</label>
 
-      <MsfSelect id="corrector" name="corrector" [(ngModel)]="correctorId" [multiple]="true" class="ms-textField-input"
+      <MsSelect id="corrector" name="corrector" [(ngModel)]="correctorId" [multiple]="true" class="ms-textField-input"
                  placeholder="Choisir les correcteurs">
-        <MsfSelectOption *ngFor="let item of correctors" [value]="item?.id">{{item?.user?.fullName}}</MsfSelectOption>
-      </MsfSelect>
+        <MsSelectOption *ngFor="let item of correctors" [value]="item?.id">{{item?.user?.fullName}}</MsSelectOption>
+      </MsSelect>
 
     </div>
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogContent class="mr-3">Annuler</button>
       <button msButton theme="primary" icon="Add" [disabled]="correctorId.length === 0" (click)="add()">
         Ajouter
       </button>

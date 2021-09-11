@@ -3,7 +3,7 @@ import {Component, Input, OnInit} from "@angular/core";
 
 import {AlertEmitter} from "src/controls/alert-emitter";
 import {Student, StudentHttpClient} from "src/models";
-import {MsfModalRef} from "fabric-docs";
+import {MsDialogRef} from '@ms-fluent/components';
 
 
 
@@ -18,7 +18,7 @@ export class StudentEdit implements OnInit{
   student: Student;
 
   constructor(private _httpClient: StudentHttpClient,
-              private _dialogRef: MsfModalRef<StudentEdit>,
+              private _dialogRef: MsDialogRef<StudentEdit>,
               private _alertEmitter: AlertEmitter) { }
 
   async ngOnInit() {

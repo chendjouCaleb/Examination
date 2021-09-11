@@ -9,8 +9,8 @@ import {
   StudentHttpClient,
   StudentLoader
 } from 'examination/models';
-import {MsfCheckboxGroup} from 'fabric-docs';
-import {MsPaginator, MsPaginatorItemsFn, MsTable} from '@ms-fluent/table';
+import {MsCheckboxGroup, MsPaginator, MsPaginatorItemsFn, MsTable} from '@ms-fluent/components';
+import {StudentAddOptions} from '../add/student-add-options';
 
 @Component({
   templateUrl: 'student-list.html',
@@ -34,7 +34,7 @@ export class StudentList implements OnInit, AfterViewInit {
   levelSpeciality: LevelSpeciality;
 
   @ViewChild('checkboxGroup')
-  checkboxGroup: MsfCheckboxGroup;
+  checkboxGroup: MsCheckboxGroup;
 
   @ViewChild('table')
   table: MsTable;
@@ -62,7 +62,7 @@ export class StudentList implements OnInit, AfterViewInit {
       await this.loadStudents();
       this.isLoading = false;
       this.isLoaded = true;
-    }catch (e) {
+    } catch (e) {
       this.isLoading = false;
     }
   }
@@ -75,6 +75,7 @@ export class StudentList implements OnInit, AfterViewInit {
   }
 
   async loadStudents() {
+    await this._studentLoader.loadBySchool(this.school);
     await this._studentLoader.loadByDepartment(this.department);
     await this._studentLoader.loadByLevel(this.level);
     await this._studentLoader.loadByLevelSpeciality(this.levelSpeciality);
@@ -85,7 +86,15 @@ export class StudentList implements OnInit, AfterViewInit {
 
 
   addStudent() {
-    this._studentService.addStudent(this.level, this.levelSpeciality);
+    const options = new StudentAddOptions({
+      school: this.school,
+      department: this.department,
+      level: this.level,
+      speciality: this.speciality,
+      levelSpeciality: this.levelSpeciality
+    });
+
+    this._studentService.addStudent(options);
   }
 
   delete(student: Student) {
@@ -97,6 +106,9 @@ export class StudentList implements OnInit, AfterViewInit {
   }
 
   getStudents(): Array<Student> {
+    if (this.school) {
+      return this.school.students?.toArray();
+    }
     if (this.department) {
       return this.department.students?.toArray();
     } else if (this.level) {

@@ -34,10 +34,7 @@ namespace ServerAppTest.Controllers
             _schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
             _memberRepository = serviceProvider.GetRequiredService<IRepository<Member, long>>();
 
-            _school = _schoolRepository.Save(new School
-            {
-                
-            });
+            
             _model = new SchoolForm
             {
                 Name = "Org name",

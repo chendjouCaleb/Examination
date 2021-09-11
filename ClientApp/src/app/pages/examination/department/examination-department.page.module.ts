@@ -5,9 +5,8 @@ import {ExaminationModule, TestModule} from 'examination/app/components';
 import {LayoutModule} from 'examination/infrastructure';
 import {ExaminationDepartmentHomePage} from './home/examination-department-home.page';
 import {ExaminationDepartmentPageLayout} from './layout/examination-department.page-layout';
-import { MsPivotModule } from '@ms-fluent/pivot';
-import {MsButtonModule} from "@ms-fluent/button";
-import {ControlModule} from "examination/controls";
+import {ControlModule} from 'examination/controls';
+import {MsButtonModule, MsPivotModule} from '@ms-fluent/components';
 
 export const routes: Routes = [
   {path: '', component: ExaminationDepartmentPageLayout}

@@ -1,8 +1,8 @@
-﻿import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from "@angular/core";
-import {School} from "examination/entities";
-import {SchoolHttpClient} from "examination/models/http";
-import {MsfModalRef} from "fabric-docs";
-import {ImageFormValue} from "examination/controls";
+﻿import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
+import {School} from 'examination/entities';
+import {SchoolHttpClient} from 'examination/models/http';
+import {MsDialogRef} from '@ms-fluent/components';
+import {ImageFormValue} from 'examination/controls';
 
 /** Change he school cover image */
 @Component({
@@ -18,7 +18,7 @@ export class SchoolCoverImage {
 
   constructor(private _httpClient: SchoolHttpClient,
               private _changeDetector: ChangeDetectorRef,
-              private _modal: MsfModalRef<SchoolCoverImage>) {
+              private _modal: MsDialogRef<SchoolCoverImage>) {
   }
 
 

@@ -2,7 +2,7 @@
 import {Department, Teacher, TeacherLoader} from 'src/models';
 import {ITeacherService, TEACHER_SERVICE_TOKEN} from '../teacher.service.interface';
 import {AssertHelpers} from '@positon/collections/dist/helpers/assert-helpers';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'teacher-list.html',

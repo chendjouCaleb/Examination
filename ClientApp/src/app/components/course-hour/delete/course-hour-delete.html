@@ -2,20 +2,20 @@
   <form class="ms-form">
     <div class="ms-form-header ms-sticky-header">
       <div msFontSize="20">Supprimer l'horaire</div>
-      <button msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+      <button msIconButton icon="Cancel" class="ml-2" msDialogClose theme="transparent" size="normal"></button>
     </div>
 
 
     <div class="ms-textField ms-disabled ms-pointer d-flex align-items-center">
-      <MsfCheckbox id="deleteSession" name="deleteSession" [(ngModel)]="deleteSession"></MsfCheckbox>
-      <label class="ms-label ms-pointer ml-2" for="deleteSession">
+      <MsCheckbox id="deleteSession" name="deleteSession" [(ngModel)]="deleteSession"></MsCheckbox>
+      <MsLabel class="ms-label ms-pointer ml-2" htmlFor="deleteSession">
         Supprimer les séances de cet horaire
-      </label>
+      </MsLabel>
     </div>
 
 
     <div class="mt-4 text-right">
-      <button msButton MsfModalClose class="mr-3">Annuler</button>
+      <button msButton msDialogClose class="mr-3">Annuler</button>
       <button msButton theme="error" icon="Delete" (click)="delete()">Supprimer</button>
     </div>
   </form>

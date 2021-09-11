@@ -1,7 +1,7 @@
-﻿import {Directive, ElementRef, forwardRef, OnDestroy, OnInit} from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {LocalTime} from "@js-joda/core";
-import Cleave from "cleave.js";
+﻿import {Directive, ElementRef, forwardRef, OnDestroy, OnInit} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {LocalTime} from '@js-joda/core';
+import Cleave from 'cleave.js';
 
 export const LOCALTIME_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -13,7 +13,7 @@ export const LOCALTIME_CONTROL_VALUE_ACCESSOR: any = {
   selector: '[LocalTimeInput]',
   providers: [LOCALTIME_CONTROL_VALUE_ACCESSOR],
   host: {
-    '[attr.autocomplete]': "'off'"
+    'autocomplete': 'off'
   }
 })
 export class LocalTimeDirective implements ControlValueAccessor, OnInit, OnDestroy {
@@ -29,7 +29,7 @@ export class LocalTimeDirective implements ControlValueAccessor, OnInit, OnDestr
       timePattern: ['h', 'm'],
 
       onValueChanged: (event: any): void => {
-        let time: string = event.target.value;
+        const time: string = event.target.value;
         if (time.length !== 5) {
           this._onChange(null);
         } else {
@@ -61,7 +61,7 @@ export class LocalTimeDirective implements ControlValueAccessor, OnInit, OnDestr
   }
 
   writeValue(obj: LocalTime): void {
-    if(obj){
+    if (obj){
       this._mask.setRawValue(obj.toString());
     }
   }

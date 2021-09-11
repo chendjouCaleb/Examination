@@ -1,0 +1,21 @@
+<form [formGroup]="form">
+  <h4>Matricule</h4>
+
+  <div class="br-2 ms-fontColor-info ms-bgColor-info p-2">
+    Veuillez renseignez le matricule avec lequel l'étudiant est inscrit.
+  </div>
+
+  <MsFormField label="Matricule de l'étudiant">
+    <input MsInputField formControlName="registrationId" (blur)="checkRegistrationId()">
+    <MsFormFieldContent>
+      <app-control-error [control]="form.controls['registrationId']"></app-control-error>
+    </MsFormFieldContent>
+  </MsFormField>
+
+  <MsAlert theme="success" *ngIf="correctRegistrationId">Le matricule renseigné est disponible.</MsAlert>
+
+  <div class="mt-3 text-right">
+    <button msButton theme="primary" (click)="next()" [disabled]="form.invalid">Continuer</button>
+  </div>
+
+</form>

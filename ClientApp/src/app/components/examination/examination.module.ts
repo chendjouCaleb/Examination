@@ -1,6 +1,5 @@
 ﻿import {ExaminationAdd} from './add/examination-add';
 import {NgModule} from '@angular/core';
-import {MsfCheckboxModule, MsfMenuModule, MsfModalModule} from 'fabric-docs';
 import {RouterModule} from '@angular/router';
 import {AppFormModule, ControlModule} from 'examination/controls';
 import {CommonModule} from '@angular/common';
@@ -22,25 +21,28 @@ import {ExaminationSpecialityLevelItem} from './speciality-level-item/examinatio
 import {ExaminationLevelSpecialityItem} from './level-speciality-item/examination-level-speciality-item';
 import {ExaminationStudentDetails} from './students-details/examination-student-details';
 import {PaperModule} from 'examination/app/components/paper';
-import {MsButtonModule} from '@ms-fluent/button';
-import {MsPaginatorModule, MsTableModule} from '@ms-fluent/table';
-import {MsPersonaModule} from '@ms-fluent/persona';
-import {MsSpinnerModule} from "@ms-fluent/spinner";
+import {
+  MsButtonModule, MsCheckboxModule,
+  MsContextMenuModule, MsDialogModule,
+  MsDropdownModule,
+  MsPaginatorModule,
+  MsPersonaModule, MsSpinnerModule, MsTableModule
+} from '@ms-fluent/components';
 
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MsfModalModule, AppFormModule, ControlModule, MsPersonaModule, PaperModule,
-    MsButtonModule, MsTableModule, MsfMenuModule, MsfCheckboxModule, MomentModule, MsPaginatorModule,
-  MsSpinnerModule],
+  imports: [CommonModule, RouterModule, MsDialogModule, AppFormModule, ControlModule, MsPersonaModule, PaperModule,
+    MsButtonModule, MsTableModule, MsContextMenuModule, MsCheckboxModule, MomentModule, MsPaginatorModule,
+    MsSpinnerModule, MsButtonModule, MsDropdownModule, MsContextMenuModule],
   declarations: [ExaminationAdd, ExaminationDelete, ExaminationList, ExaminationDetails, ExaminationDepartmentItem,
     ExaminationStudentList, ExaminationLevelItem, ExaminationSpecialityItem, ExaminationSpecialityLevelItem,
     ExaminationLevelSpecialityItem, ExaminationStudentDetails],
   exports: [ExaminationAdd, ExaminationDelete, ExaminationList, ExaminationDetails, ExaminationDepartmentItem,
     ExaminationStudentList, ExaminationLevelItem, ExaminationSpecialityItem, ExaminationSpecialityLevelItem,
     ExaminationLevelSpecialityItem, ExaminationStudentDetails],
-  providers: [ExaminationResolver, ExaminationService, ExaminationDepartmentResolver,
+  providers: [ExaminationResolver, ExaminationDepartmentResolver,
     ExaminationLevelResolver, ExaminationSpecialityResolver,
-    {provide: EXAMINATION_SERVICE_TOKEN, useExisting: ExaminationService}]
+    {provide: EXAMINATION_SERVICE_TOKEN, useClass: ExaminationService}]
 })
 export class ExaminationModule {
 

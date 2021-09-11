@@ -6,37 +6,41 @@
 
       <div class="text-right">
         <ng-container *ngIf="student.level.department.isPrincipal">
-          <button msIconButton icon="More" [MsfMenuTrigger]="more"></button>
+          <button msIconButton icon="More" [MsDropdownTrigger]="more"></button>
 
-          <MsfMenu #more>
-            <MsfMenuItem icon="Contact" (click)="_studentService.editStudent(student)">Modifier les informations
-            </MsfMenuItem>
-            <MsfMenuItem icon="AddFriend" *ngIf="!student.user" (click)="_studentService.link(student)">Lier à un
-              utilisateur
-            </MsfMenuItem>
-            <MsfMenuItem icon="UserSync" *ngIf="student.user" (click)="_studentService.link(student)">Changer
-              l'utilisateur
-            </MsfMenuItem>
-            <MsfMenuItem icon="UserRemove" theme="error" *ngIf="student.user"
-                         (click)="_studentService.removeUser(student)">
-              Enlever l'utilisateur
-            </MsfMenuItem>
-            <MsfMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(student)">Changer le matricule
-            </MsfMenuItem>
-            <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
-                         *ngIf="student.levelSpeciality">Changer la spécialité
-            </MsfMenuItem>
-            <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
-                         *ngIf="!student.levelSpeciality">Assigner une spécialité
-            </MsfMenuItem>
-            <MsfMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(student)"
-                         *ngIf="student.levelSpeciality">Enlever la spécialité
-            </MsfMenuItem>
-            <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
-          </MsfMenu>
+          <MsDropdown #more>
+            <MsContextMenu>
+              <MsContextMenuItem icon="Contact" (click)="_studentService.editStudent(student)">Modifier les informations
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="AddFriend" *ngIf="!student.user" (click)="_studentService.link(student)">Lier à
+                un
+                utilisateur
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="UserSync" *ngIf="student.user" (click)="_studentService.link(student)">Changer
+                l'utilisateur
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="UserRemove" theme="error" *ngIf="student.user"
+                                 (click)="_studentService.removeUser(student)">
+                Enlever l'utilisateur
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(student)">Changer le
+                matricule
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
+                                 *ngIf="student.levelSpeciality">Changer la spécialité
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(student)"
+                                 *ngIf="!student.levelSpeciality">Assigner une spécialité
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(student)"
+                                 *ngIf="student.levelSpeciality">Enlever la spécialité
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsContextMenuItem>
+            </MsContextMenu>
+          </MsDropdown>
         </ng-container>
 
-        <button msIconButton icon="Cancel" theme="transparent" MsfModalClose class="ml-2"></button>
+        <button msIconButton icon="Cancel" theme="transparent" msDialogContent class="ml-2"></button>
       </div>
     </div>
 

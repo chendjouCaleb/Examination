@@ -3,7 +3,7 @@ import {Course, Level, LevelSpeciality, School, Speciality} from 'examination/en
 import {CourseLevelSpecialityLoader, CourseLoader, LevelSpecialityLoader} from 'examination/loaders';
 import {COURSE_SERVICE_TOKEN, ICourseService} from '../course.service.interface';
 import {List} from '@positon/collections';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from "@ms-fluent/components";
 
 export interface Column {
   name: string;

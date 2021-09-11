@@ -1,7 +1,7 @@
 ﻿import {Component, Input} from '@angular/core';
 import {Department} from 'examination/entities';
 import {DepartmentHttpClient} from 'examination/models/http';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'department-delete.html'
@@ -11,7 +11,7 @@ export class DepartmentDelete {
   department: Department;
 
   constructor(private _httpClient: DepartmentHttpClient,
-              private _modalRef: MsfModalRef<DepartmentDelete>) {
+              private _modalRef: MsDialogRef<DepartmentDelete>) {
   }
 
   async delete() {

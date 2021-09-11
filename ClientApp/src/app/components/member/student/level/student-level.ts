@@ -1,7 +1,7 @@
 ﻿import {Component, Input, OnInit} from "@angular/core";
 import {AlertEmitter} from "src/controls/alert-emitter";
 import {Level, LevelHttpClient, LevelSpeciality, LevelSpecialityLoader, Student, StudentHttpClient} from "src/models";
-import {MsfModalRef} from "fabric-docs";
+import {MsDialogRef} from '@ms-fluent/components';
 import {List} from "@positon/collections";
 
 
@@ -21,7 +21,7 @@ export class StudentLevel implements OnInit {
   constructor(private _httpClient: StudentHttpClient,
               private _levelHttpClient: LevelHttpClient,
               private _levelSpecialityLoader: LevelSpecialityLoader,
-              private _modalRef: MsfModalRef<StudentLevel>,
+              private _modalRef: MsDialogRef<StudentLevel>,
               private _alertEmitter: AlertEmitter) {
   }
 

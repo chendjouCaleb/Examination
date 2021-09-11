@@ -1,7 +1,7 @@
 ﻿import {Component, Input, OnInit} from "@angular/core";
 import {AlertEmitter} from "src/controls/alert-emitter";
 import {LevelSpeciality, LevelSpecialityLoader, Student, StudentHttpClient} from "src/models";
-import {MsfModalRef} from "fabric-docs";
+import {MsDialogRef} from '@ms-fluent/components';
 import {AssertHelpers} from "@positon/collections/dist/helpers/assert-helpers";
 
 
@@ -16,7 +16,7 @@ export class StudentSpeciality implements OnInit {
 
   constructor(private _httpClient: StudentHttpClient,
               private _levelSpecialityLoader: LevelSpecialityLoader,
-              private _modalRef: MsfModalRef<StudentSpeciality>,
+              private _modalRef: MsDialogRef<StudentSpeciality>,
               private _alertEmitter: AlertEmitter) {
   }
 

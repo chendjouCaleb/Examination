@@ -1,17 +1,17 @@
 import {IRoomService} from './room.service.interface';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {Department, Level, Room, School} from 'examination/entities';
 import {Confirmation} from 'examination/controls';
 import {RoomAdd} from './add/room-add';
 import {RoomHttpClient } from 'examination/models/http';
 import {RoomEdit} from './edit/room-edit';
 import {RoomDetails} from './details/room-details';
+import {MsDialog} from '@ms-fluent/components';
 
 
 @Injectable()
 export class RoomService implements IRoomService {
-  constructor(private _modal: MsfModal,
+  constructor(private _modal: MsDialog,
               private _roomHttpClient: RoomHttpClient,
               private _confirmation: Confirmation) {
   }

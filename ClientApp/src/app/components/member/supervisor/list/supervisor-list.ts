@@ -2,7 +2,7 @@
 import {Department, Supervisor, SupervisorLoader} from 'src/models';
 import {ISupervisorService, SUPERVISOR_SERVICE_TOKEN} from '../supervisor.service.interface';
 import {AssertHelpers} from '@positon/collections/dist/helpers/assert-helpers';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'supervisor-list.html',

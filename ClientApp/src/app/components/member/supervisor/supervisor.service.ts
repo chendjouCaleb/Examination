@@ -1,16 +1,16 @@
 ﻿import {Supervisor, SupervisorHttpClient, SupervisorLoader, Department} from 'examination/models';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {ISupervisorService} from './supervisor.service.interface';
 import {SupervisorAdd} from './add/supervisor-add';
 import {List} from '@positon/collections';
+import {MsDialog} from "@ms-fluent/components";
 
 
 @Injectable({providedIn: 'root'})
 export class SupervisorService implements ISupervisorService {
 
-  constructor(private _dialog: MsfModal, private _confirmation: Confirmation,
+  constructor(private _dialog: MsDialog, private _confirmation: Confirmation,
               private _loader: SupervisorLoader,
               private _httpClient: SupervisorHttpClient, private _alertEmitter: AlertEmitter) {
   }

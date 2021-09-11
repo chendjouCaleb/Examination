@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,15 @@ namespace Exam.Entities
         public string RegistrationId { get; set; }
         public string FullName { get; set; }
         public DateTime BirthDate { get; set; }
-
+        public string BirthPlace { get; set; }
         public char Gender { get; set; }
+
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string Address { get; set; }
+        
+        public bool HasImage { get; set; }
+        [NotMapped] public Uri ImageUrl { get; set; }
         
         public string UserId { get; set; }
 

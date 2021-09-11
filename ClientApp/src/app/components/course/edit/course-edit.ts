@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Optional} from '@angular/core';
 import {CourseHttpClient, LevelSpecialityHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {CourseLoader} from 'examination/loaders';
 import {Course} from 'examination/entities';
 import {CourseEditForm} from '../course-form';
@@ -20,7 +20,7 @@ export class CourseEdit implements OnInit {
               private _levelSpecialityHttpClient: LevelSpecialityHttpClient,
               private _alertEmitter: AlertEmitter,
               private _loader: CourseLoader,
-              @Optional() private _modal: MsfModalRef<CourseEdit>) {
+              @Optional() private _modal: MsDialogRef<CourseEdit>) {
   }
 
   async ngOnInit() {

@@ -1,16 +1,16 @@
 ﻿import {Planner, PlannerHttpClient, PlannerLoader, School} from 'examination/models';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {IPlannerService} from './planner.service.interface';
 import {PlannerAdd} from './add/planner-add';
 import {List} from '@positon/collections';
+import {MsDialog} from '@ms-fluent/components';
 
 
 @Injectable({providedIn: 'root'})
 export class PlannerService implements IPlannerService {
 
-  constructor(private _dialog: MsfModal,
+  constructor(private _dialog: MsDialog,
               private _confirmation: Confirmation,
               private _loader: PlannerLoader,
               private _httpClient: PlannerHttpClient,
@@ -34,7 +34,7 @@ export class PlannerService implements IPlannerService {
 
 
   addPlanners(school: School): Promise<List<Planner>> {
-    const modalRef = this._dialog.open(PlannerAdd, {autoFocus: false, disableClose: true});
+    const modalRef = this._dialog.open(PlannerAdd, {autoFocus: false, minWidth: '340px'});
     modalRef.componentInstance.school = school;
     return modalRef.afterClosed().toPromise();
   }

@@ -3,7 +3,8 @@ import {ExaminationStudent, Paper, Test, TestGroup, TestLevelSpeciality, TestSco
 import {PaperLoader, TestScoreLoader} from 'examination/loaders';
 import {IPaperService, PAPER_SERVICE_TOKEN} from '../paper.service.interface';
 import {List} from '@positon/collections';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from "@ms-fluent/components";
+
 
 @Component({
   templateUrl: 'score-list.html',

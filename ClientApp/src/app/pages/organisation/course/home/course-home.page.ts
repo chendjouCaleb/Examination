@@ -18,7 +18,7 @@ export class CourseHomePage {
   delete() {
     this._courseService.deleteCourse(this.course).then(result => {
       if (result) {
-        this.router.navigateByUrl(`${this.course.level.url}`, { queryParams: {tab: 'courses'}}).then();
+        this.router.navigate([`${this.course.level.url}`], { queryParams: {tab: 'courses'}}).then();
       }
     })
   }

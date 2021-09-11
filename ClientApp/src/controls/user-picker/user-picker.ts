@@ -8,9 +8,10 @@ import {
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
-import {msfSelectAnimations, PersonaSize} from 'fabric-docs';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {UserHttpClient} from 'examination/models';
+import {msfSelectAnimations} from '../select';
+import {MsPersonaSize} from '@ms-fluent/components';
 
 
 /**
@@ -60,7 +61,7 @@ export class UserPicker implements OnInit, ControlValueAccessor {
   itemSize: number = 6;
 
   @Input()
-  personaSize: PersonaSize = 'size32';
+  personaSize: MsPersonaSize = 'size32';
 
   @Input()
   name: string = `user-picker-${uniqueId++}`;
@@ -179,7 +180,7 @@ export class UserPicker implements OnInit, ControlValueAccessor {
   getInitial(name: string) {
     const values = name.trim().split(' ');
     let initial = values[0][0] || '';
-    if(values.length > 1) {
+    if (values.length > 1) {
       initial += values[1][0] || '';
     }
     return initial.toUpperCase();

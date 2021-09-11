@@ -4,16 +4,19 @@
       <h5>{{course.name}}</h5>
       <div>
         <ng-container *ngIf="course.level.department.school.userPrincipal.isPlanner">
-          <button msIconButton icon="More" [MsfMenuTrigger]="courseMenu" theme="transparent"></button>
-          <MsfMenu #courseMenu>
-            <MsfMenuItem *ngIf="!course.isGeneral" (click)="service.general(course)">Généraliser ce cours</MsfMenuItem>
-            <MsfMenuItem *ngIf="course.isGeneral" (click)="service.restrict(course)">Restreindre ce cours</MsfMenuItem>
-            <MsfMenuItem icon="Edit" (click)="service.editCourse(course)">Modifier</MsfMenuItem>
-            <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer ce cours</MsfMenuItem>
-          </MsfMenu>
+          <button msIconButton icon="More" [MsDropdownTrigger]="courseMenu" theme="transparent"></button>
+          <MsDropdown #courseMenu>
+            <MsContextMenu>
+              <MsContextMenuItem *ngIf="!course.isGeneral" (click)="service.general(course)">Généraliser ce cours</MsContextMenuItem>
+              <MsContextMenuItem *ngIf="course.isGeneral" (click)="service.restrict(course)">Restreindre ce cours</MsContextMenuItem>
+              <MsContextMenuItem icon="Edit" (click)="service.editCourse(course)">Modifier</MsContextMenuItem>
+              <MsContextMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer ce cours</MsContextMenuItem>
+            </MsContextMenu>
+          </MsDropdown>
+
         </ng-container>
 
-        <button *ngIf="_modalRef" msIconButton icon="Cancel" class="ml-2" MsfModalClose theme="transparent" size="normal"></button>
+        <button *ngIf="_modalRef" msIconButton icon="Cancel" class="ml-2" msDialogContent theme="transparent" size="normal"></button>
 
       </div>
     </div>

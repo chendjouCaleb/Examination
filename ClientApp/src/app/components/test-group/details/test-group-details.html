@@ -2,10 +2,13 @@
   <div msFontSize="20">Groupe {{testGroup.index + 1}}</div>
   <div>
     <ng-container *ngIf="testGroup.relation.isPlanner">
-      <button msIconButton class="ml-2" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
-      <MsfMenu #more>
-        <MsfMenuItem icon="Delete" (click)="service.delete(testGroup)" theme="error">Supprimer</MsfMenuItem>
-      </MsfMenu>
+      <button msIconButton class="ml-2" [MsDropdownTrigger]="more" icon="MoreVertical"></button>
+      <MsDropdown  #more>
+        <MsContextMenu>
+          <MsContextMenuItem icon="Delete" (click)="service.delete(testGroup)" theme="error">Supprimer
+          </MsContextMenuItem>
+        </MsContextMenu>
+      </MsDropdown>
     </ng-container>
   </div>
 </div>
@@ -65,7 +68,7 @@
 
     <dl>
       <dt>Corrigés</dt>
-      <dd >{{testGroup.statistics?.correctedFrequency}}
+      <dd>{{testGroup.statistics?.correctedFrequency}}
         <app-icon *ngIf="testGroup.statistics.isAllCorrected"></app-icon>
         <span msColor="sharedRed10" *ngIf="!testGroup.statistics.isAllCorrected">
           ({{testGroup.statistics.correctedFrequency - testGroup.statistics.frequency}})

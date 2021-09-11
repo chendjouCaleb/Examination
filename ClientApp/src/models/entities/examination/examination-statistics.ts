@@ -1,4 +1,4 @@
-﻿import {ExaminationDepartment, ExaminationLevel, ExaminationStudent} from "examination/entities";
+﻿import {ExaminationDepartment, ExaminationLevel, ExaminationStudent} from 'examination/entities';
 
 export abstract class AbstractExaminationStatistics {
 
@@ -22,24 +22,40 @@ export abstract class AbstractExaminationStatistics {
   correctedTestCount: number = 0;
   publishedTestCount: number = 0;
   courseWithoutTest: number = 0;
+
   get testDone(): number {
     return this.testCount - this.waitingTestCount - this.progressTestCount;
   }
 
 
   maxStudentId: number;
-  maxStudent: ExaminationStudentStatistics;
+  private _maxStudent: ExaminationStudentStatistics;
+  public get maxStudent(): ExaminationStudentStatistics {
+    return this._maxStudent;
+  }
+
+  public set maxStudent(value: ExaminationStudentStatistics) {
+    this._maxStudent = value;
+  }
+
   maxStudentMean: number;
 
   minStudentId: number;
-  minStudent: ExaminationStudentStatistics;
-  minStudentMean: number;
+  private _minStudent: ExaminationStudentStatistics;
+  public get minStudent(): ExaminationStudentStatistics {
+    return this._minStudent;
+  }
 
+  public set minStudent(value: ExaminationStudentStatistics) {
+    this._minStudent = value;
+  }
+
+  minStudentMean: number;
 
 
 }
 
-export class ExaminationStatistics extends AbstractExaminationStatistics{
+export class ExaminationStatistics extends AbstractExaminationStatistics {
   means: number[] = [];
 
   departmentCount: number;
@@ -72,7 +88,7 @@ export class ExaminationLevelStatistics extends AbstractExaminationStatistics {
   examinationStudentStatistics: ExaminationStudentStatistics[];
 
   get maxStudent(): ExaminationStudentStatistics {
-    if(!this.examinationStudentStatistics || this.examinationStudentStatistics.length === 0) {
+    if (!this.examinationStudentStatistics || this.examinationStudentStatistics.length === 0) {
       return undefined;
     }
     return this.examinationStudentStatistics[this.examinationStudentStatistics.length - 1];
@@ -80,7 +96,7 @@ export class ExaminationLevelStatistics extends AbstractExaminationStatistics {
   }
 
   get minStudent(): ExaminationStudentStatistics {
-    if(!this.examinationStudentStatistics || this.examinationStudentStatistics.length === 0) {
+    if (!this.examinationStudentStatistics || this.examinationStudentStatistics.length === 0) {
       return undefined;
     }
 
@@ -89,12 +105,12 @@ export class ExaminationLevelStatistics extends AbstractExaminationStatistics {
 }
 
 export class ExaminationStudentStatistics {
-   examinationStudentId: number;
-   examinationStudent: ExaminationStudent;
+  examinationStudentId: number;
+  examinationStudent: ExaminationStudent;
 
-   score: number;
-   testCount: number;
-   correctedTestCount: number;
-   radical: number;
-   mean: number;
+  score: number;
+  testCount: number;
+  correctedTestCount: number;
+  radical: number;
+  mean: number;
 }

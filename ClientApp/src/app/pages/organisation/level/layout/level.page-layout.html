@@ -2,22 +2,29 @@
   <div>
     <div class="ms-header">
       <div class="d-flex align-items-center">
-        <button historyBack="2" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal" [rounded]="true"></button>
+        <button historyBack="2" msIconButton icon="ChevronLeftSmall" theme="transparent" size="normal"
+                [rounded]="true"></button>
         <div class="ms-header-title">
           <a [routerLink]="level.department.url">{{level.department.name}}</a> /
           Niveau {{level.index + 1}}</div>
       </div>
 
       <div>
-        <button *ngIf="!level.department.isStudent" msButton (click)="sendApplication()" icon="AddFriend" theme="primary">Devenir étudiant</button>
+        <button *ngIf="!level.department.isStudent" msButton (click)="sendApplication()" icon="AddFriend"
+                theme="primary">Devenir étudiant
+        </button>
         <ng-container *ngIf="level.department.isPrincipalUser">
-          <button msIconButton theme="transparent" icon="Settings" [MsfMenuTrigger]="levelMenu"></button>
-          <MsfMenu #levelMenu>
-            <MsfMenuItem icon="Add" (click)="levelService.addSpeciality(level)">Ajouter une spécialité</MsfMenuItem>
-            <MsfMenuItem  icon="Delete" theme="error" (click)="delete()">
-              Supprimer ce niveau
-            </MsfMenuItem>
-          </MsfMenu>
+          <button msIconButton theme="transparent" icon="Settings" [MsDropdownTrigger]="levelMenu"></button>
+          <MsDropdown #levelMenu>
+            <MsContextMenu>
+              <MsContextMenuItem icon="Add" (click)="levelService.addSpeciality(level)">Ajouter une spécialité
+              </MsContextMenuItem>
+              <MsContextMenuItem icon="Delete" theme="error" (click)="delete()">
+                Supprimer ce niveau
+              </MsContextMenuItem>
+            </MsContextMenu>
+          </MsDropdown>
+
         </ng-container>
       </div>
     </div>

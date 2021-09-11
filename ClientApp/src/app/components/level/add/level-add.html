@@ -7,14 +7,14 @@
 
   <div class="ms-textField">
     <label for="specialities" class="msf-label">Spécialités à ajouter à ce niveau</label>
-    <MsfSelect id="specialities" formControlName="specialities" [multiple]="true" class="ms-textField-input"
+    <MsSelect id="specialities" formControlName="specialities" [multiple]="true" class="ms-textField-input"
       placeholder="Choisir une spécialité">
-      <MsfSelectOption *ngFor="let item of specialities" [value]="item" >{{item.name}}</MsfSelectOption>
-    </MsfSelect>
+      <MsSelectOption *ngFor="let item of specialities" [value]="item" >{{item.name}}</MsSelectOption>
+    </MsSelect>
   </div>
 
   <div class="mt-4 text-right">
-    <button msButton MsfModalClose  class="mr-3">Annuler</button>
+    <button msButton msDialogContent  class="mr-3">Annuler</button>
     <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
   </div>
 </form>

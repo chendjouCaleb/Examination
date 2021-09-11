@@ -15,22 +15,22 @@ $ms-table-border-color: var(--borderColor);
 $ms-table-bgColor: var(--bodyBackgroundColor);
 $ms-table-cell-hover-backgroundColor: var(--cardBackgroundColor);
 
-@import "~@ms-fluent/table/src/styles/table";
-@import "~@ms-fluent/grid/src/styles/grid";
-@import "~@ms-fluent/button/src/styles/ms-button";
-@import "~@ms-fluent/persona/src/styles/persona";
-@import "~@ms-fluent/pivot/src/styles/ms-pivot";
+@import "~@ms-fluent/components/src/components/styles/fluent";
+@import "~@ms-fluent/date-ui/src/styles/fluent-date";
 
 @import "school-banner";
 @import "title";
 
 $font-family-sans-serif: Metropolis, sans-serif;
-@import "~fabric-docs/src/components/msf-core/Msf-Core";
 @import "text-field.scss";
 @import "color";
 @import "header";
 @import "layout";
 @import "card";
+
+.ms-Fabric {
+  font-family: "Open Sans Condensed", sans-serif;
+}
 
 *[tabindex]:focus {
   outline: none;
@@ -327,4 +327,33 @@ body {
 
 .ms-opacity-0 {
   opacity: 0;
+}
+
+.ms-date-picker-day-plus {
+  width: 40px;
+  height: 40px;
+}
+
+.date-picker-dots {
+  display: flex;
+  justify-content: center;
+}
+.date-picker-dot {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.time-line-item {
+  display: flex; background-color: rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.time-line-border {
+  width: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }

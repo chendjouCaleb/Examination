@@ -3,7 +3,7 @@
   <div class="ms-pageTitle">
     <h5>{{examinationStudent.student.fullName}}</h5>
     <div>
-      <button msIconButton theme="transparent" icon="Cancel" MsfModalClose=""></button>
+      <button msIconButton theme="transparent" icon="Cancel" msDialogContent=""></button>
     </div>
   </div>
 
@@ -81,7 +81,7 @@
   </div>
 
   <div *ngIf="isPaperLoading">
-    <msSpinnerInlineDot></msSpinnerInlineDot>
+    <MsSpinner></MsSpinner>
   </div>
 
   <div [class.ms-opacity-0]="isPaperLoading">

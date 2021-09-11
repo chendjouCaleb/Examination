@@ -14,11 +14,11 @@ import {
 } from 'examination/models';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {List} from '@positon/collections';
-import {MsfModal} from 'fabric-docs';
 import {TestGroupCorrectorAdd} from './test-group-corrector-add/test-group-corrector-add';
 import {TestGroupSecretaryAdd} from './test-group-secretary-add/test-group-secretary-add';
 import {TestGroupSupervisorAdd} from './test-group-supervisor-add/test-group-supervisor-add';
 import {TestGroupAdd} from 'examination/app/components/test-group/add/test-group-add';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable({providedIn: 'root'})
 export class TestGroupService implements ITestGroupService {
@@ -28,7 +28,7 @@ export class TestGroupService implements ITestGroupService {
               private _testGroupSupervisorHttpClient: TestGroupSupervisorHttpClient,
               private _testGroupSecretaryHttpClient: TestGroupSecretaryHttpClient,
               private _alertEmitter: AlertEmitter,
-              private _modal: MsfModal,
+              private _modal: MsDialog,
               private _confirmation: Confirmation) {
 
   }
@@ -77,21 +77,21 @@ export class TestGroupService implements ITestGroupService {
     const modalRef = this._modal.open(TestGroupCorrectorAdd, {autoFocus: false});
     modalRef.componentInstance.testGroup = testGroup;
 
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<List<TestGroupCorrector>>;
   }
 
   addTestGroupSecretaries(testGroup: TestGroup): Observable<List<TestGroupSecretary>> {
     const modalRef = this._modal.open(TestGroupSecretaryAdd, {autoFocus: false});
     modalRef.componentInstance.testGroup = testGroup;
 
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<List<TestGroupSecretary>>;
   }
 
   addTestGroupSupervisors(testGroup: TestGroup): Observable<List<TestGroupSupervisor>> {
     const modalRef = this._modal.open(TestGroupSupervisorAdd, {autoFocus: false});
     modalRef.componentInstance.testGroup = testGroup;
 
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<List<TestGroupSupervisor>>;
   }
 
   removeTestGroupCorrector(testGroup: TestGroup, testGroupCorrector: TestGroupCorrector): Promise<boolean> {
@@ -154,7 +154,7 @@ export class TestGroupService implements ITestGroupService {
   add(test: Test): Observable<TestGroup> {
     const modalRef = this._modal.open(TestGroupAdd, {autoFocus: false});
     modalRef.componentInstance.test = test;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<TestGroup>;
   }
 
   delete(testGroup: TestGroup): Promise<boolean> {

@@ -5,16 +5,7 @@ import {slideInAnimation} from 'examination/app/route-animations';
 
 @Component({
   selector: 'app-root',
-  template: `
-      <div *ngIf="!initialized" class="flex-center-screen" style="width: 100vw;">
-          <div>
-              <div class="ms-fontSize-24 mb-2 ms-fontColor-gray160 text-center">Régolia</div>
-              <msSpinnerInlineDot style="width: 100%"></msSpinnerInlineDot>
-          </div>
-      </div>
-      <ng-container *ngIf="initialized">' 
-    <div><router-outlet #outlet="outlet"> </router-outlet></div>
-    </ng-container> `,
+  templateUrl: 'app.component.html',
   animations: [ slideInAnimation ]
 
 })

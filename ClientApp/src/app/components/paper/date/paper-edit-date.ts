@@ -1,10 +1,10 @@
-﻿﻿import {Component, Input, OnInit} from "@angular/core";
-import {AlertEmitter} from "src/controls/alert-emitter";
+﻿﻿import {Component, Input, OnInit} from '@angular/core';
+import {AlertEmitter} from 'src/controls/alert-emitter';
 
-import {MsfModalRef} from "fabric-docs";
-import {PaperPeriodForm} from "../form";
-import {Paper} from "examination/entities";
-import {PaperHttpClient} from "examination/models";
+import {MsDialogRef} from '@ms-fluent/components';
+import {PaperPeriodForm} from '../form';
+import {Paper} from 'examination/entities';
+import {PaperHttpClient} from 'examination/models';
 
 
 @Component({
@@ -17,8 +17,9 @@ export class PaperEditDate implements OnInit {
   paper: Paper;
 
   constructor(private _httpClient: PaperHttpClient,
-              private _dialogRef: MsfModalRef<PaperEditDate>,
-              private _alertEmitter: AlertEmitter) { }
+              private _dialogRef: MsDialogRef<PaperEditDate>,
+              private _alertEmitter: AlertEmitter) {
+  }
 
   async ngOnInit() {
     this.form = new PaperPeriodForm({
@@ -29,7 +30,7 @@ export class PaperEditDate implements OnInit {
 
   async edit() {
     const formModel = this.form.getModel();
-    let paper = await this._httpClient.changeDates(this.paper, formModel.body);
+    const paper = await this._httpClient.changeDates(this.paper, formModel.body);
 
     this.paper.startDate = formModel.body.startDate;
     this.paper.endDate = formModel.body.endDate;

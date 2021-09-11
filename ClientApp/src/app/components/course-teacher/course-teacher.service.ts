@@ -1,16 +1,16 @@
 import {ICourseTeacherService} from './course-teacher.service.interface';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {CourseTeacherHttpClient} from 'examination/models/http';
 import {Course, CourseTeacher} from 'examination/entities';
 import {CourseTeacherAdd} from './add/course-teacher-add';
-import {CourseTeacherDetails} from "examination/app/components/course-teacher/details/course-teacher-details";
+import {CourseTeacherDetails} from './details/course-teacher-details';
+import {MsDialog} from '@ms-fluent/components';
 
 
 @Injectable()
 export class CourseTeacherService implements ICourseTeacherService {
-  constructor(private _modal: MsfModal,
+  constructor(private _modal: MsDialog,
               private _courseTeacherHttpClient: CourseTeacherHttpClient,
               private _alertEmitter: AlertEmitter,
               private _confirmation: Confirmation) {

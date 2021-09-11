@@ -3,13 +3,15 @@
     <h5>{{room.name}}</h5>
     <div class="text-right ml-5">
       <ng-container *ngIf="room.school.userPrincipal.isPlanner">
-        <button msIconButton icon="More" [MsfMenuTrigger]="roomMenu" theme="primaryOutline"></button>
-        <MsfMenu #roomMenu>
-          <MsfMenuItem icon="Edit" (click)="service.editRoom(room)">Modifier</MsfMenuItem>
-          <MsfMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer</MsfMenuItem>
-        </MsfMenu>
+        <button msIconButton icon="More" [MsDropdownTrigger]="roomMenu" theme="primaryOutline"></button>
+        <MsDropdown #roomMenu>
+          <MsContextMenu>
+            <MsContextMenuItem icon="Edit" (click)="service.editRoom(room)">Modifier</MsContextMenuItem>
+            <MsContextMenuItem icon="Delete" theme="error" (click)="delete()">Supprimer</MsContextMenuItem>
+          </MsContextMenu>
+        </MsDropdown>
       </ng-container>
-      <button msIconButton theme="transparent" icon="Cancel" MsfModalClose class="ml-2"></button>
+      <button msIconButton theme="transparent" icon="Cancel" msDialogContent class="ml-2"></button>
 
     </div>
   </div>

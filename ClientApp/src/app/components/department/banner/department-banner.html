@@ -24,16 +24,17 @@
     <div>
       <button *ngIf="!department.isStudent" msButton theme="primary" icon="AddFriend" (click)="sendApplication()">Devenir étudiant</button>
       <button *ngIf="department.userPrincipal.isPrincipal" msButton icon="Settings"
-              theme="standard" secondaryIcon="ChevronDown" class="ml-2" [MsfMenuTrigger]="settingsMenu">
+              theme="standard" secondaryIcon="ChevronDown" class="ml-2" [MsDropdownTrigger]="settingsMenu">
         Paramètres
       </button>
-      <MsfMenu #settingsMenu>
-        <MsfMenuItem icon="Edit" (click)="service.edit(department)">Modifier les informations</MsfMenuItem>
-
-        <MsfMenuItem icon="EditPhoto" (click)="changeImage()">Changer l'image de profil</MsfMenuItem>
-        <MsfMenuItem icon="EditPhoto" (click)="changeCoverImage()">Changer l'image de couverture</MsfMenuItem>
-        <MsfMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsfMenuItem>
-      </MsfMenu>
+      <ms-dropdown>
+        <MsContextMenu #settingsMenu>
+          <MsContextMenuItem icon="Edit" (click)="service.edit(department)">Modifier les informations</MsContextMenuItem>
+          <MsContextMenuItem icon="EditPhoto" (click)="changeImage()">Changer l'image de profil</MsContextMenuItem>
+          <MsContextMenuItem icon="EditPhoto" (click)="changeCoverImage()">Changer l'image de couverture</MsContextMenuItem>
+          <MsContextMenuItem icon="Delete" (click)="delete()" theme="error">Supprimer</MsContextMenuItem>
+        </MsContextMenu>
+      </ms-dropdown>
     </div>
   </div>
 </div>

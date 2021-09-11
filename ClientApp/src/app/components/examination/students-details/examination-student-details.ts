@@ -2,7 +2,7 @@
 import {ExaminationStudent, ExaminationStudentStatistics, Paper, Student} from 'examination/entities';
 import {ExaminationStudentLoader, PaperLoader} from 'examination/loaders';
 import {IPaperService, PAPER_SERVICE_TOKEN} from 'examination/app/components/paper';
-import {MsTable} from '@ms-fluent/table';
+import {MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'examination-student-details.html',

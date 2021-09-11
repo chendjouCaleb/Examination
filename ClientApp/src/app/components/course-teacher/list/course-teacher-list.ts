@@ -2,11 +2,11 @@
 import {Course, CourseTeacher, Teacher} from 'examination/entities';
 import {CourseTeacherLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
-import {MsTable} from '@ms-fluent/table';
 import {
   COURSE_TEACHER_SERVICE_TOKEN,
   ICourseTeacherService
 } from '../course-teacher.service.interface';
+import {MsTable} from "@ms-fluent/components";
 
 
 @Component({

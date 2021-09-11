@@ -1,5 +1,5 @@
 ﻿import {Pipe} from '@angular/core';
-import {DayOfWeek} from "@js-joda/core";
+import {DayOfWeek} from '@js-joda/core';
 
 const daysIntlFr = new Map<DayOfWeek, string>([
   [DayOfWeek.MONDAY, 'lundi'],

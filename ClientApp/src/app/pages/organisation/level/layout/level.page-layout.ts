@@ -9,8 +9,8 @@ import {
 } from 'examination/app/components';
 import {CurrentItems} from 'examination/app/current-items';
 import {LevelSpecialityLoader} from 'examination/loaders';
-import {MsPivot} from '@ms-fluent/pivot';
-import {PreviousLocation} from "examination/controls";
+import {PreviousLocation} from 'examination/controls';
+import {MsPivot} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'level.page-layout.html',

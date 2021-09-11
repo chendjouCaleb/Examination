@@ -1,7 +1,7 @@
 import {Component, Input, Optional} from '@angular/core';
 import {CourseSessionHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {CourseSession} from 'examination/entities';
 
 @Component({
@@ -15,7 +15,7 @@ export class CourseSessionDelete{
 
   constructor(private _httpClient: CourseSessionHttpClient,
               private _alertEmitter: AlertEmitter,
-              @Optional() private _modal: MsfModalRef<CourseSessionDelete>) {
+              @Optional() private _modal: MsDialogRef<CourseSessionDelete>) {
   }
 
 

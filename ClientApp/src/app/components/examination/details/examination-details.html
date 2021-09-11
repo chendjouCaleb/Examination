@@ -6,24 +6,26 @@
         <span class="ms-badge" msBgColor="sharedGreenCyan10" *ngIf="examination.isProgress">En cours</span>
       </div>
       <div class="text-right ml-5">
-        <button msIconButton icon="Settings" [MsfMenuTrigger]="examinationMenu"> </button>
-        <button msIconButton icon="Cancel" MsfModalClose class="ml-2"></button>
-        <MsfMenu #examinationMenu>
-          <MsfMenuItem icon="Reload">Actualiser</MsfMenuItem>
-          <MsfMenuItem theme="primary" icon="Clock" *ngIf="examination.state === 'PENDING'"
-                       (click)="service.start(examination)">
-            Débuter
-          </MsfMenuItem>
-          <MsfMenuItem theme="warning" icon="Lock" *ngIf="examination.state === 'PROGRESS'"
-                       (click)="service.end(examination)">
-            Fermer
-          </MsfMenuItem>
-          <MsfMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="examination.state === 'FINISHED'"
-                       (click)="service.relaunch(examination)">Relancer
-          </MsfMenuItem>
+        <button msIconButton icon="Settings" [MsDropdownTrigger]="examinationMenu"> </button>
+        <button msIconButton icon="Cancel" msDialogContent class="ml-2"></button>
+        <MsDropdown>
+          <MsContextMenu #examinationMenu>
+            <MsContextMenuItem icon="Reload">Actualiser</MsContextMenuItem>
+            <MsContextMenuItem theme="primary" icon="Clock" *ngIf="examination.isPending"
+                         (click)="service.start(examination)">
+              Débuter
+            </MsContextMenuItem>
+            <MsContextMenuItem theme="warning" icon="Lock" *ngIf="examination.isProgress"
+                         (click)="service.end(examination)">
+              Fermer
+            </MsContextMenuItem>
+            <MsContextMenuItem theme="primary" icon="Rotate90Clockwise" *ngIf="examination.isFinished"
+                         (click)="service.relaunch(examination)">Relancer
+            </MsContextMenuItem>
 
-          <MsfMenuItem icon="Delete" theme="error" (click)="service.delete(examination)">Supprimer</MsfMenuItem>
-        </MsfMenu>
+            <MsContextMenuItem icon="Delete" theme="error" (click)="service.delete(examination)">Supprimer</MsContextMenuItem>
+          </MsContextMenu>
+        </MsDropdown>
       </div>
     </div>
 

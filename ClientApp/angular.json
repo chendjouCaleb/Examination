@@ -3,6 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+
     "Examination": {
       "projectType": "application",
       "schematics": {
@@ -22,6 +23,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "preserveSymlinks": true,
             "aot": true,
             "assets": [
               "src/favicon.ico",

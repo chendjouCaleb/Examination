@@ -22,11 +22,17 @@ namespace Exam.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
                     b.Property<long?>("DepartmentId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FullName")
                         .HasColumnType("TEXT");
@@ -34,11 +40,17 @@ namespace Exam.Migrations
                     b.Property<char>("Gender")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("HasImage")
+                        .HasColumnType("INTEGER");
+
                     b.Property<long>("LevelId")
                         .HasColumnType("INTEGER");
 
                     b.Property<long?>("LevelSpecialityId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("ProcessDate")
                         .HasColumnType("TEXT");
@@ -1000,11 +1012,17 @@ namespace Exam.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
                     b.Property<long?>("DepartmentId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FullName")
                         .HasColumnType("TEXT");
@@ -1012,11 +1030,17 @@ namespace Exam.Migrations
                     b.Property<char>("Gender")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("HasImage")
+                        .HasColumnType("INTEGER");
+
                     b.Property<long>("LevelId")
                         .HasColumnType("INTEGER");
 
                     b.Property<long?>("LevelSpecialityId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RegisterUserId")
                         .HasColumnType("TEXT");

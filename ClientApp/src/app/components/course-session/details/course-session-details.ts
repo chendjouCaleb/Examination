@@ -2,7 +2,7 @@ import {Component, Inject, Input} from '@angular/core';
 import {CourseSession} from 'examination/entities';
 import {CourseSessionHttpClient} from 'examination/models/http';
 import {COURSE_SESSION_SERVICE_TOKEN, ICourseSessionService} from '../course-session.service.interface';
-import {MsfModalRef, MsfRadioChange} from 'fabric-docs';
+import {MsDialogRef, MsRadioChange} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'course-session-details.html',
@@ -15,10 +15,10 @@ export class CourseSessionDetails {
   constructor(private _httpClient: CourseSessionHttpClient,
 
               @Inject(COURSE_SESSION_SERVICE_TOKEN) public service: ICourseSessionService,
-              private modal: MsfModalRef<CourseSessionDetails>) {
+              private modal: MsDialogRef<CourseSessionDetails>) {
   }
 
-  lectureChange(event: MsfRadioChange) {
+  lectureChange(event: MsRadioChange) {
     this.service.isLecture(this.courseSession).then();
   }
 }

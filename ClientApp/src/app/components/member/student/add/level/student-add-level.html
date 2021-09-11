@@ -1,0 +1,61 @@
+<h4>Choisir le niveau</h4>
+
+<MsFormField label="Etablissement">
+  <input type="text" MsInputField [value]="parent.options.school.name" readonly>
+</MsFormField>
+
+<MsFormField *ngIf="parent.options.department" label="Départment">
+  <input type="text" MsInputField [value]="parent.options.department.name" readonly>
+</MsFormField>
+
+<MsFormField *ngIf="parent.options.level" label="Niveau">
+  <input type="text" MsInputField [value]="'Niveau ' + (parent.options.level.index + 1 )" readonly>
+</MsFormField>
+
+<MsFormField *ngIf="parent.options.speciality" label="Specialité">
+  <input type="text" MsInputField [value]="parent.options.speciality.name" readonly>
+</MsFormField>
+
+<div *ngIf="canSelectDepartment && options.school.departments">
+  <MsLabel htmlFor="departments">Département</MsLabel>
+  <MsSelect placeholder="Choisir un département" id="departments"
+            [(ngModel)]="options.data.department" (selectionchange)="loadLevels()">
+    <MsSelectOption *ngFor="let department of options.school.departments" [value]="department">
+      {{department.name}}
+    </MsSelectOption>
+  </MsSelect>
+</div>
+
+<div *ngIf="canSelectLevel && options.data.department.levels">
+  <MsLabel htmlFor="level">Niveau</MsLabel>
+  <MsSelect id="level" [(ngModel)]="options.data.level" (selectionchange)="loadLevelSpecialities()"
+            placeholder="Choisir un niveau">
+    <MsSelectOption *ngFor="let level of options.data.department.levels" [value]="level">
+      Niveau {{level.index + 1}}
+    </MsSelectOption>
+  </MsSelect>
+</div>
+
+<div *ngIf="canSelectLevelSpeciality && options.data.level.levelSpecialities">
+  <MsLabel htmlFor="levelSpeciality">Specialité du niveau</MsLabel>
+  <MsSelect id="levelSpeciality" placeholder="Choisir une spécialité">
+    <MsSelectOption *ngFor="let levelSpeciality of options.data.level.levelSpecialities" [value]="levelSpeciality">
+      {{levelSpeciality.speciality.name}}
+    </MsSelectOption>
+  </MsSelect>
+</div>
+
+<div *ngIf="canSelectSpecialityLevel && options.data.speciality.levelSpecialities">
+  <MsLabel htmlFor="specialityLevel">Niveau de la specialité</MsLabel>
+  <MsSelect id="specialityLevel" placeholder="Choisir un niveau">
+    <MsSelectOption *ngFor="let specialityLevel of options.speciality.levelSpecialities" [value]="specialityLevel">
+      Niveau {{specialityLevel.level.index + 1}}
+    </MsSelectOption>
+  </MsSelect>
+</div>
+
+
+
+<div class="text-right mt-3">
+  <button msButton theme="primary"  [disabled]="!options.data.level" (click)="next()">Continuer</button>
+</div>

@@ -18,7 +18,7 @@ export class TeacherHomePage {
   delete() {
     this._teacherService.deleteTeacher(this.teacher).then(result => {
       if (result) {
-        this.router.navigateByUrl(`${this.teacher.department.url}`, { queryParams: {tab: 'teachers'}}).then();
+        this.router.navigate([`${this.teacher.department.url}`], { queryParams: {tab: 'teachers'}}).then();
       }
     })
   }

@@ -1,6 +1,5 @@
 import {IDepartmentService} from './department.service.interface';
 import {Injectable} from '@angular/core';
-import {MsfModal} from 'fabric-docs';
 import {Department, School} from 'examination/entities';
 import {Confirmation} from 'examination/controls';
 import {DepartmentAdd} from './add/department-add';
@@ -8,10 +7,11 @@ import {DepartmentEdit} from './edit/department-edit';
 import {DepartmentImage} from './image/department-image';
 import {DepartmentCoverImage} from './cover-image/department-cover-image';
 import {DepartmentDelete} from './delete/department-delete';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable()
 export class DepartmentService implements IDepartmentService {
-  constructor(private _modal: MsfModal, private _confirmation: Confirmation) {
+  constructor(private _modal: MsDialog, private _confirmation: Confirmation) {
   }
 
 

@@ -1,7 +1,7 @@
 ﻿import {Component, Input} from '@angular/core';
 import {AlertEmitter} from 'src/controls/alert-emitter';
 import {SupervisorHttpClient, SupervisorLoader, Department, User, UserHttpClient} from 'examination/models';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class SupervisorAdd {
 
   constructor(private _httpClient: SupervisorHttpClient, private _loader: SupervisorLoader,
               private _userHttpClient: UserHttpClient,
-              private _dialogRef: MsfModalRef<SupervisorAdd>,
+              private _dialogRef: MsDialogRef<SupervisorAdd>,
               private _alertEmitter: AlertEmitter) {
   }
 

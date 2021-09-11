@@ -1,5 +1,5 @@
-﻿import {Directive, HostBinding, Input} from "@angular/core";
-import {msColor} from "./colors";
+﻿import {Directive, HostBinding, Input} from '@angular/core';
+import {msColor} from './colors';
 
 
 @Directive({

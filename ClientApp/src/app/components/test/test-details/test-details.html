@@ -8,29 +8,31 @@
     <!--    <button msButton *ngIf="test.notGroupedStudentCount > 0" icon="Group" theme="primary"-->
     <!--            (click)="_paperService.group(test) ">Grouper les étudiants-->
     <!--    </button>-->
-    <button msIconButton class="ml-2" icon="Settings" [MsfMenuTrigger]="testMenu" theme="transparent"></button>
-    <MsfMenu #testMenu>
+    <button msIconButton class="ml-2" icon="Settings" [MsDropdownTrigger]="testMenu" theme="transparent"></button>
+    <MsDropdown #testMenu>
+    <MsContextMenu>
 
-      <MsfMenuItem *ngIf="!test.isPublished" icon="RedEye" (click)="service.publish(test)">Publier les notes
-      </MsfMenuItem>
+      <MsContextMenuItem *ngIf="!test.isPublished" icon="RedEye" (click)="service.publish(test)">Publier les notes
+      </MsContextMenuItem>
 
-      <MsfMenuItem *ngIf="test.isPublished" icon="Hide3" theme="error" (click)="service.publish(test)">
+      <MsContextMenuItem *ngIf="test.isPublished" icon="Hide3" theme="error" (click)="service.publish(test)">
         cacher les notes
-      </MsfMenuItem>
+      </MsContextMenuItem>
 
-      <MsfMenuItem *ngIf="!test.isClosed" icon="LockSolid" theme="error" (click)="service.changeCloseState(test)">Fermer
-      </MsfMenuItem>
-      <MsfMenuItem *ngIf="test.isClosed" icon="UnlockSolid" (click)="service.changeCloseState(test)">Ouvrir
-      </MsfMenuItem>
-      <MsfMenuItem icon="Edit" (click)="service.edit(test)">Modifier les informations</MsfMenuItem>
-      <MsfMenuItem *ngIf="test.useAnonymity" icon="RedEye" (click)="service.unsetAnonymous(test)">Enlever l'anonymat
-      </MsfMenuItem>
-      <MsfMenuItem *ngIf="!test.useAnonymity" theme="error" icon="Hide3" (click)="service.setAnonymous(test)">Utiliser
+      <MsContextMenuItem *ngIf="!test.isClosed" icon="LockSolid" theme="error" (click)="service.changeCloseState(test)">Fermer
+      </MsContextMenuItem>
+      <MsContextMenuItem *ngIf="test.isClosed" icon="UnlockSolid" (click)="service.changeCloseState(test)">Ouvrir
+      </MsContextMenuItem>
+      <MsContextMenuItem icon="Edit" (click)="service.edit(test)">Modifier les informations</MsContextMenuItem>
+      <MsContextMenuItem *ngIf="test.useAnonymity" icon="RedEye" (click)="service.unsetAnonymous(test)">Enlever l'anonymat
+      </MsContextMenuItem>
+      <MsContextMenuItem *ngIf="!test.useAnonymity" theme="error" icon="Hide3" (click)="service.setAnonymous(test)">Utiliser
         l'anonymat
-      </MsfMenuItem>
-      <MsfMenuItem icon="CalendarSettings" (click)="service.editDate(test)">Modifier la date</MsfMenuItem>
-      <MsfMenuItem icon="Delete" (click)="service.delete(test)" theme="error">Supprimer</MsfMenuItem>
-    </MsfMenu>
+      </MsContextMenuItem>
+      <MsContextMenuItem icon="CalendarSettings" (click)="service.editDate(test)">Modifier la date</MsContextMenuItem>
+      <MsContextMenuItem icon="Delete" (click)="service.delete(test)" theme="error">Supprimer</MsContextMenuItem>
+    </MsContextMenu>
+    </MsDropdown>
   </div>
 </div>
 

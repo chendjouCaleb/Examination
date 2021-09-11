@@ -2,7 +2,7 @@ import {Component, Input, Optional} from '@angular/core';
 import {DepartmentAddForm} from 'examination/app/components/department/form';
 import {DepartmentHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {DepartmentLoader} from 'examination/loaders';
 import {School} from 'examination/entities';
 
@@ -21,7 +21,7 @@ export class DepartmentAdd {
   constructor(private _httpClient: DepartmentHttpClient,
               private _alertEmitter: AlertEmitter,
               private _loader: DepartmentLoader,
-              @Optional() private _modal: MsfModalRef<DepartmentAdd>) {
+              @Optional() private _modal: MsDialogRef<DepartmentAdd>) {
   }
 
   async checkName() {

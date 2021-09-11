@@ -9,6 +9,18 @@
   overflow-x: auto !important;
 }
 
+.ms-dialog-form {
+  width: 340px;
+  min-width: 340px;
+  max-width: 98%;
+  max-height: 98% !important;
+
+  & .ms-form-title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+
 .ms-form-header {
   font-size: 22px;
   line-height: 32px;
@@ -40,15 +52,8 @@
   }
 }
 
-.msf-label {
-  color: inherit;
-}
 
-.ms-label {
-  color: inherit;
-  cursor: pointer;
-  font-weight: 600;
-  line-height: normal;
+.ms-label label{
   margin-bottom: 0 !important;
 }
 

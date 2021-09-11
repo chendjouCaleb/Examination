@@ -1,8 +1,8 @@
 import {Component, Input, OnInit, Optional} from '@angular/core';
 import {CourseHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
 import {Course} from 'examination/entities';
+import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'course-chapterText.html',
@@ -16,7 +16,7 @@ export class CourseChapterText implements OnInit {
 
   constructor(private _httpClient: CourseHttpClient,
               private _alertEmitter: AlertEmitter,
-              @Optional() private _modal: MsfModalRef<CourseChapterText>) {
+              @Optional() private _modal: MsDialogRef<CourseChapterText>) {
   }
 
   async ngOnInit() {

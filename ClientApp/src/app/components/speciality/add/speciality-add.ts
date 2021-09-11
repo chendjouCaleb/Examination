@@ -2,7 +2,7 @@ import {Component, Input, Optional} from '@angular/core';
 import {SpecialityAddForm} from 'examination/app/components/speciality/form';
 import {LevelHttpClient, SpecialityHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {LevelSpecialityLoader, SpecialityLoader} from 'examination/loaders';
 import {Department} from 'examination/entities';
 
@@ -24,7 +24,7 @@ export class SpecialityAdd {
               private _alertEmitter: AlertEmitter,
               private _loader: SpecialityLoader,
               private _levelSpecialityLoader: LevelSpecialityLoader,
-              @Optional() private _modal: MsfModalRef<SpecialityAdd>) {
+              @Optional() private _modal: MsDialogRef<SpecialityAdd>) {
   }
 
   async checkName() {

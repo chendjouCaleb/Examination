@@ -2,8 +2,8 @@ import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ExaminationStudent, Student} from 'examination/entities';
 import {ExaminationStudentLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
-import {MsTable} from '@ms-fluent/table';
 import {EXAMINATION_SERVICE_TOKEN, IExaminationService} from 'examination/app/components';
+import {MsTable} from "@ms-fluent/components";
 
 @Component({
   templateUrl: 'student-examinations.html',

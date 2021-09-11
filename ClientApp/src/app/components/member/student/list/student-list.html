@@ -1,52 +1,52 @@
 ﻿<div class="ms-pageTitle">
-  <div class="ms-fontSize-20"> Étudiants ({{items.length}})</div>
+  <div class="ms-fontSize-20 ms-fontWeight-semibold"> Étudiants ({{items.length}})</div>
   <div>
     <!--    <ng-container *ngIf="students" >-->
-    <!--      <button msIconButton theme="standardOutline" icon="TripleColumn" [MsfMenuTrigger]="columnMenu" class="ms-hiddenMdUp mr-2"></button>-->
-    <!--      <button msButton [MsfMenuTrigger]="columnMenu" secondaryIcon="ChevronDown" class="ms-hiddenSm">Colonnes</button>-->
+    <!--      <button msIconButton theme="standardOutline" icon="TripleColumn" [MsDropdownTrigger]="columnMenu" class="ms-hiddenMdUp mr-2"></button>-->
+    <!--      <button msButton [MsDropdownTrigger]="columnMenu" secondaryIcon="ChevronDown" class="ms-hiddenSm">Colonnes</button>-->
     <!--      <MsfCheckboxGroup #checkboxGroup  msTableColumnHandler key="StudentList" [table]="table">-->
     <!--        <MsfMenu #columnMenu>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="#"></MsfCheckbox>#-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="levelIndex"></MsfCheckbox>Niveau-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="fullName"></MsfCheckbox>Nom & prénom-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationId"></MsfCheckbox>Matricule-->
-    <!--          </MsfMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="#"></MsfCheckbox>#-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="levelIndex"></MsfCheckbox>Niveau-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="fullName"></MsfCheckbox>Nom & prénom-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="registrationId"></MsfCheckbox>Matricule-->
+    <!--          </MsContextMenuItem>-->
 
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox>Date de naissance-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="gender"></MsfCheckbox>Sexe-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="SpecialityName"></MsfCheckbox>Spécialité-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="user"></MsfCheckbox>Utilisateur-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="registrationDate"></MsfCheckbox>Date d'ajout-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="addedBy"></MsfCheckbox>Ajouté par-->
-    <!--          </MsfMenuItem>-->
-    <!--          <MsfMenuItem>-->
-    <!--            <MsfCheckbox MsfMenuItemCheckbox name="column" value="actions"></MsfCheckbox>Actions-->
-    <!--          </MsfMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox>Date de naissance-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="gender"></MsfCheckbox>Sexe-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="SpecialityName"></MsfCheckbox>Spécialité-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="user"></MsfCheckbox>Utilisateur-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="registrationDate"></MsfCheckbox>Date d'ajout-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="addedBy"></MsfCheckbox>Ajouté par-->
+    <!--          </MsContextMenuItem>-->
+    <!--          <MsContextMenuItem>-->
+    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="actions"></MsfCheckbox>Actions-->
+    <!--          </MsContextMenuItem>-->
     <!--        </MsfMenu>-->
     <!--      </MsfCheckboxGroup>-->
     <!--    </ng-container>-->
 
 
-    <ng-container *ngIf="getDepartment()?.isPrincipal">
-      <button msButton icon="Add" *ngIf="level || levelSpeciality" theme="primary" (click)="addStudent()">
+    <ng-container >
+      <button msButton icon="Add" theme="primary" (click)="addStudent()">
         Ajouter <span class="ms-hiddenSm">un étudiant</span>
       </button>
     </ng-container>
@@ -54,7 +54,7 @@
 </div>
 
 <div *ngIf="isLoading">
-  <msSpinnerInlineDot></msSpinnerInlineDot>
+  <MsSpinner></MsSpinner>
 </div>
 
 
@@ -136,34 +136,36 @@
 
             <button msIconButton (click)="_studentService.detailsStudent(item)" icon="MiniExpand" theme="primary"></button>
             <ng-container *ngIf="getDepartment()?.isPrincipal">
-              <button msIconButton [rounded]="true" [MsfMenuTrigger]="more" icon="MoreVertical"></button>
-              <MsfMenu #more>
-                <MsfMenuItem icon="Contact" (click)="_studentService.editStudent(item)">Modifier les informations
-                </MsfMenuItem>
-                <MsfMenuItem icon="AddFriend" *ngIf="!item.user" (click)="_studentService.link(item)">Lier à un
+              <button msIconButton [rounded]="true" [MsDropdownTrigger]="more" icon="MoreVertical"></button>
+              <MsDropdown #more>
+              <MsContextMenu >
+                <MsContextMenuItem icon="Contact" (click)="_studentService.editStudent(item)">Modifier les informations
+                </MsContextMenuItem>
+                <MsContextMenuItem icon="AddFriend" *ngIf="!item.user" (click)="_studentService.link(item)">Lier à un
                   utilisateur
-                </MsfMenuItem>
-                <MsfMenuItem icon="UserSync" *ngIf="item.user" (click)="_studentService.link(item)">Changer
+                </MsContextMenuItem>
+                <MsContextMenuItem icon="UserSync" *ngIf="item.user" (click)="_studentService.link(item)">Changer
                   l'utilisateur
-                </MsfMenuItem>
-                <MsfMenuItem icon="UserRemove" theme="error" *ngIf="item.user"
+                </MsContextMenuItem>
+                <MsContextMenuItem icon="UserRemove" theme="error" *ngIf="item.user"
                              (click)="_studentService.removeUser(item)">
                   Enlever l'utilisateur
-                </MsfMenuItem>
-                <MsfMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(item)">Changer le
+                </MsContextMenuItem>
+                <MsContextMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(item)">Changer le
                   matricule
-                </MsfMenuItem>
-                <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
+                </MsContextMenuItem>
+                <MsContextMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
                              *ngIf="item.levelSpeciality">Changer la spécialité
-                </MsfMenuItem>
-                <MsfMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
+                </MsContextMenuItem>
+                <MsContextMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
                              *ngIf="!item.levelSpeciality">Assigner une spécialité
-                </MsfMenuItem>
-                <MsfMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(item)"
+                </MsContextMenuItem>
+                <MsContextMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(item)"
                              *ngIf="item.levelSpeciality">Enlever la spécialité
-                </MsfMenuItem>
-                <MsfMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsfMenuItem>
-              </MsfMenu>
+                </MsContextMenuItem>
+                <MsContextMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsContextMenuItem>
+              </MsContextMenu>
+              </MsDropdown>
             </ng-container>
           </td>
         </tr>

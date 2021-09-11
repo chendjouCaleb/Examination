@@ -1,7 +1,7 @@
-﻿import {Component} from "@angular/core";
-import {School} from "examination/entities";
-import {CurrentItems} from "examination/app/current-items";
-import {Router} from "@angular/router";
+﻿import {Component} from '@angular/core';
+import {School} from 'examination/entities';
+import {CurrentItems} from 'examination/app/current-items';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: 'school-home.page.html',

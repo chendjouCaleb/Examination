@@ -1,0 +1,11 @@
+<div *ngIf="!initialized" class="flex-center-screen" style="width: 100vw;">
+  <div>
+    <div class="ms-fontSize-24 mb-2 ms-fontColor-gray160 text-center">Régolia</div>
+    <MsSpinner></MsSpinner>
+  </div>
+</div>
+<ng-container *ngIf="initialized">'
+  <div>
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
+</ng-container>

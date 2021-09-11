@@ -8,9 +8,8 @@ import {TestLevelSpecialityPageLayout} from './level-speciality-layout/test-leve
 import {TestGroupPageLayout} from './test-group-layout/test-group.page-layout';
 import {TestGroupModule, TestGroupResolver} from 'examination/app/components/test-group';
 import {PaperModule} from 'examination/app/components/paper';
-import {MsPivotModule} from "@ms-fluent/pivot";
-import {MsButtonModule} from "@ms-fluent/button";
-import {ControlModule} from "examination/controls";
+import {ControlModule} from 'examination/controls';
+import {MsButtonModule, MsPivotModule} from '@ms-fluent/components';
 
 export const routes: Routes = [
   {path: '', component: TestPageLayout},

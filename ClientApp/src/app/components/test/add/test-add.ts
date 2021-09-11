@@ -13,7 +13,7 @@ import {
   TestLoader
 } from 'src/models';
 import {TestAddForm} from '../form';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {List} from '@positon/collections';
 
 
@@ -42,7 +42,7 @@ export class TestAdd implements OnInit {
               private _courseLoader: CourseLoader,
               private _loader: TestLoader,
               private _changeDetector: ChangeDetectorRef,
-              private _dialogRef: MsfModalRef<TestAdd>,
+              private _dialogRef: MsDialogRef<TestAdd>,
               private _alertEmitter: AlertEmitter) {
 
   }

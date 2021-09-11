@@ -1,7 +1,6 @@
 ﻿import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AppFormModule, ControlModule, MsfSelectModule, UserPickerModule} from 'examination/controls';
-import {MsfCheckboxModule, MsfMenuModule, MsfModalModule} from 'fabric-docs';
+import {AppFormModule, ControlModule, UserPickerModule} from 'examination/controls';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TestAdd} from './add/test-add';
 import {TestEditDate} from './date/test-edit-date';
@@ -26,15 +25,19 @@ import {TestGroupModule} from 'examination/app/components/test-group';
 import {PaperModule} from 'examination/app/components/paper';
 import {TestGroups} from './test-groups/test-groups';
 import {PublishScore} from './publish/publish-score';
-import {MsButtonModule} from '@ms-fluent/button';
-import {MsTableModule} from '@ms-fluent/table';
-import {MsPersonaModule} from '@ms-fluent/persona';
-import {MsSpinnerModule} from '@ms-fluent/spinner';
+import {
+  MsButtonModule,
+  MsCheckboxModule,
+  MsContextMenuModule,
+  MsDialogModule,
+  MsDropdownModule,
+  MsLabelModule, MsPersonaModule, MsSelectModule, MsSpinnerModule, MsTableModule
+} from '@ms-fluent/components';
 
 @NgModule({
-  imports: [CommonModule, ControlModule, MsfModalModule, MsButtonModule, MsfMenuModule, MsTableModule,
+  imports: [CommonModule, ControlModule, MsDialogModule, MsButtonModule, MsDropdownModule, MsContextMenuModule, MsTableModule,
     FormsModule, RouterModule, CourseModule, MomentModule, ReactiveFormsModule, MsPersonaModule, MsSpinnerModule,
-    AppFormModule, UserPickerModule, MsfSelectModule, MsfCheckboxModule, LayoutModule, TestGroupModule, PaperModule
+    AppFormModule, UserPickerModule, MsSelectModule, MsCheckboxModule, MsLabelModule, LayoutModule, TestGroupModule, PaperModule
   ],
 
   declarations: [TestAdd, TestEditDate, TestEdit, TestList, TestItem, TestScoreList, TestScoreAdd, TestDetails,

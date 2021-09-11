@@ -1,9 +1,9 @@
-﻿ import {Component, Input, OnInit} from "@angular/core";
+﻿import {Component, Input, OnInit} from '@angular/core';
 
-import {AlertEmitter} from "src/controls/alert-emitter";
-import {Student, StudentHttpClient} from "src/models";
-import {StudentRegistrationIdForm} from "../student-form";
-import {MsfModalRef} from "fabric-docs";
+import {AlertEmitter} from 'src/controls/alert-emitter';
+import {Student, StudentHttpClient} from 'src/models';
+import {StudentRegistrationIdForm} from '../student-form';
+import {MsDialogRef} from '@ms-fluent/components';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class StudentRegistrationId implements OnInit {
   student: Student;
 
   constructor(private _httpClient: StudentHttpClient,
-              private _dialogRef: MsfModalRef<StudentRegistrationId, string>,
+              private _dialogRef: MsDialogRef<StudentRegistrationId, string>,
               private _alertEmitter: AlertEmitter) {
   }
 
@@ -25,12 +25,12 @@ export class StudentRegistrationId implements OnInit {
   }
 
   async checkRegistrationId() {
-    const registrationId = this.form.getControl("registrationId");
+    const registrationId = this.form.getControl('registrationId');
     if (registrationId.value.length > 3) {
       const student = await this._httpClient.findByRegistrationId(this.student.level.department.school, registrationId.value);
 
       if (student && student.id) {
-        registrationId.addError("Le matricule est déjà utilisé par un autre étudiant!");
+        registrationId.addError('Le matricule est déjà utilisé par un autre étudiant!');
       }
     }
   }

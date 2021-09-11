@@ -1,33 +1,21 @@
 import {EvFormControl, EvFormGroup} from 'examination/controls';
-import {
-  Level,
-  LevelSpeciality,
-  StudentAddModel,
-  StudentInfoModel,
-  StudentRegistrationIdModel
-} from 'examination/models';
+import {StudentContactModel, StudentInfoModel, StudentRegistrationIdModel} from 'examination/models';
 
 
-export class StudentAddForm extends EvFormGroup<StudentAddModel> {
-  constructor(level: Level, levelSpeciality: LevelSpeciality) {
+export class StudentContactForm extends EvFormGroup<StudentContactModel> {
+  constructor(value: any = {}) {
     super({
-      fullName: new EvFormControl('fullName', ''),
-      registrationId: new EvFormControl('registrationId', ''),
-      gender: new EvFormControl('gender', ''),
-      birthDate: new EvFormControl('birthDate', ''),
-      levelSpeciality: new EvFormControl('levelSpeciality', levelSpeciality),
-      level: new EvFormControl('level', level),
+      phoneNumber: new EvFormControl('phoneNumber', value.phoneNumber),
+      email: new EvFormControl('email', value.email),
+      address: new EvFormControl('address', value.address),
     });
   }
 
-  getModel(): StudentAddModel {
-    const model = new StudentAddModel();
-    model.fullName = this.controls.fullName.value;
-    model.registrationId = this.controls.registrationId.value;
-    model.gender = this.controls.gender.value;
-    model.birthDate = this.controls.birthDate.value;
-    model.level = this.controls.level.value;
-    model.levelSpeciality = this.controls.levelSpeciality.value;
+  getModel(): StudentContactModel {
+    const model = new StudentContactModel();
+    model.phoneNumber = this.controls.phoneNumber.value;
+    model.email = this.controls.email.value;
+    model.address = this.controls.address.value;
     return model;
   }
 }
@@ -39,6 +27,7 @@ export class StudentInfoForm extends EvFormGroup<StudentInfoModel> {
     super({
       fullName: new EvFormControl('fullName', value.fullName),
       gender: new EvFormControl('gender', value.gender),
+      birthPlace: new EvFormControl('birthPlace', value.birthPlace),
       birthDate: new EvFormControl('birthDate', value.birthDate)
     });
   }
@@ -48,6 +37,7 @@ export class StudentInfoForm extends EvFormGroup<StudentInfoModel> {
     model.fullName = this.controls.fullName.value;
     model.gender = this.controls.gender.value;
     model.birthDate = this.controls.birthDate.value;
+    model.birthPlace = this.controls.birthPlace.value;
     return model;
   }
 }

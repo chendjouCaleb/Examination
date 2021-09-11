@@ -1,0 +1,21 @@
+<h3>Bienvenue dans l'assistant d'ajout d'élève</h3>
+
+<div>
+  Cette opération consite à ajouter un étudiant à cet établissement.
+  Avant de poursuivre, rassurez vous:
+
+  <ul>
+    <li>Que vous avez été désigné pour ajouter des étudiant,</li>
+    <li>Que l'étudiant est déjà inscrit formellement dans l'établissement,</li>
+  </ul>
+</div>
+
+<div class="d-flex align-items-center">
+  <MsCheckbox id="dontShowAgain"></MsCheckbox>
+  <MsLabel class="ml-2" htmlFor="dontShowAgain"> Ne plus afficher.</MsLabel>
+</div>
+
+<div class="text-right">
+  <button msButton>Annuler</button>
+  <button class="ml-2" msButton theme="primary" (click)="next()">Continuer</button>
+</div>

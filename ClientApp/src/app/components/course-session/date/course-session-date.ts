@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Optional} from '@angular/core';
 import {CourseSessionHttpClient} from 'examination/models/http';
 import {AlertEmitter} from 'examination/controls';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {CourseSession, School} from 'examination/entities';
 import {CourseSessionHourForm} from '../course-session.form';
 
@@ -18,7 +18,7 @@ export class CourseSessionDate implements OnInit {
 
   constructor(private _httpClient: CourseSessionHttpClient,
               private _alertEmitter: AlertEmitter,
-              @Optional() private _modal: MsfModalRef<CourseSessionDate>) {
+              @Optional() private _modal: MsDialogRef<CourseSessionDate>) {
   }
 
   ngOnInit(): void {

@@ -29,11 +29,15 @@
     <ms-tableCell>{{item.radical}} points</ms-tableCell>
 
     <ms-tableCell class="text-right">
-      <button msIconButton icon="More" theme="transparent" class="ml-2" [MsfMenuTrigger]="more"
+      <button msIconButton icon="More" theme="transparent" class="ml-2" [MsDropdownTrigger]="more"
               *ngIf="course.level.department?.userPrincipal?.isPrincipal"></button>
-      <MsfMenu #more>
-        <MsfMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsfMenuItem>
-      </MsfMenu>
+
+      <MsDropdown #more>
+        <MsContextMenu>
+          <MsContextMenuItem icon="Delete" (click)="service.deleteScore(item)" theme="error">Supprimer</MsContextMenuItem>
+        </MsContextMenu>
+      </MsDropdown>
+
 
     </ms-tableCell>
   </ms-tableRow>

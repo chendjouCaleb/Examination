@@ -1,9 +1,10 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Course, CourseHour, CourseSession, CourseTeacher, Level, Room, Teacher} from 'examination/entities';
-import {MsTable} from '@ms-fluent/table';
 import {CourseSessionLoader} from 'examination/loaders';
 import {List} from '@positon/collections';
 import {COURSE_SESSION_SERVICE_TOKEN, ICourseSessionService} from '../course-session.service.interface';
+import moment from 'moment';
+import {MsTimeLine, MsTimeLineItem} from '@ms-fluent/date-ui';
 
 @Component({
   templateUrl: 'course-session-list.html',
@@ -31,14 +32,16 @@ export class CourseSessionList implements OnInit {
   @Input()
   hiddenColumns: string[] = [];
 
-  @ViewChild(MsTable)
-  table: MsTable;
+  @ViewChild(MsTimeLine)
+  timeline: MsTimeLine<CourseSession>;
 
   isLoading: boolean = true;
+  isLoaded: boolean = false;
 
   courseSessions: CourseSession[] = [];
 
   constructor(private _courseSessionLoader: CourseSessionLoader,
+              private changeDetector: ChangeDetectorRef,
               @Inject(COURSE_SESSION_SERVICE_TOKEN) public service: ICourseSessionService) {
   }
 
@@ -46,7 +49,10 @@ export class CourseSessionList implements OnInit {
     try {
       await this.loadCourseSessions();
       this.isLoading = false;
-    }catch (e) {
+      this.isLoaded = true;
+
+      console.log('is loaded')
+    } catch (e) {
       this.isLoading = false;
     }
   }
@@ -76,17 +82,18 @@ export class CourseSessionList implements OnInit {
       await this._courseSessionLoader.loadByLevel(this.level);
     }
 
-    const coursessions = this.getCourseSessions().toArray()
+    const courseSessions = this.getCourseSessions().toArray()
       .sort((c1, c2) => c1.expectedStartDate.getTime() - c2.expectedStartDate.getTime());
 
-    this.table.unshift(...coursessions);
+    this.courseSessions = courseSessions;
   }
 
   addCourseSession() {
     this.service.addCourseSession(this.level, this.course).then(courseSession => {
       if (courseSession) {
-        this.table.unshift(courseSession);
-        this.table.hiddenColumns = (this.hiddenColumns);
+        this.timeline.addItem(courseSession);
+        this.courseSessions.push(courseSession);
+        this.changeDetector.detectChanges();
       }
     });
   }
@@ -94,7 +101,7 @@ export class CourseSessionList implements OnInit {
   delete(item: CourseSession) {
     this.service.deleteCourseSession(item).then(result => {
       if (result) {
-        this.table.remove(item);
+        this.timeline.removeItem(item);
       }
     })
   }
@@ -129,7 +136,27 @@ export class CourseSessionList implements OnInit {
 
   get canAdd(): boolean {
     return (this.course && this.course.level.department.school.isPlanner)
-    || (this.level && this.level.department.school.isPlanner)
+      || (this.level && this.level.department.school.isPlanner)
 
   }
+
+  getDateCourseSession(date: Date): CourseSession[] {
+    return this.courseSessions.filter(c => isEqualDay(c.expectedStartDate, date));
+  }
+
+  formatDate(date: Date): string {
+    const d = moment(date);
+    return `${d.format('HH')}h ${d.format('mm')}`;
+  }
+
+  cast(item: MsTimeLineItem): CourseSession {
+    return item as CourseSession;
+  }
+}
+
+
+export function isEqualDay(date1: Date, date2: Date): boolean {
+  return date1.getFullYear() === date2.getFullYear()
+    && date1.getMonth() === date2.getMonth()
+    && date1.getDate() === date2.getDate();
 }

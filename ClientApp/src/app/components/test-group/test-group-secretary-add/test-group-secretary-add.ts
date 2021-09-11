@@ -1,6 +1,6 @@
 ﻿import {Component, Input, OnInit} from '@angular/core';
 import {AlertEmitter} from 'src/controls/alert-emitter';
-import {MsfModalRef} from 'fabric-docs';
+import {MsDialogRef} from '@ms-fluent/components';
 import {List} from '@positon/collections';
 import {
   Department,
@@ -27,7 +27,7 @@ export class TestGroupSecretaryAdd implements OnInit {
               private _secretaryHttpClient: SecretaryHttpClient,
               private _secretaryLoader: SecretaryLoader,
               private _loader: TestGroupSecretaryLoader,
-              private _dialogRef: MsfModalRef<TestGroupSecretaryAdd>,
+              private _dialogRef: MsDialogRef<TestGroupSecretaryAdd>,
               private _alertEmitter: AlertEmitter) {
 
   }

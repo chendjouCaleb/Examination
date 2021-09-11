@@ -2,7 +2,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AppFormModule, ControlModule} from 'examination/controls';
-import {MsfMenuModule, MsfModalModule} from 'fabric-docs';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PaperReport} from './report/paper-report';
@@ -16,11 +15,15 @@ import {PaperList} from './list/paper-list';
 import {MomentModule} from 'ngx-moment';
 import {PaperScore} from './score/paper-score';
 import {PaperScoreList} from './score-list/score-list';
-import {MsButtonModule} from '@ms-fluent/button';
-import {MsTableModule} from '@ms-fluent/table';
-import {MsPersonaModule} from '@ms-fluent/persona';
-import {RouterModule} from "@angular/router";
-import {MsSpinnerModule} from "@ms-fluent/spinner";
+import {
+  MsButtonModule,
+  MsContextMenuModule,
+  MsDialogModule, MsDropdownModule,
+  MsPersonaModule,
+  MsSpinnerModule,
+  MsTableModule
+} from '@ms-fluent/components';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -28,8 +31,8 @@ import {MsSpinnerModule} from "@ms-fluent/spinner";
     PaperList, PaperScoreList],
   exports: [PaperDetails, PaperEditDate, PaperSupervisorComment, PaperReport, PaperScores, PaperScore,
     PaperList, PaperScoreList],
-  imports: [CommonModule, AppFormModule, FormsModule, ReactiveFormsModule, MsSpinnerModule,
-    ControlModule, MsButtonModule, MsPersonaModule, MsfModalModule, MsTableModule, MomentModule, MsfMenuModule, RouterModule],
+  imports: [CommonModule, AppFormModule, FormsModule, ReactiveFormsModule, MsSpinnerModule, MsDropdownModule,
+    ControlModule, MsButtonModule, MsPersonaModule, MsDialogModule, MsTableModule, MomentModule, MsContextMenuModule, RouterModule],
   providers: [PaperService, {provide: PAPER_SERVICE_TOKEN, useExisting: PaperService}]
 })
 export class PaperModule {

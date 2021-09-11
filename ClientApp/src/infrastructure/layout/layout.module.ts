@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NavbarComponent} from './navbar/navbar.component';
-import {MsfCheckboxModule, MsfPersonaModule, MsfRadioModule} from 'fabric-docs';
 import {PanelComponent} from './panel/panel.component';
 import {LayoutComponent} from './layout.component';
 import {SidebarComponent} from './sidebar/sidebar.component';
@@ -13,19 +12,17 @@ import {Theme} from '../preference/theme';
 import {Labelled} from './labelled';
 import {AuthPanelComponent} from './panel/auth-panel/auth-panel.component';
 import {Breadcrumb} from './breadcrumb/breadcrumb';
-import {MsPersonaModule} from '@ms-fluent/persona';
 import {HammerModule} from '@angular/platform-browser';
-import {MsButtonModule} from '@ms-fluent/button';
-import {ControlModule} from "examination/controls";
+import {ControlModule} from 'examination/controls';
+import {MsButtonModule, MsCheckboxModule, MsPersonaModule, MsRadioModule} from '@ms-fluent/components';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MsfRadioModule, MsfCheckboxModule,
-    MsfPersonaModule, MsPersonaModule, HammerModule, MsButtonModule, ControlModule],
+  imports: [CommonModule, RouterModule, MsRadioModule, MsCheckboxModule,
+    MsPersonaModule, HammerModule, MsButtonModule, ControlModule],
   declarations: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent, AuthPanelComponent,
     SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent, Labelled, Breadcrumb],
   exports: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent, SidebarItemComponent,
     SidebarCollapseDirective, Labelled, Breadcrumb],
   providers: [Theme]
 })
-export class LayoutModule {
-}
+export class LayoutModule { }

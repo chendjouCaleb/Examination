@@ -23,8 +23,8 @@
     </span>
 
   <span (click)="buttonClick.emit('account')" class="navbar-button flex-center" id="account-panel-button">
-    <msPersona size="size40" *ngIf="!user.hasImage" [personIcon]="true"></msPersona>
-    <msPersona size="size40" color="transparent" *ngIf="user.hasImage" [imageUrl]="user.imageUrl"></msPersona>
+    <MsIconPersona size="size40" *ngIf="!user.hasImage" ></MsIconPersona>
+    <MsImagePersona size="size40" color="transparent" *ngIf="user.hasImage" [imageUrl]="user.imageUrl"></MsImagePersona>
     </span>
 </div>
 

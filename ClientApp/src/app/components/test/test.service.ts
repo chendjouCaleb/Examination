@@ -2,7 +2,6 @@
 import {Injectable} from '@angular/core';
 import {AlertEmitter, Confirmation} from 'examination/controls';
 import {
-  Score,
   ScoreHttpClient,
   Test,
   TestGroupCorrectorHttpClient,
@@ -13,7 +12,6 @@ import {
   TestLevelSpeciality,
   TestScore
 } from 'examination/models';
-import {MsfModal} from 'fabric-docs';
 import {Observable, ReplaySubject} from 'rxjs';
 import {TestAdd} from './add/test-add';
 import {TestEdit} from './edit/test-edit';
@@ -21,7 +19,8 @@ import {TestEditDate} from './date/test-edit-date';
 import {TestScoreAdd} from './score-add/test-score-add';
 import {TestDetails} from './test-details/test-details';
 import {TestLevelSpecialityDetails} from './test-level-speciality-details/test-level-speciality-details';
-import {PublishScore} from "./publish/publish-score";
+import {PublishScore} from './publish/publish-score';
+import {MsDialog} from '@ms-fluent/components';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +40,7 @@ export class TestService implements ITestService {
 
   constructor(public _confirmation: Confirmation,
               public _alertEmitter: AlertEmitter,
-              public _modal: MsfModal,
+              public _modal: MsDialog,
               public _httpClient: TestHttpClient,
               private _testGroupCorrectorHttpClient: TestGroupCorrectorHttpClient,
               private _testGroupSupervisorHttpClient: TestGroupSupervisorHttpClient,
@@ -60,31 +59,31 @@ export class TestService implements ITestService {
   }
 
   add(params: ITestAddParams): Observable<Test> {
-    const modalRef = this._modal.open(TestAdd, {disableClose: true});
+    const modalRef = this._modal.open<TestAdd, Test>(TestAdd, {disableClose: true});
     modalRef.componentInstance.examination = params.examination;
     modalRef.componentInstance.examinationDepartment = params.examinationDepartment;
     modalRef.componentInstance.examinationLevel = params.examinationLevel;
     modalRef.componentInstance.course = params.course;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<Test>;
   }
 
 
   edit(test: Test): Observable<Test> {
     const modalRef = this._modal.open(TestEdit, {disableClose: true});
     modalRef.componentInstance.test = test;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<Test>;
   }
 
   editDate(test: Test): Observable<Test> {
     const modalRef = this._modal.open(TestEditDate, {disableClose: true});
     modalRef.componentInstance.test = test;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<Test>;
   }
 
   publish(test: Test): Observable<void> {
     const modalRef = this._modal.open(PublishScore, {autoFocus: false});
     modalRef.componentInstance.test = test;
-    return modalRef.afterClosed();
+    return modalRef.afterClosed() as unknown as Observable<void>;
   }
 
   setAnonymous(test: Test): Promise<Test> {
