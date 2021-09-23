@@ -1,6 +1,6 @@
 ﻿<image-form title="Photo de profil" [defaultImageUrl]="department.imageUrl"  (onchange)="onchange($event)" >
   <div>
     <button msButton theme="primary" [disabled]="!value" (click)="update()">Mettre à jour</button>
-    <button msButton class="ml-2"  msDialogContent> Annuler</button>
+    <button msButton class="ml-2"  msDialogClose> Annuler</button>
   </div>
 </image-form>

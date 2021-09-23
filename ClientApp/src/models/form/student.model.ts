@@ -1,10 +1,11 @@
 ﻿import {IsAlphanumeric, IsIn, IsNotEmpty, MinLength} from 'class-validator';
 import {Level, LevelSpeciality} from 'examination/entities';
+import moment from 'moment';
 
 export interface StudentAddBody {
   registrationId: string;
   fullName: string;
-  birthDate: Date;
+  birthDate: string;
   birthPlace: string;
   gender: string;
 
@@ -50,11 +51,22 @@ export class StudentAddModel {
   imageBlob: Blob;
   imageUrl: string;
 
+  get genderString(): string {
+    if (this.gender === 'f' || this.gender === 'F') {
+      return 'Féminin';
+    }
+
+    if (this.gender === 'm' || this.gender === 'M') {
+      return 'Masculin';
+    }
+    return null;
+  }
+
 
   get body(): StudentAddBody {
     return {
       fullName: this.fullName,
-      birthDate: this.birthDate,
+      birthDate: moment(this.birthDate).format('YYYY-MM-DD'),
       birthPlace: this.birthPlace,
       gender: this.gender,
       registrationId: this.registrationId,

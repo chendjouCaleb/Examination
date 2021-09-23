@@ -22,7 +22,7 @@
   </div>
 
   <div class="mt-4 text-right">
-    <button msButton class="mr-3" msDialogContent (click)="form.reset(department)">Annuler</button>
+    <button msButton class="mr-3" msDialogClose (click)="form.reset(department)">Annuler</button>
     <button msButton theme="primary" icon="Edit" [disabled]="form.invalid" (click)="edit()">Modifier</button>
   </div>
 </form>

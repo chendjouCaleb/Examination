@@ -2,7 +2,7 @@
   <form class="ms-form" *ngIf="form" [formGroup]="form">
     <div class="ms-form-header ms-sticky-header">
       <span>Modifier votre demande</span>
-      <button msIconButton icon="Cancel" msDialogContent></button>
+      <button msIconButton icon="Cancel" msDialogClose></button>
     </div>
     ﻿
 
@@ -45,7 +45,7 @@
 
 
     <div class="mt-4 text-right">
-      <button msButton msDialogContent class="mr-3">Annuler</button>
+      <button msButton msDialogClose class="mr-3">Annuler</button>
       <button msButton theme="primary" [disabled]="form.invalid" (click)="edit()">
         Modifier
       </button>

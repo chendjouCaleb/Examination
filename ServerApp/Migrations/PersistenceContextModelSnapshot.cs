@@ -1018,6 +1018,9 @@ namespace Exam.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("BirthPlace")
+                        .HasColumnType("TEXT");
+
                     b.Property<long?>("DepartmentId")
                         .HasColumnType("INTEGER");
 

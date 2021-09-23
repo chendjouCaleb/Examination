@@ -1,36 +1,7 @@
 <div>
-  <h5  class="ms-fontWeight-light">Mode</h5>
-
-  <div>
-    <MsRadioGroup (change)="changeThemeMode($event.value)">
-      <label class="color-label " for="dark" [style.backgroundColor]="getThemeColor('dark')">
-        <MsRadio id="dark" value="dark" [checked]="_themeMode === 'dark'"></MsRadio>
-      </label>
-      <label class="color-label" for="light" [style.backgroundColor]="getThemeColor('light')">
-        <MsRadio id="light" value="light" [checked]="_themeMode === 'light'"></MsRadio>
-      </label>
-    </MsRadioGroup>
+  <div class="d-flex align-items-center ms-pointer">
+    <MsToggle id="theme" (change)="changeThemeMode($event.checked)"></MsToggle>
+    <MsLabel htmlFor="theme" class="ml-2">Mode sombre</MsLabel>
   </div>
-</div>
-
-<div class="mt-3">
-  <h5 class="ms-fontWeight-light">Color de thème</h5>
-
-  <div>
-    <MsRadioGroup (change)="changeThemeColor($event.value)">
-      <label class="color-label color-theme" *ngFor="let color of theme.themes" for="{{color}}" [style.backgroundColor]="getThemeColor(color)">
-        <MsRadio id="{{color}}" [value]="color" [checked]="_themeColor === color"></MsRadio>
-      </label>
-    </MsRadioGroup>
-  </div>
-</div>
-
-<div class="mt-3">
-
-    <MsLabel labelled text="Navigation réduite" htmlFor="collapseSidebar">
-      <MsCheckbox id="collapseSidebar"
-                   [checked]="_collapseSidebar"
-                   (change)="sidebarCollapseState($event.checked)"></MsCheckbox>
-    </MsLabel>
-
+  <div class="ms-divider"></div>
 </div>

@@ -5,7 +5,7 @@ import {
   MsButtonModule,
   MsCheckboxModule, MsCleaveModule, MsDialogModule,
   MsFormFieldModule,
-  MsLabelModule,
+  MsLabelModule, MsPersonaModule,
   MsRadioModule, MsSelectModule,
   MsStepperModule
 } from '@ms-fluent/components';
@@ -23,7 +23,7 @@ import {AppFormModule, ImageFormModule} from 'examination/controls';
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MsFormFieldModule, MsStepperModule, MsRadioModule,
     MsCheckboxModule, MsLabelModule, MsButtonModule, MsStepperModule, MsSelectModule, MsDialogModule,
-    MsCleaveModule, MsAlertModule, AppFormModule, ImageFormModule],
+    MsCleaveModule, MsAlertModule, MsPersonaModule, AppFormModule, ImageFormModule],
   declarations: [ StudentAdd, StudentAddContact, StudentAddEnd, StudentAddHome, StudentAddImage, StudentAddLevel,
     StudentAddInfo, StudentAddRegistrationId ]
 })

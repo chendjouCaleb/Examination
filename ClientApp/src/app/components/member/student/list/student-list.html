@@ -1,57 +1,93 @@
 ﻿<div class="ms-pageTitle">
   <div class="ms-fontSize-20 ms-fontWeight-semibold"> Étudiants ({{items.length}})</div>
-  <div>
-    <!--    <ng-container *ngIf="students" >-->
-    <!--      <button msIconButton theme="standardOutline" icon="TripleColumn" [MsDropdownTrigger]="columnMenu" class="ms-hiddenMdUp mr-2"></button>-->
-    <!--      <button msButton [MsDropdownTrigger]="columnMenu" secondaryIcon="ChevronDown" class="ms-hiddenSm">Colonnes</button>-->
-    <!--      <MsfCheckboxGroup #checkboxGroup  msTableColumnHandler key="StudentList" [table]="table">-->
-    <!--        <MsfMenu #columnMenu>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="#"></MsfCheckbox>#-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="levelIndex"></MsfCheckbox>Niveau-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="fullName"></MsfCheckbox>Nom & prénom-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="registrationId"></MsfCheckbox>Matricule-->
-    <!--          </MsContextMenuItem>-->
-
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="birthDate"></MsfCheckbox>Date de naissance-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="gender"></MsfCheckbox>Sexe-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="SpecialityName"></MsfCheckbox>Spécialité-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="user"></MsfCheckbox>Utilisateur-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="registrationDate"></MsfCheckbox>Date d'ajout-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="addedBy"></MsfCheckbox>Ajouté par-->
-    <!--          </MsContextMenuItem>-->
-    <!--          <MsContextMenuItem>-->
-    <!--            <MsfCheckbox MsContextMenuItemCheckbox name="column" value="actions"></MsfCheckbox>Actions-->
-    <!--          </MsContextMenuItem>-->
-    <!--        </MsfMenu>-->
-    <!--      </MsfCheckboxGroup>-->
-    <!--    </ng-container>-->
-
-
-    <ng-container >
-      <button msButton icon="Add" theme="primary" (click)="addStudent()">
-        Ajouter <span class="ms-hiddenSm">un étudiant</span>
-      </button>
-    </ng-container>
-  </div>
 </div>
+
+<msActionMenu>
+  <button msActionMenuButton icon="Add" (click)="addStudent()">Ajouter un étudiant</button>
+  <button msActionMenuButton icon="Download" secondaryIcon="ChevronDown">Importer</button>
+
+  <MsActionMenuFarSection>
+    <button MsActionMenuButton icon="TripleColumn" secondaryIcon="ChevronDown" theme="primary">Colonnes</button>
+    <button MsActionMenuButton secondaryIcon="ChevronDown" icon="SortLines">Trier</button>
+    <button MsActionMenuButton secondaryIcon="ChevronDown" [MsDropdownTrigger]="displayMenu">
+      <i class="ms-Icon ms-Icon--Table text-primary" *ngIf="displayStyle === 'table'"></i>
+      <i class="ms-Icon ms-Icon--GridViewMedium text-primary" *ngIf="displayStyle === 'grid'"></i>
+    </button>
+
+    <MsDropdown #displayMenu>
+      <MsContextMenu>
+        <MsContextMenuItem icon="Table" (click)="setDisplayStyle('table')">Tableau</MsContextMenuItem>
+        <MsContextMenuItem icon="GridViewMedium" (click)="setDisplayStyle('grid')">Grille</MsContextMenuItem>
+      </MsContextMenu>
+    </MsDropdown>
+  </MsActionMenuFarSection>
+
+</msActionMenu>
+
+<div class="ms-divider"></div>
+
+<div class="mb-2 p-2 ms-depth-4 d-flex justify-content-between">
+  <MsFormField style="width: 300px">
+    <span class="ms-formField-icon"><i class="ms-Icon ms-Icon--Search"></i></span>
+    <input [(ngModel)]="filterValue" style="padding-left: 0" placeholder="Nom ou matricule d'un étudiant" type="text"
+           MsInputField>
+  </MsFormField>
+
+  <MsActionMenu>
+    <MsActionMenuFarSection>
+      <button MsActionMenuButton secondaryIcon="ChevronDown" icon="Filter" [MsDropdownTrigger]="filterDropdown">
+        Filtrer
+      </button>
+
+      <MsDropdown #filterDropdown>
+        <div class="p-3" style="backdrop-filter: blur(20px); background-color: rgba(255,255,255,0.1); ">
+
+          <div>
+            <div class="ms-fontWeight-semibold">Date d'inscription</div>
+            <div class="d-flex">
+              <MsFormField [inline]="true" appearance="underline" MsInlineFloatLabel label="Du" style="width: 120px; ">
+                <input type="text" MsDateMask MsInputField/>
+              </MsFormField>
+              <MsFormField [inline]="true" appearance="underline" MsInlineFloatLabel label="Au" class="ml-2"
+                           style="width: 120px">
+                <input type="text" MsDateMask MsInputField/>
+              </MsFormField>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div class="ms-fontWeight-semibold">Date de naissance</div>
+            <div class="d-flex">
+              <MsFormField [inline]="true" appearance="underline" MsInlineFloatLabel label="Du" style="width: 120px; ">
+                <input type="text" MsDateMask MsInputField/>
+              </MsFormField>
+              <MsFormField [inline]="true" appearance="underline" MsInlineFloatLabel label="Au" class="ml-2"
+                           style="width: 120px">
+                <input type="text" MsDateMask MsInputField/>
+              </MsFormField>
+            </div>
+          </div>
+
+          <div class="ms-divider"></div>
+          <div class="d-flex my-2">
+            <div class="d-flex align-items-center">
+              <MsCheckbox id="gender-M"></MsCheckbox>
+              <MsLabel htmlFor="gender-M" class="ml-2">Homme</MsLabel>
+            </div>
+
+            <div class="d-flex align-items-center ml-4">
+              <MsCheckbox id="gender-F"></MsCheckbox>
+              <MsLabel htmlFor="gender-F" class="ml-2">Femme</MsLabel>
+            </div>
+          </div>
+
+
+        </div>
+      </MsDropdown>
+    </MsActionMenuFarSection>
+  </MsActionMenu>
+</div>
+
 
 <div *ngIf="isLoading">
   <MsSpinner></MsSpinner>
@@ -59,17 +95,14 @@
 
 
 <div *ngIf="isLoaded">
-  <div class="d-flex align-items-center my-2" style="min-width: 200px; width: 300px">
-    <input style="flex-grow: 1" [(ngModel)]="filterValue" placeholder="Nom ou matricule d'un étudiant" type="text"
-           class="ms-textField-input">
-    <button msIconButton icon="Zoom" theme="primary" (click)="search()"></button>
-  </div>
+
 
   <msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
 
   <msPaginator #msPaginator pageSize="50" [totalSize]="students.length" [itemsFn]="itemsFn">
     <div *ms-paginatorPageDef="let data=items; let start=start">
-      <ms-table #table style="max-height: 500px">
+
+      <ms-table *ngIf="displayStyle == 'table'" #table style="max-height: 500px">
         <msTableHead *ms-tableHeadDef>
           <ms-tableHeadCell name="#">#</ms-tableHeadCell>
 
@@ -82,7 +115,6 @@
           <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
           <msTableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout
           </msTableHeadCell>
-          <msTableHeadCell name="addedBy">Ajouté par</msTableHeadCell>
 
           <msTableHeadCell name="actions" style="text-align: right">
             <i class="ms-Icon ms-Icon--SetAction px-2"></i>
@@ -124,52 +156,70 @@
             <span msFontSize="12" style="opacity: 0.8">{{item.registrationDate | date}}</span>
           </td>
 
-          <td ms-tableCell>
-            <user-persona *ngIf="item.registerUser" [user]="item.registerUser"></user-persona>
-          </td>
-
 
           <td ms-tableCell style="text-align: right">
             <a [routerLink]="item.url">
               <button msButton>Détails</button>
             </a>
 
-            <button msIconButton (click)="_studentService.detailsStudent(item)" icon="MiniExpand" theme="primary"></button>
+            <button msIconButton (click)="_studentService.detailsStudent(item)" icon="MiniExpand"
+                    theme="primary"></button>
             <ng-container *ngIf="getDepartment()?.isPrincipal">
               <button msIconButton [rounded]="true" [MsDropdownTrigger]="more" icon="MoreVertical"></button>
               <MsDropdown #more>
-              <MsContextMenu >
-                <MsContextMenuItem icon="Contact" (click)="_studentService.editStudent(item)">Modifier les informations
-                </MsContextMenuItem>
-                <MsContextMenuItem icon="AddFriend" *ngIf="!item.user" (click)="_studentService.link(item)">Lier à un
-                  utilisateur
-                </MsContextMenuItem>
-                <MsContextMenuItem icon="UserSync" *ngIf="item.user" (click)="_studentService.link(item)">Changer
-                  l'utilisateur
-                </MsContextMenuItem>
-                <MsContextMenuItem icon="UserRemove" theme="error" *ngIf="item.user"
-                             (click)="_studentService.removeUser(item)">
-                  Enlever l'utilisateur
-                </MsContextMenuItem>
-                <MsContextMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(item)">Changer le
-                  matricule
-                </MsContextMenuItem>
-                <MsContextMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
-                             *ngIf="item.levelSpeciality">Changer la spécialité
-                </MsContextMenuItem>
-                <MsContextMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
-                             *ngIf="!item.levelSpeciality">Assigner une spécialité
-                </MsContextMenuItem>
-                <MsContextMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(item)"
-                             *ngIf="item.levelSpeciality">Enlever la spécialité
-                </MsContextMenuItem>
-                <MsContextMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsContextMenuItem>
-              </MsContextMenu>
+                <MsContextMenu>
+                  <MsContextMenuItem icon="Contact" (click)="_studentService.editStudent(item)">Modifier les
+                    informations
+                  </MsContextMenuItem>
+                  <MsContextMenuItem icon="AddFriend" *ngIf="!item.user" (click)="_studentService.link(item)">Lier à un
+                    utilisateur
+                  </MsContextMenuItem>
+                  <MsContextMenuItem icon="UserSync" *ngIf="item.user" (click)="_studentService.link(item)">Changer
+                    l'utilisateur
+                  </MsContextMenuItem>
+                  <MsContextMenuItem icon="UserRemove" theme="error" *ngIf="item.user"
+                                     (click)="_studentService.removeUser(item)">
+                    Enlever l'utilisateur
+                  </MsContextMenuItem>
+                  <MsContextMenuItem icon="EditSolid12" (click)="_studentService.changeRegistrationId(item)">Changer le
+                    matricule
+                  </MsContextMenuItem>
+                  <MsContextMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
+                                     *ngIf="item.levelSpeciality">Changer la spécialité
+                  </MsContextMenuItem>
+                  <MsContextMenuItem icon="D365TalentLearn" (click)="_studentService.changeSpeciality(item)"
+                                     *ngIf="!item.levelSpeciality">Assigner une spécialité
+                  </MsContextMenuItem>
+                  <MsContextMenuItem icon="Cancel" theme="error" (click)="_studentService.removeLevelSpeciality(item)"
+                                     *ngIf="item.levelSpeciality">Enlever la spécialité
+                  </MsContextMenuItem>
+                  <MsContextMenuItem icon="Delete" (click)="delete(item)" theme="error">Supprimer</MsContextMenuItem>
+                </MsContextMenu>
               </MsDropdown>
             </ng-container>
           </td>
         </tr>
       </ms-table>
+
+      <MsGrid xGap="20" yGap="20" [itemHeight]="400" [itemWidth]="280" #msGrid *ngIf="displayStyle == 'grid'">
+        <div *MsGridItemDef="let item of data; let i=index" class="ms-depth-8 student-card" >
+          <div>
+            <img style="width: 100%" [src]="item.imageUrl" alt="Student photo" />
+          </div>
+          <div class="p-2 mt-2">
+            <div msFontWeight="semibold" msFontSize="16" class="ms-text-ellipsis">{{item.fullName}}</div>
+            <div class="ms-opacity-8">{{item.registrationId}}</div>
+            <div class="ms-text-ellipsis ms-opacity-8">
+              {{item.level.department.name}} / Niveau {{item.level.index + 1}}
+            </div>
+
+            <div class="ms-text-ellipsis" *ngIf="item.levelSpeciality">
+              <span class="ms-badge ms-bgColor-themeDarkAlt">{{item.levelSpeciality?.speciality.name}}</span>
+            </div>
+          </div>
+
+        </div>
+      </MsGrid>
     </div>
   </msPaginator>
 </div>

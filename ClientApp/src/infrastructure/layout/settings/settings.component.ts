@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Theme} from '../../preference/theme';
 import {Preference} from '../../preference/preference';
 
@@ -24,9 +24,10 @@ export class LayoutSettingsComponent {
     return style.getPropertyValue(`--${value}Color`);
   }
 
-  changeThemeMode(value: 'dark' | 'light') {
-    document.documentElement.setAttribute('data-theme', value);
-    this.preference.set('themeMode', value, true);
+  changeThemeMode(value: boolean) {
+    const theme = value ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    this.preference.set('themeMode', theme, true);
   }
 
   changeThemeColor(value: string) {

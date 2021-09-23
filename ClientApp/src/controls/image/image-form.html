@@ -1,9 +1,12 @@
-﻿<div class="ms-form ms-depth-8" style="width: 700px; max-width: 100vw">
+﻿<div style="width: 700px; max-width: 100vw">
+  <div class="text-right">
+    <button msIconButton icon="Cancel" theme="transparent" [rounded]="true" msDialogClose></button>
+  </div>
   <div class="ms-fontSize-24">{{title}}</div>
 
   <div class="d-flex justify-content-center mt-5">
 
-    <div >
+    <div>
       <div class="br-2 ms-bgColor-warning ms-fontColor-warning p-2 ms-fontSize-12" *ngIf="!_imageUrl">
         Charger une image depuis votre ordinateur pour la redimensionner.
       </div>
@@ -12,9 +15,9 @@
   </div>
   <div class="text-center mt-2" *ngIf="_resizeMode">
     <button msIconButton icon="Rotate90Clockwise" theme="primary" [rounded]="true"
-                   (click)="_cropper.rotate(90)"></button>
+            (click)="_cropper.rotate(90)"></button>
     <button msIconButton class="ml-2" icon="Rotate90CounterClockwise" theme="primary" [rounded]="true"
-                   (click)="_cropper.rotate(-90)"></button>
+            (click)="_cropper.rotate(-90)"></button>
 
     <button msIconButton class="ml-2" icon="CheckMark" theme="success" [rounded]="true" (click)="endResize()"></button>
   </div>
@@ -27,17 +30,20 @@
         <button msIconButton icon="Upload" (click)="inputFile.click()" class="ms-hiddenLgUp"></button>
 
       </label>
-      <input #inputFile type="file" id="input-file" name="image" accept="image/*" (change)="loadImage($event.target)" style="display: none">
+      <input #inputFile type="file" id="input-file" name="image" accept="image/*" (change)="loadImage($event.target)"
+             style="display: none">
 
-      <button msButton theme="primary" class="ml-2 ms-hiddenMdDown" icon="Crop" *ngIf="_imageUrl" [disabled]="_resizeMode" (click)="startResize()">Redimensionner</button>
-      <button msIconButton class="ml-2 ms-hiddenLgUp" icon="Crop" *ngIf="_imageUrl" [disabled]="_resizeMode" (click)="startResize()"></button>
+      <button msButton theme="primary" class="ml-2 ms-hiddenMdDown" icon="Crop" *ngIf="_imageUrl"
+              [disabled]="_resizeMode" (click)="startResize()">Redimensionner
+      </button>
+      <button msIconButton class="ml-2 ms-hiddenLgUp" icon="Crop" *ngIf="_imageUrl" [disabled]="_resizeMode"
+              (click)="startResize()"></button>
 
     </div>
 
     <div class="text-right">
-      <ng-content></ng-content>
+      <button class="ml-2" msButton theme="primary" [disabled]="!_value?.blob" (click)="select()">Choisir</button>
     </div>
 
   </div>
-
 </div>

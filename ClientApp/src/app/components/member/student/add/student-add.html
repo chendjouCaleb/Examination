@@ -1,17 +1,19 @@
-﻿<div>
-  <button msIconButton icon="ChromeBack" theme="transparent"></button>
+﻿<div class="d-flex justify-content-between">
+  <div>
+    <button *ngIf="stepper?.activeIndex > 0"
+            (click)="stepper.prev()"
+            msIconButton icon="ChromeBack" theme="transparent"></button>
+  </div>
+  <button msIconButton msDialogClose="" icon="Cancel"  theme="transparent"></button>
 </div>
-<div class="d-flex">
-  <div style="width: 80px">
-    <img src="/assets/icon/graduated.svg" alt="Icon" width="80" height="80">
+<div class="d-flex mt-2">
+  <div style="width: 80px; border-radius: 50%">
+    <img *ngIf="!model.imageUrl" src="/assets/icon/graduated.svg" alt="Icon" width="80" height="80" >
+    <img *ngIf="model.imageUrl" [src]="model.imageUrl" alt="Student image" width="80" height="80" >
   </div>
 
   <div style="width: 380px; margin-left: 32px; box-sizing: border-box">
-    <msStepper>
-
-      <div *ms-stepper-step>
-        <student-add-image></student-add-image>
-      </div>
+    <msStepper #msStepper>
 
       <div *ms-stepper-step>
         <student-add-home></student-add-home>
@@ -33,6 +35,13 @@
         <student-add-contact></student-add-contact>
       </div>
 
+      <div *ms-stepper-step>
+        <student-add-image></student-add-image>
+      </div>
+
+      <div *ms-stepper-step>
+        <student-add-end></student-add-end>
+      </div>
 
 
     </msStepper>

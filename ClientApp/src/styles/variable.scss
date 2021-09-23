@@ -34,37 +34,46 @@ html {
   --primaryColor: var(--blueColor);
 
   --textFieldBorderColor: #{$ms-color-gray190};
-  --cardBackgroundColor:  #{$ms-color-gray10};
+  --cardBackgroundColor: #{$ms-color-gray10};
 }
 
 html[data-theme="light"] {
   --textColor: #{$ms-color-gray190};
-
-  --bodyBackgroundColor:  #FFF;
-  --secondaryBackgroundColor:  #{$ms-color-gray30};
+  --dialogBackgroundColor: rgba(255, 255, 255, 0.9);
+  --overlayBackgroundColor: rgba(255, 255, 255, 0.4);
+  --bodyBackgroundColor: #FFF;
+  --secondaryBackgroundColor: #{$ms-color-gray30};
   --hoverBackgroundColor: #{$ms-color-gray40};
 
-  --cardBackgroundColor:  #{$ms-color-gray10};
+  --cardBorderColor: rgba(200, 198, 196, 0.5);
+  --cardBackgroundColor: #{$ms-color-gray10};
+  --cardBackgroundColor--hover: #{$ms-color-gray20};
 
   --sidebarBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.2));
 
   --panelBackgroundColor: rgba(227, 225, 223, calc(var(--opacity) - 0.5));
 
-  --borderColor:  #{$ms-color-gray30};
-  --headerBgColor:  #{$ms-color-gray30};
+  --borderColor: #{$ms-color-gray30};
+  --headerBgColor: #{$ms-color-gray30};
 
   --standardColor: #{$ms-color-gray160};
   --standardBgColor: #{$ms-color-gray30};
   --standardBgColor--hover: #{$ms-color-gray40};
+  --buttonBgColor--hover: rgba(11, 11, 10, 0.005);
 }
 
 html[data-theme="dark"] {
   --textColor: #{$ms-color-gray10};
-  --bodyBackgroundColor:  rgba(11, 11, 10, calc(var(--opacity) - 0.15));
-  --secondaryBackgroundColor:  rgba(11, 11, 10, calc(var(--opacity) - 0.1));
-  --hoverBackgroundColor:  rgba(11, 11, 10, calc(var(--opacity) - 0.05));
+  --bodyBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.15));
+  --dialogBackgroundColor: rgba(11, 11, 10, 0.7);
+  --overlayBackgroundColor: rgba(11, 11, 10, 0.5);
+  --secondaryBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.1));
+  --hoverBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.05));
 
-  --cardBackgroundColor:  #{$ms-color-gray200};
+
+  --cardBorderColor: rgba(200, 198, 196, 0.2);
+  --cardBackgroundColor: #{$ms-color-gray180};
+  --cardBackgroundColor--hover: #{$ms-color-gray210};
 
   --sidebarBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.2));
 
@@ -72,12 +81,14 @@ html[data-theme="dark"] {
 
   --panelBackgroundColor: rgba(11, 11, 10, calc(var(--opacity) - 0.5));
 
-  --borderColor:  #{$ms-color-gray150};
-  --headerBgColor:  #{$ms-color-gray150};
+  --borderColor: #{$ms-color-gray150};
+  --headerBgColor: #{$ms-color-gray150};
 
   --standardColor: #{$ms-color-gray10};
   --standardBgColor: #{$ms-color-gray170};
   --standardBgColor--hover: #{$ms-color-gray200};
+
+  --buttonBgColor--hover: rgba(255, 255, 255, 0.05);
 }
 
 

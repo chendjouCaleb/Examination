@@ -11,6 +11,7 @@ import {
 } from 'examination/models';
 import {MsCheckboxGroup, MsPaginator, MsPaginatorItemsFn, MsTable} from '@ms-fluent/components';
 import {StudentAddOptions} from '../add/student-add-options';
+import {Preference} from "examination/infrastructure";
 
 @Component({
   templateUrl: 'student-list.html',
@@ -51,10 +52,14 @@ export class StudentList implements OnInit, AfterViewInit {
   isLoading: boolean = true;
   isLoaded: boolean = false;
 
+  displayStyle: 'table' | 'grid' = 'grid';
+
   constructor(private _studentLoader: StudentLoader,
               private _httpClient: StudentHttpClient,
+              private preference: Preference,
               @Inject(STUDENT_SERVICE_TOKEN) public _studentService: IStudentService
   ) {
+    this.displayStyle = this.preference.get('studentListDisplayMode') || 'grid';
   }
 
   async ngOnInit() {
@@ -64,14 +69,16 @@ export class StudentList implements OnInit, AfterViewInit {
       this.isLoaded = true;
     } catch (e) {
       this.isLoading = false;
+      console.error(e);
     }
+    console.log('loaded')
   }
 
-  ngAfterViewInit(): void {
-    // this.checkboxGroup.change.subscribe(() => {
-    //   console.log(this.checkboxGroup._checkboxChildren.filter(c => c.checked).map(c => c.value));
-    //   // this.table.setVisibleColumns(this.checkboxGroup.values.toArray())
-    // })
+  ngAfterViewInit(): void {}
+
+  setDisplayStyle(model: 'table' | 'grid') {
+    this.displayStyle = model;
+    this.preference.set('studentListDisplayMode', model, true);
   }
 
   async loadStudents() {
@@ -81,7 +88,7 @@ export class StudentList implements OnInit, AfterViewInit {
     await this._studentLoader.loadByLevelSpeciality(this.levelSpeciality);
     await this._studentLoader.loadBySpeciality(this.speciality);
 
-    this.students = this.getStudents().sort((a, b) => a.fullName.localeCompare(b.fullName));
+    this.students = this.getStudents().sort((a, b) => a.fullName?.localeCompare(b.fullName));
   }
 
 

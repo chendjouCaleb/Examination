@@ -11,6 +11,9 @@
 } from '@angular/core';
 import Cropper from 'cropperjs';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ImageFormValue} from './ImageFormValue';
+import {MsDialogRef} from '@ms-fluent/components';
+import {ImageFormDialog} from './image-form-dialog';
 
 
 export const IMAGE_FORM_VALUE_ACCESSOR: any = {
@@ -18,11 +21,6 @@ export const IMAGE_FORM_VALUE_ACCESSOR: any = {
   useExisting: forwardRef(() => ImageForm),
   multi: true
 };
-
-export interface ImageFormValue {
-  blob?: Blob,
-  url?: string
-}
 
 @Component({
   templateUrl: 'image-form.html',
@@ -63,7 +61,8 @@ export class ImageForm implements AfterViewInit, OnDestroy, ControlValueAccessor
 
   _imageUrl: string;
 
-  constructor(private _changeDetector: ChangeDetectorRef) {
+  constructor(private _changeDetector: ChangeDetectorRef,
+              private dialogRef: MsDialogRef<ImageFormDialog>) {
   }
 
   ngAfterViewInit(): void {
@@ -81,6 +80,11 @@ export class ImageForm implements AfterViewInit, OnDestroy, ControlValueAccessor
     }
   }
 
+  select() {
+    if (this._value?.blob) {
+      this.dialogRef.close(this._value);
+    }
+  }
 
   loadImage(inputImage: HTMLInputElement) {
     if (inputImage.files.length === 0) {
@@ -116,6 +120,7 @@ export class ImageForm implements AfterViewInit, OnDestroy, ControlValueAccessor
       this._value.blob = blob;
       this._onChange(this._value);
       this.onchange.emit(this._value);
+      this._changeDetector.detectChanges();
     });
 
     this._value.url = canvas.toDataURL();
@@ -125,6 +130,8 @@ export class ImageForm implements AfterViewInit, OnDestroy, ControlValueAccessor
     this._cropper.destroy();
     this._cropper = null;
     this._resizeMode = false;
+
+    this._changeDetector.detectChanges();
   }
 
   ngOnDestroy(): void {

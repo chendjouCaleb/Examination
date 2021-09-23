@@ -15,6 +15,8 @@ $ms-table-border-color: var(--borderColor);
 $ms-table-bgColor: var(--bodyBackgroundColor);
 $ms-table-cell-hover-backgroundColor: var(--cardBackgroundColor);
 
+$ms-dialog-background-color: transparent;
+
 @import "~@ms-fluent/components/src/components/styles/fluent";
 @import "~@ms-fluent/date-ui/src/styles/fluent-date";
 
@@ -30,6 +32,7 @@ $font-family-sans-serif: Metropolis, sans-serif;
 
 .ms-Fabric {
   font-family: "Open Sans Condensed", sans-serif;
+  color: var(--textColor);
 }
 
 *[tabindex]:focus {
@@ -356,4 +359,40 @@ body {
   width: 5px;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.student-card {
+  border: 1px solid var(--cardBorderColor);
+  box-sizing: border-box;
+  height: 100%;
+  cursor: pointer;
+  transition: .3s transform;
+  background-color: var(--cardBackgroundColor);
+
+  &:hover {
+    background-color: var(--cardBackgroundColor--hover);
+  }
+}
+
+.ms-text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ex-dialog-panel {
+  background-color: var(--dialogBackgroundColor);
+  backdrop-filter: blur(20px);
+}
+
+.ex-overlay-class {
+  background-color: var(--overlayBackgroundColor) !important;
+}
+
+.ms-dropdown-overlay {
+  background-color: var(--overlayBackgroundColor) !important;
+}
+
+.ms-action-menu-button-standard {
+  &:hover {background-color: var(--buttonBgColor--hover) !important};
 }

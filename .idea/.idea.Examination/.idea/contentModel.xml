@@ -1290,9 +1290,11 @@
               <e p="icon.ts" t="Include" />
             </e>
             <e p="image" t="Include">
+              <e p="image-form-dialog.ts" t="Include" />
               <e p="image-form.html" t="Include" />
               <e p="image-form.module.ts" t="Include" />
               <e p="image-form.ts" t="Include" />
+              <e p="ImageFormValue.ts" t="Include" />
               <e p="index.ts" t="Include" />
             </e>
             <e p="index.ts" t="Include" />
@@ -2260,6 +2262,8 @@
           <e p="20210305182306_Initial.Designer.cs" t="Include" />
           <e p="20210908060431_StudentCOntact.cs" t="Include" />
           <e p="20210908060431_StudentCOntact.Designer.cs" t="Include" />
+          <e p="20210914045229_Update5.cs" t="Include" />
+          <e p="20210914045229_Update5.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

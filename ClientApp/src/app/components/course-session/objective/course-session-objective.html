@@ -2,7 +2,7 @@
   <form class="ms-form">
     <div class="ms-form-header ms-sticky-header">
       <div msFontSize="20">Changer l'objectif</div>
-      <button msIconButton icon="Cancel" class="ml-2" msDialogContent theme="transparent" size="normal"></button>
+      <button msIconButton icon="Cancel" class="ml-2" msDialogClose theme="transparent" size="normal"></button>
     </div>
 
     <div class="ms-textField">
@@ -12,7 +12,7 @@
     </div>
 
     <div class="mt-4 text-right">
-      <button msButton msDialogContent class="mr-3">Annuler</button>
+      <button msButton msDialogClose class="mr-3">Annuler</button>
       <button msButton theme="primary" [disabled]="!objective" (click)="change()">Changer</button>
     </div>
   </form>

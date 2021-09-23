@@ -16,7 +16,15 @@ export class Student extends Entity<number> {
       this.fullName = value.fullName;
       this.registrationId = value.registrationId;
       this.birthDate = new Date(value.birthDate);
+      this.birthPlace = value.birthPlace;
       this.gender = value.gender;
+
+      this.phoneNumber = value.phoneNumber;
+      this.email = value.email;
+      this.address = value.address;
+
+      this.hasImage = value.hasImage;
+      this.imageUrl = value.imageUrl;
 
       this.levelId = value.levelId;
       this.levelSpecialityId = value.levelSpecialityId;
@@ -32,7 +40,15 @@ export class Student extends Entity<number> {
   registrationId: string;
   fullName: string;
   birthDate: Date;
+  birthPlace: string;
   gender: string;
+
+  phoneNumber: string;
+  email: string;
+  address: string;
+
+  hasImage: string;
+  imageUrl: string;
 
   userId: string;
   user: User;

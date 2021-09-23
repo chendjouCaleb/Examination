@@ -24,9 +24,9 @@ import {Global} from '../global';
 import * as hammer from 'hammerjs'
 import {
   MS_BUTTON_DEFAULT_OPTIONS,
-  MS_BUTTON_DEFAULT_OPTIONS_FACTORY,
+  MS_BUTTON_DEFAULT_OPTIONS_FACTORY, MS_DIALOG_DEFAULT_OPTIONS,
   MsButtonDefaultOptions,
-  MsButtonModule,
+  MsButtonModule, MsDialogConfig,
   MsSpinnerModule
 } from '@ms-fluent/components';
 
@@ -52,6 +52,10 @@ buttonOptions.colorThemes['standard'] = {
   borderColor: 'transparent'
 };
 
+const dialogConfig = new MsDialogConfig();
+dialogConfig.backdropClass = ['ex-overlay-class'];
+dialogConfig.panelClass = ['ex-dialog-panel'];
+
 @NgModule({
   declarations: [
     AppComponent
@@ -61,6 +65,7 @@ buttonOptions.colorThemes['standard'] = {
     AppHttpClientModule, HubsModule, BrowserAnimationsModule
   ],
   providers: [Preference, CurrentItems, Global,
+    {provide: MS_DIALOG_DEFAULT_OPTIONS, useValue: dialogConfig},
     {provide: LISTENER_ALERT_SERVICE_TOKEN, useExisting: AlertEmitter},
     {provide: LOCALE_ID, useValue: 'fr-FR'},
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},

@@ -46,8 +46,17 @@ export class StudentHttpClient extends GenericHttpClient<Student, number> {
     return this.listAsync({userId});
   }
 
-  addStudent(body: StudentAddBody, params: StudentAddParams) {
-    return this.add(body, params);
+  async addStudent(body: StudentAddBody, params: StudentAddParams): Promise<Student> {
+    const formData = new FormData();
+
+    for (const key in body) {
+      formData.append(key, body[key])
+    }
+
+    formData.set('image', body.image, 'image.png');
+
+    const result = await this.httpClient.post<Student>(`${this.url}`, formData, {params: params as any}).toPromise();
+    return new Student(result);
   }
 
   async changeUserId(student: Student, userId: string) {
@@ -79,5 +88,9 @@ export class StudentHttpClient extends GenericHttpClient<Student, number> {
 
   async removeLevelSpeciality(student: Student) {
     return this.httpClient.delete(`${this.url}/${student.id}/levelSpeciality`, {}).toPromise();
+  }
+
+  getStudentImageUrl(student: Student): string {
+    return `${this.url}/${student.id}/image`;
   }
 }

@@ -6,7 +6,6 @@ import {StudentHttpClient, UserHttpClient} from 'examination/models/http';
 import {Department, Level, LevelSpeciality, School, Speciality, Student} from 'examination/entities';
 
 
-
 @Injectable({providedIn: 'root'})
 export class StudentLoader extends Loader<Student, number> {
 
@@ -28,6 +27,12 @@ export class StudentLoader extends Loader<Student, number> {
 
     if (item.levelSpecialityId) {
       item.levelSpeciality = await this._levelSpecialityLoader.loadById(item.levelSpecialityId);
+    }
+
+    if (item.hasImage) {
+      item.imageUrl = this.studentRepository.getStudentImageUrl(item);
+    } else {
+      item.imageUrl = '/assets/icon/graduated.svg';
     }
 
 

@@ -31,6 +31,9 @@ export class StudentAddLevel implements OnInit {
     if (!this.data.level) {
       return;
     }
+
+    this.parent.model.level = this.data.level;
+    this.parent.model.levelSpeciality = this.data.levelSpeciality;
     this.parent.stepper.next();
   }
 

@@ -20,7 +20,8 @@ export class StudentService implements IStudentService {
   }
 
   addStudent(options: StudentAddOptions): Promise<Student> {
-    const modal = this._dialog.open(StudentAdd, {disableClose: false, width: '540px'});
+    const modal = this._dialog.open(StudentAdd, {
+      disableClose: false, width: '540px', panelClass: 'ex-dialog-panel', backdropClass: 'ex-overlay-class'});
     modal.componentInstance.options = options;
 
     return modal.afterClosed().toPromise();

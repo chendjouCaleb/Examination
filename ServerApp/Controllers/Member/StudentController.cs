@@ -155,7 +155,7 @@ namespace Exam.Controllers
             }
 
             if (_studentRepository.Exists(s =>
-                level.Department.School.Equals(s.Level?.Department?.School) && s.RegistrationId == form.RegistrationId))
+                level.Department.SchoolId == s.Level?.Department?.SchoolId && s.RegistrationId == form.RegistrationId))
             {
                 throw new InvalidValueException("{student.constraints.uniqueRegistrationId}");
             }
@@ -177,7 +177,7 @@ namespace Exam.Controllers
 
             student = _studentRepository.Save(student);
 
-            if (form.Image == null)
+            if (form.Image != null)
             {
                 ChangeImage(student, form.Image).ConfigureAwait(false);   
             }

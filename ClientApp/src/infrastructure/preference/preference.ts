@@ -18,11 +18,11 @@ export const DEFAULT_PREFERENCES = {
 @Injectable()
 export class Preference implements IPreference {
   constructor() {
-    // this._loadProperties();
-    // if (this.properties.isEmpty()) {
-    //   this._setDefaultProperties();
-    //   this.save();
-    // }
+    this.loadProperties();
+    if (this.properties.isEmpty()) {
+      this._setDefaultProperties();
+      this.save();
+    }
   }
 
   private _properties = new Dictionary<string, any>();

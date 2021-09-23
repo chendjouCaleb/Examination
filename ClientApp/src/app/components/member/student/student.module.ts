@@ -18,11 +18,12 @@ import {StudentList} from './list/student-list';
 import {StudentSpeciality} from './speciality/student-speciality';
 import {RouterModule} from '@angular/router';
 import {
+  MsActionMenuModule,
   MsButtonModule,
-  MsCheckboxModule,
+  MsCheckboxModule, MsCleaveModule,
   MsContextMenuModule,
   MsDialogModule,
-  MsDropdownModule, MsFormFieldModule, MsLabelModule,
+  MsDropdownModule, MsFormFieldModule, MsGridModule, MsLabelModule,
   MsPaginatorModule,
   MsPivotModule,
   MsRadioModule,
@@ -33,10 +34,10 @@ import {
 import {StudentAddModule} from './add/student-add.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsSelectModule, MsSpinnerModule,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsSelectModule, MsSpinnerModule, MsActionMenuModule,
     AppFormModule, MsContextMenuModule, MsDropdownModule, MomentModule, MsRadioModule, MsTableModule, MsButtonModule, MsPaginatorModule,
     MatRippleModule, MsCheckboxModule, UserPickerModule, MsPivotModule, MsDialogModule, RouterModule, MsFormFieldModule,
-    MsLabelModule, StudentAddModule],
+    MsLabelModule, StudentAddModule, MsCleaveModule, MsGridModule],
   declarations: [ StudentEdit, StudentUserLink, StudentLevel, StudentRegistrationId,
     StudentDetails, StudentList, StudentSpeciality],
   exports: [ StudentEdit, StudentUserLink, StudentLevel, StudentRegistrationId,

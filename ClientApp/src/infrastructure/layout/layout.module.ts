@@ -14,10 +14,17 @@ import {AuthPanelComponent} from './panel/auth-panel/auth-panel.component';
 import {Breadcrumb} from './breadcrumb/breadcrumb';
 import {HammerModule} from '@angular/platform-browser';
 import {ControlModule} from 'examination/controls';
-import {MsButtonModule, MsCheckboxModule, MsPersonaModule, MsRadioModule} from '@ms-fluent/components';
+import {
+  MsButtonModule,
+  MsCheckboxModule,
+  MsLabelModule,
+  MsPersonaModule,
+  MsRadioModule,
+  MsToggleModule
+} from '@ms-fluent/components';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MsRadioModule, MsCheckboxModule,
+  imports: [CommonModule, RouterModule, MsRadioModule, MsCheckboxModule, MsToggleModule, MsLabelModule,
     MsPersonaModule, HammerModule, MsButtonModule, ControlModule],
   declarations: [NavbarComponent, PanelComponent, LayoutComponent, SidebarComponent, AuthPanelComponent,
     SidebarItemComponent, SidebarCollapseDirective, LayoutSettingsComponent, Labelled, Breadcrumb],
