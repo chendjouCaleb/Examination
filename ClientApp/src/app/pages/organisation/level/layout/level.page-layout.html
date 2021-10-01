@@ -51,10 +51,9 @@
         </div>
         <div *msPivotContentDef>
           <app-course-session-list [level]="level" [hiddenColumns]="['level']"></app-course-session-list>
-
         </div>
         <div *msPivotContentDef>
-          <app-student-list [level]="level"></app-student-list>
+          <app-student-list [level]="level" [hiddenColumns]="['departmentName', 'levelIndex']" columnsKey="levelStudents"></app-student-list>
         </div>
         <div *msPivotContentDef>
           <app-room-list [level]="level"></app-room-list>

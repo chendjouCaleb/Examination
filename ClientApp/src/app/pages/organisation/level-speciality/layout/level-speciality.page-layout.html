@@ -16,7 +16,7 @@
             <button msIconButton theme="transparent" icon="MoreVertical" [MsDropdownTrigger]="levelMenu"></button>
             <MsDropdown #levelMenu>
               <MsContextMenu>
-                <MsContextMenuItem  icon="Delete" theme="error" (click)="delete()">
+                <MsContextMenuItem icon="Delete" theme="error" (click)="delete()">
                   Supprimer
                 </MsContextMenuItem>
               </MsContextMenu>
@@ -40,7 +40,9 @@
             <app-course-list [levelSpeciality]="levelSpeciality"></app-course-list>
           </div>
           <div *msPivotContentDef>
-            <app-student-list [levelSpeciality]="levelSpeciality"></app-student-list>
+            <app-student-list [levelSpeciality]="levelSpeciality"
+                              [hiddenColumns]="['departmentName', 'levelIndex', 'specialityName']"
+                              columnsKey="levelStudents"></app-student-list>
           </div>
         </msPivotBody>
       </msPivot>

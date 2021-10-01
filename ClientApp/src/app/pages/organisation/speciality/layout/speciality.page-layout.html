@@ -41,7 +41,7 @@
           <app-course-list [speciality]="speciality"></app-course-list>
         </div>
         <div *msPivotContentDef>
-          <app-student-list [speciality]="speciality"></app-student-list>
+          <app-student-list [speciality]="speciality" [hiddenColumns]="['departmentName', 'specialityName']" columnsKey="SpecialityStudents"></app-student-list>
         </div>
 
         <div *msPivotContentDef>

@@ -24,7 +24,7 @@
         <app-room-list  [department]="department"></app-room-list>
       </div>
       <div *msPivotContentDef>
-        <app-student-list  [department]="department"></app-student-list>
+        <app-student-list  [department]="department" [hiddenColumns]="['departmentName']" columnsKey="departmentStudents"></app-student-list>
       </div>
       <div *msPivotContentDef>
         <app-teacher-list  [department]="department"></app-teacher-list>

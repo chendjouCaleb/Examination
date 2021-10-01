@@ -1,125 +1,105 @@
 ﻿﻿
-<div class="flex-center-cover" style="max-height: 98%">
-  <div class="p-3" style=" max-height: 98%; overflow-y: auto; ">
-    <div class="ms-pageTitle ms-sticky-header">
-      <div msFontSize="18" class="d-flex">Demande
-        <app-icon *ngIf="application.isAuthor" class="ml-1" icon="Contact"></app-icon>
-        <div class="ml-2">
+<div style=" max-height: 98%; overflow-y: auto; ">
+  <div class="ms-pageTitle ms-sticky-header">
+    <div msFontSize="18" class="d-flex">Demande</div>
+    <button msIconButton icon="Cancel" msDialogClose>Fermer</button>
+  </div>
+
+  <MsActionMenu class="my-2">
+    <ng-container *ngIf=" application.waiting">
+      <button msActionMenuButton icon="CheckMark" theme="success" (click)="accept()">Accepter</button>
+      <button msActionMenuButton icon="UserRemove" theme="error" (click)="reject()">Rejeter</button>
+    </ng-container>
+
+    <ng-container *ngIf="application.isAuthor && application.waiting">
+      <button msActionMenuButton icon="Edit" (click)="_applicationService.edit(application)">Modifier</button>
+    </ng-container>
+
+    <button msActionMenuButton *ngIf="application.isAuthor" icon="Delete" (click)="delete()" theme="error">Supprimer
+    </button>
+  </MsActionMenu>
+
+  <div class="ms-divider"></div>
+  <msAlert class="mt-3" theme="severeWarning" *ngIf="registrationIdIsUsed">
+    Le matricule utilisé par cette demande est déjà utilisé par un autre étudiant de l'établissement!
+  </msAlert>
+
+
+  <div class="ms-Grid-row">
+    <div class="mt-4 ms-Grid-col ms-sm12 ms-md12 ms-lg6 ms-description-list">
+      <dl>
+        <dt>Nom & prénom</dt>
+        <dd>{{application.fullName}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Matricule</dt>
+        <dd>{{application.registrationId}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Date de naissance</dt>
+        <dd>{{application.birthDate | date}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Genre</dt>
+        <dd> {{application.gender}} </dd>
+      </dl>
+
+      <dl>
+        <dt>Départment</dt>
+        <dd>{{application.level.department.name}}</dd>
+      </dl>
+      <dl>
+        <dt>Niveau</dt>
+        <dd>{{application.level.index + 1}}</dd>
+      </dl>
+
+      <dl>
+        <dt>Spécialité</dt>
+        <dd *ngIf="application.levelSpeciality">{{application.levelSpeciality.speciality.name}}</dd>
+        <dd *ngIf="!application.levelSpeciality">
+          <span class="ms-badge ms-badge-error">Aucune</span>
+        </dd>
+      </dl>
+
+    </div>
+
+    <div class="mt-4 ms-Grid-col ms-sm12 ms-md12 ms-lg6 ms-description-list">
+      <dl>
+        <dt>Date d'envoie</dt>
+        <dd>{{application.registrationDate | amCalendar}}</dd>
+      </dl>
+      <dl>
+        <dt>Envoyée par</dt>
+        <dd>
+          <user-persona style="white-space: nowrap" [user]="application.user" *ngIf="application.user"></user-persona>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>{{'état' | ucFirst}}</dt>
+        <dd>
           <span [appStateBadge]="application.state"></span>
-        </div>
-      </div>
+        </dd>
+      </dl>
 
-      <button msIconButton icon="Cancel" msDialogClose>Fermer</button>
-    </div>
+      <dl *ngIf="application.processDate">
+        <dt>Date de traitement</dt>
+        <dd>{{application.processDate | amCalendar}}</dd>
+      </dl>
 
-    <div class="text-right my-2">
-      <ng-container *ngIf=" application.waiting">
-        <button msButton icon="CheckMark" theme="success" (click)="accept()">Accepter</button>
-        <button msButton icon="UserRemove" theme="error" class="ml-2" (click)="reject()">Rejeter</button>
-      </ng-container>
-
-      <ng-container *ngIf="application.isAuthor && application.waiting">
-        <button msButton [MsDropdownTrigger]="more" icon="Edit" secondaryIcon="ChevronDown" theme="primary"
-                class="ml-2">
-          Modifier
-        </button>
-
-        <MsDropdown #more>
-          <MsContextMenu>
-            <MsContextMenuItem icon="Contact" (click)="_applicationService.edit(application)">Modifier les informations
-            </MsContextMenuItem>
-
-          </MsContextMenu>
-        </MsDropdown>
-      </ng-container>
-
-      <button msButton *ngIf="application.isAuthor" icon="Delete" (click)="delete()" theme="errorOutline"
-              class="ml-2">Supprimer
-      </button>
-    </div>
-
-    <div class="ms-divider"></div>
-    <msAlert class="mt-3" theme="severeWarning" *ngIf="registrationIdIsUsed">
-      Le matricule utilisé par cette demande est déjà utilisé par un autre étudiant de l'établissement!
-    </msAlert>
-
-
-    <div class="ms-Grid-row">
-      <div class="mt-4 ms-Grid-col ms-sm12 ms-md12 ms-lg6 ms-description-list">
-        <dl>
-          <dt>Nom & prénom</dt>
-          <dd>{{application.fullName}}</dd>
-        </dl>
-
-        <dl>
-          <dt>Matricule</dt>
-          <dd>{{application.registrationId}}</dd>
-        </dl>
-
-        <dl>
-          <dt>Date de naissance</dt>
-          <dd>{{application.birthDate | date}}</dd>
-        </dl>
-
-        <dl>
-          <dt>Genre</dt>
-          <dd> {{application.gender}} </dd>
-        </dl>
-
-        <dl>
-          <dt>Départment</dt>
-          <dd>{{application.level.department.name}}</dd>
-        </dl>
-        <dl>
-          <dt>Niveau</dt>
-          <dd>{{application.level.index + 1}}</dd>
-        </dl>
-
-        <dl>
-          <dt>Spécialité</dt>
-          <dd *ngIf="application.levelSpeciality">{{application.levelSpeciality.speciality.name}}</dd>
-          <dd *ngIf="!application.levelSpeciality">
-            <span class="ms-badge ms-badge-error">Aucune</span>
-          </dd>
-        </dl>
-
-      </div>
-
-      <div class="mt-4 ms-Grid-col ms-sm12 ms-md12 ms-lg6 ms-description-list">
-        <dl>
-          <dt>Date d'envoie</dt>
-          <dd>{{application.registrationDate | amCalendar}}</dd>
-        </dl>
-        <dl>
-          <dt>Envoyée par</dt>
-          <dd>
-            <user-persona style="white-space: nowrap" [user]="application.user" *ngIf="application.user"></user-persona>
-          </dd>
-        </dl>
-
-        <dl>
-          <dt>{{'état' | ucFirst}}</dt>
-          <dd>
-            <span [appStateBadge]="application.state"></span>
-          </dd>
-        </dl>
-
-        <dl *ngIf="application.processDate">
-          <dt>Date de traitement</dt>
-          <dd>{{application.processDate | amCalendar}}</dd>
-        </dl>
-
-        <dl *ngIf="application.processDate">
-          <dt>Traitée par</dt>
-          <dd>
-            <user-persona *ngIf="application.processUser" [user]="application.processUser"></user-persona>
-          </dd>
-        </dl>
-
-      </div>
-
+      <dl *ngIf="application.processDate">
+        <dt>Traitée par</dt>
+        <dd>
+          <user-persona *ngIf="application.processUser" [user]="application.processUser"></user-persona>
+        </dd>
+      </dl>
 
     </div>
+
 
   </div>
+
 </div>

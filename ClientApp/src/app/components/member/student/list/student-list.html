@@ -2,17 +2,34 @@
   <div class="ms-fontSize-20 ms-fontWeight-semibold"> Étudiants ({{items.length}})</div>
 </div>
 
-<msActionMenu>
+<msActionMenu class="my-2">
   <button msActionMenuButton icon="Add" (click)="addStudent()">Ajouter un étudiant</button>
   <button msActionMenuButton icon="Download" secondaryIcon="ChevronDown">Importer</button>
 
   <MsActionMenuFarSection>
-    <button MsActionMenuButton icon="TripleColumn" secondaryIcon="ChevronDown" theme="primary">Colonnes</button>
+    <button MsActionMenuButton icon="TripleColumn" secondaryIcon="ChevronDown" [MsDropdownTrigger]="visibleColumnDropdown">Colonnes</button>
     <button MsActionMenuButton secondaryIcon="ChevronDown" icon="SortLines">Trier</button>
     <button MsActionMenuButton secondaryIcon="ChevronDown" [MsDropdownTrigger]="displayMenu">
       <i class="ms-Icon ms-Icon--Table text-primary" *ngIf="displayStyle === 'table'"></i>
       <i class="ms-Icon ms-Icon--GridViewMedium text-primary" *ngIf="displayStyle === 'grid'"></i>
     </button>
+
+    <MsDropdown #visibleColumnDropdown>
+      <MsContextMenu [(values)]="visibleColumns" [selectable]="true">
+        <MsContextMenuItem value="#">#</MsContextMenuItem>
+        <MsContextMenuItem value="departmentName">Département</MsContextMenuItem>
+        <MsContextMenuItem value="levelIndex">Niveau</MsContextMenuItem>
+        <MsContextMenuItem value="specialityName">Spécialité</MsContextMenuItem>
+        <MsContextMenuItem value="fullName">Nom & prénom</MsContextMenuItem>
+        <MsContextMenuItem value="registrationId">Matricule</MsContextMenuItem>
+        <MsContextMenuItem value="birthDate">Date de naissance</MsContextMenuItem>
+        <MsContextMenuItem value="gender">Sexe</MsContextMenuItem>
+        <MsContextMenuItem value="user">Utilisateur</MsContextMenuItem>
+        <MsContextMenuItem value="registrationDate">Date d'ajout</MsContextMenuItem>
+        <MsContextMenuItem value="addedBy">Ajouté par</MsContextMenuItem>
+        <MsContextMenuItem value="actions">Actions</MsContextMenuItem>
+      </MsContextMenu>
+    </MsDropdown>
 
     <MsDropdown #displayMenu>
       <MsContextMenu>
@@ -102,19 +119,22 @@
   <msPaginator #msPaginator pageSize="50" [totalSize]="students.length" [itemsFn]="itemsFn">
     <div *ms-paginatorPageDef="let data=items; let start=start">
 
-      <ms-table *ngIf="displayStyle == 'table'" #table style="max-height: 500px">
+      <ms-table *ngIf="displayStyle == 'table'" #table style="max-height: 500px" [visibleColumns]="visibleColumns">
         <msTableHead *ms-tableHeadDef>
           <ms-tableHeadCell name="#">#</ms-tableHeadCell>
 
+          <msTableHeadCell name="departmentName" [sortBy]="['departmentName', 'string']">Départment</msTableHeadCell>
           <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
+          <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
           <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom</msTableHeadCell>
           <msTableHeadCell name="registrationId" [sortBy]="['registrationId', 'string']">Matricule</msTableHeadCell>
           <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
           <msTableHeadCell name="gender" [sortBy]="['gender', 'string']">Sexe</msTableHeadCell>
-          <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
           <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
           <msTableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout
           </msTableHeadCell>
+
+          <msTableHeadCell name="addedBy">Ajouté par</msTableHeadCell>
 
           <msTableHeadCell name="actions" style="text-align: right">
             <i class="ms-Icon ms-Icon--SetAction px-2"></i>
@@ -123,10 +143,13 @@
 
         <tr ms-tableRow *ms-tableRowDef="let item of data; let i=index" [value]="item">
           <td ms-tableCell>{{i + start + 1}}</td>
-
-
+          <td ms-tableCell class="ms-fontWeight-semibold">
+            {{item.departmentName}}
+          </td>
           <td ms-tableCell>{{item.levelIndex + 1}}</td>
-
+          <td ms-tableCell class="ms-fontWeight-semibold">
+            {{item.specialityName}}
+          </td>
           <td ms-tableCell>
             <a [routerLink]="item.url" class="ms-fontWeight-semibold text-capitalize">{{item.fullName}}</a>
           </td>
@@ -135,17 +158,10 @@
             {{item.registrationId}}
           </td>
 
-          <td ms-tableCell>
-            {{item.birthDate | date}}
-          </td>
+          <td ms-tableCell> {{item.birthDate | date}} </td>
+          <td ms-tableCell> {{item.gender}} </td>
 
-          <td ms-tableCell>
-            {{item.gender}}
-          </td>
 
-          <td ms-tableCell class="ms-fontWeight-semibold">
-            {{item.specialityName}}
-          </td>
 
 
           <td ms-tableCell>
@@ -154,6 +170,10 @@
 
           <td ms-tableCell>
             <span msFontSize="12" style="opacity: 0.8">{{item.registrationDate | date}}</span>
+          </td>
+
+          <td ms-tableCell>
+            <user-persona *ngIf="item.registerUser" [user]="item.registerUser"></user-persona>
           </td>
 
 
@@ -202,9 +222,9 @@
       </ms-table>
 
       <MsGrid xGap="20" yGap="20" [itemHeight]="400" [itemWidth]="280" #msGrid *ngIf="displayStyle == 'grid'">
-        <div *MsGridItemDef="let item of data; let i=index" class="ms-depth-8 student-card" >
+        <div *MsGridItemDef="let item of data; let i=index" class="ms-depth-8 student-card">
           <div>
-            <img style="width: 100%" [src]="item.imageUrl" alt="Student photo" />
+            <img style="width: 100%" [src]="item.imageUrl" alt="Student photo"/>
           </div>
           <div class="p-2 mt-2">
             <div msFontWeight="semibold" msFontSize="16" class="ms-text-ellipsis">{{item.fullName}}</div>

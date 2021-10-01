@@ -11,13 +11,19 @@ import {
 } from 'examination/models';
 import {MsCheckboxGroup, MsPaginator, MsPaginatorItemsFn, MsTable} from '@ms-fluent/components';
 import {StudentAddOptions} from '../add/student-add-options';
-import {Preference} from "examination/infrastructure";
+import {Preference} from 'examination/infrastructure';
+import {AlertEmitter} from 'examination/controls';
+
+const columns = ['#', 'departmentName', 'levelIndex', 'specialityName', 'fullName', 'registrationId', 'birthDate', 'gender', 'user', 'registrationDate', 'addedBy', 'actions'];
 
 @Component({
   templateUrl: 'student-list.html',
   selector: 'app-student-list'
 })
 export class StudentList implements OnInit, AfterViewInit {
+
+  @Input()
+  columnsKey = 'StudentListColumns';
 
   @Input()
   school: School;
@@ -54,27 +60,52 @@ export class StudentList implements OnInit, AfterViewInit {
 
   displayStyle: 'table' | 'grid' = 'grid';
 
+  @Input()
+  hiddenColumns: string[];
+  private _visibleColumns: string[];
+  get visibleColumns(): string[] {
+    return this._visibleColumns;
+  }
+
+  set visibleColumns(values: string[]) {
+    this._visibleColumns = values;
+    this.preference.set(this.columnsKey, values, true);
+  }
+
   constructor(private _studentLoader: StudentLoader,
               private _httpClient: StudentHttpClient,
               private preference: Preference,
+              private alert: AlertEmitter,
               @Inject(STUDENT_SERVICE_TOKEN) public _studentService: IStudentService
   ) {
     this.displayStyle = this.preference.get('studentListDisplayMode') || 'grid';
   }
 
   async ngOnInit() {
+    const savedColumns = this.preference.get(this.columnsKey);
+
+    if (!savedColumns || savedColumns.length === 0) {
+      const selectedColumns = columns.filter(c => !(this.hiddenColumns?.indexOf(c) > -1));
+      console.log(selectedColumns)
+      this._visibleColumns = selectedColumns;
+    } else {
+      this._visibleColumns = savedColumns;
+    }
+
+
     try {
       await this.loadStudents();
       this.isLoading = false;
       this.isLoaded = true;
     } catch (e) {
       this.isLoading = false;
-      console.error(e);
+      this.alert.error(e.error.message);
     }
-    console.log('loaded')
+    this.alert.info('Chargement terminé !');
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+  }
 
   setDisplayStyle(model: 'table' | 'grid') {
     this.displayStyle = model;

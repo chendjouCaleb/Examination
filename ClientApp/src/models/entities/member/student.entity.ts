@@ -77,8 +77,15 @@ export class Student extends Entity<number> {
   }
 
   get specialityName(): string {
-    if(this.levelSpeciality) {
+    if (this.levelSpeciality) {
       return this.levelSpeciality?.speciality.name;
+    }
+    return '';
+  }
+
+  get departmentName(): string {
+    if (this.level?.department) {
+      return this.level.department.name;
     }
     return '';
   }

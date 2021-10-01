@@ -13,6 +13,7 @@ import {STUDENT_APPLICATION_SERVICE_TOKEN} from './application.service.interface
 import {ApplicationResolver} from './application.resolver';
 import {ApplicationList} from './list/application-list';
 import {
+  MsActionMenuModule,
   MsButtonModule,
   MsCheckboxModule, MsContextMenuModule,
   MsDialogModule, MsDropdownModule, MsLabelModule,
@@ -25,6 +26,7 @@ import {
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsButtonModule, MsSelectModule,
+    MsActionMenuModule,
     AppFormModule, MsPersonaModule, MsContextMenuModule, MsDropdownModule, MomentModule, MsRadioModule, MsCheckboxModule,
     MsLabelModule,
     MsPivotModule, MsDialogModule, MsTableModule, MsPaginatorModule, RouterModule, MsSpinnerModule],
