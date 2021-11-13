@@ -37,12 +37,15 @@ namespace Exam.Controllers.Courses
 
         [HttpGet]
         public IEnumerable<CourseHour> List([FromQuery] long? roomId, 
+            [FromQuery] long? schoolId,
+            [FromQuery] long? departmentId,
             [FromQuery] long? courseId,
             [FromQuery] long? courseTeacherId,
             [FromQuery] long? teacherId,
             [FromQuery] long? levelId)
         {
-            if (roomId == null && courseId == null && courseTeacherId == null && teacherId == null && levelId == null)
+            if (roomId == null && courseId == null && courseTeacherId == null && teacherId == null && levelId == null
+                && schoolId == null && departmentId == null)
             {
                 return new CourseHour[] { };
             }
@@ -72,6 +75,16 @@ namespace Exam.Controllers.Courses
             if (levelId != null)
             {
                 query = query.Where(ch => ch.Course.LevelId == levelId);
+            }
+            
+            if (departmentId != null)
+            {
+                query = query.Where(ch => ch.Course.Level.DepartmentId == departmentId);
+            }
+            
+            if (schoolId != null)
+            {
+                query = query.Where(ch => ch.Course.Level.Department.SchoolId == schoolId);
             }
 
             return query.ToArray();

@@ -1,5 +1,6 @@
 ﻿using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Persistence
@@ -51,6 +52,13 @@ namespace Exam.Persistence
         public DbSet<TestLevelSpeciality> TestLevelSpecialities { get; set; }
         public DbSet<TestScore> TestScores { get; set; }
         public DbSet<ScorePaper> ScorePapers{ get; set; }
+
+        public DbSet<Year> Years { get; set; }
+        public DbSet<YearDepartment> YearDepartments { get; set; }
+        public DbSet<YearSpeciality> YearSpecialities { get; set; }
+        public DbSet<YearLevel> YearLevels { get; set; }
+        public DbSet<YearLevelSpeciality> YearLevelSpecialities { get; set; }
+        
         
         public PersistenceContext(DbContextOptions<PersistenceContext> options):base(options)
         { }

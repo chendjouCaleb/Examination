@@ -12,6 +12,7 @@
       <e p="ClientApp\node_modules\@angular\compiler-cli" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@angular\core" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@angular\forms" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\@angular\localize" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@angular\material" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@angular\material-moment-adapter" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@angular\platform-browser" t="IncludeRecursive" />
@@ -36,15 +37,14 @@
       <e p="ClientApp\node_modules\@jest\types" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@js-joda\core" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@js-joda\locale_fr" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\@jsdevtools\coverage-istanbul-loader" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@microsoft\signalr" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\@ms-fluent\action-menu" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\@ms-fluent\button" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\@ms-fluent\grid" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\@ms-fluent\persona" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\@ms-fluent\pivot" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\@ms-fluent\spinner" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\@ms-fluent\table" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\@ms-fluent\components" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\@ms-fluent\date-ui" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@ngtools\webpack" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\@nodelib\fs.scandir" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\@nodelib\fs.stat" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\@nodelib\fs.walk" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@positon\collections" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\@types" t="IncludeRecursive">
         <e p="animejs" t="IncludeRecursive" />
@@ -52,7 +52,6 @@
         <e p="babel__template" t="IncludeRecursive" />
         <e p="babel__traverse" t="IncludeRecursive" />
         <e p="cleave.js" t="IncludeRecursive" />
-        <e p="events" t="IncludeRecursive" />
         <e p="hammerjs" t="IncludeRecursive" />
         <e p="istanbul-lib-coverage" t="IncludeRecursive" />
         <e p="istanbul-lib-report" t="IncludeRecursive" />
@@ -64,37 +63,48 @@
         <e p="node" t="IncludeRecursive" />
         <e p="prop-types" t="IncludeRecursive" />
         <e p="react" t="IncludeRecursive" />
+        <e p="scheduler" t="IncludeRecursive" />
         <e p="source-list-map" t="IncludeRecursive" />
         <e p="yargs-parser" t="IncludeRecursive" />
       </e>
-      <e p="ClientApp\node_modules\acorn" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\agent-base" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\ajv" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\ajv-formats" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\ajv-keywords" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\ansi-colors" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\arg" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\autoprefixer" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\babel-jest" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\blocking-proxy" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\browserslist" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\bs-logger" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\canonical-path" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\chalk" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\chokidar" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\class-validator" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\cleave.js" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\codelyzer" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\colorette" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\commander" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\core-js" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\coverage-istanbul-loader" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\critters" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\cropperjs" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\csstype" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\dependency-graph" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\diff-sequences" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\enhanced-resolve" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\es6-promise" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\escalade" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\expect" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\express" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\fabric-docs" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\fast-deep-equal" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\fast-glob" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\fast-json-stable-stringify" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\fraction.js" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\gsap" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\gulp-shell" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\hammerjs" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\hash.js" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\https-proxy-agent" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\jasmine-core" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\jasmine-spec-reporter" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\jest" t="IncludeRecursive" />
@@ -121,6 +131,8 @@
       <e p="ClientApp\node_modules\jest-util" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\jest-validate" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\jest-worker" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\json-schema-traverse" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\json5" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\jwt-decode" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\karma" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\karma-chrome-launcher" t="IncludeRecursive" />
@@ -130,6 +142,7 @@
       <e p="ClientApp\node_modules\license-webpack-plugin" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\magic-string" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\moment" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\nanoid" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\ngx-moment" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\node-sass" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\office-ui-fabric-core" t="IncludeRecursive" />
@@ -142,9 +155,11 @@
       <e p="ClientApp\node_modules\resize-observer-polyfill" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\rollup" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\rxjs" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\schema-utils" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\source-map" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\sourcemap-codec" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\symbol-observable" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\tapable" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\terser" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\tree-kill" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\ts-jest" t="IncludeRecursive" />
@@ -187,27 +202,238 @@
       <e p="ClientApp\node_modules\typescript\lib\lib.es2019.object.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.es2019.string.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.es2019.symbol.d.ts" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\typescript\lib\lib.es2020.bigint.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.es2020.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.es2020.full.d.ts" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\typescript\lib\lib.es2020.intl.d.ts" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\typescript\lib\lib.es2020.promise.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.es2020.string.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.es2020.symbol.wellknown.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.es5.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.es6.d.ts" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\typescript\lib\lib.esnext.array.d.ts" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\typescript\lib\lib.esnext.asynciterable.d.ts" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\typescript\lib\lib.esnext.bigint.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.esnext.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.esnext.full.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.esnext.intl.d.ts" t="IncludeRecursive" />
-      <e p="ClientApp\node_modules\typescript\lib\lib.esnext.symbol.d.ts" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\typescript\lib\lib.esnext.promise.d.ts" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\typescript\lib\lib.esnext.string.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.scripthost.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.webworker.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\typescript\lib\lib.webworker.importscripts.d.ts" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\upath" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\uri-js" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\webdriver-js-extender" t="IncludeRecursive" />
+      <e p="ClientApp\node_modules\webpack-merge" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\worker-farm" t="IncludeRecursive" />
       <e p="ClientApp\node_modules\zone.js" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@ampproject\remapping" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\animations" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\cdk" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\cli" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\common" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\compiler" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\compiler-cli" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\core" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\forms" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\platform-browser" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\platform-browser-dynamic" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular\router" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-devkit\architect" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-devkit\build-angular" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-devkit\build-optimizer" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-devkit\build-webpack" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-devkit\core" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-devkit\schematics" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-eslint\eslint-plugin" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-eslint\eslint-plugin-template" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@angular-eslint\template-parser" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@assemblyscript\loader" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@babel\parser" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@babel\types" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@bcoe\v8-coverage" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\console" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\core" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\environment" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\fake-timers" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\globals" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\reporters" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\source-map" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\test-result" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\test-sequencer" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\transform" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jest\types" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jridgewell\resolve-uri" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@js-joda\core" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@js-joda\locale_fr" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@jsdevtools\coverage-istanbul-loader" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@microsoft\signalr" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@ms-fluent\components" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@ms-fluent\date-ui" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@ngtools\webpack" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nodelib\fs.scandir" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nodelib\fs.stat" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nodelib\fs.walk" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\angular" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\cli" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\cypress" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\devkit" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\eslint-plugin-nx" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\jest" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\linter" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\storybook" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\tao" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@nrwl\workspace" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@phenomnomnominal\tsquery" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@positon\collections" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@types" t="IncludeRecursive">
+        <e p="babel__generator" t="IncludeRecursive" />
+        <e p="babel__template" t="IncludeRecursive" />
+        <e p="babel__traverse" t="IncludeRecursive" />
+        <e p="cleave.js" t="IncludeRecursive" />
+        <e p="eslint" t="IncludeRecursive" />
+        <e p="estree" t="IncludeRecursive" />
+        <e p="hammerjs" t="IncludeRecursive" />
+        <e p="istanbul-lib-coverage" t="IncludeRecursive" />
+        <e p="istanbul-lib-report" t="IncludeRecursive" />
+        <e p="jest" t="IncludeRecursive" />
+        <e p="json-schema" t="IncludeRecursive" />
+        <e p="jwt-decode" t="IncludeRecursive" />
+        <e p="minimatch" t="IncludeRecursive" />
+        <e p="node" t="IncludeRecursive" />
+        <e p="prop-types" t="IncludeRecursive" />
+        <e p="react" t="IncludeRecursive" />
+        <e p="scheduler" t="IncludeRecursive" />
+        <e p="source-list-map" t="IncludeRecursive" />
+        <e p="yargs-parser" t="IncludeRecursive" />
+      </e>
+      <e p="webapp\node_modules\@typescript-eslint\eslint-plugin" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@typescript-eslint\experimental-utils" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@typescript-eslint\parser" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@typescript-eslint\scope-manager" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@typescript-eslint\types" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@typescript-eslint\typescript-estree" t="IncludeRecursive" />
+      <e p="webapp\node_modules\@typescript-eslint\visitor-keys" t="IncludeRecursive" />
+      <e p="webapp\node_modules\acorn" t="IncludeRecursive" />
+      <e p="webapp\node_modules\agent-base" t="IncludeRecursive" />
+      <e p="webapp\node_modules\ajv" t="IncludeRecursive" />
+      <e p="webapp\node_modules\ajv-formats" t="IncludeRecursive" />
+      <e p="webapp\node_modules\ajv-keywords" t="IncludeRecursive" />
+      <e p="webapp\node_modules\ansi-colors" t="IncludeRecursive" />
+      <e p="webapp\node_modules\arch" t="IncludeRecursive" />
+      <e p="webapp\node_modules\arg" t="IncludeRecursive" />
+      <e p="webapp\node_modules\babel-jest" t="IncludeRecursive" />
+      <e p="webapp\node_modules\base64-js" t="IncludeRecursive" />
+      <e p="webapp\node_modules\blob-util" t="IncludeRecursive" />
+      <e p="webapp\node_modules\browserslist" t="IncludeRecursive" />
+      <e p="webapp\node_modules\bs-logger" t="IncludeRecursive" />
+      <e p="webapp\node_modules\canonical-path" t="IncludeRecursive" />
+      <e p="webapp\node_modules\check-more-types" t="IncludeRecursive" />
+      <e p="webapp\node_modules\chokidar" t="IncludeRecursive" />
+      <e p="webapp\node_modules\chrome-trace-event" t="IncludeRecursive" />
+      <e p="webapp\node_modules\cjs-module-lexer" t="IncludeRecursive" />
+      <e p="webapp\node_modules\class-validator" t="IncludeRecursive" />
+      <e p="webapp\node_modules\cleave.js" t="IncludeRecursive" />
+      <e p="webapp\node_modules\cli-table3" t="IncludeRecursive" />
+      <e p="webapp\node_modules\collect-v8-coverage" t="IncludeRecursive" />
+      <e p="webapp\node_modules\colorette" t="IncludeRecursive" />
+      <e p="webapp\node_modules\commander" t="IncludeRecursive" />
+      <e p="webapp\node_modules\create-require" t="IncludeRecursive" />
+      <e p="webapp\node_modules\critters" t="IncludeRecursive" />
+      <e p="webapp\node_modules\cropperjs" t="IncludeRecursive" />
+      <e p="webapp\node_modules\csstype" t="IncludeRecursive" />
+      <e p="webapp\node_modules\cypress" t="IncludeRecursive" />
+      <e p="webapp\node_modules\dayjs" t="IncludeRecursive" />
+      <e p="webapp\node_modules\dependency-graph" t="IncludeRecursive" />
+      <e p="webapp\node_modules\diff-sequences" t="IncludeRecursive" />
+      <e p="webapp\node_modules\dotenv" t="IncludeRecursive" />
+      <e p="webapp\node_modules\es-module-lexer" t="IncludeRecursive" />
+      <e p="webapp\node_modules\esbuild-wasm" t="IncludeRecursive" />
+      <e p="webapp\node_modules\escalade" t="IncludeRecursive" />
+      <e p="webapp\node_modules\eslint" t="IncludeRecursive" />
+      <e p="webapp\node_modules\eslint-config-prettier" t="IncludeRecursive" />
+      <e p="webapp\node_modules\eslint-plugin-cypress" t="IncludeRecursive" />
+      <e p="webapp\node_modules\eventemitter-asyncresource" t="IncludeRecursive" />
+      <e p="webapp\node_modules\eventemitter2" t="IncludeRecursive" />
+      <e p="webapp\node_modules\expect" t="IncludeRecursive" />
+      <e p="webapp\node_modules\extract-zip" t="IncludeRecursive" />
+      <e p="webapp\node_modules\fast-deep-equal" t="IncludeRecursive" />
+      <e p="webapp\node_modules\fast-glob" t="IncludeRecursive" />
+      <e p="webapp\node_modules\fast-json-stable-stringify" t="IncludeRecursive" />
+      <e p="webapp\node_modules\fork-ts-checker-webpack-plugin" t="IncludeRecursive" />
+      <e p="webapp\node_modules\gsap" t="IncludeRecursive" />
+      <e p="webapp\node_modules\gulp-shell" t="IncludeRecursive" />
+      <e p="webapp\node_modules\hammerjs" t="IncludeRecursive" />
+      <e p="webapp\node_modules\hdr-histogram-js" t="IncludeRecursive" />
+      <e p="webapp\node_modules\https-proxy-agent" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-changed-files" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-circus" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-config" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-diff" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-docblock" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-each" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-environment-jsdom" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-environment-node" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-get-type" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-haste-map" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-jasmine2" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-leak-detector" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-matcher-utils" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-message-util" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-mock" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-preset-angular" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-regex-util" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-resolve" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-resolve-dependencies" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-runner" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-runtime" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-serializer" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-snapshot" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-util" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-validate" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-watcher" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jest-worker" t="IncludeRecursive" />
+      <e p="webapp\node_modules\json-schema-traverse" t="IncludeRecursive" />
+      <e p="webapp\node_modules\json5" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jsonc-parser" t="IncludeRecursive" />
+      <e p="webapp\node_modules\jwt-decode" t="IncludeRecursive" />
+      <e p="webapp\node_modules\kleur" t="IncludeRecursive" />
+      <e p="webapp\node_modules\lazy-ass" t="IncludeRecursive" />
+      <e p="webapp\node_modules\license-webpack-plugin" t="IncludeRecursive" />
+      <e p="webapp\node_modules\listr2" t="IncludeRecursive" />
+      <e p="webapp\node_modules\magic-string" t="IncludeRecursive" />
+      <e p="webapp\node_modules\memfs" t="IncludeRecursive" />
+      <e p="webapp\node_modules\moment" t="IncludeRecursive" />
+      <e p="webapp\node_modules\nanoid" t="IncludeRecursive" />
+      <e p="webapp\node_modules\ngx-moment" t="IncludeRecursive" />
+      <e p="webapp\node_modules\nx" t="IncludeRecursive" />
+      <e p="webapp\node_modules\picocolors" t="IncludeRecursive" />
+      <e p="webapp\node_modules\pirates" t="IncludeRecursive" />
+      <e p="webapp\node_modules\piscina" t="IncludeRecursive" />
+      <e p="webapp\node_modules\postcss" t="IncludeRecursive" />
+      <e p="webapp\node_modules\pretty-format" t="IncludeRecursive" />
+      <e p="webapp\node_modules\reflect-metadata" t="IncludeRecursive" />
+      <e p="webapp\node_modules\resize-observer-polyfill" t="IncludeRecursive" />
+      <e p="webapp\node_modules\rxjs" t="IncludeRecursive" />
+      <e p="webapp\node_modules\rxjs-for-await" t="IncludeRecursive" />
+      <e p="webapp\node_modules\schema-utils" t="IncludeRecursive" />
+      <e p="webapp\node_modules\source-map" t="IncludeRecursive" />
+      <e p="webapp\node_modules\source-map-js" t="IncludeRecursive" />
+      <e p="webapp\node_modules\sourcemap-codec" t="IncludeRecursive" />
+      <e p="webapp\node_modules\symbol-observable" t="IncludeRecursive" />
+      <e p="webapp\node_modules\terser" t="IncludeRecursive" />
+      <e p="webapp\node_modules\tree-kill" t="IncludeRecursive" />
+      <e p="webapp\node_modules\ts-jest" t="IncludeRecursive" />
+      <e p="webapp\node_modules\ts-loader" t="IncludeRecursive" />
+      <e p="webapp\node_modules\ts-node" t="IncludeRecursive" />
+      <e p="webapp\node_modules\tsconfig-paths" t="IncludeRecursive" />
+      <e p="webapp\node_modules\tsconfig-paths-webpack-plugin" t="IncludeRecursive" />
+      <e p="webapp\node_modules\tslib" t="IncludeRecursive" />
+      <e p="webapp\node_modules\upath" t="IncludeRecursive" />
+      <e p="webapp\node_modules\uri-js" t="IncludeRecursive" />
+      <e p="webapp\node_modules\v8-to-istanbul" t="IncludeRecursive" />
+      <e p="webapp\node_modules\webpack" t="IncludeRecursive" />
+      <e p="webapp\node_modules\webpack-merge" t="IncludeRecursive" />
+      <e p="webapp\node_modules\zone.js" t="IncludeRecursive" />
     </e>
   </component>
 </project>

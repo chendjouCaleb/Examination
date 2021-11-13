@@ -5,7 +5,7 @@ import {MsDialogRef} from '@ms-fluent/components';
 
 @Component({
   templateUrl: 'student-details.html',
-  selector: 'app-student-details'
+  selector: 'app-student-details, StudentDetails'
 })
 export class StudentDetails {
   @Input()

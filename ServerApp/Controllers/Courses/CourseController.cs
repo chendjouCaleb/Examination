@@ -67,13 +67,26 @@ namespace Exam.Controllers.Courses
         }
 
         [HttpGet]
-        public IEnumerable<Course> List([FromQuery] long levelId, [FromQuery] long? specialityId)
+        public IEnumerable<Course> List([FromQuery] long levelId, 
+            [FromQuery] long? departmentId,
+            [FromQuery] long? schoolId,
+            [FromQuery] long? specialityId)
         {
             if (specialityId != null)
             {
                 return _courseLevelSpecialityRepository
                     .List(c => c.LevelSpeciality.SpecialityId == specialityId)
                     .Select(c => c.Course);
+            }
+
+            if (schoolId != null)
+            {
+                return _courseRepository.List(c => c.Level.Department.SchoolId == schoolId);
+            }
+            
+            if (departmentId != null)
+            {
+                return _courseRepository.List(c => c.Level.DepartmentId == departmentId);
             }
 
             return _courseRepository.List(c => c.LevelId == levelId);

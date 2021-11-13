@@ -20,7 +20,7 @@ import {RouterModule} from '@angular/router';
 import {
   MsActionMenuModule,
   MsButtonModule,
-  MsCheckboxModule, MsCleaveModule,
+  MsCheckboxModule, MsCleaveModule, MsCollectionSlideModule,
   MsContextMenuModule,
   MsDialogModule,
   MsDropdownModule, MsFormFieldModule, MsGridModule, MsLabelModule,
@@ -32,14 +32,15 @@ import {
   MsTableModule
 } from '@ms-fluent/components';
 import {StudentAddModule} from './add/student-add.module';
+import {StudentSlide} from './slide/student-slide';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ControlModule, MsSelectModule, MsSpinnerModule, MsActionMenuModule,
     AppFormModule, MsContextMenuModule, MsDropdownModule, MomentModule, MsRadioModule, MsTableModule, MsButtonModule, MsPaginatorModule,
     MatRippleModule, MsCheckboxModule, UserPickerModule, MsPivotModule, MsDialogModule, RouterModule, MsFormFieldModule,
-    MsLabelModule, StudentAddModule, MsCleaveModule, MsGridModule],
+    MsLabelModule, StudentAddModule, MsCleaveModule, MsGridModule, MsCollectionSlideModule],
   declarations: [ StudentEdit, StudentUserLink, StudentLevel, StudentRegistrationId,
-    StudentDetails, StudentList, StudentSpeciality],
+    StudentDetails, StudentList, StudentSpeciality, StudentSlide ],
   exports: [ StudentEdit, StudentUserLink, StudentLevel, StudentRegistrationId,
     StudentDetails, StudentList, StudentSpeciality],
 

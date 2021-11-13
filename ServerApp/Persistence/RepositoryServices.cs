@@ -1,6 +1,7 @@
 ﻿using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Exam.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -70,9 +71,16 @@ namespace Exam.Persistence
             services.AddTransient<IRepository<ScorePaper, long>, Repository<ScorePaper, long>>();
             services.AddTransient<IRepository<TestGroup, long>, TestGroupRepository>();
             services.AddTransient<ITestGroupRepository, TestGroupRepository>();
-            
-            
-            
+
+            services.AddTransient<IRepository<Year, long>, Repository<Year, long>>();
+            services.AddTransient<IRepository<YearDepartment, long>, Repository<YearDepartment, long>>();
+            services.AddTransient<IRepository<YearLevel, long>, Repository<YearLevel, long>>();
+            services.AddTransient<IRepository<YearSpeciality, long>, Repository<YearSpeciality, long>>();   
+            services.AddTransient<IRepository<YearLevelSpeciality, long>, Repository<YearLevelSpeciality, long>>();
+
+
+
+
         }
     }
 }

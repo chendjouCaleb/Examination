@@ -1,4 +1,4 @@
-import {Level, LevelSpeciality, Student, User} from 'examination/entities';
+import {Student, User} from 'examination/entities';
 import {InjectionToken} from '@angular/core';
 import {StudentAddOptions} from './add/student-add-options';
 
@@ -28,5 +28,5 @@ export interface IStudentService {
 
   editStudent(student: Student): Promise<void>;
 
-
+  slide(students: Student[]): void;
 }

@@ -122,6 +122,9 @@ export class StudentList implements OnInit, AfterViewInit {
     this.students = this.getStudents().sort((a, b) => a.fullName?.localeCompare(b.fullName));
   }
 
+  slide() {
+    this._studentService.slide(this.students)
+  }
 
   addStudent() {
     const options = new StudentAddOptions({

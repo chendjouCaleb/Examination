@@ -1,12 +1,12 @@
-﻿import {Component, EventEmitter, Input, Output, ViewEncapsulation} from "@angular/core";
+﻿import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {School} from 'examination/entities';
 
 @Component({
   templateUrl: 'school-card.html',
-  selector: 'app-school-card',
+  selector: 'SchoolCard',
   encapsulation: ViewEncapsulation.None,
   host: {
-    'class': 'd-block'
+    'class': 'school-card ms-depth-8'
   }
 })
 export class SchoolCard {

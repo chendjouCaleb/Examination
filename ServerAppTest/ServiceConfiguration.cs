@@ -2,6 +2,7 @@
 using System.IO;
 using Exam.Controllers;
 using Exam.Controllers.Courses;
+using Exam.Controllers.Periods;
 using Exam.Destructors;
 using Exam.Entities;
 using Exam.Hubs;
@@ -83,6 +84,7 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<ScorePaperController>();
             ServiceCollection.AddTransient<PaperController>();
             ServiceCollection.AddTransient<GroupPaperController>();
+            ServiceCollection.AddTransient<YearController>();
 
             ServiceCollection.AddTransient<SchoolDestructor>();
             

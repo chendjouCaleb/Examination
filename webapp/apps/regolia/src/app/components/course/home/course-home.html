@@ -1,0 +1,34 @@
+<ng-container *ngIf="course">
+  <div class="ms-fontWeight-semibold ms-fontSize-20 mb-2 d-flex align-items-center justify-content-between">
+    {{course.name}}
+  </div>
+
+  <MsPivot>
+    <msPivotHeader>
+      <msPivotLabel id="details">Détails</msPivotLabel>
+      <msPivotLabel id="chapters">Chapitres</msPivotLabel>
+      <msPivotLabel id="hours">Horaires</msPivotLabel>
+      <msPivotLabel id="sessions">Séances de cours</msPivotLabel>
+      <msPivotLabel id="tests">épreuves</msPivotLabel>
+    </msPivotHeader>
+    <msPivotBody>
+      <div *msPivotContentDef>
+        <!--      <CourseDetails [course]="course"></CourseDetails>-->
+      </div>
+      <div *msPivotContentDef>
+        <!--      <app-course-chapters [course]="course"></app-course-chapters>-->
+      </div>
+      <div *msPivotContentDef>
+        <CourseHourList [course]="course" [hiddenColumns]="['course']"></CourseHourList>
+      </div>
+      <div *msPivotContentDef>
+        <CourseSessionList [course]="course" [hiddenColumns]="['course']"></CourseSessionList>
+      </div>
+
+      <div *msPivotContentDef>
+        <TestList [course]="course" [columns]="['course', 'code', 'level', 'department']"></TestList>
+      </div>
+    </msPivotBody>
+  </MsPivot>
+
+</ng-container>

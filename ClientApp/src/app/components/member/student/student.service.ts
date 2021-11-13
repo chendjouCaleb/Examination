@@ -11,6 +11,7 @@ import {StudentDetails} from './details/student-details';
 import {StudentSpeciality} from './speciality/student-speciality';
 import {MsDialog} from '@ms-fluent/components';
 import {StudentAddOptions} from './add/student-add-options';
+import {StudentSlide} from './slide/student-slide';
 
 @Injectable({providedIn: 'root'})
 export class StudentService implements IStudentService {
@@ -116,4 +117,7 @@ export class StudentService implements IStudentService {
     });
   }
 
+  slide(students: Student[]): void {
+    const modalRef = this._dialog.open(StudentSlide, {width: '98%', height: '98vh', maxWidth: '98%', data: {students}});
+  }
 }

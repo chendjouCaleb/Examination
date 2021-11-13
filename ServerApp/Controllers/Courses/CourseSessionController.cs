@@ -39,13 +39,18 @@ namespace Exam.Controllers.Courses
         
         [HttpGet]
         public IEnumerable<CourseSession> List([FromQuery] long? roomId, 
+            [FromQuery] long? schoolId,
+            [FromQuery] long? departmentId,
             [FromQuery] long? courseId,
             [FromQuery] long? courseHourId,
             [FromQuery] long? courseTeacherId,
             [FromQuery] long? teacherId,
-            [FromQuery] long? levelId)
+            [FromQuery] long? levelId,
+            [FromQuery] int take,
+            [FromQuery] int skip)
         {
-            if (roomId == null && courseId == null && courseHourId == null && courseTeacherId == null && teacherId == null && levelId == null)
+            if (roomId == null && courseId == null && courseHourId == null && courseTeacherId == null && teacherId == null 
+                && levelId == null && schoolId == null && departmentId == null)
             {
                 return new CourseSession[] { };
             }
@@ -81,6 +86,19 @@ namespace Exam.Controllers.Courses
             {
                 query = query.Where(ch => ch.Course.LevelId == levelId);
             }
+            
+            if (departmentId != null)
+            {
+                query = query.Where(ch => ch.Course.Level.DepartmentId == departmentId);
+            }
+            
+            if (schoolId != null)
+            {
+                query = query.Where(ch => ch.Course.Level.Department.SchoolId == schoolId);
+            }
+
+            //query = query.Skip(skip).Take(take);
+            query = query.OrderBy(o => o.ExpectedStartDate);
 
             return query.ToArray();
         }

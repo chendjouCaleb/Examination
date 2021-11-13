@@ -1,0 +1,64 @@
+﻿<div style="max-height: 100%; overflow-y: auto" *ngIf="loaded">
+
+  <div class="d-flex justify-content-between align-items-center">
+    <h5>{{course.name}}</h5>
+    <button msIconButton icon="Cancel" theme="transparent" MsTooltipClose></button>
+  </div>
+
+  <div>
+
+
+    <div class="d-flex flex-wrap">
+      <div class="p-2 ms-sm-w100 ms-description-list">
+        <dl>
+          <dt>Nom</dt>
+          <dd>{{course.name}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Code</dt>
+          <dd>{{course.code}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Coefficient</dt>
+          <dd>{{course.coefficient}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Description</dt>
+          <dd>{{course.description}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Niveau</dt>
+          <dd>{{course.level.index + 1}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Specialités</dt>
+          <dd *ngIf="!course.isGeneral && course.courseLevelSpecialities">{{course.specialityNames.join(', ')}}</dd>
+          <dd *ngIf="course.isGeneral">
+            <span class="badge ms-bgColor-sharedGreen10">Cours général</span>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>Ajouté le</dt>
+          <dd class="ms-fontSize-12">{{course.registrationDate | amCalendar}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Radical</dt>
+          <dd class="text-right">{{course.radical}} Points</dd>
+        </dl>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="p-2 text-right">
+  <button msButton theme="errorOutline" size="small" MsTooltipClose>Fermer</button>
+</div>
