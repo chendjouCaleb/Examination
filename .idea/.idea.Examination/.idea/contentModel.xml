@@ -2170,6 +2170,7 @@
             <e p="Speciality.cs" t="Include" />
           </e>
           <e p="Periods" t="Include">
+            <e p="Semester.cs" t="Include" />
             <e p="Year.cs" t="Include" />
             <e p="YearDepartment.cs" t="Include" />
             <e p="YearLevel.cs" t="Include" />
