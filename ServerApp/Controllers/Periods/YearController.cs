@@ -5,6 +5,7 @@ using System.Linq.Dynamic.Core;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Authorizers;
+using Exam.Destructors;
 using Exam.Entities;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
@@ -51,6 +52,7 @@ namespace Exam.Controllers.Periods
         [HttpPost]
         [ValidModel]
         [RequireQueryParameter("schoolId")]
+        [LoadSchool]
         [IsPrincipal]
         public CreatedAtActionResult Add(School school, [FromBody] YearForm form)
         {
@@ -294,11 +296,41 @@ namespace Exam.Controllers.Periods
         }
 
 
+        [HttpDelete("{yearId}")]
+        [LoadYear(SchoolItemName = "school")]
+        [IsPrincipal]
         public NoContentResult Delete(Year year)
         {
             Assert.RequireNonNull(year, nameof(year));
+            var semesterDestructor = new SemesterDestructor(_dbContext);
+            var yearDestructor = new YearDestructor(_dbContext);
+            
+            semesterDestructor.Destroy(year);
+            yearDestructor.Destroy(year);
 
-            throw new NotImplementedException();
+            return NoContent();
+        }
+
+        public List<YearDepartment> GetYearDepartments(Year year)
+        {
+            return _dbContext.Set<YearDepartment>().Where(y => y.YearId == year.Id).ToList();
+        }
+
+        public List<YearLevel> GetYearLevels(Year year)
+        {
+            return _dbContext.Set<YearLevel>().Where(y => y.YearDepartment.YearId == year.Id).ToList();
+        }
+        
+        public List<YearSpeciality> GetYearSpecialities(Year year)
+        {
+            return _dbContext.Set<YearSpeciality>().Where(y => y.YearDepartment.YearId == year.Id).ToList();
+        }
+
+        public List<YearLevelSpeciality> GetYearLevelSpecialities(Year year)
+        {
+            return _dbContext.Set<YearLevelSpeciality>()
+                .Where(y => y.YearLevel.YearDepartment.YearId == year.Id)
+                .ToList();
         }
     }
 }

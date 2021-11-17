@@ -78,7 +78,11 @@ namespace Exam.Persistence
             services.AddTransient<IRepository<YearSpeciality, long>, Repository<YearSpeciality, long>>();   
             services.AddTransient<IRepository<YearLevelSpeciality, long>, Repository<YearLevelSpeciality, long>>();
 
-
+            services.AddTransient<IRepository<Semester, long>, Repository<Semester, long>>();
+            services.AddTransient<IRepository<SemesterDepartment, long>, Repository<SemesterDepartment, long>>();
+            services.AddTransient<IRepository<SemesterLevel, long>, Repository<SemesterLevel, long>>();
+            services.AddTransient<IRepository<SemesterSpeciality, long>, Repository<SemesterSpeciality, long>>();   
+            services.AddTransient<IRepository<SemesterLevelSpeciality, long>, Repository<SemesterLevelSpeciality, long>>();
 
 
         }

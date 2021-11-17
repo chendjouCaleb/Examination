@@ -18,6 +18,11 @@ namespace Exam.Entities
 
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+
+        public bool Closed => EndDate != null;
+        public bool Opened => StartDate != null && EndDate == null;
+
+        public bool Pending => StartDate == null;
     }
 
     public interface IExpectedPeriod

@@ -85,6 +85,7 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<PaperController>();
             ServiceCollection.AddTransient<GroupPaperController>();
             ServiceCollection.AddTransient<YearController>();
+            ServiceCollection.AddTransient<SemesterController>();
 
             ServiceCollection.AddTransient<SchoolDestructor>();
             

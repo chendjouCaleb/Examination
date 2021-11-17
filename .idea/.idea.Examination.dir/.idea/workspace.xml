@@ -2,63 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="735d0e59-fec3-4701-a921-ce58e1fa7090" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/slide/student-slide.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/slide/student-slide.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClientApp/src/styles/school-card.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course-hour/slide/course-hour-slide.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course-hour/slide/course-hour-slide.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course-session/slide/course-session-slide.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course-session/slide/course-session-slide.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/card/course-card.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/card/course-card.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/home/course-home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/home/course-home.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/home/course-home.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/home/course-home.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/home/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/slide/course-slide.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/slide/course-slide.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/slide/course-slide.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/slide/course-slide.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/course/slide/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/room/slide/room-slide.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/room/slide/room-slide.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/test/add/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/test/add/test-add.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/test/add/test-add.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/test/list/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/app/components/test/list/test-list.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/bibliotheque-cloud.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/books.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/bureau.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/calendrier.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/carnet.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/classroom.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/eleve.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/enseignement.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/examination.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/plan.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/professeur.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/schedule.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/student-application.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/test.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/trophee.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webapp/apps/regolia/src/assets/icon/user-plan.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerApp/Controllers/Periods/SemesterController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/SemesterDepartment.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/SemesterLevel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/SemesterLevelSpeciality.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/SemesterSpeciality.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerApp/Loaders/SemesterLoader.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerApp/Models/SemesterForm.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerAppTest/Controllers/Periods/SemesterTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Examination.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Examination.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Examination/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Examination/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/details/student-details.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/details/student-details.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/list/student-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/list/student-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/list/student-list.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/list/student-list.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/student.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/student.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/student.service.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/student.service.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/student.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/components/member/student/student.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/components/school/card/school-card.html" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/components/school/card/school-card.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/components/school/card/school-card.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/components/school/card/school-card.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/app/pages/organisation/school/list/school-list.page.html" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/app/pages/organisation/school/list/school-list.page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/styles/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ClientApp/src/styles/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerApp/Controllers/Courses/CourseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Controllers/Courses/CourseController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerApp/Controllers/Courses/CourseHourController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Controllers/Courses/CourseHourController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerApp/Controllers/Courses/CourseSessionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Controllers/Courses/CourseSessionController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerApp/examination.db" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/examination.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Controllers/Periods/YearController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Controllers/Periods/YearController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Entities/Periods/Semester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/Semester.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Entities/Periods/Year.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/Year.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Entities/Periods/YearDepartment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/YearDepartment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Entities/Periods/YearLevel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/YearLevel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Entities/Periods/YearLevelSpeciality.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/YearLevelSpeciality.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Entities/Periods/YearSpeciality.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Entities/Periods/YearSpeciality.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Persistence/PersistenceContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Persistence/PersistenceContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApp/Persistence/RepositoryServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApp/Persistence/RepositoryServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerAppTest/ServiceConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerAppTest/ServiceConfiguration.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

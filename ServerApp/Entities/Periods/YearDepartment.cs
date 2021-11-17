@@ -12,6 +12,10 @@ namespace Exam.Entities.Periods
         [JsonIgnore]
         public virtual Year Year { get; set; }
         public long YearId { get; set; }
+
+        public bool Opened { get; set; }
+        public bool Closed { get; set; }
+        public bool Pending { get; set; } = true;
         
         [JsonIgnore]
         public virtual Department Department { get; set; }
@@ -22,6 +26,9 @@ namespace Exam.Entities.Periods
         
         [JsonIgnore]
         public virtual List<YearSpeciality> YearSpecialities { get; set; }
+
+        [JsonIgnore]
+        public virtual List<SemesterDepartment> SemesterDepartments { get; set; }
         
     }
 }

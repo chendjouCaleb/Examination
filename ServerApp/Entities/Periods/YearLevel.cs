@@ -9,6 +9,11 @@ namespace Exam.Entities.Periods
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class YearLevel:Entity<long>
     {
+        
+        public bool Opened { get; set; }
+        public bool Closed { get; set; }
+        public bool Pending { get; set; } = true;
+        
         [JsonIgnore]
         public virtual YearDepartment YearDepartment { get; set; }
         public long? YearDepartmentId { get; set; }
@@ -19,5 +24,7 @@ namespace Exam.Entities.Periods
 
         [JsonIgnore]
         public virtual List<YearLevelSpeciality> YearLevelSpecialities { get; set; }
+
+        [JsonIgnore] public virtual List<SemesterLevel> SemesterLevels { get; set; }
     }
 }

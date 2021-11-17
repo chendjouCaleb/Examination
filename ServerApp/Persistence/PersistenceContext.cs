@@ -59,6 +59,12 @@ namespace Exam.Persistence
         public DbSet<YearLevel> YearLevels { get; set; }
         public DbSet<YearLevelSpeciality> YearLevelSpecialities { get; set; }
         
+        public DbSet<Semester> Semesters { get; set; }
+        public DbSet<SemesterDepartment> SemesterDepartments { get; set; }
+        public DbSet<SemesterSpeciality> SemesterSpecialities { get; set; }
+        public DbSet<SemesterLevel> SemesterLevels { get; set; }
+        public DbSet<SemesterLevelSpeciality> SemesterLevelSpecialities { get; set; }
+        
         
         public PersistenceContext(DbContextOptions<PersistenceContext> options):base(options)
         { }

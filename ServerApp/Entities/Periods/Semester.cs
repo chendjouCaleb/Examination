@@ -21,5 +21,8 @@ namespace Exam.Entities.Periods
         
         public DateTime ExpectedStartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
+
+        [JsonIgnore]
+        public virtual List<SemesterDepartment> SemesterDepartments { get; set; }
     }
 }
