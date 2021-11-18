@@ -8,13 +8,9 @@ namespace Exam.Entities.Periods
 {
     
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
-    public class SemesterSpeciality: Entity<long>
+    public class SemesterSpeciality: PeriodChild
     {
-        public bool Opened { get; set; }
-        public bool Closed { get; set; }
-        public bool Pending { get; set; } = true;
-        
-        [JsonIgnore]
+         [JsonIgnore]
         public virtual SemesterDepartment SemesterDepartment { get; set; }
         public long? SemesterDepartmentId { get; set; }
 

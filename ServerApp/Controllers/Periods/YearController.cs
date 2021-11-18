@@ -94,8 +94,7 @@ namespace Exam.Controllers.Periods
                     Department = department,
                     Year = year
                 };
-                Console.WriteLine("yearc");
-
+                
                 _dbContext.Add(yearDepartment);
 
                 var yearLevels = _CreateYearLevels(yearDepartment);
@@ -246,6 +245,31 @@ namespace Exam.Controllers.Periods
 
             year.StartDate = DateTime.UtcNow;
 
+            var yearDepartments = GetYearDepartments(year);
+            var yearLevels = GetYearLevels(year);
+            var yearSpecialities = GetYearSpecialities(year);
+            var yearLevelSpecialties = GetYearLevelSpecialities(year);
+
+            foreach (var yearDepartment in yearDepartments)
+            {
+                yearDepartment.Start();
+            }
+
+            foreach (YearLevel yearLevel in yearLevels)
+            {
+                yearLevel.Start();
+            }
+
+            foreach (var yearSpeciality in yearSpecialities)
+            {
+                yearSpeciality.Start();
+            }
+
+            foreach (var yearLevelSpeciality in yearLevelSpecialties)
+            {
+                yearLevelSpeciality.Start();
+            }
+
             _dbContext.Update(year);
             _dbContext.SaveChanges();
             return Accepted();
@@ -269,8 +293,28 @@ namespace Exam.Controllers.Periods
             }
 
             year.EndDate = DateTime.UtcNow;
-
             _dbContext.Update(year);
+            
+            foreach (var yearDepartment in GetYearDepartments(year))
+            {
+                yearDepartment.Close();
+            }
+
+            foreach (YearLevel yearLevel in GetYearLevels(year))
+            {
+                yearLevel.Close();
+            }
+
+            foreach (var yearSpeciality in GetYearSpecialities(year))
+            {
+                yearSpeciality.Close();
+            }
+
+            foreach (var yearLevelSpeciality in GetYearLevelSpecialities(year))
+            {
+                yearLevelSpeciality.Close();
+            }
+            
             _dbContext.SaveChanges();
             return Accepted();
         }
@@ -289,8 +333,29 @@ namespace Exam.Controllers.Periods
             }
 
             year.EndDate = null;
-
             _dbContext.Update(year);
+            
+            foreach (var yearDepartment in GetYearDepartments(year))
+            {
+                yearDepartment.Start();
+            }
+
+            foreach (YearLevel yearLevel in GetYearLevels(year))
+            {
+                yearLevel.Start();
+            }
+
+            foreach (var yearSpeciality in GetYearSpecialities(year))
+            {
+                yearSpeciality.Start();
+            }
+
+            foreach (var yearLevelSpeciality in GetYearLevelSpecialities(year))
+            {
+                yearLevelSpeciality.Start();
+            }
+            
+            
             _dbContext.SaveChanges();
             return Accepted();
         }

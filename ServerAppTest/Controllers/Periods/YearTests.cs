@@ -6,6 +6,7 @@ using Exam.Controllers.Periods;
 using Exam.Entities;
 using Exam.Entities.Periods;
 using Exam.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -17,6 +18,7 @@ namespace ServerAppTest.Controllers.Periods
         private IRepository<Year, long> _yearRepository;
         private IRepository<YearDepartment, long> _yearDepartmentRepository;
         private SchoolBuilder _schoolBuilder;
+        private DbContext _dbContext;
         private YearForm _yearForm = new YearForm
         {
             ExpectedStartDate = DateTime.Now.AddDays(2),
@@ -33,6 +35,7 @@ namespace ServerAppTest.Controllers.Periods
             _controller = serviceProvider.GetRequiredService<YearController>();
             _yearRepository = serviceProvider.GetRequiredService<IRepository<Year, long>>();
             _yearDepartmentRepository = serviceProvider.GetRequiredService<IRepository<YearDepartment, long>>();
+            _dbContext = serviceProvider.GetRequiredService<DbContext>();
             _schoolBuilder = new SchoolBuilder(serviceProvider);
         }
 
@@ -89,6 +92,23 @@ namespace ServerAppTest.Controllers.Periods
                     }
                 }
             }
+        }
+
+
+        [Test]
+        public void DestroyYear()
+        {
+            School school = _schoolBuilder.CreateSchool();
+            Year year = _controller.Add(school, _yearForm).Value as Year;
+
+            var yearDepartments = _controller.GetYearDepartments(year);
+            var yearLevels = _controller.GetYearLevels(year);
+            var yearSpecialities = _controller.GetYearSpecialities(year);
+            var yearLevelSpecialities = _controller.GetYearLevelSpecialities(year);
+            
+            _controller.Delete(year);
+            Assert.True(_yearRepository.Exists(year));
+            
         }
     }
 }

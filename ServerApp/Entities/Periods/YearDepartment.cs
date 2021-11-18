@@ -7,15 +7,11 @@ using Newtonsoft.Json;
 namespace Exam.Entities.Periods
 {
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
-    public class YearDepartment:Entity<long>
+    public class YearDepartment: PeriodChild
     {
         [JsonIgnore]
         public virtual Year Year { get; set; }
         public long YearId { get; set; }
-
-        public bool Opened { get; set; }
-        public bool Closed { get; set; }
-        public bool Pending { get; set; } = true;
         
         [JsonIgnore]
         public virtual Department Department { get; set; }
@@ -29,6 +25,7 @@ namespace Exam.Entities.Periods
 
         [JsonIgnore]
         public virtual List<SemesterDepartment> SemesterDepartments { get; set; }
+        
         
     }
 }

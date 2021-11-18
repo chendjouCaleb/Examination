@@ -1759,6 +1759,10 @@
           <e p="Periods" t="Include">
             <e p="SemesterController.cs" t="Include" />
             <e p="YearController.cs" t="Include" />
+            <e p="YearDepartmentController.cs" t="Include" />
+            <e p="YearLevelController.cs" t="Include" />
+            <e p="YearLevelSpecialityController.cs" t="Include" />
+            <e p="YearSpecialityController.cs" t="Include" />
           </e>
           <e p="SchoolBuilder.cs" t="Include" />
           <e p="SchoolBuilderController.cs" t="Include" />
@@ -2173,6 +2177,7 @@
             <e p="Speciality.cs" t="Include" />
           </e>
           <e p="Periods" t="Include">
+            <e p="PeriodChild.cs" t="Include" />
             <e p="Semester.cs" t="Include" />
             <e p="SemesterDepartment.cs" t="Include" />
             <e p="SemesterLevel.cs" t="Include" />
