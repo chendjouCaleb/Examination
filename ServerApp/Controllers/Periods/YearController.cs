@@ -52,8 +52,8 @@ namespace Exam.Controllers.Periods
         [HttpPost]
         [ValidModel]
         [RequireQueryParameter("schoolId")]
-        [LoadSchool]
-        [IsPrincipal]
+        [LoadSchool(Source = ParameterSource.Query)]
+        [IsDirector]
         public CreatedAtActionResult Add(School school, [FromBody] YearForm form)
         {
             Assert.RequireNonNull(school, nameof(school));
@@ -210,9 +210,10 @@ namespace Exam.Controllers.Periods
         }
 
 
-        [HttpPost]
+        [HttpPut("{yearId}/date")]
         [ValidModel]
         [LoadYear(SchoolItemName = "school")]
+        [IsDirector]
         public AcceptedResult ChangeDate(Year year, [FromBody] YearForm form)
         {
             Assert.RequireNonNull(year, nameof(year));
@@ -233,7 +234,7 @@ namespace Exam.Controllers.Periods
 
         [HttpPut("{yearId}/start")]
         [LoadYear(SchoolItemName = "school")]
-        [IsPrincipal]
+        [IsDirector]
         public AcceptedResult Start(Year year)
         {
             Assert.RequireNonNull(year, nameof(year));
@@ -277,7 +278,7 @@ namespace Exam.Controllers.Periods
 
         [HttpPut("{yearId}/close")]
         [LoadYear(SchoolItemName = "school")]
-        [IsPrincipal]
+        [IsDirector]
         public AcceptedResult Close(Year year)
         {
             Assert.RequireNonNull(year, nameof(year));
@@ -322,7 +323,7 @@ namespace Exam.Controllers.Periods
 
         [HttpPut("{yearId}/restart")]
         [LoadYear(SchoolItemName = "school")]
-        [IsPrincipal]
+        [IsDirector]
         public AcceptedResult Restart(Year year)
         {
             Assert.RequireNonNull(year, nameof(year));
@@ -363,7 +364,7 @@ namespace Exam.Controllers.Periods
 
         [HttpDelete("{yearId}")]
         [LoadYear(SchoolItemName = "school")]
-        [IsPrincipal]
+        [IsDirector]
         public NoContentResult Delete(Year year)
         {
             Assert.RequireNonNull(year, nameof(year));

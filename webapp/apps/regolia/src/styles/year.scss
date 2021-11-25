@@ -1,0 +1,17 @@
+.year-item {
+  border: 1px solid var(--cardBorderColor);
+  border-radius: 2px;
+  display: inline-block;
+  color: inherit;
+  padding: 12px;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+
+    background-color: var(--cardBackgroundColor--hover);
+  }
+
+
+}

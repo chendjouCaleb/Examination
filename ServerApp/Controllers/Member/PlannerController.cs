@@ -64,7 +64,7 @@ namespace Exam.Controllers
         [HttpPost]
         [RequireQueryParameter("schoolId")]
         [LoadSchool(Source = ParameterSource.Query)]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public ObjectResult Add(School school, [FromQuery] string[] userId)
         {
             Assert.RequireNonNull(school, nameof(school));
@@ -119,7 +119,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{plannerId}")]
         [LoadPlanner(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public NoContentResult Delete(Planner planner)
         {
             Assert.RequireNonNull(planner, nameof(planner));

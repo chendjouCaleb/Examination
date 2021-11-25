@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.Controllers.Periods
 {
-    [Route("api/yearSpecialities")]
+    [Route("api/yearLevelSpecialities")]
     public class YearLevelSpecialityController
     {
         private IRepository<YearLevelSpeciality, long> _yearLevelSpecialityRepository;

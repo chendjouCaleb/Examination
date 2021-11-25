@@ -79,7 +79,7 @@ namespace Exam.Controllers
         [LoadSchool(Source = ParameterSource.Query)]
         [LoadDepartment(Source = ParameterSource.Query, SchoolItemName = "school")]
         [LoadLevel(Source = ParameterSource.Query, SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public CreatedAtActionResult Add([FromBody] RoomForm form, User user,
             School school, Department department = null, Level level = null)
         {
@@ -123,7 +123,7 @@ namespace Exam.Controllers
 
         [HttpPut("{roomId}/name")]
         [LoadRoom(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public StatusCodeResult ChangeName(Room room, [FromQuery] string name)
         {
             Assert.RequireNonNull(room, nameof(room));
@@ -148,7 +148,7 @@ namespace Exam.Controllers
         [HttpPut("{roomId}")]
         [ValidModel]
         [LoadRoom(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public AcceptedResult Update(Room room, [FromBody] RoomInfoForm form)
         {
             Assert.RequireNonNull(room, nameof(room));
@@ -172,7 +172,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{roomId}")]
         [LoadRoom(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public NoContentResult Delete(Room room)
         {
             _schoolRepository.Update(room.School);

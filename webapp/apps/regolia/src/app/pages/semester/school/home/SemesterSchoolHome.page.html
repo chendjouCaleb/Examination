@@ -1,0 +1,17 @@
+<MsActionMenu>
+  <button MsActionMenuButton icon="DateTime">Démarrer</button>
+  <button MsActionMenuButton icon="CalendarSettings" (click)="changeDate()">Changer les dates</button>
+  <button MsActionMenuButton theme="error" icon="Delete">Supprimer</button>
+</MsActionMenu>
+
+<div class="ms-fontSize-20">
+  <div>
+    <span class="ms-fontWeight-light">Du </span>
+    <span > {{semester.expectedStartDate | amDateFormat:'LL' }}</span>
+  </div>
+
+  <div>
+    <span class="ms-fontWeight-light">Au </span>
+    <span > {{semester.expectedEndDate | amDateFormat:'LL' }}</span>
+  </div>
+</div>

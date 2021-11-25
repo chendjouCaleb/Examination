@@ -84,7 +84,7 @@ namespace Exam.Controllers
         [ValidModel]
         [RequireQueryParameter("schoolId")]
         [LoadSchool(Source = ParameterSource.Query)]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public CreatedAtActionResult Add(School school, [FromBody] ExaminationForm form)
         {
             ExaminationBuilder builder = new ExaminationBuilder(_serviceProvider);
@@ -120,7 +120,7 @@ namespace Exam.Controllers
 
         [HttpPut("{examinationId}/startDate")]
         [LoadExamination(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         [PeriodHaveState(ItemName = "examination", State = "PENDING",
             ErrorMessage = "{examination.requireState.pending}")]
         public StatusCodeResult ChangeStartDate(Examination examination, [FromQuery] DateTime startDate)
@@ -146,7 +146,7 @@ namespace Exam.Controllers
 
         [HttpPut("{examinationId}/endDate")]
         [LoadExamination(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         [PeriodDontHaveState(ItemName = "examination", State = "FINISHED",
             ErrorMessage = "{examination.requireNoState.finished}")]
         public StatusCodeResult ChangeEndDate(Examination examination, [FromQuery] DateTime endDate)
@@ -165,7 +165,7 @@ namespace Exam.Controllers
 
         [HttpPut("{examinationId}/name")]
         [LoadExamination(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public StatusCodeResult ChangeName(Examination examination, [FromQuery] string name)
         {
             Assert.RequireNonNull(examination, nameof(examination));
@@ -189,7 +189,7 @@ namespace Exam.Controllers
 
         [HttpPut("{examinationId}/start")]
         [LoadExamination(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         [PeriodHaveState(ItemName = "examination", State = "PENDING",
             ErrorMessage = "{examination.requireState.pending}")]
         public StatusCodeResult Start(Examination examination)
@@ -203,7 +203,7 @@ namespace Exam.Controllers
 
         [HttpPut("{examinationId}/close")]
         [LoadExamination(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         [PeriodHaveState(ItemName = "examination", State = "PROGRESS",
             ErrorMessage = "{examination.requireState.progress}")]
         public StatusCodeResult End(Examination examination)
@@ -217,7 +217,7 @@ namespace Exam.Controllers
 
         [HttpPut("{examinationId}/relaunch")]
         [LoadExamination(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public StatusCodeResult Relaunch(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));
@@ -245,7 +245,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{examinationId}")]
         [LoadExamination(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public NoContentResult Delete(Examination examination)
         {
             Assert.RequireNonNull(examination, nameof(examination));

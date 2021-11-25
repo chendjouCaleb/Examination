@@ -112,7 +112,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("schoolId")]
         [ValidModel]
         [LoadSchool(Source = ParameterSource.Query)]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public CreatedAtActionResult Add(School school, [FromBody] AddDepartmentForm form)
         {
             if (school == null)
@@ -190,7 +190,7 @@ namespace Exam.Controllers
 
         [HttpPut("{departmentId}/principal")]
         [LoadDepartment(SchoolItemName = "school")]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public StatusCodeResult Principal(Department department, [FromForm] string userId)
         {
             if (department == null)
@@ -314,7 +314,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{departmentId}")]
         [LoadDepartment]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public NoContentResult Delete(Department department)
         {
             _departmentRepository.Delete(department);

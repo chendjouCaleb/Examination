@@ -776,6 +776,345 @@ namespace Exam.Migrations
                     b.ToTable("PaperFiles");
                 });
 
+            modelBuilder.Entity("Exam.Entities.Periods.Semester", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExpectedEndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExpectedStartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("YearId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("YearId");
+
+                    b.ToTable("Semesters");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterDepartment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Opened")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Pending")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("SemesterId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("YearDepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SemesterId");
+
+                    b.HasIndex("YearDepartmentId");
+
+                    b.ToTable("SemesterDepartments");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterLevel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Opened")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Pending")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("SemesterDepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("YearLevelId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SemesterDepartmentId");
+
+                    b.HasIndex("YearLevelId");
+
+                    b.ToTable("SemesterLevels");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterLevelSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Opened")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Pending")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("SemesterLevelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("SemesterSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("YearLevelSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SemesterLevelId");
+
+                    b.HasIndex("SemesterSpecialityId");
+
+                    b.HasIndex("YearLevelSpecialityId");
+
+                    b.ToTable("SemesterLevelSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Opened")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Pending")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("SemesterDepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("YearSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SemesterDepartmentId");
+
+                    b.HasIndex("YearSpecialityId");
+
+                    b.ToTable("SemesterSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.Year", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExpectedEndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExpectedStartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("SchoolId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("Years");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearDepartment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("DepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Opened")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Pending")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("YearId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("YearId");
+
+                    b.ToTable("YearDepartments");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearLevel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("LevelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Opened")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Pending")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("YearDepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LevelId");
+
+                    b.HasIndex("YearDepartmentId");
+
+                    b.ToTable("YearLevels");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearLevelSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("LevelSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Opened")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Pending")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("YearLevelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("YearSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LevelSpecialityId");
+
+                    b.HasIndex("YearLevelId");
+
+                    b.HasIndex("YearSpecialityId");
+
+                    b.ToTable("YearLevelSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Opened")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Pending")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("SpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("YearDepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpecialityId");
+
+                    b.HasIndex("YearDepartmentId");
+
+                    b.ToTable("YearSpecialities");
+                });
+
             modelBuilder.Entity("Exam.Entities.Planner", b =>
                 {
                     b.Property<long>("Id")
@@ -1670,6 +2009,122 @@ namespace Exam.Migrations
                         .HasForeignKey("PaperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.Semester", b =>
+                {
+                    b.HasOne("Exam.Entities.Periods.Year", "Year")
+                        .WithMany("Semesters")
+                        .HasForeignKey("YearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterDepartment", b =>
+                {
+                    b.HasOne("Exam.Entities.Periods.Semester", "Semester")
+                        .WithMany("SemesterDepartments")
+                        .HasForeignKey("SemesterId");
+
+                    b.HasOne("Exam.Entities.Periods.YearDepartment", "YearDepartment")
+                        .WithMany("SemesterDepartments")
+                        .HasForeignKey("YearDepartmentId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterLevel", b =>
+                {
+                    b.HasOne("Exam.Entities.Periods.SemesterDepartment", "SemesterDepartment")
+                        .WithMany("SemesterLevels")
+                        .HasForeignKey("SemesterDepartmentId");
+
+                    b.HasOne("Exam.Entities.Periods.YearLevel", "YearLevel")
+                        .WithMany("SemesterLevels")
+                        .HasForeignKey("YearLevelId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterLevelSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.Periods.SemesterLevel", "SemesterLevel")
+                        .WithMany("SemesterLevelSpecialities")
+                        .HasForeignKey("SemesterLevelId");
+
+                    b.HasOne("Exam.Entities.Periods.SemesterSpeciality", "SemesterSpeciality")
+                        .WithMany("SemesterLevelSpecialities")
+                        .HasForeignKey("SemesterSpecialityId");
+
+                    b.HasOne("Exam.Entities.Periods.YearLevelSpeciality", "YearLevelSpeciality")
+                        .WithMany("SemesterLevelSpecialities")
+                        .HasForeignKey("YearLevelSpecialityId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.Periods.SemesterDepartment", "SemesterDepartment")
+                        .WithMany("SemesterSpecialities")
+                        .HasForeignKey("SemesterDepartmentId");
+
+                    b.HasOne("Exam.Entities.Periods.YearSpeciality", "YearSpeciality")
+                        .WithMany("SemesterSpecialities")
+                        .HasForeignKey("YearSpecialityId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.Year", b =>
+                {
+                    b.HasOne("Exam.Entities.School", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearDepartment", b =>
+                {
+                    b.HasOne("Exam.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Exam.Entities.Periods.Year", "Year")
+                        .WithMany("YearDepartments")
+                        .HasForeignKey("YearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearLevel", b =>
+                {
+                    b.HasOne("Exam.Entities.Level", "Level")
+                        .WithMany("YearLevels")
+                        .HasForeignKey("LevelId");
+
+                    b.HasOne("Exam.Entities.Periods.YearDepartment", "YearDepartment")
+                        .WithMany("YearLevels")
+                        .HasForeignKey("YearDepartmentId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearLevelSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.LevelSpeciality", "LevelSpeciality")
+                        .WithMany("YearLevelSpecialities")
+                        .HasForeignKey("LevelSpecialityId");
+
+                    b.HasOne("Exam.Entities.Periods.YearLevel", "YearLevel")
+                        .WithMany("YearLevelSpecialities")
+                        .HasForeignKey("YearLevelId");
+
+                    b.HasOne("Exam.Entities.Periods.YearSpeciality", "YearSpeciality")
+                        .WithMany("YearLevelSpecialities")
+                        .HasForeignKey("YearSpecialityId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.Speciality", "Speciality")
+                        .WithMany("YearSpecialities")
+                        .HasForeignKey("SpecialityId");
+
+                    b.HasOne("Exam.Entities.Periods.YearDepartment", "YearDepartment")
+                        .WithMany("YearSpecialities")
+                        .HasForeignKey("YearDepartmentId");
                 });
 
             modelBuilder.Entity("Exam.Entities.Planner", b =>

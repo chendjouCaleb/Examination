@@ -2,17 +2,23 @@ import {Component} from "@angular/core";
 import {School} from 'examination/entities';
 import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
-import {YearAddService} from "../../../components/year";
+import {YearAddService} from "examination/app/components";
+
 
 @Component({
   template: `
-      <div class="d-flex align-items-center justify-content-between">
-          <div class="ms-fontWeight-semibold ms-fontSize-24">Années scolaires</div>
-          <div>
-              <button msButton icon="Add" theme="primary" (click)="_addService.add(school)">Nouvelle année</button>
+      <div class="p-3">
+          <div class="d-flex align-items-center justify-content-between">
+              <h2>Années scolaires</h2>
+              <div>
+                  <button msButton icon="Add" theme="primary" (click)="_addService.add(school)">Nouvelle année</button>
+              </div>
+          </div>
+          <div class="mt-3">
+              <YearList [school]="school"></YearList>
           </div>
       </div>
-      <YearList [school]="school"></YearList>`
+  `
 })
 export class SchoolYearPage {
   school: School;

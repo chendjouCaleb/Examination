@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Authorizers;
 using Exam.Destructors;
-using Exam.Entities;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
 using Exam.Loaders;
@@ -57,8 +56,8 @@ namespace Exam.Controllers.Periods
         [HttpPost]
         [ValidModel]
         [RequireQueryParameter("yearId")]
-        [LoadYear(SchoolItemName = "school")]
-        [IsPrincipal]
+        [LoadYear(SchoolItemName = "school", Source = ParameterSource.Query)]
+        [IsDirector]
         public CreatedAtActionResult Add(Year year, [FromBody] SemesterForm form)
         {
             Assert.RequireNonNull(year, nameof(year));
@@ -69,13 +68,18 @@ namespace Exam.Controllers.Periods
                 throw new InvalidOperationException("START_DATE_IS_AFTER_END_DATE");
             }
 
+            var semesters = _dbContext.Set<Semester>().Where(s => s.YearId == year.Id).ToList();
+
             Semester semester = new Semester
             {
                 ExpectedStartDate = form.ExpectedStartDate,
                 ExpectedEndDate = form.ExpectedEndDate,
-                Year = year
+                Year = year,
+                Index = semesters.Count
             };
             _dbContext.Set<Semester>().Add(semester);
+            semesters.Add(semester);
+            _SetSemesterIndex(semesters);
 
             _CreateDepartmentSemesters(semester);
 
@@ -208,9 +212,10 @@ namespace Exam.Controllers.Periods
         }
 
 
-        [HttpPost]
+        [HttpPut("{semesterId}/date")]
         [ValidModel]
         [LoadSemester(SchoolItemName = "school")]
+        [IsDirector]
         public AcceptedResult ChangeDate(Semester semester, [FromBody] SemesterForm form)
         {
             Assert.RequireNonNull(semester, nameof(semester));
@@ -231,7 +236,7 @@ namespace Exam.Controllers.Periods
 
         [HttpPut("{semesterId}/start")]
         [LoadSemester(SchoolItemName = "school")]
-        [IsPrincipal]
+        [IsDirector]
         public AcceptedResult Start(Semester semester)
         {
             Assert.RequireNonNull(semester, nameof(semester));
@@ -255,7 +260,7 @@ namespace Exam.Controllers.Periods
 
         [HttpPut("{semesterId}/close")]
         [LoadSemester(SchoolItemName = "school")]
-        [IsPrincipal]
+        [IsDirector]
         public AcceptedResult Close(Semester semester)
         {
             Assert.RequireNonNull(semester, nameof(semester));
@@ -280,7 +285,7 @@ namespace Exam.Controllers.Periods
 
         [HttpPut("{semesterId}/restart")]
         [LoadSemester(SchoolItemName = "school")]
-        [IsPrincipal]
+        [IsDirector]
         public AcceptedResult Restart(Semester semester)
         {
             Assert.RequireNonNull(semester, nameof(semester));
@@ -305,7 +310,7 @@ namespace Exam.Controllers.Periods
 
         [HttpDelete("{semesterId}")]
         [LoadSemester(SchoolItemName = "school")]
-        [IsPrincipal]
+        [IsDirector]
         public NoContentResult Delete(Semester semester)
         {
             Assert.RequireNonNull(semester, nameof(semester));
@@ -318,9 +323,26 @@ namespace Exam.Controllers.Periods
             SemesterDestructor destructor = new SemesterDestructor(_dbContext);
             destructor.Destroy(semester);
 
+            IEnumerable<Semester> semesters = _dbContext.Set<Semester>().Where(s => s.YearId == semester.YearId)
+                .ToImmutableList()
+                .RemoveAll(s => s.Id == semester.Id);
+            
+            _SetSemesterIndex(semesters);
+
             _dbContext.SaveChanges();
 
             return NoContent();
+        }
+
+        private void _SetSemesterIndex(IEnumerable<Semester> values)
+        {
+            var semesters = values.OrderBy(s => s.ExpectedStartDate).ToList();;
+            
+            for (int i = 0; i < semesters.Count(); i++)
+            {
+                semesters[i].Index = i;
+                _dbContext.Update(semesters[i]);
+            }
         }
         
         

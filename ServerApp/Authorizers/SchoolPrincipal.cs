@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Exam.Authorizers
 {
-    public class AuthorizeSchoolPrincipalAttribute: ActionFilterAttribute
+    public class IsDirectorAttribute: ActionFilterAttribute
     {
         public string SchoolItemName { get; set; } = "school";
         public override void OnActionExecuting(ActionExecutingContext context)

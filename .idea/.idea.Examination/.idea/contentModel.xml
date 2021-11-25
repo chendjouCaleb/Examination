@@ -2294,6 +2294,8 @@
           <e p="20210908060431_StudentCOntact.Designer.cs" t="Include" />
           <e p="20210914045229_Update5.cs" t="Include" />
           <e p="20210914045229_Update5.Designer.cs" t="Include" />
+          <e p="20211120063659_AddPeriods.cs" t="Include" />
+          <e p="20211120063659_AddPeriods.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

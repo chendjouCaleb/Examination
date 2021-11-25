@@ -14,6 +14,8 @@ namespace Exam.Entities.Periods
         public long Id { get; set; }
 
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
+
+        public int Index { get; set; } = 0;
         
         [JsonIgnore]
         public virtual Year Year { get; set; }

@@ -137,7 +137,7 @@ namespace Exam.Controllers
 
         [HttpPut("{schoolId}/principal")]
         [LoadSchool]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public StatusCodeResult ChangePrincipalUserId(School school, [FromForm] string userId)
         {
             Assert.RequireNonNull(school, nameof(school));
@@ -152,7 +152,7 @@ namespace Exam.Controllers
         [HttpPut("{schoolId}")]
         [ValidModel]
         [LoadSchool]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public AcceptedResult Update(School school, [FromBody] SchoolInfoForm form)
         {
             Assert.RequireNonNull(school, nameof(school));
@@ -170,7 +170,7 @@ namespace Exam.Controllers
 
         [HttpPut("{schoolId}/identifier")]
         [LoadSchool]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public StatusCodeResult ChangeIdentifier(School school, [FromQuery] string identifier)
         {
             Assert.RequireNonNull(school, nameof(school));
@@ -214,7 +214,7 @@ namespace Exam.Controllers
 
         [HttpPut("{schoolId}/image")]
         [LoadSchool]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public async Task<StatusCodeResult> ChangeImage(School school, IFormFile image)
         {
             if (school == null)
@@ -265,7 +265,7 @@ namespace Exam.Controllers
 
         [HttpPut("{schoolId}/coverImage")]
         [LoadSchool]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public async Task<StatusCodeResult> ChangeCoverImage(School school, IFormFile image)
         {
             if (school == null)
@@ -296,7 +296,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{schoolId}")]
         [LoadSchool]
-        [AuthorizeSchoolPrincipal]
+        [IsDirector]
         public NoContentResult Delete(School school)
         {
             Assert.RequireNonNull(school, nameof(school));

@@ -9,7 +9,7 @@ namespace Exam.Validators
         {
             DateTime dateTime = Convert.ToDateTime(value);
 
-            if (dateTime > DateTime.Now)
+            if (dateTime < DateTime.Now)
             {
                 return new ValidationResult("The date must be future.");
             }

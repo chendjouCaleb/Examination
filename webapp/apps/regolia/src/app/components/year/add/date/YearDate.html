@@ -1,0 +1,29 @@
+ <form class="ms-dialog-form" [formGroup]="form">
+    <h3 class="ms-form-header">Changer la date</h3>
+
+
+    <MsFormField>
+      <MsLabel htmlFor="expectedStartDate">Date de début</MsLabel>
+      <input id="expectedStartDate" MsInputField MsDateMask formControlName="expectedStartDate" placeholder="JJ/MM/AAAA">
+
+      <MsFormFieldContent>
+        <app-control-error [control]="form.controls['expectedStartDate']"></app-control-error>
+      </MsFormFieldContent>
+    </MsFormField>
+
+    <MsFormField class="mt-2">
+      <MsLabel htmlFor="expectedEndDate" >Date de fin</MsLabel>
+      <input id="expectedEndDate" MsInputField MsDateMask formControlName="expectedEndDate" placeholder="JJ/MM/AAAA">
+
+      <MsFormFieldContent>
+        <app-control-error [control]="form.controls['expectedEndDate']"></app-control-error>
+      </MsFormFieldContent>
+    </MsFormField>
+
+    <div class="mt-4 text-right">
+      <button msButton msDialogClose="" class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Edit" [disabled]="form.invalid" (click)="add()">
+        Modifier
+      </button>
+    </div>
+  </form>

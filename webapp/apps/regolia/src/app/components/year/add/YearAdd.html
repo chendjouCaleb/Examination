@@ -1,29 +1,29 @@
- <form class="ms-dialog-form" [formGroup]="form">
-    <div class="ms-form-header">Ajouter une année scolaire</div>
+<form class="ms-dialog-form" [formGroup]="form">
+<div class="ms-form-header">Ajouter une année scolaire</div>
 
 
-    <MsFormField>
-      <MsLabel htmlFor="expectedStartDate">Date de début</MsLabel>
-      <input id="expectedStartDate" MsInputField MsDateMask formControlName="expectedStartDate" placeholder="JJ/MM/AAAA">
+<MsFormField>
+<MsLabel htmlFor="expectedStartDate">Date de début</MsLabel>
+<input id="expectedStartDate" MsInputField MsDateMask formControlName="expectedStartDate" placeholder="JJ/MM/AAAA">
 
-      <MsFormFieldContent>
-        <app-control-error [control]="form.controls['expectedStartDate']"></app-control-error>
-      </MsFormFieldContent>
-    </MsFormField>
+<MsFormFieldContent>
+  <app-control-error [control]="form.controls['expectedStartDate']"></app-control-error>
+  </MsFormFieldContent>
+  </MsFormField>
 
-    <MsFormField class="mt-2">
-      <MsLabel htmlFor="expectedEndDate" >Date de fin</MsLabel>
-      <input id="expectedEndDate" MsInputField MsDateMask formControlName="expectedEndDate" placeholder="JJ/MM/AAAA">
+  <MsFormField class="mt-2">
+<MsLabel htmlFor="expectedEndDate" >Date de fin</MsLabel>
+<input id="expectedEndDate" MsInputField MsDateMask formControlName="expectedEndDate" placeholder="JJ/MM/AAAA">
 
-      <MsFormFieldContent>
-        <app-control-error [control]="form.controls['expectedEndDate']"></app-control-error>
-      </MsFormFieldContent>
-    </MsFormField>
+<MsFormFieldContent>
+  <app-control-error [control]="form.controls['expectedEndDate']"></app-control-error>
+  </MsFormFieldContent>
+  </MsFormField>
 
-    <div class="mt-4 text-right">
-      <button msButton msDialogClose="" class="mr-3">Annuler</button>
-      <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">
-        Ajouter
-      </button>
-    </div>
+  <div class="mt-4 text-right">
+  <button msButton msDialogClose="" class="mr-3">Annuler</button>
+  <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">
+  Ajouter
+  </button>
+  </div>
   </form>
