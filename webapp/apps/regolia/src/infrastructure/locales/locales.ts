@@ -11,5 +11,9 @@ export const locales = {
   'planners': 'Planificateurs',
   'years': 'Années scolaires',
   'semesters': 'Semestres',
-  'examinations': 'Examens'
+  'examinations': 'Examens',
+  'correctors': 'Correcteurs',
+  'supervisors': 'Superviseurs',
+  'principals': 'Délégués',
+  'secretaries': 'Sécrétaires'
 };

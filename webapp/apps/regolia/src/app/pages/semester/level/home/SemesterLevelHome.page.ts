@@ -4,9 +4,9 @@ import {Router} from "@angular/router";
 import {YearDepartment, YearLevel} from "examination/models";
 
 @Component({
-  templateUrl: 'YearLevelHome.page.html',
+  templateUrl: 'SemesterLevelHome.page.html',
 })
-export class YearLevelHomePage {
+export class SemesterLevelHomePage {
   yearLevel: YearLevel;
 
   constructor(items: CurrentItems, public _router: Router) {

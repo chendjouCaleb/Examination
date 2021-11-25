@@ -1758,6 +1758,10 @@
           </e>
           <e p="Periods" t="Include">
             <e p="SemesterController.cs" t="Include" />
+            <e p="SemesterDepartmentController.cs" t="Include" />
+            <e p="SemesterLevelController.cs" t="Include" />
+            <e p="SemesterLevelSpecialityController.cs" t="Include" />
+            <e p="SemesterSpecialityController.cs" t="Include" />
             <e p="YearController.cs" t="Include" />
             <e p="YearDepartmentController.cs" t="Include" />
             <e p="YearLevelController.cs" t="Include" />
@@ -2296,6 +2300,8 @@
           <e p="20210914045229_Update5.Designer.cs" t="Include" />
           <e p="20211120063659_AddPeriods.cs" t="Include" />
           <e p="20211120063659_AddPeriods.Designer.cs" t="Include" />
+          <e p="20211125055219_SemesterIndex.cs" t="Include" />
+          <e p="20211125055219_SemesterIndex.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

@@ -4,9 +4,9 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CurrentItems} from '../../../../current-items';
 
 @Component({
-  templateUrl: 'YearSpecialityPageLayout.html',
+  templateUrl: 'SemesterLevelPageLayout.html',
 })
-export class YearSpecialityPageLayout implements AfterViewInit {
+export class SemesterLevelPageLayout implements AfterViewInit {
   school: School;
 
   @ViewChild(RouterLink)
