@@ -77,12 +77,24 @@ namespace Exam.Persistence
             services.AddTransient<IRepository<YearLevel, long>, Repository<YearLevel, long>>();
             services.AddTransient<IRepository<YearSpeciality, long>, Repository<YearSpeciality, long>>();   
             services.AddTransient<IRepository<YearLevelSpeciality, long>, Repository<YearLevelSpeciality, long>>();
+            services.AddTransient<IRepository<YearTeacher, long>, Repository<YearTeacher, long>>();
+            services.AddTransient<IRepository<YearStudent, long>, Repository<YearStudent, long>>();
 
             services.AddTransient<IRepository<Semester, long>, Repository<Semester, long>>();
             services.AddTransient<IRepository<SemesterDepartment, long>, Repository<SemesterDepartment, long>>();
             services.AddTransient<IRepository<SemesterLevel, long>, Repository<SemesterLevel, long>>();
-            services.AddTransient<IRepository<SemesterSpeciality, long>, Repository<SemesterSpeciality, long>>();   
+            services.AddTransient<IRepository<SemesterSpeciality, long>, Repository<SemesterSpeciality, long>>();
             services.AddTransient<IRepository<SemesterLevelSpeciality, long>, Repository<SemesterLevelSpeciality, long>>();
+            
+            services.AddTransient<IRepository<SemesterTeacher, long>, Repository<SemesterTeacher, long>>();
+            services.AddTransient<IRepository<SemesterStudent, long>, Repository<SemesterStudent, long>>();
+
+
+            services.AddTransient<IRepository<SemesterCourse, long>, Repository<SemesterCourse, long>>();   
+            services.AddTransient<IRepository<SemesterCourseLevelSpeciality, long>, Repository<SemesterCourseLevelSpeciality, long>>();   
+            services.AddTransient<IRepository<SemesterCourseTeacher, long>, Repository<SemesterCourseTeacher, long>>();   
+            services.AddTransient<IRepository<SemesterTeacher, long>, Repository<SemesterTeacher, long>>();   
+
 
 
         }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -19,6 +21,8 @@ namespace Exam.Entities
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
+
+        public bool IsActive { get; set; } = true;
         
         public bool HasImage { get; set; }
         [NotMapped] public Uri ImageUrl { get; set; }
@@ -37,8 +41,9 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual LevelSpeciality LevelSpeciality { get; set; }
         public long? LevelSpecialityId{ get; set; }
-        
-        
-        
+
+
+        [JsonIgnore]
+        public virtual List<YearStudent> YearStudents { get; set; }
     }
 }

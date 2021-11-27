@@ -1767,6 +1767,8 @@
             <e p="YearLevelController.cs" t="Include" />
             <e p="YearLevelSpecialityController.cs" t="Include" />
             <e p="YearSpecialityController.cs" t="Include" />
+            <e p="YearStudentController.cs" t="Include" />
+            <e p="YearTeacherController.cs" t="Include" />
           </e>
           <e p="SchoolBuilder.cs" t="Include" />
           <e p="SchoolBuilderController.cs" t="Include" />
@@ -1791,9 +1793,11 @@
           <e p="ExaminationDestructor.cs" t="Include" />
           <e p="SchoolDestructor.cs" t="Include" />
           <e p="SemesterDestructor.cs" t="Include" />
+          <e p="SemesterStudentDestructor.cs" t="Include" />
           <e p="TestDestructor.cs" t="Include" />
           <e p="TestGroupDestructor.cs" t="Include" />
           <e p="YearDestructor.cs" t="Include" />
+          <e p="YearStudentDestructor.cs" t="Include" />
         </e>
         <e p="dist" t="Include">
           <e p="appsettings.Development.json" t="Include" />
@@ -2182,16 +2186,27 @@
           </e>
           <e p="Periods" t="Include">
             <e p="PeriodChild.cs" t="Include" />
-            <e p="Semester.cs" t="Include" />
-            <e p="SemesterDepartment.cs" t="Include" />
-            <e p="SemesterLevel.cs" t="Include" />
-            <e p="SemesterLevelSpeciality.cs" t="Include" />
-            <e p="SemesterSpeciality.cs" t="Include" />
-            <e p="Year.cs" t="Include" />
-            <e p="YearDepartment.cs" t="Include" />
-            <e p="YearLevel.cs" t="Include" />
-            <e p="YearLevelSpeciality.cs" t="Include" />
-            <e p="YearSpeciality.cs" t="Include" />
+            <e p="Semester" t="Include">
+              <e p="Semester.cs" t="Include" />
+              <e p="SemesterCourse.cs" t="Include" />
+              <e p="SemesterCourseLevelSpeciality.cs" t="Include" />
+              <e p="SemesterCourseTeacher.cs" t="Include" />
+              <e p="SemesterDepartment.cs" t="Include" />
+              <e p="SemesterLevel.cs" t="Include" />
+              <e p="SemesterLevelSpeciality.cs" t="Include" />
+              <e p="SemesterSpeciality.cs" t="Include" />
+              <e p="SemesterStudent.cs" t="Include" />
+              <e p="SemesterTeacher.cs" t="Include" />
+            </e>
+            <e p="Year" t="Include">
+              <e p="Year.cs" t="Include" />
+              <e p="YearDepartment.cs" t="Include" />
+              <e p="YearLevel.cs" t="Include" />
+              <e p="YearLevelSpeciality.cs" t="Include" />
+              <e p="YearSpeciality.cs" t="Include" />
+              <e p="YearStudent.cs" t="Include" />
+              <e p="YearTeacher.cs" t="Include" />
+            </e>
           </e>
           <e p="PeriodState.cs" t="Include" />
           <e p="test" t="Include">
@@ -2498,8 +2513,9 @@
           </e>
           <e p="PaperControllerTests.cs" t="Include" />
           <e p="Periods" t="Include">
-            <e p="SemesterTests.cs" t="Include" />
-            <e p="YearTests.cs" t="Include" />
+            <e p="SemesterControllerTests.cs" t="Include" />
+            <e p="YearControllerTests.cs" t="Include" />
+            <e p="YearStudentControllerTests.cs" t="Include" />
           </e>
           <e p="StudentGroupingControllerTests.cs" t="Include" />
           <e p="test" t="Include">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Everest.AspNetStartup.Persistence;
-using Exam.Controllers;
 using Exam.Controllers.Periods;
 using Exam.Entities;
 using Exam.Entities.Periods;
@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace ServerAppTest.Controllers.Periods
 {
-    public class YearTests
+    public class YearControllerTests
     {
         private YearController _controller;
         private IRepository<Year, long> _yearRepository;
@@ -108,7 +108,11 @@ namespace ServerAppTest.Controllers.Periods
             
             _controller.Delete(year);
             Assert.True(_yearRepository.Exists(year));
-            
+            foreach (YearDepartment yearDepartment in yearDepartments)
+            {
+                Assert.True(_dbContext.Set<YearDepartment>().Contains(yearDepartment));
+            }
+
         }
     }
 }
