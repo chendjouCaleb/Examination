@@ -2,6 +2,7 @@ import {Entity} from "../entity";
 import {School} from "../organisation";
 import {YearDepartment} from "./year-department";
 import {Semester} from "../semester";
+import {YearTeacher} from "./year-teacher";
 
 export class Year extends Entity<number>{
   expectedStartDate: Date;
@@ -14,6 +15,7 @@ export class Year extends Entity<number>{
   schoolId: number;
 
   yearDepartments: YearDepartment[] = [];
+  yearTeachers: YearTeacher[];
   semesters: Semester[];
 
   constructor(value: any = {}) {
@@ -29,6 +31,7 @@ export class Year extends Entity<number>{
     this.expectedEndDate = value.expectedEndDate ? new Date(value.expectedEndDate) : null;
 
     this.schoolId = value.schoolId;
+    this.school = new School(value.school);
   }
 
   get isWaiting() :boolean {
@@ -56,7 +59,7 @@ export class Year extends Entity<number>{
   url(path?: string): string {
     const url = `${this.school.url}/years/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }

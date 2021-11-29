@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Everest.AspNetStartup.Infrastructure;
 using Exam.Destructors;
 using Exam.Entities;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
+using Exam.Loaders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,9 +24,10 @@ namespace Exam.Controllers.Periods
 
 
         [HttpGet("{yearStudentId}")]
-        public YearStudent Get(YearStudent yearStudent)
+        public YearStudent Get(long yearStudentId)
         {
-            return yearStudent;
+           return  _dbContext.Set<YearStudent>()
+               .Include(y => y.Student).First(y => y.Id == yearStudentId);
         }
 
 
@@ -61,11 +64,13 @@ namespace Exam.Controllers.Periods
                 query = query.Where(s => s.YearLevelSpecialityId == yearLevelSpecialityId);
             }
 
-            return query.ToList();
+            return query.Include(y => y.Student).ToList();
         }
         
         
         [HttpPost("addAll")]
+        [RequireQueryParameter("yearId")]
+        [LoadYear(Source = ParameterSource.Query)]
         public List<YearStudent> AddStudents(Year year)
         {
             Assert.RequireNonNull(year, nameof(year));
@@ -81,17 +86,25 @@ namespace Exam.Controllers.Periods
                 .Where(yls => yls.YearLevel.YearDepartment.YearId == year.Id)
                 .ToList();
 
-            return _AddStudents(students, yearLevels, yearLevelSpecialities);
+            var yearStudents = _AddStudents(students, yearLevels, yearLevelSpecialities);
+
+            Console.WriteLine("Year students count: " + yearStudents.Count);
+
+            _dbContext.SaveChanges();
+            return yearStudents;
         }
 
 
         [HttpDelete("{yearStudentId}")]
+        [LoadYearStudent]
         public NoContentResult Delete(YearStudent yearStudent)
         {
+            Console.WriteLine(yearStudent.Id);
             Assert.RequireNonNull(yearStudent, nameof(yearStudent));
             var destructor = new YearStudentDestructor(_dbContext);
 
             destructor.Destroy(yearStudent);
+            _dbContext.SaveChanges();
             return NoContent();
         }
 
@@ -112,6 +125,11 @@ namespace Exam.Controllers.Periods
             if (yearStudent != null)
             {
                 return yearStudent;
+            }
+
+            if (student.Level.DepartmentId != yearLevel.YearDepartment.DepartmentId)
+            {
+                throw new IncompatibleEntityException(student, yearLevel);
             }
 
             if (yearLevelSpeciality != null && !yearLevel.Equals(yearLevelSpeciality.YearLevel))

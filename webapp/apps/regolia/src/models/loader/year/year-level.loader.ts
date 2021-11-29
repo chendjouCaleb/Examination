@@ -2,10 +2,9 @@ import {Injectable} from '@angular/core';
 
 import {AuthorizationManager} from 'examination/app/authorization';
 import {Loader} from '../loader';
-import {Level, Year, YearDepartment, YearLevel} from 'examination/entities';
+import {Level, YearDepartment, YearLevel} from 'examination/entities';
 import {UserHttpClient, YearLevelHttpClient} from 'examination/models/http';
 import {LevelLoader} from "../organisation";
-import {YearLoader} from "./year.loader";
 import {YearDepartmentLoader} from "./year-department.loader";
 
 
@@ -21,7 +20,7 @@ export class YearLevelLoader extends Loader<YearLevel, number> {
   }
 
   async load(item: YearLevel): Promise<YearLevel> {
-    item.level = await this._levelLoader.loadById(item.levelId);
+    await this._levelLoader.load(item.level);
     item.yearDepartment = await this._yearDepartmentLoader.loadById(item.yearDepartmentId);
     return item;
   }

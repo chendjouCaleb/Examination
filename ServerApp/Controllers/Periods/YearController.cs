@@ -28,10 +28,11 @@ namespace Exam.Controllers.Periods
 
 
         [HttpGet("{yearId}")]
-        [LoadYear]
-        public Year Get(Year year)
+        public Year Get(long yearId)
         {
-            return year;
+            return _dbContext.Set<Year>()
+                .Include(y => y.School)
+                .First(y => y.Id == yearId);
         }
 
 
@@ -45,7 +46,7 @@ namespace Exam.Controllers.Periods
                 query = query.Where(y => y.SchoolId == schoolId);
             }
 
-            return query.ToList();
+            return query.Include(y => y.School).ToList();
         }
 
 

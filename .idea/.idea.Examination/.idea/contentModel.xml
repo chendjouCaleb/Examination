@@ -1762,6 +1762,8 @@
             <e p="SemesterLevelController.cs" t="Include" />
             <e p="SemesterLevelSpecialityController.cs" t="Include" />
             <e p="SemesterSpecialityController.cs" t="Include" />
+            <e p="SemesterStudentController.cs" t="Include" />
+            <e p="SemesterTeacherController.cs" t="Include" />
             <e p="YearController.cs" t="Include" />
             <e p="YearDepartmentController.cs" t="Include" />
             <e p="YearLevelController.cs" t="Include" />
@@ -1794,10 +1796,12 @@
           <e p="SchoolDestructor.cs" t="Include" />
           <e p="SemesterDestructor.cs" t="Include" />
           <e p="SemesterStudentDestructor.cs" t="Include" />
+          <e p="SemesterTeacherDestructor.cs" t="Include" />
           <e p="TestDestructor.cs" t="Include" />
           <e p="TestGroupDestructor.cs" t="Include" />
           <e p="YearDestructor.cs" t="Include" />
           <e p="YearStudentDestructor.cs" t="Include" />
+          <e p="YearTeacherDestructor.cs" t="Include" />
         </e>
         <e p="dist" t="Include">
           <e p="appsettings.Development.json" t="Include" />
@@ -2516,6 +2520,7 @@
             <e p="SemesterControllerTests.cs" t="Include" />
             <e p="YearControllerTests.cs" t="Include" />
             <e p="YearStudentControllerTests.cs" t="Include" />
+            <e p="YearTeacherControllerTests.cs" t="Include" />
           </e>
           <e p="StudentGroupingControllerTests.cs" t="Include" />
           <e p="test" t="Include">

@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Exam.Entities.Periods
 {
+    
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class YearStudent:Entity<long>
     {
         public virtual Student Student { get; set; }

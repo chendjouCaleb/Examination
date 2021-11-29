@@ -810,6 +810,107 @@ namespace Exam.Migrations
                     b.ToTable("Semesters");
                 });
 
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterCourse", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<uint>("Coefficient")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("CourseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsGeneral")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("PracticalWork")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<uint>("Radical")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Required")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("SemesterLevelId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("SemesterLevelId");
+
+                    b.ToTable("SemesterCourses");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterCourseLevelSpeciality", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("CourseLevelSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("SemesterCourseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("SemesterLevelSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseLevelSpecialityId");
+
+                    b.HasIndex("SemesterCourseId");
+
+                    b.HasIndex("SemesterLevelSpecialityId");
+
+                    b.ToTable("SemesterCourseLevelSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterCourseTeacher", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsPrincipal")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Lecture")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("SemesterCourseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("SemesterTeacherId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Tutorial")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SemesterCourseId");
+
+                    b.HasIndex("SemesterTeacherId");
+
+                    b.ToTable("SemesterCourseTeachers");
+                });
+
             modelBuilder.Entity("Exam.Entities.Periods.SemesterDepartment", b =>
                 {
                     b.Property<long>("Id")
@@ -945,6 +1046,59 @@ namespace Exam.Migrations
                     b.HasIndex("YearSpecialityId");
 
                     b.ToTable("SemesterSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterStudent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("SemesterLevelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("SemesterLevelSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("YearStudentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SemesterLevelId");
+
+                    b.HasIndex("SemesterLevelSpecialityId");
+
+                    b.HasIndex("YearStudentId");
+
+                    b.ToTable("SemesterStudent");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterTeacher", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("SemesterDepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("YearTeacherId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SemesterDepartmentId");
+
+                    b.HasIndex("YearTeacherId");
+
+                    b.ToTable("SemesterTeachers");
                 });
 
             modelBuilder.Entity("Exam.Entities.Periods.Year", b =>
@@ -1113,6 +1267,59 @@ namespace Exam.Migrations
                     b.HasIndex("YearDepartmentId");
 
                     b.ToTable("YearSpecialities");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearStudent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("StudentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("YearLevelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("YearLevelSpecialityId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("YearLevelId");
+
+                    b.HasIndex("YearLevelSpecialityId");
+
+                    b.ToTable("YearStudents");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearTeacher", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("TeacherId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("YearDepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.HasIndex("YearDepartmentId");
+
+                    b.ToTable("YearTeachers");
                 });
 
             modelBuilder.Entity("Exam.Entities.Planner", b =>
@@ -1375,6 +1582,9 @@ namespace Exam.Migrations
                     b.Property<bool>("HasImage")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<long>("LevelId")
                         .HasColumnType("INTEGER");
 
@@ -1441,6 +1651,9 @@ namespace Exam.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("DepartmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("MemberId")
@@ -2020,6 +2233,45 @@ namespace Exam.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterCourse", b =>
+                {
+                    b.HasOne("Exam.Entities.Courses.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("Exam.Entities.Periods.SemesterLevel", "SemesterLevel")
+                        .WithMany()
+                        .HasForeignKey("SemesterLevelId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterCourseLevelSpeciality", b =>
+                {
+                    b.HasOne("Exam.Entities.Courses.CourseLevelSpeciality", "CourseLevelSpeciality")
+                        .WithMany("SemesterCourseLevelSpecialities")
+                        .HasForeignKey("CourseLevelSpecialityId");
+
+                    b.HasOne("Exam.Entities.Periods.SemesterCourse", "SemesterCourse")
+                        .WithMany("SemesterCourseLevelSpecialities")
+                        .HasForeignKey("SemesterCourseId");
+
+                    b.HasOne("Exam.Entities.Periods.SemesterLevelSpeciality", "SemesterLevelSpeciality")
+                        .WithMany("SemesterCourseLevelSpecialities")
+                        .HasForeignKey("SemesterLevelSpecialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterCourseTeacher", b =>
+                {
+                    b.HasOne("Exam.Entities.Periods.SemesterCourse", "SemesterCourse")
+                        .WithMany()
+                        .HasForeignKey("SemesterCourseId");
+
+                    b.HasOne("Exam.Entities.Periods.SemesterTeacher", "SemesterTeacher")
+                        .WithMany("SemesterCourseTeachers")
+                        .HasForeignKey("SemesterTeacherId");
+                });
+
             modelBuilder.Entity("Exam.Entities.Periods.SemesterDepartment", b =>
                 {
                     b.HasOne("Exam.Entities.Periods.Semester", "Semester")
@@ -2066,6 +2318,36 @@ namespace Exam.Migrations
                     b.HasOne("Exam.Entities.Periods.YearSpeciality", "YearSpeciality")
                         .WithMany("SemesterSpecialities")
                         .HasForeignKey("YearSpecialityId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterStudent", b =>
+                {
+                    b.HasOne("Exam.Entities.Periods.SemesterLevel", "SemesterLevel")
+                        .WithMany()
+                        .HasForeignKey("SemesterLevelId");
+
+                    b.HasOne("Exam.Entities.Periods.SemesterLevelSpeciality", "SemesterLevelSpeciality")
+                        .WithMany()
+                        .HasForeignKey("SemesterLevelSpecialityId");
+
+                    b.HasOne("Exam.Entities.Periods.YearStudent", "YearStudent")
+                        .WithMany("SemesterStudents")
+                        .HasForeignKey("YearStudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.SemesterTeacher", b =>
+                {
+                    b.HasOne("Exam.Entities.Periods.SemesterDepartment", "SemesterDepartment")
+                        .WithMany("SemesterTeachers")
+                        .HasForeignKey("SemesterDepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.Periods.YearTeacher", "YearTeacher")
+                        .WithMany()
+                        .HasForeignKey("YearTeacherId");
                 });
 
             modelBuilder.Entity("Exam.Entities.Periods.Year", b =>
@@ -2125,6 +2407,36 @@ namespace Exam.Migrations
                     b.HasOne("Exam.Entities.Periods.YearDepartment", "YearDepartment")
                         .WithMany("YearSpecialities")
                         .HasForeignKey("YearDepartmentId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearStudent", b =>
+                {
+                    b.HasOne("Exam.Entities.Student", "Student")
+                        .WithMany("YearStudents")
+                        .HasForeignKey("StudentId");
+
+                    b.HasOne("Exam.Entities.Periods.YearLevel", "YearLevel")
+                        .WithMany("YearStudents")
+                        .HasForeignKey("YearLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.Periods.YearLevelSpeciality", "YearLevelSpeciality")
+                        .WithMany("YearStudents")
+                        .HasForeignKey("YearLevelSpecialityId");
+                });
+
+            modelBuilder.Entity("Exam.Entities.Periods.YearTeacher", b =>
+                {
+                    b.HasOne("Exam.Entities.Teacher", "Teacher")
+                        .WithMany("YearTeachers")
+                        .HasForeignKey("TeacherId");
+
+                    b.HasOne("Exam.Entities.Periods.YearDepartment", "YearDepartment")
+                        .WithMany("YearTeachers")
+                        .HasForeignKey("YearDepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Exam.Entities.Planner", b =>

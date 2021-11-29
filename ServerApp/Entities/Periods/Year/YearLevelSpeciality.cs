@@ -8,8 +8,7 @@ namespace Exam.Entities.Periods
 {
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class YearLevelSpeciality: PeriodChild
-    { 
-        [JsonIgnore]
+    {
         public virtual LevelSpeciality LevelSpeciality { get; set; }
         public long? LevelSpecialityId { get; set; }
 

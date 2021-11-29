@@ -3,6 +3,7 @@ import {Entity} from "../entity";
 import {YearSpeciality} from "./year-speciality";
 import {YearLevel} from "./year-level";
 import {SemesterLevelSpeciality} from "../semester";
+import {YearStudent} from "./year-student";
 
 export class YearLevelSpeciality extends Entity<number> {
 
@@ -14,6 +15,11 @@ export class YearLevelSpeciality extends Entity<number> {
 
     this.yearSpecialityId = value.yearSpecialityId;
     this.levelSpecialityId = value.levelSpecialityId;
+
+    if(value.levelSpeciality){
+      this.levelSpeciality = new LevelSpeciality(value.levelSpeciality);
+    }
+
     this.yearLevelId = value.yearLevelId;
   }
 
@@ -27,6 +33,7 @@ export class YearLevelSpeciality extends Entity<number> {
   levelSpecialityId: number;
 
   semesterLevelSpecialities: SemesterLevelSpeciality[];
+  yearStudents: YearStudent[];
 
   url(path?: string): string {
     const url = `${this.yearLevel.url()}/specialities/${this.id}`;

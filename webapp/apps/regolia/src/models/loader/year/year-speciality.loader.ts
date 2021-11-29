@@ -21,7 +21,7 @@ export class YearSpecialityLoader extends Loader<YearSpeciality, number> {
   }
 
   async load(item: YearSpeciality): Promise<YearSpeciality> {
-    item.speciality = await this._specialityLoader.loadById(item.specialityId);
+    await this._specialityLoader.load(item.speciality);
     item.yearDepartment = await this._yearDepartmentLoader.loadById(item.yearDepartmentId);
     return item;
   }

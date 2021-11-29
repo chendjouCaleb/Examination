@@ -12,6 +12,8 @@ namespace Exam.Entities
     public class Teacher: Entity<long>
     {
         public string UserId { get; set; }
+
+        public bool IsActive { get; set; } = true;
         
         [JsonIgnore]
         public virtual Member Member { get; set; }

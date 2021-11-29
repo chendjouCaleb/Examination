@@ -13,7 +13,7 @@ namespace Exam.Entities.Periods
         public virtual Year Year { get; set; }
         public long YearId { get; set; }
         
-        [JsonIgnore]
+       
         public virtual Department Department { get; set; }
         public virtual long? DepartmentId { get; set; }
 

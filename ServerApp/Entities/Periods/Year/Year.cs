@@ -15,7 +15,7 @@ namespace Exam.Entities.Periods
 
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
         
-        [JsonIgnore]
+        
         public virtual School School { get; set; }
         public long SchoolId { get; set; }
         

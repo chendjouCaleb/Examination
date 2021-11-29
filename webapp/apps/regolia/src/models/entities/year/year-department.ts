@@ -4,6 +4,8 @@ import {Entity} from "../entity";
 import {YearLevel} from "./year-level";
 import {YearSpeciality} from "./year-speciality";
 import {SemesterDepartment} from "../semester";
+import {YearStudent} from "./year-student";
+import {YearTeacher} from "./year-teacher";
 
 export class YearDepartment extends Entity<number> {
 
@@ -15,6 +17,7 @@ export class YearDepartment extends Entity<number> {
 
     this.yearId = value.yearId;
     this.departmentId = value.departmentId;
+    this.department = new Department(value.department);
   }
 
   yearId: number;
@@ -26,6 +29,8 @@ export class YearDepartment extends Entity<number> {
   yearLevels: YearLevel[];
   yearSpecialities: YearSpeciality[];
   semesterDepartments: SemesterDepartment[];
+  yearStudents: YearStudent[];
+  yearTeachers: YearTeacher[];
 
   url(path?: string): string {
     const url = `${this.year.url()}/departments/${this.id}`;

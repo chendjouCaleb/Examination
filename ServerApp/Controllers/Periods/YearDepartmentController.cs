@@ -3,6 +3,7 @@ using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Controllers.Periods
 {
@@ -20,7 +21,8 @@ namespace Exam.Controllers.Periods
         [HttpGet("{yearDepartmentId}")]
         public YearDepartment Get(long yearDepartmentId)
         {
-            return _yearDepartmentRepository.Find(yearDepartmentId);
+            return _yearDepartmentRepository.Set.Include(y => y.Department)
+                .First(y => y.Id == yearDepartmentId);
         }
 
         [HttpGet]
@@ -39,7 +41,7 @@ namespace Exam.Controllers.Periods
                 query = query.Where(yd => yd.YearId == yearId);
             }
 
-            query = query.Skip(skip).Take(take);
+            query = query.Include(y => y.Department).Skip(skip).Take(take);
 
             return query.ToList();
         }

@@ -50,6 +50,7 @@ namespace ServerAppTest
 
                 department.Levels = CreateLevels(department, 2);
                 department.Specialities = CreateSpecialities(department, 2);
+                department.Teachers = CreateTeachers(department);
 
                 foreach (var level in department.Levels)
                 {
@@ -77,6 +78,25 @@ namespace ServerAppTest
             }
 
             return specialities;
+        }
+        
+        
+        public List<Teacher> CreateTeachers(Department department, int number = 3)
+        {
+            var repository = _serviceProvider.GetService<IRepository<Teacher, long>>();
+            List<Teacher> teachers = new List<Teacher>();
+            for (int i = 0; i < number; i++)
+            {
+                var teacher = repository.Save(new Teacher
+                {
+                    Department = department,
+                    UserId = Guid.NewGuid().ToString()
+                });
+                
+                teachers.Add(teacher);
+            }
+
+            return teachers;
         }
         
         

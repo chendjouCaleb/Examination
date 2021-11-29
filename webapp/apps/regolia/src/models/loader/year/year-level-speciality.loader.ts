@@ -2,10 +2,9 @@ import {Injectable} from '@angular/core';
 
 import {AuthorizationManager} from 'examination/app/authorization';
 import {Loader} from '../loader';
-import {LevelSpeciality, Speciality, Year, YearLevel, YearLevelSpeciality, YearSpeciality} from 'examination/entities';
-import {UserHttpClient, YearLevelSpecialityHttpClient, YearSpecialityHttpClient} from 'examination/models/http';
-import {LevelLoader, LevelSpecialityLoader, SpecialityLoader} from "../organisation";
-import {YearLoader} from "./year.loader";
+import {LevelSpeciality, YearLevel, YearLevelSpeciality, YearSpeciality} from 'examination/entities';
+import {UserHttpClient, YearLevelSpecialityHttpClient} from 'examination/models/http';
+import {LevelSpecialityLoader, SpecialityLoader} from "../organisation";
 import {YearLevelLoader} from "./year-level.loader";
 import {YearSpecialityLoader} from "./year-speciality.loader";
 
@@ -17,7 +16,6 @@ export class YearLevelSpecialityLoader extends Loader<YearLevelSpeciality, numbe
                private _userHttClient: UserHttpClient,
                private _yearLevelLoader: YearLevelLoader,
                private _yearSpecialityLoader: YearSpecialityLoader,
-               private _levelLoader: LevelLoader,
                private _specialityLoader: SpecialityLoader,
                private _levelSpecialityLoader: LevelSpecialityLoader,
                private _authorization: AuthorizationManager) {
@@ -27,7 +25,8 @@ export class YearLevelSpecialityLoader extends Loader<YearLevelSpeciality, numbe
   async load(item: YearLevelSpeciality): Promise<YearLevelSpeciality> {
     item.yearSpeciality = await this._yearSpecialityLoader.loadById(item.yearSpecialityId);
     item.yearLevel = await this._yearLevelLoader.loadById(item.yearLevelId);
-    item.levelSpeciality = await this._levelSpecialityLoader.loadById(item.levelSpecialityId);
+    await this._levelSpecialityLoader.load(item.levelSpeciality);
+
     return item;
   }
 
