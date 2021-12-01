@@ -10,6 +10,7 @@ namespace Exam.Entities.Periods
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class SemesterCourse:Entity<long>
     {
+        
         public bool PracticalWork { get; set; }
         
         public bool IsGeneral { get; set; }

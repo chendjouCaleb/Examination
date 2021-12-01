@@ -1718,6 +1718,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="AuthorizeController.cs" t="Include" />
+          <e p="ConsoleController.cs" t="Include" />
           <e p="Courses" t="Include">
             <e p="CourseController.cs" t="Include" />
             <e p="CourseHourController.cs" t="Include" />
@@ -1757,6 +1758,11 @@
             <e p="SpecialityController.cs" t="Include" />
           </e>
           <e p="Periods" t="Include">
+            <e p="course" t="Include">
+              <e p="SemesterCourseController.cs" t="Include" />
+              <e p="SemesterCourseTeacherController.cs" t="Include" />
+              <e p="SemesterLevelSpecialityCourseController.cs" t="Include" />
+            </e>
             <e p="SemesterController.cs" t="Include" />
             <e p="SemesterDepartmentController.cs" t="Include" />
             <e p="SemesterLevelController.cs" t="Include" />
@@ -1794,6 +1800,7 @@
         <e p="Destructors" t="Include">
           <e p="ExaminationDestructor.cs" t="Include" />
           <e p="SchoolDestructor.cs" t="Include" />
+          <e p="SemesterCourseDestructor.cs" t="Include" />
           <e p="SemesterDestructor.cs" t="Include" />
           <e p="SemesterStudentDestructor.cs" t="Include" />
           <e p="SemesterTeacherDestructor.cs" t="Include" />
@@ -2230,6 +2237,8 @@
           <e p="UserSchool.cs" t="Include" />
         </e>
         <e p="examination.db" t="Include" />
+        <e p="examination.db-shm" t="Include" />
+        <e p="examination.db-wal" t="Include" />
         <e p="Exceptions" t="Include">
           <e p="IncomptabileEntityException.cs" t="Include" />
           <e p="UniqueValueException.cs" t="Include" />
@@ -2256,6 +2265,7 @@
           <e p="AuthorizationMiddleware.cs" t="Include" />
           <e p="DateTimeAssert.cs" t="Include" />
           <e p="DateTimeExtensions.cs" t="Include" />
+          <e p="DuplicateObjectException.cs" t="Include" />
           <e p="InvalidStateException.cs" t="Include" />
           <e p="ItemList.cs" t="Include" />
           <e p="LinqExtension.cs" t="Include" />
@@ -2271,6 +2281,7 @@
             <e p="CourseLoader.cs" t="Include" />
             <e p="CourseSessionLoader.cs" t="Include" />
             <e p="CourseTeacherLoader.cs" t="Include" />
+            <e p="SemesterCourseLoader.cs" t="Include" />
           </e>
           <e p="Examination" t="Include">
             <e p="ExaminationDepartmentLoader.cs" t="Include" />
@@ -2300,7 +2311,10 @@
             <e p="SpecialityLoader.cs" t="Include" />
           </e>
           <e p="PaperLoader.cs" t="Include" />
+          <e p="SemesterCourseTeacherLoader.cs" t="Include" />
+          <e p="SemesterDepartmentLoader.cs" t="Include" />
           <e p="SemesterLoader.cs" t="Include" />
+          <e p="SemesterTeacherLoader.cs" t="Include" />
           <e p="TestGroupCorrectorLoader.cs" t="Include" />
           <e p="TestGroupLoader.cs" t="Include" />
           <e p="TestGroupSecretaryLoader.cs" t="Include" />
@@ -2309,6 +2323,7 @@
           <e p="TestLoader.cs" t="Include" />
           <e p="TestScoreLoader.cs" t="Include" />
           <e p="YearLoader.cs" t="Include" />
+          <e p="YearStudentLoader.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
           <e p="20210305182306_Initial.cs" t="Include" />
@@ -2321,6 +2336,8 @@
           <e p="20211120063659_AddPeriods.Designer.cs" t="Include" />
           <e p="20211125055219_SemesterIndex.cs" t="Include" />
           <e p="20211125055219_SemesterIndex.Designer.cs" t="Include" />
+          <e p="20211127180647_AddActiveOnStudent.cs" t="Include" />
+          <e p="20211127180647_AddActiveOnStudent.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">
@@ -2336,6 +2353,7 @@
           <e p="RoomForm.cs" t="Include" />
           <e p="SchoolForm.cs" t="Include" />
           <e p="ScoreForm.cs" t="Include" />
+          <e p="SemesterCourseForm.cs" t="Include" />
           <e p="SemesterForm.cs" t="Include" />
           <e p="SpecialityForm.cs" t="Include" />
           <e p="Statistics" t="Include">

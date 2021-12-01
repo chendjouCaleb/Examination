@@ -27,7 +27,10 @@ namespace Exam.Controllers.Periods
         [HttpGet("{semesterTeacherId}")]
         public SemesterTeacher Get(long semesterTeacherId)
         {
-            return DbContext.Set<SemesterTeacher>().Find(semesterTeacherId);
+            return DbContext.Set<SemesterTeacher>()
+                .Include(s => s.YearTeacher)
+                .ThenInclude(y => y.Teacher)
+                .First(s => s.Id == semesterTeacherId);
         }
 
 
