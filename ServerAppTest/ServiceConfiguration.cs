@@ -79,8 +79,7 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<TestGroupSecretaryController>();
             ServiceCollection.AddTransient<TestGroupCorrectorController>();
             ServiceCollection.AddTransient<TestGroupController>();
-            
-            
+
             ServiceCollection.AddTransient<ScorePaperController>();
             ServiceCollection.AddTransient<PaperController>();
             ServiceCollection.AddTransient<GroupPaperController>();
@@ -88,6 +87,13 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<YearStudentController>();
             ServiceCollection.AddTransient<YearTeacherController>();
             ServiceCollection.AddTransient<SemesterController>();
+            ServiceCollection.AddTransient<SemesterStudentController>();
+            
+            ServiceCollection.AddTransient<SemesterCourseController>();
+            ServiceCollection.AddTransient<SemesterTeacherController>();
+            ServiceCollection.AddTransient<SemesterStudentController>();
+            ServiceCollection.AddTransient<SemesterCourseTeacherController>();
+            ServiceCollection.AddTransient<SemesterLevelSpecialityCourseController>();
 
             ServiceCollection.AddTransient<SchoolDestructor>();
             

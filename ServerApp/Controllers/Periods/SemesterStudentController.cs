@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Exam.Destructors;
 using Exam.Entities.Periods;
@@ -67,6 +68,20 @@ namespace Exam.Controllers.Periods
 
             return query.ToList();
         }
+
+
+        public CreatedAtActionResult AddSemesterStudent(YearStudent yearStudent, SemesterLevel semesterLevel,
+            SemesterLevelSpeciality semesterLevelSpeciality = null)
+        {
+            Assert.RequireNonNull(yearStudent, nameof(yearStudent));
+            Assert.RequireNonNull(semesterLevel, nameof(semesterLevel));
+
+            SemesterStudent semesterStudent = _AddSemesterStudent(yearStudent, semesterLevel, semesterLevelSpeciality);
+            _dbContext.Add(semesterStudent);
+            _dbContext.SaveChanges();
+            
+            return CreatedAtAction("Get", new {semesterStudentId = semesterStudent.Id}, semesterStudent);
+        }
         
         
         [HttpPost("addAll")]
@@ -88,6 +103,27 @@ namespace Exam.Controllers.Periods
             return _AddStudents(yearStudents, semesterLevels, semesterLevelSpecialities);
         }
 
+        public OkResult ChangeSpeciality(SemesterStudent semesterStudent, SemesterLevelSpeciality semesterLevelSpeciality)
+        {
+            _ChangeSpeciality(semesterStudent, semesterLevelSpeciality);
+            _dbContext.Update(semesterStudent);
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
+
+        public void _ChangeSpeciality(SemesterStudent semesterStudent, SemesterLevelSpeciality semesterLevelSpeciality)
+        {
+            Assert.RequireNonNull(semesterStudent, nameof(semesterStudent));
+            Assert.RequireNonNull(semesterLevelSpeciality, nameof(semesterLevelSpeciality));
+
+            if (!semesterStudent.SemesterLevel.Equals(semesterLevelSpeciality.SemesterLevel))
+            {
+                throw new IncompatibleEntityException(semesterStudent, semesterLevelSpeciality);
+            }
+
+            semesterStudent.SemesterLevelSpeciality = semesterLevelSpeciality;
+        }
 
         [HttpDelete("{semesterStudentId}")]
         public NoContentResult Delete(SemesterStudent semesterStudent)
@@ -100,23 +136,15 @@ namespace Exam.Controllers.Periods
             return NoContent();
         }
 
-        public SemesterStudent _AddSemesterStudent(YearStudent yearStudent, SemesterLevel semesterLevel)
-        {
-            return _AddSemesterStudent(yearStudent, semesterLevel, null);
-        }
-        
-
         public SemesterStudent _AddSemesterStudent(YearStudent yearStudent, SemesterLevel semesterLevel,
-            SemesterLevelSpeciality semesterLevelSpeciality)
+            SemesterLevelSpeciality semesterLevelSpeciality = null)
         {
             Assert.RequireNonNull(yearStudent, nameof(yearStudent));
             Assert.RequireNonNull(semesterLevel, nameof(semesterLevel));
-
-            SemesterStudent semesterStudent = _dbContext.Set<SemesterStudent>()
-                .FirstOrDefault(ss => ss.YearStudentId == yearStudent.Id && ss.SemesterLevelId == semesterLevel.Id);
-            if (semesterStudent != null)
+            
+            if (Contains(yearStudent, semesterLevel))
             {
-                return semesterStudent;
+                throw new DuplicateObjectException("DUPLICATE_SEMESTER_STUDENT");
             }
 
             if (!yearStudent.YearLevel.Equals(semesterLevel.YearLevel))
@@ -129,15 +157,12 @@ namespace Exam.Controllers.Periods
                 throw new IncompatibleEntityException(semesterLevel, semesterLevelSpeciality);
             }
             
-            semesterStudent = new SemesterStudent
+            SemesterStudent semesterStudent = new SemesterStudent
             {
                 SemesterLevel = semesterLevel,
                 SemesterLevelSpeciality = semesterLevelSpeciality,
                 YearStudent = yearStudent
             };
-
-            _dbContext.Add(semesterStudent);
-
             return semesterStudent;
         }
 
@@ -151,13 +176,26 @@ namespace Exam.Controllers.Periods
                 SemesterLevel semesterLevel = semesterLevels.Find(yl => yl.YearLevel.Equals(yearStudent.YearLevel));
                 SemesterLevelSpeciality semesterLevelSpeciality = semesterLevelSpecialities
                     .Find(yl => yl.YearLevelSpeciality.Equals(yearStudent.YearLevelSpeciality));
-                
-                SemesterStudent semesterStudent = _AddSemesterStudent(yearStudent, semesterLevel, semesterLevelSpeciality);
-                semesterStudents.Add(semesterStudent);
+
+                if (!Contains(yearStudent, semesterLevel))
+                {
+                    SemesterStudent semesterStudent = _AddSemesterStudent(yearStudent, semesterLevel, semesterLevelSpeciality);
+                    semesterStudents.Add(semesterStudent);
+                }
             }
             return semesterStudents;
         }
 
+        public SemesterStudent Find(YearStudent yearStudent, SemesterLevel semesterLevel)
+        {
+            return _dbContext.Set<SemesterStudent>()
+                .FirstOrDefault(ss => ss.YearStudentId == yearStudent.Id && ss.SemesterLevelId == semesterLevel.Id);
+        }
         
+        public bool Contains(YearStudent yearStudent, SemesterLevel semesterLevel)
+        {
+            return _dbContext.Set<SemesterStudent>()
+                .Any(ss => ss.YearStudentId == yearStudent.Id && ss.SemesterLevelId == semesterLevel.Id);
+        }
     }
 }

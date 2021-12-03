@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Everest.AspNetStartup.Persistence;
+using Exam.Controllers.Periods;
 using Exam.Entities;
+using Exam.Entities.Periods;
+using Exam.Models;
 using Exam.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -34,6 +37,47 @@ namespace ServerAppTest
             return school;
         }
 
+        public Year CreateYear(School school)
+        {
+            YearForm _yearForm = new YearForm
+            {
+                ExpectedStartDate = DateTime.Now.AddDays(2),
+                ExpectedEndDate = DateTime.Now.AddMonths(10)
+            };
+
+            var controller = _serviceProvider.GetService<YearController>();
+            Year year = controller.Add(school, _yearForm).Value as Year;
+
+            return year;
+        }
+
+        public List<YearTeacher> AddYearTeachers(Year year)
+        {
+            var yearTeacherController = _serviceProvider.GetRequiredService<YearTeacherController>();
+            return yearTeacherController.AddTeachers(year);
+        }
+        
+        public List<YearStudent> AddYearStudents(Year year)
+        {
+            var yearStudentController = _serviceProvider.GetRequiredService<YearStudentController>();
+            return yearStudentController.AddStudents(year);
+        }
+        
+        
+        public Semester CreateSemester(Year year, DateTime? expectedStartDate = null, DateTime? expectedEndDate = null)
+        {
+            SemesterForm _semesterForm = new SemesterForm
+            {
+                ExpectedStartDate = expectedStartDate ?? DateTime.Now.AddDays(2),
+                ExpectedEndDate = expectedEndDate ?? DateTime.Now.AddMonths(10)
+            };
+
+            var controller = _serviceProvider.GetService<SemesterController>();
+            Semester semester = controller.Add(year, _semesterForm).Value as Semester;
+
+            return semester;
+        }
+
         List<Department> CreateDepartments(School school, int number)
         {
             var repository = _serviceProvider.GetService<IRepository<Department, long>>();
@@ -56,6 +100,7 @@ namespace ServerAppTest
                 {
                     CreateLevelSpecialities(level, department.Specialities);
                 }
+
                 departments.Add(department);
             }
 
@@ -73,14 +118,14 @@ namespace ServerAppTest
                     Department = department,
                     Name = $"speciality{i}"
                 });
-                
+
                 specialities.Add(speciality);
             }
 
             return specialities;
         }
-        
-        
+
+
         public List<Teacher> CreateTeachers(Department department, int number = 3)
         {
             var repository = _serviceProvider.GetService<IRepository<Teacher, long>>();
@@ -92,17 +137,16 @@ namespace ServerAppTest
                     Department = department,
                     UserId = Guid.NewGuid().ToString()
                 });
-                
+
                 teachers.Add(teacher);
             }
 
             return teachers;
         }
-        
-        
+
+
         public List<Level> CreateLevels(Department department, int number)
         {
-            
             var repository = _serviceProvider.GetService<IRepository<Level, long>>();
             List<Level> levels = new List<Level>();
             for (int i = 0; i < number; i++)
@@ -135,10 +179,10 @@ namespace ServerAppTest
                     Level = level,
                     Speciality = speciality
                 });
-                
+
                 levelSpecialities.Add(levelSpeciality);
                 levelSpeciality.Students = CreateStudents(levelSpeciality, 5);
-                
+
                 _logger.LogInformation($"LevelSpeciality: {levelSpeciality.Id} is created");
             }
 
@@ -157,13 +201,14 @@ namespace ServerAppTest
                     FullName = $"LevelStudent{i}",
                     RegistrationId = $"SL{level.Index}-{i}"
                 });
-                
+
                 students.Add(student);
             }
+
             return students;
         }
-        
-        
+
+
         public List<Student> CreateStudents(LevelSpeciality levelSpeciality, int number)
         {
             var repository = _serviceProvider.GetService<IRepository<Student, long>>();
@@ -177,11 +222,11 @@ namespace ServerAppTest
                     FullName = $"LevelSpecialityStudent{i}",
                     RegistrationId = $"SLS{levelSpeciality.Level.Index}-{levelSpeciality.Id}-{i}"
                 });
-                
+
                 students.Add(student);
             }
+
             return students;
         }
-        
     }
 }

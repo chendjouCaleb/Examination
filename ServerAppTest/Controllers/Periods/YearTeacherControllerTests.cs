@@ -58,8 +58,6 @@ namespace ServerAppTest.Controllers.Periods
         [Test]
         public void AddYearTeacher()
         {
-            
-
             YearTeacher yearTeacher = _controller._AddYearTeacher(_teacher, _yearDepartment);
             
             Assert.NotNull(yearTeacher);

@@ -2536,6 +2536,8 @@
           <e p="PaperControllerTests.cs" t="Include" />
           <e p="Periods" t="Include">
             <e p="SemesterControllerTests.cs" t="Include" />
+            <e p="SemesterStudentControllerTests.cs" t="Include" />
+            <e p="SemesterTeacherControllerTests.cs" t="Include" />
             <e p="YearControllerTests.cs" t="Include" />
             <e p="YearStudentControllerTests.cs" t="Include" />
             <e p="YearTeacherControllerTests.cs" t="Include" />

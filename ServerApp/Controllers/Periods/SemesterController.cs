@@ -78,6 +78,8 @@ namespace Exam.Controllers.Periods
                 Index = semesters.Count
             };
             _dbContext.Set<Semester>().Add(semester);
+            _dbContext.SaveChanges();
+            
             semesters.Add(semester);
             _SetSemesterIndex(semesters);
 

@@ -51,6 +51,19 @@ namespace Exam.Controllers.Periods
             
             return query.ToList();
         }
+
+        
+        
+        public YearTeacher AddYearTeacher(Teacher teacher, YearDepartment yearDepartment)
+        {
+            Assert.RequireNonNull(teacher, nameof(teacher));
+            Assert.RequireNonNull(yearDepartment, nameof(yearDepartment));
+
+            YearTeacher yearTeacher = _AddYearTeacher(teacher, yearDepartment);
+            DbContext.SaveChanges();
+
+            return yearTeacher;
+        }
         
         
         [HttpPost("addAll")]

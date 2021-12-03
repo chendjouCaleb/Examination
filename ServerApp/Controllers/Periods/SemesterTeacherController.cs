@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Exam.Destructors;
 using Exam.Entities.Periods;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Exam.Controllers.Periods
 {
     [Route("api/semesterTeachers")]
-    public class SemesterTeacherController:Controller
+    public class SemesterTeacherController : Controller
     {
         public readonly DbContext DbContext;
 
@@ -45,26 +46,36 @@ namespace Exam.Controllers.Periods
             {
                 query = query.Where(s => s.YearTeacher.TeacherId == teacherId);
             }
-            
+
             if (yearTeacherId != null)
             {
                 query = query.Where(s => s.YearTeacherId == yearTeacherId);
             }
-            
+
             if (semesterDepartmentId != null)
             {
                 query = query.Where(s => s.SemesterDepartmentId == semesterDepartmentId);
             }
-            
+
             if (semesterId != null)
             {
                 query = query.Where(s => s.SemesterDepartment.SemesterId == semesterDepartmentId);
             }
-            
+
             return query.ToList();
         }
-        
-        
+
+
+        public CreatedAtActionResult AddSemesterTeacher(YearTeacher yearTeacher, SemesterDepartment semesterDepartment)
+        {
+            Assert.RequireNonNull(yearTeacher, nameof(yearTeacher));
+            Assert.RequireNonNull(semesterDepartment, nameof(semesterDepartment));
+
+            SemesterTeacher semesterTeacher = _AddSemesterTeacher(yearTeacher, semesterDepartment);
+            DbContext.SaveChanges();
+            return CreatedAtAction("Get", new {semesterTeacherId = semesterTeacher.Id}, semesterTeacher);
+        }
+
         [HttpPost("addAll")]
         public List<SemesterTeacher> AddTeachers(Semester semester)
         {
@@ -73,11 +84,11 @@ namespace Exam.Controllers.Periods
             List<YearTeacher> yearTeachers = DbContext.Set<YearTeacher>()
                 .Where(t => t.YearDepartment.Year.Equals(semester.Year))
                 .ToList();
-            
+
             List<SemesterDepartment> semesterDepartments = DbContext.Set<SemesterDepartment>()
                 .Where(yd => yd.SemesterId == semester.Id)
                 .ToList();
-            
+
 
             return _AddTeachers(yearTeachers, semesterDepartments);
         }
@@ -99,19 +110,17 @@ namespace Exam.Controllers.Periods
             Assert.RequireNonNull(yearTeacher, nameof(yearTeacher));
             Assert.RequireNonNull(semesterDepartment, nameof(semesterDepartment));
 
-            SemesterTeacher semesterTeacher = DbContext.Set<SemesterTeacher>()
-                .FirstOrDefault(yt => yearTeacher.Equals(yt.YearTeacher) && semesterDepartment.Equals(yt.SemesterDepartment));
-            if (semesterTeacher != null)
+            if (Contains(yearTeacher, semesterDepartment))
             {
-                return semesterTeacher;
+                throw new DuplicateObjectException("DUPLICATE_ENTITY");
             }
 
             if (!yearTeacher.YearDepartment.Equals(semesterDepartment.YearDepartment))
             {
                 throw new IncompatibleEntityException(yearTeacher, semesterDepartment);
             }
-            
-            semesterTeacher = new SemesterTeacher
+
+            SemesterTeacher semesterTeacher = new SemesterTeacher
             {
                 SemesterDepartment = semesterDepartment,
                 YearTeacher = yearTeacher
@@ -122,7 +131,8 @@ namespace Exam.Controllers.Periods
             return semesterTeacher;
         }
 
-        public List<SemesterTeacher> _AddTeachers(List<YearTeacher> yearTeachers, List<SemesterDepartment> semesterDepartments)
+        public List<SemesterTeacher> _AddTeachers(List<YearTeacher> yearTeachers,
+            List<SemesterDepartment> semesterDepartments)
         {
             List<SemesterTeacher> semesterTeachers = new List<SemesterTeacher>();
 
@@ -130,12 +140,28 @@ namespace Exam.Controllers.Periods
             {
                 SemesterDepartment semesterDepartment = semesterDepartments
                     .Find(sd => yearTeacher.YearDepartment.Equals(sd.YearDepartment));
-                
-                SemesterTeacher semesterTeacher = _AddSemesterTeacher(yearTeacher, semesterDepartment);
-                semesterTeachers.Add(semesterTeacher);
+
+                if (!Contains(yearTeacher, semesterDepartment))
+                {
+                    SemesterTeacher semesterTeacher = _AddSemesterTeacher(yearTeacher, semesterDepartment);
+                    semesterTeachers.Add(semesterTeacher);
+                }
             }
 
             return semesterTeachers;
+        }
+
+        public bool Contains(YearTeacher yearTeacher, SemesterDepartment semesterDepartment)
+        {
+            return DbContext.Set<SemesterTeacher>()
+                .Any(yt => yearTeacher.Equals(yt.YearTeacher) && semesterDepartment.Equals(yt.SemesterDepartment));
+        }
+
+        public SemesterTeacher First(YearTeacher yearTeacher, SemesterDepartment semesterDepartment)
+        {
+            return DbContext.Set<SemesterTeacher>()
+                .FirstOrDefault(yt =>
+                    yearTeacher.Equals(yt.YearTeacher) && semesterDepartment.Equals(yt.SemesterDepartment));
         }
     }
 }

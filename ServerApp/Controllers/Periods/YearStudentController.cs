@@ -99,7 +99,6 @@ namespace Exam.Controllers.Periods
         [LoadYearStudent]
         public NoContentResult Delete(YearStudent yearStudent)
         {
-            Console.WriteLine(yearStudent.Id);
             Assert.RequireNonNull(yearStudent, nameof(yearStudent));
             var destructor = new YearStudentDestructor(_dbContext);
 
