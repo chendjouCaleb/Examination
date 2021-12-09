@@ -10,6 +10,8 @@ namespace Exam.Models
 
         public bool IsGeneral { get; set; }
 
+        public bool PracticalWork { get; set; }
+
 
         [Required]
         [Range(1, 100)]
@@ -20,7 +22,6 @@ namespace Exam.Models
 
     public class AddSemesterCourseTeacherForm
     {
-        public bool Tutorial { get; set; }
         public bool Lecture { get; set; }
         public bool IsPrincipal { get; set; }
     }

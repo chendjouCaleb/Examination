@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Everest.AspNetStartup.Infrastructure;
+using Exam.Authorizers;
 using Exam.Destructors;
 using Exam.Entities;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
+using Exam.Loaders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,9 +25,10 @@ namespace Exam.Controllers.Periods
 
 
         [HttpGet("{yearTeacherId}")]
-        public YearTeacher Get(YearTeacher yearTeacher)
+        public YearTeacher Get(long yearTeacherId)
         {
-            return yearTeacher;
+            return DbContext.Set<YearTeacher>().Include(y => y.Teacher)
+                .FirstOrDefault(y => y.Id == yearTeacherId);
         }
 
 
@@ -46,27 +50,58 @@ namespace Exam.Controllers.Periods
             
             if (yearId != null)
             {
-                query = query.Where(s => s.YearDepartment.YearId == yearDepartmentId);
+                query = query.Where(s => s.YearDepartment.YearId == yearId);
             }
             
             return query.ToList();
         }
 
         
-        
+        [HttpPost]
+        [RequireQueryParameter("teacherId")]
+        [RequireQueryParameter("yearDepartmentId")]
+        [LoadTeacher(Source = ParameterSource.Query)]
+        [LoadYearDepartment(Source = ParameterSource.Query, DepartmentItemName = "department")]
+        [IsDepartmentPrincipal]
         public YearTeacher AddYearTeacher(Teacher teacher, YearDepartment yearDepartment)
         {
             Assert.RequireNonNull(teacher, nameof(teacher));
             Assert.RequireNonNull(yearDepartment, nameof(yearDepartment));
 
             YearTeacher yearTeacher = _AddYearTeacher(teacher, yearDepartment);
+            DbContext.Add(yearTeacher);
             DbContext.SaveChanges();
 
             return yearTeacher;
         }
         
         
+        [HttpPost("addAllDepartment")]
+        [RequireQueryParameter("yearDepartmentId")]
+        [LoadYearDepartment(Source = ParameterSource.Query, DepartmentItemName = "school")]
+        [IsDepartmentPrincipal]
+        public List<YearTeacher> AddTeachers(YearDepartment yearDepartment)
+        {
+            Assert.RequireNonNull(yearDepartment, nameof(yearDepartment));
+
+            List<Teacher> teachers = DbContext.Set<Teacher>()
+                .Where(t => yearDepartment.Department.Equals(t.Department) && t.IsActive)
+                .ToList();
+            
+            List<YearDepartment> yearDepartments = new List<YearDepartment>{yearDepartment};
+            
+            var yearTeachers = _AddTeachers(teachers, yearDepartments);
+
+            DbContext.AddRange(yearTeachers);
+            DbContext.SaveChanges();
+
+            return yearTeachers;
+        }
+        
         [HttpPost("addAll")]
+        [RequireQueryParameter("yearId")]
+        [LoadYear(Source = ParameterSource.Query, SchoolItemName = "school")]
+        [IsDirector]
         public List<YearTeacher> AddTeachers(Year year)
         {
             Assert.RequireNonNull(year, nameof(year));
@@ -79,12 +114,18 @@ namespace Exam.Controllers.Periods
                 .Where(yd => yd.YearId == year.Id)
                 .ToList();
             
+            var yearTeachers = _AddTeachers(teachers, yearDepartments);
 
-            return _AddTeachers(teachers, yearDepartments);
+            DbContext.AddRange(yearTeachers);
+            DbContext.SaveChanges();
+
+            return yearTeachers;
         }
 
 
         [HttpDelete("{yearTeacherId}")]
+        [LoadYearTeacher]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(YearTeacher yearTeacher)
         {
             Assert.RequireNonNull(yearTeacher, nameof(yearTeacher));
@@ -118,8 +159,6 @@ namespace Exam.Controllers.Periods
                 Teacher = teacher
             };
 
-            DbContext.Add(yearTeacher);
-
             return yearTeacher;
         }
 
@@ -130,11 +169,29 @@ namespace Exam.Controllers.Periods
             foreach (Teacher teacher in teachers.FindAll(s => s.IsActive))
             {
                 YearDepartment yearDepartment = yearDepartments.Find(yd => yd.DepartmentId == teacher.DepartmentId);
-                YearTeacher yearTeacher = _AddYearTeacher(teacher, yearDepartment);
-                yearTeachers.Add(yearTeacher);
+
+                if (yearDepartment != null && !Contains(teacher, yearDepartment))
+                {
+                    YearTeacher yearTeacher = _AddYearTeacher(teacher, yearDepartment);
+                    yearTeachers.Add(yearTeacher);   
+                }
             }
 
             return yearTeachers;
         }
+
+        public bool Contains(Teacher teacher, YearDepartment yearDepartment)
+        {
+            return DbContext.Set<YearTeacher>()
+                .Any(yt => yt.TeacherId == teacher.Id && yt.YearDepartmentId == yearDepartment.Id);
+        }
+        
+        public YearTeacher First(Teacher teacher, YearDepartment yearDepartment)
+        {
+            return DbContext.Set<YearTeacher>()
+                .FirstOrDefault(yt => yt.TeacherId == teacher.Id && yt.YearDepartmentId == yearDepartment.Id);
+        }
+        
+        
     }
 }

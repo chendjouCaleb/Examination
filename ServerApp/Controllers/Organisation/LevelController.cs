@@ -53,7 +53,7 @@ namespace Exam.Controllers
         [HttpPost]
         [RequireQueryParameter("departmentId")]
         [LoadDepartment(Source = ParameterSource.Query)]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public CreatedAtActionResult Add(Department department, [FromQuery] long[] specialityId)
         {
             Level level = Add(department);
@@ -105,7 +105,7 @@ namespace Exam.Controllers
         /// </exception>
         [HttpDelete("{levelId}")]
         [LoadLevel(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(Level level)
         {
             if (level == null)

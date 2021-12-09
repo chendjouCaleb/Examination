@@ -4,3 +4,4 @@ export * from './semester-level-speciality.loader';
 export * from './semester-level.loader';
 export * from './semester-loader.module';
 export * from './semester-speciality.loader';
+export * from './semester-teacher.loader';

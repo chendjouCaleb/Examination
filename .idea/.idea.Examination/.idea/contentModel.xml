@@ -10,6 +10,7 @@
     <e p="C:\Users\HP\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\NUnit3.TestAdapter.pdb" t="Include" />
     <e p="C:\Users\HP\.Rider2019.2\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\HP\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Examination.-845940042.00" t="ExcludeRecursive" />
+    <e p="C:\Users\HP\.Rider2019.2\system\rust_expanded_macros\slRUDQSk\expansions" t="IncludeRecursive" />
     <e p="E:\Lab\Everest\Examination" t="IncludeFlat">
       <e p="ClientApp" t="IncludeRecursive">
         <e p=".browserslistrc" t="Include" />
@@ -1760,8 +1761,8 @@
           <e p="Periods" t="Include">
             <e p="course" t="Include">
               <e p="SemesterCourseController.cs" t="Include" />
+              <e p="SemesterCourseLevelSpecialityController.cs" t="Include" />
               <e p="SemesterCourseTeacherController.cs" t="Include" />
-              <e p="SemesterLevelSpecialityCourseController.cs" t="Include" />
             </e>
             <e p="SemesterController.cs" t="Include" />
             <e p="SemesterDepartmentController.cs" t="Include" />
@@ -1801,6 +1802,7 @@
           <e p="ExaminationDestructor.cs" t="Include" />
           <e p="SchoolDestructor.cs" t="Include" />
           <e p="SemesterCourseDestructor.cs" t="Include" />
+          <e p="SemesterCourseLevelSpecialityDestructor.cs" t="Include" />
           <e p="SemesterDestructor.cs" t="Include" />
           <e p="SemesterStudentDestructor.cs" t="Include" />
           <e p="SemesterTeacherDestructor.cs" t="Include" />
@@ -2237,8 +2239,6 @@
           <e p="UserSchool.cs" t="Include" />
         </e>
         <e p="examination.db" t="Include" />
-        <e p="examination.db-shm" t="Include" />
-        <e p="examination.db-wal" t="Include" />
         <e p="Exceptions" t="Include">
           <e p="IncomptabileEntityException.cs" t="Include" />
           <e p="UniqueValueException.cs" t="Include" />
@@ -2311,9 +2311,13 @@
             <e p="SpecialityLoader.cs" t="Include" />
           </e>
           <e p="PaperLoader.cs" t="Include" />
+          <e p="SemesterCourseLevelSpecialityLoader.cs" t="Include" />
           <e p="SemesterCourseTeacherLoader.cs" t="Include" />
           <e p="SemesterDepartmentLoader.cs" t="Include" />
+          <e p="SemesterLevelLoader.cs" t="Include" />
+          <e p="SemesterLevelSpecialityLoader.cs" t="Include" />
           <e p="SemesterLoader.cs" t="Include" />
+          <e p="SemesterStudentLoader.cs" t="Include" />
           <e p="SemesterTeacherLoader.cs" t="Include" />
           <e p="TestGroupCorrectorLoader.cs" t="Include" />
           <e p="TestGroupLoader.cs" t="Include" />
@@ -2322,8 +2326,10 @@
           <e p="TestLevelSpecialityLoadercs.cs" t="Include" />
           <e p="TestLoader.cs" t="Include" />
           <e p="TestScoreLoader.cs" t="Include" />
+          <e p="YearDepartmentLoader.cs" t="Include" />
           <e p="YearLoader.cs" t="Include" />
           <e p="YearStudentLoader.cs" t="Include" />
+          <e p="YearTeacherLoader.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
           <e p="20210305182306_Initial.cs" t="Include" />
@@ -2536,6 +2542,7 @@
           <e p="PaperControllerTests.cs" t="Include" />
           <e p="Periods" t="Include">
             <e p="SemesterControllerTests.cs" t="Include" />
+            <e p="SemesterCourseControllerTests.cs" t="Include" />
             <e p="SemesterStudentControllerTests.cs" t="Include" />
             <e p="SemesterTeacherControllerTests.cs" t="Include" />
             <e p="YearControllerTests.cs" t="Include" />

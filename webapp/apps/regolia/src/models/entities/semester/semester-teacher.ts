@@ -1,5 +1,6 @@
 import {Entity} from "../entity";
 import {YearTeacher} from "../year";
+import {SemesterDepartment} from "./semester-department";
 
 export class SemesterTeacher extends Entity<number> {
 
@@ -20,8 +21,16 @@ export class SemesterTeacher extends Entity<number> {
   yearTeacher: YearTeacher;
   yearTeacherId: number;
 
-  semesterDepartment: SemesterTeacher;
+  semesterDepartment: SemesterDepartment;
   semesterDepartmentId: number;
 
   isNew: boolean = false;
+
+  url(path?: string): string {
+    const url = `${this.semesterDepartment?.url()}/teachers/${this.id}`;
+    if(path) {
+      return `${url}/${path}`;
+    }
+    return url;
+  }
 }

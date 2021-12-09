@@ -87,9 +87,6 @@ namespace Exam.Controllers.Periods
                 .ToList();
 
             var yearStudents = _AddStudents(students, yearLevels, yearLevelSpecialities);
-
-            Console.WriteLine("Year students count: " + yearStudents.Count);
-
             _dbContext.SaveChanges();
             return yearStudents;
         }
@@ -158,13 +155,33 @@ namespace Exam.Controllers.Periods
                 YearLevel yearLevel = yearLevels.Find(yl => yl.LevelId == student.LevelId);
                 YearLevelSpeciality yearLevelSpeciality = yearLevelSpecialities
                     .Find(yl => yl.LevelSpecialityId == student.LevelSpecialityId);
-                YearStudent yearStudent = _AddYearStudent(student, yearLevel, yearLevelSpeciality);
-                yearStudents.Add(yearStudent);
+
+                if (yearLevel != null && !Contains(student, yearLevel))
+                {
+                    YearStudent yearStudent = _AddYearStudent(student, yearLevel, yearLevelSpeciality);
+                    yearStudents.Add(yearStudent);
+                }
             }
 
             return yearStudents;
         }
 
+        public YearStudent First(Student student, YearLevel yearLevel)
+        {
+            return _dbContext.Set<YearStudent>()
+                .FirstOrDefault(ys => ys.StudentId == student.Id && ys.YearLevelId == yearLevel.Id);
+        }
         
+        public bool Contains(Student student, YearLevel yearLevel)
+        {
+            return _dbContext.Set<YearStudent>()
+                .Any(ys => ys.StudentId == student.Id && ys.YearLevelId == yearLevel.Id);
+        }
+        
+        public bool Contains(Student student, Year year)
+        {
+            return _dbContext.Set<YearStudent>()
+                .Any(ys => ys.StudentId == student.Id && year.Equals(ys.YearLevel.YearDepartment.Year));
+        }
     }
 }

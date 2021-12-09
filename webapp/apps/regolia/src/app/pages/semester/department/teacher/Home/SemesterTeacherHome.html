@@ -1,0 +1,33 @@
+<MsActionMenu *ngIf="semesterTeacher.semesterDepartment?.yearDepartment?.department?.isDirector" class="ms-depth-8 p-2">
+  <button MsActionMenuButton icon="Delete" (click)="delete()" theme="error">Supprimer</button>
+</MsActionMenu>
+
+<div class="ms-description-list" style="white-space: nowrap">
+  <dl>
+    <dt>Nom & prénom</dt>
+    <dd>
+      <user-persona *ngIf="semesterTeacher.yearTeacher.teacher?.user"
+                    [user]="semesterTeacher.yearTeacher.teacher?.user"></user-persona>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>Année scolaire</dt>
+    <dd>
+      <a [routerLink]="semesterTeacher.semesterDepartment?.yearDepartment?.year?.url()">
+        {{semesterTeacher.semesterDepartment?.yearDepartment?.year?.rangeYears()}}
+      </a>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>Département</dt>
+    <dd>
+      <a [routerLink]="semesterTeacher.semesterDepartment?.url()">
+        {{semesterTeacher.yearTeacher?.yearDepartment?.department?.name}}
+      </a>
+    </dd>
+  </dl>
+
+
+</div>

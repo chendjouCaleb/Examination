@@ -1,1 +1,11 @@
-{{yearDepartment.department.name}}
+<a [routerLink]="yearDepartment.department.url">{{yearDepartment.department?.name}}</a>
+
+
+<h4 class="mt-4">Semestres</h4>
+<div *ngIf="semesterDepartments" class="mt-2">
+  <a SemesterItem *ngFor="let semesterDepartment of semesterDepartments"
+     [routerLink]="semesterDepartment.url()"
+     [semester]="semesterDepartment.semester">
+
+  </a>
+</div>

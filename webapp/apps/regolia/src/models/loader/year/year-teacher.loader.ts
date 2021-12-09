@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {AuthorizationManager} from 'examination/app/authorization';
 import {Loader} from '../loader';
 import {Teacher, Year, YearDepartment, YearTeacher} from 'examination/entities';
-import {UserHttpClient, YearTeacherHttpClient} from 'examination/models/http';
+import {TeacherHttpClient, UserHttpClient, YearTeacherHttpClient} from 'examination/models/http';
 import {TeacherLoader} from "../member";
 import {YearDepartmentLoader} from "./year-department.loader";
 
@@ -15,12 +15,18 @@ export class YearTeacherLoader extends Loader<YearTeacher, number> {
                private _userHttClient: UserHttpClient,
                private _yearDepartmentLoader: YearDepartmentLoader,
                private _teacherLoader: TeacherLoader,
+               private _teacherHttpClient: TeacherHttpClient,
                private _authorization: AuthorizationManager) {
     super(_httpClient);
   }
 
   async load(item: YearTeacher): Promise<YearTeacher> {
-    item.teacher = await this._teacherLoader.loadById(item.teacherId);
+    if(!item.teacher) {
+      item.teacher = await this._teacherHttpClient.findAsync(item.teacherId);
+    }
+
+    await this._teacherLoader.load(item.teacher);
+
     item.yearDepartment = await this._yearDepartmentLoader.loadById(item.yearDepartmentId);
     return item;
   }

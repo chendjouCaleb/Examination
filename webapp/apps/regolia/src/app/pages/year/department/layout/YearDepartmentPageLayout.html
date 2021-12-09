@@ -1,24 +1,34 @@
 ﻿<app-layout>
 
   <div style="display: grid; grid-template-columns: 200px 1fr; ">
-    <MsRibbonMenu style="height: 100%">
+    <MsRibbonMenu style="height: 100%" [selectedLabel]="selectedLabel">
 <!--      <button class="">-->
 <!--        <i class="icon-ic_fluent_navigation_16_regular" style="color:var(&#45;&#45;textColor)"></i>-->
 <!--      </button>-->
-      <MsRibbonMenuItem [routerLink]="url('home')" icon="home" label="home">Accueil</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('courses')" imageIcon="/assets/icon/books.png" label="courses">Cours</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('courseHours')" imageIcon="/assets/icon/calendrier.png" label="courseHours">Emplois du temps</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('courseSessions')" imageIcon="/assets/icon/schedule.svg" label="courseSessions">Séances de cours</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('applications')" imageIcon="/assets/icon/student-application.png" label="applications">Demandes</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('students')" imageIcon="/assets/icon/eleve.png" label="students">Étudiants</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('semesters')" imageIcon="/assets/icon/semester.png" label="examinations">Semestres</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('examinations')" imageIcon="/assets/icon/examination.png" label="examinations">Examens</MsRibbonMenuItem>
+      <a MsRibbonMenuItem [routerLink]="url('home')" icon="home" label="home">Accueil</a>
+      <a MsRibbonMenuItem [routerLink]="url('courses')" [imageIcon]="icons.course" label="courses">Cours</a>
+      <a MsRibbonMenuItem [routerLink]="url('courseHours')" [imageIcon]="icons.courseHour" label="courseHours">Emplois du temps</a>
+      <a MsRibbonMenuItem [routerLink]="url('courseSessions')" [imageIcon]="icons.courseSession" label="courseSessions">Séances de cours</a>
+      <a MsRibbonMenuItem [routerLink]="url('applications')" imageIcon="/assets/icon/student-application.png" label="applications">Demandes</a>
+      <a MsRibbonMenuItem [routerLink]="url('teachers')" [imageIcon]="icons.teacher" label="teachers">Enseignants</a>
+      <a MsRibbonMenuItem [routerLink]="url('students')" [imageIcon]="icons.student" label="students">Étudiants</a>
+      <a MsRibbonMenuItem [routerLink]="url('semesters')" [imageIcon]="icons.semester" label="examinations">Semestres</a>
+      <a MsRibbonMenuItem [routerLink]="url('examinations')" [imageIcon]="icons.examination" label="examinations">Examens</a>
 
     </MsRibbonMenu>
 
-  <div class="p-2">
-    <router-outlet></router-outlet>
-  </div>
+    <div>
+
+      <MsBreadcrumb class="mb-2">
+        <a routerLink="/schools" *MsBreadcrumbDef>Établissements</a>
+        <a [routerLink]="school.url" *MsBreadcrumbDef>{{school.name}}</a>
+        <a [routerLink]="[school.url, 'years']" *MsBreadcrumbDef>Années scolaires</a>
+        <a *MsBreadcrumbDef [routerLink]="year.url()">{{year.rangeYears()}}</a>
+        <a *MsBreadcrumbDef>{{yearDepartment.department?.name}}</a>
+        <a *MsBreadcrumbDef>{{title}}</a>
+      </MsBreadcrumb>
+      <router-outlet #outlet></router-outlet>
+    </div>
 
 
 

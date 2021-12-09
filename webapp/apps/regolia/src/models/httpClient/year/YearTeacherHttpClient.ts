@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {GenericHttpClient, SERVER_URL} from "../httpClient";
 import {
   Teacher,
-  Year,
+  Year, YearDepartment,
   YearLevel,
   YearLevelSpeciality,
   YearSpeciality,
@@ -34,8 +34,8 @@ export class YearTeacherHttpClient extends GenericHttpClient<YearTeacher, number
     return this.list({yearId: year.id});
   }
 
-  listByYearLevel(yearLevel: YearLevel): Promise<List<YearTeacher>> {
-    return this.list({yearLevelId: yearLevel.id});
+  listByYearDepartment(yearDepartment: YearDepartment): Promise<List<YearTeacher>> {
+    return this.list({yearDepartmentId: yearDepartment.id});
   }
 
   listByYearSpeciality(yearSpeciality: YearSpeciality): Promise<List<YearTeacher>> {

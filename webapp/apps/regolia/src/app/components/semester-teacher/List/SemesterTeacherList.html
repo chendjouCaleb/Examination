@@ -1,0 +1,42 @@
+<msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
+
+<msPaginator #msPaginator [pageSize]="50" [totalSize]="items.length" [itemsFn]="itemsFn">
+  <div *ms-paginatorPageDef="let data=items; let start=start">
+
+    <ms-table [hiddenColumns]="hiddenColumns" >
+      <msTableHead *ms-tableHeadDef>
+        <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+        <ms-tableHeadCell name="user">Nom & prénom</ms-tableHeadCell>
+        <ms-tableHeadCell name="department">Département</ms-tableHeadCell>
+        <ms-tableHeadCell name="semester">Semestre</ms-tableHeadCell>
+        <ms-tableHeadCell name="year">Année </ms-tableHeadCell>
+        <ms-tableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout</ms-tableHeadCell>
+      </msTableHead>
+
+      <msTableRow *ms-tableRowDef="let item of items; let i=index" [value]="item"
+                  [routerLink]="item.url()">
+        <msTableCell>{{i + 1}}</msTableCell>
+        <msTableCell>
+          <user-persona [user]="item.yearTeacher?.teacher?.user"></user-persona>
+        </msTableCell>
+        <msTableCell>
+          <a [routerLink]="item.semesterDepartment?.url()">
+            {{item.semesterDepartment?.yearDepartment?.department?.name}}</a>
+        </msTableCell>
+        <msTableCell>
+          <a [routerLink]="item.semesterDepartment?.semester?.url()">
+            {{item.semesterDepartment?.semester.rangeYears()}}
+          </a>
+        </msTableCell>
+        <msTableCell>
+          <a [routerLink]="item.semesterDepartment?.yearDepartment?.year?.url()">
+            {{item.semesterDepartment?.yearDepartment?.year.rangeYears()}}
+          </a>
+        </msTableCell>
+        <msTableCell >
+          <span class="ms-fontSize-12 ms-opacity-7">{{item.registrationDate | date}}</span>
+        </msTableCell>
+      </msTableRow>
+    </ms-table>
+  </div>
+</msPaginator>

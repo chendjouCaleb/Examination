@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Everest.AspNetStartup.Infrastructure;
+using Exam.Authorizers;
 using Exam.Destructors;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
+using Exam.Loaders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,24 +61,34 @@ namespace Exam.Controllers.Periods
 
             if (semesterId != null)
             {
-                query = query.Where(s => s.SemesterDepartment.SemesterId == semesterDepartmentId);
+                query = query.Where(s => s.SemesterDepartment.SemesterId == semesterId);
             }
 
             return query.ToList();
         }
 
 
+        [HttpPost]
+        [RequireQueryParameter("semesterDepartmentId")]
+        [RequireQueryParameter("yearTeacherId")]
+        [LoadSemesterDepartment(Source = ParameterSource.Query)]
+        [LoadYearTeacher(Source = ParameterSource.Query, DepartmentItemName = "department")]
+        [IsDepartmentPrincipal]
         public CreatedAtActionResult AddSemesterTeacher(YearTeacher yearTeacher, SemesterDepartment semesterDepartment)
         {
             Assert.RequireNonNull(yearTeacher, nameof(yearTeacher));
             Assert.RequireNonNull(semesterDepartment, nameof(semesterDepartment));
 
             SemesterTeacher semesterTeacher = _AddSemesterTeacher(yearTeacher, semesterDepartment);
+            DbContext.Add(semesterTeacher);
             DbContext.SaveChanges();
             return CreatedAtAction("Get", new {semesterTeacherId = semesterTeacher.Id}, semesterTeacher);
         }
 
         [HttpPost("addAll")]
+        [RequireQueryParameter("semesterId")]
+        [LoadSemester(Source = ParameterSource.Query, SchoolItemName = "school")]
+        [IsDirector]
         public List<SemesterTeacher> AddTeachers(Semester semester)
         {
             Assert.RequireNonNull(semester, nameof(semester));
@@ -89,12 +101,39 @@ namespace Exam.Controllers.Periods
                 .Where(yd => yd.SemesterId == semester.Id)
                 .ToList();
 
+            var semesterTeachers = _AddTeachers(yearTeachers, semesterDepartments);
+            DbContext.AddRange(semesterTeachers);
+            DbContext.SaveChanges();
 
-            return _AddTeachers(yearTeachers, semesterDepartments);
+            return semesterTeachers;
+        }
+        
+        
+        [HttpPost("addAllDepartment")]
+        [RequireQueryParameter("semesterDepartmentId")]
+        [LoadSemesterDepartment(Source = ParameterSource.Query, DepartmentItemName = "department")]
+        [IsDepartmentPrincipal]
+        public List<SemesterTeacher> AddTeachers(SemesterDepartment semesterDepartment)
+        {
+            Assert.RequireNonNull(semesterDepartment, nameof(semesterDepartment));
+
+            List<YearTeacher> yearTeachers = DbContext.Set<YearTeacher>()
+                .Where(t => t.YearDepartment.Equals(semesterDepartment.YearDepartment))
+                .ToList();
+
+            List<SemesterDepartment> semesterDepartments = new List<SemesterDepartment>{semesterDepartment};
+
+            var semesterTeachers = _AddTeachers(yearTeachers, semesterDepartments);
+            DbContext.AddRange(semesterTeachers);
+            DbContext.SaveChanges();
+
+            return semesterTeachers;
         }
 
 
         [HttpDelete("{semesterTeacherId}")]
+        [LoadSemesterTeacher(DepartmentItemName = "department")]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(SemesterTeacher semesterTeacher)
         {
             Assert.RequireNonNull(semesterTeacher, nameof(semesterTeacher));
@@ -125,8 +164,6 @@ namespace Exam.Controllers.Periods
                 SemesterDepartment = semesterDepartment,
                 YearTeacher = yearTeacher
             };
-
-            DbContext.Add(semesterTeacher);
 
             return semesterTeacher;
         }

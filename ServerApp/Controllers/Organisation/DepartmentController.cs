@@ -152,7 +152,7 @@ namespace Exam.Controllers
         [HttpPut("{departmentId}")]
         [ValidModel]
         [LoadDepartment]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public StatusCodeResult Edit(Department department, [FromBody] EditDepartmentForm form)
         {
             if (department == null)
@@ -232,7 +232,7 @@ namespace Exam.Controllers
 
         [HttpPut("{departmentId}/image")]
         [LoadDepartment]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public async Task<StatusCodeResult> ChangeImage(Department department, IFormFile image)
         {
             if (department == null)
@@ -283,7 +283,7 @@ namespace Exam.Controllers
 
         [HttpPut("{departmentId}/coverImage")]
         [LoadDepartment]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public async Task<StatusCodeResult> ChangeCoverImage(Department department, IFormFile image)
         {
             if (department == null)

@@ -2,6 +2,7 @@
 using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
+using Exam.Entities;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -29,28 +30,24 @@ namespace Exam.Loaders.Courses
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<SemesterCourse, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<SemesterCourse, long>>();
+            DbContext dbContext = context.HttpContext.RequestServices.GetRequiredService<DbContext>();
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
                 return;
             }
 
-            SemesterCourse semesterCourse = repository.Set
+            SemesterCourse semesterCourse = dbContext.Set<SemesterCourse>()
                 .Include(s => s.SemesterLevel)
-                .ThenInclude(s => s.YearLevel)
-                .ThenInclude(s => s.YearDepartment)
-                .ThenInclude(s => s.Department)
-                .ThenInclude(s => s.School)
                 .First(s => s.Id == long.Parse(id));
 
             context.HttpContext.Items[ItemName] = semesterCourse;
 
             if (!string.IsNullOrWhiteSpace(DepartmentItemName))
             {
-                context.HttpContext.Items[DepartmentItemName] =
-                    semesterCourse.SemesterLevel.YearLevel.Level.DepartmentId;
+                context.HttpContext.Items[DepartmentItemName] = dbContext.Set<Department>()
+                    .FirstOrDefault(d =>
+                        d.Equals(semesterCourse.SemesterLevel.SemesterDepartment.YearDepartment.Department));
             }
             
             if (!string.IsNullOrWhiteSpace(SemesterItemName))

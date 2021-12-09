@@ -6,6 +6,7 @@ export const locales = {
   'course-sessions': 'Séances de cours',
   'course-hours': 'Emploi du temps',
   'students': 'étudiants',
+  'teachers' : 'Enseignants',
   'applications': 'Demandes',
   'rooms': 'Salles',
   'planners': 'Planificateurs',

@@ -64,7 +64,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("specialityId")]
         [LoadLevel(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [LoadSpeciality(Source = ParameterSource.Query)]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public ObjectResult Add(Level level, Speciality speciality)
         {
             Assert.RequireNonNull(speciality, nameof(speciality));
@@ -100,7 +100,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{levelSpecialityId}")]
         [LoadLevelSpeciality(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(LevelSpeciality levelSpeciality)
         {
             if (levelSpeciality == null)

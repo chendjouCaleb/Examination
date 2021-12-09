@@ -74,7 +74,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("departmentId")]
         [ValidModel]
         [LoadDepartment(Source = ParameterSource.Query)]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public CreatedAtActionResult Add(Department department, [FromQuery] long[] levelId,
             [FromBody] SpecialityForm form)
         {
@@ -117,7 +117,7 @@ namespace Exam.Controllers
         [HttpPut("{specialityId}")]
         [ValidModel]
         [LoadSpeciality(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public AcceptedResult Edit(Speciality speciality, [FromBody] SpecialityEditForm form)
         {
             Assert.RequireNonNull(speciality, nameof(speciality));
@@ -142,7 +142,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{specialityId}")]
         [LoadSpeciality(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(Speciality speciality)
         {
             Assert.RequireNonNull(speciality, nameof(speciality));

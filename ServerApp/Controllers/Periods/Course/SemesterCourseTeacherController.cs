@@ -32,7 +32,9 @@ namespace Exam.Controllers.Periods
         public SemesterCourseTeacher Get(long semesterCourseTeacherId)
         {
             SemesterCourseTeacher semesterCourseTeacher =
-                _dbContext.Set<SemesterCourseTeacher>().Find(semesterCourseTeacherId);
+                _dbContext.Set<SemesterCourseTeacher>()
+                    
+                    .Find(semesterCourseTeacherId);
             return semesterCourseTeacher;
         }
 
@@ -71,7 +73,7 @@ namespace Exam.Controllers.Periods
         [RequireQueryParameter("semesterTeacherId")]
         [LoadSemesterCourse(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [LoadSemesterTeacher(Source = ParameterSource.Query)]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         [ValidModel]
         public CreatedAtActionResult Add(SemesterCourse semesterCourse, SemesterTeacher semesterTeacher,
             [FromBody] AddSemesterCourseTeacherForm form)
@@ -80,18 +82,18 @@ namespace Exam.Controllers.Periods
             Assert.RequireNonNull(semesterTeacher, nameof(semesterTeacher));
             Assert.RequireNonNull(form, nameof(form));
 
-            if (Contains(semesterTeacher, semesterCourse))
-            {
-                throw new DuplicateObjectException("DUPLICATE_OBJECT");
-            }
-
             SemesterCourseTeacher semesterCourseTeacher = _Add(semesterCourse, semesterTeacher, form);
+            _dbContext.Add(semesterCourseTeacher);
             _dbContext.SaveChanges();
             return CreatedAtAction("Get", new {semesterCourseTeacherId = semesterCourseTeacher.IsPrincipal},
                 semesterCourseTeacher);
         }
 
         
+        [HttpPost("addAll")]
+        [RequireQueryParameter("semesterId")]
+        [LoadSemester(Source = ParameterSource.Query, SchoolItemName = "school")]
+        [IsDirector]
         public List<SemesterCourseTeacher> AddAll(Semester semester)
         {
             Assert.RequireNonNull(semester, nameof(semester));
@@ -110,15 +112,17 @@ namespace Exam.Controllers.Periods
                 .ToList();
 
             var semesterCourseTeachers = _AddAll(courseTeachers, semesterTeachers, semesterCourses);
+            _dbContext.AddRange(semesterCourseTeachers);
             _dbContext.SaveChanges();
 
             return semesterCourseTeachers;
         }
         
         
-        [HttpPost]
+        [HttpPost("addAll")]
+        [RequireQueryParameter("semesterDepartmentId")]
         [LoadSemesterDepartment(Source = ParameterSource.Query, DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public List<SemesterCourseTeacher> AddAll(SemesterDepartment semesterDepartment)
         {
             Assert.RequireNonNull(semesterDepartment, nameof(semesterDepartment));
@@ -137,6 +141,8 @@ namespace Exam.Controllers.Periods
                 .ToList();
 
             var semesterCourseTeachers = _AddAll(courseTeachers, semesterTeachers, semesterCourses);
+            
+            _dbContext.AddRange(semesterCourseTeachers);
             _dbContext.SaveChanges();
 
             return semesterCourseTeachers;
@@ -176,8 +182,7 @@ namespace Exam.Controllers.Periods
             AddSemesterCourseTeacherForm form = new AddSemesterCourseTeacherForm
             {
                 IsPrincipal = courseTeacher.IsPrincipal,
-                Lecture = courseTeacher.Lecture,
-                Tutorial = courseTeacher.Tutorial
+                Lecture = courseTeacher.Lecture
             };
 
             return _Add(semesterCourse, semesterTeacher, form);
@@ -189,6 +194,11 @@ namespace Exam.Controllers.Periods
             Assert.RequireNonNull(semesterCourse, nameof(semesterCourse));
             Assert.RequireNonNull(semesterTeacher, nameof(semesterTeacher));
             Assert.RequireNonNull(form, nameof(form));
+            
+            if (Contains(semesterTeacher, semesterCourse))
+            {
+                throw new DuplicateObjectException("DUPLICATE_OBJECT");
+            }
 
             if (!semesterTeacher.SemesterDepartment.Equals(semesterCourse.SemesterLevel.SemesterDepartment))
             {
@@ -207,7 +217,7 @@ namespace Exam.Controllers.Periods
             {
                 SemesterCourse = semesterCourse,
                 SemesterTeacher = semesterTeacher,
-                Tutorial = form.Tutorial,
+                Tutorial = !form.Lecture,
                 Lecture = form.Lecture
             };
 
@@ -216,31 +226,18 @@ namespace Exam.Controllers.Periods
                 _RemoveAllPrincipalRole(semesterCourse);
                 semesterCourseTeacher.IsPrincipal = true;
             }
-
-            _dbContext.Add(semesterCourseTeacher);
-
+            
             return semesterCourseTeacher;
-        }
-
-        [HttpPut("{semesterCourseTeacherId}/tutorial")]
-        [LoadSemesterCourseTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
-        public StatusCodeResult Tutorial(SemesterCourseTeacher semesterCourseTeacher)
-        {
-            Assert.RequireNonNull(semesterCourseTeacher, nameof(semesterCourseTeacher));
-            semesterCourseTeacher.Tutorial = !semesterCourseTeacher.Tutorial;
-            _semesterCourseTeacherRepository.Update(semesterCourseTeacher);
-
-            return Ok();
         }
 
         [HttpPut("{semesterCourseTeacherId}/lecture")]
         [LoadSemesterCourseTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
-        public StatusCodeResult Lecture(SemesterCourseTeacher semesterCourseTeacher)
+        [IsDepartmentPrincipal]
+        public StatusCodeResult Lecture(SemesterCourseTeacher semesterCourseTeacher, [FromQuery] bool state)
         {
             Assert.RequireNonNull(semesterCourseTeacher, nameof(semesterCourseTeacher));
-            semesterCourseTeacher.Lecture = !semesterCourseTeacher.Lecture;
+            semesterCourseTeacher.Lecture = state;
+            semesterCourseTeacher.Tutorial = !state;
             _semesterCourseTeacherRepository.Update(semesterCourseTeacher);
 
             return Ok();
@@ -248,7 +245,7 @@ namespace Exam.Controllers.Periods
 
         [HttpPut("{semesterCourseTeacherId}/principal")]
         [LoadSemesterCourseTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public StatusCodeResult IsPrincipal(SemesterCourseTeacher semesterCourseTeacher)
         {
             Assert.RequireNonNull(semesterCourseTeacher, nameof(semesterCourseTeacher));
@@ -288,10 +285,11 @@ namespace Exam.Controllers.Periods
 
         [HttpDelete("{semesterCourseTeacherId}")]
         [LoadSemesterCourseTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(SemesterCourseTeacher semesterCourseTeacher, [FromQuery] bool semesterCourseHour,
             [FromQuery] bool semesterCourseSession)
         {
+            Assert.RequireNonNull(semesterCourseTeacher, nameof(semesterCourseTeacher));
             _semesterCourseTeacherRepository.Delete(semesterCourseTeacher);
             return NoContent();
         }

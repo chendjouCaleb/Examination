@@ -93,7 +93,7 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<SemesterTeacherController>();
             ServiceCollection.AddTransient<SemesterStudentController>();
             ServiceCollection.AddTransient<SemesterCourseTeacherController>();
-            ServiceCollection.AddTransient<SemesterLevelSpecialityCourseController>();
+            ServiceCollection.AddTransient<SemesterCourseLevelSpecialityController>();
 
             ServiceCollection.AddTransient<SchoolDestructor>();
             

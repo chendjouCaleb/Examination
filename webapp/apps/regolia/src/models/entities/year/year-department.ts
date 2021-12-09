@@ -35,7 +35,7 @@ export class YearDepartment extends Entity<number> {
   url(path?: string): string {
     const url = `${this.year.url()}/departments/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }

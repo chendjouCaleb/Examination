@@ -59,7 +59,7 @@ export class Semester extends Entity<number>{
   url(path?: string): string {
     const url = `${this.year.url()}/semesters/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }
@@ -79,6 +79,10 @@ export class Semester extends Entity<number>{
   }
 
   rangeYears(): string {
+    return `${this.displayStartDate().getFullYear()}-${this.displayEndDate().getFullYear()}`;
+  }
+
+  range(): string {
     return `${this.displayStartDate().getFullYear()}-${this.displayEndDate().getFullYear()}`;
   }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Everest.AspNetStartup.Infrastructure;
 using Exam.Destructors;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
+using Exam.Loaders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,7 +71,13 @@ namespace Exam.Controllers.Periods
             return query.ToList();
         }
 
-
+        
+        [HttpPost]
+        [RequireQueryParameter("yearStudentId")]
+        [RequireQueryParameter("semesterLevelId")]
+        [LoadYearStudent(Source = ParameterSource.Query)]
+        [LoadSemesterLevel(Source = ParameterSource.Query)]
+        [LoadSemesterLevelSpeciality(Source = ParameterSource.Query)]
         public CreatedAtActionResult AddSemesterStudent(YearStudent yearStudent, SemesterLevel semesterLevel,
             SemesterLevelSpeciality semesterLevelSpeciality = null)
         {
@@ -85,6 +93,7 @@ namespace Exam.Controllers.Periods
         
         
         [HttpPost("addAll")]
+        [LoadSemester(Source = ParameterSource.Query)]
         public List<SemesterStudent> AddStudents(Semester semester)
         {
             Assert.RequireNonNull(semester, nameof(semester));
@@ -103,6 +112,11 @@ namespace Exam.Controllers.Periods
             return _AddStudents(yearStudents, semesterLevels, semesterLevelSpecialities);
         }
 
+        
+        [HttpPut("{semesterStudentId}/speciality")]
+        [LoadSemesterStudent]
+        [RequireQueryParameter("semesterLevelSpecialityId")]
+        [LoadSemesterLevelSpeciality(Source = ParameterSource.Query)]
         public OkResult ChangeSpeciality(SemesterStudent semesterStudent, SemesterLevelSpeciality semesterLevelSpeciality)
         {
             _ChangeSpeciality(semesterStudent, semesterLevelSpeciality);
@@ -126,6 +140,7 @@ namespace Exam.Controllers.Periods
         }
 
         [HttpDelete("{semesterStudentId}")]
+        [LoadSemesterStudent]
         public NoContentResult Delete(SemesterStudent semesterStudent)
         {
             Assert.RequireNonNull(semesterStudent, nameof(semesterStudent));
@@ -177,7 +192,7 @@ namespace Exam.Controllers.Periods
                 SemesterLevelSpeciality semesterLevelSpeciality = semesterLevelSpecialities
                     .Find(yl => yl.YearLevelSpeciality.Equals(yearStudent.YearLevelSpeciality));
 
-                if (!Contains(yearStudent, semesterLevel))
+                if (semesterLevel != null && !Contains(yearStudent, semesterLevel))
                 {
                     SemesterStudent semesterStudent = _AddSemesterStudent(yearStudent, semesterLevel, semesterLevelSpeciality);
                     semesterStudents.Add(semesterStudent);

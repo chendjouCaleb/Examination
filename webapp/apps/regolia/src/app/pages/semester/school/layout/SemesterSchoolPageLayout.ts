@@ -4,6 +4,7 @@ import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router'
 import {CurrentItems} from '../../../../current-items';
 import {Title} from "@angular/platform-browser";
 import {locales} from "@examination/locales";
+import {MENU_ICONS_VALUES} from "../../../../../infrastructure";
 
 @Component({
   templateUrl: 'SemesterSchoolPageLayout.html',
@@ -18,6 +19,10 @@ export class SemesterSchoolPageLayout implements AfterViewInit {
 
   @ViewChild(RouterOutlet)
   outlet: RouterOutlet;
+
+  locales = locales;
+
+  icons = MENU_ICONS_VALUES;
 
   selectedLabel: string = '';
   title: string = '';
@@ -40,6 +45,6 @@ export class SemesterSchoolPageLayout implements AfterViewInit {
 
 
   url(path: string): string {
-    return this.year.url(path);
+    return this.semester.url(path);
   }
 }

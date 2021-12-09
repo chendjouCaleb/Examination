@@ -15,6 +15,7 @@ namespace Exam.Entities.Periods
         public virtual SemesterCourse SemesterCourse { get; set; }
         public long? SemesterCourseId { get; set; }
 
+        
         public virtual SemesterTeacher SemesterTeacher { get; set; }
         public long? SemesterTeacherId { get; set; }
     }

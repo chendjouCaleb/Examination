@@ -37,11 +37,18 @@ namespace Exam.Controllers
 
         [HttpGet]
         [LoadDepartment(Source = ParameterSource.Query)]
-        public IEnumerable<Teacher> List([FromQuery] long? departmentId, [FromQuery] string userId)
+        public IEnumerable<Teacher> List([FromQuery] long? departmentId,
+            [FromQuery] long? schoolId,
+            [FromQuery] string userId)
         {
             if (departmentId != null)
             {
                 return _teacherRepository.List(c => c.DepartmentId == departmentId.Value);
+            }
+            
+            if (schoolId != null)
+            {
+                return _teacherRepository.List(c => c.Department.SchoolId == schoolId);
             }
 
             if (userId != null)
@@ -56,7 +63,7 @@ namespace Exam.Controllers
         [HttpPost]
         [RequireQueryParameter("departmentId")]
         [LoadDepartment(Source = ParameterSource.Query)]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public ObjectResult Add(Department department, [FromQuery] string[] userId)
         {
             Assert.RequireNonNull(department, nameof(department));
@@ -111,7 +118,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{teacherId}")]
         [LoadTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(Teacher teacher)
         {
             Assert.RequireNonNull(teacher, nameof(teacher));

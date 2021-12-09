@@ -1,0 +1,18 @@
+﻿﻿
+<form class="ms-dialog-form">
+  <h4>Supprimer un enseignant</h4>
+
+  <div class="d-flex mt-2">
+    <div class="ms-fontSize-32 ms-fontColor-red">
+      <i class="ms-Icon ms-Icon--Delete"></i>
+    </div>
+    <div class="ms-fontSize-16 ml-2">
+      Êtes vous sur de vouloir supprimer cet enseignant de l'année scolaire ?
+    </div>
+  </div>
+
+  <div class="mt-4 text-right">
+    <button msButton msDialogClose class="mr-3">Annuler</button>
+    <button msButton (click)="delete()" icon="Delete" theme="error">Supprimer</button>
+  </div>
+</form>

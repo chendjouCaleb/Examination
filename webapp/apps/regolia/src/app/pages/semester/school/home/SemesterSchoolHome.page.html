@@ -15,3 +15,13 @@
     <span > {{semester.expectedEndDate | amDateFormat:'LL' }}</span>
   </div>
 </div>
+
+
+<h4 class="mt-4">Semestres</h4>
+<div *ngIf="semesterDepartments" class="mt-2">
+  <a SemesterItem *ngFor="let semesterDepartment of semesterDepartments"
+     [routerLink]="semesterDepartment.url()"
+     [semester]="semesterDepartment.semester">
+
+  </a>
+</div>

@@ -56,7 +56,7 @@ namespace Exam.Controllers
         [HttpPost]
         [RequireQueryParameter("departmentId")]
         [LoadDepartment(Source = ParameterSource.Query)]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public ObjectResult Add(Department department, [FromQuery] string[] userId)
         {
             Assert.RequireNonNull(department, nameof(department));
@@ -111,7 +111,7 @@ namespace Exam.Controllers
 
         [HttpDelete("{principalId}")]
         [LoadPrincipal(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(Principal principal)
         {
             Assert.RequireNonNull(principal, nameof(principal));

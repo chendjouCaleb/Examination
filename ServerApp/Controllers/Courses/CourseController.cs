@@ -97,7 +97,7 @@ namespace Exam.Controllers.Courses
         [RequireQueryParameter("levelId")]
         [ValidModel]
         [LoadLevel(Source = ParameterSource.Query, DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public CreatedAtActionResult Add([FromBody] CourseForm form, Level level, [FromQuery] long[] levelSpecialityId)
         {
             Course course = Add(form, level);
@@ -145,7 +145,7 @@ namespace Exam.Controllers.Courses
 
         [HttpPut("{courseId}")]
         [LoadCourse(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public ObjectResult Edit(Course course, [FromBody] CourseForm form)
         {
             Assert.RequireNonNull(course, nameof(course));
@@ -170,7 +170,7 @@ namespace Exam.Controllers.Courses
 
         [HttpPut("{courseId}/general")]
         [LoadCourse(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public StatusCodeResult General(Course course)
         {
             Assert.RequireNonNull(course, nameof(course));
@@ -200,7 +200,7 @@ namespace Exam.Controllers.Courses
 
         [HttpPut("{courseId}/restrict")]
         [LoadCourse(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public StatusCodeResult Restrict(Course course, [FromQuery] long[] levelSpecialityId)
         {
             Assert.RequireNonNull(course, nameof(course));
@@ -221,7 +221,7 @@ namespace Exam.Controllers.Courses
 
         [HttpDelete("{courseId}")]
         [LoadCourse(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(Course course)
         {
             _courseLevelSpecialityController.DeleteAll(course);

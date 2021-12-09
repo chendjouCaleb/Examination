@@ -55,7 +55,7 @@ namespace Exam.Controllers.Courses
         [HttpPost]
         [LoadCourse(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [LoadTeacher(Source = ParameterSource.Query)]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         [ValidModel]
         public CreatedAtActionResult Add(Course course, Teacher teacher,
             [FromBody] AddCourseTeacherForm form)
@@ -96,7 +96,7 @@ namespace Exam.Controllers.Courses
 
         [HttpPut("{courseTeacherId}/tutorial")]
         [LoadCourseTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public StatusCodeResult Tutorial(CourseTeacher courseTeacher)
         {
             Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
@@ -108,7 +108,7 @@ namespace Exam.Controllers.Courses
         
         [HttpPut("{courseTeacherId}/lecture")]
         [LoadCourseTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public StatusCodeResult Lecture(CourseTeacher courseTeacher)
         {
             Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
@@ -120,7 +120,7 @@ namespace Exam.Controllers.Courses
         
         [HttpPut("{courseTeacherId}/principal")]
         [LoadCourseTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public StatusCodeResult IsPrincipal(CourseTeacher courseTeacher)
         {
             Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
@@ -147,7 +147,7 @@ namespace Exam.Controllers.Courses
 
         [HttpDelete("{courseTeacherId}")]
         [LoadCourseTeacher(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(CourseTeacher courseTeacher, [FromQuery] bool courseHour,
             [FromQuery] bool courseSession)
         {

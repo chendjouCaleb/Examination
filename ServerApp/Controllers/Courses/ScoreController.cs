@@ -53,7 +53,7 @@ namespace Exam.Controllers.Courses
         [HttpPost]
         [RequireQueryParameter("courseId")]
         [LoadCourse(DepartmentItemName = "department", Source = ParameterSource.Query)]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public CreatedAtActionResult Add(Course course, [FromBody] ScoreForm form)
         {
             Assert.RequireNonNull(course, nameof(course));
@@ -95,7 +95,7 @@ namespace Exam.Controllers.Courses
         [HttpPut("{scoreId}/name")]
         [LoadScore(DepartmentItemName = "department", CourseItemName = "course")]
         [RequireQueryParameter("name")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public StatusCodeResult ChangeName(Score score, [FromQuery] string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -117,7 +117,7 @@ namespace Exam.Controllers.Courses
 
         [HttpDelete("{scoreId}")]
         [LoadScore(DepartmentItemName = "department")]
-        [AuthorizeDepartmentPrincipal]
+        [IsDepartmentPrincipal]
         public NoContentResult Delete(Score score)
         {
             Course course = score.Course;

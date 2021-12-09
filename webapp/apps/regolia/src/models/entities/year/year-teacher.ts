@@ -12,6 +12,10 @@ export class YearTeacher extends Entity<number> {
 
     this.yearDepartmentId = value.yearDepartmentId;
     this.teacherId = value.teacherId;
+
+    if(value.teacher) {
+      this.teacher = new Teacher(value.teacher);
+    }
   }
 
   yearDepartmentId: number;
@@ -21,7 +25,7 @@ export class YearTeacher extends Entity<number> {
   teacherId: number;
 
   url(path?: string): string {
-    const url = `${this.yearDepartment.url()}/teachers/${this.id}`;
+    const url = `${this.yearDepartment?.url()}/teachers/${this.id}`;
     if(path) {
       return `${url}/path`;
     }

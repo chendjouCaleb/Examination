@@ -57,6 +57,12 @@ namespace ServerAppTest
             return yearTeacherController.AddTeachers(year);
         }
         
+        public List<SemesterTeacher> AddSemesterTeachers(Semester semester)
+        {
+            var semesterTeacherController = _serviceProvider.GetRequiredService<SemesterTeacherController>();
+            return semesterTeacherController.AddTeachers(semester);
+        }
+        
         public List<YearStudent> AddYearStudents(Year year)
         {
             var yearStudentController = _serviceProvider.GetRequiredService<YearStudentController>();
