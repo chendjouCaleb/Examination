@@ -1,1 +1,14 @@
 {{semesterDepartment.yearDepartment.department.name}}
+
+<div *ngIf="semesterLevels">
+  <a *ngFor="let semesterLevel of semesterLevels" [routerLink]="semesterLevel.url()" class="p-2">
+    Niveau {{semesterLevel.yearLevel.level.index + 1}}
+  </a>
+</div>
+
+
+<div *ngIf="semesterSpecialities" class="mt-5">
+  <a *ngFor="let semesterSpeciality of semesterSpecialities" [routerLink]="semesterSpeciality.url()" class="m-2">
+    {{semesterSpeciality.yearSpeciality.speciality.name}}
+  </a>
+</div>

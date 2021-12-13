@@ -1,0 +1,66 @@
+﻿<div>
+  <ms-table #msTable [hiddenColumns]="hiddenColumns">
+    <ms-tableHead *msTableHeadDef>
+      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>
+      <ms-tableHeadCell name="semester">Semestre</ms-tableHeadCell>
+      <ms-tableHeadCell name="year">Année scolaire</ms-tableHeadCell>
+      <ms-tableHeadCell name="coefficient" [sortBy]="['coefficient', 'number']">Coeff.</ms-tableHeadCell>
+      <ms-tableHeadCell name="radical" [sortBy]="['radical', 'number']">Radical</ms-tableHeadCell>
+      <ms-tableHeadCell name="specialities">Spécialités</ms-tableHeadCell>
+      <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
+      <ms-tableHeadCell name="department">Département</ms-tableHeadCell>
+      <ms-tableHeadCell name="registrationDate">Date d'ajout</ms-tableHeadCell>
+    </ms-tableHead>
+
+    <ms-tableRow *ms-tableRowDef="let item of items; let i=index" [value]="item" #row
+      [routerLink]="item.url()"
+    >
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>
+        <a [routerLink]="item.course?.url">{{item.course?.name | ucFirst}}
+          ({{item.course?.code}})
+        </a>
+      </ms-tableCell>
+      <ms-tableCell>
+        <a [routerLink]="item.semesterLevel?.url()">
+          {{item.semesterLevel?.semesterDepartment?.semester?.range()}}</a>
+
+        <span class="ms-bgColor-shared{{colors[item.semesterLevel?.semesterDepartment?.semester?.index]}} p-1 ms-rounded ml-2">
+          {{item.semesterLevel?.semesterDepartment?.semester?.index + 1}}</span>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <a [routerLink]="item.semesterLevel?.url()">
+          {{item.semesterLevel?.semesterDepartment?.semester?.year.rangeYears()}}
+        </a>
+      </ms-tableCell>
+
+
+      <ms-tableCell>{{item.coefficient}}</ms-tableCell>
+      <ms-tableCell>{{item.course.radical}}</ms-tableCell>
+      <ms-tableCell>
+        <ng-container *ngIf="!item.isGeneral && item">
+          {{item.specialityNames.join(', ')}}
+        </ng-container>
+
+        <app-icon *ngIf="item.isGeneral" bgColor="sharedRed10" icon="Cancel"></app-icon>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <a [routerLink]="item.semesterLevel?.url()">Niveau {{item.semesterLevel?.yearLevel?.level?.index + 1}}</a>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <a [routerLink]="item.semesterLevel?.semesterDepartment.url()">
+          {{item.semesterLevel?.semesterDepartment?.yearDepartment?.department?.name}}
+        </a>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <span class="ms-fontSize-12">{{item.registrationDate | date}}</span>
+      </ms-tableCell>
+    </ms-tableRow>
+  </ms-table>
+
+</div>

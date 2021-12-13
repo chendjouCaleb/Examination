@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {CurrentItems} from "../../../../current-items";
 import {Router} from "@angular/router";
-import {YearSpeciality} from "examination/models";
+import {YearLevelSpecialityLoader, YearSpeciality} from "examination/models";
 
 @Component({
   templateUrl: 'YearSpecialityHome.page.html',
@@ -9,7 +9,12 @@ import {YearSpeciality} from "examination/models";
 export class YearSpecialityHomePage {
   yearSpeciality : YearSpeciality;
 
-  constructor(items: CurrentItems, public _router: Router) {
+
+
+  constructor(items: CurrentItems, public _router: Router,
+              private yearLevelSpecialityLoader: YearLevelSpecialityLoader) {
     this.yearSpeciality = items.get('yearSpeciality');
+
+    this.yearLevelSpecialityLoader.loadByYearSpeciality(this.yearSpeciality);
   }
 }

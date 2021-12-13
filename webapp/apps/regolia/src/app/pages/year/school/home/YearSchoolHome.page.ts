@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {CurrentItems} from "../../../../current-items";
 import {Router} from "@angular/router";
-import {SemesterLoader, Year} from "examination/models";
+import {SemesterLoader, Year, YearDepartmentLoader} from "examination/models";
 import {SemesterAddService, YearAddService} from "@examination/components";
 
 @Component({
@@ -14,10 +14,12 @@ export class YearSchoolHomePage {
               private _service: SemesterAddService,
               private _yearService: YearAddService,
               private _semesterLoader: SemesterLoader,
+              private _yearDepartmentLoader: YearDepartmentLoader,
               public _router: Router) {
     this.year = items.get('year');
 
     _semesterLoader.loadByYear(this.year);
+    _yearDepartmentLoader.loadByYear(this.year);
   }
 
   addSemester() {

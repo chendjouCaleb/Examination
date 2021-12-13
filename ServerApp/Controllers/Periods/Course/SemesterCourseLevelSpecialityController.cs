@@ -13,9 +13,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Controllers.Periods
 {
-    
     [Route("api/semesterCourseLevelSpecialities")]
-    public class SemesterCourseLevelSpecialityController:Controller
+    public class SemesterCourseLevelSpecialityController : Controller
     {
         private DbContext _dbContext;
 
@@ -35,8 +34,9 @@ namespace Exam.Controllers.Periods
         }
 
         [HttpGet]
-        IEnumerable<SemesterCourseLevelSpeciality> List([FromQuery] long? semesterCourseId,
+        public IEnumerable<SemesterCourseLevelSpeciality> List([FromQuery] long? semesterCourseId,
             [FromQuery] long? semesterLevelSpecialityId,
+            [FromQuery] long? semesterSpecialityId,
             [FromQuery] long? yearLevelSpecialityId
         )
         {
@@ -48,12 +48,17 @@ namespace Exam.Controllers.Periods
             {
                 query = query.Where(s => s.SemesterCourseId == semesterCourseId);
             }
-            
+
             if (semesterLevelSpecialityId != null)
             {
                 query = query.Where(s => s.SemesterLevelSpecialityId == semesterLevelSpecialityId);
             }
             
+            if (semesterSpecialityId != null)
+            {
+                query = query.Where(s => s.SemesterLevelSpeciality.SemesterSpecialityId == semesterSpecialityId);
+            }
+
             if (yearLevelSpecialityId != null)
             {
                 query = query.Where(s => s.SemesterLevelSpeciality.YearLevelSpecialityId == yearLevelSpecialityId);
@@ -79,7 +84,8 @@ namespace Exam.Controllers.Periods
             _dbContext.Add(courseLevelSpeciality);
             _dbContext.SaveChanges();
 
-            return CreatedAtAction("Get", new {semesterCourseLevelSpecialityId = courseLevelSpeciality.Id}, courseLevelSpeciality);
+            return CreatedAtAction("Get", new {semesterCourseLevelSpecialityId = courseLevelSpeciality.Id},
+                courseLevelSpeciality);
         }
 
         public List<SemesterCourseLevelSpeciality> AddAll(Semester semester)
@@ -99,63 +105,103 @@ namespace Exam.Controllers.Periods
         {
             Assert.RequireNonNull(semesterCourseLevelSpeciality, nameof(semesterCourseLevelSpeciality));
             var destructor = new SemesterCourseLevelSpecialityDestructor(_dbContext);
-            
+
             destructor.Destroy(semesterCourseLevelSpeciality);
             _dbContext.SaveChanges();
 
             return NoContent();
         }
-        
+
 
         public List<SemesterCourseLevelSpeciality> _AddAll(Semester semester)
         {
-            List<CourseLevelSpeciality> courseLevelSpecialities = _dbContext.Set<CourseLevelSpeciality>()
-                .Where(s => s.LevelSpeciality.Level.Department.School.Equals(semester.Year.School))
-                .ToList();
+            IQueryable<CourseLevelSpeciality> courseLevelSpecialities = _dbContext.Set<CourseLevelSpeciality>()
+                .Where(s => s.LevelSpeciality.Level.Department.School.Equals(semester.Year.School));
 
-            IEnumerable<SemesterCourse> semesterCourses = _dbContext.Set<SemesterCourse>()
+            IQueryable<SemesterCourse> semesterCourses = _dbContext.Set<SemesterCourse>()
                 .Where(s => s.SemesterLevel.SemesterDepartment.Semester.Equals(semester));
-            
-            List<SemesterLevelSpeciality> semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>()
-                .Where(s => s.SemesterLevel.SemesterDepartment.Semester.Equals(semester)).ToList();
+
+            IQueryable<SemesterLevelSpeciality> semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>()
+                .Where(s => s.SemesterLevel.SemesterDepartment.Semester.Equals(semester));
+
+            return _AddAll(courseLevelSpecialities, semesterCourses, semesterLevelSpecialities);
+        }
+        
+        public List<SemesterCourseLevelSpeciality> _AddAll(SemesterDepartment semesterDepartment)
+        {
+            IQueryable<CourseLevelSpeciality> courseLevelSpecialities = _dbContext.Set<CourseLevelSpeciality>()
+                .Where(s => s.LevelSpeciality.Level.Department.Equals(semesterDepartment.YearDepartment.Department));
+
+            IQueryable<SemesterCourse> semesterCourses = _dbContext.Set<SemesterCourse>()
+                .Where(s => s.SemesterLevel.SemesterDepartment.Equals(semesterDepartment));
+
+            IQueryable<SemesterLevelSpeciality> semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>()
+                .Where(s => s.SemesterLevel.SemesterDepartment.Equals(semesterDepartment));
 
             return _AddAll(courseLevelSpecialities, semesterCourses, semesterLevelSpecialities);
         }
 
         public List<SemesterCourseLevelSpeciality> _AddAll(SemesterLevel semesterLevel)
         {
-            List<CourseLevelSpeciality> courseLevelSpecialities = _dbContext.Set<CourseLevelSpeciality>()
-                .Where(s => s.LevelSpeciality.Level.Equals(semesterLevel.YearLevel.Level))
-                .ToList();
+            IQueryable<CourseLevelSpeciality> courseLevelSpecialities = _dbContext.Set<CourseLevelSpeciality>()
+                .Where(s => s.LevelSpeciality.Level.Equals(semesterLevel.YearLevel.Level));
 
-            List<SemesterCourse> semesterCourses = _dbContext.Set<SemesterCourse>()
-                .Where(s => s.SemesterLevel.Equals(semesterLevel)).ToList();
+            IQueryable<SemesterCourse> semesterCourses = _dbContext.Set<SemesterCourse>()
+                .Where(s => s.SemesterLevel.Equals(semesterLevel));
+
+            IQueryable<SemesterLevelSpeciality> semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>()
+                .Where(s => s.SemesterLevel.Equals(semesterLevel));
+
+            return _AddAll(courseLevelSpecialities, semesterCourses, semesterLevelSpecialities);
+        }
+        
+        
+        
+
+        public List<SemesterCourseLevelSpeciality> _AddAll(
+            IQueryable<CourseLevelSpeciality> courseLevelSpecialityQuery,
+            IQueryable<SemesterCourse> semesterCourseQuery,
+            IQueryable<SemesterLevelSpeciality> semesterLevelSpecialityQuery)
+        {
+            var semesterCourses = semesterCourseQuery
+                .Include(s => s.SemesterLevel)
+                .Include(s => s.Course)
+                .ToList();
             
-            List<SemesterLevelSpeciality> semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>()
-                .Where(s => s.SemesterLevel.Equals(semesterLevel)).ToList();
+            var courseLevelSpecialities = courseLevelSpecialityQuery
+                .Include(c => c.Course)
+                .ToList();
+            
+            var semesterLevelSpecialities = semesterLevelSpecialityQuery
+                .Include(s => s.SemesterLevel)
+                .Include(s => s.YearLevelSpeciality.LevelSpeciality)
+                .ToList();
 
             return _AddAll(courseLevelSpecialities, semesterCourses, semesterLevelSpecialities);
         }
 
         public List<SemesterCourseLevelSpeciality> _AddAll(IEnumerable<CourseLevelSpeciality> courseLevelSpecialities,
-            IEnumerable<SemesterCourse> semesterCourses, IEnumerable<SemesterLevelSpeciality> semesterLevelSpecialities)
+            List<SemesterCourse> semesterCourses, List<SemesterLevelSpeciality> semesterLevelSpecialities)
         {
             var semesterCourseLevelSpecialities = new List<SemesterCourseLevelSpeciality>();
-            
+
             foreach (CourseLevelSpeciality courseLevelSpeciality in courseLevelSpecialities)
             {
-                SemesterCourse semesterCourse = _dbContext.Set<SemesterCourse>()
+                SemesterCourse semesterCourse = semesterCourses
                     .FirstOrDefault(s => s.Course.Equals(courseLevelSpeciality.Course));
 
-                SemesterLevelSpeciality semesterLevelSpeciality = _dbContext.Set<SemesterLevelSpeciality>()
-                    .FirstOrDefault(s => s.SemesterLevel.Equals(semesterCourse.SemesterLevel) 
-                                && s.YearLevelSpeciality.LevelSpeciality.Equals(courseLevelSpeciality.LevelSpeciality));
+                SemesterLevelSpeciality semesterLevelSpeciality = semesterCourse == null
+                    ? null
+                    : semesterLevelSpecialities
+                        .FirstOrDefault(s => s.SemesterLevel.Equals(semesterCourse.SemesterLevel)
+                                             && s.YearLevelSpeciality.LevelSpeciality.Equals(courseLevelSpeciality
+                                                 .LevelSpeciality));
 
                 if (semesterCourse != null && semesterLevelSpeciality != null &&
                     !Contains(semesterCourse, semesterLevelSpeciality))
                 {
                     semesterCourseLevelSpecialities.Add(_Add(semesterCourse, semesterLevelSpeciality));
-                } 
+                }
             }
 
             return semesterCourseLevelSpecialities;
@@ -180,11 +226,12 @@ namespace Exam.Controllers.Periods
 
             CourseLevelSpeciality courseLevelSpeciality = _dbContext.Set<CourseLevelSpeciality>()
                 .FirstOrDefault(c => c.Course.Equals(semesterCourse.Course) &&
-                            c.LevelSpeciality.Equals(semesterLevelSpeciality.YearLevelSpeciality.LevelSpeciality));
+                                     c.LevelSpeciality.Equals(semesterLevelSpeciality.YearLevelSpeciality
+                                         .LevelSpeciality));
 
             SemesterCourseLevelSpeciality item = new SemesterCourseLevelSpeciality
             {
-                SemesterCourse =  semesterCourse,
+                SemesterCourse = semesterCourse,
                 CourseLevelSpeciality = courseLevelSpeciality,
                 SemesterLevelSpeciality = semesterLevelSpeciality
             };
@@ -192,14 +239,52 @@ namespace Exam.Controllers.Periods
             return item;
         }
 
+
+        public List<SemesterCourseLevelSpeciality> _Add(SemesterCourse semesterCourse,
+            IEnumerable<long> semesterLevelSpecialityId)
+        {
+            Assert.RequireNonNull(semesterLevelSpecialityId, nameof(semesterLevelSpecialityId));
+            Assert.RequireNonNull(semesterCourse, nameof(semesterCourse));
+
+            var semesterCourseLevelSpecialities = new List<SemesterCourseLevelSpeciality>();
+            var semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>()
+                .Include(s => s.YearLevelSpeciality)
+                .ThenInclude(s => s.LevelSpeciality)
+                .Where(s => semesterLevelSpecialityId.Contains(s.Id));
+
+            foreach (var semesterLevelSpeciality in semesterLevelSpecialities)
+            {
+                semesterCourseLevelSpecialities.Add(_Add(semesterCourse, semesterLevelSpeciality));
+            }
+
+            return semesterCourseLevelSpecialities;
+        }
+
+        public List<SemesterCourseLevelSpeciality> _Add(SemesterCourse semesterCourse,
+            IEnumerable<SemesterLevelSpeciality> semesterLevelSpecialities)
+        {
+            Assert.RequireNonNull(semesterLevelSpecialities, nameof(semesterLevelSpecialities));
+            Assert.RequireNonNull(semesterCourse, nameof(semesterCourse));
+
+            var semesterCourseLevelSpecialities = new List<SemesterCourseLevelSpeciality>();
+
+            foreach (var semesterLevelSpeciality in semesterLevelSpecialities)
+            {
+                semesterCourseLevelSpecialities.Add(_Add(semesterCourse, semesterLevelSpeciality));
+            }
+
+            return semesterCourseLevelSpecialities;
+        }
+
         public bool Contains(SemesterCourse semesterCourse, SemesterLevelSpeciality semesterLevelSpeciality)
         {
             return _dbContext.Set<SemesterCourseLevelSpeciality>()
                 .Any(s => semesterCourse.Equals(s.SemesterCourse) &&
-                            semesterLevelSpeciality.Equals(s.SemesterLevelSpeciality));
+                          semesterLevelSpeciality.Equals(s.SemesterLevelSpeciality));
         }
 
-        public SemesterCourseLevelSpeciality Find(SemesterCourse semesterCourse, SemesterLevelSpeciality semesterLevelSpeciality)
+        public SemesterCourseLevelSpeciality Find(SemesterCourse semesterCourse,
+            SemesterLevelSpeciality semesterLevelSpeciality)
         {
             return _dbContext.Set<SemesterCourseLevelSpeciality>()
                 .First(s => semesterCourse.Equals(s.SemesterCourse) &&

@@ -26,9 +26,9 @@ export class SemesterLevel extends Entity<number> {
   semesterStudents: SemesterStudent[];
 
   url(path?: string): string {
-    const url = `${this.semesterDepartment.url()}/levels/${this.id}`;
+    const url = `${this.semesterDepartment?.url()}/levels/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }

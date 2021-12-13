@@ -1,0 +1,73 @@
+﻿<div>
+  <ms-table #msTable [hiddenColumns]="hiddenColumns">
+    <ms-tableHead *msTableHeadDef>
+      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="teacher">Enseignant</ms-tableHeadCell>
+      <ms-tableHeadCell name="course" [sortBy]="['courseName', 'string']">Cours</ms-tableHeadCell>
+      <ms-tableHeadCell name="role">Roles</ms-tableHeadCell>
+      <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
+      <ms-tableHeadCell name="semester">Semestre</ms-tableHeadCell>
+      <ms-tableHeadCell name="registrationDate">Date d'ajout</ms-tableHeadCell>
+      <msTableHeadCell name="actions" class="text-right">
+        <i class="ms-Icon ms-Icon--SetAction px-2"></i>
+      </msTableHeadCell>
+    </ms-tableHead>
+
+    <ms-tableRow *ms-tableRowDef="let item of courseTeachers; let i=index" [value]="item">
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>
+        <div style="position: relative">
+          <user-persona class="ms-pointer" [routerLink]="item.semesterTeacher?.url()"
+                        [user]="item.semesterTeacher?.yearTeacher?.teacher.user"></user-persona>
+          <app-icon style="position: absolute; left: 24px; top: 24px"
+                    *ngIf="item.isPrincipal" bgColor="sharedYellowGreen10" icon="CheckMark"></app-icon>
+        </div>
+
+      </ms-tableCell>
+      <ms-tableCell>
+        <a [routerLink]="item.semesterCourse.url()">
+          {{item.courseName}}({{item.semesterCourse.course.code}})
+        </a>
+      </ms-tableCell>
+      <ms-tableCell>
+        <span *ngIf="item.lecture" class="ms-badge mr-2" msBgColor="sharedCyanBlue20">CM</span>
+        <span *ngIf="item.tutorial" class="ms-badge" msBgColor="sharedRedOrange10">TD</span>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <a [routerLink]="item.semesterCourse?.semesterLevel?.url()">Niveau {{item.levelIndex + 1}}</a>
+      </ms-tableCell>
+
+      <ms-tableCell>
+        <a [routerLink]="item.semesterTeacher?.semesterDepartment?.semester?.url()">
+          {{item.semesterTeacher?.semesterDepartment?.semester?.range()}}
+        </a>
+      </ms-tableCell>
+
+      <ms-tableCell><span class="ms-fontSize-12 ms-opacity-7">{{item.registrationDate | date}}</span></ms-tableCell>
+      <ms-tableCell class="text-right">
+        <button *ngIf="item.semesterTeacher?.semesterDepartment?.yearDepartment?.department.isDirector"
+                msIconButton icon="MoreVertical" theme="transparent" [MsDropdownTrigger]="dropdown"></button>
+
+        <MsDropdown #dropdown>
+          <MsContextMenu>
+            <MsContextMenuItem icon="PlayerSettings" (click)="principal(item)">Enseignant principal</MsContextMenuItem>
+            <MsContextMenuItem *ngIf="!item.tutorial" (click)="addTutorialRole(item)" icon="AddFriend">Ajouter Travaux dirigés
+            </MsContextMenuItem>
+            <MsContextMenuItem *ngIf="item.tutorial" (click)="deleteTutorialRole(item)" icon="UserRemove" theme="error">
+              Enlever Travaux dirigés
+            </MsContextMenuItem>
+
+            <MsContextMenuItem *ngIf="!item.lecture" (click)="addLectureRole(item)"  icon="AddFriend">Ajouter cours magistral
+            </MsContextMenuItem>
+            <MsContextMenuItem *ngIf="item.lecture" (click)="deleteLectureRole(item)" icon="UserRemove" theme="error">
+              Enlever cours magistral
+            </MsContextMenuItem>
+            <MsContextMenuItem icon="Delete" theme="error" (click)="delete(item)">Supprimer</MsContextMenuItem>
+          </MsContextMenu>
+        </MsDropdown>
+      </ms-tableCell>
+    </ms-tableRow>
+  </ms-table>
+
+</div>

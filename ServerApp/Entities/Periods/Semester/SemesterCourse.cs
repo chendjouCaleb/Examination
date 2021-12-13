@@ -28,8 +28,7 @@ namespace Exam.Entities.Periods
         public virtual SemesterLevel SemesterLevel { get; set; }
         public long? SemesterLevelId { get; set; }
 
-
-        [JsonIgnore]
+        
         public virtual List<SemesterCourseLevelSpeciality> SemesterCourseLevelSpecialities { get; set; }
         
     }

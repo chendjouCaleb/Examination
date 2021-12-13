@@ -62,6 +62,11 @@ namespace Exam.Loaders
                 context.HttpContext.Items[SemesterTeacherItemName] = semesterCourseTeacher.SemesterTeacher;
             }
             
+            if (!string.IsNullOrWhiteSpace(DepartmentItemName))
+            {
+                context.HttpContext.Items[DepartmentItemName] =
+                    semesterCourseTeacher.SemesterCourse.SemesterLevel.SemesterDepartment.YearDepartment.Department;
+            }
         }
     }
 }

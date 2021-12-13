@@ -6,7 +6,7 @@ import {SemesterSchoolPageLayout} from "./layout/SemesterSchoolPageLayout";
 import {LayoutModule} from "../../../../infrastructure";
 import {BreadcrumbModule, MsActionMenuModule, MsButtonModule, MsRibbonModule} from "@ms-fluent/components";
 import {
-  SemesterAddModule,
+  SemesterAddModule, SemesterCourseListModule,
   SemesterListModule,
   SemesterTeacherListModule,
   SemesterTeacherModule
@@ -14,12 +14,14 @@ import {
 import {MomentModule} from "ngx-moment";
 import {SemesterTeachersPage} from "./SemesterTeachers.page";
 import {SemesterItemModule} from "../../../components/semester/item";
+import {SemesterCoursePage} from "./SemesterCourse.page";
 
 const routes: Routes = [
   {
     path: '', component: SemesterSchoolPageLayout, children: [
       {path: '', component: SemesterSchoolHomePage, data: { label: 'home'}},
       {path: 'teachers', component: SemesterTeachersPage, data: { label: 'teachers'}},
+      {path: 'courses', component: SemesterCoursePage, data: { label: 'courses'}},
       {path: 'home', redirectTo: '', pathMatch: 'full'}
     ]
   }
@@ -28,8 +30,8 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, SemesterAddModule,
     SemesterListModule, SemesterTeacherModule,
-    MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule, SemesterTeacherListModule, SemesterItemModule],
-  declarations: [ SemesterSchoolHomePage, SemesterSchoolPageLayout, SemesterTeachersPage]
+    MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule, SemesterTeacherListModule, SemesterItemModule, SemesterCourseListModule],
+  declarations: [ SemesterSchoolHomePage, SemesterSchoolPageLayout, SemesterTeachersPage, SemesterCoursePage]
 })
 export class SemesterSchoolPageModule {
 

@@ -2,14 +2,13 @@ import {Component, ViewChild} from "@angular/core";
 import {Department, Teacher} from 'examination/entities';
 import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
-import {TeacherHttpClient} from "../../../../models/httpClient/member";
-import {TeacherList} from "../../../components/member/teacher/list";
-import {TeacherService} from "../../../components/member/teacher";
+import {TeacherHttpClient} from "@examination/http";
+import {TeacherList, TeacherService} from "@examination/components";
 
 @Component({
   template: `
       <MsActionMenu class="ms-depth-8 p-2">
-          <button *ngIf="department.isPrincipal"msActionMenuButton icon="Add" (click)="addTeacher()">
+          <button *ngIf="department.isDirector" msActionMenuButton icon="Add" (click)="addTeacher()">
               Ajouter <span class="ms-hiddenSm">des enseignants</span></button>
       </MsActionMenu>
       <h4 class="my-2">Enseignants</h4>

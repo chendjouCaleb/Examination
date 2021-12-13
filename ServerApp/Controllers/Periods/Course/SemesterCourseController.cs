@@ -19,10 +19,16 @@ namespace Exam.Controllers.Periods
     public class SemesterCourseController:Controller
     {
         private DbContext _dbContext;
+        private SemesterCourseTeacherController _semesterCourseTeacherController;
+        private SemesterCourseLevelSpecialityController _semesterCourseLevelSpecialityController;
 
-        public SemesterCourseController(DbContext dbContext)
+        public SemesterCourseController(DbContext dbContext,
+            SemesterCourseTeacherController semesterCourseTeacherController,
+            SemesterCourseLevelSpecialityController semesterCourseLevelSpecialityController)
         {
             _dbContext = dbContext;
+            _semesterCourseTeacherController = semesterCourseTeacherController;
+            _semesterCourseLevelSpecialityController = semesterCourseLevelSpecialityController;
         }
 
         [HttpGet("{semesterCourseId}")]
@@ -34,10 +40,16 @@ namespace Exam.Controllers.Periods
 
 
         [HttpGet]
-        IEnumerable<SemesterCourse> List([FromQuery] long? courseId, [FromQuery] long? semesterLevelId,
-            [FromQuery] long? yearLevelId)
+        public IEnumerable<SemesterCourse> List([FromQuery] long? courseId, [FromQuery] long? semesterLevelId,
+            [FromQuery] long? yearLevelId,
+            [FromQuery] long? semesterDepartmentId,
+            [FromQuery] long? yearDepartmentId,
+            [FromQuery] long? semesterId,
+            [FromQuery] long? yearId
+            )
         {
-            IQueryable<SemesterCourse> query = _dbContext.Set<SemesterCourse>().Include(s => s.Course);
+            IQueryable<SemesterCourse> query = _dbContext.Set<SemesterCourse>()
+                .Include(s => s.Course);
 
             if (semesterLevelId != null)
             {
@@ -45,7 +57,7 @@ namespace Exam.Controllers.Periods
             }
 
             if (courseId != null)
-            {                
+            {              
                 query = query.Where(s => s.CourseId == courseId);
             }
             
@@ -53,47 +65,82 @@ namespace Exam.Controllers.Periods
             {                
                 query = query.Where(s => s.SemesterLevel.YearLevelId == yearLevelId);
             }
+            
+            if (semesterDepartmentId != null)
+            {                
+                query = query.Where(s => s.SemesterLevel.SemesterDepartmentId == semesterDepartmentId);
+            }
+            
+            if (yearDepartmentId != null)
+            {                
+                query = query.Where(s => s.SemesterLevel.SemesterDepartment.YearDepartmentId == yearDepartmentId);
+            }
+
+            if (semesterId != null)
+            {                
+                query = query.Where(s => s.SemesterLevel.SemesterDepartment.SemesterId == semesterId);
+            }
+            
+            if (yearId != null)
+            {                
+                query = query.Where(s => s.SemesterLevel.SemesterDepartment.YearDepartment.YearId == yearId);
+            }
 
             return query.ToList();
         }
 
         
-        [HttpGet]
+        [HttpPost]
         [RequireQueryParameter("courseId")]
         [RequireQueryParameter("semesterLevelId")]
         [LoadCourse(Source = ParameterSource.Query)]
         [LoadSemesterLevel(Source = ParameterSource.Query,DepartmentItemName = "department")]
         [IsDepartmentPrincipal]
-        public CreatedAtActionResult AddCourse(SemesterCourseForm form, Course course, SemesterLevel semesterLevel)
+        public CreatedAtActionResult AddCourse(SemesterCourseForm form, Course course, 
+            SemesterLevel semesterLevel, [FromQuery] long[]? semesterLevelSpecialityId = null)
         {
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(course, nameof(course));
             Assert.RequireNonNull(semesterLevel, nameof(semesterLevel));
 
             SemesterCourse semesterCourse = _AddCourse(form, course, semesterLevel);
-            _dbContext.Update(semesterCourse);
+            _dbContext.Add(semesterCourse);
+
+            if (semesterLevelSpecialityId != null)
+            {
+                var semesterCourseLevelSpecialities = 
+                    _semesterCourseLevelSpecialityController._Add(semesterCourse, semesterLevelSpecialityId);
+                _dbContext.AddRange(semesterCourseLevelSpecialities);
+            }
+            
             _dbContext.SaveChanges();
 
             return CreatedAtAction("Get", new {semesterCourseId = semesterCourse.Id}, semesterCourse);
         }
 
 
-        [HttpGet]
-        [RequireQueryParameter("semesterLevelId")]
-        [LoadCourse(Source = ParameterSource.Query)]
-        [LoadSemester(SchoolItemName = "school")]
-        [IsDepartmentPrincipal]
+        [HttpPost("addAll")]
+        [RequireQueryParameter("semesterId")]
+        [LoadSemester(SchoolItemName = "school", Source = ParameterSource.Query)]
+        [IsDirector]
         public List<SemesterCourse> AddAll(Semester semester)
         {
             Assert.RequireNonNull(semester, nameof(semester));
             List<SemesterCourse> semesterCourses = _AddAll(semester);
             _dbContext.AddRange(semesterCourses);
             _dbContext.SaveChanges();
+            
+            var semesterCourseLevelSpecialities = _semesterCourseLevelSpecialityController._AddAll(semester);
+            _dbContext.AddRange(semesterCourseLevelSpecialities);
+            _dbContext.SaveChanges();
+
+            _semesterCourseTeacherController.AddAll(semester);
+            
             return semesterCourses;
         }
         
         
-        [HttpGet]
+        [HttpPost("addAllSemesterDepartment")]
         [RequireQueryParameter("semesterDepartmentId")]
         [LoadSemesterDepartment(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [IsDepartmentPrincipal]
@@ -103,10 +150,17 @@ namespace Exam.Controllers.Periods
             List<SemesterCourse> semesterCourses = _AddAll(semesterDepartment);
             _dbContext.AddRange(semesterCourses);
             _dbContext.SaveChanges();
+            
+            var semesterCourseLevelSpecialities = _semesterCourseLevelSpecialityController._AddAll(semesterDepartment);
+            _dbContext.AddRange(semesterCourseLevelSpecialities);
+            _dbContext.SaveChanges();
+
+            _semesterCourseTeacherController.AddAll(semesterDepartment);
+            
             return semesterCourses;
         }
         
-        [HttpGet]
+        [HttpPost("addAllSemesterLevel")]
         [RequireQueryParameter("semesterLevelId")]
         [LoadSemesterLevel(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [IsDepartmentPrincipal]
@@ -116,6 +170,13 @@ namespace Exam.Controllers.Periods
             List<SemesterCourse> semesterCourses = _AddAll(semesterLevel);
             _dbContext.AddRange(semesterCourses);
             _dbContext.SaveChanges();
+            
+            var semesterCourseLevelSpecialities = _semesterCourseLevelSpecialityController._AddAll(semesterLevel);
+            _dbContext.AddRange(semesterCourseLevelSpecialities);
+            _dbContext.SaveChanges();
+
+            _semesterCourseTeacherController.AddAll(semesterLevel);
+            
             return semesterCourses;
         }
 
@@ -207,7 +268,6 @@ namespace Exam.Controllers.Periods
             SemesterCourseForm form = new SemesterCourseForm
             {
                 Coefficient = course.Coefficient,
-                Radical = course.Radical,
                 IsGeneral = course.IsGeneral,
                 PracticalWork = course.PracticalWork
             };
@@ -215,7 +275,8 @@ namespace Exam.Controllers.Periods
             return _AddCourse(form, course, semesterLevel);
         }
 
-        public SemesterCourse _AddCourse(SemesterCourseForm form, Course course, SemesterLevel semesterLevel)
+        public SemesterCourse _AddCourse(SemesterCourseForm form, Course course,
+            SemesterLevel semesterLevel)
         {
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(course, nameof(course));

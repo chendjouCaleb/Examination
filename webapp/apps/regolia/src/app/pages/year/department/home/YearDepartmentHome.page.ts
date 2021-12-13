@@ -5,7 +5,7 @@ import {
   SemesterDepartment,
   SemesterDepartmentHttpClient,
   SemesterDepartmentLoader,
-  YearDepartment
+  YearDepartment, YearLevelLoader, YearSpecialityLoader
 } from "examination/models";
 
 @Component({
@@ -17,6 +17,8 @@ export class YearDepartmentHomePage implements OnInit {
 
   constructor(items: CurrentItems, public _router: Router,
               private semesterLoader: SemesterDepartmentLoader,
+              private _yearLevelLoader: YearLevelLoader,
+              private _yearSpecialityLoader: YearSpecialityLoader,
               private semesterHttpClient: SemesterDepartmentHttpClient) {
     this.yearDepartment = items.get('yearDepartment');
   }
@@ -26,5 +28,8 @@ export class YearDepartmentHomePage implements OnInit {
     await this.semesterLoader.loadAll(semesterDepartments);
 
     this.semesterDepartments = semesterDepartments.toArray();
+
+    this._yearLevelLoader.loadByYearDepartment(this.yearDepartment);
+    this._yearSpecialityLoader.loadByYearDepartment(this.yearDepartment);
   }
 }

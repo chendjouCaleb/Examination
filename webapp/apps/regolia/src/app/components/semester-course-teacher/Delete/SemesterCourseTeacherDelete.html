@@ -1,0 +1,18 @@
+﻿﻿<form class="ms-dialog-form">
+  <h4>Enlever un enseignant du cours</h4>
+
+  <div class="d-flex mt-3">
+    <div>
+      <img src="/assets/icon/remove-user.png" alt="book image" width="42" height="42">
+    </div>
+    <div class="ms-fontSize-16 ml-3">
+      Enlevez l'enseignant  <b>{{semesterCourseTeacher.semesterTeacher?.yearTeacher?.teacher?.user?.fullName}}</b> du cours
+      <b> {{semesterCourseTeacher.courseName}}</b> pour le compte de ce semestre
+    </div>
+  </div>
+
+  <div class="mt-4 text-right">
+    <button msButton msDialogClose class="mr-3">Annuler</button>
+    <button msButton (click)="delete()" icon="UserRemove" theme="error">Enlever</button>
+  </div>
+</form>

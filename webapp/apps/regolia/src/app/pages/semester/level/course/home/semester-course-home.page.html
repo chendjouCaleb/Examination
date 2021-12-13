@@ -1,0 +1,58 @@
+<MsActionMenu class="p-2 ms-depth-8">
+  <button MsActionMenuButton icon="AddFriend" (click)="addTeacher()">Ajouter un enseignant</button>
+  <button MsActionMenuButton theme="error" icon="Delete" (click)="delete()">Supprimer</button>
+</MsActionMenu>
+
+<div style="max-width: 100%; overflow: auto">
+  <div class="p-2 ms-sm-w100 ms-description-list">
+    <dl>
+      <dt>Nom</dt>
+      <dd>
+        <a [routerLink]="semesterCourse.course?.url">{{semesterCourse.course?.name}}</a>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>Code</dt>
+      <dd>{{semesterCourse.course?.code}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Coefficient</dt>
+      <dd>{{semesterCourse.course?.coefficient}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Description</dt>
+      <dd>{{semesterCourse.course?.description}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Niveau</dt>
+      <dd>{{semesterCourse.semesterLevel?.yearLevel?.level?.index + 1}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Specialités</dt>
+      <dd *ngIf="!semesterCourse.isGeneral && semesterCourse.semesterCourseLevelSpecialities">
+        {{semesterCourse.specialityNames.join(', ')}}
+      </dd>
+      <dd *ngIf="semesterCourse.isGeneral">
+        <span class="badge ms-bgColor-sharedGreen10">Cours général</span>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>Ajouté le</dt>
+      <dd class="ms-fontSize-12">{{semesterCourse.registrationDate | amCalendar}}</dd>
+    </dl>
+
+  </div>
+</div>
+
+<div class="mt-3">
+  <h4>Enseignants</h4>
+  <SemesterCourseTeacherList [params]="{semesterCourseId: semesterCourse.id}" #courseTeacherList
+  [hiddenColumns]="['course', 'level', 'semester']"
+  ></SemesterCourseTeacherList>
+</div>

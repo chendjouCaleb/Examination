@@ -1,0 +1,19 @@
+﻿﻿<form class="ms-dialog-form">
+  <h4>Enlever un enseignant du cours</h4>
+
+  <div class="d-flex mt-3">
+    <div>
+      <img src="/assets/icon/presentation.png" alt="book image" width="42" height="42">
+    </div>
+    <div class="ms-fontSize-16 ml-3">
+      Ajouter la charge des travaux dirigés à l'enseignant
+      <b>{{semesterCourseTeacher.semesterTeacher?.yearTeacher?.teacher?.user?.fullName}}</b> du cours
+      <b> {{semesterCourseTeacher.courseName}}</b> pour le compte de ce semestre
+    </div>
+  </div>
+
+  <div class="mt-4 text-right">
+    <button msButton msDialogClose class="mr-3">Annuler</button>
+    <button msButton (click)="add()" icon="FriendAdd" theme="primary">Ajouter</button>
+  </div>
+</form>

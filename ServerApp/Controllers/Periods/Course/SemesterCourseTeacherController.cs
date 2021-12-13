@@ -44,27 +44,32 @@ namespace Exam.Controllers.Periods
             [FromQuery] long? semesterTeacherId,
             [FromQuery] long? teacherId)
         {
+            IQueryable<SemesterCourseTeacher> query = _dbContext.Set<SemesterCourseTeacher>()
+                .Include(s => s.SemesterTeacher)
+                .ThenInclude(s => s.YearTeacher).ThenInclude(s => s.Teacher)
+                .Include(s => s.SemesterCourse);
+
             if (semesterCourseId != null)
             {
-                return _semesterCourseTeacherRepository.List(c => c.SemesterCourseId == semesterCourseId);
+                query = query.Where(s => s.SemesterCourseId == semesterCourseId);
             }
 
             if (courseId != null)
             {
-                return _semesterCourseTeacherRepository.List(c => c.SemesterCourse.CourseId == courseId);
+                query = query.Where(c => c.SemesterCourse.CourseId == courseId);
             }
 
             if (teacherId != null)
             {
-                return _semesterCourseTeacherRepository.List(c => c.SemesterTeacher.YearTeacher.TeacherId == teacherId);
+                query = query.Where(c => c.SemesterTeacher.YearTeacher.TeacherId == teacherId);
             }
 
             if (semesterTeacherId != null)
             {
-                return _semesterCourseTeacherRepository.List(c => c.SemesterTeacherId == semesterTeacherId);
+                query = query.Where(c => c.SemesterTeacherId == semesterTeacherId);
             }
 
-            return new SemesterCourseTeacher[] { };
+            return query.ToList();
         }
 
 
@@ -147,6 +152,33 @@ namespace Exam.Controllers.Periods
 
             return semesterCourseTeachers;
         }
+        
+        
+        
+        public List<SemesterCourseTeacher> AddAll(SemesterLevel semesterLevel)
+        {
+            Assert.RequireNonNull(semesterLevel, nameof(semesterLevel));
+
+            List<CourseTeacher> courseTeachers = _dbContext.Set<CourseTeacher>()
+                .Where(ct => ct.Course.Level.Equals(semesterLevel.YearLevel.Level)).ToList();
+
+            List<SemesterTeacher> semesterTeachers = _dbContext.Set<SemesterTeacher>()
+                .Where(st => semesterLevel.SemesterDepartment.Equals(st.SemesterDepartment))
+                .Include(st => st.SemesterDepartment).ToList();
+            
+            List<SemesterCourse> semesterCourses = _dbContext.Set<SemesterCourse>()
+                .Where(sc => semesterLevel.Equals(sc.SemesterLevel))
+                .Include(st => st.SemesterLevel)
+                .ThenInclude(sl => sl.SemesterDepartment)
+                .ToList();
+
+            var semesterCourseTeachers = _AddAll(courseTeachers, semesterTeachers, semesterCourses);
+            
+            _dbContext.AddRange(semesterCourseTeachers);
+            _dbContext.SaveChanges();
+
+            return semesterCourseTeachers;
+        }
 
 
         public List<SemesterCourseTeacher> _AddAll(List<CourseTeacher> courseTeachers,
@@ -161,7 +193,7 @@ namespace Exam.Controllers.Periods
             foreach (var courseTeacher in courseTeachers)
             {
                 SemesterTeacher semesterTeacher =
-                    semesterTeachers.Find(s => courseTeacher.TeacherId == s.YearTeacher.Id);
+                    semesterTeachers.Find(s => courseTeacher.TeacherId == s.YearTeacher.TeacherId);
 
                 SemesterCourse semesterCourse = semesterCourses.Find(s => s.CourseId == courseTeacher.CourseId);
 
@@ -182,7 +214,8 @@ namespace Exam.Controllers.Periods
             AddSemesterCourseTeacherForm form = new AddSemesterCourseTeacherForm
             {
                 IsPrincipal = courseTeacher.IsPrincipal,
-                Lecture = courseTeacher.Lecture
+                Lecture = courseTeacher.Lecture,
+                Tutorial = courseTeacher.Tutorial
             };
 
             return _Add(semesterCourse, semesterTeacher, form);
@@ -217,7 +250,7 @@ namespace Exam.Controllers.Periods
             {
                 SemesterCourse = semesterCourse,
                 SemesterTeacher = semesterTeacher,
-                Tutorial = !form.Lecture,
+                Tutorial = form.Lecture,
                 Lecture = form.Lecture
             };
 
@@ -233,15 +266,28 @@ namespace Exam.Controllers.Periods
         [HttpPut("{semesterCourseTeacherId}/lecture")]
         [LoadSemesterCourseTeacher(DepartmentItemName = "department")]
         [IsDepartmentPrincipal]
-        public StatusCodeResult Lecture(SemesterCourseTeacher semesterCourseTeacher, [FromQuery] bool state)
+        public StatusCodeResult Lecture(SemesterCourseTeacher semesterCourseTeacher)
         {
             Assert.RequireNonNull(semesterCourseTeacher, nameof(semesterCourseTeacher));
-            semesterCourseTeacher.Lecture = state;
-            semesterCourseTeacher.Tutorial = !state;
+            semesterCourseTeacher.Lecture = !semesterCourseTeacher.Lecture;
             _semesterCourseTeacherRepository.Update(semesterCourseTeacher);
 
             return Ok();
         }
+        
+        
+        [HttpPut("{semesterCourseTeacherId}/tutorial")]
+        [LoadSemesterCourseTeacher(DepartmentItemName = "department")]
+        [IsDepartmentPrincipal]
+        public StatusCodeResult Tutorial(SemesterCourseTeacher semesterCourseTeacher)
+        {
+            Assert.RequireNonNull(semesterCourseTeacher, nameof(semesterCourseTeacher));
+            semesterCourseTeacher.Tutorial = !semesterCourseTeacher.Tutorial;
+            _semesterCourseTeacherRepository.Update(semesterCourseTeacher);
+
+            return Ok();
+        }
+        
 
         [HttpPut("{semesterCourseTeacherId}/principal")]
         [LoadSemesterCourseTeacher(DepartmentItemName = "department")]

@@ -9,7 +9,7 @@ namespace Exam.Entities.Periods
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class SemesterCourseLevelSpeciality:Entity<long>
     {
-        [JsonIgnore]
+        
         public virtual SemesterCourse SemesterCourse { get; set; }
         public long? SemesterCourseId { get; set; }
 

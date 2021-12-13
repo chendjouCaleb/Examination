@@ -2,12 +2,6 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule, Routes} from "@angular/router";
 import {
-  YearDepartmentResolver,
-  YearLevelResolver,
-  YearLevelSpecialityResolver,
-  YearSpecialityResolver
-} from "../../components/year";
-import {
   SemesterDepartmentResolver,
   SemesterLevelResolver,
   SemesterLevelSpecialityResolver,
@@ -21,7 +15,7 @@ const routes: Routes = [
     loadChildren: () => import('./department/semester-department.page.module').then(m => m.SemesterDepartmentPageModule)
   },
   {
-    path: 'departments/:semesterDepartmentId/levels/:yearLevelId',
+    path: 'departments/:semesterDepartmentId/levels/:semesterLevelId',
     resolve: [SemesterDepartmentResolver, SemesterLevelResolver],
     loadChildren: () => import('./level/SemesterLevel.page.module').then(m => m.SemesterLevelPageModule)
   },

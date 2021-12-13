@@ -2,6 +2,7 @@ import {Entity} from "../entity";
 import {School} from "../organisation";
 import {SemesterDepartment} from "./semester-department";
 import {Year} from "../year";
+import moment from "moment";
 
 export class Semester extends Entity<number>{
   expectedStartDate: Date;
@@ -83,6 +84,7 @@ export class Semester extends Entity<number>{
   }
 
   range(): string {
-    return `${this.displayStartDate().getFullYear()}-${this.displayEndDate().getFullYear()}`;
+    return `${moment(this.displayStartDate()).format('MMM yy')}
+    - ${moment(this.displayEndDate()).format('MMM yy')}`;
   }
 }

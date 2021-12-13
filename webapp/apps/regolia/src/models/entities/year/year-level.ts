@@ -35,7 +35,7 @@ export class YearLevel extends Entity<number> {
   url(path?: string): string {
     const url = `${this.yearDepartment.url()}/levels/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }

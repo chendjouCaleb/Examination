@@ -12,7 +12,7 @@ import {
   MsTableModule
 } from "@ms-fluent/components";
 import {
-  SemesterAddModule,
+  SemesterAddModule, SemesterCourseListModule,
   SemesterListModule,
   YearStudentDetailsModule,
   YearStudentListModule, YearTeacherDetailsModule, YearTeacherList, YearTeacherListModule, YearTeacherModule
@@ -23,6 +23,7 @@ import {YearSchoolStudentDetailsPage} from "./YearSchoolStudentDetails.page";
 import {ControlModule} from "../../../../controls";
 import {YearSchoolTeacherPage} from "./YearSchoolTeacher.page";
 import {YearSchoolTeacherDetailsPage} from "./YearSchoolTeacherDetails.page";
+import {YearCoursesPage} from "./YearCourses.page";
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
       {path: 'students/:yearStudentId', component: YearSchoolStudentDetailsPage, data: {label: 'students'}},
       {path: 'teachers/:yearTeacherId', component: YearSchoolTeacherDetailsPage, data: {label: 'teachers'}},
       {path: 'teachers', component: YearSchoolTeacherPage, data: {label: 'teachers'}},
+      {path: 'courses', component: YearCoursesPage, data: {label: 'courses'}},
       {path: 'home', redirectTo: '', pathMatch: 'full'}
     ]
   }
@@ -40,9 +42,11 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, SemesterAddModule,
     SemesterListModule, YearTeacherModule,
-    MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule, YearStudentListModule, YearStudentDetailsModule, MsTableModule, ControlModule, MsPaginatorModule, YearTeacherListModule, YearTeacherDetailsModule],
+    MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule, YearStudentListModule,
+    YearStudentDetailsModule, MsTableModule, ControlModule, MsPaginatorModule, YearTeacherListModule,
+    YearTeacherDetailsModule, SemesterCourseListModule],
   declarations: [YearSchoolHomePage, YearSchoolStudentPage, YearSchoolStudentDetailsPage, YearSchoolTeacherPage,
-    YearSchoolPageLayout, YearSchoolTeacherDetailsPage]
+    YearSchoolPageLayout, YearSchoolTeacherDetailsPage, YearCoursesPage]
 })
 export class YearSchoolPageModule {
 

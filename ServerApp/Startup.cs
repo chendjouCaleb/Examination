@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using ServerApp.Hubs;
 
 namespace ServerApp
@@ -40,6 +41,7 @@ namespace ServerApp
                 .AddControllersAsServices()
                 .AddNewtonsoftJson(options =>
                 {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.DateFormatString = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
                 });
             

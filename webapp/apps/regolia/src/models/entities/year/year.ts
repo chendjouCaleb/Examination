@@ -14,7 +14,7 @@ export class Year extends Entity<number>{
   school: School;
   schoolId: number;
 
-  yearDepartments: YearDepartment[] = [];
+  yearDepartments: YearDepartment[];
   yearTeachers: YearTeacher[];
   semesters: Semester[];
 

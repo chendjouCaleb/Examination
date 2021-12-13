@@ -1,5 +1,3 @@
-import {Semester} from "./semester";
-import {Department, Speciality} from "../organisation";
 import {Entity} from "../entity";
 import {SemesterLevelSpeciality} from "./semester-level-speciality";
 import {SemesterDepartment} from "./semester-department";
@@ -26,9 +24,9 @@ export class SemesterSpeciality extends Entity<number> {
   semesterLevelSpecialities: SemesterLevelSpeciality[];
 
   url(path?: string): string {
-    const url = `${this.semesterDepartment.url()}/specialities/${this.id}`;
+    const url = `${this.semesterDepartment?.url()}/specialities/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }

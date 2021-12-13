@@ -1,0 +1,37 @@
+<div *ngIf="form">
+  <form class="ms-dialog-form" [formGroup]="form">
+    <h4>Ajouter un enseignat un cours</h4>
+
+
+    <div class="ms-textField">
+      <MsLabel htmlFor="teacher">Choisir un enseignant</MsLabel>
+      <MsSelect id="teacher" formControlName="semesterTeacher" class="ms-textField-input" placeholder="">
+        <MsSelectOption *ngFor="let item of teachers" [value]="item">
+          {{item.yearTeacher?.teacher?.user.fullName}}
+        </MsSelectOption>
+      </MsSelect>
+    </div>
+
+    <div class="d-flex align-items-center" [class.ms-disabled]="semesterCourseTeachers?.length === 0">
+      <MsCheckbox id="isPrincipal" formControlName="isPrincipal"></MsCheckbox>
+      <MsLabel htmlFor="isPrincipal" class="ml-2">Enseignant principal</MsLabel>
+    </div>
+
+    <div class="d-flex align-items-center">
+      <MsCheckbox id="lecture" formControlName="lecture"></MsCheckbox>
+      <MsLabel class="ms-pointer" class="ml-2" htmlFor="lecture">Cours magistral</MsLabel>
+
+    </div>
+
+    <div class="d-flex align-items-center ms-pointer">
+      <MsCheckbox id="tutorial" formControlName="tutorial"></MsCheckbox>
+      <MsLabel class="ml-2" htmlFor="tutorial">Travaux dirigés</MsLabel>
+    </div>
+
+
+    <div class="mt-4 text-right">
+      <button msButton msDialogClose class="mr-3">Annuler</button>
+      <button msButton theme="primary" icon="Add" [disabled]="form.invalid" (click)="add()">Ajouter</button>
+    </div>
+  </form>
+</div>

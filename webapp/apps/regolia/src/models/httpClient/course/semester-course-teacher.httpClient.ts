@@ -1,5 +1,5 @@
 import {GenericHttpClient, SERVER_URL} from '../httpClient';
-import {SemesterCourse, SemesterCourseTeacher, Teacher} from 'examination/entities';
+import {SemesterCourse, SemesterCourseTeacher, SemesterTeacher, Teacher} from 'examination/entities';
 import {Injectable} from '@angular/core';
 import {CourseTeacherAddBodyModel} from "../../form";
 
@@ -13,8 +13,8 @@ export class SemesterCourseTeacherHttpClient extends GenericHttpClient<SemesterC
     return new SemesterCourseTeacher(value);
   }
 
-  addSemesterCourseTeacher(semesterCourse: SemesterCourse, teacher: Teacher, model: CourseTeacherAddBodyModel): Promise<SemesterCourseTeacher> {
-    return this.add(model, {semesterCourseId: semesterCourse.id, teacherId: teacher.id});
+  addSemesterCourseTeacher(semesterCourse: SemesterCourse, teacher: SemesterTeacher, model: CourseTeacherAddBodyModel): Promise<SemesterCourseTeacher> {
+    return this.add(model, {semesterCourseId: semesterCourse.id, semesterTeacherId: teacher.id});
   }
 
   isTutorial(semesterCourseTeacher: SemesterCourseTeacher): Promise<void> {

@@ -23,6 +23,8 @@ namespace Exam.Models
     public class AddSemesterCourseTeacherForm
     {
         public bool Lecture { get; set; }
+
+        public bool Tutorial { get; set; }
         public bool IsPrincipal { get; set; }
     }
     

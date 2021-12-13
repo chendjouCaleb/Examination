@@ -1,0 +1,24 @@
+﻿<div>
+  <msPivot>
+    <msPivotHeader [msFontSize]="12">
+      <msPivotLabel id="details">Détails</msPivotLabel>
+      <msPivotLabel id="hours">Horaires</msPivotLabel>
+      <msPivotLabel id="sessions">Séances de cours</msPivotLabel>
+      <msPivotLabel id="tests">Épreuves</msPivotLabel>
+    </msPivotHeader>
+    <msPivotBody>
+      <div *msPivotContentDef>
+        <SemesterCourseHomePage [semesterCourse]="semesterCourse"></SemesterCourseHomePage>
+      </div>
+      <div *msPivotContentDef>
+        course hour
+      </div>
+      <div *msPivotContentDef>
+        course session
+      </div>
+      <div *msPivotContentDef>
+        test
+      </div>
+    </msPivotBody>
+  </msPivot>
+</div>

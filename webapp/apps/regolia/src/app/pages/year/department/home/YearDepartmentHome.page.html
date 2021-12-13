@@ -9,3 +9,21 @@
 
   </a>
 </div>
+
+<div class="mt-4">
+  <h4>Niveaux</h4>
+  <div *ngIf="yearDepartment.yearLevels">
+    <a *ngFor="let yearLevel of yearDepartment.yearLevels" [routerLink]="yearLevel.url()">
+      <button msButton class="m-1">Niveau {{yearLevel.level?.index + 1}}</button>
+    </a>
+  </div>
+</div>
+
+<div class="mt-4">
+  <h4>Spécialités</h4>
+  <div *ngIf="yearDepartment.yearSpecialities">
+    <a *ngFor="let yearSpeciality of yearDepartment.yearSpecialities" [routerLink]="yearSpeciality.url()">
+      <button msButton class="m-1">{{yearSpeciality.speciality.name}}</button>
+    </a>
+  </div>
+</div>

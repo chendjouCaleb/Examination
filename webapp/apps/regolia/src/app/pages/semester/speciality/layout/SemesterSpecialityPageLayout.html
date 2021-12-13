@@ -2,55 +2,39 @@
 
   <div style="display: grid; grid-template-columns: 200px 1fr; ">
     <MsRibbonMenu style="height: 100%">
-<!--      <button class="">-->
-<!--        <i class="icon-ic_fluent_navigation_16_regular" style="color:var(&#45;&#45;textColor)"></i>-->
-<!--      </button>-->
-      <MsRibbonMenuItem [routerLink]="url('home')" icon="home" label="home">Accueil</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('courses')" imageIcon="/assets/icon/books.png" label="courses">Cours</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('courseHours')" imageIcon="/assets/icon/calendrier.png" label="courseHours">Emplois du temps</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('courseSessions')" imageIcon="/assets/icon/schedule.svg" label="courseSessions">Séances de cours</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('students')" imageIcon="/assets/icon/eleve.png" label="students">Étudiants</MsRibbonMenuItem>
-      <MsRibbonMenuItem [routerLink]="url('examinations')" imageIcon="/assets/icon/examination.png" label="examinations">Examens</MsRibbonMenuItem>
+      <!--      <button class="">-->
+      <!--        <i class="icon-ic_fluent_navigation_16_regular" style="color:var(&#45;&#45;textColor)"></i>-->
+      <!--      </button>-->
+      <a MsRibbonMenuItem [routerLink]="url('home')" icon="home" label="home">Accueil</a>
+      <a MsRibbonMenuItem [routerLink]="url('courses')" [imageIcon]="icons.course" label="courses">Cours</a>
+      <a MsRibbonMenuItem [routerLink]="url('courseHours')" [imageIcon]="icons.courseHour" label="courseHours">
+        Emplois du temps
+      </a>
+      <a MsRibbonMenuItem [routerLink]="url('courseSessions')" [imageIcon]="icons.courseSession"
+         label="course-sessions">Séances de cours
+      </a>
+      <a MsRibbonMenuItem [routerLink]="url('students')" [imageIcon]="icons.student" label="students">Étudiants</a>
+      <a MsRibbonMenuItem [routerLink]="url('examinations')" [imageIcon]="icons.examination" label="examinations">Examens
+      </a>
 
     </MsRibbonMenu>
 
-  <div class="p-2">
-    <router-outlet></router-outlet>
-  </div>
+    <div class="p-2">
+      <MsBreadcrumb class="mb-2">
+        <a routerLink="/schools" *MsBreadcrumbDef>Établissements</a>
+        <a [routerLink]="school.url" *MsBreadcrumbDef>{{school.name}}</a>
+        <a [routerLink]="[school.url, 'years']" *MsBreadcrumbDef>Années scolaires</a>
+        <a *MsBreadcrumbDef [routerLink]="year.url()">{{year.rangeYears()}}</a>
+        <a *MsBreadcrumbDef [routerLink]="semester.url()">Semestre {{semester.index + 1}}</a>
+        <a *MsBreadcrumbDef [routerLink]="semesterDepartment.url()">
+          {{semesterDepartment.yearDepartment?.department?.name}}
+        </a>
+        <a *MsBreadcrumbDef [routerLink]="semesterSpeciality.url()">
+          {{semesterSpeciality.yearSpeciality.speciality.name}}</a>
 
-
-
-
-<!--    <div *MsRibbonContentDef>-->
-<!--      <div>{{school.name}}</div>-->
-<!--      <app-department-list [school]="school"></app-department-list>-->
-<!--    </div>-->
-<!--    <div *MsRibbonContentDef>-->
-<!--      <app-planner-list [school]="school"></app-planner-list>-->
-<!--    </div>-->
-<!--    <div *MsRibbonContentDef>-->
-<!--      <CourseList *ngIf="!itemId" [school]="school"></CourseList>-->
-<!--      <CourseHome *ngIf="itemId"  [courseId]="itemId"></CourseHome>-->
-<!--    </div>-->
-<!--    <div *MsRibbonContentDef>-->
-<!--      <CourseHourList [school]="school"></CourseHourList>-->
-<!--    </div>-->
-<!--    <div *MsRibbonContentDef>-->
-<!--      <CourseSessionList [school]="school"></CourseSessionList>-->
-<!--    </div>-->
-<!--    <div *MsRibbonContentDef>-->
-<!--      <app-room-list [school]="school"></app-room-list>-->
-<!--    </div>-->
-<!--    <div *MsRibbonContentDef>-->
-<!--      <app-application-list [school]="school"></app-application-list>-->
-<!--    </div>-->
-
-<!--    <div *MsRibbonContentDef>-->
-<!--      <app-student-list [school]="school"></app-student-list>-->
-<!--    </div>-->
-
-<!--    <div *MsRibbonContentDef>-->
-<!--      <app-examination-list [school]="school"></app-examination-list>-->
-<!--    </div>-->
+        <a *MsBreadcrumbDef>{{title}}</a>
+      </MsBreadcrumb>
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </app-layout>

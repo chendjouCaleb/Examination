@@ -22,11 +22,19 @@ export class SemesterCourseTeacher extends Entity<number> {
 
   tutorial: boolean;
   lecture: boolean;
-  isPrincipal: number;
+  isPrincipal: boolean;
 
   semesterCourse: SemesterCourse;
   semesterCourseId: number;
 
   semesterTeacher: SemesterTeacher;
   semesterTeacherId: number;
+
+  get courseName() {
+    return this.semesterCourse.course?.name;
+  }
+
+  get levelIndex(): number {
+    return this.semesterCourse.semesterLevel?.yearLevel?.id
+  }
 }

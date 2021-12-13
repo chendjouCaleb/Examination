@@ -1,0 +1,17 @@
+﻿﻿<form class="ms-dialog-form">
+  <h4>Supprimer un cours</h4>
+
+  <div class="d-flex mt-3">
+    <div>
+      <img src="/assets/icon/bin.png" alt="book image" width="42" height="42">
+    </div>
+    <div class="ms-fontSize-16 ml-3">
+      Voulez-vous supprimer ce cours de ce semestre ?
+    </div>
+  </div>
+
+  <div class="mt-4 text-right">
+    <button msButton msDialogClose class="mr-3">Annuler</button>
+    <button msButton (click)="delete()" icon="Delete" theme="error">Supprimer</button>
+  </div>
+</form>

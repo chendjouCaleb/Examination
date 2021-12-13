@@ -1,1 +1,10 @@
 {{yearSpeciality.speciality.name}}
+
+<div class="mt-4">
+  <h4>Niveaux</h4>
+  <div *ngIf="yearSpeciality.yearLevelSpecialities">
+    <a *ngFor="let item of yearSpeciality.yearLevelSpecialities" [routerLink]="item.url()">
+      <button msButton class="m-1">Niveau {{item.yearLevel.level?.index + 1}}</button>
+    </a>
+  </div>
+</div>

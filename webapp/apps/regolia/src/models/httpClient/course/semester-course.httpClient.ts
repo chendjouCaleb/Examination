@@ -5,7 +5,7 @@ import {
   Level,
   LevelSpeciality,
   Speciality,
-  SemesterLevelSpeciality
+  SemesterLevelSpeciality, Semester, SemesterLevel, SemesterDepartment, SemesterSpeciality
 } from 'examination/entities';
 import {Injectable} from '@angular/core';
 import {List} from '@positon/collections';
@@ -32,6 +32,22 @@ export class SemesterCourseHttpClient extends GenericHttpClient<SemesterCourse, 
     return this.listAsync({levelId: level.id});
   }
 
+  listBySemesterLevel(semesterLevel: SemesterLevel): Promise<List<SemesterCourse>> {
+    return this.listAsync({semesterLevelId: semesterLevel.id});
+  }
+
+  listBySemesterDepartment(semesterDepartment: SemesterDepartment): Promise<List<SemesterCourse>> {
+    return this.listAsync({semesterDepartmentId: semesterDepartment.id});
+  }
+
+  listBySemesterSpeciality(semesterSpeciality: SemesterSpeciality): Promise<List<SemesterCourse>> {
+    return this.listAsync({semesterSpecialityId: semesterSpeciality.id});
+  }
+
+  listBySemester(semester: Semester): Promise<List<SemesterCourse>> {
+    return this.listAsync({semesterId: semester.id});
+  }
+
 
   listByLevelSpeciality(levelSpeciality: LevelSpeciality): Promise<List<SemesterCourse>> {
     return this.listAsync({levelSpecialityId: levelSpeciality.id});
@@ -56,5 +72,26 @@ export class SemesterCourseHttpClient extends GenericHttpClient<SemesterCourse, 
   restrict(semesterCourse: SemesterCourse, semesterLevelSpecialities: SemesterLevelSpeciality[]): Promise<void> {
     const id = semesterLevelSpecialities.map(s => s.id);
     return this.httpClient.put<void>(`${this.url}/${semesterCourse.id}/restrict`, {}, {params: {id}}).toPromise();
+  }
+
+  async addAddSemester(semester: Semester): Promise<SemesterCourse[]> {
+    const resultItems = await this.httpClient.post<SemesterCourse[]>(`${this.url}/addAll`, {},
+      {params: {semesterId: semester.id}}).toPromise();
+
+    return resultItems.map(s => new SemesterCourse(s));
+  }
+
+  async addAddSemesterDepartment(semesterDepartment: SemesterDepartment): Promise<SemesterCourse[]> {
+    const resultItems = await this.httpClient.post<SemesterCourse[]>(`${this.url}/addAllSemesterDepartment`, {},
+      {params: {semesterDepartmentId: semesterDepartment.id}}).toPromise();
+
+    return resultItems.map(s => new SemesterCourse(s));
+  }
+
+  async addAddSemesterLevel(semesterLevel: SemesterLevel): Promise<SemesterCourse[]> {
+    const resultItems = await this.httpClient.post<SemesterCourse[]>(`${this.url}/addAllSemesterLevel`, {},
+      {params: {semesterLevelId: semesterLevel.id}}).toPromise();
+
+    return resultItems.map(s => new SemesterCourse(s));
   }
 }

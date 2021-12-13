@@ -4,32 +4,21 @@ import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router'
 import {CurrentItems} from '../../../../current-items';
 import {Title} from "@angular/platform-browser";
 import {locales} from "@examination/locales";
-import {MENU_ICONS_VALUES} from "../../../../../infrastructure";
+import {MENU_ICONS_VALUES, RibbonPageLayout} from "../../../../../infrastructure";
 
 @Component({
   templateUrl: 'SemesterSchoolPageLayout.html',
 })
-export class SemesterSchoolPageLayout implements AfterViewInit {
+export class SemesterSchoolPageLayout extends RibbonPageLayout implements AfterViewInit {
   school: School;
   year: Year;
   semester: Semester;
-
-  @ViewChild(RouterLink)
-  private activeLink : RouterLink;
-
-  @ViewChild(RouterOutlet)
-  outlet: RouterOutlet;
-
-  locales = locales;
-
-  icons = MENU_ICONS_VALUES;
-
-  selectedLabel: string = '';
   title: string = '';
 
   constructor(public _router: Router, currentItems: CurrentItems,
               private browserTitle: Title,
               @Optional() private route: ActivatedRoute) {
+    super();
     this.school = currentItems.get('school');
     this.year = currentItems.get('year');
     this.semester = currentItems.get('semester');
@@ -37,8 +26,7 @@ export class SemesterSchoolPageLayout implements AfterViewInit {
 
   ngAfterViewInit(): void {
     Promise.resolve().then(() => {
-      this.selectedLabel = this.outlet.activatedRouteData.label;
-      this.title = locales[this.selectedLabel];
+      this.initView();
       this.browserTitle.setTitle(`Semestre ${this.semester.index + 1} • ${this.title}`);
     });
   }
