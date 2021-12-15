@@ -44,24 +44,24 @@ namespace Exam.Loaders.Courses
             
             if (!string.IsNullOrWhiteSpace(CourseTeacherItemName))
             {
-                context.HttpContext.Items[CourseTeacherItemName] = courseHour.CourseTeacher;
+                context.HttpContext.Items[CourseTeacherItemName] = courseHour.SemesterCourseTeacher;
             }
             
             if (!string.IsNullOrWhiteSpace(CourseItemName))
             {
-                context.HttpContext.Items[CourseItemName] = courseHour.Course;
+                context.HttpContext.Items[CourseItemName] = courseHour.SemesterCourse;
             }
 
             if (!string.IsNullOrWhiteSpace(SchoolItemName))
             {
                 context.HttpContext.Items[SchoolItemName] = dbContext.Set<School>()
-                    .First(s => s.Id == courseHour.Course.Level.Department.SchoolId);
+                    .First(s => s.Id == courseHour.SemesterCourse.SemesterLevel.SemesterDepartment.Semester.Year.SchoolId);
             }
             
             if (!string.IsNullOrWhiteSpace(DepartmentItemName))
             {
                 context.HttpContext.Items[DepartmentItemName] = dbContext.Set<Department>()
-                    .First(s => s.Id == courseHour.Course.Level.DepartmentId);
+                    .First(s => s.Id == courseHour.SemesterCourse.SemesterLevel.SemesterDepartment.YearDepartment.DepartmentId);
             }
             
         }

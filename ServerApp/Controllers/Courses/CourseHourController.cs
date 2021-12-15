@@ -6,6 +6,7 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Loaders.Courses;
@@ -40,51 +41,104 @@ namespace Exam.Controllers.Courses
             [FromQuery] long? schoolId,
             [FromQuery] long? departmentId,
             [FromQuery] long? courseId,
-            [FromQuery] long? courseTeacherId,
             [FromQuery] long? teacherId,
-            [FromQuery] long? levelId)
+            [FromQuery] long? levelId,
+            [FromQuery] long? yearId,
+            [FromQuery] long? yearDepartmentId,
+            [FromQuery] long? yearTeacherId,
+            [FromQuery] long? yearLevelId,
+            [FromQuery] long? semesterId,
+            [FromQuery] long? semesterDepartmentId,
+            [FromQuery] long? semesterCourseId,
+            [FromQuery] long? semesterCourseTeacherId,
+            [FromQuery] long? semesterTeacherId,
+            [FromQuery] long? semesterLevelId
+            )
         {
-            if (roomId == null && courseId == null && courseTeacherId == null && teacherId == null && levelId == null
-                && schoolId == null && departmentId == null)
-            {
-                return new CourseHour[] { };
-            }
-
             IQueryable<CourseHour> query = _dbContext.Set<CourseHour>();
 
             if (roomId != null)
             {
                 query = query.Where(ch => ch.RoomId != null && ch.RoomId == roomId);
             }
+
+            if (semesterCourseId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourseId == semesterCourseId);
+            }
+            
+            if (semesterCourseTeacherId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourseTeacherId == semesterCourseTeacherId);
+            }
+            
+            if (semesterTeacherId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourseTeacher !=null && 
+                                          ch.SemesterCourseTeacher.SemesterTeacherId == semesterTeacherId);
+            }
+            
+            if (semesterLevelId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevelId == semesterLevelId);
+            }
+            
+            if (semesterDepartmentId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevel.SemesterDepartmentId == semesterDepartmentId);
+            }
+            
+            if (semesterId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevel.SemesterDepartment.SemesterId == semesterId);
+            }
+            
+            if (yearTeacherId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourseTeacher !=null && 
+                                          ch.SemesterCourseTeacher.SemesterTeacher.YearTeacherId == yearTeacherId);
+            }
+            
+            if (yearLevelId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevel.YearLevelId == yearLevelId);
+            }
+            
+            if (yearDepartmentId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevel.SemesterDepartment.YearDepartmentId == yearDepartmentId);
+            }
+            
+            if (yearId != null)
+            {
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevel.SemesterDepartment.Semester.YearId == yearId);
+            }
             
             if (courseId != null)
             {
-                query = query.Where(ch => ch.CourseId == courseId);
+                query = query.Where(ch => ch.SemesterCourse.CourseId == courseId);
             }
 
-            if (courseTeacherId != null)
-            {
-                query = query.Where(ch => ch.CourseTeacherId != null && ch.CourseTeacherId == courseTeacherId);
-            }
-            
             if (teacherId != null)
             {
-                query = query.Where(ch => ch.CourseTeacherId != null && ch.CourseTeacher.TeacherId == teacherId);
+                query = query.Where(ch => ch.SemesterCourseTeacherId != null 
+                                          && ch.SemesterCourseTeacher.SemesterTeacher.YearTeacher.TeacherId == teacherId);
             }
             
             if (levelId != null)
             {
-                query = query.Where(ch => ch.Course.LevelId == levelId);
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevel.YearLevel.LevelId == levelId);
             }
             
             if (departmentId != null)
             {
-                query = query.Where(ch => ch.Course.Level.DepartmentId == departmentId);
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevel.SemesterDepartment.YearDepartmentId == 
+                                          yearDepartmentId);
             }
             
             if (schoolId != null)
             {
-                query = query.Where(ch => ch.Course.Level.Department.SchoolId == schoolId);
+                query = query.Where(ch => ch.SemesterCourse.SemesterLevel.SemesterDepartment.Semester.Year.SchoolId == schoolId);
             }
 
             return query.ToArray();
@@ -93,36 +147,37 @@ namespace Exam.Controllers.Courses
 
         [HttpPost]
         [RequireQueryParameter("roomId")]
-        [RequireQueryParameter("courseTeacherId")]
-        [RequireQueryParameter("courseId")]
-        [LoadCourseTeacher(Source = ParameterSource.Query)]
-        [LoadCourse(Source = ParameterSource.Query)]
+        [RequireQueryParameter("semesterCourseTeacherId")]
+        [RequireQueryParameter("semesterCourseId")]
+        [LoadSemesterCourseTeacher(Source = ParameterSource.Query)]
+        [LoadSemesterCourse(Source = ParameterSource.Query)]
         [LoadRoom(Source = ParameterSource.Query, SchoolItemName = "school")]
         [IsPlanner]
         [ValidModel]
-        public CreatedAtActionResult Add(Course course, Room room, CourseTeacher courseTeacher,
+        public CreatedAtActionResult Add(SemesterCourse semesterCourse, Room room, 
+            SemesterCourseTeacher semesterCourseTeacher,
             [FromBody] AddCourseHourForm form)
         {
-            Assert.RequireNonNull(course, nameof(course));
+            Assert.RequireNonNull(semesterCourse, nameof(semesterCourse));
             Assert.RequireNonNull(room, nameof(room));
-            Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
+            Assert.RequireNonNull(semesterCourseTeacher, nameof(semesterCourseTeacher));
             Assert.RequireNonNull(form, nameof(form));
 
-            if (!course.Level.Department.School.Equals(room.School))
+            if (!room.School.Equals(semesterCourse.SemesterLevel?.SemesterDepartment?.YearDepartment?.Year?.School))
             {
-                throw new IncompatibleEntityException(course, room);
+                throw new IncompatibleEntityException(semesterCourse, room);
             }
 
-            if (!course.Equals(courseTeacher.Course))
+            if (!semesterCourse.Equals(semesterCourseTeacher.SemesterCourse))
             {
-                throw new IncompatibleEntityException(course, courseTeacher);
+                throw new IncompatibleEntityException(semesterCourse, semesterCourseTeacher);
             }
 
             CourseHour courseHour = new CourseHour
             {
-                Course = course,
+                SemesterCourse = semesterCourse,
                 Room = room,
-                CourseTeacher = courseTeacher,
+                SemesterCourseTeacher = semesterCourseTeacher,
                 DayOfWeek = form.DayOfWeek,
                 StartHour = form.StartHour,
                 EndHour = form.EndHour,
@@ -135,20 +190,21 @@ namespace Exam.Controllers.Courses
 
         
         [HttpPut("{courseHourId}/teacher")]
-        [RequireQueryParameter("courseTeacherId")]
+        [HttpPut("{courseHourId}/semesterTeacher")]
+        [RequireQueryParameter("semesterCourseTeacherId")]
         [LoadCourseHour(SchoolItemName = "school")]
-        [LoadCourseTeacher(Source = ParameterSource.Query)]
+        [LoadSemesterCourseTeacher(Source = ParameterSource.Query)]
         [IsPlanner]
-        public StatusCodeResult Teacher(CourseHour courseHour, CourseTeacher courseTeacher)
+        public StatusCodeResult Teacher(CourseHour courseHour, SemesterCourseTeacher semesterCourseTeacher)
         {
             Assert.RequireNonNull(courseHour, nameof(courseHour));
-            Assert.RequireNonNull(courseTeacher, nameof(courseTeacher));
-            if (!courseTeacher.Course.Equals(courseHour.Course))
+            Assert.RequireNonNull(semesterCourseTeacher, nameof(semesterCourseTeacher));
+            if (!semesterCourseTeacher.SemesterCourse.Equals(courseHour.SemesterCourse))
             {
-                throw new IncompatibleEntityException(courseHour, courseTeacher);
+                throw new IncompatibleEntityException(courseHour, semesterCourseTeacher);
             }
 
-            courseHour.CourseTeacher = courseTeacher;
+            courseHour.SemesterCourseTeacher = semesterCourseTeacher;
             _courseHourRepository.Update(courseHour);
             return Ok();
         }
@@ -185,7 +241,26 @@ namespace Exam.Controllers.Courses
         public NoContentResult Delete(CourseHour courseHour, [FromQuery] bool courseSession) 
         {
             Assert.RequireNonNull(courseHour, nameof(courseHour));
-            _courseHourRepository.Delete(courseHour);
+            
+            var courseSessions = _dbContext.Set<CourseSession>().Where(s => courseHour.Equals(s.CourseHour));
+            
+            if (courseSession)
+            {
+                _dbContext.RemoveRange(courseSessions);
+            }
+            else
+            {
+                foreach (CourseSession session in courseSessions)
+                {
+                    session.CourseHour = null;
+                    session.CourseHourId = null;
+                }
+                _dbContext.UpdateRange(courseSessions);
+            }
+            
+            _dbContext.RemoveRange(courseHour);
+
+            _dbContext.SaveChanges();
             return NoContent();
 
         }

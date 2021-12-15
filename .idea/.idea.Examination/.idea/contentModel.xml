@@ -1717,6 +1717,11 @@
           <e p="TestGroupSupervisor.cs" t="Include" />
         </e>
         <e p="bin" t="ExcludeRecursive" />
+        <e p="bin-db" t="Include">
+          <e p="examination.db" t="Include" />
+          <e p="examination.db-shm" t="Include" />
+          <e p="examination.db-wal" t="Include" />
+        </e>
         <e p="Controllers" t="Include">
           <e p="AuthorizeController.cs" t="Include" />
           <e p="ConsoleController.cs" t="Include" />
@@ -2332,18 +2337,8 @@
           <e p="YearTeacherLoader.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
-          <e p="20210305182306_Initial.cs" t="Include" />
-          <e p="20210305182306_Initial.Designer.cs" t="Include" />
-          <e p="20210908060431_StudentCOntact.cs" t="Include" />
-          <e p="20210908060431_StudentCOntact.Designer.cs" t="Include" />
-          <e p="20210914045229_Update5.cs" t="Include" />
-          <e p="20210914045229_Update5.Designer.cs" t="Include" />
-          <e p="20211120063659_AddPeriods.cs" t="Include" />
-          <e p="20211120063659_AddPeriods.Designer.cs" t="Include" />
-          <e p="20211125055219_SemesterIndex.cs" t="Include" />
-          <e p="20211125055219_SemesterIndex.Designer.cs" t="Include" />
-          <e p="20211127180647_AddActiveOnStudent.cs" t="Include" />
-          <e p="20211127180647_AddActiveOnStudent.Designer.cs" t="Include" />
+          <e p="20211214125326_Initial.cs" t="Include" />
+          <e p="20211214125326_Initial.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

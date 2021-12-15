@@ -21,11 +21,5 @@ namespace Exam.Entities.Courses
         public bool Lecture { get; set; }
 
         public bool IsPrincipal { get; set; }
-
-        [JsonIgnore]
-        public virtual List<CourseHour> CourseHours { get; set; }
-        
-        [JsonIgnore]
-        public virtual List<CourseSession> CourseSessions { get; set; }
     }
 }

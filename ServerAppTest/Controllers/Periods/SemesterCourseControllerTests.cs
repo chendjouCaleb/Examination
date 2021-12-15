@@ -175,12 +175,11 @@ namespace ServerAppTest.Controllers.Periods
             SemesterCourseTeacher semesterCourseTeacher = _semesterCourseTeacherController
                 .Add(semesterCourse, _semesterTeacher, _teacherForm).Value as SemesterCourseTeacher;
 
-            _semesterCourseTeacherController.Lecture(semesterCourseTeacher, false);
+            _semesterCourseTeacherController.Lecture(semesterCourseTeacher);
             _semesterCourseTeacherRepository.Refresh(semesterCourseTeacher);
             
             Assert.NotNull(semesterCourseTeacher);
             Assert.False(semesterCourseTeacher.Lecture);
-            Assert.True(semesterCourseTeacher.Tutorial);
         }
 
 

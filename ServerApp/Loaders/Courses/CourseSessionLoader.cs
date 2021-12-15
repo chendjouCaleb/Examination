@@ -46,7 +46,7 @@ namespace Exam.Loaders.Courses
             
             if (!string.IsNullOrWhiteSpace(CourseTeacherItemName))
             {
-                context.HttpContext.Items[CourseTeacherItemName] = courseSession.CourseTeacher;
+                context.HttpContext.Items[CourseTeacherItemName] = courseSession.SemesterCourseTeacher;
             }
             
             if (!string.IsNullOrWhiteSpace(CourseHourItemName))
@@ -56,19 +56,19 @@ namespace Exam.Loaders.Courses
             
             if (!string.IsNullOrWhiteSpace(CourseItemName))
             {
-                context.HttpContext.Items[CourseItemName] = courseSession.Course;
+                context.HttpContext.Items[CourseItemName] = courseSession.SemesterCourse;
             }
 
             if (!string.IsNullOrWhiteSpace(SchoolItemName))
             {
                 context.HttpContext.Items[SchoolItemName] = dbContext.Set<School>()
-                    .First(s => s.Id == courseSession.Course.Level.Department.SchoolId);
+                    .First(s => s.Id == courseSession.SemesterCourse.SemesterLevel.SemesterDepartment.Semester.Year.SchoolId);
             }
             
             if (!string.IsNullOrWhiteSpace(DepartmentItemName))
             {
                 context.HttpContext.Items[DepartmentItemName] = dbContext.Set<Department>()
-                    .First(s => s.Id == courseSession.Course.Level.DepartmentId);
+                    .First(s => s.Id == courseSession.SemesterCourse.SemesterLevel.SemesterDepartment.YearDepartment.DepartmentId);
             }
             
         }

@@ -195,12 +195,6 @@ namespace Exam.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("CourseId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("CourseTeacherId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("INTEGER");
 
@@ -216,16 +210,22 @@ namespace Exam.Migrations
                     b.Property<long?>("RoomId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("SemesterCourseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("SemesterCourseTeacherId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<TimeSpan>("StartHour")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("CourseTeacherId");
-
                     b.HasIndex("RoomId");
+
+                    b.HasIndex("SemesterCourseId");
+
+                    b.HasIndex("SemesterCourseTeacherId");
 
                     b.ToTable("CourseHours");
                 });
@@ -263,12 +263,6 @@ namespace Exam.Migrations
                     b.Property<long?>("CourseHourId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("CourseId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("CourseTeacherId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("TEXT");
 
@@ -296,6 +290,12 @@ namespace Exam.Migrations
                     b.Property<long?>("RoomId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("SemesterCourseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("SemesterCourseTeacherId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("TEXT");
 
@@ -303,11 +303,11 @@ namespace Exam.Migrations
 
                     b.HasIndex("CourseHourId");
 
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("CourseTeacherId");
-
                     b.HasIndex("RoomId");
+
+                    b.HasIndex("SemesterCourseId");
+
+                    b.HasIndex("SemesterCourseTeacherId");
 
                     b.ToTable("CourseSessions");
                 });
@@ -2001,19 +2001,19 @@ namespace Exam.Migrations
 
             modelBuilder.Entity("Exam.Entities.Courses.CourseHour", b =>
                 {
-                    b.HasOne("Exam.Entities.Courses.Course", "Course")
-                        .WithMany("CourseHours")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Exam.Entities.Courses.CourseTeacher", "CourseTeacher")
-                        .WithMany("CourseHours")
-                        .HasForeignKey("CourseTeacherId");
-
                     b.HasOne("Exam.Entities.Room", "Room")
                         .WithMany("CourseHours")
                         .HasForeignKey("RoomId");
+
+                    b.HasOne("Exam.Entities.Periods.SemesterCourse", "SemesterCourse")
+                        .WithMany("CourseHours")
+                        .HasForeignKey("SemesterCourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.Periods.SemesterCourseTeacher", "SemesterCourseTeacher")
+                        .WithMany("CourseHours")
+                        .HasForeignKey("SemesterCourseTeacherId");
                 });
 
             modelBuilder.Entity("Exam.Entities.Courses.CourseLevelSpeciality", b =>
@@ -2035,19 +2035,19 @@ namespace Exam.Migrations
                         .WithMany("CourseSessions")
                         .HasForeignKey("CourseHourId");
 
-                    b.HasOne("Exam.Entities.Courses.Course", "Course")
-                        .WithMany("CourseSessions")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Exam.Entities.Courses.CourseTeacher", "CourseTeacher")
-                        .WithMany("CourseSessions")
-                        .HasForeignKey("CourseTeacherId");
-
                     b.HasOne("Exam.Entities.Room", "Room")
                         .WithMany("CourseSessions")
                         .HasForeignKey("RoomId");
+
+                    b.HasOne("Exam.Entities.Periods.SemesterCourse", "SemesterCourse")
+                        .WithMany("CourseSessions")
+                        .HasForeignKey("SemesterCourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Entities.Periods.SemesterCourseTeacher", "SemesterCourseTeacher")
+                        .WithMany("CourseSessions")
+                        .HasForeignKey("SemesterCourseTeacherId");
                 });
 
             modelBuilder.Entity("Exam.Entities.Courses.CourseTeacher", b =>
@@ -2346,7 +2346,7 @@ namespace Exam.Migrations
                         .IsRequired();
 
                     b.HasOne("Exam.Entities.Periods.YearTeacher", "YearTeacher")
-                        .WithMany()
+                        .WithMany("SemesterTeachers")
                         .HasForeignKey("YearTeacherId");
                 });
 

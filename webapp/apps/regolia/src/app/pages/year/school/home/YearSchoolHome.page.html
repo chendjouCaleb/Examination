@@ -20,7 +20,7 @@
   <div class="d-flex justify-content-between align-items-center">
     <h4>Semestres</h4>
     <div>
-      <button msButton theme="primary" icon="Add" *ngIf="year.school.isPrincipalUser"
+      <button msButton theme="primary" icon="Add" *ngIf="year.school.userPrincipal.isPrincipal"
         (click)="addSemester()">Ajouter un semestre</button>
     </div>
   </div>

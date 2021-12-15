@@ -31,5 +31,13 @@ namespace Exam.Entities.Periods
         
         public virtual List<SemesterCourseLevelSpeciality> SemesterCourseLevelSpecialities { get; set; }
         
+        [JsonIgnore]
+        public virtual List<CourseHour> CourseHours { get; set; }
+        
+        [JsonIgnore]
+        public virtual List<CourseSession> CourseSessions { get; set; }
+        
+        
+        
     }
 }

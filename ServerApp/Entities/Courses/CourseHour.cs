@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -12,12 +13,12 @@ namespace Exam.Entities.Courses
     {
         // Cette propriété permet de ne pas avoir de CourseTeacher.
         [JsonIgnore]
-        public virtual Course Course { get; set; }
-        public long CourseId { get; set; }
+        public virtual SemesterCourse SemesterCourse { get; set; }
+        public long SemesterCourseId { get; set; }
 
         [JsonIgnore]
-        public virtual CourseTeacher CourseTeacher { get; set; }
-        public long? CourseTeacherId { get; set; }
+        public virtual SemesterCourseTeacher SemesterCourseTeacher { get; set; }
+        public long? SemesterCourseTeacherId { get; set; }
         
         [JsonIgnore]
         public virtual Room Room { get; set; }

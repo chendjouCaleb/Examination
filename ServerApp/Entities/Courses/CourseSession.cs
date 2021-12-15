@@ -1,6 +1,7 @@
 ﻿using System;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.Entities.Courses
@@ -8,14 +9,14 @@ namespace Exam.Entities.Courses
     [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class CourseSession: Entity<long>
     {
-        public virtual CourseTeacher CourseTeacher { get; set; }
-        public long? CourseTeacherId { get; set; }
+        public virtual SemesterCourseTeacher SemesterCourseTeacher { get; set; }
+        public long? SemesterCourseTeacherId { get; set; }
 
         public virtual CourseHour CourseHour { get; set; }
         public long? CourseHourId { get; set; }
         
-        public virtual Course Course { get; set; }
-        public long CourseId { get; set; }
+        public virtual SemesterCourse SemesterCourse { get; set; }
+        public long SemesterCourseId { get; set; }
 
         public virtual Room Room { get; set; }
         public long? RoomId { get; set; }

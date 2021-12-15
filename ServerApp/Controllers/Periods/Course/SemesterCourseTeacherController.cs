@@ -250,7 +250,7 @@ namespace Exam.Controllers.Periods
             {
                 SemesterCourse = semesterCourse,
                 SemesterTeacher = semesterTeacher,
-                Tutorial = form.Lecture,
+                Tutorial = form.Tutorial,
                 Lecture = form.Lecture
             };
 

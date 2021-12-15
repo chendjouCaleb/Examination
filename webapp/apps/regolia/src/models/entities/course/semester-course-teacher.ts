@@ -37,4 +37,8 @@ export class SemesterCourseTeacher extends Entity<number> {
   get levelIndex(): number {
     return this.semesterCourse.semesterLevel?.yearLevel?.id
   }
+
+  get teacherName(): string {
+    return this.semesterTeacher?.yearTeacher?.teacher.user.fullName;
+  }
 }

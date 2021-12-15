@@ -3,6 +3,9 @@ import {Course} from "./course.entity";
 import {SemesterLevel} from "../semester";
 import {SemesterCourseTeacher} from "./semester-course-teacher";
 import {SemesterCourseLevelSpeciality} from "./semester-course-level-speciality";
+import {List} from "@positon/collections";
+import {CourseHour} from "./course-hour.entity";
+import {CourseSession} from "./course-session.entity";
 
 export class SemesterCourse extends Entity<number> {
   constructor(value: any = {}) {
@@ -44,6 +47,9 @@ export class SemesterCourse extends Entity<number> {
   semesterCourseLevelSpecialities: SemesterCourseLevelSpeciality[];
 
   semesterCourseTeachers: SemesterCourseTeacher[];
+
+  courseHours: List<CourseHour>;
+  courseSessions: List<CourseSession>;
 
   get specialityNames(): string[] {
     return this.semesterCourseLevelSpecialities

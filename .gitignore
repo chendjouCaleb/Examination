@@ -3,3 +3,4 @@ obj/
 /packages/
 /ServerApp/dist/
 /ClientApp/dist/
+/ServerApp/Migrations/
