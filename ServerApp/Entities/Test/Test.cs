@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -50,8 +51,8 @@ namespace Exam.Entities
         public uint NotGroupedStudentCount { get; set; }
 
         [JsonIgnore]
-        public virtual Course Course { get; set; }
-        public long? CourseId { get; set; }
+        public virtual SemesterCourse SemesterCourse { get; set; }
+        public long? SemesterCourseId { get; set; }
         
         [JsonIgnore] public virtual ExaminationLevel ExaminationLevel { get; set; }
         public long? ExaminationLevelId { get; set; }

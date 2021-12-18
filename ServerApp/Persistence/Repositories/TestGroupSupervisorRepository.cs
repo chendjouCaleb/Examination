@@ -24,12 +24,14 @@ namespace Exam.Persistence.Repositories
 
         public School GetSchool(TestGroupSupervisor testGroupSupervisor)
         {
-            return context.Set<School>().First(s => s.Equals(testGroupSupervisor.TestGroup.Test.Course.Level.Department.School));
+            return context.Set<School>()
+                .First(s => s.Equals(testGroupSupervisor.TestGroup.Test.SemesterCourse.Course.Level.Department.School));
         }
 
         public Department GetDepartment(TestGroupSupervisor testGroupSupervisor)
         {
-            return context.Set<Department>().First(s => s.Equals(testGroupSupervisor.TestGroup.Test.Course.Level.Department));
+            return context.Set<Department>()
+                .First(s => s.Equals(testGroupSupervisor.TestGroup.Test.SemesterCourse.Course.Level.Department));
         }
         
         public Examination GetExamination(TestGroupSupervisor testGroupSupervisor)

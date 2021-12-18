@@ -5,10 +5,12 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Controllers
 {
@@ -18,15 +20,18 @@ namespace Exam.Controllers
         private ITestLevelSpecialityRepository _testLevelSpecialityRepository;
         private ICourseLevelSpecialityRepository _courseLevelSpecialityRepository;
         private IRepository<ExaminationLevelSpeciality, long> _examinationLevelSpecialityRepository;
+        private DbContext _dbContext;
 
 
         public TestLevelSpecialityController(ITestLevelSpecialityRepository testLevelSpecialityRepository,
             ICourseLevelSpecialityRepository courseLevelSpecialityRepository,
-            IRepository<ExaminationLevelSpeciality, long> examinationLevelSpecialityRepository)
+            IRepository<ExaminationLevelSpeciality, long> examinationLevelSpecialityRepository,
+            DbContext dbContext)
         {
             _testLevelSpecialityRepository = testLevelSpecialityRepository;
             _courseLevelSpecialityRepository = courseLevelSpecialityRepository;
             _examinationLevelSpecialityRepository = examinationLevelSpecialityRepository;
+            _dbContext = dbContext;
         }
 
         [HttpGet("{testLevelSpecialityId}")]
@@ -35,8 +40,8 @@ namespace Exam.Controllers
         {
             return testLevelSpeciality;
         }
-        
-        
+
+
         [HttpGet("{testLevelSpecialityId}/statistics")]
         [LoadTestLevelSpeciality]
         public PapersStatistics GetStatistics(TestLevelSpeciality testLevelSpeciality)
@@ -47,65 +52,112 @@ namespace Exam.Controllers
         [HttpGet]
         public IEnumerable<TestLevelSpeciality> List([FromQuery] long? testId,
             [FromQuery] long? examinationLevelSpecialityId,
+            [FromQuery] long? semesterLevelSpecialityId,
+            [FromQuery] long? yearLevelSpecialityId,
             [FromQuery] long? examinationSpecialityId,
-            [FromQuery] long? courseLevelSpecialityId)
+            [FromQuery] long? courseLevelSpecialityId,
+            [FromQuery] long? semesterCourseLevelSpecialityId
+        )
         {
+            IQueryable<TestLevelSpeciality> query = _dbContext.Set<TestLevelSpeciality>();
             if (testId != null)
             {
-                return _testLevelSpecialityRepository.List(cls => cls.TestId == testId);
+                query = query.Where(cls => cls.TestId == testId);
             }
 
             if (examinationLevelSpecialityId != null)
             {
-                return _testLevelSpecialityRepository.List(t =>
-                    t.ExaminationLevelSpecialityId == examinationLevelSpecialityId);
+                query = query.Where(t => t.ExaminationLevelSpecialityId == examinationLevelSpecialityId);
+            }
+
+            if (semesterLevelSpecialityId != null)
+            {
+                query = query.Where(t =>
+                    t.ExaminationLevelSpeciality.SemesterLevelSpecialityId == semesterLevelSpecialityId);
+            }
+
+            if (yearLevelSpecialityId != null)
+            {
+                query = query.Where(t =>
+                    t.ExaminationLevelSpeciality.SemesterLevelSpeciality.YearLevelSpecialityId ==
+                    yearLevelSpecialityId);
             }
 
             if (examinationSpecialityId != null)
             {
-                return _testLevelSpecialityRepository.List(
+                query = query.Where(
                     t => t.ExaminationLevelSpeciality.ExaminationSpecialityId == examinationSpecialityId);
             }
 
-            return _testLevelSpecialityRepository
-                .List(cls => cls.CourseLevelSpecialityId == courseLevelSpecialityId);
+            if (semesterCourseLevelSpecialityId != null)
+            {
+                query = query.Where(t => t.SemesterCourseLevelSpecialityId == semesterCourseLevelSpecialityId);
+            }
+
+            if (courseLevelSpecialityId != null)
+            {
+                query = query.Where(t =>
+                    t.SemesterCourseLevelSpeciality.CourseLevelSpecialityId == courseLevelSpecialityId);
+            }
+
+            return query.ToList();
         }
 
         public List<TestLevelSpeciality> _AddAll(Test test)
         {
-            return _courseLevelSpecialityRepository.List(c => c.Course.Equals(test.Course))
-                .Select(c =>
-                    _Add(test, c,
-                        _examinationLevelSpecialityRepository
-                            .First(l => l.LevelSpecialityId == c.LevelSpecialityId))
-                ).ToList();
+            if (test.IsGeneral)
+            {
+                throw new InvalidOperationException("TEST_IS_GENERAL");
+            }
+
+            var semesterCourseLevelSpecialities = _dbContext.Set<SemesterCourseLevelSpeciality>()
+                .Where(c => c.SemesterCourse.Equals(test.SemesterCourse)).ToList();
+
+            var testLevelSpecialities = new List<TestLevelSpeciality>();
+
+            foreach (var semesterCourseLevelSpeciality in semesterCourseLevelSpecialities)
+            {
+                if (!Contains(test, semesterCourseLevelSpeciality))
+                {
+                    var testLevelSpeciality = _Add(test, semesterCourseLevelSpeciality);
+                    testLevelSpecialities.Add(testLevelSpeciality);
+                }
+            }
+
+            return testLevelSpecialities;
         }
 
-        public TestLevelSpeciality _Add(Test test, CourseLevelSpeciality courseLevelSpeciality,
+        public TestLevelSpeciality _Add(Test test, SemesterCourseLevelSpeciality semesterCourseLevelSpeciality)
+        {
+            ExaminationLevelSpeciality examinationLevelSpeciality = _dbContext.Set<ExaminationLevelSpeciality>()
+                .First(e => e.ExaminationLevel.Equals(test.ExaminationLevel) &&
+                            e.SemesterLevelSpeciality.Equals(semesterCourseLevelSpeciality.SemesterLevelSpeciality));
+
+            return _Add(test, semesterCourseLevelSpeciality, examinationLevelSpeciality);
+        }
+
+        public TestLevelSpeciality _Add(Test test, SemesterCourseLevelSpeciality semesterCourseLevelSpeciality,
             ExaminationLevelSpeciality examinationLevelSpeciality)
         {
             Assert.RequireNonNull(test, nameof(test));
-            Assert.RequireNonNull(courseLevelSpeciality, nameof(courseLevelSpeciality));
+            Assert.RequireNonNull(semesterCourseLevelSpeciality, nameof(semesterCourseLevelSpeciality));
             Assert.RequireNonNull(examinationLevelSpeciality, nameof(examinationLevelSpeciality));
 
-            TestLevelSpeciality result = _testLevelSpecialityRepository
-                .First(cls => test.Equals(cls.Test)
-                              && courseLevelSpeciality.Equals(cls.CourseLevelSpeciality)
-                              && examinationLevelSpeciality.Equals(cls.ExaminationLevelSpeciality));
-
-            if (result != null)
+            if (Contains(test, semesterCourseLevelSpeciality))
             {
-                return result;
+                throw new DuplicateObjectException("DUPLICATE_TEST_LEVEL_SPECIALITY");
             }
 
-            if (!test.Course.Equals(courseLevelSpeciality.Course))
+
+            if (!test.SemesterCourse.Equals(semesterCourseLevelSpeciality.SemesterCourse))
             {
-                throw new IncompatibleEntityException(test, courseLevelSpeciality);
+                throw new IncompatibleEntityException(test, semesterCourseLevelSpeciality);
             }
 
-            if (!courseLevelSpeciality.LevelSpeciality.Equals(examinationLevelSpeciality.LevelSpeciality))
+            if (!semesterCourseLevelSpeciality.SemesterLevelSpeciality.Equals(examinationLevelSpeciality
+                .SemesterLevelSpeciality))
             {
-                throw new IncompatibleEntityException(courseLevelSpeciality, examinationLevelSpeciality);
+                throw new IncompatibleEntityException(semesterCourseLevelSpeciality, examinationLevelSpeciality);
             }
 
             if (!examinationLevelSpeciality.ExaminationLevel.Equals(test.ExaminationLevel))
@@ -113,7 +165,7 @@ namespace Exam.Controllers
                 throw new IncompatibleEntityException(test, examinationLevelSpeciality);
             }
 
-            if (test.Course.IsGeneral)
+            if (test.SemesterCourse.IsGeneral)
             {
                 throw new InvalidOperationException("{testLevelSpeciality.constraints.isNotGeneralTest}");
             }
@@ -121,7 +173,7 @@ namespace Exam.Controllers
             return new TestLevelSpeciality
             {
                 Test = test,
-                CourseLevelSpeciality = courseLevelSpeciality,
+                SemesterCourseLevelSpeciality = semesterCourseLevelSpeciality,
                 ExaminationLevelSpeciality = examinationLevelSpeciality
             };
         }
@@ -140,6 +192,20 @@ namespace Exam.Controllers
         public void DeleteAll(Test test)
         {
             _testLevelSpecialityRepository.DeleteAll(test);
+        }
+
+        public TestLevelSpeciality Find(Test test, SemesterCourseLevelSpeciality semesterCourseLevelSpeciality)
+        {
+            return _dbContext.Set<TestLevelSpeciality>()
+                .FirstOrDefault(t => test.Equals(t.Test)
+                                     && semesterCourseLevelSpeciality.Equals(t.SemesterCourseLevelSpeciality));
+        }
+
+
+        public bool Contains(Test test, SemesterCourseLevelSpeciality semesterCourseLevelSpeciality)
+        {
+            return _dbContext.Set<TestLevelSpeciality>()
+                .Any(t => test.Equals(t.Test) && semesterCourseLevelSpeciality.Equals(t.SemesterCourseLevelSpeciality));
         }
     }
 }

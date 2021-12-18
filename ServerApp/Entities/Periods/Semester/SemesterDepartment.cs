@@ -26,5 +26,8 @@ namespace Exam.Entities.Periods
         
         [JsonIgnore]
         public virtual List<SemesterTeacher> SemesterTeachers { get; set; }
+        
+        [JsonIgnore] 
+        public virtual List<ExaminationDepartment> ExaminationDepartments { get; set; }
     }
 }

@@ -38,7 +38,6 @@ namespace ServerAppTest.Controllers.Courses
         private Semester _semester;
         private SemesterLevel _semesterLevel;
         private SemesterDepartment _semesterDepartment;
-        private SemesterLevelSpeciality _semesterLevelSpeciality;
         private SemesterTeacher _semesterTeacher;
         private SemesterCourse _semesterCourse;
 
@@ -67,10 +66,6 @@ namespace ServerAppTest.Controllers.Courses
             _yearTeacherRepository = serviceProvider.GetRequiredService<IRepository<YearTeacher, long>>();
             _semesterCourseRepository = serviceProvider.GetRequiredService<IRepository<SemesterCourse, long>>();
             _courseHourRepository = serviceProvider.GetRequiredService<IRepository<CourseHour, long>>();
-            
-            var departmentRepository = serviceProvider.GetRequiredService<IRepository<Department, long>>();
-            var schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
-            var levelRepository = serviceProvider.GetRequiredService<IRepository<Level, long>>();
 
             _courseRepository = serviceProvider.GetRequiredService<IRepository<Course, long>>();
             _dbContext = serviceProvider.GetRequiredService<DbContext>();
@@ -81,25 +76,27 @@ namespace ServerAppTest.Controllers.Courses
             _semester = _schoolBuilder.CreateSemester(_year);
             _schoolBuilder.AddYearStudents(_year);
 
+            
             _schoolBuilder.AddYearTeachers(_year);
             _schoolBuilder.AddSemesterTeachers(_semester);
 
+            _department = _dbContext.Set<Department>().First(d => d.School.Equals(_school));
             
             _semesterDepartment = _dbContext.Set<SemesterDepartment>().First(ys => ys.YearDepartment.Year.Equals(_year) 
                                                                               && _department.Equals(ys.YearDepartment.Department));
-            _semesterLevel = _dbContext.Set<SemesterLevel>().First(ys => ys.YearLevel.YearDepartment.Year.Equals(_year));
-            _semesterLevelSpeciality = _dbContext.Set<SemesterLevelSpeciality>().First(sl => sl.SemesterLevel.Equals(_semesterLevel));
+            
+            _semesterLevel = _dbContext.Set<SemesterLevel>().First(ys => ys.SemesterDepartment.Equals(_semesterDepartment));
             
             _teacher = _teacherRepository.First(t => t.Department.School.Equals(_school));
             _semesterTeacher = _dbContext.Set<SemesterTeacher>().First(st => 
                 st.SemesterDepartment.Equals(_semesterLevel.SemesterDepartment) && _teacher.Equals(st.YearTeacher.Teacher));
 
             _room = _roomRepository.Save(new Room { School = _school, Name = "room Name"});
-            Level level = levelRepository.Save(new Level {Index = 0, Department = _department});
+            
 
             _course = _courseRepository.Save(new Course
             {
-                Level = level,
+                Level = _semesterLevel.YearLevel.Level,
                 Name = "course form",
                 Code = "123",
                 Coefficient = 1,
@@ -167,7 +164,7 @@ namespace ServerAppTest.Controllers.Courses
             _controller.Teacher(courseHour, semesterCourseTeacher1);
             _courseHourRepository.Refresh(courseHour);
             
-            Assert.AreEqual(semesterCourseTeacher1, courseHour.SemesterCourseTeacher);
+            Assert.AreEqual(semesterCourseTeacher1, courseHour?.SemesterCourseTeacher);
         }
 
         [Test]
@@ -179,7 +176,7 @@ namespace ServerAppTest.Controllers.Courses
             _controller.Room(courseHour, room1);
             _courseHourRepository.Refresh(courseHour);
             
-            Assert.AreEqual(room1, courseHour.Room);
+            Assert.AreEqual(room1, courseHour?.Room);
         }
 
 
@@ -187,6 +184,8 @@ namespace ServerAppTest.Controllers.Courses
         public void Change_LectureAtTrue_ShouldSetItAtFalse()
         {
             CourseHour courseHour = _controller.Add(_semesterCourse, _room, _semesterCourseTeacher, _form).Value as CourseHour;
+            Assert.NotNull(courseHour);
+            
             courseHour.Lecture = true;
             _courseHourRepository.Update(courseHour);
 
@@ -199,6 +198,8 @@ namespace ServerAppTest.Controllers.Courses
         public void Change_LectureAtFalse_ShouldSetItAtTrue()
         {
             CourseHour courseHour = _controller.Add(_semesterCourse, _room, _semesterCourseTeacher, _form).Value as CourseHour;
+            Assert.NotNull(courseHour);
+            
             courseHour.Lecture = false;
             _courseHourRepository.Update(courseHour);
 

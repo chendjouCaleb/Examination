@@ -2,8 +2,11 @@
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Periods;
+using Exam.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Assert = NUnit.Framework.Assert;
 
 namespace ServerAppTest.Controllers
 {
@@ -12,11 +15,11 @@ namespace ServerAppTest.Controllers
         private ExaminationLevelController _controller;
         private IRepository<ExaminationDepartment, long> _examinationDepartmentRepository;
         private IRepository<ExaminationLevel, long> _examinationLevelRepository;
-        private IRepository<Department, long> _departmentRepository;
-        private IRepository<Level, long> _levelRepository;
+        private IRepository<SemesterDepartment, long> _semesterDepartmentRepository;
+        private IRepository<SemesterLevel, long> _semesterLevelRepository;
 
-        private Department _department;
-        private Level _level;
+        private SemesterDepartment _semesterDepartment;
+        private SemesterLevel _semesterLevel;
         private ExaminationDepartment _examinationDepartment;
 
 
@@ -29,58 +32,55 @@ namespace ServerAppTest.Controllers
 
             _controller = services.GetRequiredService<ExaminationLevelController>();
 
-            _departmentRepository = services.GetRequiredService<IRepository<Department, long>>();
+            _semesterDepartmentRepository = services.GetRequiredService<IRepository<SemesterDepartment, long>>();
             _examinationDepartmentRepository = services.GetRequiredService<IRepository<ExaminationDepartment, long>>();
             _examinationLevelRepository = services.GetRequiredService<IRepository<ExaminationLevel, long>>();
-            _levelRepository = services.GetRequiredService<IRepository<Level, long>>();
+            _semesterLevelRepository = services.GetRequiredService<IRepository<SemesterLevel, long>>();
+            
+            
+            SchoolBuilder builder = new SchoolBuilder(services);
+            School school = builder.CreateSchool();
+            Year year = builder.CreateYear(school);
+            Semester semester = builder.CreateSemester(year);
+            Examination examination = builder.CreateSimpleExamination(semester);
 
-            _department = _departmentRepository.Save(new Department
-            {
-                Name = "Org name"
-            });
-
+            _semesterDepartment = _semesterDepartmentRepository.First(s => s.Semester.Equals(semester));
+            _semesterLevel = _semesterLevelRepository.First(l => l.SemesterDepartment.Equals(_semesterDepartment));
             _examinationDepartment = _examinationDepartmentRepository.Save(new ExaminationDepartment
             {
-                Department = _department
-            });
-            
-            _level = _levelRepository.Save(new Level
-            {
-                Department = _department
-                
+                SemesterDepartment = _semesterDepartment,
+                Examination = examination
             });
         }
 
         [Test]
         public void Add()
         {
-            ExaminationLevel examinationLevel = _controller._Add(_examinationDepartment, _level);
-
-            _examinationLevelRepository.Refresh(examinationLevel);
+            ExaminationLevel examinationLevel = _controller._Add(_examinationDepartment, _semesterLevel);
 
             Assert.NotNull(examinationLevel);
             Assert.AreEqual(examinationLevel.ExaminationDepartment, _examinationDepartment);
-            Assert.AreEqual(examinationLevel.Level, _level);
+            Assert.AreEqual(examinationLevel.SemesterLevel, _semesterLevel);
         }
 
         [Test]
         public void Check_If_Add_IsPureMethod()
         {
-            ExaminationLevel examinationLevel1 = _controller._Add(_examinationDepartment, _level);
-            ExaminationLevel examinationLevel2 = _controller._Add(_examinationDepartment, _level);
-
-            Assert.AreEqual(examinationLevel1, examinationLevel2);
+            ExaminationLevel examinationLevel  = _controller._Add(_examinationDepartment, _semesterLevel);
+            _examinationLevelRepository.Save(examinationLevel);
+            
+            Assert.Throws<DuplicateObjectException>(
+               () => _controller._Add(_examinationDepartment, _semesterLevel));
         }
 
 
         [Test]
         public void Delete()
         {
-            ExaminationLevel examinationLevel = _controller._Add(_examinationDepartment, _level);
+            ExaminationLevel examinationLevel = _controller._Add(_examinationDepartment, _semesterLevel);
             _examinationLevelRepository.Save(examinationLevel);
             
             _controller.Delete(examinationLevel);
-            _departmentRepository.Refresh(_department);
 
             Assert.False(_examinationLevelRepository.Exists(examinationLevel));
         }

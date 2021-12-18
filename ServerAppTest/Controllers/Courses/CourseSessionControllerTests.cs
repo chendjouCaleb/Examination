@@ -17,29 +17,18 @@ namespace ServerAppTest.Controllers.Courses
         private CourseSessionController _controller;
         private IRepository<Course, long> _courseRepository;
         private IRepository<Room, long> _roomRepository;
-        private IRepository<CourseHour, long> _courseHourRepository;
-        private IRepository<Teacher, long> _teacherRepository;
-        private IRepository<SemesterCourseTeacher, long> _semesterCourseTeacherRepository;
         private IRepository<CourseSession, long> _courseSessionRepository;
-        private IRepository<SemesterTeacher, long> _semesterTeacherRepository;
-        private IRepository<YearTeacher, long> _yearTeacherRepository;
-        private IRepository<SemesterCourse, long> _semesterCourseRepository;
         private DbContext _dbContext;
-        private SchoolBuilder _schoolBuilder;
-        
+
 
         private Course _course;
         private Room _room;
-        private Teacher _teacher;
         private SemesterCourseTeacher _semesterCourseTeacher;
-        private Department _department;
         private School _school;
         private Year _year;
         
         private Semester _semester;
         private SemesterLevel _semesterLevel;
-        private SemesterDepartment _semesterDepartment;
-        private SemesterLevelSpeciality _semesterLevelSpeciality;
         private SemesterTeacher _semesterTeacher;
         private SemesterCourse _semesterCourse;
         private CourseHour _courseHour;
@@ -60,36 +49,30 @@ namespace ServerAppTest.Controllers.Courses
 
 
             _controller = serviceProvider.GetRequiredService<CourseSessionController>();
-
+            _dbContext = serviceProvider.GetRequiredService<DbContext>();
             _roomRepository = serviceProvider.GetRequiredService<IRepository<Room, long>>();
             _courseRepository = serviceProvider.GetRequiredService<IRepository<Course, long>>();
-            _teacherRepository = serviceProvider.GetRequiredService<IRepository<Teacher, long>>();
-            _courseHourRepository = serviceProvider.GetRequiredService<IRepository<CourseHour, long>>();
             _courseSessionRepository = serviceProvider.GetRequiredService<IRepository<CourseSession, long>>();
+
+            SchoolBuilder schoolBuilder = new SchoolBuilder(serviceProvider);
             
-            var departmentRepository = serviceProvider.GetRequiredService<IRepository<Department, long>>();
-            var schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
-            var levelRepository = serviceProvider.GetRequiredService<IRepository<Level, long>>();
+            _school = schoolBuilder.CreateSchool();
+            _year = schoolBuilder.CreateYear(_school);
+            _semester = schoolBuilder.CreateSemester(_year);
+            schoolBuilder.AddYearStudents(_year);
 
-            _school = _schoolBuilder.CreateSchool();
-            _year = _schoolBuilder.CreateYear(_school);
-            _semester = _schoolBuilder.CreateSemester(_year);
-            _schoolBuilder.AddYearStudents(_year);
-
-            _schoolBuilder.AddYearTeachers(_year);
-            _schoolBuilder.AddSemesterTeachers(_semester);
+            schoolBuilder.AddYearTeachers(_year);
+            schoolBuilder.AddSemesterTeachers(_semester);
 
             _semesterLevel = _dbContext.Set<SemesterLevel>().First(ys => ys.YearLevel.YearDepartment.Year.Equals(_year));
-            _semesterLevelSpeciality = _dbContext.Set<SemesterLevelSpeciality>().First(sl => sl.SemesterLevel.Equals(_semesterLevel));
             _semesterTeacher = _dbContext.Set<SemesterTeacher>()
                 .First(st => st.SemesterDepartment.Equals(_semesterLevel.SemesterDepartment));
             
             _room = _roomRepository.Save(new Room { School = _school, Name = "room Name"});
-            Level level = levelRepository.Save(new Level {Index = 0, Department = _department});
 
             _course = _courseRepository.Save(new Course
             {
-                Level = level,
+                Level = _semesterLevel.YearLevel.Level,
                 Name = "course form",
                 Code = "123",
                 Coefficient = 1,
@@ -98,19 +81,19 @@ namespace ServerAppTest.Controllers.Courses
                 IsGeneral = false
             });
             
-            _semesterCourse = _semesterCourseRepository.Save(new SemesterCourse
+            _semesterCourse = new SemesterCourse
             {
                 Course = _course,
                 SemesterLevel = _semesterLevel
-            });
+            };
 
-            _semesterCourseTeacher = _semesterCourseTeacherRepository.Save(new SemesterCourseTeacher
+            _semesterCourseTeacher = new SemesterCourseTeacher
             {
                 SemesterTeacher = _semesterTeacher,
                 SemesterCourse = _semesterCourse
-            });
+            };
 
-            _courseHour = _courseHourRepository.Save(new CourseHour
+            _courseHour = new CourseHour
             {
                 SemesterCourse = _semesterCourse,
                 SemesterCourseTeacher = _semesterCourseTeacher,
@@ -118,7 +101,12 @@ namespace ServerAppTest.Controllers.Courses
                 StartHour = new TimeSpan(0, 10, 0, 0),
                 EndHour = new TimeSpan(0, 12, 0, 0),
                 Lecture = true
-            });
+            };
+
+            _dbContext.Add(_semesterCourse);
+            _dbContext.Add(_semesterCourseTeacher);
+            _dbContext.Add(_courseHour);
+            _dbContext.SaveChanges();
         }
 
         [Test]
@@ -147,7 +135,7 @@ namespace ServerAppTest.Controllers.Courses
             
             Assert.NotNull(courseSession);
             Assert.True(_courseSessionRepository.Exists(courseSession));
-            Assert.AreEqual(courseSession.SemesterCourse, _course);
+            Assert.AreEqual(courseSession.SemesterCourse, _semesterCourse);
             Assert.AreEqual(courseSession.Room, _room);
             Assert.AreEqual(courseSession.SemesterCourseTeacher, _semesterCourseTeacher);
             Assert.Null(courseSession.CourseHour);
@@ -214,7 +202,7 @@ namespace ServerAppTest.Controllers.Courses
             _controller.Objective(courseSession, newObjective);
             _courseSessionRepository.Refresh(courseSession);
             
-            Assert.AreEqual(newObjective, courseSession.Objective);
+            Assert.AreEqual(newObjective, courseSession?.Objective);
         }
         
         
@@ -251,7 +239,7 @@ namespace ServerAppTest.Controllers.Courses
             _controller.Room(courseSession, room1);
             _courseSessionRepository.Refresh(courseSession);
             
-            Assert.AreEqual(room1, courseSession.Room);
+            Assert.AreEqual(room1, courseSession?.Room);
         }
         
 
@@ -261,6 +249,8 @@ namespace ServerAppTest.Controllers.Courses
         {
             CourseSession courseSession =
                 _controller.Add(_semesterCourse, _semesterCourseTeacher, _room, _courseHour.Id, _form).Value as CourseSession;
+            Assert.NotNull(courseSession);
+            
             courseSession.Lecture = true;
             _courseSessionRepository.Update(courseSession);
 
@@ -274,6 +264,8 @@ namespace ServerAppTest.Controllers.Courses
         {
             CourseSession courseSession =
                 _controller.Add(_semesterCourse, _semesterCourseTeacher, _room, _courseHour.Id, _form).Value as CourseSession;
+            Assert.NotNull(courseSession);
+            
             courseSession.Lecture = false;
             _courseSessionRepository.Update(courseSession);
 

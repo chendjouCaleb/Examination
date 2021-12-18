@@ -43,7 +43,8 @@ namespace Exam.Loaders
                 IRepository<Department, long> departmentRepository =
                     context.HttpContext.RequestServices.GetRequiredService<IRepository<Department, long>>();
                 context.HttpContext.Items[DepartmentItemName] =
-                    departmentRepository.First(d => d.Id == testLevelSpeciality.Test.Course.Level.DepartmentId);
+                    departmentRepository
+                        .First(d => d.Id == testLevelSpeciality.Test.SemesterCourse.Course.Level.DepartmentId);
             }
             
         }

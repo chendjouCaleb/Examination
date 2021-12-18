@@ -31,9 +31,6 @@ namespace Exam.Entities
         [JsonIgnore] 
         public virtual List<Application> Applications { get; set; }
 
-        [JsonIgnore] 
-        public virtual List<ExaminationDepartment> ExaminationDepartments { get; set; }
-        
         [JsonIgnore]
         public virtual List<Room> Rooms { get; set; }
 

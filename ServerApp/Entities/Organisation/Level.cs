@@ -31,8 +31,5 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual List<Application> Applications { get; set; }
-
-        [JsonIgnore]
-        public virtual List<ExaminationLevel> ExaminationLevels { get; set; }
     }
 }

@@ -25,10 +25,6 @@ namespace Exam.Entities
         [JsonIgnore]
         public virtual List<LevelSpeciality> LevelSpecialities { get; set; }
 
-        [JsonIgnore]
-        public virtual List<ExaminationSpeciality> ExaminationSpecialities { get; set; }
-        
-        
         [NotMapped] 
         public SpecialityStatistics Statistics { get; set; }
     }

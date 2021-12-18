@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Exam.Entities;
+using Exam.Entities.Periods;
 using Exam.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,11 +19,11 @@ namespace Exam.Controllers
         public double Total { get; private set; }
         public double Progression { get; private set; }
 
-        private IEnumerable<Department> _departments;
-        private IEnumerable<Level> _levels;
-        private IEnumerable<Speciality> _specialities;
-        private IEnumerable<LevelSpeciality> _levelSpecialities;
-        private IEnumerable<Student> _students;
+        private IQueryable<SemesterDepartment> _semesterDepartments;
+        private IQueryable<SemesterLevel> _semesterLevels;
+        private IQueryable<SemesterSpeciality> _semesterSpecialities;
+        private IQueryable<SemesterLevelSpeciality> _semesterLevelSpecialities;
+        private IQueryable<SemesterStudent> _semesterStudents;
 
         public Examination Examination { get; private set; }
         public List<ExaminationDepartment> ExaminationDepartments { get; } = new List<ExaminationDepartment>();
@@ -44,31 +45,33 @@ namespace Exam.Controllers
             _logger = _services.GetService<ILogger<ExaminationBuilder>>();
         }
 
-        public void Init(School school
-        )
+        public void Init(Semester semester)
         {
-            _departments = _dbContext.Set<Department>().Where(d => d.School.Equals(school));
-            _levels = _dbContext.Set<Level>().Where(l => l.Department.School.Equals(school));
-            _specialities = _dbContext.Set<Speciality>().Where(d => d.Department.School.Equals(school));
+            _semesterDepartments = _dbContext.Set<SemesterDepartment>().Where(d => d.Semester.Equals(semester));
+            _semesterLevels = _dbContext.Set<SemesterLevel>().Where(l => l.SemesterDepartment.Semester.Equals(semester));
+            _semesterSpecialities = _dbContext.Set<SemesterSpeciality>()
+                .Where(d => d.SemesterDepartment.Semester.Equals(semester));
 
-            _levelSpecialities = _dbContext.Set<LevelSpeciality>().Where(d => d.Level.Department.School.Equals(school));
+            _semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>().
+                Where(d => d.SemesterLevel.SemesterDepartment.Semester.Equals(semester));
 
-            _students = _dbContext.Set<Student>().Where(l => l.Level.Department.School.Equals(school));
+            _semesterStudents = _dbContext.Set<SemesterStudent>()
+                .Where(l => l.SemesterLevel.SemesterDepartment.Semester.Equals(semester));
 
-            Total = _departments.Count() + _levels.Count() + _specialities.Count() + _levelSpecialities.Count() +
-                    _students.Count();
+            Total = _semesterDepartments.Count() + _semesterLevels.Count() + _semesterSpecialities.Count() 
+                    + _semesterLevelSpecialities.Count() + _semesterStudents.Count() + 1;
 
 
             _logger.LogInformation($"Total: {Total}");
         }
 
-        public Examination Create(School school, ExaminationForm form)
+        public Examination Create(Semester semester, ExaminationForm form)
         {
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
-            Init(school);
+            Init(semester);
 
-            AddExamination(school, form);
+            AddExamination(semester, form);
             AddDepartments();
             AddLevels();
             AddSpecialities();
@@ -90,22 +93,23 @@ namespace Exam.Controllers
             return Examination;
         }
 
-        private void AddExamination(School school, ExaminationForm form)
+        private void AddExamination(Semester semester, ExaminationForm form)
         {
             var examinationController = _services.GetRequiredService<ExaminationController>();
-            Examination = examinationController._Add(form, school);
+            Examination = examinationController._Add(form, semester);
+            Progression += 1 / Total;
         }
 
         private void AddDepartments()
         {
             var examinationDepartmentController = _services.GetRequiredService<ExaminationDepartmentController>();
-            foreach (var department in _departments)
+            foreach (var semesterDepartment in _semesterDepartments)
             {
-                var result = examinationDepartmentController._Add(Examination, department);
+                var result = examinationDepartmentController._Add(Examination, semesterDepartment);
                 ExaminationDepartments.Add(result);
             }
 
-            Progression += _departments.Count() / Total;
+            Progression += _semesterDepartments.Count() / Total;
         }
 
         private void AddLevels()
@@ -113,7 +117,7 @@ namespace Exam.Controllers
             var examinationLevelController = _services.GetRequiredService<ExaminationLevelController>();
             foreach (var item in ExaminationDepartments)
             {
-                var levels = _levels.Where(l => l.Department.Equals(item.Department)).ToList();
+                var levels = _semesterLevels.Where(l => l.SemesterDepartment.Equals(item.SemesterDepartment)).ToList();
                 foreach (var level in levels)
                 {
                     ExaminationLevels.Add(examinationLevelController._Add(item, level));
@@ -129,7 +133,8 @@ namespace Exam.Controllers
             var examinationSpecialityController = _services.GetService<ExaminationSpecialityController>();
             foreach (var item in ExaminationDepartments)
             {
-                var specialities = _specialities.Where(l => l.Department.Equals(item.Department)).ToList();
+                var specialities = _semesterSpecialities
+                    .Where(l => l.SemesterDepartment.Equals(item.SemesterDepartment)).ToList();
                 foreach (var speciality in specialities)
                 {
                     ExaminationSpecialities.Add(examinationSpecialityController._Add(item, speciality));
@@ -144,15 +149,16 @@ namespace Exam.Controllers
             var examinationLevelSpecialityController = _services.GetService<ExaminationLevelSpecialityController>();
             foreach (var item in ExaminationLevels)
             {
-                var levelSpecialities = _levelSpecialities.Where(l => l.Level.Equals(item.Level)).ToList();
+                var levelSpecialities = _semesterLevelSpecialities
+                    .Where(l => l.SemesterLevel.Equals(item.SemesterLevel)).ToList();
 
                 foreach (var levelSpeciality in levelSpecialities)
                 {
                     var examinationSpeciality = ExaminationSpecialities
-                        .Find(e => e.Speciality.Equals(levelSpeciality.Speciality));
+                        .Find(e => e.SemesterSpeciality.Equals(levelSpeciality.SemesterSpeciality));
 
                     var examinationLevelSpeciality = examinationLevelSpecialityController
-                        ._Add(item, examinationSpeciality, levelSpeciality);
+                        ._Add(item, examinationSpeciality);
 
                     ExaminationLevelSpecialities.Add(examinationLevelSpeciality);
                 }
@@ -167,13 +173,14 @@ namespace Exam.Controllers
             var examinationStudentController = _services.GetService<ExaminationStudentController>();
             foreach (var examinationLevel in ExaminationLevels)
             {
-                var students = _students.Where(l => l.Level.Equals(examinationLevel.Level)).ToList();
+                var students = _semesterStudents
+                    .Where(l => l.SemesterLevel.Equals(examinationLevel.SemesterLevel)).ToList();
 
                 foreach (var student in students)
                 {
                     var examinationLevelSpeciality = ExaminationLevelSpecialities
-                        .Find(l => l.ExaminationLevel.Equals(examinationLevel) &&
-                                   l.LevelSpeciality.Equals(student.LevelSpeciality));
+                        .FirstOrDefault(l => l.ExaminationLevel.Equals(examinationLevel) &&
+                                   l.SemesterLevelSpeciality.Equals(student.SemesterLevelSpeciality));
 
                     ExaminationStudents.Add(
                         examinationStudentController._Add(student, examinationLevel, examinationLevelSpeciality)

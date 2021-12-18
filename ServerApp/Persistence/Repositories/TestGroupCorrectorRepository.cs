@@ -24,7 +24,7 @@ namespace Exam.Persistence.Repositories
         public School GetSchool(TestGroupCorrector testGroupCorrector)
         {
             return context.Set<School>()
-                .First(s => s.Equals(testGroupCorrector.TestGroup.Test.Course.Level.Department.School));
+                .First(s => s.Equals(testGroupCorrector.TestGroup.Test.SemesterCourse.Course.Level.Department.School));
         }
 
         public Examination GetExamination(TestGroupCorrector testGroupCorrector)
@@ -36,7 +36,7 @@ namespace Exam.Persistence.Repositories
         public Department GetDepartment(TestGroupCorrector testGroupCorrector)
         {
             return context.Set<Department>()
-                .First(s => s.Equals(testGroupCorrector.TestGroup.Test.Course.Level.Department));
+                .First(s => s.Equals(testGroupCorrector.TestGroup.Test.SemesterCourse.Course.Level.Department));
         }
     }
 }

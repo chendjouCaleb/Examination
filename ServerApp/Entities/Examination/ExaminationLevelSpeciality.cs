@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -10,8 +11,8 @@ namespace Exam.Entities
     public class ExaminationLevelSpeciality:Entity<long>
     {
         [JsonIgnore]
-        public virtual LevelSpeciality LevelSpeciality { get; set; }
-        public long LevelSpecialityId { get; set; }
+        public virtual SemesterLevelSpeciality SemesterLevelSpeciality { get; set; }
+        public long? SemesterLevelSpecialityId { get; set; }
         
         [JsonIgnore]
         public virtual ExaminationLevel ExaminationLevel { get; set; }

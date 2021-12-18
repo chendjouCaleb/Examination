@@ -50,7 +50,7 @@ namespace Exam.Controllers
 
             // model.Examinations = examinations.Distinct().Where(e => e != null).ToList();
 
-            model.Schools = model.Examinations.ConvertAll(e => e.School)
+            model.Schools = model.Examinations.ConvertAll(e => e.Semester.Year.School)
                 .Distinct().ToList();
 
 
@@ -89,7 +89,7 @@ namespace Exam.Controllers
 
             tests.AddRange(
                 _dbContext.Set<Test>().Where(t =>
-                    t.ExaminationLevel.LevelId == student.LevelId).ToList()
+                    t.ExaminationLevel.SemesterLevel.YearLevel.LevelId == student.LevelId).ToList()
             );
             return tests;
         }
@@ -98,7 +98,8 @@ namespace Exam.Controllers
         [HttpGet("{userId}/papers")]
         public List<Paper> Papers(string userId)
         {
-            return _dbContext.Set<Paper>().Where(t => userId == t.ExaminationStudent.Student.UserId).ToList();
+            return _dbContext.Set<Paper>()
+                .Where(t => userId == t.ExaminationStudent.SemesterStudent.YearStudent.Student.UserId).ToList();
         }
 
         [HttpGet("{userId}/groups")]

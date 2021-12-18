@@ -2566,10 +2566,13 @@
         </e>
         <e p="OrganisationBuilder.cs" t="Include" />
         <e p="SchoolBuilder.cs" t="Include" />
+        <e p="SemesterBuilder.cs" t="Include" />
         <e p="ServerAppTest.csproj" t="IncludeRecursive" />
         <e p="ServerAppTest.csproj.DotSettings" t="Include" />
         <e p="ServiceConfiguration.cs" t="Include" />
+        <e p="TestExaminationBuilder.cs" t="Include" />
         <e p="UnitTest1.cs" t="Include" />
+        <e p="YearBuilder.cs" t="Include" />
       </e>
     </e>
   </component>

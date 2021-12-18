@@ -8,6 +8,7 @@ using Everest.AspNetStartup.Infrastructure;
 using Exam.Authorizers;
 using Exam.Destructors;
 using Exam.Entities;
+using Exam.Entities.Periods;
 using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
@@ -57,20 +58,37 @@ namespace Exam.Controllers
         }
 
         [HttpGet("find/name")]
-        [RequireQueryParameters(new[] {"schoolId", "name"})]
-        [LoadSchool(Source = ParameterSource.Query)]
-        public Examination First(School school, [FromQuery] string name)
+        [RequireQueryParameters(new[] {"semesterId", "name"})]
+        [LoadSemester(Source = ParameterSource.Query)]
+        public Examination First(Semester semester, [FromQuery] string name)
         {
-            return _examinationRepository.First(a => school.Equals(a.School) && name == a.Name);
+            return _examinationRepository.First(a => semester.Equals(a.Semester) && name == a.Name);
         }
 
 
         [HttpGet]
-        public IEnumerable<Examination> List([FromQuery] long schoolId, [FromQuery] string state)
+        public IEnumerable<Examination> List(
+            [FromQuery] long? schoolId,
+            [FromQuery] long? yearId,
+            [FromQuery] long? semesterId, [FromQuery] string state)
         {
             IQueryable<Examination> queryable = _examinationRepository.Set;
 
-            queryable = queryable.Where(e => e.SchoolId == schoolId);
+            if (schoolId != null)
+            {
+                queryable = queryable.Where(e => e.Semester.Year.SchoolId == schoolId);
+            }
+            
+            if (yearId != null)
+            {
+                queryable = queryable.Where(e => e.Semester.YearId == yearId);
+            }
+            
+            if (semesterId != null)
+            {
+                queryable = queryable.Where(e => e.SemesterId == semesterId);
+            }
+            
             if (!string.IsNullOrWhiteSpace(state))
             {
                 queryable = queryable.Where(e => e.State == state);
@@ -85,20 +103,20 @@ namespace Exam.Controllers
         [RequireQueryParameter("schoolId")]
         [LoadSchool(Source = ParameterSource.Query)]
         [IsDirector]
-        public CreatedAtActionResult Add(School school, [FromBody] ExaminationForm form)
+        public CreatedAtActionResult Add(Semester semester, [FromBody] ExaminationForm form)
         {
             ExaminationBuilder builder = new ExaminationBuilder(_serviceProvider);
-            Examination examination = builder.Create(school, form);
+            Examination examination = builder.Create(semester, form);
             return CreatedAtAction("Find", new {examination.Id}, examination);
         }
 
 
-        public Examination _Add(ExaminationForm form, School school)
+        public Examination _Add(ExaminationForm form, Semester semester)
         {
             Assert.RequireNonNull(form, nameof(form));
-            Assert.RequireNonNull(school, nameof(school));
+            Assert.RequireNonNull(semester, nameof(semester));
 
-            if (_examinationRepository.Exists(e => e.Name == form.Name && school.Id == e.SchoolId))
+            if (_examinationRepository.Exists(e => e.Name == form.Name && semester.Id == e.SemesterId))
             {
                 throw new InvalidValueException("{examination.constraints.uniqueName}");
             }
@@ -110,7 +128,7 @@ namespace Exam.Controllers
 
             Examination examination = new Examination
             {
-                School = school,
+                Semester = semester,
                 Name = form.Name,
                 ExpectedStartDate = form.ExpectedStartDate,
                 ExpectedEndDate = form.ExpectedEndDate
@@ -174,7 +192,7 @@ namespace Exam.Controllers
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (_examinationRepository.Exists(e => e.Name == name && examination.SchoolId == e.SchoolId))
+            if (_examinationRepository.Exists(e => e.Name == name && examination.SemesterId == e.SemesterId))
             {
                 throw new InvalidValueException("{examination.constraints.uniqueName}");
             }

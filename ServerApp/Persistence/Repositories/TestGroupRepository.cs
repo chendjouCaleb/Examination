@@ -67,19 +67,19 @@ namespace Exam.Persistence.Repositories
 
         public School GetSchool(TestGroup testGroup)
         {
-            return context.Set<School>().First(s => s.Equals(testGroup.Test.Course.Level.Department.School));
+            return context.Set<School>().First(s => s.Equals(testGroup.Test.SemesterCourse.Course.Level.Department.School));
         }
 
         public Department GetDepartment(TestGroup testGroup)
         {
-            return context.Set<Department>().First(s => s.Equals(testGroup.Test.Course.Level.Department));
+            return context.Set<Department>().First(s => s.Equals(testGroup.Test.SemesterCourse.Course.Level.Department));
         }
 
         public UserTestGroup UserTestGroup(TestGroup testGroup, string userId)
         {
             return new UserTestGroup
             {
-                IsStudent = context.Set<Paper>().Any(s => userId == s.ExaminationStudent.Student.UserId
+                IsStudent = context.Set<Paper>().Any(s => userId == s.ExaminationStudent.SemesterStudent.YearStudent.Student.UserId
                                                           && testGroup.Equals(s.TestGroup)),
 
                 IsCorrector = context.Set<TestGroupCorrector>()

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
-using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Exam.Infrastructure;
+using Exam.Models;
 using Exam.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
@@ -14,22 +17,27 @@ namespace ServerAppTest.Controllers
     public class TestGroupControllerTests
     {
         private TestGroupController _controller;
+        private DbContext _dbContext;
         private TestController _testController;
         private IRepository<Test, long> _testRepository;
         private IRepository<TestGroup, long> _testGroupRepository;
 
         private IRepository<Room, long> _roomRepository;
-        private IRepository<School, long> _schoolRepository;
-        private IRepository<Examination, long> _examinationRepository;
 
         private Room _room0;
         private Room _room1;
         private Room _room2;
 
         private Test _test;
-        private Course _course;
         private Examination _examination;
         private School _school;
+
+        private Year _year;
+        private Semester _semester;
+
+        private ExaminationLevelSpeciality _examinationLevelSpeciality;
+        private ExaminationLevel _examinationLevel;
+        private SemesterCourse _semesterCourse;
         
 
         [SetUp]
@@ -38,33 +46,37 @@ namespace ServerAppTest.Controllers
             ServiceConfiguration.InitServiceCollection();
             IServiceProvider serviceProvider = ServiceConfiguration.BuildServiceProvider();
 
-
+            _dbContext = serviceProvider.GetRequiredService<DbContext>();
             _controller = serviceProvider.GetRequiredService<TestGroupController>();
             _testController = serviceProvider.GetRequiredService<TestController>();
-
-            _schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
+            
             _testRepository = serviceProvider.GetRequiredService<IRepository<Test, long>>();
 
             _roomRepository = serviceProvider.GetRequiredService<IRepository<Room, long>>();
             _testGroupRepository = serviceProvider.GetRequiredService<ITestGroupRepository>();
-            _examinationRepository = serviceProvider.GetRequiredService<IRepository<Examination, long>>();
             _testRepository = serviceProvider.GetRequiredService<IRepository<Test, long>>();
 
-            var courseRepository = serviceProvider.GetRequiredService<IRepository<Course, long>>();
-            var levelRepository = serviceProvider.GetRequiredService<IRepository<Level, long>>();
-            var departmentRepository = serviceProvider.GetRequiredService<IRepository<Department, long>>();
-            var examinationLevelRepository = serviceProvider.GetRequiredService<IRepository<ExaminationLevel, long>>();
-            var examinationDepartmentRepository =
-                serviceProvider.GetRequiredService<IRepository<ExaminationDepartment, long>>();
-
-            _school = _schoolRepository.Save(new School
+            SchoolBuilder schoolBuilder = new SchoolBuilder(serviceProvider);
+            _school = schoolBuilder.CreateSchool();
+            
+            YearBuilder yearBuilder = new YearBuilder(_school, serviceProvider);
+            _year = yearBuilder.Build();
+            
+            SemesterBuilder semesterBuilder = new SemesterBuilder(_year, serviceProvider);
+            _semester = semesterBuilder.Build();
+            
+            _examination = new ExaminationBuilder(serviceProvider).Create(_semester, new ExaminationForm
             {
-                Name = "School name"
+                ExpectedStartDate = _semester.ExpectedStartDate.AddDays(2),
+                ExpectedEndDate = _semester.ExpectedEndDate.AddDays(20)
             });
 
-            var department = departmentRepository.Save(new Department {Name = "dept", School = _school});
-            var level = levelRepository.Save(new Level {Index = 0, Department = department});
-            _course = courseRepository.Save(new Course {Code = "125", Level = level});
+            _examinationLevelSpeciality = _dbContext.Set<ExaminationLevelSpeciality>()
+                .First(e => e.ExaminationLevel.ExaminationDepartment.Examination.Equals(_examination));
+
+            _examinationLevel = _examinationLevelSpeciality.ExaminationLevel;
+            _semesterCourse = _dbContext.Set<SemesterCourse>()
+                .First(e => e.SemesterLevel.Equals(_examinationLevel.SemesterLevel));
 
             _room0 = _roomRepository.Save(new Room
             {
@@ -84,32 +96,14 @@ namespace ServerAppTest.Controllers
                 Name = "ABC3"
             });
 
-            _examination = _examinationRepository.Save(new Examination
-            {
-                School = _school,
-                Name = "Exam name",
-                StartDate = DateTime.Now.AddMonths(1),
-                ExpectedEndDate = DateTime.Now.AddMonths(4)
-            });
-
-            var examinationDepartment = examinationDepartmentRepository.Save(new ExaminationDepartment
-            {
-                Department = department,
-                Examination = _examination
-            });
-
-            var examinationLevel = examinationLevelRepository.Save(new ExaminationLevel
-            {
-                ExaminationDepartment = examinationDepartment,
-                Level = level
-            });
+            
 
             _test = _testRepository.Save(
                 new Test
                 {
-                    ExaminationLevel = examinationLevel,
+                    ExaminationLevel = _examinationLevel,
                     Coefficient = 5,
-                    Course = _course,
+                    SemesterCourse = _semesterCourse,
                     UseAnonymity = false,
                     ExpectedStartDate = _examination.ExpectedStartDate.AddHours(1),
                     ExpectedEndDate = _examination.ExpectedEndDate.AddHours(3)

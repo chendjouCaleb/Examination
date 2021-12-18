@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Authorizers;
@@ -119,6 +120,8 @@ namespace Exam.Controllers.Periods
             DbContext.AddRange(yearTeachers);
             DbContext.SaveChanges();
 
+            Console.WriteLine("Year teachers: " + yearTeachers.Count);
+
             return yearTeachers;
         }
 
@@ -141,11 +144,9 @@ namespace Exam.Controllers.Periods
             Assert.RequireNonNull(teacher, nameof(teacher));
             Assert.RequireNonNull(yearDepartment, nameof(yearDepartment));
 
-            YearTeacher yearTeacher = DbContext.Set<YearTeacher>()
-                .FirstOrDefault(yt => yt.TeacherId == teacher.Id && yt.YearDepartmentId == yearDepartment.Id);
-            if (yearTeacher != null)
+            if (Contains(teacher, yearDepartment))
             {
-                return yearTeacher;
+                throw new DuplicateObjectException("DUPLICATE_YEAR_TEACHER");
             }
 
             if (!teacher.Department.Equals(yearDepartment.Department))
@@ -153,7 +154,7 @@ namespace Exam.Controllers.Periods
                 throw new IncompatibleEntityException(teacher, yearDepartment);
             }
             
-            yearTeacher = new YearTeacher
+            YearTeacher yearTeacher = new YearTeacher
             {
                 YearDepartment = yearDepartment,
                 Teacher = teacher

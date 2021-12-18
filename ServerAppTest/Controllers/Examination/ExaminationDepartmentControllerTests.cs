@@ -2,6 +2,7 @@
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Periods;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -11,12 +12,11 @@ namespace ServerAppTest.Controllers
     {
         private ExaminationDepartmentController _controller;
         private IRepository<Examination, long> _examinationRepository;
-        private IRepository<ExaminationDepartment, long> _examinationDepartmentRepository;
         private IRepository<School, long> _schoolRepository;
-        private IRepository<Department, long> _departmentRepository;
+        private IRepository<SemesterDepartment, long> _semesterDepartmentRepository;
 
         private School _school;
-        private Department _department;
+        private SemesterDepartment _semesterDepartment;
         private Examination _examination;
 
 
@@ -31,59 +31,47 @@ namespace ServerAppTest.Controllers
 
             _schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
             _examinationRepository = serviceProvider.GetRequiredService<IRepository<Examination, long>>();
-            _examinationDepartmentRepository =
-                serviceProvider.GetRequiredService<IRepository<ExaminationDepartment, long>>();
-            _departmentRepository = serviceProvider.GetRequiredService<IRepository<Department, long>>();
+            _semesterDepartmentRepository = serviceProvider.GetRequiredService<IRepository<SemesterDepartment, long>>();
 
             _school = _schoolRepository.Save(new School
             {
                 Name = "Org name"
             });
+            
+            SchoolBuilder builder = new SchoolBuilder(serviceProvider);
+
+            _school = builder.CreateSchool();
+            Year year = builder.CreateYear(_school);
+            Semester semester = builder.CreateSemester(year);
+
+            _semesterDepartment = _semesterDepartmentRepository.First(s => s.Semester.Equals(semester));
 
             _examination = _examinationRepository.Save(new Examination
             {
-                School = _school,
+                Semester = semester,
                 Name = "MATH-L3-2015/2016-S2",
                 ExpectedStartDate = DateTime.Now.AddMonths(1),
                 ExpectedEndDate = DateTime.Now.AddMonths(3)
-            });
-            _department = _departmentRepository.Save(new Department
-            {
-                School = _school,
-                Name = "MATH-L3-2015/2016-S2"
             });
         }
 
         [Test]
         public void Add()
         {
-            ExaminationDepartment examinationDepartment = _controller._Add(_examination, _department, true);
-
-            _examinationDepartmentRepository.Refresh(examinationDepartment);
+            ExaminationDepartment examinationDepartment = _controller._Add(_examination, _semesterDepartment);
 
             Assert.NotNull(examinationDepartment);
             Assert.AreEqual(examinationDepartment.Examination, _examination);
-            Assert.AreEqual(examinationDepartment.Department, _department);
+            Assert.AreEqual(examinationDepartment.SemesterDepartment, _semesterDepartment);
         }
 
         [Test]
         public void Check_If_Add_IsPureMethod()
         {
-            ExaminationDepartment examinationDepartment1 = _controller._Add(_examination, _department);
-            ExaminationDepartment examinationDepartment2 = _controller._Add(_examination, _department);
+            ExaminationDepartment examinationDepartment1 = _controller._Add(_examination, _semesterDepartment);
+            ExaminationDepartment examinationDepartment2 = _controller._Add(_examination, _semesterDepartment);
 
             Assert.AreEqual(examinationDepartment1, examinationDepartment2);
-        }
-
-
-        [Test]
-        public void Delete()
-        {
-            ExaminationDepartment examinationDepartment = _controller._Add(_examination, _department, true);
-            _controller.Delete(examinationDepartment);
-            _schoolRepository.Refresh(_school);
-
-            Assert.False(_examinationDepartmentRepository.Exists(examinationDepartment));
         }
     }
 }

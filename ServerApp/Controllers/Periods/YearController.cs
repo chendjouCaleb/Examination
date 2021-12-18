@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Authorizers;
@@ -20,10 +19,16 @@ namespace Exam.Controllers.Periods
     public class YearController : Controller
     {
         private DbContext _dbContext;
+        private YearTeacherController _yearTeacherController;
+        private YearStudentController _yearStudentController;
 
-        public YearController(DbContext dbContext)
+        public YearController(DbContext dbContext, 
+            YearStudentController yearStudentController,
+            YearTeacherController yearTeacherController)
         {
             _dbContext = dbContext;
+            _yearStudentController = yearStudentController;
+            _yearTeacherController = yearTeacherController;
         }
 
 
@@ -60,6 +65,21 @@ namespace Exam.Controllers.Periods
             Assert.RequireNonNull(school, nameof(school));
             Assert.RequireNonNull(form, nameof(form));
 
+            Year year = AddYear(school, form);
+
+            _CreateDepartmentYears(year);
+
+            _dbContext.SaveChanges();
+            
+            _yearTeacherController.AddTeachers(year);
+            _yearStudentController.AddStudents(year);
+            
+
+            return CreatedAtAction("Get", new {yearId = year.Id}, year);
+        }
+
+        public Year AddYear(School school, [FromBody] YearForm form)
+        {
             if (form.ExpectedStartDate >= form.ExpectedEndDate)
             {
                 throw new InvalidOperationException("START_DATE_IS_AFTER_END_DATE");
@@ -73,12 +93,8 @@ namespace Exam.Controllers.Periods
                 SchoolId = school.Id
             };
             _dbContext.Set<Year>().Add(year);
-
-            _CreateDepartmentYears(year);
-
             _dbContext.SaveChanges();
-
-            return CreatedAtAction("Get", new {yearId = year.Id}, year);
+            return year;
         }
 
         public IEnumerable<YearDepartment> _CreateDepartmentYears(Year year)

@@ -61,7 +61,7 @@ namespace Exam.Controllers
 
             List<Paper> papers = _paperRepository.Set
                 .Where(p => test.Equals(p.Test))
-                .OrderBy(p => p.ExaminationStudent.Student.FullName).ToList();
+                .OrderBy(p => p.ExaminationStudent.SemesterStudent.YearStudent.Student.FullName).ToList();
             
             List<TestGroup> testGroups = _testGroupRepository.Set
                 .Where(g => test.Equals(g.Test))

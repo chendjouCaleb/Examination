@@ -2,6 +2,7 @@
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using MathNet.Numerics.Statistics;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +12,11 @@ namespace Exam.Persistence.Repositories
     {
         TestStatistics GetStatistics(Test test);
 
-        Test Find(long courseId, long examinationLevelId);
+        Test Find(long semesterCourseId, long examinationLevelId);
 
-        Test Find(Course course, ExaminationLevel examinationLevel);
+        Test Find(SemesterCourse semesterCourse, ExaminationLevel examinationLevel);
 
-        bool Exists(Course course, ExaminationLevel examinationLevel);
+        bool Exists(SemesterCourse semesterCourse, ExaminationLevel examinationLevel);
 
         School GetSchool(Test test);
 
@@ -32,24 +33,24 @@ namespace Exam.Persistence.Repositories
         {
         }
         
-        public Test Find(long courseId, long examinationLevelId)
+        public Test Find(long semesterCourseId, long examinationLevelId)
         {
-            return Set.First(t => t.CourseId == courseId && t.ExaminationLevelId == examinationLevelId);
+            return Set.First(t => t.SemesterCourseId == semesterCourseId && t.ExaminationLevelId == examinationLevelId);
         }
 
-        public Test Find(Course course, ExaminationLevel examinationLevel)
+        public Test Find(SemesterCourse semesterCourse, ExaminationLevel examinationLevel)
         {
-            return Set.First(t => course.Equals(t.Course) && examinationLevel.Equals(t.ExaminationLevel));
+            return Set.First(t => semesterCourse.Equals(t.SemesterCourse) && examinationLevel.Equals(t.ExaminationLevel));
         }
         
-        public bool Exists(Course course, ExaminationLevel examinationLevel)
+        public bool Exists(SemesterCourse semesterCourse, ExaminationLevel examinationLevel)
         {
-            return Set.Any(t => course.Equals(t.Course) && examinationLevel.Equals(t.ExaminationLevel));
+            return Set.Any(t => semesterCourse.Equals(t.SemesterCourse) && examinationLevel.Equals(t.ExaminationLevel));
         }
 
         public School GetSchool(Test test)
         {
-            return context.Set<School>().First(s => s.Equals(test.Course.Level.Department.School));
+            return context.Set<School>().First(s => s.Equals(test.SemesterCourse.Course.Level.Department.School));
         }
 
         public TestStatistics Statistics(Test test)
@@ -69,14 +70,15 @@ namespace Exam.Persistence.Repositories
 
         public Department GetDepartment(Test test)
         {
-            return context.Set<Department>().First(s => s.Equals(test.Course.Level.Department));
+            return context.Set<Department>().First(s => s.Equals(test.SemesterCourse.Course.Level.Department));
         }
 
         public UserTest UserTest(Test test, string userId)
         {
             return new UserTest
             {
-                IsStudent = context.Set<Paper>().Any(s => userId == s.ExaminationStudent.Student.UserId
+                IsStudent = context.Set<Paper>()
+                    .Any(s => userId == s.ExaminationStudent.SemesterStudent.YearStudent.Student.UserId
                                                           && test.Equals(s.TestGroup.Test)),
 
                 IsCorrector = context.Set<TestGroupCorrector>()

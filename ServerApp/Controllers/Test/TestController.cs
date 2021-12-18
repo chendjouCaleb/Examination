@@ -7,6 +7,7 @@ using Exam.Authorizers;
 using Exam.Destructors;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Exam.Filters;
 using Exam.Infrastructure;
 using Exam.Loaders;
@@ -16,6 +17,7 @@ using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using ServerApp.Hubs;
 
 namespace Exam.Controllers
@@ -25,16 +27,19 @@ namespace Exam.Controllers
     {
         private ITestRepository _testRepository;
         private IServiceProvider _serviceProvider;
+        private DbContext _dbContext;
         private readonly IHubContext<TestHub, ITestHub> _testHub;
 
 
         public TestController(ITestRepository testRepository,
             IServiceProvider serviceProvider,
+            DbContext dbContext,
             IHubContext<TestHub, ITestHub> testHub)
         {
             _serviceProvider = serviceProvider;
             _testRepository = testRepository;
             _testHub = testHub;
+            _dbContext = dbContext;
         }
 
 
@@ -54,15 +59,13 @@ namespace Exam.Controllers
         }
 
         [HttpGet("find")]
-        public Test Find([FromQuery] long courseId, [FromQuery] long examinationLevelId)
+        public Test Find([FromQuery] long semesterCourseId, [FromQuery] long examinationLevelId)
         {
-            return _testRepository.First(t => t.CourseId == courseId && t.ExaminationLevelId == examinationLevelId);
+            return _testRepository
+                .First(t => t.SemesterCourseId == semesterCourseId && t.ExaminationLevelId == examinationLevelId);
         }
 
-        public Test Find(Course course, ExaminationLevel examinationLevel)
-        {
-            return _testRepository.First(t => course.Equals(t.Course) && examinationLevel.Equals(t.ExaminationLevel));
-        }
+       
 
         void _Update(Test test)
         {
@@ -78,6 +81,7 @@ namespace Exam.Controllers
         [HttpGet]
         public IEnumerable<Test> List(
             [FromQuery] long? courseId,
+            [FromQuery] long? semesterCourseId,
             [FromQuery] long? examinationLevelId,
             [FromQuery] long? examinationDepartmentId,
             [FromQuery] long? examinationId,
@@ -91,7 +95,12 @@ namespace Exam.Controllers
 
             if (courseId != null)
             {
-                tests = tests.Where(t => t.CourseId == courseId);
+                tests = tests.Where(t => t.SemesterCourse.CourseId == courseId);
+            }
+            
+            if (semesterCourseId != null)
+            {
+                tests = tests.Where(t => t.SemesterCourseId == semesterCourseId);
             }
 
             if (examinationLevelId != null)
@@ -128,19 +137,19 @@ namespace Exam.Controllers
 
         [HttpPost]
         [ValidModel]
-        [RequireQueryParameters(new[] {"courseId", "examinationLevelId"})]
-        [LoadCourse(Source = ParameterSource.Query, SchoolItemName = "school")]
+        [RequireQueryParameters(new[] {"semesterCourseId", "examinationLevelId"})]
+        [LoadSemesterCourse(Source = ParameterSource.Query, SchoolItemName = "school")]
         [LoadExaminationLevel(Source = ParameterSource.Query, ExaminationItemName = "examination")]
         [IsPlanner]
         [IsNotFinished(ItemName = "examination")]
         public CreatedAtActionResult Add(
-            Course course,
+            SemesterCourse semesterCourse,
             ExaminationLevel examinationLevel,
             [FromBody] TestForm form,
             Planner planner)
         {
             var builder = new TestBuilder(_serviceProvider);
-            Test test = builder.Add(course, examinationLevel, form, planner);
+            Test test = builder.Add(semesterCourse, examinationLevel, form, planner);
             _testHub.Clients?.All.TestCreated(test);
             return CreatedAtAction("Find", new {test.Id}, test);
         }
@@ -151,41 +160,41 @@ namespace Exam.Controllers
         /// Pour des raisons de performances, le test de chevauchement n'est pas fait pas le serveur.
         /// Ce soin est laissé à l'application cliente.
         /// </summary>
-        /// <param name="course">Le cours du test.</param>
+        /// <param name="semesterCourse">Le cours du test.</param>
         /// <param name="examinationLevel"> Le niveau de l'examen.</param> 
         /// <param name="form">Les informations du test.</param>
         /// <param name="planner">Le planificateur qui ajoute le test.</param>
         /// <returns>Le test nouvellement crée</returns>
         /// <exception cref="IncompatibleEntityException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
-        public Test _Add(Course course, ExaminationLevel examinationLevel,
+        public Test _Add(SemesterCourse semesterCourse, ExaminationLevel examinationLevel,
             TestForm form,
             Planner planner)
         {
-            Assert.RequireNonNull(course, nameof(course));
+            Assert.RequireNonNull(semesterCourse, nameof(semesterCourse));
             Assert.RequireNonNull(examinationLevel, nameof(examinationLevel));
             Assert.RequireNonNull(form, nameof(form));
             Assert.RequireNonNull(planner, nameof(planner));
 
-            if (examinationLevel.LevelId != course.LevelId)
+            if (!examinationLevel.SemesterLevel.Equals(semesterCourse.SemesterLevel))
             {
-                throw new IncompatibleEntityException(examinationLevel, course);
+                throw new IncompatibleEntityException(examinationLevel, semesterCourse);
             }
 
-            if (_testRepository.Exists(course, examinationLevel))
+            if (Contains(semesterCourse, examinationLevel))
             {
-                throw new InvalidOperationException("{test.constraints.uniqueCourse}");
+                throw new DuplicateObjectException("DUPLICATE_TEST");
             }
 
             Test test = new Test
             {
                 RegisterUserId = planner.UserId,
                 ExaminationLevel = examinationLevel,
-                Course = course,
-                Coefficient = form.Coefficient != 0 ? form.Coefficient : course.Coefficient,
-                Radical = form.Radical != 0 ? form.Radical : course.Radical,
+                SemesterCourse = semesterCourse,
+                Coefficient = form.Coefficient != 0 ? form.Coefficient : semesterCourse.Coefficient,
+                Radical = form.Radical != 0 ? form.Radical : semesterCourse.Radical,
                 UseAnonymity = form.UseAnonymity,
-                IsGeneral = course.IsGeneral,
+                IsGeneral = semesterCourse.IsGeneral,
                 ExpectedStartDate = form.ExpectedStartDate,
                 ExpectedEndDate = form.ExpectedEndDate
             };
@@ -405,6 +414,19 @@ namespace Exam.Controllers
             destructor.Destroy(test);
             _testHub.Clients?.All.TestDeleted(test);
             return NoContent();
+        }
+
+        public Test Find(SemesterCourse semesterCourse, ExaminationLevel examinationLevel)
+        {
+            return _dbContext.Set<Test>()
+                .FirstOrDefault(t => 
+                    t.SemesterCourseId == semesterCourse.Id && examinationLevel.Id == t.ExaminationLevelId);
+        }
+        
+        public bool Contains(SemesterCourse semesterCourse, ExaminationLevel examinationLevel)
+        {
+            return _dbContext.Set<Test>()
+                .Any(t => t.SemesterCourseId == semesterCourse.Id && examinationLevel.Id == t.ExaminationLevelId);
         }
     }
 }

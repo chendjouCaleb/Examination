@@ -3,6 +3,7 @@ using System.Linq;
 using Exam.Controllers;
 using Exam.Destructors;
 using Exam.Entities;
+using Exam.Entities.Periods;
 using Exam.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,9 +38,11 @@ namespace ServerAppTest.Controllers
         {
             SchoolBuilder schoolBuilder = new SchoolBuilder(_serviceProvider);
             School school = schoolBuilder.CreateSchool();
+            Year year = schoolBuilder.CreateYear(school);
+            Semester semester = schoolBuilder.CreateSemester(year);
 
             ExaminationBuilder examinationBuilder = new ExaminationBuilder(_serviceProvider);
-            Examination examination = examinationBuilder.Create(school, _model);
+            Examination examination = examinationBuilder.Create(semester, _model);
 
             ExaminationDestructor examinationDestructor = new ExaminationDestructor(_serviceProvider);
             examinationDestructor.Destroy(examination);
@@ -52,7 +55,7 @@ namespace ServerAppTest.Controllers
             CheckStudents(examination);
 
             Console.WriteLine($"{examinationDestructor.Progression}: {examinationDestructor.Total}");
-            Assert.AreEqual(examinationBuilder.Examination.School, school);
+            Assert.AreEqual(examinationBuilder.Examination.Semester, semester);
             Assert.AreEqual(2 + 4 + 4 + 8 + 60 + 1, examinationDestructor.Total);
             Assert.AreEqual(examinationDestructor.Total, examinationDestructor.Progression);
         }

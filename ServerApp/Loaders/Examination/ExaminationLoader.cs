@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Exam.Entities;
 using Exam.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Loaders
 {
@@ -26,8 +28,9 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<Examination, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<Examination, long>>();
+            DbContext dbContext = context.HttpContext.RequestServices.GetRequiredService<DbContext>();
+            var repository = dbContext.Set<Examination>();
+                
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
@@ -39,7 +42,8 @@ namespace Exam.Loaders
 
             if (!string.IsNullOrWhiteSpace(SchoolItemName))
             {
-                context.HttpContext.Items[SchoolItemName] = examination.School;
+                context.HttpContext.Items[SchoolItemName] = dbContext.Set<School>()
+                    .First(s => s.Equals(examination.Semester.Year.School));
             }
         }
     }

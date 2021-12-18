@@ -1,6 +1,7 @@
 ﻿using System;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Periods;
 using Exam.Models;
 using NUnit.Framework;
 
@@ -32,9 +33,12 @@ namespace ServerAppTest.Controllers
         {
             SchoolBuilder schoolBuilder = new SchoolBuilder(_serviceProvider);
             School school = schoolBuilder.CreateSchool();
+            Year year = new YearBuilder(school, _serviceProvider).Build();
+            Semester semester = new SemesterBuilder(year, _serviceProvider).Build();
+            
             
             ExaminationBuilder examinationBuilder = new ExaminationBuilder(_serviceProvider);
-            examinationBuilder.Create(school, _model);
+            examinationBuilder.Create(semester, _model);
 
             checkDepartments(examinationBuilder);
             checkLevels(examinationBuilder);
@@ -42,8 +46,9 @@ namespace ServerAppTest.Controllers
             checkLevelSpecialities(examinationBuilder);
             checkStudents(examinationBuilder);
             
-            Assert.AreEqual(examinationBuilder.Examination.School, school);
-            Assert.AreEqual(2+4+4+8+60, examinationBuilder.Total);
+            Assert.AreEqual(examinationBuilder.Examination.Semester, semester);
+            Assert.AreEqual(2+4+4+8+60+1, examinationBuilder.Total);
+            Console.WriteLine("Progression: " + examinationBuilder.Progression);
             Assert.True( 0.99 <= examinationBuilder.Progression && examinationBuilder.Progression <= 1);
         }
 
@@ -88,7 +93,7 @@ namespace ServerAppTest.Controllers
             {
                 Assert.AreEqual(builder.Examination, examinationStudent.ExaminationLevel.ExaminationDepartment.Examination);
                 Assert.NotNull(examinationStudent.ExaminationLevel);    
-                if (examinationStudent.Student.LevelSpeciality == null)
+                if (examinationStudent.SemesterStudent.SemesterLevelSpeciality == null)
                 {
                     Assert.Null(examinationStudent.ExaminationLevelSpeciality);
                 }

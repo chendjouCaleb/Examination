@@ -30,5 +30,13 @@
     "radical": 20,
     "coefficient": 7,
     "isGeneral":true
+  },
+  {
+    "name": "Philosophie",
+    "description": "Apprendre à réflechir à ces idiots.",
+    "code": "265",
+    "radical": 10,
+    "coefficient": 5,
+    "isGeneral":true
   }
 ]

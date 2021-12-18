@@ -2,7 +2,7 @@
 using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
-using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using MathNet.Numerics.Statistics;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +12,7 @@ namespace Exam.Persistence.Repositories
     {
         PapersStatistics GetStatistics(TestLevelSpeciality testLevelSpeciality);
         void DeleteAll(Test test);
-        void DeleteAll(CourseLevelSpeciality courseLevelSpeciality);
+        void DeleteAll(SemesterCourseLevelSpeciality semesterCourseLevelSpeciality);
     }
 
     public class TestLevelSpecialityRepository : Repository<TestLevelSpeciality, long>,
@@ -71,10 +71,10 @@ namespace Exam.Persistence.Repositories
             _dataContext.SaveChanges();
         }
 
-        public void DeleteAll(CourseLevelSpeciality courseLevelSpeciality)
+        public void DeleteAll(SemesterCourseLevelSpeciality semesterCourseLevelSpeciality)
         {
             _dataContext.Set<TestLevelSpeciality>().RemoveRange(
-                Set.Where(m => m.CourseLevelSpecialityId == courseLevelSpeciality.Id)
+                Set.Where(m => m.SemesterCourseLevelSpecialityId == semesterCourseLevelSpeciality.Id)
             );
             _dataContext.SaveChanges();
         }

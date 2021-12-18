@@ -1,10 +1,11 @@
 ﻿using System;
-using Everest.AspNetStartup.Exceptions;
+using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
-using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Exam.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
@@ -14,14 +15,13 @@ namespace ServerAppTest.Controllers
     public class TestGroupCorrectorControllerTests
     {
         private TestGroupCorrectorController _controller;
+        private DbContext _dbContext;
         private IRepository<TestGroup, long> _testGroupRepository;
         private IRepository<Test, long> _testRepository;
         private IRepository<Corrector, long> _correctorRepository;
         private IRepository<TestGroupCorrector, long> _testGroupCorrectorRepository;
 
         private IRepository<Room, long> _roomRepository;
-        private IRepository<School, long> _schoolRepository;
-        private IRepository<Examination, long> _examinationRepository;
 
         private Corrector _corrector;
         private Room _room;
@@ -44,9 +44,7 @@ namespace ServerAppTest.Controllers
 
 
             _controller = serviceProvider.GetRequiredService<TestGroupCorrectorController>();
-
-
-            _schoolRepository = serviceProvider.GetRequiredService<IRepository<School, long>>();
+            
             _correctorRepository = serviceProvider.GetRequiredService<IRepository<Corrector, long>>();
             _testRepository = serviceProvider.GetRequiredService<IRepository<Test, long>>();
 
@@ -55,56 +53,35 @@ namespace ServerAppTest.Controllers
 
             _testGroupCorrectorRepository =
                 serviceProvider.GetRequiredService<IRepository<TestGroupCorrector, long>>();
-            _examinationRepository = serviceProvider.GetRequiredService<IRepository<Examination, long>>();
+            
             _testRepository = serviceProvider.GetRequiredService<IRepository<Test, long>>();
-
-            var courseRepository = serviceProvider.GetRequiredService<IRepository<Course, long>>();
-            var levelRepository = serviceProvider.GetRequiredService<IRepository<Level, long>>();
-            var departmentRepository = serviceProvider.GetRequiredService<IRepository<Department, long>>();
-            var examinationLevelRepository = serviceProvider.GetRequiredService<IRepository<ExaminationLevel, long>>();
-            var examinationDepartmentRepository =
-                serviceProvider.GetRequiredService<IRepository<ExaminationDepartment, long>>();
+            
+            _dbContext = serviceProvider.GetRequiredService<DbContext>();
 
 
-            _school = _schoolRepository.Save(new School
-            {
-                Name = "Org name"
-            });
-
-            var department = departmentRepository.Save(new Department {Name = "dept", School = _school});
-            var level = levelRepository.Save(new Level {Index = 0, Department = department});
-            var course = courseRepository.Save(new Course {Code = "125", Level = level});
-
+            var builder = new TestExaminationBuilder(serviceProvider);
+            _examination = builder.Build();
+            _school = builder.School;
+            
             _room = _roomRepository.Save(new Room
             {
                 School = _school,
                 Name = "ABC"
             });
 
-            _examination = _examinationRepository.Save(new Examination
-            {
-                School = _school,
-                Name = "Exam name",
-                StartDate = DateTime.Now.AddMonths(1),
-                ExpectedEndDate = DateTime.Now.AddMonths(4)
-            });
+            ExaminationLevel examinationLevel = _dbContext.Set<ExaminationLevel>()
+                .First(e => e.ExaminationDepartment.Examination.Equals(_examination));
 
-            var examinationDepartment = examinationDepartmentRepository.Save(new ExaminationDepartment
-            {
-                Department = department,
-                Examination = _examination
-            });
+            SemesterCourse semesterCourse = _dbContext.Set<SemesterCourse>()
+                .First(s => s.SemesterLevel.Equals(examinationLevel.SemesterLevel));
 
-            var examinationLevel = examinationLevelRepository.Save(new ExaminationLevel
-            {
-                Level = level,
-                ExaminationDepartment = examinationDepartment
-            });
+            Department department = _dbContext.Set<Department>()
+                .First(s => s.School.Equals(_school));
 
             _test = _testRepository.Save(
                 new Test
                 {
-                    Course = course,
+                    SemesterCourse = semesterCourse,
                     Coefficient = 5,
                     ExaminationLevel = examinationLevel,
                     UseAnonymity = false,

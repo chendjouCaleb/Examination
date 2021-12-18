@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using Exam.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,43 +26,27 @@ namespace Exam.Controllers
         }
 
 
-        public Test Test { get; private set; }
-        public List<TestLevelSpeciality> TestLevelSpecialities { get; private set; } = new List<TestLevelSpeciality>();
-
-
         public Test Add(
-            Course course,
+            SemesterCourse semesterCourse,
             ExaminationLevel examinationLevel,
             TestForm form,
             Planner planner)
         {
-            Test = _testController._Add(course, examinationLevel, form, planner);
+            Test test = _testController._Add(semesterCourse, examinationLevel, form, planner);
+            _dbContext.Set<Test>().Add(test);
 
-            if (!course.IsGeneral)
+            var testLevelSpecialities = _testLevelSpecialityController._AddAll(test);
+            _dbContext.AddRange(testLevelSpecialities);
+
+            if (semesterCourse.Course.MultipleScore)
             {
-                TestLevelSpecialities = _dbContext.Set<CourseLevelSpeciality>()
-                    .Where(c => c.Course.Equals(course)).ToList()
-                    .Select(c =>
-                        _testLevelSpecialityController._Add(Test, c,
-                            _dbContext.Set<ExaminationLevelSpeciality>()
-                                .First(l => l.LevelSpecialityId == c.LevelSpecialityId &&
-                                            l.ExaminationLevel.Equals(examinationLevel)))
-                    ).ToList();
-            }
-
-            _dbContext.Set<Test>().Add(Test);
-
-            if (course.MultipleScore)
-            {
-                var testScores = _testScoreController.Copy(Test, course);
+                var testScores = _testScoreController.Copy(test, semesterCourse.Course);
                 _dbContext.Set<TestScore>().AddRange(testScores);
             }
-            
-            _dbContext.Set<TestLevelSpeciality>().AddRange(TestLevelSpecialities);
 
             _dbContext.SaveChanges();
 
-            return Test;
+            return test;
         }
     }
 }

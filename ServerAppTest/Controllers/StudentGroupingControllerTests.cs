@@ -5,6 +5,7 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
 using Exam.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
@@ -69,21 +70,14 @@ namespace ServerAppTest.Controllers
 
             _paperRepository.DeleteAll();
             _papers.Clear();
-            _school = _schoolRepository.Save(new School
-            {
-                Name = "Org name"
-            });
+            DbContext _dbContext = serviceProvider.GetRequiredService<DbContext>();
 
-            _examination = _examinationRepository.Save(new Examination
-            {
-                School = _school,
-                Name = "Exam name",
-                ExpectedStartDate = DateTime.Now.AddMonths(1),
-                ExpectedEndDate = DateTime.Now.AddMonths(4)
-            });
+            var builder = new TestExaminationBuilder(serviceProvider);
+            _examination = builder.Build();
+            _school = builder.School;
 
-            _examinationLevel = examinationLevelRepository.Save(new ExaminationLevel
-             ());
+            ExaminationLevel examinationLevel = _dbContext.Set<ExaminationLevel>()
+                .First(e => e.ExaminationDepartment.Examination.Equals(_examination));
 
             
             _test = _testRepository.Save(new Test
@@ -112,14 +106,12 @@ namespace ServerAppTest.Controllers
                 Room = _roomRepository.Save(new Room {School = _school, Capacity = 5})
             });
 
+            var examinationStudents = _dbContext.Set<ExaminationStudent>()
+                .Where(s => s.ExaminationLevel.Equals(examinationLevel)).ToList();
 
             for (int i = 0; i < 10; i++)
             {
-                Student student = _studentRepository.Save(new Student {FullName = i + "Name"});
-                ExaminationStudent examinationStudent = examinationStudentRepository.Save(new ExaminationStudent
-                {
-                    Student = student
-                });
+                ExaminationStudent examinationStudent = examinationStudents[i];
                 var paper = _paperRepository.Save(new Paper
                 {
                     ExaminationStudent = examinationStudent,
@@ -147,9 +139,11 @@ namespace ServerAppTest.Controllers
         {
             _controller.Group(_test);
 
-            List<Paper> papers = _papers.OrderBy(u => u.ExaminationStudent.Student.FullName).ToList();
-            papers.ForEach(s => _paperRepository.Refresh(s));
+            List<Paper> papers = _papers
+                .OrderBy(u => u.ExaminationStudent.SemesterStudent.YearStudent.Student.FullName)
+                .ToList();
             
+            papers.ForEach(s => _paperRepository.Refresh(s));
 
             for (int i = 0; i < 4; i++)
             {

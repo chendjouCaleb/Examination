@@ -1,31 +1,29 @@
 ﻿using System;
+using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Entities.Periods;
+using Exam.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Assert = NUnit.Framework.Assert;
 
 namespace ServerAppTest.Controllers
 {
     public class ExaminationStudentControllerTests
     {
         private ExaminationStudentController _controller;
-        private IRepository<ExaminationDepartment, long> _examinationDepartmentRepository;
-        private IRepository<ExaminationSpeciality, long> _examinationSpecialityRepository;
-        private IRepository<ExaminationLevel, long> _examinationLevelRepository;
-        private IRepository<ExaminationLevelSpeciality, long> _examinationLevelSpecialityRepository;
         private IRepository<ExaminationStudent, long> _examinationStudentRepository;
-        private IRepository<Department, long> _departmentRepository;
-        private IRepository<Speciality, long> _specialityRepository;
-        private IRepository<LevelSpeciality, long> _levelSpecialityRepository;
-        private IRepository<Level, long> _levelRepository;
-        private IRepository<Student, long> _studentRepository;
+        private DbContext _dbContext;
 
-        private Department _department;
-        private Speciality _speciality;
-        private Level _level;
-        private LevelSpeciality _levelSpeciality;
-        private Student _student;
+        private SemesterDepartment _semesterDepartment;
+        private SemesterSpeciality _semesterSpeciality;
+        private SemesterLevel _semesterLevel;
+        private SemesterLevelSpeciality _semesterLevelSpeciality;
+        private SemesterStudent _semesterStudent;
+
         private ExaminationDepartment _examinationDepartment;
         private ExaminationLevel _examinationLevel;
         private ExaminationSpeciality _examinationSpeciality;
@@ -40,101 +38,62 @@ namespace ServerAppTest.Controllers
 
 
             _controller = services.GetRequiredService<ExaminationStudentController>();
-
-            _departmentRepository = services.GetRequiredService<IRepository<Department, long>>();
-            _levelRepository = services.GetRequiredService<IRepository<Level, long>>();
-            _specialityRepository = services.GetRequiredService<IRepository<Speciality, long>>();
-            _levelSpecialityRepository = services.GetRequiredService<IRepository<LevelSpeciality, long>>();
-            _studentRepository = services.GetRequiredService<IRepository<Student, long>>();
-
-
-            _examinationDepartmentRepository = services.GetRequiredService<IRepository<ExaminationDepartment, long>>();
-            _examinationSpecialityRepository = services.GetRequiredService<IRepository<ExaminationSpeciality, long>>();
-            _examinationLevelRepository = services.GetRequiredService<IRepository<ExaminationLevel, long>>();
             _examinationStudentRepository = services.GetRequiredService<IRepository<ExaminationStudent, long>>();
+            _dbContext = services.GetRequiredService<DbContext>();
 
-            _examinationLevelSpecialityRepository =
-                services.GetRequiredService<IRepository<ExaminationLevelSpeciality, long>>();
+            SchoolBuilder builder = new SchoolBuilder(services);
+            School school = builder.CreateSchool();
+            Year year = builder.CreateYear(school);
+            Semester semester = builder.CreateSemester(year);
+            Examination examination = builder.CreateSimpleExamination(semester);
 
-            _department = _departmentRepository.Save(new Department
-            {
-                Name = "Org name"
-            });
+            builder.AddYearStudents(year);
+            builder.AddSemesterStudents(semester);
 
-            _speciality = _specialityRepository.Save(new Speciality
-            {
-                Department = _department
-            });
+            _semesterDepartment = _dbContext.Set<SemesterDepartment>().First(s => s.Semester.Equals(semester));
+            _semesterLevel = _dbContext.Set<SemesterLevel>()
+                .First(s => s.SemesterDepartment.Equals(_semesterDepartment));
 
-            _level = _levelRepository.Save(new Level
-            {
-                Department = _department
-            });
+            _semesterSpeciality = _dbContext.Set<SemesterSpeciality>()
+                .First(s => s.SemesterDepartment.Equals(_semesterDepartment));
 
-            _levelSpeciality = _levelSpecialityRepository.Save(new LevelSpeciality
-            {
-                Level = _level,
-                Speciality = _speciality
-            });
+            _semesterLevelSpeciality = _dbContext.Set<SemesterLevelSpeciality>()
+                .First(s => s.SemesterLevel.Equals(_semesterLevel) && s.SemesterSpeciality.Equals(_semesterSpeciality));
 
-            _student = _studentRepository.Save(new Student
-            {
-                Level = _level,
-                LevelSpeciality = _levelSpeciality,
-                FullName = "Chendjou Caleb",
-                RegistrationId = "15T2541"
-            });
 
-            _examinationDepartment = _examinationDepartmentRepository.Save(new ExaminationDepartment
-            {
-                Department = _department
-            });
+            _examinationDepartment = builder.CreateSimpleExaminationDepartment(examination, _semesterDepartment);
 
-            _examinationSpeciality = _examinationSpecialityRepository.Save(new ExaminationSpeciality
-            {
-                ExaminationDepartment = _examinationDepartment,
-                Speciality = _speciality
-            });
+            _examinationSpeciality =
+                builder.CreateSimpleExaminationSpeciality(_examinationDepartment, _semesterSpeciality);
+            _examinationLevel = builder.CreateSimpleExaminationLevel(_examinationDepartment, _semesterLevel);
 
-            _examinationLevel = _examinationLevelRepository.Save(new ExaminationLevel
-            {
-                ExaminationDepartment = _examinationDepartment,
-                Level = _level
-            });
-
-            _examinationLevelSpeciality = _examinationLevelSpecialityRepository.Save(new ExaminationLevelSpeciality
-            {
-                ExaminationLevel = _examinationLevel,
-                ExaminationSpeciality = _examinationSpeciality,
-                LevelSpeciality = _levelSpeciality
-            });
+            _semesterStudent = _dbContext.Set<SemesterStudent>().First(s => s.SemesterLevel.Equals(_semesterLevel));
         }
 
         [Test]
         public void Add()
         {
             ExaminationStudent examinationStudent =
-                _controller._Add(_student, _examinationLevel, _examinationLevelSpeciality);
+                _controller._Add(_semesterStudent, _examinationLevel, _examinationLevelSpeciality);
 
-            _examinationStudentRepository.Refresh(examinationStudent);
+            _examinationStudentRepository.Save(examinationStudent);
 
             Assert.NotNull(examinationStudent);
             Assert.AreEqual(examinationStudent.ExaminationLevel, _examinationLevel);
             Assert.AreEqual(examinationStudent.ExaminationLevelSpeciality, _examinationLevelSpeciality);
 
-            Assert.AreEqual(examinationStudent.Student, _student);
+            Assert.AreEqual(examinationStudent.SemesterStudent, _semesterStudent);
         }
 
         [Test]
         public void Check_If_Add_IsPureMethod_ForExaminationLevel()
         {
-            ExaminationStudent examinationStudent1 =
-                _controller._Add(_student, _examinationLevel, _examinationLevelSpeciality);
-            ExaminationStudent examinationStudent2 =
-                _controller._Add(_student, _examinationLevel, _examinationLevelSpeciality);
+            ExaminationStudent examinationStudent = _controller._Add(_semesterStudent, _examinationLevel);
+            _examinationStudentRepository.Save(examinationStudent);
 
-
-            Assert.AreEqual(examinationStudent1, examinationStudent2);
+            Assert.Throws<DuplicateObjectException>(
+                () => _controller._Add(_semesterStudent, _examinationLevel)
+            );
         }
 
 
@@ -142,7 +101,7 @@ namespace ServerAppTest.Controllers
         public void Delete()
         {
             ExaminationStudent examinationStudent =
-                _controller._Add(_student, _examinationLevel, _examinationLevelSpeciality);
+                _controller._Add(_semesterStudent, _examinationLevel, _examinationLevelSpeciality);
             _examinationStudentRepository.Save(examinationStudent);
 
             _controller.Delete(examinationStudent);

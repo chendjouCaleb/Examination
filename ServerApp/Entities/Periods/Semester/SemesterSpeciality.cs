@@ -20,5 +20,8 @@ namespace Exam.Entities.Periods
 
         [JsonIgnore]
         public virtual List<SemesterLevelSpeciality> SemesterLevelSpecialities { get; set; }
+        
+        [JsonIgnore]
+        public virtual List<ExaminationSpeciality> ExaminationSpecialities { get; set; }
     }
 }

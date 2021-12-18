@@ -151,7 +151,7 @@ namespace Exam.Controllers.Periods
 
             if (Contains(yearTeacher, semesterDepartment))
             {
-                throw new DuplicateObjectException("DUPLICATE_ENTITY");
+                throw new DuplicateObjectException("DUPLICATE_SEMESTER_TEACHER");
             }
 
             if (!yearTeacher.YearDepartment.Equals(semesterDepartment.YearDepartment))

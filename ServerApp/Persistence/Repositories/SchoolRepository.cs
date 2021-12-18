@@ -31,13 +31,13 @@ namespace Exam.Persistence.Repositories
                 RoomCount = context.Set<Room>().Count(r => school.Equals(r.School)),
                 Capacity = context.Set<Room>().Where(r => school.Equals(r.School))
                     .Select(r => (int) r.Capacity).Sum(),
-                ExaminationCount = context.Set<Examination>().Count(e => school.Equals(e.School)),
+                ExaminationCount = context.Set<Examination>().Count(e => school.Equals(e.Semester.Year.School)),
                 WaitingExaminationCount = context.Set<Examination>()
-                    .Count(e => school.Equals(e.School) && e.StartDate == null),
+                    .Count(e => school.Equals(e.Semester.Year.School) && e.StartDate == null),
                 ProgressExaminationCount = context.Set<Examination>()
-                    .Count(e => school.Equals(e.School) && e.StartDate != null && e.EndDate == null),
+                    .Count(e => school.Equals(e.Semester.Year.School) && e.StartDate != null && e.EndDate == null),
                 ClosedExaminationCount = context.Set<Examination>()
-                    .Count(e => school.Equals(e.School) && e.StartDate != null && e.EndDate != null),
+                    .Count(e => school.Equals(e.Semester.Year.School) && e.StartDate != null && e.EndDate != null),
             };
         }
     }

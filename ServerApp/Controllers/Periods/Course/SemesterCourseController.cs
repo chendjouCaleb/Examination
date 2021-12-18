@@ -269,7 +269,8 @@ namespace Exam.Controllers.Periods
             {
                 Coefficient = course.Coefficient,
                 IsGeneral = course.IsGeneral,
-                PracticalWork = course.PracticalWork
+                PracticalWork = course.PracticalWork,
+                Radical = course.Radical
             };
 
             return _AddCourse(form, course, semesterLevel);

@@ -87,6 +87,8 @@ namespace Exam.Controllers.Periods
                 .ToList();
 
             var yearStudents = _AddStudents(students, yearLevels, yearLevelSpecialities);
+            
+            _dbContext.AddRange(yearStudents);
             _dbContext.SaveChanges();
             return yearStudents;
         }

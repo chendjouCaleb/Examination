@@ -51,13 +51,14 @@ namespace Exam.Loaders
             if (!string.IsNullOrWhiteSpace(DepartmentItemName))
             {
                 context.HttpContext.Items[DepartmentItemName] =
-                    dbContext.Set<Department>().First(d => d.Id == testScore.Test.Course.Level.DepartmentId);
+                    dbContext.Set<Department>()
+                        .First(d => d.Id == testScore.Test.SemesterCourse.Course.Level.DepartmentId);
             }
 
             if (!string.IsNullOrWhiteSpace(SchoolItemName))
             {
                 context.HttpContext.Items[SchoolItemName] =
-                    dbContext.Set<School>().First(d => d.Id == testScore.Test.Course.Level.DepartmentId);
+                    dbContext.Set<School>().First(d => d.Id == testScore.Test.SemesterCourse.Course.Level.DepartmentId);
             }
         }
     }

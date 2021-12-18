@@ -21,9 +21,5 @@ namespace Exam.Entities.Courses
         
         [JsonIgnore]
         public virtual List<SemesterCourseLevelSpeciality> SemesterCourseLevelSpecialities { get; set; }
-
-
-        [JsonIgnore]
-        public virtual List<TestLevelSpeciality> TestLevelSpecialities { get; set; }
     }
 }

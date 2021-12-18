@@ -1,4 +1,5 @@
-﻿using Everest.AspNetStartup.Binding;
+﻿using System.Collections.Generic;
+using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Exam.Entities.Courses;
 using Microsoft.AspNetCore.Mvc;
@@ -21,5 +22,8 @@ namespace Exam.Entities.Periods
         [JsonIgnore]
         public virtual CourseLevelSpeciality CourseLevelSpeciality { get; set; }
         public long? CourseLevelSpecialityId { get; set; }
+        
+        [JsonIgnore]
+        public virtual List<TestLevelSpeciality> TestLevelSpecialities { get; set; }
     }
 }

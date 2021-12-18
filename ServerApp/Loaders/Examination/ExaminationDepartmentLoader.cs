@@ -48,7 +48,7 @@ namespace Exam.Loaders
                     context.HttpContext.RequestServices.GetRequiredService<IRepository<School, long>>();
 
                 context.HttpContext.Items[SchoolItemName] = schoolRepository.First(s =>
-                    s.Id == examinationDepartment.Department.SchoolId);
+                    s.Id == examinationDepartment.SemesterDepartment.YearDepartment.Department.SchoolId);
             }
             
             if (!string.IsNullOrWhiteSpace(DepartmentItemName))
@@ -57,7 +57,7 @@ namespace Exam.Loaders
                     context.HttpContext.RequestServices.GetRequiredService<IRepository<Department, long>>();
 
                 context.HttpContext.Items[DepartmentItemName] = departmentRepository.First(s =>
-                    s.Id == examinationDepartment.DepartmentId);
+                    s.Id == examinationDepartment.SemesterDepartment.YearDepartment.DepartmentId);
             }
             
             if (!string.IsNullOrWhiteSpace(ExaminationItemName))

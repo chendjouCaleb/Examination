@@ -19,10 +19,26 @@ namespace Exam.Controllers.Periods
     public class SemesterController : Controller
     {
         private DbContext _dbContext;
+        private SemesterTeacherController _semesterTeacherController;
+        private SemesterStudentController _semesterStudentController;
+        private SemesterCourseController _semesterCourseController;
+        private SemesterCourseTeacherController _semesterCourseTeacherController;
+        private SemesterCourseLevelSpecialityController _semesterCourseLevelSpecialityController;
 
-        public SemesterController(DbContext dbContext)
+
+        public SemesterController(DbContext dbContext, 
+            SemesterTeacherController semesterTeacherController, 
+            SemesterStudentController semesterStudentController, 
+            SemesterCourseController semesterCourseController, 
+            SemesterCourseTeacherController semesterCourseTeacherController, 
+            SemesterCourseLevelSpecialityController semesterCourseLevelSpecialityController)
         {
             _dbContext = dbContext;
+            _semesterTeacherController = semesterTeacherController;
+            _semesterStudentController = semesterStudentController;
+            _semesterCourseController = semesterCourseController;
+            _semesterCourseTeacherController = semesterCourseTeacherController;
+            _semesterCourseLevelSpecialityController = semesterCourseLevelSpecialityController;
         }
 
 
@@ -63,31 +79,45 @@ namespace Exam.Controllers.Periods
             Assert.RequireNonNull(year, nameof(year));
             Assert.RequireNonNull(form, nameof(form));
 
+
+
+            Semester semester = AddSemester(year, form);
+
+            _CreateDepartmentSemesters(semester);
+            _dbContext.SaveChanges();
+
+            _semesterStudentController.AddStudents(semester);
+            _semesterTeacherController.AddTeachers(semester);
+            _semesterCourseController.AddAll(semester);
+            _semesterCourseTeacherController.AddAll(semester);
+            _semesterCourseLevelSpecialityController.AddAll(semester);
+
+            return CreatedAtAction("Get", new {semesterId = semester.Id}, semester);
+        }
+
+        public Semester AddSemester(Year year, [FromBody] SemesterForm form)
+        {
+            Assert.RequireNonNull(year, nameof(year));
+            Assert.RequireNonNull(form, nameof(form));
+
             if (form.ExpectedStartDate >= form.ExpectedEndDate)
             {
                 throw new InvalidOperationException("START_DATE_IS_AFTER_END_DATE");
             }
-
-            var semesters = _dbContext.Set<Semester>().Where(s => s.YearId == year.Id).ToList();
-
+            
             Semester semester = new Semester
             {
                 ExpectedStartDate = form.ExpectedStartDate,
                 ExpectedEndDate = form.ExpectedEndDate,
-                Year = year,
-                Index = semesters.Count
+                Year = year
             };
             _dbContext.Set<Semester>().Add(semester);
             _dbContext.SaveChanges();
             
-            semesters.Add(semester);
-            _SetSemesterIndex(semesters);
-
-            _CreateDepartmentSemesters(semester);
-
+            _SetSemesterIndex(year);
             _dbContext.SaveChanges();
 
-            return CreatedAtAction("Get", new {semesterId = semester.Id}, semester);
+            return semester;
         }
 
         public IEnumerable<SemesterDepartment> _CreateDepartmentSemesters(Semester semester)
@@ -324,27 +354,25 @@ namespace Exam.Controllers.Periods
             
             SemesterDestructor destructor = new SemesterDestructor(_dbContext);
             destructor.Destroy(semester);
-
-            IEnumerable<Semester> semesters = _dbContext.Set<Semester>().Where(s => s.YearId == semester.YearId)
-                .ToImmutableList()
-                .RemoveAll(s => s.Id == semester.Id);
-            
-            _SetSemesterIndex(semesters);
-
             _dbContext.SaveChanges();
+            
+            _SetSemesterIndex(semester.Year);
 
             return NoContent();
         }
 
-        private void _SetSemesterIndex(IEnumerable<Semester> values)
+        private void _SetSemesterIndex(Year year)
         {
-            var semesters = values.OrderBy(s => s.ExpectedStartDate).ToList();;
+            var semesters = _dbContext.Set<Semester>().Where(s => s.YearId == year.Id).ToList()
+                .OrderBy(s => s.ExpectedStartDate).ToList();
             
             for (int i = 0; i < semesters.Count(); i++)
             {
                 semesters[i].Index = i;
                 _dbContext.Update(semesters[i]);
             }
+
+            _dbContext.SaveChanges();
         }
         
         

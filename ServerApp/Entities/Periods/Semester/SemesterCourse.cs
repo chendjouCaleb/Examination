@@ -37,6 +37,8 @@ namespace Exam.Entities.Periods
         [JsonIgnore]
         public virtual List<CourseSession> CourseSessions { get; set; }
         
+        [JsonIgnore] public virtual List<Test> Tests { get; set; }
+        
         
         
     }

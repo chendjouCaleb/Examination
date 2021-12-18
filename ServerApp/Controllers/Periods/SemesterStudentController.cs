@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Destructors;
@@ -14,7 +13,7 @@ namespace Exam.Controllers.Periods
     [Route("api/semesterStudents")]
     public class SemesterStudentController:Controller
     {
-        private DbContext _dbContext;
+        private readonly DbContext _dbContext;
 
         public SemesterStudentController(DbContext dbContext)
         {
@@ -109,7 +108,11 @@ namespace Exam.Controllers.Periods
                 .Where(yls => yls.SemesterLevel.SemesterDepartment.SemesterId == semester.Id)
                 .ToList();
 
-            return _AddStudents(yearStudents, semesterLevels, semesterLevelSpecialities);
+            var students = _AddStudents(yearStudents, semesterLevels, semesterLevelSpecialities);
+            _dbContext.AddRange(students);
+            _dbContext.SaveChanges();
+            
+            return students;
         }
 
         

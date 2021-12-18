@@ -51,8 +51,6 @@ namespace Exam.Entities.Courses
 
         [JsonIgnore] public virtual List<Score> Scores { get; set; }
 
-        [JsonIgnore] public virtual List<Test> Tests { get; set; }
-        
         [JsonIgnore] public virtual List<CourseTeacher> CourseTeachers { get; set; }
         
         

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
+using Exam.Entities.Periods;
 using Exam.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,52 +25,73 @@ namespace Exam.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ExaminationDepartment> List([FromQuery] long? examinationId, [FromQuery] long? departmentId)
+        public IEnumerable<ExaminationDepartment> List(
+            [FromQuery] long? examinationId,
+            [FromQuery] long? yearDepartmentId,
+            [FromQuery] long? semesterDepartmentId,
+            [FromQuery] long? departmentId)
         {
+            var query = _repository.Set;
+
             if (examinationId != null)
             {
-                return _repository.List(e => e.ExaminationId == examinationId);
+                query = query.Where(e => e.ExaminationId == examinationId);
+            }
+
+            if (yearDepartmentId != null)
+            {
+                query = query.Where(e => e.SemesterDepartment.YearDepartmentId == yearDepartmentId);
+            }
+
+            if (semesterDepartmentId != null)
+            {
+                query = query.Where(e => e.SemesterDepartmentId == yearDepartmentId);
             }
 
             if (departmentId != null)
             {
-                return _repository.List(e => e.DepartmentId == departmentId);
+                query = query.Where(e => e.SemesterDepartment.YearDepartment.DepartmentId == departmentId);
             }
 
             return new ExaminationDepartment[0];
         }
 
 
-        public ExaminationDepartment _Add(Examination examination, Department department, bool persist = false)
+        public ExaminationDepartment _Add(Examination examination, SemesterDepartment semesterDepartment)
         {
-            Assert.RequireNonNull(examination, nameof(department));
-            Assert.RequireNonNull(department, nameof(department));
+            Assert.RequireNonNull(examination, nameof(examination));
+            Assert.RequireNonNull(semesterDepartment, nameof(semesterDepartment));
 
-            if (!examination.School.Equals(department.School))
+            if (!examination.Semester.Equals(semesterDepartment.Semester))
             {
-                throw new IncompatibleEntityException<Examination, Department>(examination, department);
+                throw new IncompatibleEntityException(examination, semesterDepartment);
             }
 
-            ExaminationDepartment examinationDepartment = _repository
-                .First(e => examination.Equals(e.Examination) && department.Equals(e.Department));
-
-            if (examinationDepartment == null)
+            if (Contains(examination, semesterDepartment))
             {
-                examinationDepartment = new ExaminationDepartment
-                {
-                    Examination = examination,
-                    Department = department
-                };
-
-                if (persist)
-                {
-                    _repository.Save(examinationDepartment);   
-                }
+                throw new DuplicateObjectException("DUPLICATE_EXAMINATION_DEPARTMENT");
             }
+
+            ExaminationDepartment examinationDepartment = new ExaminationDepartment
+            {
+                Examination = examination,
+                SemesterDepartment = semesterDepartment
+            };
 
             return examinationDepartment;
         }
 
+        public ExaminationDepartment Find(Examination examination, SemesterDepartment semesterDepartment)
+        {
+            return _repository.First(
+                e => examination.Equals(e.Examination) && semesterDepartment.Equals(e.SemesterDepartment));
+        }
+
+        public bool Contains(Examination examination, SemesterDepartment semesterDepartment)
+        {
+            return _repository.Exists(
+                e => examination.Equals(e.Examination) && semesterDepartment.Equals(e.SemesterDepartment));
+        }
 
         public void Delete(ExaminationDepartment examinationDepartment)
         {

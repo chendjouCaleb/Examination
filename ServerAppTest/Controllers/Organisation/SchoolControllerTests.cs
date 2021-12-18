@@ -130,7 +130,6 @@ namespace ServerAppTest.Controllers
         {
             School school = _controller.Add(_model, _user).Value as School;
             _controller.Delete(school);
-            _schoolRepository.Refresh(_school);
             
             Assert.False(_schoolRepository.Exists(school));
         }

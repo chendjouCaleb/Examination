@@ -46,7 +46,7 @@ namespace Exam.Loaders
                     context.HttpContext.RequestServices.GetRequiredService<IRepository<School, long>>();
 
                 context.HttpContext.Items[SchoolItemName] = schoolRepository.First(s =>
-                    s.Id == examinationLevelSpeciality.ExaminationLevel.ExaminationDepartment.Department.SchoolId);
+                    s.Id == examinationLevelSpeciality.ExaminationLevel.ExaminationDepartment.SemesterDepartment.YearDepartment.Department.SchoolId);
             }
             
             

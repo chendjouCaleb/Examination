@@ -2,6 +2,7 @@
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using MathNet.Numerics.Statistics;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +28,8 @@ namespace Exam.Persistence.Repositories
 
         public ExaminationStatistics Statistics(Examination examination)
         {
-            var courseCount = context.Set<Course>().Count(c => examination.School.Equals(c.Level.Department.School));
+            var courseCount = context.Set<SemesterCourse>()
+                .Count(c => examination.Semester.Equals(c.SemesterLevel.SemesterDepartment.Semester));
             var examinationDepartments = context.Set<ExaminationDepartment>()
                 .Where(d => examination.Equals(d.Examination))
                 .Include(d => d.ExaminationLevels)

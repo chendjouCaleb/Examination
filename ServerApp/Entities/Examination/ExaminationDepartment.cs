@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -17,8 +18,9 @@ namespace Exam.Entities
         public long? ExaminationId { get; set; }
 
 
-        [JsonIgnore] public virtual Department Department { get; set; }
-        public long? DepartmentId { get; set; }
+        [JsonIgnore] public virtual SemesterDepartment SemesterDepartment { get; set; }
+        public long? SemesterDepartmentId { get; set; }
+        
 
 
         [JsonIgnore]

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Everest.AspNetStartup.Persistence;
+using Exam.Controllers.Courses;
 using Exam.Controllers.Periods;
 using Exam.Entities;
 using Exam.Entities.Periods;
 using Exam.Models;
 using Exam.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -14,12 +17,14 @@ namespace ServerAppTest
     public class SchoolBuilder
     {
         private IServiceProvider _serviceProvider;
+        private DbContext _dbContext;
         private ILogger<SchoolBuilder> _logger;
 
         public SchoolBuilder(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _logger = serviceProvider.GetRequiredService<ILogger<SchoolBuilder>>();
+            _dbContext = serviceProvider.GetRequiredService<DbContext>();
         }
 
         public School CreateSchool()
@@ -33,6 +38,12 @@ namespace ServerAppTest
             });
 
             school.Departments = CreateDepartments(school, 2);
+
+            var levels = _dbContext.Set<Level>().Where(l => l.Department.School.Equals(school));
+            foreach (var level in levels)
+            {
+                AddCourses(level);
+            }
 
             return school;
         }
@@ -51,25 +62,77 @@ namespace ServerAppTest
             return year;
         }
 
+        public Year CreateSimpleYear(School school)
+        {
+            YearForm _yearForm = new YearForm
+            {
+                ExpectedStartDate = DateTime.Now.AddDays(2),
+                ExpectedEndDate = DateTime.Now.AddMonths(10)
+            };
+            var controller = _serviceProvider.GetService<YearController>();
+            Year year = controller.AddYear(school, _yearForm);
+
+            return year;
+        }
+
+        public List<YearDepartment> AddYearDepartments(Year year)
+        {
+            var departments = _dbContext.Set<Department>().Where(d => d.School.Equals(year.School));
+            List<YearDepartment> yearDepartments = new List<YearDepartment>();
+            
+            foreach (Department department in departments)
+            {
+                YearDepartment yearDepartment = new YearDepartment
+                {
+                    Year = year,
+                    Department = department
+                };
+
+                _dbContext.Add(yearDepartment);
+                yearDepartments.Add(yearDepartment);
+            }
+
+            _dbContext.SaveChanges();
+            return yearDepartments;
+        }
+
+        public YearDepartment CreateYearDepartment(Year year, Department department)
+        {
+            YearDepartment yearDepartment = new YearDepartment
+            {
+                Year = year,
+                Department = department
+            };
+
+            _dbContext.Add(yearDepartment);
+            _dbContext.SaveChanges();
+            return yearDepartment;
+        }
+
         public List<YearTeacher> AddYearTeachers(Year year)
         {
             var yearTeacherController = _serviceProvider.GetRequiredService<YearTeacherController>();
             return yearTeacherController.AddTeachers(year);
         }
-        
+
         public List<SemesterTeacher> AddSemesterTeachers(Semester semester)
         {
             var semesterTeacherController = _serviceProvider.GetRequiredService<SemesterTeacherController>();
             return semesterTeacherController.AddTeachers(semester);
         }
-        
+
         public List<YearStudent> AddYearStudents(Year year)
         {
             var yearStudentController = _serviceProvider.GetRequiredService<YearStudentController>();
             return yearStudentController.AddStudents(year);
         }
-        
-        
+
+        public List<SemesterStudent> AddSemesterStudents(Semester semester)
+        {
+            var semesterStudentController = _serviceProvider.GetRequiredService<SemesterStudentController>();
+            return semesterStudentController.AddStudents(semester);
+        }
+
         public Semester CreateSemester(Year year, DateTime? expectedStartDate = null, DateTime? expectedEndDate = null)
         {
             SemesterForm _semesterForm = new SemesterForm
@@ -82,6 +145,63 @@ namespace ServerAppTest
             Semester semester = controller.Add(year, _semesterForm).Value as Semester;
 
             return semester;
+        }
+
+        public Examination CreateSimpleExamination(Semester semester)
+        {
+            var examinationRepository = _serviceProvider.GetService<IRepository<Examination, long>>();
+            Examination examination = examinationRepository.Save(new Examination
+            {
+                Semester = semester,
+                Name = "MATH-L3-2015/2016-S2",
+                ExpectedStartDate = semester.ExpectedStartDate.AddMonths(1),
+                ExpectedEndDate = semester.ExpectedStartDate.AddMonths(3)
+            });
+
+            return examination;
+        }
+
+        public ExaminationDepartment CreateSimpleExaminationDepartment(Examination examination,
+            SemesterDepartment semesterDepartment)
+        {
+            var examinationRepository = _serviceProvider.GetService<IRepository<ExaminationDepartment, long>>();
+            ExaminationDepartment examinationDepartment = new ExaminationDepartment
+            {
+                Examination = examination,
+                SemesterDepartment = semesterDepartment
+            };
+            examinationRepository.Save(examinationDepartment);
+
+            return examinationDepartment;
+        }
+
+        public ExaminationLevel CreateSimpleExaminationLevel(ExaminationDepartment examinationDepartment,
+            SemesterLevel semesterLevel)
+        {
+            var examinationRepository = _serviceProvider.GetService<IRepository<ExaminationLevel, long>>();
+            ExaminationLevel examinationLevel = new ExaminationLevel
+            {
+                ExaminationDepartment = examinationDepartment,
+                SemesterLevel = semesterLevel
+            };
+            examinationRepository.Save(examinationLevel);
+
+            return examinationLevel;
+        }
+
+
+        public ExaminationSpeciality CreateSimpleExaminationSpeciality(ExaminationDepartment examinationDepartment,
+            SemesterSpeciality semesterSpeciality)
+        {
+            var examinationRepository = _serviceProvider.GetService<IRepository<ExaminationSpeciality, long>>();
+            ExaminationSpeciality examinationSpeciality = new ExaminationSpeciality
+            {
+                ExaminationDepartment = examinationDepartment,
+                SemesterSpeciality = semesterSpeciality
+            };
+            examinationRepository.Save(examinationSpeciality);
+
+            return examinationSpeciality;
         }
 
         List<Department> CreateDepartments(School school, int number)
@@ -141,7 +261,8 @@ namespace ServerAppTest
                 var teacher = repository.Save(new Teacher
                 {
                     Department = department,
-                    UserId = Guid.NewGuid().ToString()
+                    UserId = Guid.NewGuid().ToString(),
+                    IsActive = true
                 });
 
                 teachers.Add(teacher);
@@ -233,6 +354,32 @@ namespace ServerAppTest
             }
 
             return students;
+        }
+
+        public void AddCourses(Level level)
+        {
+            var form1 = new CourseForm
+            {
+                Code = $"${level.Index}{level.Id}", Coefficient = 12, Description = "Noting",
+                Name = "Course Name", Radical = 20, IsGeneral = true
+            };
+
+            var form2 = new CourseForm
+            {
+                Code = $"${level.Index}{level.Id}2", Coefficient = 12, Description = "Noting",
+                Name = "Course Name", Radical = 20
+            };
+
+            var controller = _serviceProvider.GetRequiredService<CourseController>();
+            controller.Add(form1, level);
+
+            LevelSpeciality levelSpeciality = _dbContext.Set<LevelSpeciality>().First(l => l.Level.Equals(level));
+
+
+            if (levelSpeciality != null)
+            {
+                controller.Add(form2, level, new[] {levelSpeciality.Id});
+            }
         }
     }
 }

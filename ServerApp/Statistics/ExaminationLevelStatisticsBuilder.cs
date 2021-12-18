@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Entities.Periods;
 using MathNet.Numerics.Statistics;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +34,7 @@ namespace Exam.Statistics
 
             var tests = _dbContext.Set<Test>().Where(e => examinationLevel.Equals(e.ExaminationLevel))
                 .Include(t => t.Papers).ToList();
-            var courseCount = _dbContext.Set<Course>().Count(e => e.Level.Equals(examinationLevel.Level));
+            var courseCount = _dbContext.Set<SemesterCourse>().Count(e => e.SemesterLevel.Equals(examinationLevel.SemesterLevel));
 
             var papers = tests.SelectMany(t => t.Papers).ToList();
             return new ExaminationLevelStatistics

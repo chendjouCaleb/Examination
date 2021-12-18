@@ -42,7 +42,7 @@ namespace Exam.Entities
 
         [JsonIgnore] public virtual List<Member> Members { get; set; }
 
-        [JsonIgnore] public virtual List<Examination> Examinations { get; set; }
+        
 
         [JsonIgnore] public virtual List<Room> Rooms { get; set; }
 

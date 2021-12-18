@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -17,10 +18,10 @@ namespace Exam.Entities
         
         [NotMapped]
         public string Statistics { get; set; }
-       
-        public virtual Level Level { get; set; }
 
-        public long? LevelId { get; set; }
+        
+        public virtual SemesterLevel SemesterLevel { get; set; }
+        public long? SemesterLevelId { get; set; }
 
         
         [JsonIgnore]

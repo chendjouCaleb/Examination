@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Periods;
 using Exam.Models.Statistics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -22,11 +23,8 @@ namespace Exam.Entities
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        
-
-        [JsonIgnore]
-        public virtual School School { get; set; }
-        public long SchoolId { get; set; }
+        [JsonIgnore] public virtual Semester Semester { get; set; }
+        public long? SemesterId { get; set; }
         
         public string State => this.GetState();
         
