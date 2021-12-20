@@ -1,6 +1,14 @@
 import {Injectable} from "@angular/core";
 import {GenericHttpClient, SERVER_URL} from "../httpClient";
-import {Student, Year, YearLevel, YearLevelSpeciality, YearSpeciality, YearStudent} from "examination/entities";
+import {
+  Student,
+  Year,
+  YearDepartment,
+  YearLevel,
+  YearLevelSpeciality,
+  YearSpeciality,
+  YearStudent
+} from "examination/entities";
 import {List} from "@positon/collections";
 
 @Injectable()
@@ -13,6 +21,22 @@ export class YearStudentHttpClient extends GenericHttpClient<YearStudent, number
 
   async addAll(year: Year): Promise<YearStudent[]> {
     const results = await this.httpClient.post<YearStudent[]>(`${this.url}/addAll`, {}, {params: {yearId: year.id}})
+      .toPromise();
+
+    return results.map(y => new YearStudent(y));
+  }
+
+  async addAllDepartment(yearDepartment: YearDepartment): Promise<YearStudent[]> {
+    const results = await this.httpClient.post<YearStudent[]>(`${this.url}/addAllDepartment`, {},
+      {params: {yearDepartmentId: yearDepartment.id}})
+      .toPromise();
+
+    return results.map(y => new YearStudent(y));
+  }
+
+  async addAllLevel(yearLevel: YearLevel): Promise<YearStudent[]> {
+    const results = await this.httpClient.post<YearStudent[]>(`${this.url}/addAllLevel`, {},
+      {params: {yearLevelId: yearLevel.id}})
       .toPromise();
 
     return results.map(y => new YearStudent(y));

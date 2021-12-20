@@ -1718,6 +1718,7 @@
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="bin-db" t="Include">
+          <e p="examination-1.db" t="Include" />
           <e p="examination.db" t="Include" />
           <e p="examination.db-shm" t="Include" />
           <e p="examination.db-wal" t="Include" />
@@ -2243,7 +2244,6 @@
           </e>
           <e p="UserSchool.cs" t="Include" />
         </e>
-        <e p="examination.db" t="Include" />
         <e p="Exceptions" t="Include">
           <e p="IncomptabileEntityException.cs" t="Include" />
           <e p="UniqueValueException.cs" t="Include" />
@@ -2332,13 +2332,14 @@
           <e p="TestLoader.cs" t="Include" />
           <e p="TestScoreLoader.cs" t="Include" />
           <e p="YearDepartmentLoader.cs" t="Include" />
+          <e p="YearLevelLoader.cs" t="Include" />
           <e p="YearLoader.cs" t="Include" />
           <e p="YearStudentLoader.cs" t="Include" />
           <e p="YearTeacherLoader.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
-          <e p="20211214125326_Initial.cs" t="Include" />
-          <e p="20211214125326_Initial.Designer.cs" t="Include" />
+          <e p="20211220075720_Initial.cs" t="Include" />
+          <e p="20211220075720_Initial.Designer.cs" t="Include" />
           <e p="PersistenceContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="models" t="Include">

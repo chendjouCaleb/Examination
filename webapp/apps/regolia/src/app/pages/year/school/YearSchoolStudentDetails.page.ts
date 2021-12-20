@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ViewChild} from "@angular/core";
+import {AfterViewInit, Component} from "@angular/core";
 import {YearStudentHttpClient} from "@examination/models/http";
 import {Year, YearStudent} from "@examination/models/entities";
 import {YearStudentLoader} from "@examination/models/loaders";
 import {CurrentItems} from "../../../current-items";
-import {YearStudentList, YearStudentService} from "@examination/components";
+import {YearStudentService} from "@examination/components";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({

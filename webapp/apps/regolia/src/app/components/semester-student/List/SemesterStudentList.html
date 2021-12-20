@@ -1,0 +1,77 @@
+<ng-container *ngIf="items">
+  <msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
+
+  <msPaginator #msPaginator [pageSize]="20" [totalSize]="items.length" [itemsFn]="itemsFn">
+    <div *ms-paginatorPageDef="let data=items; let start=start">
+
+      <ms-table #table style="max-height: 500px" [hiddenColumns]="hiddenColumns">
+        <msTableHead *ms-tableHeadDef>
+          <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+
+          <msTableHeadCell name="department" [sortBy]="['departmentName', 'string']">Départment</msTableHeadCell>
+          <msTableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
+          <msTableHeadCell name="speciality" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
+          <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom</msTableHeadCell>
+          <msTableHeadCell name="registrationId" [sortBy]="['registrationId', 'string']">Matricule</msTableHeadCell>
+          <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
+          <msTableHeadCell name="gender" [sortBy]="['gender', 'string']">Sexe</msTableHeadCell>
+          <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
+          <msTableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout
+          </msTableHeadCell>
+
+          <msTableHeadCell name="actions" style="text-align: right">
+            <i class="ms-Icon ms-Icon--SetAction px-2"></i>
+          </msTableHeadCell>
+        </msTableHead>
+
+        <tr ms-tableRow *ms-tableRowDef="let item of data; let i=index" [value]="item" [routerLink]="item.url()"
+            [class.ms-new-item]="item.isNew">
+          <td ms-tableCell>{{i + start + 1}}</td>
+          <td ms-tableCell class="ms-fontWeight-semibold">
+            <a [routerLink]="item.semesterLevel?.semesterDepartment?.url()">
+              {{item.semesterLevel?.yearLevel?.yearDepartment?.department?.name}}
+            </a>
+          </td>
+          <td ms-tableCell>
+            <a [routerLink]="item.semesterLevel?.url()">Niveau {{item.semesterLevel?.yearLevel?.level?.index + 1}}</a>
+          </td>
+          <td ms-tableCell>
+            <a [routerLink]="item.semesterLevelSpeciality?.url()">
+              {{item.semesterLevelSpeciality?.yearLevelSpeciality?.levelSpeciality?.speciality?.name}}
+            </a>
+
+          </td>
+          <td ms-tableCell>
+            <a [routerLink]="item.yearStudent?.student?.url" class="ms-fontWeight-semibold text-capitalize">
+              {{item.yearStudent?.student?.fullName}}</a>
+          </td>
+
+          <td ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+            {{item.yearStudent?.student?.registrationId}}
+          </td>
+
+          <td ms-tableCell>
+            <span class="text-capitalize ms-fontSize-12 ms-opacity-7">
+            {{item.yearStudent?.student.birthDate | date}} </span>
+          </td>
+
+          <td ms-tableCell>
+          <span class="text-capitalize ms-fontSize-12 ms-opacity-7 ms-fontWeight-semibold">
+            {{item.yearStudent?.student.genderShort}}</span>
+          </td>
+
+          <td ms-tableCell>
+            <user-persona *ngIf="item.yearStudent?.student.user" [user]="item.yearStudent?.student.user">
+            </user-persona>
+          </td>
+
+          <td ms-tableCell>
+          <span
+            class="text-capitalize ms-fontSize-12 ms-opacity-7">{{item.registrationDate | date}}</span>
+          </td>
+        </tr>
+      </ms-table>
+    </div>
+  </msPaginator>
+
+</ng-container>

@@ -7,3 +7,4 @@ export * from './semester-speciality.loader';
 export * from './semester-teacher.loader';
 export * from './semester-course.loader';
 export * from './semester-course-teacher.loader';
+export * from './semester-teacher.loader';

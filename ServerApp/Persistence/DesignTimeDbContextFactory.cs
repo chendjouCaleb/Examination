@@ -14,14 +14,12 @@ namespace Exam.Persistence
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile("appsettings.production.json")
                 .AddJsonFile("appsettings.Development.json")
-
                 .Build();
 
             var builder = new DbContextOptionsBuilder<PersistenceContext>();
 
-
-            //builder.UseSqlServer(configuration["Data:ConnectionStrings:Database"]);
-            builder.UseSqlite(configuration["Data:SQLiteConnectionStrings"]);
+            builder.UseSqlServer(configuration["Data:ConnectionStrings:Database"]);
+            //builder.UseSqlite(configuration["Data:SQLiteConnectionStrings"]);
 
             return new PersistenceContext(builder.Options);
         }

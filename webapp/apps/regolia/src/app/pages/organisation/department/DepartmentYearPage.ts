@@ -8,6 +8,13 @@ import {YearDepartmentLoader} from "examination/loaders";
   template: `
       <h3>Années scolaires</h3>
       <div class="mt-3">
+          <div class="br-2 p-2 d-flex" 
+               *ngIf="!department.yearDepartments || department.yearDepartments.length === 0">
+              <i class="ms-Icon ms-Icon--Info ms-fontSize-18"></i>
+              <div class="ml-2">
+                  Aucune année scolaire pour ce départment !
+              </div>
+          </div>
           <YearDepartmentList [items]="department.yearDepartments"></YearDepartmentList>
       </div>`
 })

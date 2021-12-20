@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ViewChild} from "@angular/core";
+import { Component, ViewChild} from "@angular/core";
 import {SemesterCourseHttpClient} from "@examination/models/http";
-import {SemesterDepartment, SemesterCourse, SemesterLevel} from "@examination/models/entities";
+import { SemesterLevel} from "@examination/models/entities";
 import {CurrentItems} from "../../../current-items";
 import {SemesterCourseList, SemesterCourseService} from "@examination/components";
 

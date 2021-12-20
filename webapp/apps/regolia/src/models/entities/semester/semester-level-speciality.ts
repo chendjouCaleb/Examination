@@ -32,7 +32,7 @@ export class SemesterLevelSpeciality extends Entity<number> {
   url(path?: string): string {
     const url = `${this.semesterLevel.url()}/specialities/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }

@@ -1,2 +1,4 @@
-Niveau: {{yearLevelSpeciality.yearLevel.level.index + 1}}
-Specialité: {{yearLevelSpeciality.yearSpeciality.speciality.name}}
+Niveau:
+<a [routerLink]="yearLevelSpeciality.yearLevel.url()">{{yearLevelSpeciality.yearLevel.level.index + 1}}</a>
+
+Specialité: <a [routerLink]="yearLevelSpeciality.yearSpeciality.url()">{{yearLevelSpeciality.specialityName}}</a>

@@ -50,8 +50,8 @@ namespace ServerApp
             {
                 options.UseLazyLoadingProxies();
                 options.EnableSensitiveDataLogging();
-                options.UseSqlite(_configuration["Data:SQLiteConnectionStrings"]);
-                //options.UseSqlServer(_configuration["Data:ConnectionStrings:Database"]);
+                //options.UseSqlite(_configuration["Data:SQLiteConnectionStrings"]);
+                options.UseSqlServer(_configuration["Data:ConnectionStrings:Database"]);
             });
 
             services.AddExceptionTransformerFactory();

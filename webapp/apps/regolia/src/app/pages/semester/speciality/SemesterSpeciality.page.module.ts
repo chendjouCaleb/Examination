@@ -6,21 +6,24 @@ import {SemesterSpecialityPageLayout} from "./layout/SemesterSpecialityPageLayou
 import {LayoutModule} from "examination/infrastructure";
 import {BreadcrumbModule, MsActionMenuModule, MsRibbonModule} from "@ms-fluent/components";
 import {SemesterSpecialityCoursesPage} from "./SemesterSpecialityCourses.page";
-import {SemesterCourseListModule} from "@examination/components";
+import {SemesterCourseListModule, SemesterStudentListModule} from "@examination/components";
+import {SemesterSpecialityStudentsPage} from "./SemesterSpecialityStudents.page";
 
 const routes: Routes = [
   {
     path: '', component: SemesterSpecialityPageLayout, children: [
       {path: '', component: SemesterSpecialityHomePage, data: { label: 'home'}},
       {path: 'courses', component: SemesterSpecialityCoursesPage, data: { label: 'courses'}},
+      {path: 'students', component: SemesterSpecialityStudentsPage, data: { label: 'students'}},
       {path: 'home', redirectTo: '', pathMatch: 'full'}
     ]
   }
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, BreadcrumbModule, MsActionMenuModule, SemesterCourseListModule],
-  declarations: [ SemesterSpecialityHomePage, SemesterSpecialityPageLayout, SemesterSpecialityCoursesPage]
+  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, BreadcrumbModule, MsActionMenuModule, SemesterCourseListModule, SemesterStudentListModule],
+  declarations: [ SemesterSpecialityHomePage, SemesterSpecialityPageLayout, SemesterSpecialityCoursesPage,
+    SemesterSpecialityStudentsPage ]
 })
 export class SemesterSpecialityPageModule {
 

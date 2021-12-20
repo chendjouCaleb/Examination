@@ -114,6 +114,57 @@ namespace Exam.Controllers.Periods
             
             return students;
         }
+        
+        
+        
+        [HttpPost("addAllDepartment")]
+        [LoadSemesterDepartment(Source = ParameterSource.Query)]
+        public List<SemesterStudent> AddStudents(SemesterDepartment semesterDepartment)
+        {
+            Assert.RequireNonNull(semesterDepartment, nameof(semesterDepartment));
+
+            List<YearStudent> yearStudents = _dbContext.Set<YearStudent>()
+                .Where(ys => ys.YearLevel.YearDepartment.Equals(semesterDepartment.YearDepartment))
+                .ToList();
+            
+            List<SemesterLevel> semesterLevels = _dbContext.Set<SemesterLevel>()
+                .Where(yl => yl.SemesterDepartmentId == semesterDepartment.Id)
+                .ToList();
+            
+            List<SemesterLevelSpeciality> semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>()
+                .Where(yls => yls.SemesterLevel.SemesterDepartmentId == semesterDepartment.Id)
+                .ToList();
+
+            var students = _AddStudents(yearStudents, semesterLevels, semesterLevelSpecialities);
+            _dbContext.AddRange(students);
+            _dbContext.SaveChanges();
+            
+            return students;
+        }
+        
+        
+        [HttpPost("addAllLevel")]
+        [LoadSemesterLevel(Source = ParameterSource.Query)]
+        public List<SemesterStudent> AddStudents(SemesterLevel semesterLevel)
+        {
+            Assert.RequireNonNull(semesterLevel, nameof(semesterLevel));
+
+            List<YearStudent> yearStudents = _dbContext.Set<YearStudent>()
+                .Where(ys => ys.YearLevel.Equals(semesterLevel.YearLevel))
+                .ToList();
+            
+            List<SemesterLevel> semesterLevels = new List<SemesterLevel>(new []{semesterLevel});
+            
+            List<SemesterLevelSpeciality> semesterLevelSpecialities = _dbContext.Set<SemesterLevelSpeciality>()
+                .Where(yls => yls.SemesterLevelId == semesterLevel.Id)
+                .ToList();
+
+            var students = _AddStudents(yearStudents, semesterLevels, semesterLevelSpecialities);
+            _dbContext.AddRange(students);
+            _dbContext.SaveChanges();
+            
+            return students;
+        }
 
         
         [HttpPut("{semesterStudentId}/speciality")]

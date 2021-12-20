@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Destructors;
@@ -93,6 +92,57 @@ namespace Exam.Controllers.Periods
             return yearStudents;
         }
 
+        
+        [HttpPost("addAllDepartment")]
+        [RequireQueryParameter("yearDepartmentId")]
+        [LoadYearDepartment(Source = ParameterSource.Query)]
+        public List<YearStudent> AddStudents(YearDepartment yearDepartment)
+        {
+            Assert.RequireNonNull(yearDepartment, nameof(yearDepartment));
+
+            List<Student> students = _dbContext.Set<Student>()
+                .Where(s => s.Level.DepartmentId == yearDepartment.DepartmentId && s.IsActive)
+                .ToList();
+            
+            List<YearLevel> yearLevels = _dbContext.Set<YearLevel>()
+                .Where(yl => yl.YearDepartmentId == yearDepartment.Id)
+                .ToList();
+            
+            List<YearLevelSpeciality> yearLevelSpecialities = _dbContext.Set<YearLevelSpeciality>()
+                .Where(yls => yls.YearLevel.YearDepartmentId == yearDepartment.Id)
+                .ToList();
+
+            var yearStudents = _AddStudents(students, yearLevels, yearLevelSpecialities);
+            
+            _dbContext.AddRange(yearStudents);
+            _dbContext.SaveChanges();
+            return yearStudents;
+        }
+        
+       
+        [HttpPost("addAllLevel")]
+        [RequireQueryParameter("yearLevelId")]
+        [LoadYearLevel(Source = ParameterSource.Query)]
+        public List<YearStudent> AddStudents(YearLevel yearLevel)
+        {
+            Assert.RequireNonNull(yearLevel, nameof(yearLevel));
+
+            List<Student> students = _dbContext.Set<Student>()
+                .Where(s => s.LevelId == yearLevel.LevelId && s.IsActive)
+                .ToList();
+            
+            List<YearLevel> yearLevels = new List<YearLevel>(new []{yearLevel});
+            
+            List<YearLevelSpeciality> yearLevelSpecialities = _dbContext.Set<YearLevelSpeciality>()
+                .Where(yls => yls.YearLevelId == yearLevel.Id)
+                .ToList();
+
+            var yearStudents = _AddStudents(students, yearLevels, yearLevelSpecialities);
+            
+            _dbContext.AddRange(yearStudents);
+            _dbContext.SaveChanges();
+            return yearStudents;
+        }
 
         [HttpDelete("{yearStudentId}")]
         [LoadYearStudent]

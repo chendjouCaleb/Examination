@@ -1,0 +1,69 @@
+<MsActionMenu class="p-2 ms-depth-8">
+  <button MsActionMenuButton theme="error" icon="Delete" (click)="delete()">Supprimer</button>
+</MsActionMenu>
+
+<div class="d-flex mt-4">
+  <div class="ms-description-list">
+    <dl>
+      <dt>Matricule</dt>
+      <dd>{{semesterStudent.yearStudent.student.registrationId}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Nom & prénom</dt>
+      <dd>{{semesterStudent.yearStudent.student.fullName}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Date de naissance</dt>
+      <dd>{{semesterStudent.yearStudent.student.birthDate | date}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Sexe</dt>
+      <dd>
+        <span class="ms-opacity-7 ms-fontSize-12">{{semesterStudent.yearStudent.student.genderLong}}</span>
+      </dd>
+    </dl>
+
+    <div class="divider"></div>
+
+    <dl>
+      <dt>Départment</dt>
+      <dd>{{semesterStudent.yearStudent.yearLevel?.yearDepartment?.department.name}}</dd>
+    </dl>
+    <dl>
+      <dt>Niveau</dt>
+      <dd>{{semesterStudent.yearStudent.yearLevel?.level.index + 1}}</dd>
+    </dl>
+
+    <dl>
+      <dt>Spécialité</dt>
+      <dd *ngIf="semesterStudent.yearStudent.student.levelSpeciality">{{semesterStudent.yearStudent.student?.levelSpeciality?.speciality.name}}</dd>
+      <dd *ngIf="!semesterStudent.yearStudent?.student.levelSpeciality">
+        <span class="ms-badge ms-badge-error">Aucune</span>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="ms-description-list ml-5" style="white-space: nowrap">
+    <dl>
+      <dt>Date d'enregistrement</dt>
+      <dd>
+        <span class="ms-badge ms-badge-info">{{semesterStudent.yearStudent.student.registrationDate | amTimeAgo}}</span>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>Utilisateur</dt>
+      <dd>
+        <user-persona *ngIf="semesterStudent.yearStudent.student.user" [user]="semesterStudent.yearStudent.student.user"></user-persona>
+        <span *ngIf="semesterStudent.yearStudent.student.user" class="ms-badge ms-badge-error">Aucune liaison</span>
+      </dd>
+
+    </dl>
+  </div>
+
+
+</div>
+

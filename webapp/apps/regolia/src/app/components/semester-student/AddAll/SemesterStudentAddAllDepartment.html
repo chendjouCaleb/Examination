@@ -1,0 +1,23 @@
+<form class="ms-dialog-form">
+  <h4>Ajouter des étudiants</h4>
+
+  <div class="d-flex mt-2">
+    <div class="ms-confirm-dialog-icon ms-fontColor-blue ms-fontSize-42">
+      <i class="ms-Icon ms-Icon--AddGroup"></i>
+    </div>
+
+    <div class="p-2  br-2 mb-2 ml-2">
+      Voulez-vous ajouter tous les étudiants du département
+      au semestre ?
+
+      <div class="mt-2">
+        Seuls les étudiants n'étant pas déjà ajoutés seront ajoutés.
+      </div>
+    </div>
+  </div>
+
+  <div class="text-right mt-3">
+    <button msButton ms-dialog-close="">Annuler</button>
+    <button msButton theme="primary" class="ml-2" icon="Add" (click)="addAll()">Ajouter</button>
+  </div>
+</form>

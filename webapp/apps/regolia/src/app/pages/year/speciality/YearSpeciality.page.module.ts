@@ -7,20 +7,23 @@ import {LayoutModule} from "examination/infrastructure";
 import {BreadcrumbModule, MsActionMenuModule, MsButtonModule, MsRibbonModule} from "@ms-fluent/components";
 import {YearSpecialityCoursesPage} from "./YearSpecialityCourses.page";
 import {SemesterCourseListModule} from "../../../components/semester-course/list";
+import {YearSpecialityStudentsPage} from "./YearSpecialityStudents.page";
+import {YearStudentListModule} from "../../../components/year-student/List";
 
 const routes: Routes = [
   {
     path: '', component: YearSpecialityPageLayout, children: [
       {path: '', component: YearSpecialityHomePage, data: {label: 'home'}},
       {path: 'courses', component: YearSpecialityCoursesPage, data: {label: 'courses'}},
+      {path: 'students', component: YearSpecialityStudentsPage, data: {label: 'students'}},
       {path: 'home', redirectTo: '', pathMatch: 'full'}
     ]
   }
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, BreadcrumbModule, SemesterCourseListModule, MsActionMenuModule, MsButtonModule],
-  declarations: [ YearSpecialityHomePage, YearSpecialityPageLayout, YearSpecialityCoursesPage]
+  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, BreadcrumbModule, SemesterCourseListModule, MsActionMenuModule, MsButtonModule, YearStudentListModule],
+  declarations: [ YearSpecialityHomePage, YearSpecialityPageLayout, YearSpecialityStudentsPage, YearSpecialityCoursesPage]
 })
 export class YearSpecialityPageModule {
 

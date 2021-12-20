@@ -2,7 +2,7 @@ import {Entity} from "../entity";
 import {YearLevel} from "./year-level";
 import {Student} from "../member";
 import {YearLevelSpeciality} from "./year-level-speciality";
-import {SemesterStudent} from "../semester/semester-student";
+import {SemesterStudent} from "../semester";
 
 export class YearStudent extends Entity<number> {
 
@@ -31,9 +31,9 @@ export class YearStudent extends Entity<number> {
   semesterStudents: SemesterStudent[];
 
   url(path?: string): string {
-    const url = `${this.yearLevel.url()}/students/${this.id}`;
+    const url = `${this.yearLevel?.url()}/students/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }

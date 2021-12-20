@@ -15,12 +15,10 @@ import {YearStudentList, YearStudentService} from "@examination/components";
     </div>
     
     <h3 class="mt-3">Étudiants</h3>
-    <YearStudentList *ngIf="items" [items]="items"></YearStudentList>
+    <YearStudentList [params]="{yearId : year.id}"></YearStudentList>
   `
 })
 export class YearSchoolStudentPage implements AfterViewInit {
-
-  items: YearStudent[];
   year: Year;
 
   @ViewChild(YearStudentList)
@@ -35,24 +33,18 @@ export class YearSchoolStudentPage implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this._httpClient.listByYear(this.year).then(items => {
-      this.items = items.toArray();
-      this._loader.loadAll(this.items);
-    });
+
   }
 
   addAll() {
     this.service.addAll(this.year).subscribe(items => {
-      this.list.addItems(...items);
+      if(items) {
+        this.list.addItems(...items);
+      }
     })
   }
 
   refresh() {
-    this.items = [];
-    this._httpClient.listByYear(this.year).then(items => {
-      this.items = items.toArray();
-      this.items.forEach(item => this._loader.load(item));
-      this.list.refresh(this.items);
-    });
+    this.list.refresh();
   }
 }

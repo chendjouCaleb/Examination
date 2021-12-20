@@ -20,7 +20,7 @@ export class YearStudentDelete {
 
  async delete() {
     await this._httpClient.delete(this.yearStudent.id);
-    this.alertEmitter.info(`L'étudant a été supprimé de l'année scolaire.`);
+    this.alertEmitter.info(`L'étudant ${this.yearStudent.student.fullName} a été supprimé de l'année scolaire.`);
     this.dialogRef.close(true);
  }
 }

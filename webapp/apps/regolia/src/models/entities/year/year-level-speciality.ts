@@ -35,10 +35,14 @@ export class YearLevelSpeciality extends Entity<number> {
   semesterLevelSpecialities: SemesterLevelSpeciality[];
   yearStudents: YearStudent[];
 
+  get specialityName(): string {
+    return this.levelSpeciality?.speciality?.name;
+  }
+
   url(path?: string): string {
     const url = `${this.yearLevel.url()}/specialities/${this.id}`;
     if(path) {
-      return `${url}/path`;
+      return `${url}/${path}`;
     }
     return url;
   }

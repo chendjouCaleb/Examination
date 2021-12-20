@@ -25,6 +25,12 @@ export class SemesterStudentHttpClient extends GenericHttpClient<SemesterStudent
     return items.map(v => new SemesterStudent(v));
   }
 
+  async addAllDepartment(semesterDepartment: SemesterDepartment): Promise<SemesterStudent[]> {
+    const items = await this.httpClient.post<any[]>(`${this.url}/addAllDepartment`, {},
+      {params: {semesterDepartmentId: semesterDepartment.id}}).toPromise();
+    return items.map(v => new SemesterStudent(v));
+  }
+
   async addAllLevelStudents(semesterLevel: SemesterLevel): Promise<SemesterStudent[]> {
     const items = await this.httpClient.post<any[]>(`${this.url}/addAllLevel`, {},
       {params: {semesterLevelId: semesterLevel.id}}).toPromise();

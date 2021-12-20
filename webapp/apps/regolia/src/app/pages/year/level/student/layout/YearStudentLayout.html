@@ -1,0 +1,16 @@
+﻿<div *ngIf="yearStudent">
+  <msPivot>
+    <msPivotHeader>
+      <msPivotLabel id="details">Détails</msPivotLabel>
+      <msPivotLabel id="tests">Épreuves</msPivotLabel>
+    </msPivotHeader>
+    <msPivotBody>
+      <div *msPivotContentDef>
+        <YearStudentHome [yearStudent]="yearStudent"></YearStudentHome>
+      </div>
+      <div *msPivotContentDef>
+        test
+      </div>
+    </msPivotBody>
+  </msPivot>
+</div>

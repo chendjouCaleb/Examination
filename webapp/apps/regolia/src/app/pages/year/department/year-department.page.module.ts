@@ -8,22 +8,25 @@ import {BreadcrumbModule, MsActionMenuModule, MsButtonModule, MsRibbonModule} fr
 import {YearDepartmentTeacherPage} from "./YearDepartmentTeacher.page";
 import {YearTeacherDetailsPage} from "./YearTeacherDetails.page";
 import {
-  SemesterCourseListModule,
+  SemesterCourseListModule, YearStudentListModule,
   YearTeacherDetailsModule,
   YearTeacherListModule,
   YearTeacherModule,
   YearTeacherResolver
 } from "@examination/components";
-import { YearDepartmentCoursesPage } from "./YearDepartmentCourses.page";
+import {YearDepartmentCoursesPage} from "./YearDepartmentCourses.page";
 import {SemesterItemModule} from "../../../components/semester/item";
+import {YearDepartmentStudentPage} from "./YearDepartmentStudent.page";
 
 const routes: Routes = [
   {
     path: '', component: YearDepartmentPageLayout, children: [
       {path: '', component: YearDepartmentHomePage, data: {label: 'home'}},
       {path: 'courses', component: YearDepartmentCoursesPage, data: {label: 'courses'}},
+      {path: 'students', component: YearDepartmentStudentPage, data: {label: 'students'}},
       {path: 'teachers', component: YearDepartmentTeacherPage, data: {label: 'teachers'}},
-      {path: 'teachers/:yearTeacherId', data: {label: 'teachers'}, resolve: [ YearTeacherResolver ],
+      {
+        path: 'teachers/:yearTeacherId', data: {label: 'teachers'}, resolve: [YearTeacherResolver],
         loadChildren: () => import('./teacher/YearTeacherPage.module').then(m => m.YearTeacherPageModule)
       },
 
@@ -34,9 +37,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, YearTeacherModule,
-    YearTeacherListModule, MsActionMenuModule, YearTeacherDetailsModule, BreadcrumbModule, SemesterItemModule, SemesterCourseListModule, MsButtonModule],
-  declarations: [ YearDepartmentHomePage, YearDepartmentPageLayout, YearDepartmentTeacherPage, YearTeacherDetailsPage,
-    YearDepartmentCoursesPage ]
+    YearTeacherListModule, MsActionMenuModule, YearTeacherDetailsModule, BreadcrumbModule, SemesterItemModule, SemesterCourseListModule, MsButtonModule, YearStudentListModule],
+  declarations: [YearDepartmentHomePage, YearDepartmentPageLayout, YearDepartmentTeacherPage, YearTeacherDetailsPage,
+    YearDepartmentCoursesPage, YearDepartmentStudentPage]
 })
 export class YearDepartmentPageModule {
 

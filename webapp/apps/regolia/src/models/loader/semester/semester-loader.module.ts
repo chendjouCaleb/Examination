@@ -7,10 +7,11 @@ import {SemesterSpecialityLoader} from "./semester-speciality.loader";
 import {SemesterTeacherLoader} from "./semester-teacher.loader";
 import {SemesterCourseLoader} from "./semester-course.loader";
 import {SemesterCourseTeacherLoader} from "./semester-course-teacher.loader";
+import {SemesterStudentLoader} from "./semester-student.loader";
 
 @NgModule({
   providers: [ SemesterLoader, SemesterDepartmentLoader, SemesterLevelLoader, SemesterTeacherLoader,
-    SemesterLevelSpecialityLoader, SemesterSpecialityLoader, SemesterCourseLoader,
+    SemesterLevelSpecialityLoader, SemesterSpecialityLoader, SemesterCourseLoader, SemesterStudentLoader,
     SemesterCourseTeacherLoader ]
 })
 export class SemesterLoaderModule {

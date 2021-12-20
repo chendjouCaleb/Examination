@@ -1,72 +1,75 @@
-<msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
+<ng-container *ngIf="items">
+  <msPaginatorButtons *ngIf="msPaginator" [paginator]="msPaginator"></msPaginatorButtons>
 
-<msPaginator #msPaginator [pageSize]="50" [totalSize]="items.length" [itemsFn]="itemsFn">
-  <div *ms-paginatorPageDef="let data=items; let start=start">
+  <msPaginator #msPaginator [pageSize]="20" [totalSize]="items.length" [itemsFn]="itemsFn">
+    <div *ms-paginatorPageDef="let data=items; let start=start">
 
-    <ms-table #table style="max-height: 500px">
-      <msTableHead *ms-tableHeadDef>
-        <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+      <ms-table #table style="max-height: 500px" [hiddenColumns]="hiddenColumns">
+        <msTableHead *ms-tableHeadDef>
+          <ms-tableHeadCell name="#">#</ms-tableHeadCell>
 
-        <msTableHeadCell name="departmentName" [sortBy]="['departmentName', 'string']">Départment</msTableHeadCell>
-        <msTableHeadCell name="levelIndex" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
-        <msTableHeadCell name="specialityName" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
-        <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom</msTableHeadCell>
-        <msTableHeadCell name="registrationId" [sortBy]="['registrationId', 'string']">Matricule</msTableHeadCell>
-        <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
-        <msTableHeadCell name="gender" [sortBy]="['gender', 'string']">Sexe</msTableHeadCell>
-        <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
-        <msTableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout
-        </msTableHeadCell>
+          <msTableHeadCell name="department" [sortBy]="['departmentName', 'string']">Départment</msTableHeadCell>
+          <msTableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</msTableHeadCell>
+          <msTableHeadCell name="speciality" [sortBy]="['specialityName', 'string']">Spécialité</msTableHeadCell>
+          <msTableHeadCell name="fullName" [sortBy]="['fullName', 'string']">Nom</msTableHeadCell>
+          <msTableHeadCell name="registrationId" [sortBy]="['registrationId', 'string']">Matricule</msTableHeadCell>
+          <msTableHeadCell name="birthDate" [sortBy]="['birthDate', 'date']">Date de naissance</msTableHeadCell>
+          <msTableHeadCell name="gender" [sortBy]="['gender', 'string']">Sexe</msTableHeadCell>
+          <msTableHeadCell name="user">Utilisateur</msTableHeadCell>
+          <msTableHeadCell name="registrationDate" [sortBy]="['registrationDate', 'date']">Date d'ajout
+          </msTableHeadCell>
 
-        <msTableHeadCell name="actions" style="text-align: right">
-          <i class="ms-Icon ms-Icon--SetAction px-2"></i>
-        </msTableHeadCell>
-      </msTableHead>
+          <msTableHeadCell name="actions" style="text-align: right">
+            <i class="ms-Icon ms-Icon--SetAction px-2"></i>
+          </msTableHeadCell>
+        </msTableHead>
 
-      <tr ms-tableRow *ms-tableRowDef="let item of data; let i=index" [value]="item"
-          [class.ms-new-item]="item.isNew">
-        <td ms-tableCell>{{i + start + 1}}</td>
-        <td ms-tableCell class="ms-fontWeight-semibold">
-          {{item.yearLevel?.yearDepartment?.department?.name}}
-        </td>
-        <td ms-tableCell>{{item.yearLevel?.level?.index + 1}}</td>
-        <td ms-tableCell class="ms-fontWeight-semibold">
-          {{item.yearLevelSpeciality?.levelSpeciality?.speciality?.name}}
-        </td>
-        <td ms-tableCell>
-          <a [routerLink]="item.student?.url" class="ms-fontWeight-semibold text-capitalize">{{item.student?.fullName}}</a>
-        </td>
+        <tr ms-tableRow *ms-tableRowDef="let item of data; let i=index" [value]="item" [routerLink]="item.url()"
+            [class.ms-new-item]="item.isNew">
+          <td ms-tableCell>{{i + start + 1}}</td>
+          <td ms-tableCell class="ms-fontWeight-semibold">
+            {{item.yearLevel?.yearDepartment?.department?.name}}
+          </td>
+          <td ms-tableCell>{{item.yearLevel?.level?.index + 1}}</td>
+          <td ms-tableCell class="ms-fontWeight-semibold">
+            {{item.yearLevelSpeciality?.levelSpeciality?.speciality?.name}}
+          </td>
+          <td ms-tableCell>
+            <a [routerLink]="item.student?.url" class="ms-fontWeight-semibold text-capitalize">{{item.student?.fullName}}</a>
+          </td>
 
-        <td ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
-          {{item.student?.registrationId}}
-        </td>
+          <td ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">
+            {{item.student?.registrationId}}
+          </td>
 
-        <td ms-tableCell> {{item.student.birthDate | date}} </td>
-        <td ms-tableCell>
+          <td ms-tableCell> {{item.student.birthDate | date}} </td>
+          <td ms-tableCell>
           <span
             class="text-capitalize ms-fontSize-12 ms-opacity-7 ms-fontWeight-semibold">{{item.student.genderShort}}</span>
-        </td>
+          </td>
 
 
-        <td ms-tableCell>
-          <user-persona *ngIf="item.student.user" [user]="item.student.user"></user-persona>
-        </td>
+          <td ms-tableCell>
+            <user-persona *ngIf="item.student.user" [user]="item.student.user"></user-persona>
+          </td>
 
-        <td ms-tableCell>
+          <td ms-tableCell>
           <span
             class="text-capitalize ms-fontSize-12 ms-opacity-7 ms-fontWeight-semibold">{{item.registrationDate | date}}</span>
-        </td>
+          </td>
 
-        <td ms-tableCell style="text-align: right">
-          <a [routerLink]="item.url">
-            <button msButton>Détails</button>
-          </a>
+          <td ms-tableCell style="text-align: right">
+            <a [routerLink]="item.url">
+              <button msButton>Détails</button>
+            </a>
 
-          <button msIconButton icon="MiniExpand"
-                  theme="primary"></button>
+            <button msIconButton icon="MiniExpand"
+                    theme="primary"></button>
 
-        </td>
-      </tr>
-    </ms-table>
-  </div>
-</msPaginator>
+          </td>
+        </tr>
+      </ms-table>
+    </div>
+  </msPaginator>
+
+</ng-container>
