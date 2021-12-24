@@ -4,7 +4,9 @@ import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
 
 @Component({
-  template: `<ExaminationList [school]="school"></ExaminationList>`
+  template: `
+      <h4 class="mt-3">Examens de l'établissement</h4>
+      <ExaminationList class="mt-3" [params]="{schoolId: school.id}"></ExaminationList>`
 })
 export class SchoolExaminationPage {
   school: School;

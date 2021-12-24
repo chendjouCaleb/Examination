@@ -12,6 +12,7 @@ import {
   MsTableModule
 } from "@ms-fluent/components";
 import {
+  ExaminationModule,
   SemesterAddModule, SemesterCourseListModule,
   SemesterListModule,
   YearStudentDetailsModule,
@@ -24,6 +25,7 @@ import {ControlModule} from "../../../../controls";
 import {YearSchoolTeacherPage} from "./YearSchoolTeacher.page";
 import {YearSchoolTeacherDetailsPage} from "./YearSchoolTeacherDetails.page";
 import {YearCoursesPage} from "./YearCourses.page";
+import {YearExaminationsPage} from "./YearExaminationPage";
 
 const routes: Routes = [
   {
@@ -34,6 +36,7 @@ const routes: Routes = [
       {path: 'teachers/:yearTeacherId', component: YearSchoolTeacherDetailsPage, data: {label: 'teachers'}},
       {path: 'teachers', component: YearSchoolTeacherPage, data: {label: 'teachers'}},
       {path: 'courses', component: YearCoursesPage, data: {label: 'courses'}},
+      {path: 'examinations', component: YearExaminationsPage, data: {label: 'examinations'}},
       {path: 'home', redirectTo: '', pathMatch: 'full'}
     ]
   }
@@ -44,9 +47,9 @@ const routes: Routes = [
     SemesterListModule, YearTeacherModule,
     MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule, YearStudentListModule,
     YearStudentDetailsModule, MsTableModule, ControlModule, MsPaginatorModule, YearTeacherListModule,
-    YearTeacherDetailsModule, SemesterCourseListModule],
+    YearTeacherDetailsModule, SemesterCourseListModule, ExaminationModule],
   declarations: [YearSchoolHomePage, YearSchoolStudentPage, YearSchoolStudentDetailsPage, YearSchoolTeacherPage,
-    YearSchoolPageLayout, YearSchoolTeacherDetailsPage, YearCoursesPage]
+    YearSchoolPageLayout, YearSchoolTeacherDetailsPage, YearCoursesPage, YearExaminationsPage ]
 })
 export class YearSchoolPageModule {
 

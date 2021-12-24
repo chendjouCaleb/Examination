@@ -22,9 +22,12 @@ namespace Exam.Controllers.Periods
 
 
         [HttpGet("{semesterStudentId}")]
-        public SemesterStudent Get(SemesterStudent semesterStudent)
+        public SemesterStudent Get(long semesterStudentId)
         {
-            return semesterStudent;
+            return _dbContext.Set<SemesterStudent>()
+                .Include(s => s.YearStudent)
+                .ThenInclude(s => s.Student)
+                .FirstOrDefault(e => e.Id == semesterStudentId);
         }
 
 
@@ -35,7 +38,9 @@ namespace Exam.Controllers.Periods
             [FromQuery] long? semesterLevelId, [FromQuery] long? semesterLevelSpecialityId
         )
         {
-            IQueryable<SemesterStudent> query = _dbContext.Set<SemesterStudent>();
+            IQueryable<SemesterStudent> query = _dbContext.Set<SemesterStudent>()
+                .Include(s => s.YearStudent)
+                .ThenInclude(s => s.Student);
 
             if (studentId != null)
             {

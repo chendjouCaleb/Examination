@@ -22,7 +22,7 @@ export class TestAddService {
     modalRef.componentInstance.examination = params.examination;
     modalRef.componentInstance.examinationDepartment = params.examinationDepartment;
     modalRef.componentInstance.examinationLevel = params.examinationLevel;
-    modalRef.componentInstance.course = params.course;
+    modalRef.componentInstance.semesterCourse = params.semesterCourse;
     return modalRef.afterClosed() as unknown as Observable<Test>;
   }
 }

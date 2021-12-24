@@ -4,16 +4,14 @@ import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router'
 import {CurrentItems} from '../../../../current-items';
 import {Title} from "@angular/platform-browser";
 import {locales} from "../../../../../infrastructure/locales";
+import {RibbonPageLayout} from "../../../../../infrastructure";
 
 @Component({
   templateUrl: 'YearSchoolPageLayout.html',
 })
-export class YearSchoolPageLayout implements AfterViewInit {
+export class YearSchoolPageLayout extends RibbonPageLayout implements AfterViewInit {
   school: School;
   year: Year;
-
-  @ViewChild(RouterLink)
-  private activeLink : RouterLink;
 
   @ViewChild(RouterOutlet)
   outlet: RouterOutlet;
@@ -24,6 +22,7 @@ export class YearSchoolPageLayout implements AfterViewInit {
   constructor(public _router: Router, currentItems: CurrentItems,
               private browserTitle: Title,
               @Optional() private route: ActivatedRoute) {
+    super();
     this.school = currentItems.get('school');
     this.year = currentItems.get('year');
   }

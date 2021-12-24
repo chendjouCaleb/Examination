@@ -6,7 +6,6 @@ using Everest.AspNetStartup.Infrastructure;
 using Exam.Authorizers;
 using Exam.Destructors;
 using Exam.Entities;
-using Exam.Entities.Courses;
 using Exam.Entities.Periods;
 using Exam.Filters;
 using Exam.Infrastructure;
@@ -89,42 +88,42 @@ namespace Exam.Controllers
             int take = 100,
             int skip = 0)
         {
-            IQueryable<Test> tests = _testRepository.Set;
+            IQueryable<Test> query = _testRepository.Set;
             
-            tests.ToList().ForEach(_Update);
+            //tests.ToList().ForEach(_Update);
 
             if (courseId != null)
             {
-                tests = tests.Where(t => t.SemesterCourse.CourseId == courseId);
+                query = query.Where(t => t.SemesterCourse.CourseId == courseId);
             }
             
             if (semesterCourseId != null)
             {
-                tests = tests.Where(t => t.SemesterCourseId == semesterCourseId);
+                query = query.Where(t => t.SemesterCourseId == semesterCourseId);
             }
 
             if (examinationLevelId != null)
             {
-                tests = tests.Where(t => t.ExaminationLevelId == examinationLevelId);
+                query = query.Where(t => t.ExaminationLevelId == examinationLevelId);
             }
             
 
             if (examinationDepartmentId != null)
             {
-                tests = tests.Where(t => t.ExaminationLevel.ExaminationDepartmentId == examinationDepartmentId);
+                query = query.Where(t => t.ExaminationLevel.ExaminationDepartmentId == examinationDepartmentId);
             }
 
             if (examinationId != null)
             {
-                tests = tests.Where(t => t.ExaminationLevel.ExaminationDepartment.ExaminationId == examinationId);
+                query = query.Where(t => t.ExaminationLevel.ExaminationDepartment.ExaminationId == examinationId);
             }
 
             if (!string.IsNullOrWhiteSpace(state))
             {
-                tests = tests.Where(t => t.State == state);
+                query = query.Where(t => t.State == state);
             }
 
-            var collection = tests.Skip(skip).Take(take);
+            var collection = query.Skip(skip).Take(take);
 
             return collection.ToList();
         }

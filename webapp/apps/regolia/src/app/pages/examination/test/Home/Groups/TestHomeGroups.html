@@ -1,0 +1,20 @@
+<a *ngFor="let testGroup of testGroups" [routerLink]="testGroup.url"
+   style="color: inherit; display: block; margin-bottom: 16px">
+
+  <div style="border-radius: 2px; border: 1px solid var(--borderColor)" class="ms-depth-8 p-2">
+    <h5>Groupe {{testGroup.index + 1}}</h5>
+    <div class="d-flex mt-2">
+
+      <div class="d-flex align-items-center">
+        <i class="ms-Icon ms-Icon--Group"></i>
+        <span class="ml-2">{{testGroup.paperCount}} étudiants</span>
+      </div>
+
+
+      <div class="d-flex align-items-center ml-3">
+        <i class="ms-Icon ms-Icon--Bank"></i>
+        <span class="ml-2">{{testGroup.room?.name}}</span>
+      </div>
+    </div>
+  </div>
+</a>

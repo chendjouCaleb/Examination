@@ -42,7 +42,9 @@ namespace Exam.Controllers.Periods
             [FromQuery] long? yearTeacherId,
             [FromQuery] long? semesterId, [FromQuery] long? semesterDepartmentId)
         {
-            IQueryable<SemesterTeacher> query = DbContext.Set<SemesterTeacher>();
+            IQueryable<SemesterTeacher> query = DbContext.Set<SemesterTeacher>()
+                .Include(s => s.YearTeacher)
+                .ThenInclude(y => y.Teacher);
 
             if (teacherId != null)
             {

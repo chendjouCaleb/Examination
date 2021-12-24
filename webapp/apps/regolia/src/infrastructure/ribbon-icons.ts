@@ -1,7 +1,8 @@
 import {InjectionToken} from "@angular/core";
 
 export const MENU_ICONS_VALUES = {
-  course: '/assets/icon/books.png',
+  course: '/assets/icon/test.png',
+  test: '/assets/icon/books.png',
   books: '/assets/icon/books.png',
   courseHour: '/assets/icon/calendrier.png',
   courseSession: '/assets/icon/schedule.svg',

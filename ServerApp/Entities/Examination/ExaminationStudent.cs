@@ -16,11 +16,12 @@ namespace Exam.Entities
         public virtual SemesterStudent SemesterStudent { get; set; }
         public long SemesterStudentId { get; set; }
 
-
+        [JsonIgnore]
         public virtual ExaminationLevel ExaminationLevel { get; set; }
         public long? ExaminationLevelId { get; set; }
 
-        [JsonIgnore] public virtual ExaminationLevelSpeciality ExaminationLevelSpeciality { get; set; }
+        [JsonIgnore] 
+        public virtual ExaminationLevelSpeciality ExaminationLevelSpeciality { get; set; }
         public long? ExaminationLevelSpecialityId { get; set; }
 
 

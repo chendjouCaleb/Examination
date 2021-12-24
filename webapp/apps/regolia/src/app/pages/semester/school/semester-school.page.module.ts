@@ -6,6 +6,7 @@ import {SemesterSchoolPageLayout} from "./layout/SemesterSchoolPageLayout";
 import {LayoutModule} from "../../../../infrastructure";
 import {BreadcrumbModule, MsActionMenuModule, MsButtonModule, MsRibbonModule} from "@ms-fluent/components";
 import {
+  ExaminationModule,
   SemesterAddModule, SemesterCourseListModule,
   SemesterListModule, SemesterStudentListModule,
   SemesterTeacherListModule,
@@ -16,6 +17,7 @@ import {SemesterTeachersPage} from "./SemesterTeachers.page";
 import {SemesterItemModule} from "../../../components/semester/item";
 import {SemesterCoursePage} from "./SemesterCourse.page";
 import {SemesterStudentsPage} from "./SemesterStudents.page";
+import {SemesterExaminationPage} from "./SemesterExaminationPage";
 
 const routes: Routes = [
   {
@@ -24,6 +26,7 @@ const routes: Routes = [
       {path: 'teachers', component: SemesterTeachersPage, data: {label: 'teachers'}},
       {path: 'courses', component: SemesterCoursePage, data: {label: 'courses'}},
       {path: 'students', component: SemesterStudentsPage, data: {label: 'students'}},
+      {path: 'examinations', component: SemesterExaminationPage, data: {label: 'examinations'}},
       {path: 'home', redirectTo: '', pathMatch: 'full'}
     ]
   }
@@ -31,10 +34,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, SemesterAddModule,
-    SemesterListModule, SemesterTeacherModule,
-    MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule, SemesterTeacherListModule, SemesterItemModule, SemesterCourseListModule, SemesterStudentListModule],
+    SemesterListModule, SemesterTeacherModule, MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule,
+    MsActionMenuModule, SemesterTeacherListModule, SemesterItemModule, SemesterCourseListModule, SemesterStudentListModule, ExaminationModule],
   declarations: [SemesterSchoolHomePage, SemesterSchoolPageLayout, SemesterTeachersPage,
-    SemesterCoursePage, SemesterStudentsPage]
+    SemesterCoursePage, SemesterStudentsPage, SemesterExaminationPage]
 })
 export class SemesterSchoolPageModule {
 

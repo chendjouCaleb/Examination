@@ -7,7 +7,6 @@ export class SemesterStudent extends Entity<number> {
 
   constructor(value: any = {}) {
     super();
-
     this.id = value.id;
     this.registrationDate = new Date(value.registrationDate);
 

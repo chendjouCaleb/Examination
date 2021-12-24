@@ -5,6 +5,7 @@ using Exam.Entities;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Controllers
 {
@@ -21,7 +22,11 @@ namespace Exam.Controllers
         [HttpGet("{examinationDepartmentId}")]
         public ExaminationDepartment Get(long examinationDepartmentId)
         {
-            return _repository.Find(examinationDepartmentId);
+            return _repository.Set
+                .Include(e => e.SemesterDepartment)
+                .ThenInclude(e => e.YearDepartment)
+                .ThenInclude(e => e.Department)
+                .FirstOrDefault(e => e.Id == examinationDepartmentId);
         }
 
         [HttpGet]
@@ -31,7 +36,10 @@ namespace Exam.Controllers
             [FromQuery] long? semesterDepartmentId,
             [FromQuery] long? departmentId)
         {
-            var query = _repository.Set;
+            IEnumerable<ExaminationDepartment> query = _repository.Set
+                .Include(e => e.SemesterDepartment)
+                .ThenInclude(e => e.YearDepartment)
+                .ThenInclude(e => e.Department);
 
             if (examinationId != null)
             {
@@ -53,7 +61,7 @@ namespace Exam.Controllers
                 query = query.Where(e => e.SemesterDepartment.YearDepartment.DepartmentId == departmentId);
             }
 
-            return new ExaminationDepartment[0];
+            return query.ToList();
         }
 
 

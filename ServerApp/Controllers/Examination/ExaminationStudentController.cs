@@ -24,7 +24,10 @@ namespace Exam.Controllers
         [HttpGet("{examinationStudentId}")]
         public ExaminationStudent Get(long examinationStudentId)
         {
-            return _dbContext.Set<ExaminationStudent>().Find(examinationStudentId);
+            return _dbContext.Set<ExaminationStudent>()
+                .Include(e => e.SemesterStudent)
+                .ThenInclude(s => s.YearStudent).ThenInclude(s => s.Student)
+                .FirstOrDefault(e => e.Id == examinationStudentId);
         }
 
         [HttpGet]

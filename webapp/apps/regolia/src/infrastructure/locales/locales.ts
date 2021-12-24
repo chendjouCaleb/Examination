@@ -16,5 +16,6 @@ export const locales = {
   'correctors': 'Correcteurs',
   'supervisors': 'Superviseurs',
   'principals': 'Délégués',
-  'secretaries': 'Sécrétaires'
+  'secretaries': 'Sécrétaires',
+  tests: 'épreuves'
 };

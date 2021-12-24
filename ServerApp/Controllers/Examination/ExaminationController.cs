@@ -100,8 +100,8 @@ namespace Exam.Controllers
 
         [HttpPost]
         [ValidModel]
-        [RequireQueryParameter("schoolId")]
-        [LoadSchool(Source = ParameterSource.Query)]
+        [RequireQueryParameter("semesterId")]
+        [LoadSemester(Source = ParameterSource.Query, SchoolItemName = "school")]
         [IsDirector]
         public CreatedAtActionResult Add(Semester semester, [FromBody] ExaminationForm form)
         {

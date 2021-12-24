@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
@@ -58,9 +59,10 @@ namespace Exam.Loaders.Courses
             
             if (!string.IsNullOrWhiteSpace(SchoolItemName))
             {
+                School school = dbContext.Set<School>()
+                    .FirstOrDefault(s => s.Id == semesterCourse.SemesterLevel.YearLevel.Level.Department.SchoolId);
 
-                context.HttpContext.Items[SchoolItemName] =
-                    semesterCourse.SemesterLevel.YearLevel.Level.Department.SchoolId;
+                context.HttpContext.Items[SchoolItemName] = school;
             }
         }
     }

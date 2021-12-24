@@ -35,8 +35,11 @@ namespace Exam.Controllers
             Test test = _testController._Add(semesterCourse, examinationLevel, form, planner);
             _dbContext.Set<Test>().Add(test);
 
-            var testLevelSpecialities = _testLevelSpecialityController._AddAll(test);
-            _dbContext.AddRange(testLevelSpecialities);
+            if (!test.IsGeneral)
+            {
+                var testLevelSpecialities = _testLevelSpecialityController._AddAll(test);
+                _dbContext.AddRange(testLevelSpecialities);   
+            }
 
             if (semesterCourse.Course.MultipleScore)
             {
