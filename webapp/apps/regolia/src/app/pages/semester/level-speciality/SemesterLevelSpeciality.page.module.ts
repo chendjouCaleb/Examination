@@ -7,20 +7,31 @@ import {LayoutModule} from "../../../../infrastructure";
 import {MsActionMenuModule, MsRibbonModule} from "@ms-fluent/components";
 import {SemesterLevelSpecialityStudentsPage} from "./SemesterLevelSpecialityStudents.page";
 import {SemesterStudentListModule} from "../../../components/semester-student/List";
+import {SemesterLevelSpecialityCourseHoursPage} from "./SemesterLevelSpecialityCourseHoursPage";
+import {SemesterLevelSpecialityCourseSessionsPage} from "./SemesterLevelSpecialityCourseSessions.page";
+import {SemesterLevelCourseSessionsPage} from "../level/SemesterLevelCourseSessions.page";
+import {SemesterLevelCourseHoursPage} from "../level/SemesterLevelCourseHoursPage";
+import {CourseHourModule} from "../../../components/course-hour";
+import {CourseSessionModule} from "../../../components/course-session";
 
 const routes: Routes = [
   {
     path: '', component: SemesterLevelSpecialityPageLayout,  children: [
       {path: '', component: SemesterLevelSpecialityHomePage, data: {label: 'home'}},
       {path: 'students', component: SemesterLevelSpecialityStudentsPage, data: {label: 'students'} },
-      {path: 'home', redirectTo: '', pathMatch: 'full'}
+      {path: 'course-sessions', component: SemesterLevelCourseSessionsPage, data: {label: 'course-sessions'}},
+      {path: 'course-hours', component: SemesterLevelCourseHoursPage, data: {label: 'course-hours'}},
+      {path: 'home', redirectTo: '', pathMatch: 'full'},
+      {path: 'courseSessions', redirectTo: 'course-sessions', pathMatch: 'full'},
+      {path: 'courseHours', redirectTo: 'course-hours', pathMatch: 'full'}
     ]
   }
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, SemesterStudentListModule, MsActionMenuModule],
-  declarations: [ SemesterLevelSpecialityHomePage, SemesterLevelSpecialityStudentsPage, SemesterLevelSpecialityPageLayout]
+  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, SemesterStudentListModule, MsActionMenuModule, CourseHourModule, CourseSessionModule],
+  declarations: [ SemesterLevelSpecialityHomePage, SemesterLevelSpecialityStudentsPage, SemesterLevelSpecialityPageLayout,
+    SemesterLevelSpecialityCourseHoursPage, SemesterLevelSpecialityCourseSessionsPage]
 })
 export class SemesterLevelSpecialityPageModule {
 

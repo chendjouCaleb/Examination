@@ -1787,6 +1787,7 @@
           </e>
           <e p="SchoolBuilder.cs" t="Include" />
           <e p="SchoolBuilderController.cs" t="Include" />
+          <e p="SemesterGroupController.cs" t="Include" />
           <e p="test" t="Include">
             <e p="GroupPaperController.cs" t="Include" />
             <e p="PaperController.cs" t="Include" />
@@ -2211,6 +2212,7 @@
               <e p="SemesterCourseLevelSpeciality.cs" t="Include" />
               <e p="SemesterCourseTeacher.cs" t="Include" />
               <e p="SemesterDepartment.cs" t="Include" />
+              <e p="SemesterGroup.cs" t="Include" />
               <e p="SemesterLevel.cs" t="Include" />
               <e p="SemesterLevelSpeciality.cs" t="Include" />
               <e p="SemesterSpeciality.cs" t="Include" />
@@ -2319,6 +2321,7 @@
           <e p="SemesterCourseLevelSpecialityLoader.cs" t="Include" />
           <e p="SemesterCourseTeacherLoader.cs" t="Include" />
           <e p="SemesterDepartmentLoader.cs" t="Include" />
+          <e p="SemesterGroupLoader.cs" t="Include" />
           <e p="SemesterLevelLoader.cs" t="Include" />
           <e p="SemesterLevelSpecialityLoader.cs" t="Include" />
           <e p="SemesterLoader.cs" t="Include" />
@@ -2357,6 +2360,7 @@
           <e p="ScoreForm.cs" t="Include" />
           <e p="SemesterCourseForm.cs" t="Include" />
           <e p="SemesterForm.cs" t="Include" />
+          <e p="SemesterGroupForm.cs" t="Include" />
           <e p="SpecialityForm.cs" t="Include" />
           <e p="Statistics" t="Include">
             <e p="DepartmentStatistics.cs" t="Include" />

@@ -69,7 +69,7 @@ namespace Exam.Controllers
 
 
         [HttpGet]
-        public IEnumerable<TestGroup> List([FromQuery] long? testId, [FromQuery] long? roomId,
+        public IEnumerable<TestGroup> List([FromQuery] long[]? testId, [FromQuery] long? roomId,
             [FromQuery] string state, [FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
             IQueryable<TestGroup> queryable = _testGroupRepository.Set;
@@ -77,7 +77,7 @@ namespace Exam.Controllers
 
             if (testId != null)
             {
-                queryable = queryable.Where(g => testId == g.TestId);
+                queryable = queryable.Where(g => testId.Contains(g.TestId));
             }
 
 
@@ -119,7 +119,7 @@ namespace Exam.Controllers
 
             if (testGroup != null)
             {
-                return testGroup;
+                throw new DuplicateObjectException("DUPLICATE_GROUP_ROOM");
             }
 
             if (!room.School.Equals(_testRepository.GetSchool(test)))

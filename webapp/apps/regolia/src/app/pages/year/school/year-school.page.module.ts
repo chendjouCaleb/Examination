@@ -7,16 +7,23 @@ import {LayoutModule} from "../../../../infrastructure";
 import {
   BreadcrumbModule,
   MsActionMenuModule,
-  MsButtonModule, MsPaginatorModule,
+  MsButtonModule,
+  MsPaginatorModule,
   MsRibbonModule,
   MsTableModule
 } from "@ms-fluent/components";
 import {
+  CourseHourModule,
+  CourseSessionModule,
   ExaminationModule,
-  SemesterAddModule, SemesterCourseListModule,
+  SemesterAddModule,
+  SemesterCourseListModule,
   SemesterListModule,
   YearStudentDetailsModule,
-  YearStudentListModule, YearTeacherDetailsModule, YearTeacherList, YearTeacherListModule, YearTeacherModule
+  YearStudentListModule,
+  YearTeacherDetailsModule,
+  YearTeacherListModule,
+  YearTeacherModule
 } from "@examination/components";
 import {MomentModule} from "ngx-moment";
 import {YearSchoolStudentPage} from "./YearSchoolStudent.page";
@@ -26,6 +33,9 @@ import {YearSchoolTeacherPage} from "./YearSchoolTeacher.page";
 import {YearSchoolTeacherDetailsPage} from "./YearSchoolTeacherDetails.page";
 import {YearCoursesPage} from "./YearCourses.page";
 import {YearExaminationsPage} from "./YearExaminationPage";
+import {ExaminationListModule} from "../../../components/examination/list";
+import {YearCourseHoursPage} from "./YearCourseHoursPage";
+import {YearCourseSessionsPage} from "./YearCourseSessions.page";
 
 const routes: Routes = [
   {
@@ -36,8 +46,12 @@ const routes: Routes = [
       {path: 'teachers/:yearTeacherId', component: YearSchoolTeacherDetailsPage, data: {label: 'teachers'}},
       {path: 'teachers', component: YearSchoolTeacherPage, data: {label: 'teachers'}},
       {path: 'courses', component: YearCoursesPage, data: {label: 'courses'}},
+      {path: 'course-sessions', component: YearCourseSessionsPage, data: {label: 'course-sessions'}},
+      {path: 'course-hours', component: YearCourseHoursPage, data: {label: 'course-hours'}},
       {path: 'examinations', component: YearExaminationsPage, data: {label: 'examinations'}},
-      {path: 'home', redirectTo: '', pathMatch: 'full'}
+      {path: 'home', redirectTo: '', pathMatch: 'full'},
+      {path: 'courseSessions', redirectTo: 'course-sessions', pathMatch: 'full'},
+      {path: 'courseHours', redirectTo: 'course-hours', pathMatch: 'full'}
     ]
   }
 ];
@@ -47,9 +61,10 @@ const routes: Routes = [
     SemesterListModule, YearTeacherModule,
     MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule, YearStudentListModule,
     YearStudentDetailsModule, MsTableModule, ControlModule, MsPaginatorModule, YearTeacherListModule,
-    YearTeacherDetailsModule, SemesterCourseListModule, ExaminationModule],
+    YearTeacherDetailsModule, SemesterCourseListModule, ExaminationModule, ExaminationListModule, CourseSessionModule, CourseHourModule],
   declarations: [YearSchoolHomePage, YearSchoolStudentPage, YearSchoolStudentDetailsPage, YearSchoolTeacherPage,
-    YearSchoolPageLayout, YearSchoolTeacherDetailsPage, YearCoursesPage, YearExaminationsPage ]
+    YearSchoolPageLayout, YearSchoolTeacherDetailsPage, YearCoursesPage, YearExaminationsPage, YearCourseHoursPage,
+    YearCourseSessionsPage]
 })
 export class YearSchoolPageModule {
 

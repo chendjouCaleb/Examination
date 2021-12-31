@@ -9,9 +9,9 @@ import {YearLevelLoader} from "../year";
 @Injectable({providedIn: 'root'})
 export class SemesterLevelLoader extends Loader<SemesterLevel, number> {
 
-  constructor( public _httpClient: SemesterLevelHttpClient,
-               private _semesterDepartmentLoader: SemesterDepartmentLoader,
-               private _yearLevelLoader: YearLevelLoader) {
+  constructor(public _httpClient: SemesterLevelHttpClient,
+              private _semesterDepartmentLoader: SemesterDepartmentLoader,
+              private _yearLevelLoader: YearLevelLoader) {
     super(_httpClient);
   }
 
@@ -19,6 +19,12 @@ export class SemesterLevelLoader extends Loader<SemesterLevel, number> {
     item.yearLevel = await this._yearLevelLoader.loadById(item.yearLevelId);
     item.semesterDepartment = await this._semesterDepartmentLoader.loadById(item.semesterDepartmentId);
     return item;
+  }
+
+  async loads(params: any): Promise<SemesterLevel[]> {
+    const items = await this._httpClient.list(params);
+    await this.loadAll(items);
+    return items.toArray();
   }
 
   async loadById(id: number): Promise<SemesterLevel> {

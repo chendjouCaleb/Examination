@@ -17,7 +17,8 @@
         <SemesterCourseSessionsPage [semesterCourse]="semesterCourse"></SemesterCourseSessionsPage>
       </div>
       <div *msPivotContentDef>
-        test
+        <h4 class="my-2">Épreuves</h4>
+        <TestList [params]="{semesterCourseId: semesterCourse.id}"></TestList>
       </div>
     </msPivotBody>
   </msPivot>

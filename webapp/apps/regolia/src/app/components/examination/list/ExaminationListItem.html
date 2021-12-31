@@ -1,0 +1,19 @@
+<div class="ms-fontSize-16 ms-fontWeight-semibold">
+  {{examination.name}}
+</div>
+
+<div class="ms-fontSize-16">
+  <div>
+    <span class="ms-fontWeight-light">Du </span>
+    <span > {{examination.expectedStartDate | amDateFormat:'LL' }}</span>
+  </div>
+
+  <div>
+    <span class="ms-fontWeight-light">Au </span>
+    <span > {{examination.expectedEndDate | amDateFormat:'LL' }}</span>
+  </div>
+</div>
+
+<div class="mt-2">
+  <MsStateBadge [state]="examination.state"></MsStateBadge>
+</div>

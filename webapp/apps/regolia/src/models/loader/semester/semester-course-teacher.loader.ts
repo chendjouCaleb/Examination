@@ -39,6 +39,13 @@ export class SemesterCourseTeacherLoader extends Loader<SemesterCourseTeacher, n
     return item;
   }
 
+  async loads(params: any): Promise<SemesterCourseTeacher[]> {
+    const items = await this._httpClient.list(params);
+    await this.loadAll(items);
+
+    return items.toArray();
+  }
+
   async loadById(id: number): Promise<SemesterCourseTeacher> {
     const item = await this._httpClient.findAsync(id);
     await this.load(item);

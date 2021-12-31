@@ -38,6 +38,8 @@ export class YearDepartmentPageLayout implements AfterViewInit {
       this.title = locales[this.selectedLabel];
       this.browserTitle.setTitle(`${this.year.rangeYears()} • ${this.yearDepartment.department.name} • ${this.title}`);
     });
+
+
   }
 
 

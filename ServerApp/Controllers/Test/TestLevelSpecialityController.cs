@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
-using Exam.Entities.Courses;
 using Exam.Entities.Periods;
 using Exam.Infrastructure;
 using Exam.Loaders;
@@ -50,7 +49,7 @@ namespace Exam.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TestLevelSpeciality> List([FromQuery] long? testId,
+        public IEnumerable<TestLevelSpeciality> List([FromQuery] long[]? testId,
             [FromQuery] long? examinationLevelSpecialityId,
             [FromQuery] long? semesterLevelSpecialityId,
             [FromQuery] long? yearLevelSpecialityId,
@@ -59,10 +58,10 @@ namespace Exam.Controllers
             [FromQuery] long? semesterCourseLevelSpecialityId
         )
         {
-            IQueryable<TestLevelSpeciality> query = _dbContext.Set<TestLevelSpeciality>();
+            IQueryable<TestLevelSpeciality> query = _testLevelSpecialityRepository.Set;
             if (testId != null)
             {
-                query = query.Where(cls => cls.TestId == testId);
+                query = query.Where(t => testId.Contains(t.TestId.Value));
             }
 
             if (examinationLevelSpecialityId != null)

@@ -8,7 +8,10 @@ import {BreadcrumbModule, MsActionMenuModule, MsButtonModule, MsRibbonModule} fr
 import {YearDepartmentTeacherPage} from "./YearDepartmentTeacher.page";
 import {YearTeacherDetailsPage} from "./YearTeacherDetails.page";
 import {
-  SemesterCourseListModule, YearStudentListModule,
+  CourseHourModule,
+  CourseSessionModule,
+  SemesterCourseListModule,
+  YearStudentListModule,
   YearTeacherDetailsModule,
   YearTeacherListModule,
   YearTeacherModule,
@@ -17,6 +20,8 @@ import {
 import {YearDepartmentCoursesPage} from "./YearDepartmentCourses.page";
 import {SemesterItemModule} from "../../../components/semester/item";
 import {YearDepartmentStudentPage} from "./YearDepartmentStudent.page";
+import {YearDepartmentCourseHoursPage} from "./YearDepartmentCourseHoursPage";
+import {YearDepartmentCourseSessionsPage} from "./YearDepartmentCourseSessions.page";
 
 const routes: Routes = [
   {
@@ -25,21 +30,25 @@ const routes: Routes = [
       {path: 'courses', component: YearDepartmentCoursesPage, data: {label: 'courses'}},
       {path: 'students', component: YearDepartmentStudentPage, data: {label: 'students'}},
       {path: 'teachers', component: YearDepartmentTeacherPage, data: {label: 'teachers'}},
+      {path: 'course-sessions', component: YearDepartmentCourseSessionsPage, data: {label: 'course-sessions'}},
+      {path: 'course-hours', component: YearDepartmentCourseHoursPage, data: {label: 'course-hours'}},
       {
         path: 'teachers/:yearTeacherId', data: {label: 'teachers'}, resolve: [YearTeacherResolver],
         loadChildren: () => import('./teacher/YearTeacherPage.module').then(m => m.YearTeacherPageModule)
       },
 
-      {path: 'home', redirectTo: '', pathMatch: 'full'}
+      {path: 'home', redirectTo: '', pathMatch: 'full'},
+      {path: 'courseSessions', redirectTo: 'course-sessions', pathMatch: 'full'},
+      {path: 'courseHours', redirectTo: 'course-hours', pathMatch: 'full'}
     ]
   }
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, YearTeacherModule,
-    YearTeacherListModule, MsActionMenuModule, YearTeacherDetailsModule, BreadcrumbModule, SemesterItemModule, SemesterCourseListModule, MsButtonModule, YearStudentListModule],
+    YearTeacherListModule, MsActionMenuModule, YearTeacherDetailsModule, BreadcrumbModule, SemesterItemModule, SemesterCourseListModule, MsButtonModule, YearStudentListModule, CourseHourModule, CourseSessionModule],
   declarations: [YearDepartmentHomePage, YearDepartmentPageLayout, YearDepartmentTeacherPage, YearTeacherDetailsPage,
-    YearDepartmentCoursesPage, YearDepartmentStudentPage]
+    YearDepartmentCoursesPage, YearDepartmentStudentPage, YearDepartmentCourseHoursPage, YearDepartmentCourseSessionsPage]
 })
 export class YearDepartmentPageModule {
 

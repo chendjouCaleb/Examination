@@ -4,7 +4,7 @@ import {CurrentItems} from "../../../current-items";
 
 @Component({
   template: `
-    <h3>Épreuves</h3>
+    <h3 class="my-2">Épreuves</h3>
     <div class="mt-2">
         <TestList [params]="{ examinationSpecialityId : examinationSpeciality.id}"></TestList>
     </div>

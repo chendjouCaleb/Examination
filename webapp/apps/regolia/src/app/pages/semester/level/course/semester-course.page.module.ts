@@ -9,7 +9,7 @@ import {
   CourseModule, CourseSessionModule,
   CourseTeacherModule,
   ExaminationModule,
-  SpecialityModule,
+  SpecialityModule, TestListModule,
   TestModule
 } from '@examination/components';
 import {SemesterCoursePageLayout} from './layout/semester-course.page-layout';
@@ -27,7 +27,7 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, MsButtonModule, MsTableModule, SpecialityModule, CourseModule, ExaminationModule,
     CourseModule, MsPivotModule, TestModule, CourseTeacherModule,
-    RouterModule.forChild(routes), LayoutModule, ControlModule, MomentModule, MsActionMenuModule, SemesterCourseTeacherListModule, CourseHourModule, CourseSessionModule],
+    RouterModule.forChild(routes), LayoutModule, ControlModule, MomentModule, MsActionMenuModule, SemesterCourseTeacherListModule, CourseHourModule, CourseSessionModule, TestListModule],
   declarations: [SemesterCoursePageLayout, SemesterCourseHomePage, SemesterCourseHoursPage,  SemesterCourseSessionsPage]
 })
 export class SemesterCoursePageModule {

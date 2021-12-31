@@ -1,8 +1,9 @@
 import {Component, ViewChild} from "@angular/core";
-import {School, Semester} from 'examination/entities';
+import {Semester} from 'examination/entities';
 import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
-import {ExaminationList, ExaminationService} from "../../../components/examination";
+import {ExaminationService} from "../../../components/examination";
+import {SemesterExaminationList} from "../../../components/examination/list";
 
 @Component({
   template: `
@@ -10,12 +11,12 @@ import {ExaminationList, ExaminationService} from "../../../components/examinati
       <MsActionMenu class="ms-depth-8 p-2 my-2">
           <button MsActionMenuButton icon="Add" (click)="add()">Ajouter un examination</button>
       </MsActionMenu>
-      <ExaminationList class="mt-3" [params]="{semesterId: semester.id}"></ExaminationList>`
+      <SemesterExaminationList class="mt-3" [params]="{semesterId: semester.id}"></SemesterExaminationList>`
 })
 export class SemesterExaminationPage {
   semester: Semester;
-  @ViewChild(ExaminationList)
-  list: ExaminationList;
+  @ViewChild(SemesterExaminationList)
+  list: SemesterExaminationList;
 
   constructor(items: CurrentItems, public _router: Router, public service: ExaminationService) {
     this.semester = items.get('semester');

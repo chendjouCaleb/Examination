@@ -1,7 +1,8 @@
-import {Component} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {ExaminationLevel} from "@examination/entities";
 import {CurrentItems} from "../../../current-items";
 import {TestAddService} from "../../../components/test/add";
+import {TestList} from "../../../components/test/list";
 
 @Component({
   template: `
@@ -18,6 +19,9 @@ import {TestAddService} from "../../../components/test/add";
 export class ExaminationLevelTestsPage {
   examinationLevel: ExaminationLevel;
 
+  @ViewChild(TestList)
+  testList: TestList;
+
   constructor(private items: CurrentItems, private _service: TestAddService) {
     this.examinationLevel = items.get('examinationLevel');
   }
@@ -25,7 +29,7 @@ export class ExaminationLevelTestsPage {
   addTest() {
     this._service.add({examinationLevel: this.examinationLevel}).subscribe(test => {
       if (test) {
-
+        this.testList.addItem(test);
       }
     })
   }

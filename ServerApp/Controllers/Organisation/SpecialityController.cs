@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Castle.Core.Internal;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
@@ -61,12 +63,21 @@ namespace Exam.Controllers
         }
 
         [HttpGet]
-        [RequireQueryParameter("departmentId")]
-        [LoadDepartment(Source = ParameterSource.Query)]
-        public IEnumerable<Speciality> List(Department department)
+        public IEnumerable<Speciality> List([FromQuery] long? schoolId, [FromQuery] long[]? departmentId)
         {
-            Assert.RequireNonNull(department, nameof(department));
-            return _specialityRepository.List(s => department.Equals(s.Department));
+            IQueryable<Speciality> query = _specialityRepository.Set;
+
+            if (schoolId != null)
+            {
+                query = query.Where(s => s.Department.SchoolId == schoolId);
+            }
+
+            if (departmentId != null && !departmentId.IsNullOrEmpty())
+            {
+                query = query.Where(s => departmentId.Contains(s.DepartmentId));
+            }
+
+            return query.ToList();
         }
 
 
