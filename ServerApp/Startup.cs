@@ -11,6 +11,7 @@ using Exam.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using ServerApp.Hubs;
+using User = Exam.Entities.Identity.User;
 
 namespace ServerApp
 {
@@ -44,8 +46,8 @@ namespace ServerApp
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.DateFormatString = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
                 });
-            
-                services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
+
+            services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
             services.AddDbContext<DbContext, PersistenceContext>(options =>
             {
                 options.UseLazyLoadingProxies();
@@ -53,6 +55,15 @@ namespace ServerApp
                 //options.UseSqlite(_configuration["Data:SQLiteConnectionStrings"]);
                 options.UseSqlServer(_configuration["Data:ConnectionStrings:Database"]);
             });
+
+            services.AddIdentity<User, IdentityRole>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                })
+                .AddEntityFrameworkStores<IdentityDataContext>();
 
             services.AddExceptionTransformerFactory();
             services.AddScoped<ExceptionTransformerAttribute>();
@@ -77,8 +88,6 @@ namespace ServerApp
             });
 
             services.AddTransient<SchoolDestructor>();
-            
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,21 +97,20 @@ namespace ServerApp
             app.UseCors("corsPolicy");
 
             app.UseStaticFiles();
-            
+
             if (env.IsProduction())
             {
                 app.UseStaticFiles(new StaticFileOptions
                 {
                     RequestPath = "",
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "./wwwroot/app"))
+                    FileProvider =
+                        new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "./wwwroot/app"))
                 });
             }
 
             app.ParseAuthorization();
 
             app.UseRouting();
-            
-            
 
 
             app.UseEndpoints(endpoints =>
@@ -121,12 +129,8 @@ namespace ServerApp
 
             if (env.IsDevelopment())
             {
-                app.UseSpa(spa =>
-                {
-                    spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:9200");
-                });
+                app.UseSpa(spa => { spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:9200"); });
             }
-            
         }
     }
 }
