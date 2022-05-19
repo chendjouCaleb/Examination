@@ -1,4 +1,5 @@
-﻿using Everest.AspNetStartup.Exceptions;
+﻿using System.Security.Claims;
+using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Entities;
 using Exam.Infrastructure;
@@ -12,14 +13,14 @@ namespace Exam.Authorizers
         public string SchoolItemName { get; set; } = "school";
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            Authorization authorization = 
-                context.HttpContext.Items["Authorization"] as Authorization;
+            string userId = 
+                context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             School school = context.HttpContext.GetItem(SchoolItemName) as School;
-            Assert.RequireNonNull(authorization, nameof(authorization));
+            
             Assert.RequireNonNull(school, nameof(school));
 
-            if (school.PrincipalUserId != authorization.UserId)
+            if (school.PrincipalUserId != userId)
             {
                 throw new UnauthorizedException("L'administrateur principal de cet school est requis pour effectuer l'action.");
             }

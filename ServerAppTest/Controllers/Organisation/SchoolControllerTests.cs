@@ -4,6 +4,7 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
 using Exam.Exceptions;
+using Exam.Identity;
 using Exam.Infrastructure;
 using Exam.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,7 @@ namespace ServerAppTest.Controllers
         private IRepository<School, long> _schoolRepository;
         private IRepository<Member, long> _memberRepository;
 
-        private User _user = new User {Id = Guid.NewGuid().ToString()};
+        private LoggedUser _user = new (){UserId = Guid.NewGuid().ToString()};
         private School _school;
         private SchoolForm _model;
 
@@ -57,10 +58,10 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(_model.Address, school.Address);
             Assert.AreEqual(_model.Acronym, school.Acronym);
             
-            Assert.AreEqual(_user.Id, school.RegisterUserId);
+            Assert.AreEqual(_user.UserId, school.RegisterUserId);
             
             Assert.True(_memberRepository.Exists(school.Principal));
-            Assert.AreEqual(_user.Id, school.Principal.UserId);
+            Assert.AreEqual(_user.UserId, school.Principal.UserId);
             Assert.AreEqual(school, school.Principal.School);
         }
 

@@ -1,0 +1,53 @@
+﻿<div class="p-3" *ngIf="user">
+  <user-settings-image [user]="user"></user-settings-image>
+
+
+  <form *ngIf="form" [formGroup]="form" class="ms-page-form mt-4">
+    <h3>Information public</h3>
+
+
+    <div class="mt-2">
+      <div class="d-flex">
+        <MsFormField label="Nom" style="width: 50%">
+          <input MsInputField formControlName="firstName" id="firstName" type="text">
+        </MsFormField>
+
+        <MsFormField label="Prénom" class="ml-2" style="width: 50%">
+          <input MsInputField formControlName="lastName" id="lastName" type="text">
+        </MsFormField>
+      </div>
+      <app-control-error [control]="form.controls['firstName']"></app-control-error>
+      <app-control-error [control]="form.controls['lastName']"></app-control-error>
+    </div>
+
+    <MsFormField label="Date de naissance">
+      <input MsInputField formControlName="birthDate" id="birthDate" MsDateMask placeholder="dd/mm/yyyy"/>
+      <MsFormFieldContent>
+        <app-control-error [control]="form.controls['birthDate']"></app-control-error>
+      </MsFormFieldContent>
+    </MsFormField>
+
+
+    <div class="mt-3 d-flex align-items-center">
+      <span class="ms-label">Sexe: </span>
+
+      <MsRadioGroup class=" ml-3 d-flex" formControlName="gender">
+        <div class="d-flex align-items-center">
+          <MsRadio id="gender-F" value="F"></MsRadio>
+          <MsLabel class="ms-label ml-2" htmlFor="gender-F">Femme</MsLabel>
+        </div>
+
+        <div class=" ml-3 d-flex align-items-center">
+          <MsRadio id="gender-H" value="H"></MsRadio>
+          <MsLabel class="ms-label ml-2" htmlFor="gender-H">Homme</MsLabel>
+        </div>
+      </MsRadioGroup>
+
+    </div>
+
+    <div class="mt-4 text-right">
+      <button msButton theme="primary" icon="Edit" (click)="changeInfo()" class="ml-3">Modifier</button>
+    </div>
+
+  </form>
+</div>

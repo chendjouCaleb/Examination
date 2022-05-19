@@ -1,0 +1,16 @@
+﻿<div class="ms-dialog-form">
+  <div class="d-flex align-items-center justify-content-center">
+    <img src="/assets/icon/bin.png" width="80" height="80" alt="">
+  </div>
+
+  <div class="mt-4 text-center ms-fontSize-18">
+    Voulez-vous supprimer la spécialité
+    <span class="ms-fontWeight-bold">{{levelSpeciality.speciality.name}}</span>
+    du <span class="ms-fontWeight-bold">niveau {{levelSpeciality.level.index + 1}}</span> ?
+  </div>
+
+  <div class="text-center mt-4">
+    <button msButton MsDialogClose>Annuler</button>
+    <button class="ml-3" msButton theme="error" (click)="delete()">Supprimer</button>
+  </div>
+</div>

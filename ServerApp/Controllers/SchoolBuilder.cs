@@ -4,6 +4,7 @@ using System.IO;
 using Exam.Controllers.Courses;
 using Exam.Entities;
 using Exam.Entities.Courses;
+using Exam.Identity;
 using Exam.Infrastructure;
 using Exam.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,7 +48,7 @@ namespace Exam.Controllers
                 Acronym = "FS",
                 Address = "Yaoundé, UY1"
             };
-            School school = controller.Add(form, new User {Id = schoolAdminUserId})
+            School school = controller.Add(form, new LoggedUser {UserId = schoolAdminUserId})
                 .Value as School;
 
             school.Departments = CreateDepartment(school);

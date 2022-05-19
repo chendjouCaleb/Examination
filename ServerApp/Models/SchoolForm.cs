@@ -15,6 +15,9 @@ namespace Exam.Models
         
         [Required]
         public string Acronym { get; set; }
+
+        [Required]
+        public string Code { get; set; }
     }
 
     public class SchoolInfoForm

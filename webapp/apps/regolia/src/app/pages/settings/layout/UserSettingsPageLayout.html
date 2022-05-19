@@ -1,0 +1,20 @@
+﻿<app-layout>
+
+  <div style="display: grid; grid-template-columns: 200px 1fr; ">
+    <MsRibbonMenu style="height: 100%" [selectedLabel]="selectedLabel">
+      <button class="">
+        <i class="icon-ic_fluent_navigation_16_regular" style="color:var(--textColor)"></i>
+      </button>
+      <a MsRibbonMenuItem [routerLink]="url('profile')" icon="person" label="profile">Profile</a>
+      <a MsRibbonMenuItem [routerLink]="url('admin')" icon="settings" label="account">Paramètres</a>
+      <a MsRibbonMenuItem [routerLink]="url('password')" icon="key" label="password">Mot de passe</a>
+      <a MsRibbonMenuItem label="organisations" icon="building" [routerLink]="url('organisations')">Organisations</a>
+    </MsRibbonMenu>
+
+    <div>
+      <router-outlet #outlet></router-outlet>
+    </div>
+
+
+  </div>
+</app-layout>

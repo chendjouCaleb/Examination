@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Entities;
@@ -12,8 +13,8 @@ namespace Exam.Authorizers
         public string DepartmentItemName { get; set; } = "department";
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            Authorization authorization = 
-                context.HttpContext.Items["Authorization"] as Authorization;
+            string userId = 
+                context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             Department department = context.HttpContext.GetItem(DepartmentItemName) as Department;
             
@@ -22,12 +23,12 @@ namespace Exam.Authorizers
                 throw new ArgumentNullException(nameof(department));
             }
 
-            if (authorization == null)
+            if (userId == null)
             {
-                throw new ArgumentNullException(nameof(authorization));
+                throw new ArgumentNullException(nameof(userId));
             }
 
-            if (!department.PrincipalUserId.Equals(authorization.UserId)) 
+            if (!department.PrincipalUserId.Equals(userId))     
             {
                 throw new UnauthorizedException("L'administrateur de département est requis pour effectuer l'action.");
             }

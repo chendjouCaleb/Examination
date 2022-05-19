@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Exceptions;
@@ -82,15 +84,46 @@ namespace Exam.Controllers.Identity
             return user;
         }
         
+        [HttpGet]
+        public List<User> List([FromQuery] string[] id, [FromQuery] string filter, [FromQuery] int take = 50, [FromQuery] int skip = 0)
+        {
+            IQueryable<User> query = _dataContext.Users;
+
+            if (id is {Length: > 1})
+            {
+                return query.Where(u => id.Contains(u.Id)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filter = filter.ToLowerInvariant();
+                query = query.Where(x => x.FirstName.Contains(filter)
+                                         || x.LastName.Contains(filter) 
+                                         || x.UserName.Contains(filter));
+            }
+
+            query = query.Take(take).Skip(skip);
+
+            var users = query.ToList();
+            
+            users.ForEach(user =>
+            {
+                user.ImageUrl = new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/users/{user.Id}/image");
+            });
+
+            return users;
+        }
+        
         public async Task<bool> EmailExists(string email)
         {
-            return await _dataContext.Users.AnyAsync(e => e.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+            string normalizedEmail = email.ToUpperInvariant();
+            return await _dataContext.Users.AnyAsync(e => e.NormalizedEmail == normalizedEmail);
         }
         
         public async Task<bool> UserNameExists(string userName)
         {
-            return await _dataContext.Users
-                .AnyAsync(e => e.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            string normalized = userName.ToUpper();
+            return await _dataContext.Users.AnyAsync(e => e.UserName == normalized);
         }
 
         public async Task<long> Count()
@@ -115,7 +148,7 @@ namespace Exam.Controllers.Identity
                 throw new InvalidOperationException("{user.constraints.uniqueUserName}");
             }
             
-            UserCode userCode = _userCodeController.CheckCode(model.Email, model.Code);
+            //UserCode userCode = _userCodeController.CheckCode(model.Email, model.Code);
 
             User user = new User
             {
@@ -125,8 +158,6 @@ namespace Exam.Controllers.Identity
                 Email = model.Email,
                 EmailConfirmed = !string.IsNullOrWhiteSpace(model.Email),
                 UserName = model.UserName,
-                Gender = model.Gender,
-                BirthDate = model.BirthDate,
                 
                 IsPrincipal = await Count() == 0
             };
@@ -136,7 +167,7 @@ namespace Exam.Controllers.Identity
 
             if (result.Succeeded)
             {
-                _userCodeController.DeleteCode(userCode);
+               // _userCodeController.DeleteCode(userCode);
                 return user;
             }
 
@@ -411,13 +442,15 @@ namespace Exam.Controllers.Identity
         public async Task<IActionResult> DownloadImage(User user)
         {
             Assert.RequireNonNull(user, nameof(user));
-            if (!user.HasImage)
+            string imagePath = _configuration["File:Paths:UserImages"];
+            string path = Path.Combine(imagePath, "default-user-image.png");
+            if (user.HasImage)
             {
-                return NoContent();
+                string imageName = user.Id + ".png";
+                path = Path.Combine(imagePath, imageName);
             }
 
-            string imageName = user.Id + ".png";
-            string path = Path.Combine(_configuration["File:Paths:UserImages"], imageName);
+            
             Stream memory = new MemoryStream();
 
             using (var stream = new FileStream(path, FileMode.Open))

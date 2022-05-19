@@ -4,6 +4,7 @@ using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Exam.Loaders
@@ -25,14 +26,14 @@ namespace Exam.Loaders
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             Assert.RequireNonNull(context, nameof(context));
-            IRepository<Department, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<Department, long>>();
+            DbContext dbContext = context.HttpContext.RequestServices.GetRequiredService<DbContext>();
+            
             string id = context.GetParameter(ParameterName, Source);
             if (string.IsNullOrEmpty(id))
             {
                 return;
             }
-            Department department = repository.Find(long.Parse(id));
+            Department department = dbContext.Set<Department>().Find(long.Parse(id));
 
             context.HttpContext.Items[ItemName] = department;
 

@@ -1,0 +1,18 @@
+﻿<div>
+  <img #imageElement alt="Image url" style="max-height: 512px">
+</div>
+
+<div class="text-center mt-2" *ngIf="_resizeMode">
+  <button msIconButton icon="Rotate90Clockwise" theme="primary" [rounded]="true"
+          (click)="_cropper.rotate(90)"></button>
+  <button msIconButton class="ml-2" icon="Rotate90CounterClockwise" theme="primary" [rounded]="true"
+          (click)="_cropper.rotate(-90)"></button>
+
+
+</div>
+
+<div>
+  <button msButton (click)="close()">Annuler</button>
+  <button msButton theme="primary" (click)="endResize()">Terminé</button>
+</div>
+

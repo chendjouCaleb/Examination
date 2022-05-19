@@ -1,8 +1,8 @@
 export const locales = {
-  schools: 'Établissements',
-  home: 'Accueil',
-  courses : 'Cours',
-  departments: 'Départments',
+  'schools': 'Établissements',
+  'home': 'Accueil',
+  'courses' : 'Cours',
+  'departments': 'Départments',
   'course-sessions': 'Séances de cours',
   'course-hours': 'Emploi du temps',
   'students': 'étudiants',
@@ -17,5 +17,6 @@ export const locales = {
   'supervisors': 'Superviseurs',
   'principals': 'Délégués',
   'secretaries': 'Sécrétaires',
-  tests: 'épreuves'
+  'tests': 'épreuves',
+  'settings': 'Paramètres'
 };

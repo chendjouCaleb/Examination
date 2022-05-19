@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Everest.AspNetStartup.Binding;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Exam.Entities.Identity
 {
+    
+    [ModelBinder(BinderType = typeof(ItemValueModelBinder))]
     public class User:IdentityUser
     {
         public DateTime RegistrationDate { get; set; }

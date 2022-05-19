@@ -1,12 +1,15 @@
 ﻿using System;
 using System.IO;
 using Exam.Controllers;
+using Exam.Controllers.Identity;
 using Exam.Controllers.Courses;
 using Exam.Controllers.Periods;
 using Exam.Destructors;
 using Exam.Entities;
+using Exam.Entities.Identity;
 using Exam.Hubs;
 using Exam.Persistence;
+using Exam.Services.Emails;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using ServerApp.Hubs;
+using UserController = Exam.Controllers.Identity.UserController;
 
 namespace ServerAppTest
 {
@@ -32,9 +36,27 @@ namespace ServerAppTest
                 options.UseInMemoryDatabase(Guid.NewGuid().ToString());
             });
 
+            ServiceCollection.AddDbContext<IdentityDataContext>(options =>
+            {
+                options.EnableSensitiveDataLogging();
+                options.UseInMemoryDatabase(Guid.NewGuid().ToString());
+            });
+            
+            ServiceCollection.AddIdentity<User, IdentityRole>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                })
+                .AddEntityFrameworkStores<IdentityDataContext>();
+
             ServiceCollection.AddRepositories();
 
             ServiceCollection.AddLogging();
+
+            ServiceCollection.AddTransient<UserController>();
+            ServiceCollection.AddTransient<UserCodeController>();
 
             ServiceCollection.AddTransient<SchoolController>();
             ServiceCollection.AddTransient<DepartmentController>();
@@ -96,6 +118,8 @@ namespace ServerAppTest
             ServiceCollection.AddTransient<SemesterCourseLevelSpecialityController>();
 
             ServiceCollection.AddTransient<SchoolDestructor>();
+
+            ServiceCollection.AddTransient<IEmailSender, EmailSender>();
             
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

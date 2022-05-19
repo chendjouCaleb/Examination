@@ -1,0 +1,51 @@
+﻿
+<div>
+  <div class="section-background p-2">
+    <school-settings-image [school]="school"></school-settings-image>
+  </div>
+
+
+  <div class="section-background p-2 mt-3">
+    <h4>Informations</h4>
+    <div class="ms-description-list">
+      <div class="ms-description-item">
+        <dl>
+          <dt>Nom</dt>
+          <dd>{{school.name}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Acronyme</dt>
+          <dd>{{school.acronym}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Adresse</dt>
+          <dd>{{school.address}}</dd>
+        </dl>
+      </div>
+      <div class="mt-2 text-right">
+        <button msButton theme="primary" icon="Edit" (click)="changeInfo()">Modifier</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ms-description-list ms-border section-background p-2 mt-3">
+    <dl>
+      <dt>Identifiant</dt>
+      <dd>{{school.identifier}}</dd>
+    </dl>
+    <button msButton theme="primary" icon="Edit" (click)="schoolService.changeIdentifier(school)">Changer l'identifiant</button>
+  </div>
+
+  <div class="section-background p-2 mt-3">
+    <h5>Administrateur</h5>
+
+    <div class="d-flex align-items-center mt-2">
+      <MsImagePersona [imageUrl]="school.principalUser.imageUrl"></MsImagePersona>
+      <div>
+        <div>{{school.principalUser.fullName}}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
+using Exam.Entities.Courses;
 using Exam.Entities.Periods;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -27,5 +28,7 @@ namespace Exam.Entities
         
         [JsonIgnore]
         public virtual List<YearLevelSpeciality> YearLevelSpecialities { get; set; }
+        
+        [JsonIgnore] public virtual List<CourseLevelSpeciality> CourseLevelSpecialities { get; set; }
     }
 }

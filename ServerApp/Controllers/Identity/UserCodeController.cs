@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities.Identity;
 using Exam.Infrastructure;
 using Exam.Models.Identity;
+using Exam.Persistence;
 using Exam.Services.Emails;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,15 +16,16 @@ namespace Exam.Controllers.Identity
     [Route("api/users/code")]
     public class UserCodeController
     {
-        private IRepository<UserCode, long> _userCodeRepository;
+        private IdentityDataContext _dataContext;
         private IConfiguration _configuration;
         private IEmailSender _emailSender;
 
-        public UserCodeController(IRepository<UserCode, long> userCodeRepository,
+        public UserCodeController(
+            IdentityDataContext dataContext,
             IEmailSender emailSender,
             IConfiguration configuration)
         {
-            _userCodeRepository = userCodeRepository;
+            _dataContext = dataContext;
             _configuration = configuration;
             _emailSender = emailSender;
         }
@@ -50,13 +53,14 @@ namespace Exam.Controllers.Identity
 
         public UserCode AddOrUpdate(string emailOrPhone)
         {
-            UserCode code = _userCodeRepository.First(u => u.EmailOrPhone == emailOrPhone);
+            UserCode code = _dataContext.UserCodes.FirstOrDefault(u => u.EmailOrPhone == emailOrPhone);
 
             if (code != null)
             {
                 code.Code = _GenerateCode();
                 code.UpdateDate = DateTime.Now;
-                _userCodeRepository.Update(code);
+                _dataContext.Update(code);
+                _dataContext.SaveChanges();
             }
             else
             {
@@ -75,7 +79,7 @@ namespace Exam.Controllers.Identity
                 throw new ArgumentNullException(nameof(emailOrPhone));
             }
 
-            UserCode userCode = _userCodeRepository.First(u => u.EmailOrPhone == emailOrPhone);
+            UserCode userCode = _dataContext.UserCodes.FirstOrDefault(u => u.EmailOrPhone == emailOrPhone);
 
             if (userCode == null)
             {
@@ -93,7 +97,8 @@ namespace Exam.Controllers.Identity
         public void DeleteCode(UserCode userCode)
         {
             Assert.RequireNonNull(userCode, nameof(userCode));
-            _userCodeRepository.Delete(userCode);
+            _dataContext.UserCodes.Remove(userCode);
+            _dataContext.SaveChanges();
         }
 
         public UserCode AddCode(string emailOrPhone)
@@ -109,7 +114,8 @@ namespace Exam.Controllers.Identity
                 Code = _GenerateCode(),
                 UpdateDate = DateTime.UtcNow
             };
-            _userCodeRepository.Save(userCode);
+            _dataContext.Add(userCode);
+            _dataContext.SaveChanges();
 
             return userCode;
         }

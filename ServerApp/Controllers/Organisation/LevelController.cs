@@ -5,6 +5,7 @@ using Castle.Core.Internal;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
+using Exam.Destructors;
 using Exam.Entities;
 using Exam.Infrastructure;
 using Exam.Loaders;
@@ -20,17 +21,20 @@ namespace Exam.Controllers
         private IRepository<Level, long> _levelRepository;
         private ISpecialityRepository _specialityRepository;
         private LevelSpecialityController _levelSpecialityController;
+        private LevelDestructor _levelDestructor;
         private ILogger<LevelController> _logger;
 
 
         public LevelController(IRepository<Level, long> levelRepository,
             ISpecialityRepository specialityRepository,
             LevelSpecialityController levelSpecialityController,
+            LevelDestructor levelDestructor,
             ILogger<LevelController> logger)
         {
             _levelRepository = levelRepository;
             _specialityRepository = specialityRepository;
             _levelSpecialityController = levelSpecialityController;
+            _levelDestructor = levelDestructor;
             _logger = logger;
         }
 
@@ -131,7 +135,7 @@ namespace Exam.Controllers
                 throw new InvalidOperationException("{level.constraints.DeleteOnlyLastLevel}");
             }
 
-            _levelRepository.Delete(level);
+            _levelDestructor.Destroy(level);
 
             _logger.LogInformation("Level deleted: " + level);
             return NoContent();

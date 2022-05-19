@@ -24,6 +24,8 @@ namespace Exam.Entities
         public string Acronym { get; set; }
         public string Address { get; set; }
 
+        public string Code { get; set; }
+
         public bool HasImage { get; set; }
 
         [NotMapped]

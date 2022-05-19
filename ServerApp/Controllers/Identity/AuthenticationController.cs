@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Everest.AspNetStartup.Binding;
@@ -6,6 +7,8 @@ using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities.Identity;
 using Exam.Models;
+using Exam.Models.Identity;
+using Exam.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,18 +21,22 @@ namespace Exam.Controllers.Identity
     public class AuthenticationController : ControllerBase
     {
         private readonly SignInManager<User> _signInManager;
-        private readonly IRepository<User, string> _userRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly IdentityDataContext _dataContext;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly ILogger<AuthenticationController> _logger;
 
 
         public AuthenticationController(SignInManager<User> signInManager,
+            UserManager<User> userManager,
             ILogger<AuthenticationController> logger,
-            IRepository<User, string> userRepository,
+            IdentityDataContext dataContext,
             IPasswordHasher<User> passwordHasher)
         {
             _signInManager = signInManager;
-            _userRepository = userRepository;
+            _userManager = userManager;
+            _dataContext = dataContext;
+            
             _passwordHasher = passwordHasher;
             _logger = logger;
         }
@@ -43,22 +50,23 @@ namespace Exam.Controllers.Identity
 
         
         [HttpGet("loggedUser")]
-        public User GetLoggedIn()
+        public async Task<ActionResult> GetLoggedIn()
         {
            
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Console.WriteLine("UserId: " + userId);
             if (string.IsNullOrWhiteSpace(userId))
             {
-                return null;
+                return NoContent();
             }
             
-            User user = _userRepository.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            User user = await _dataContext.Users.FindAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (user != null)
             {
                 user.ImageUrl = user.ImageUrl = new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/users/{user.Id}/image");
             }
 
-            return user;
+            return Ok(user);
         }
         
 
@@ -66,16 +74,20 @@ namespace Exam.Controllers.Identity
         
         [HttpPost]
         [ValidModel]
-        public async Task<OkResult> Login([FromBody] LoginModel model)
+        public async Task<OkObjectResult> Login([FromBody] LoginModel model)
         {
             if (_signInManager.IsSignedIn(User))
             {
                 throw new InvalidOperationException(User.FindFirst(ClaimTypes.Name) + " is already logged");
             }
 
-            string identifier = model.Email.ToUpperInvariant();
-            User user = _userRepository.First(u => u.NormalizedEmail == identifier);
+            User user = await _userManager.FindByNameAsync(model.Id);
 
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(model.Id);
+            }
+            
             if (user == null)
             {
                 throw new EntityNotFoundException( "{user.constraints.exists}");
@@ -84,20 +96,14 @@ namespace Exam.Controllers.Identity
             if (PasswordVerificationResult.Success !=
                 _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password))
             {
-                throw new InvalidValueException("Mot de passe incorrect");
+                throw new InvalidValueException("{user.invalidPassword}");
             }
             
             await _signInManager.SignInAsync(user, model.IsPersisted);
-            var cookieOptions = new CookieOptions( );
-            if (model.IsPersisted)
-            {
-                
-                cookieOptions.Expires = DateTimeOffset.Now.AddMonths(1);
-            }
-
+            
             _logger.LogInformation($"The user {user.FullName} is logged. Persisted = {model.IsPersisted}");
 
-            return Ok();
+            return Ok(user);
         }
 
         

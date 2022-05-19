@@ -10,11 +10,13 @@ using Exam.Authorizers;
 using Exam.Destructors;
 using Exam.Entities;
 using Exam.Exceptions;
+using Exam.Identity;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
 using Exam.Models.Statistics;
 using Exam.Persistence.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,12 +32,14 @@ namespace Exam.Controllers
         private MemberController _memberController;
         private ILogger<SchoolController> _logger;
         private SchoolDestructor _schoolDestructor;
+        private SchoolCodeController _schoolCodeController;
         private DbContext _dbContext;
         private IConfiguration _configuration;
 
 
         public SchoolController(ISchoolRepository schoolRepository, MemberController memberController,
             SchoolDestructor schoolDestructor, DbContext dbContext,
+            SchoolCodeController schoolCodeController,
             ILogger<SchoolController> logger, IConfiguration configuration)
         {
             _schoolRepository = schoolRepository;
@@ -43,33 +47,42 @@ namespace Exam.Controllers
             _logger = logger;
             _configuration = configuration;
             _schoolDestructor = schoolDestructor;
+            _schoolCodeController = schoolCodeController;
             _dbContext = dbContext;
         }
 
         [HttpGet("{schoolId}")]
         [LoadSchool]
-        public School Find(School school, User user)
+        public School Find(School school, LoggedUser loggedUser)
         {
-            Get(school, user);
+            Get(school, loggedUser);
             school.Statistics = Statistics(school);
             return school;
         }
+        
+        
+        [HttpGet("contains/identifier/{identifier}")]
+        public bool ContainsIdentifier([FromQuery] string identifier)
+        {
+            return _dbContext.Set<School>().Any(s => s.Identifier ==  identifier);
+        }
+        
 
         [HttpGet("find/identifier/{identifier}")]
-        public School FindByIdentifier(string identifier, User user)
+        public School FindByIdentifier(string identifier, LoggedUser loggedUser)
         {
             School school = _schoolRepository.First(o => o.Identifier == identifier);
-            Get(school, user);
+            Get(school, loggedUser);
             return school;
         }
 
-        public School Get(School school, User user)
+        public School Get(School school, LoggedUser loggedUser)
         {
-            if (user != null && !string.IsNullOrEmpty(user?.Id))
+            if (loggedUser != null && !string.IsNullOrEmpty(loggedUser.UserId))
             {
-                school.IsPrincipalUser = school.PrincipalUserId == user.Id;
+                school.IsPrincipalUser = school.PrincipalUserId == loggedUser.UserId;
                 school.IsPlanner = _dbContext.Set<Planner>()
-                    .Any(c => c.UserId == user.Id && c.SchoolId == school.Id);
+                    .Any(c => c.UserId == loggedUser.UserId && c.SchoolId == school.Id);
             }
             
             school.ImageUrl =
@@ -96,16 +109,16 @@ namespace Exam.Controllers
         /// Create a new School
         /// </summary>
         /// <param name="form">Information of a school to create.</param>
-        /// <param name="user">The user who creates the school. This user will be the admin of the created school.</param>
+        /// <param name="loggedUser">The user who creates the school. This user will be the admin of the created school.</param>
         /// <returns>A <see cref="CreatedAtActionResult"/> containing the created <see cref="School"/> as <c>Value</c>.
         /// </returns>
         /// <exception cref="UniqueValueException">When the given identifier is already used by another school.</exception>
         [HttpPost]
         [ValidModel]
-        public CreatedAtActionResult Add([FromBody] SchoolForm form, User user)
+        public CreatedAtActionResult Add([FromBody] SchoolForm form, LoggedUser loggedUser)
         {
             Assert.RequireNonNull(form, nameof(form));
-            Assert.RequireNonNull(user, nameof(user));
+            Assert.RequireNonNull(loggedUser, nameof(loggedUser));
 
 
             if (_schoolRepository.Exists(o => o.Identifier == form.Identifier))
@@ -113,19 +126,25 @@ namespace Exam.Controllers
                 throw new UniqueValueException("{school.constraints.uniqueIdentifier}");
             }
 
+            if (!_schoolCodeController.IsValid(form.Code))
+            {
+                throw new InvalidOperationException("{school.constraints.invalidCode}");
+            }
+
             School school = new School
             {
                 Name = form.Name,
                 Identifier = form.Identifier,
                 Address = form.Address,
-                RegisterUserId = user.Id,
-                PrincipalUserId = user.Id,
-                Acronym = form.Acronym
+                RegisterUserId = loggedUser.UserId,
+                PrincipalUserId = loggedUser.UserId,
+                Acronym = form.Acronym,
+                Code = form.Code
             };
 
             school = _schoolRepository.Save(school);
 
-            Member principal = _memberController._Add(school, user.Id);
+            Member principal = _memberController._Add(school, loggedUser.UserId);
             school.Principal = principal;
 
             _schoolRepository.Update(school);
@@ -151,6 +170,7 @@ namespace Exam.Controllers
 
         [HttpPut("{schoolId}")]
         [ValidModel]
+        [Authorize]
         [LoadSchool]
         [IsDirector]
         public AcceptedResult Update(School school, [FromBody] SchoolInfoForm form)
@@ -169,6 +189,7 @@ namespace Exam.Controllers
 
 
         [HttpPut("{schoolId}/identifier")]
+        [Authorize]
         [LoadSchool]
         [IsDirector]
         public StatusCodeResult ChangeIdentifier(School school, [FromQuery] string identifier)
@@ -213,6 +234,7 @@ namespace Exam.Controllers
 
 
         [HttpPut("{schoolId}/image")]
+        [Authorize]
         [LoadSchool]
         [IsDirector]
         public async Task<StatusCodeResult> ChangeImage(School school, IFormFile image)
@@ -295,6 +317,7 @@ namespace Exam.Controllers
 
 
         [HttpDelete("{schoolId}")]
+        [Authorize]
         [LoadSchool]
         [IsDirector]
         public NoContentResult Delete(School school)

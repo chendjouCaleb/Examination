@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
+using Exam.Destructors;
 using Exam.Entities;
 using Exam.Infrastructure;
 using Exam.Loaders;
@@ -16,11 +17,14 @@ namespace Exam.Controllers
     {
         private IRepository<LevelSpeciality, long> _levelSpecialityRepository;
         private ILogger<LevelSpecialityController> _logger;
+        private LevelSpecialityDestructor _levelSpecialityDestructor;
 
         public LevelSpecialityController(IRepository<LevelSpeciality, long> levelSpecialityRepository,
+            LevelSpecialityDestructor levelSpecialityDestructor,
             ILogger<LevelSpecialityController> logger)
         {
             _levelSpecialityRepository = levelSpecialityRepository;
+            _levelSpecialityDestructor = levelSpecialityDestructor;
             _logger = logger;
         }
 
@@ -108,7 +112,7 @@ namespace Exam.Controllers
                 throw new ArgumentNullException(nameof(levelSpeciality));
             }
 
-            _levelSpecialityRepository.Delete(levelSpeciality);
+            _levelSpecialityDestructor.Destroy(levelSpeciality);
 
             _logger.LogInformation("LevelSpeciality deleted: " + levelSpeciality);
             return NoContent();

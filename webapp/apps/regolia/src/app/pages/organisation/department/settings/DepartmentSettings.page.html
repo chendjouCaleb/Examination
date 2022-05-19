@@ -1,0 +1,57 @@
+﻿<div class="p-2">
+  <div class="section-background p-2">
+    <department-settings-image [department]="department"></department-settings-image>
+  </div>
+
+
+  <div class="section-background p-3 mt-3">
+    <h4>Informations</h4>
+    <div class="ms-description-list">
+      <div class="ms-description-item">
+        <dl>
+          <dt>Nom</dt>
+          <dd>{{department.name}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Acronyme</dt>
+          <dd>{{department.acronym}}</dd>
+        </dl>
+
+        <dl>
+          <dt>Adresse</dt>
+          <dd>{{department.address}}</dd>
+        </dl>
+      </div>
+      <div class="mt-2 ">
+        <button msButton theme="primary" icon="Edit" (click)="changeInfo()">Modifier</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="section-background p-3 mt-3">
+    <h5>Administrateur</h5>
+
+    <div class="d-flex align-items-center mt-2">
+      <MsImagePersona [imageUrl]="department.principalUser.imageUrl"></MsImagePersona>
+      <div>
+        <div>{{department.principalUser.fullName}}</div>
+      </div>
+    </div>
+
+    <button msButton theme="primary" icon="Edit" class="mt-2" (click)="changePrincipal()">Changer</button>
+  </div>
+
+
+  <div class="section-background p-3 mt-3">
+    <h5>Supprimer</h5>
+
+    <div class="ms-fontColor-red ms-fontWeight-semibold p-2">
+      Supprimer ce département définitivement.
+    </div>
+
+    <button msButton theme="error" icon="Delete" class="mt-2" (click)="delete()">Supprimer</button>
+  </div>
+</div>

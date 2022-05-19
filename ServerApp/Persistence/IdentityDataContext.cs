@@ -9,6 +9,6 @@ namespace Exam.Persistence
         public IdentityDataContext(DbContextOptions<IdentityDataContext> options)
             : base(options) { }
 
-        public DbSet<Connection> Connections { get; set; }
+        public DbSet<UserCode> UserCodes { get; set; }
     }
 }

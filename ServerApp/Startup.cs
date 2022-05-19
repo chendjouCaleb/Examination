@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Everest.AspNetStartup.ExceptionTransformers;
 using Exam.Destructors;
+using Exam.Entities;
 using Exam.Hubs;
 using Exam.Infrastructure;
 using Exam.Persistence;
+using Exam.Services.Emails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +24,7 @@ using Newtonsoft.Json;
 using ServerApp.Hubs;
 using User = Exam.Entities.Identity.User;
 
-namespace ServerApp
+namespace Exam
 {
     public class Startup
     {
@@ -56,6 +58,12 @@ namespace ServerApp
                 options.UseSqlServer(_configuration["Data:ConnectionStrings:Database"]);
             });
 
+            services.AddDbContext<IdentityDataContext>(options =>
+            {
+                options.EnableSensitiveDataLogging();
+                options.UseSqlServer(_configuration["Identity:ConnectionStrings:Database"]);
+            }); 
+            
             services.AddIdentity<User, IdentityRole>(options =>
                 {
                     options.Password.RequireDigit = false;
@@ -67,7 +75,7 @@ namespace ServerApp
 
             services.AddExceptionTransformerFactory();
             services.AddScoped<ExceptionTransformerAttribute>();
-
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddRepositories();
             services.AddSession();
@@ -88,6 +96,10 @@ namespace ServerApp
             });
 
             services.AddTransient<SchoolDestructor>();
+            services.AddTransient<LevelDestructor>();
+            services.AddTransient<SpecialityDestructor>();
+            services.AddTransient<DepartmentDestructor>();
+            services.AddTransient<LevelSpecialityDestructor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,11 +119,11 @@ namespace ServerApp
                         new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "./wwwroot/app"))
                 });
             }
-
-            app.ParseAuthorization();
+            
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

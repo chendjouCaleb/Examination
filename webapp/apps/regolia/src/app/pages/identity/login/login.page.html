@@ -1,0 +1,37 @@
+<div class="flex-center-cover">
+  <form class="ms-form ms-depth-4" [formGroup]="form">
+    <h4 style="margin-top: 32px">Se connecter</h4>
+
+
+    <MsFormField label="E-mail ou Nom d'utilisateur" class="mt-2">
+      <input MsInputField formControlName="id" >
+
+      <MsFormFieldContent>
+        <app-control-error [control]="form.controls['id']"></app-control-error>
+      </MsFormFieldContent>
+    </MsFormField>
+
+    <MsFormField label="Mot de passe" >
+      <input MsInputField autocomplete="off" [type]="passwordType"  formControlName="password">
+      <MsFormFieldContent>
+        <app-control-error [control]="form.controls['password']"></app-control-error>
+      </MsFormFieldContent>
+    </MsFormField>
+
+    <div class="d-flex align-items-center ms-formLine mt-2">
+      <MsCheckbox id="isPersisted" formControlName="isPersisted"></MsCheckbox>
+      <MsLabel htmlFor="isPersisted" class="ml-2">Rester connecté</MsLabel>
+    </div>
+
+    <div class="ms-fontWeight-semibold mt-3 ms-formLine">
+       <a routerLink="/identity/register">Créer un nouveau compte !</a>
+    </div>
+
+    <div class="text-right ms-formLine mt-3">
+      <button msButton theme="primary" [disabled]="form.invalid" (click)="login()" >Se connecter</button>
+    </div>
+
+  </form>
+
+
+</div>

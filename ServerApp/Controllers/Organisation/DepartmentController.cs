@@ -9,6 +9,7 @@ using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Identity;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 
 namespace Exam.Controllers
@@ -26,42 +28,45 @@ namespace Exam.Controllers
     public class DepartmentController : Controller
     {
         private readonly IRepository<Department, long> _departmentRepository;
+        private readonly ILogger<DepartmentController> _logger;
         private readonly IConfiguration _configuration;
         private readonly DbContext _dbContext;
 
         public DepartmentController(IRepository<Department, long> departmentRepository,
             DbContext dbContext,
+            ILogger<DepartmentController> logger,
             IConfiguration configuration)
         {
             _departmentRepository = departmentRepository;
             _configuration = configuration;
             _dbContext = dbContext;
+            _logger = logger;
         }
 
 
         [LoadDepartment]
         [HttpGet("{departmentId}")]
-        public Department Get(Department department, User user)
+        public Department Get(Department department, LoggedUser loggedUser)
         {
             Assert.RequireNonNull(department, nameof(department));
             
-            if (!string.IsNullOrEmpty(user?.Id))
+            if (!string.IsNullOrEmpty(loggedUser?.UserId))
             {
-                department.IsPrincipalUser = department.PrincipalUserId == user.Id;
+                department.IsPrincipalUser = department.PrincipalUserId == loggedUser.UserId;
                 department.IsCorrector = _dbContext.Set<Corrector>()
-                    .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);
+                    .Any(c => c.UserId == loggedUser.UserId && c.DepartmentId == department.Id);
                 
                 department.IsSecretary = _dbContext.Set<Secretary>()
-                    .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);
+                    .Any(c => c.UserId == loggedUser.UserId && c.DepartmentId == department.Id);
                 
                 department.IsSupervisor = _dbContext.Set<Supervisor>()
-                    .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);
+                    .Any(c => c.UserId == loggedUser.UserId && c.DepartmentId == department.Id);
                 
                 department.IsPrincipal = _dbContext.Set<Principal>()
-                    .Any(c => c.UserId == user.Id && c.DepartmentId == department.Id);
+                    .Any(c => c.UserId == loggedUser.UserId && c.DepartmentId == department.Id);
                 
                 department.IsStudent = _dbContext.Set<Student>()
-                    .Any(s => s.UserId != null && s.UserId == user.Id && s.Level.DepartmentId == department.Id);
+                    .Any(s => s.UserId != null && s.UserId == loggedUser.UserId && s.Level.DepartmentId == department.Id);
             }
             return department;
         }
@@ -206,6 +211,7 @@ namespace Exam.Controllers
             department.PrincipalUserId = userId;
 
             _departmentRepository.Update(department);
+            _logger.LogInformation($"L'administrateur du département {department.Name} a été changé.");
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -313,7 +319,7 @@ namespace Exam.Controllers
 
 
         [HttpDelete("{departmentId}")]
-        [LoadDepartment]
+        [LoadDepartment(SchoolItemName = "school")]
         [IsDirector]
         public NoContentResult Delete(Department department)
         {

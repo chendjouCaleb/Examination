@@ -5,6 +5,7 @@ using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
+using Exam.Destructors;
 using Exam.Entities;
 using Exam.Exceptions;
 using Exam.Infrastructure;
@@ -21,13 +22,16 @@ namespace Exam.Controllers
         private IRepository<Speciality, long> _specialityRepository;
         private IRepository<Level, long> _levelRepository;
         private LevelSpecialityController _levelSpecialityController;
+        private SpecialityDestructor _specialityDestructor;
         private ILogger<SpecialityController> _logger;
 
         public SpecialityController(IRepository<Speciality, long> specialityRepository,
             IRepository<Level, long> levelRepository,
             LevelSpecialityController levelSpecialityController,
+            SpecialityDestructor specialityDestructor,
             ILogger<SpecialityController> logger)
         {
+            _specialityDestructor = specialityDestructor;
             _specialityRepository = specialityRepository;
             _levelRepository = levelRepository;
             _levelSpecialityController = levelSpecialityController;
@@ -157,7 +161,7 @@ namespace Exam.Controllers
         public NoContentResult Delete(Speciality speciality)
         {
             Assert.RequireNonNull(speciality, nameof(speciality));
-            _specialityRepository.Delete(speciality);
+            _specialityDestructor.Destroy(speciality);
 
             return NoContent();
         }
