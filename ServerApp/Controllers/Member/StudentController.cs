@@ -166,6 +166,8 @@ namespace Exam.Controllers
                 RegistrationId = form.RegistrationId,
                 BirthDate = form.BirthDate,
                 BirthPlace = form.BirthPlace,
+                School = level.Department.School,
+                Department = level.Department,
                 Level = level,
                 LevelSpeciality = levelSpeciality,
                 RegisterUserId = principal.UserId,
@@ -223,8 +225,11 @@ namespace Exam.Controllers
                 throw new IncompatibleEntityException(level, levelSpeciality);
             }
 
+            student.School = level.Department.School;
+            student.Department = level.Department;
             student.Level = level;
             student.LevelSpeciality = levelSpeciality;
+            
             _studentRepository.Update(student);
             return StatusCode(StatusCodes.Status202Accepted);
         }

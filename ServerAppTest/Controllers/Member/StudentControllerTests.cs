@@ -114,6 +114,8 @@ namespace ServerAppTest.Controllers
 
             Assert.AreEqual(_level, student.Level);
             Assert.AreEqual(_levelSpeciality, student.LevelSpeciality);
+            Assert.AreEqual(_level.Department, student.Level.Department);
+            Assert.AreEqual(_level.Department.School, student.School);
 
             Assert.AreEqual(_principalUser.Id, student.RegisterUserId);
         }
@@ -244,6 +246,8 @@ namespace ServerAppTest.Controllers
             Assert.NotNull(student);
             Assert.AreEqual(level, student.Level);
             Assert.AreEqual(levelSpeciality, student.LevelSpeciality);
+            Assert.AreEqual(level.Department, student.Level.Department);
+            Assert.AreEqual(level.Department.School, student.School);
         }
         
         

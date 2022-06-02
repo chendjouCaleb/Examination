@@ -1,5 +1,4 @@
-﻿
-<div>
+﻿<div>
   <div class="section-background p-2">
     <school-settings-image [school]="school"></school-settings-image>
   </div>
@@ -24,7 +23,7 @@
           <dd>{{school.address}}</dd>
         </dl>
       </div>
-      <div class="mt-2 text-right">
+      <div class="mt-2 ">
         <button msButton theme="primary" icon="Edit" (click)="changeInfo()">Modifier</button>
       </div>
     </div>
@@ -35,17 +34,25 @@
       <dt>Identifiant</dt>
       <dd>{{school.identifier}}</dd>
     </dl>
-    <button msButton theme="primary" icon="Edit" (click)="schoolService.changeIdentifier(school)">Changer l'identifiant</button>
+    <button msButton theme="primary" icon="Edit" (click)="schoolService.changeIdentifier(school)">Changer
+      l'identifiant
+    </button>
   </div>
 
   <div class="section-background p-2 mt-3">
     <h5>Administrateur</h5>
-
-    <div class="d-flex align-items-center mt-2">
-      <MsImagePersona [imageUrl]="school.principalUser.imageUrl"></MsImagePersona>
-      <div>
-        <div>{{school.principalUser.fullName}}</div>
-      </div>
+    <div class="mt-3">
+      <UserPersona [user]="school.principalUser"></UserPersona>
     </div>
+  </div>
+
+  <div class="section-background p-3 mt-3">
+    <h5>Supprimer</h5>
+
+    <div class="ms-fontColor-red ms-fontWeight-semibold p-2">
+      Supprimer cette établissement définitivement.
+    </div>
+
+    <button msButton theme="error" icon="Delete" class="mt-2" (click)="delete()">Supprimer</button>
   </div>
 </div>

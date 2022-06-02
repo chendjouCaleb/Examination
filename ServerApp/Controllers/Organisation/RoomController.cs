@@ -6,6 +6,7 @@ using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
 using Exam.Entities;
+using Exam.Identity;
 using Exam.Infrastructure;
 using Exam.Loaders;
 using Exam.Models;
@@ -80,7 +81,7 @@ namespace Exam.Controllers
         [LoadDepartment(Source = ParameterSource.Query, SchoolItemName = "school")]
         [LoadLevel(Source = ParameterSource.Query, SchoolItemName = "school")]
         [IsDirector]
-        public CreatedAtActionResult Add([FromBody] RoomForm form, User user,
+        public CreatedAtActionResult Add([FromBody] RoomForm form, LoggedUser loggedUser,
             School school, Department department = null, Level level = null)
         {
             if (department != null)
@@ -106,7 +107,7 @@ namespace Exam.Controllers
                 Name = form.Name,
                 Capacity = form.Capacity,
                 Address = form.Address,
-                RegisterUserId = user.Id,
+                RegisterUserId = loggedUser.UserId,
                 Department = department,
                 Level = level
             };

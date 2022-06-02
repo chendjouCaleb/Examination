@@ -30,6 +30,12 @@ namespace Exam.Entities.Courses
         /// </summary>
         public bool IsGeneral { get; set; }
 
+        public virtual School School { get; set; }
+        public long SchoolId { get; set; }
+
+
+        public virtual Department Department { get; set; }
+        public long? DepartmentId { get; set; }
 
         [JsonIgnore] public virtual Level Level { get; set; }
         public long? LevelId { get; set; }

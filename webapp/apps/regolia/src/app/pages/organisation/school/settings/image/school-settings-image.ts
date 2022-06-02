@@ -1,6 +1,8 @@
 ﻿import {Component, ElementRef, Inject, Input, ViewChild} from "@angular/core";
 import {School} from "examination/entities";
 import {ISchoolService, SCHOOL_SERVICE_TOKEN} from "@examination/components";
+import {AlertEmitter, ImageForm, ImageFormDialog} from "src/controls";
+import {SchoolHttpClient} from "@examination/http";
 
 @Component({
   templateUrl: 'school-settings-image.html',
@@ -13,14 +15,20 @@ export class SchoolSettingsImage {
   @ViewChild('imageElement')
   _imageElement: ElementRef<HTMLImageElement>;
 
-  constructor(@Inject(SCHOOL_SERVICE_TOKEN) private _service: ISchoolService) {
+  constructor(@Inject(SCHOOL_SERVICE_TOKEN) private _service: ISchoolService,
+              private _httpClient: SchoolHttpClient,
+              private _alert: AlertEmitter,
+              private imageForm: ImageFormDialog) {
   }
 
   async changeImage() {
-    const changed = await this._service.changeImage(this.school);
+    this.imageForm.open().subscribe(async value => {
+      if (value.blob) {
+        await this._httpClient.changeImage(this.school, value.blob);
+        this.school.imageUrl = value.url;
 
-    if(changed) {
-      this._imageElement.nativeElement.src = this.school.imageUrl + '?' + Date.now();
-    }
+        this._alert.info('Photo mise à jour.');
+      }
+    })
   }
 }

@@ -55,27 +55,27 @@ namespace Exam.Destructors
 
         private void DestroyApplications(School school)
         {
-            Log(school, "Début de la suppréssion des demandes");
+            Log(school, "Début de la suppréssion des demandes.");
 
             var students = _context.Set<Application>().Where(s => school.Equals(s.Level.Department.School));
             _context.RemoveRange(students);
             
-            Log(school, "Fin de la suppréssion des demandes");
+            Log(school, "Fin de la suppréssion des demandes.");
         }
 
         private void DestroyStudents(School school)
         {
-            Log(school, "Début de la suppréssion des étudiants");
+            Log(school, "Début de la suppréssion des étudiants.");
 
-            var students = _context.Set<Student>().Where(s => school.Equals(s.Level.Department.School));
+            var students = _context.Set<Student>().Where(s => school.Equals(s.School));
             _context.RemoveRange(students);
             
-            Log(school, "Fin de la suppréssion des étudiants");
+            Log(school, "Fin de la suppréssion des étudiants.");
         }
 
         private void DestroyPlanners(School school)
         {
-            Log(school, "Suppréssion des planificateurs");
+            Log(school, "Suppréssion des planificateurs.");
 
             var planners = _context.Set<Planner>().Where(s => school.Equals(s.School));
             _context.RemoveRange(planners);
@@ -84,7 +84,7 @@ namespace Exam.Destructors
 
         private void DestroyCorrectors(School school)
         {
-            Log(school, "Suppréssion des correcteurs");
+            Log(school, "Suppréssion des correcteurs.");
 
             var correctors = _context.Set<Corrector>().Where(s => school.Equals(s.Department.School));
             _context.RemoveRange(correctors);
@@ -94,7 +94,7 @@ namespace Exam.Destructors
 
         private void DestroySupervisors(School school)
         {
-            Log(school, "Suppréssion des superviseurs");
+            Log(school, "Suppréssion des superviseurs.");
 
             var supervisors = _context.Set<Supervisor>().Where(s => school.Equals(s.Department.School));
             _context.RemoveRange(supervisors);

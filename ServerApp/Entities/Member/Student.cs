@@ -34,9 +34,16 @@ namespace Exam.Entities
         [JsonIgnore] 
         public virtual Application Application { get; set; }
         
+        public virtual School School { get; set; }
+        public long SchoolId { get; set; }
+
+
+        public virtual Department Department { get; set; }
+        public long? DepartmentId { get; set; }
+        
         [JsonIgnore] 
         public virtual Level Level { get; set; }
-        public long LevelId { get; set; }
+        public long? LevelId { get; set; }
         
         [JsonIgnore]
         public virtual LevelSpeciality LevelSpeciality { get; set; }

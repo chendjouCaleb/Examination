@@ -23,9 +23,11 @@ namespace Exam.Destructors
 
         public void Destroy(Level level)
         {
-            DestroyCourses(level);
+            UpdateCourses(level);
+            DestroyCourseLevelSpecialities(level);
             DestroyLevelSpecialities(level);
-            DestroyRooms(level);
+            UpdateRooms(level);
+            UpdateStudents(level);
 
             _context.Remove(level);
             _context.SaveChanges();
@@ -35,17 +37,22 @@ namespace Exam.Destructors
 
         
 
-        private void DestroyStudents(Level level)
+        private void UpdateStudents(Level level)
         {
-            // Log(level, "Début de la suppréssion des étudiants.");
-            //
-            // var students = _context.Set<Student>().Where(s => level.Equals(s.));
-            // _context.RemoveRange(students);
-            //
-            // Log(school, "Fin de la suppréssion des étudiants");
+            Log(level, "Début de la suppréssion des étudiants.");
+            
+            var students = _context.Set<Student>().Where(s => level.Equals(s.Level));
+            foreach (Student student in students)
+            {
+                student.Level = null;
+                student.LevelId = null;
+            }
+            _context.UpdateRange(students);
+            
+            Log(level, "Fin de la suppréssion des étudiants");
         }
 
-        private void DestroyRooms(Level level)
+        private void UpdateRooms(Level level)
         {
             Log(level, "Début de la suppréssion des salles.");
 
@@ -62,16 +69,34 @@ namespace Exam.Destructors
         
         
         
-        private void DestroyCourses(Level level)
+        private void UpdateCourses(Level level)
         {
-            // Log(level, "Début de la suppréssion des cours.");
-            //
-            // var courses = _context.Set<Course>().Where(c => level.Equals(c.Level));
-            // _context.RemoveRange(courses);
-            //
-            // Log(level, "Fin de la suppréssion des cours.");
+            Log(level, "Début de la suppréssion des cours.");
+            
+            var courses = _context.Set<Course>().Where(c => level.Equals(c.Level));
+
+            foreach (Course course in courses)
+            {
+                course.Level = null;
+                course.LevelId = null;
+            }
+            _context.UpdateRange(courses);
+            
+            Log(level, "Fin de la suppréssion des cours.");
         }
         
+        
+        private void DestroyCourseLevelSpecialities(Level level)
+        {
+            Log(level, "Début de la suppréssion des cours par niveau.");
+            
+            var courseLevelSpecialities = _context.Set<CourseLevelSpeciality>()
+                .Where(c => level.Equals(c.LevelSpeciality.Level));
+            
+            _context.UpdateRange(courseLevelSpecialities);
+            
+            Log(level, "Fin de la suppréssion des cours par niveau.");
+        }
         
         
         private void DestroyLevelSpecialities(Level level)

@@ -133,7 +133,9 @@ namespace Exam.Controllers.Courses
                 Description = form.Description,
                 Radical = form.Radical,
                 IsGeneral = form.IsGeneral,
-                Level = level
+                Level = level,
+                Department = level.Department,
+                School = level.Department.School
             };
             _courseRepository.Save(course);
 

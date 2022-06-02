@@ -19,4 +19,11 @@ export class SchoolSettingsPage {
   changeInfo() {
     this.schoolService.edit(this.school);
   }
+
+  async delete() {
+    const deleted = await this.schoolService.delete(this.school);
+    if (deleted) {
+     this._router.navigateByUrl('/').then();
+    }
+  }
 }

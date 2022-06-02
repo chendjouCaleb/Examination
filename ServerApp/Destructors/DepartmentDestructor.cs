@@ -12,204 +12,178 @@ namespace Exam.Destructors
     {
         private DbContext _context;
 
-        private IHubContext<SchoolDestructorHub, ISchoolDestructorHub> _hub;
-        private ILogger<SchoolDestructor> _logger;
+        private ILogger<DepartmentDestructor> _logger;
 
 
         public DepartmentDestructor(DbContext context,
-            IHubContext<SchoolDestructorHub, ISchoolDestructorHub> hub,
-            ILogger<SchoolDestructor> logger)
+            ILogger<DepartmentDestructor> logger)
         {
-            _hub = hub;
             _context = context;
             _logger = logger;
         }
 
-        public void Destruct(School school)
+        public void Destroy(Department department)
         {
-            DestroyApplications(school);
-            DestroyStudents(school);
+            DestroyApplications(department);
 
-            DestroyCorrectors(school);
-            DestroySupervisors(school);
-            DestroySecretaries(school);
-            DestroyPrincipals(school);
-            DestroyPlanners(school);
-
-            DestroyMembers(school);
-            DestroyRooms(school);
+            DestroyCorrectors(department);
+            DestroySupervisors(department);
+            DestroySecretaries(department);
+            DestroyPrincipals(department);
+            UpdateRooms(department);
             
-            DestroyScores(school);
-            DestroyCourseLevelSpecialities(school);
-            DestroyCourses(school);
-            DestroyLevelSpecialities(school);
-            DestroySpecialities(school);
-            DestroyLevels(school);
-            DestroyDepartments(school);
+            DestroyCourseLevelSpecialities(department);
+            UpdateCourses(department);
+            DestroyLevelSpecialities(department);
+            DestroySpecialities(department);
+            DestroyLevels(department);
 
-            _context.Remove(school);
+            _context.Remove(department);
             _context.SaveChanges();
             
-            Log(school, "Suppréssion de l'établissement terminée!");
+            Log("Suppréssion de l'établissement terminée!");
         }
 
-        private void DestroyApplications(School school)
+        private void DestroyApplications(Department department)
         {
-            Log(school, "Début de la suppréssion des demandes");
+            Log("Début de la suppréssion des demandes");
 
-            var students = _context.Set<Application>().Where(s => school.Equals(s.Level.Department.School));
+            var students = _context.Set<Application>().Where(s => department.Equals(s.Level.Department));
             _context.RemoveRange(students);
             
-            Log(school, "Fin de la suppréssion des demandes");
+            Log( "Fin de la suppréssion des demandes");
         }
 
-        private void DestroyStudents(School school)
+        private void UpdateStudents(Department department)
         {
-            Log(school, "Début de la suppréssion des étudiants");
+            Log("Début de la suppréssion des étudiants");
 
-            var students = _context.Set<Student>().Where(s => school.Equals(s.Level.Department.School));
-            _context.RemoveRange(students);
+            var students = _context.Set<Student>().Where(s => department.Equals(s.Level.Department));
+
+            foreach (Student student in students)
+            {
+                student.Department = null;
+                student.DepartmentId = null;
+                student.Level = null;
+                student.LevelId = null;
+            }
             
-            Log(school, "Fin de la suppréssion des étudiants");
-        }
-
-        private void DestroyPlanners(School school)
-        {
-            Log(school, "Suppréssion des planificateurs");
-
-            var planners = _context.Set<Planner>().Where(s => school.Equals(s.School));
-            _context.RemoveRange(planners);
+            _context.UpdateRange(students);
             
+            Log( "Fin de la suppréssion des étudiants");
         }
+        
 
-        private void DestroyCorrectors(School school)
+        private void DestroyCorrectors(Department department)
         {
-            Log(school, "Suppréssion des correcteurs");
+            Log("Suppréssion des correcteurs");
 
-            var correctors = _context.Set<Corrector>().Where(s => school.Equals(s.Department.School));
+            var correctors = _context.Set<Corrector>().Where(s => department.Equals(s.Department));
             _context.RemoveRange(correctors);
             
         }
 
 
-        private void DestroySupervisors(School school)
+        private void DestroySupervisors(Department department)
         {
-            Log(school, "Suppréssion des superviseurs");
+            Log("Suppréssion des superviseurs");
 
-            var supervisors = _context.Set<Supervisor>().Where(s => school.Equals(s.Department.School));
+            var supervisors = _context.Set<Supervisor>().Where(s => department.Equals(s.Department));
             _context.RemoveRange(supervisors);
             
         }
 
-        private void DestroySecretaries(School school)
+        private void DestroySecretaries(Department department)
         {
-            Log(school, "Suppréssion des sécrétaires");
+            Log("Suppréssion des sécrétaires");
 
-            var secretaries = _context.Set<Secretary>().Where(s => school.Equals(s.Department.School));
+            var secretaries = _context.Set<Secretary>().Where(s => department.Equals(s.Department));
             _context.RemoveRange(secretaries);
              
         }
 
-        private void DestroyPrincipals(School school)
+        private void DestroyPrincipals(Department department)
         {
-            Log(school, "Suppréssion des délégués");
+            Log("Suppréssion des délégués");
 
-            var principals = _context.Set<Principal>().Where(s => school.Equals(s.Department.School));
+            var principals = _context.Set<Principal>().Where(s => department.Equals(s.Department));
             _context.RemoveRange(principals);
             
         }
 
-        private void DestroyMembers(School school)
+
+        private void UpdateRooms(Department department)
         {
-            Log(school, "Début de la suppréssion des members");
+            Log("Début de la suppréssion des salles");
 
-            var members = _context.Set<Member>().Where(s => school.Equals(s.School));
-            _context.RemoveRange(members);
-            
-            Log(school, "Fin de la suppréssion des membres");
-        }
-
-        private void DestroyRooms(School school)
-        {
-            Log(school, "Début de la suppréssion des salles");
-
-            var rooms = _context.Set<Room>().Where(s => school.Equals(s.School));
+            var rooms = _context.Set<Room>().Where(s => department.Equals(s.Department));
             _context.RemoveRange(rooms);
             
-            Log(school, "Fin de la suppréssion des salles");
+            Log("Fin de la suppréssion des salles");
         }
         
-        private void DestroyScores(School school)
-        {
-            Log(school, "Début de la suppréssion des barèmes");
 
-            var scores = _context.Set<Score>().Where(s => school.Equals(s.Course.Level.Department.School));
-            _context.RemoveRange(scores);
-            
-            Log(school, "Fin de la suppréssion des barèmes");
-        }
-
-        private void DestroyCourseLevelSpecialities(School school)
+        private void DestroyCourseLevelSpecialities(Department department)
         {
-            Log(school, "Suppréssion des cours de spécialité");
+            Log("Suppréssion des cours de spécialité");
 
             var courseLevelSpecialitys = _context.Set<CourseLevelSpeciality>()
-                .Where(s => school.Equals(s.Course.Level.Department.School));
+                .Where(s => department.Equals(s.Course.Level.Department));
             _context.RemoveRange(courseLevelSpecialitys);
             
         }
         
-        private void DestroyCourses(School school)
+        private void UpdateCourses(Department department)
         {
-            Log(school, "Début de la suppréssion des cours");
+            Log("Début de la suppréssion des cours");
 
-            var courses = _context.Set<Course>().Where(s => school.Equals(s.Level.Department.School));
-            _context.RemoveRange(courses);
+            var courses = _context.Set<Course>().Where(s => department.Equals(s.Level.Department));
+            foreach (Course course in courses)
+            {
+                course.Level = null;
+                course.LevelId = null;
+                course.Department = null;
+                course.DepartmentId = null;
+            }
             
-            Log(school, "Fin de la suppréssion des cours");
+            
+            _context.UpdateRange(courses);
+            
+            Log("Fin de la suppréssion des cours");
         }
         
-        private void DestroyLevelSpecialities(School school)
+        private void DestroyLevelSpecialities(Department department)
         {
-            Log(school, "Suppréssion des niveaux de spécialité");
+            Log("Suppréssion des niveaux de spécialité");
 
             var levelSpecialitys = _context.Set<LevelSpeciality>()
-                .Where(s => school.Equals(s.Level.Department.School));
+                .Where(s => department.Equals(s.Level.Department));
             _context.RemoveRange(levelSpecialitys);
             
         }
         
-        private void DestroySpecialities(School school)
+        private void DestroySpecialities(Department department)
         {
-            Log(school, "Suppréssion des spécialités");
+            Log( "Suppréssion des spécialités");
 
-            var specialitys = _context.Set<Speciality>().Where(s => school.Equals(s.Department.School));
-            _context.RemoveRange(specialitys);
+            var specialities = _context.Set<Speciality>().Where(s => department.Equals(s.Department));
+            _context.RemoveRange(specialities);
             
         }
         
-        private void DestroyLevels(School school)
+        private void DestroyLevels(Department department)
         {
-            Log(school, "Début de la suppréssion des niveaux");
+            Log( "Début de la suppréssion des niveaux");
 
-            var levels = _context.Set<Level>().Where(s => school.Equals(s.Department.School));
+            var levels = _context.Set<Level>().Where(s => department.Equals(s.Department));
             _context.RemoveRange(levels);
             
         }
         
-        private void DestroyDepartments(School school)
-        {
-            Log(school, "Suppréssion des départment");
-
-            var departments = _context.Set<Department>().Where(s => school.Equals(s.School));
-            _context.RemoveRange(departments);
-            
-        }
         
-        private void Log(School school, string message)
+        private void Log(string message)
         {
             _logger.LogInformation(message);
-            _hub?.Clients?.All?.Log(school, message);
         }
     }
 }

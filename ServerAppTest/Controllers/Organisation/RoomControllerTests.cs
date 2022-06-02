@@ -3,6 +3,7 @@ using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
 using Exam.Entities;
+using Exam.Identity;
 using Exam.Infrastructure;
 using Exam.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,7 @@ namespace ServerAppTest.Controllers
         private Department _department;
         private Level _level;
         private RoomForm _model;
-        private User _user = new User {Id = Guid.NewGuid().ToString()};
+        private LoggedUser _user = new () {UserId = Guid.NewGuid().ToString()};
 
         [SetUp]
         public void BeforeEach()
@@ -72,7 +73,7 @@ namespace ServerAppTest.Controllers
             Assert.AreEqual(_model.Name, room.Name);
             Assert.AreEqual(_model.Address, room.Address);
             Assert.AreEqual(_model.Capacity, room.Capacity);
-            Assert.AreEqual(_user.Id, room.RegisterUserId);
+            Assert.AreEqual(_user.UserId, room.RegisterUserId);
 
             Assert.AreEqual(_school, room.School);
         }

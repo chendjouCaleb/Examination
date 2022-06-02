@@ -1,0 +1,8 @@
+﻿<ng-container *ngIf="user">
+  <MsImagePersona size="size40" *ngIf="user.hasImage" [imageUrl]="user.imageUrl"></MsImagePersona>
+  <MsTextPersona size="size40" *ngIf="!user.hasImage" [text]="user.name"></MsTextPersona>
+  <div class="ml-2">
+    <div class="ms-fontWeight-semibold">{{user?.fullName}}</div>
+    <div class="ms-fontSize-12 ms-opacity-8" *ngIf="user?.username">@{{user?.username}}</div>
+  </div>
+</ng-container>

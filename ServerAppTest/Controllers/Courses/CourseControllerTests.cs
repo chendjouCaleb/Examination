@@ -82,6 +82,9 @@ namespace ServerAppTest.Controllers.Courses
             Assert.AreEqual(_form.Radical, course.Radical);
 
             Assert.AreEqual(_level, course.Level);
+            Assert.AreEqual(_level.Department, course.Level.Department);
+            Assert.AreEqual(_level.Department.School, course.School);
+            
             Assert.False(course.MultipleScore);
             Assert.False(course.IsGeneral);
         }
