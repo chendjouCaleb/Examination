@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
+using System.Security.Claims;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Entities;
 using Exam.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Exam.Authorizers
@@ -14,11 +17,9 @@ namespace Exam.Authorizers
         public string DepartmentItemName { get; set; } = "department";
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            Authorization authorization = 
-                context.HttpContext.Items["Authorization"] as Authorization;
+            string userId = context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-            IRepository<Principal, long> repository =
-                context.HttpContext.RequestServices.GetRequiredService<IRepository<Principal, long>>();
+            DbContext dbContext = context.HttpContext.RequestServices.GetRequiredService<DbContext>();
 
             Department department = context.HttpContext.GetItem(DepartmentItemName) as Department;
             
@@ -27,13 +28,8 @@ namespace Exam.Authorizers
                 throw new ArgumentNullException(nameof(department));
             }
 
-            if (authorization == null)
-            {
-                throw new ArgumentNullException(nameof(authorization));
-            }
-
-            Principal principal =
-                repository.First(p => department.Equals(p.Department) && p.UserId == authorization.UserId);
+            Principal principal =  dbContext.Set<Principal>()
+                .First(p => department.Equals(p.Department) && p.UserId == userId);
 
             if (principal == null) 
             {

@@ -103,19 +103,18 @@ namespace Exam.Controllers
 
             Room room = new Room
             {
-                School = school,
                 Name = form.Name,
                 Capacity = form.Capacity,
                 Address = form.Address,
                 RegisterUserId = loggedUser.UserId,
+                
+                School = school,
                 Department = department,
                 Level = level
             };
 
 
             _roomRepository.Save(room);
-            _schoolRepository.Update(school);
-
             _logger.LogInformation($"New Room: {room}");
 
             return CreatedAtAction("Find", new {room.Id}, room);

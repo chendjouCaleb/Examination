@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {School} from 'examination/entities';
+import {Course, School} from 'examination/entities';
 import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
 
@@ -8,6 +8,8 @@ import {Router} from "@angular/router";
 })
 export class SchoolCoursesPage {
   school: School;
+
+  courseUrlFn = (course:Course) => `${this.school.url}/courses/${course.id}`;
 
   constructor(items: CurrentItems, public _router: Router) {
     this.school = items.get('school');

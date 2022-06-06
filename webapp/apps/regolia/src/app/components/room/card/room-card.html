@@ -1,0 +1,26 @@
+﻿<div style="width: 160px">
+  <img src="/assets/icon/classroom.png" alt="Room imagage" width="160" height="90">
+</div>
+
+<div class="room-card-text">
+  <div>
+    <div class="ms-fontWeight-semibold ms-fontSize-18 " MsTextEllipsis [MsTitle]="room?.name">{{room?.name}}</div>
+    <div class="ms-fontWeight-semibold ms-opacity-7"> {{room?.capacity}} places</div>
+
+    <div class="ms-fontSize-12 ms-opacity-8 " ms-text-ellipsis [MsTitle]="room.address">{{room.address}}</div>
+
+    <div *ngIf="room.department" class="mt-2 ms-fontWeight-semibold" MsTextEllipsis>
+      <a
+        class="ms-fontColor-sharedBlueMagenta20 ms-fontColor-sharedBlueMagenta20--hover"
+        *ngIf="room.department" [routerLink]="room.department?.url" (click)="$event.stopPropagation()">
+        {{room.department.acronym}}</a>
+
+      <span *ngIf="room.level"> : <a class="ms-fontColor-sharedBlueMagenta20 ms-fontColor-sharedBlueMagenta20--hover"
+                                     [routerLink]="room.level?.url" (click)="$event.stopPropagation()">
+      Niv. {{room.level.index + 1}}</a> </span>
+    </div>
+  </div>
+
+
+</div>
+

@@ -82,7 +82,7 @@ namespace Exam.Controllers
             {
                 school.IsPrincipalUser = school.PrincipalUserId == loggedUser.UserId;
                 school.IsPlanner = _dbContext.Set<Planner>()
-                    .Any(c => c.UserId == loggedUser.UserId && c.SchoolId == school.Id);
+                    .Any(p => p.UserId == loggedUser.UserId && p.SchoolId == school.Id);
             }
             
             school.ImageUrl =

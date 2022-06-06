@@ -1,0 +1,11 @@
+﻿:host {
+  background-color: var(--cardBackgroundColor);
+  color: var(--textColor);
+
+  display: flex;
+  border-radius: 4px;
+}
+
+.room-card-text {
+  padding: 8px 8px 8px 16px;
+}

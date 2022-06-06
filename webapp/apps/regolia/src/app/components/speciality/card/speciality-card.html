@@ -1,0 +1,13 @@
+﻿<h5 class="ms-fontWeight-semibold">{{speciality.name}}</h5>
+
+<div class="ms-divider my-2"></div>
+
+<div>
+  <a style="border-radius: 16px"
+     class="py-1 px-2 mr-2 mb-3 ms-link-inherit ms-bgColor-sharedGreen10 ms-bgColor-sharedGreen20--hover"
+     *ngFor="let levelSpeciality of speciality.levelSpecialities"
+     [routerLink]="levelSpeciality.url">
+    Niveau {{levelSpeciality.level.index + 1}}
+  </a>
+</div>
+<div class="mt-3 ">{{speciality.description}}</div>

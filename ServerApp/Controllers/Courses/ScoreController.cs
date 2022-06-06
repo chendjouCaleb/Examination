@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
@@ -13,19 +14,18 @@ using Exam.Loaders.Courses;
 using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Controllers.Courses
 {
     [Route("api/scores")]
     public class ScoreController : Controller
     {
-        private readonly IRepository<Score, long> _scoreRepository;
-        private readonly IRepository<Course, long> _courseRepository;
+        private readonly DbContext _dbContext;
 
-        public ScoreController(IRepository<Score, long> scoreRepository, IRepository<Course, long> courseRepository)
+        public ScoreController(DbContext dbContext)
         {
-            _scoreRepository = scoreRepository;
-            _courseRepository = courseRepository;
+            _dbContext = dbContext;
         }
 
 
@@ -37,7 +37,7 @@ namespace Exam.Controllers.Courses
         [RequireQueryParameters(new[] {"scoreId", "name"})]
         public Score FindByName([FromQuery] long courseId, [FromQuery] string name)
         {
-            return this._scoreRepository.First(s => s.CourseId == courseId && s.Name == name);
+            return _dbContext.Set<Score>().First(s => s.CourseId == courseId && s.Name == name);
         }
 
 
@@ -46,7 +46,7 @@ namespace Exam.Controllers.Courses
         [RequireQueryParameter("courseId")]
         public IEnumerable<Score> List(Course course)
         {
-            return _scoreRepository.Set.Where(g => course.Equals(g.Course)).ToList();
+            return _dbContext.Set<Score>().Where(g => course.Equals(g.Course)).ToList();
         }
 
 
@@ -59,11 +59,11 @@ namespace Exam.Controllers.Courses
             Assert.RequireNonNull(course, nameof(course));
             Assert.RequireNonNull(form, nameof(form));
 
-            double totalRadical = _scoreRepository.List(g => course.Equals(g.Course))
+            double totalRadical = _dbContext.Set<Score>().Where(g => course.Equals(g.Course))
                                       .Sum(e => e.Radical)
                                   + form.Radical;
 
-            if (_scoreRepository.Exists(t => course.Equals(t.Course) && t.Name == form.Name))
+            if (_dbContext.Set<Score>().Any(t => course.Equals(t.Course) && t.Name == form.Name))
             {
                 throw new InvalidValueException("{score.constraints.uniqueName}");
             }
@@ -80,13 +80,15 @@ namespace Exam.Controllers.Courses
                 Course = course
             };
 
-            _scoreRepository.Save(score);
+            _dbContext.Set<Score>().Add(score);
 
             if (!course.MultipleScore)
             {
                 course.MultipleScore = true;
-                _courseRepository.Update(course);
+                _dbContext.Set<Course>().Update(course);
             }
+
+            _dbContext.SaveChanges();
 
             return CreatedAtAction("Find", new {score.Id}, score);
         }
@@ -103,13 +105,14 @@ namespace Exam.Controllers.Courses
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (_scoreRepository.Exists(t => score.Course.Equals(t.Course) && t.Name == name))
+            if (_dbContext.Set<Score>().Any(t => score.Course.Equals(t.Course) && t.Name == name))
             {
                 throw new InvalidValueException("{score.constraints.uniqueName}");
             }
 
             score.Name = name;
-            _scoreRepository.Update(score);
+            _dbContext.Set<Score>().Update(score);
+            _dbContext.SaveChanges();
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
@@ -121,13 +124,31 @@ namespace Exam.Controllers.Courses
         public NoContentResult Delete(Score score)
         {
             Course course = score.Course;
-            _scoreRepository.Delete(score);
-            if (_scoreRepository.Count(s => course.Equals(s.Course)) == 0)
+            _dbContext.Set<Score>().Remove(score);
+            if (_dbContext.Set<Score>().Count(s => course.Equals(s.Course)) == 0)
             {
                 course.MultipleScore = false;
-                _courseRepository.Update(course);
+                _dbContext.Set<Course>().Update(course);
             }
 
+            _dbContext.SaveChanges();
+            return NoContent();
+        }
+
+        
+        [HttpDelete]
+        [RequireQueryParameter("courseId")]
+        [LoadCourse(DepartmentItemName = "department", Source = ParameterSource.Query)]
+        [IsDepartmentPrincipal]
+        public async Task<NoContentResult> DeleteAll(Course course)
+        {
+            var scores = await _dbContext.Set<Score>().Where(s => s.CourseId == course.Id).ToListAsync();
+            _dbContext.RemoveRange(scores);
+            
+            course.MultipleScore = false;
+            _dbContext.Set<Course>().Update(course);
+            
+            await _dbContext.SaveChangesAsync();
             return NoContent();
         }
     }

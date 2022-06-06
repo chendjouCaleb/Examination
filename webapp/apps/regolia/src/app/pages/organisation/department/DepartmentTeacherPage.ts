@@ -12,7 +12,7 @@ import {TeacherList, TeacherService} from "@examination/components";
               Ajouter <span class="ms-hiddenSm">des enseignants</span></button>
       </MsActionMenu>
       <h4 class="my-2">Enseignants</h4>
-      <TeacherList [teachers]="[]"></TeacherList>
+      <TeacherList [teachers]="[]" class="mt-2"></TeacherList>
   `
 })
 export class DepartmentTeacherPage {
@@ -21,6 +21,8 @@ export class DepartmentTeacherPage {
 
   @ViewChild(TeacherList)
   teacherList: TeacherList;
+
+
 
   constructor(items: CurrentItems, public _router: Router,
               private service: TeacherService,

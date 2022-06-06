@@ -1,0 +1,11 @@
+﻿<h5 class="ms-fontWeight-semibold">Niveau {{level.index + 1}}</h5>
+<div class="ms-divider my-2"></div>
+
+<div>
+  <a style="border-radius: 15px; display: inline-block"
+     class="px-2 py-1 mr-2 ms-link-inherit ms-bgColor-sharedOrange20 ms-bgColor-sharedOrange30--hover"
+     *ngFor="let levelSpeciality of level.levelSpecialities"
+     [routerLink]="levelSpeciality.url" (click)="$event.stopPropagation()">
+    {{levelSpeciality.speciality.name}}
+  </a>
+</div>

@@ -58,7 +58,7 @@ export class AuthenticationManager {
   }
 
   async getUser(): Promise<User> {
-    if (this._user) {
+    if (this.isInitialized) {
       return Promise.resolve(this._user);
     }
     return new Promise(resolve => {

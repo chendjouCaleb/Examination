@@ -91,7 +91,9 @@ namespace Exam.Controllers.Identity
 
             if (id is {Length: > 1})
             {
-                return query.Where(u => id.Contains(u.Id)).ToList();
+                var _users = query.Where(u => id.Contains(u.Id)).ToList();
+                _users.ForEach(SetUserUri);
+                return _users;
             }
 
             if (!string.IsNullOrEmpty(filter))
@@ -106,10 +108,7 @@ namespace Exam.Controllers.Identity
 
             var users = query.ToList();
             
-            users.ForEach(user =>
-            {
-                user.ImageUrl = new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/users/{user.Id}/image");
-            });
+            users.ForEach(SetUserUri);
 
             return users;
         }

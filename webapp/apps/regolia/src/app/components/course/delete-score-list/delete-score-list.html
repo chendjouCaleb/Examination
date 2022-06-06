@@ -1,0 +1,18 @@
+﻿<form class="ms-form-dialog" style="max-width: 98%; width: 400px">
+  <h4 class="ms-fontColor-sharedRed10">Supprimer ce barème</h4>
+
+  <div class="d-flex mt-3">
+
+    <img src="/assets/icon/bin.png" height="100" width="100"  alt="">
+
+    <div class="br-2 ms-fontColor-sharedRedOrange10 ml-3 ms-fontSize-14" >
+      Souhaitez vous réellement supprimer ce barème ?<br><br>
+      Cette opération est irréversible.
+    </div>
+  </div>
+
+  <div class="mt-4 text-right">
+    <button msButton msDialogClose="" class="mr-3">Annuler</button>
+    <button msButton theme="error" icon="Delete"  (click)="delete()">Supprimer</button>
+  </div>
+</form>

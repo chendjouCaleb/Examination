@@ -154,8 +154,10 @@ namespace Exam.Controllers
                 throw new IncompatibleEntityException<Level, LevelSpeciality>(level, levelSpeciality);
             }
 
+            string registrationId = form.RegistrationId.ToUpper();
+            
             if (_studentRepository.Exists(s =>
-                level.Department.SchoolId == s.Level?.Department?.SchoolId && s.RegistrationId == form.RegistrationId))
+                level.Department.SchoolId == s.Level?.Department?.SchoolId && s.RegistrationId == registrationId))
             {
                 throw new InvalidValueException("{student.constraints.uniqueRegistrationId}");
             }
@@ -163,7 +165,7 @@ namespace Exam.Controllers
             Student student = new Student
             {
                 FullName = form.FullName,
-                RegistrationId = form.RegistrationId,
+                RegistrationId = registrationId,
                 BirthDate = form.BirthDate,
                 BirthPlace = form.BirthPlace,
                 School = level.Department.School,

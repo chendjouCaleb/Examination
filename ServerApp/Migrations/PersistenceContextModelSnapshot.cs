@@ -174,6 +174,9 @@ namespace Exam.Migrations
                     b.Property<long>("Coefficient")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("DepartmentId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -198,9 +201,16 @@ namespace Exam.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("SchoolId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentId");
+
                     b.HasIndex("LevelId");
+
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Courses");
                 });
@@ -1689,7 +1699,7 @@ namespace Exam.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<long>("LevelId")
+                    b.Property<long?>("LevelId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("LevelSpecialityId")
@@ -1707,6 +1717,9 @@ namespace Exam.Migrations
                     b.Property<string>("RegistrationId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("SchoolId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
@@ -1717,6 +1730,8 @@ namespace Exam.Migrations
                     b.HasIndex("LevelId");
 
                     b.HasIndex("LevelSpecialityId");
+
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Students");
                 });
@@ -2128,11 +2143,25 @@ namespace Exam.Migrations
 
             modelBuilder.Entity("Exam.Entities.Courses.Course", b =>
                 {
+                    b.HasOne("Exam.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
                     b.HasOne("Exam.Entities.Level", "Level")
                         .WithMany("Courses")
                         .HasForeignKey("LevelId");
 
+                    b.HasOne("Exam.Entities.School", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
                     b.Navigation("Level");
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("Exam.Entities.Courses.CourseHour", b =>
@@ -2165,7 +2194,7 @@ namespace Exam.Migrations
                         .HasForeignKey("CourseId");
 
                     b.HasOne("Exam.Entities.LevelSpeciality", "LevelSpeciality")
-                        .WithMany()
+                        .WithMany("CourseLevelSpecialities")
                         .HasForeignKey("LevelSpecialityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2840,23 +2869,31 @@ namespace Exam.Migrations
 
             modelBuilder.Entity("Exam.Entities.Student", b =>
                 {
-                    b.HasOne("Exam.Entities.Department", null)
+                    b.HasOne("Exam.Entities.Department", "Department")
                         .WithMany("Students")
                         .HasForeignKey("DepartmentId");
 
                     b.HasOne("Exam.Entities.Level", "Level")
                         .WithMany("Students")
-                        .HasForeignKey("LevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelId");
 
                     b.HasOne("Exam.Entities.LevelSpeciality", "LevelSpeciality")
                         .WithMany("Students")
                         .HasForeignKey("LevelSpecialityId");
 
+                    b.HasOne("Exam.Entities.School", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
                     b.Navigation("Level");
 
                     b.Navigation("LevelSpeciality");
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("Exam.Entities.Supervisor", b =>
@@ -3115,6 +3152,8 @@ namespace Exam.Migrations
             modelBuilder.Entity("Exam.Entities.LevelSpeciality", b =>
                 {
                     b.Navigation("Applications");
+
+                    b.Navigation("CourseLevelSpecialities");
 
                     b.Navigation("Students");
 
