@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Exam.Controllers.Courses;
 using Exam.Entities;
 using Exam.Entities.Courses;
@@ -37,7 +38,7 @@ namespace Exam.Controllers
             _levelSpecialityController = _serviceProvider.GetRequiredService<LevelSpecialityController>();
         }
 
-        public School CreateSchool()
+        public async Task<School> CreateSchool()
         {
             _logger.LogInformation("Creating school");
             var controller = _serviceProvider.GetService<SchoolController>();
@@ -51,12 +52,12 @@ namespace Exam.Controllers
             School school = controller.Add(form, new LoggedUser {UserId = schoolAdminUserId})
                 .Value as School;
 
-            school.Departments = CreateDepartment(school);
+            school.Departments = await CreateDepartment(school);
 
             return school;
         }
 
-        List<Department> CreateDepartment(School school)
+        async Task<List<Department>> CreateDepartment(School school)
         {
             var controller = _serviceProvider.GetService<DepartmentController>();
             var principalController = _serviceProvider.GetService<PrincipalController>();
@@ -82,8 +83,8 @@ namespace Exam.Controllers
                 department.Specialities.Add(statisticsSpeciality);
 
                 department.Levels = new List<Level>();
-                department.Levels.Add(CreateLevel1(department));
-                department.Levels.Add(CreateLevel2(department));
+                department.Levels.Add(await CreateLevel1(department));
+                department.Levels.Add(await CreateLevel2(department));
                 
                 
 
@@ -108,7 +109,7 @@ namespace Exam.Controllers
         }
 
 
-        public Level CreateLevel1(Department department)
+        public async Task<Level> CreateLevel1(Department department)
         {
             var level = _levelController.Add(department);
             
@@ -123,16 +124,16 @@ namespace Exam.Controllers
             for (int i = 0; i < studentForms.Count; i++)
             {
                 studentForms[i].RegistrationId = ("1" + i + studentForms[i].RegistrationId).ToUpper();;
-                var student = _studentController.Add(studentForms[i], level, 
+                var student = (await _studentController.Add(studentForms[i], level, 
                         i%3 == 0 ? statisticsLevelSpeciality : null
-                        , level.Department.Principals[0])
+                        , level.Department.Principals[0]))
                     .Value as Student;
             }
 
             return level;
         }
         
-        public Level CreateLevel2(Department department)
+        public async Task<Level> CreateLevel2(Department department)
         {
             var level = _levelController.Add(department);
 
@@ -144,9 +145,9 @@ namespace Exam.Controllers
             for (int i = 0; i < studentForms.Count; i++)
             {
                 studentForms[i].RegistrationId = ("2" + i + studentForms[i].RegistrationId).ToUpper();
-                var student = _studentController.Add(studentForms[i], level,  null
+                var student = (await _studentController.Add(studentForms[i], level,  null
                         , level.Department.Principals[0])
-                    .Value as Student;
+                    ).Value as Student;
                 level.Students.Add(student);
             }
 

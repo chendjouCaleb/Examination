@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
@@ -192,7 +193,7 @@ namespace Exam.Controllers
         [HttpPut("{applicationId}/accept")]
         [LoadApplication(DepartmentItemName = "department")]
         [IsPrincipal]
-        public AcceptedResult Accept(Application application, Principal principal)
+        public async Task<AcceptedResult> Accept(Application application, Principal principal)
         {
             Assert.RequireNonNull(application, nameof(application));
             Assert.RequireNonNull(principal, nameof(principal));
@@ -205,7 +206,8 @@ namespace Exam.Controllers
                 RegistrationId = application.RegistrationId
             };
 
-            Student student = _studentController.Add(form, application.Level, application.LevelSpeciality, principal)
+            Student student = 
+                (await _studentController.Add(form, application.Level, application.LevelSpeciality, principal))
                 .Value as Student;
 
             _studentController.ChangeUserId(student, application.UserId);

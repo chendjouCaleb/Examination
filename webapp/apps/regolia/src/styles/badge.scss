@@ -1,0 +1,66 @@
+﻿@import "~office-ui-fabric-core/src/sass/variables/Color.Variables";
+
+.ms-badge {
+  color: #FFF !important;
+  border-radius: 2px;
+  padding: 1px 3px;
+  font-size: 11px;
+  user-select: none;
+
+  text-transform: uppercase;
+  display: inline-block;
+
+  &.ms-badge-primary {
+    background-color: $ms-color-themePrimary;
+  }
+
+  &.ms-badge-success {
+    background-color: $ms-color-successBackground;
+    color: $ms-color-success;
+  }
+
+  &.ms-badge-info {
+    background-color: $ms-color-infoBackground;
+    color: $ms-color-info;
+  }
+
+  &.ms-badge-warning {
+    background-color: $ms-color-warningBackground;
+    color: $ms-color-warning;
+  }
+
+  &.ms-badge-error {
+    background-color: $ms-color-errorBackground;
+    color: $ms-color-error !important;
+  }
+
+  &:hover{
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.ms-badge.ms-badge-department {
+  background-color: $ms-color-sharedBlueMagenta10;
+  color: $ms-color-white;
+  &:hover {
+    background-color: $ms-color-sharedMagenta20;
+  }
+}
+
+
+.ms-badge.ms-badge-level {
+  background-color: $ms-color-sharedGreen10;
+  color: $ms-color-white;
+  &:hover {
+    background-color: $ms-color-sharedGreen20;
+  }
+}
+
+.ms-badge.ms-badge-speciality {
+  background-color: $ms-color-sharedOrange20;
+  color: $ms-color-white;
+  &:hover {
+    background-color: $ms-color-sharedOrange30;
+  }
+}

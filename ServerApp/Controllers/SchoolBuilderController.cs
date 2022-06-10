@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Exam.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,11 @@ namespace Exam.Controllers
         }
 
         [HttpGet]
-        public School Build()
+        public async Task<School> Build()
         {
             Console.Clear();
-            return _schoolBuilder.CreateSchool();
+            School school = await _schoolBuilder.CreateSchool();
+            return school;
         }
     }
 }

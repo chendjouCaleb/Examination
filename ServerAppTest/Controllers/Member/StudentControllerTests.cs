@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Persistence;
 using Exam.Controllers;
@@ -31,12 +32,8 @@ namespace ServerAppTest.Controllers
         private StudentForm _form;
 
 
-        private User _user = new User
-        {
-            Id = Guid.NewGuid().ToString()
-        };
 
-        private User _principalUser = new User
+        private User _principalUser = new ()
         {
             Id = Guid.NewGuid().ToString()
         };
@@ -101,9 +98,9 @@ namespace ServerAppTest.Controllers
         }
 
         [Test]
-        public void Add()
+        public async Task Add()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
             _studentRepository.Refresh(student);
 
             Assert.NotNull(student);
@@ -134,12 +131,12 @@ namespace ServerAppTest.Controllers
         }
 
         [Test]
-        public void ChangeUserId()
+        public async Task ChangeUserId()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
             string userId = Guid.NewGuid().ToString();
 
-            _controller.ChangeUserId(student, userId);
+            await _controller.ChangeUserId(student, userId);
 
             _studentRepository.Refresh(student);
 
@@ -148,21 +145,21 @@ namespace ServerAppTest.Controllers
         }
 
         [Test]
-        public void TryChangeUserId_WithUsedUserId_ShouldThrow()
+        public async Task TryChangeUserId_WithUsedUserId_ShouldThrow()
         {
-            Student student1 = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
-            Student student2 = _controller.Add(new StudentForm
+            Student student1 = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
+            Student student2 = (await _controller.Add(new StudentForm
             {
                 FullName = "student2 fullName",
                 BirthDate = DateTime.Now.AddYears(-23),
                 RegistrationId = "15S2287",
                 Gender = 'M'
-            }, _level, _levelSpeciality, _principal).Value as Student;
+            }, _level, _levelSpeciality, _principal)).Value as Student;
 
             string userId = Guid.NewGuid().ToString();
-            _controller.ChangeUserId(student1, userId);
+            await _controller.ChangeUserId(student1, userId);
 
-            Exception ex = Assert.Throws<InvalidValueException>(
+            Exception ex = Assert.ThrowsAsync<InvalidValueException>(
                 () => _controller.ChangeUserId(student2, userId)
             );
 
@@ -171,10 +168,10 @@ namespace ServerAppTest.Controllers
 
 
         [Test]
-        public void RemoveUserId()
+        public async Task RemoveUserId()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
-            _controller.RemoveUserId(student);
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
+            await _controller.RemoveUserId(student);
 
             _studentRepository.Refresh(student);
 
@@ -182,12 +179,12 @@ namespace ServerAppTest.Controllers
         }
 
         [Test]
-        public void ChangeRegistrationId()
+        public async Task ChangeRegistrationId()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
 
             string registrationId = "14T5236";
-            _controller.ChangeRegistrationId(student, registrationId);
+            await _controller.ChangeRegistrationId(student, registrationId);
 
             _studentRepository.Refresh(student);
 
@@ -196,13 +193,13 @@ namespace ServerAppTest.Controllers
         }
 
         [Test]
-        public void TryChangeRegistrationId_WithUsedRegistrationId_ShouldThrow()
+        public async Task TryChangeRegistrationId_WithUsedRegistrationId_ShouldThrow()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
 
             string registrationId = "14T5236";
 
-            _controller.Add(new StudentForm
+            await _controller.Add(new StudentForm
             {
                 FullName = "my fullName",
                 BirthDate = DateTime.Now.AddYears(-23),
@@ -219,9 +216,9 @@ namespace ServerAppTest.Controllers
 
 
         [Test]
-        public void ChangeLevel()
+        public async Task ChangeLevel()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
 
             Level level = _levelRepository.Save(new Level
             {
@@ -240,7 +237,7 @@ namespace ServerAppTest.Controllers
             });
 
 
-            _controller.ChangeLevel(student, level, levelSpeciality);
+            await _controller.ChangeLevel(student, level, levelSpeciality);
             _studentRepository.Refresh(student);
 
             Assert.NotNull(student);
@@ -252,9 +249,9 @@ namespace ServerAppTest.Controllers
         
         
         [Test]
-        public void ChangeLevel_WithoutSpeciality()
+        public async Task ChangeLevel_WithoutSpeciality()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
 
             Level level = _levelRepository.Save(new Level
             {
@@ -263,7 +260,7 @@ namespace ServerAppTest.Controllers
             });
 
             
-            _controller.ChangeLevel(student, level );
+            await _controller.ChangeLevel(student, level );
             _studentRepository.Refresh(student);
 
             Assert.NotNull(student);
@@ -272,11 +269,11 @@ namespace ServerAppTest.Controllers
         }
 
         [Test]
-        public void RemoveLevelSpeciality()
+        public async Task RemoveLevelSpeciality()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
 
-            _controller.RemoveLevelSpeciality(student);
+            await _controller.RemoveLevelSpeciality(student);
 
             _studentRepository.Refresh(student);
 
@@ -286,9 +283,9 @@ namespace ServerAppTest.Controllers
 
 
         [Test]
-        public void UpdateInfo()
+        public async Task UpdateInfo()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
 
             StudentFormInfo form = new StudentFormInfo
             {
@@ -297,7 +294,7 @@ namespace ServerAppTest.Controllers
                 Gender = 'F'
             };
 
-            _controller.Update(student, form);
+            await _controller.Update(student, form);
 
             _studentRepository.Refresh(student);
 
@@ -309,10 +306,10 @@ namespace ServerAppTest.Controllers
 
 
         [Test]
-        public void Delete()
+        public async Task Delete()
         {
-            Student student = _controller.Add(_form, _level, _levelSpeciality, _principal).Value as Student;
-            _controller.Delete(student);
+            Student student = (await _controller.Add(_form, _level, _levelSpeciality, _principal)).Value as Student;
+            await _controller.Delete(student);
             Assert.False(_studentRepository.Exists(student));
         }
     }

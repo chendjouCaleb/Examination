@@ -14,6 +14,7 @@ using Exam.Loaders;
 using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -22,16 +23,18 @@ namespace Exam.Controllers
     [Route("api/students")]
     public class StudentController : Controller
     {
-        private IRepository<Student, long> _studentRepository;
+        //private IRepository<Student, long> _studentRepository;
+        private DbContext _dbContext;
         private IConfiguration _configuration;
         private ILogger<StudentController> _logger;
 
         public StudentController(
             IRepository<Student, long> studentRepository,
+            DbContext dbContext,
             IConfiguration configuration,
             ILogger<StudentController> logger)
         {
-            _studentRepository = studentRepository;
+            _dbContext = dbContext;
             _configuration = configuration;
             _logger = logger;
         }
@@ -44,9 +47,9 @@ namespace Exam.Controllers
         [HttpGet("find/registrationId")]
         [RequireQueryParameter("schoolId")]
         [RequireQueryParameter("registrationId")]
-        public Student First(long schoolId, [FromQuery] string registrationId)
+        public Task<Student> First(long schoolId, [FromQuery] string registrationId)
         {
-            return _studentRepository.First(s =>
+            return _dbContext.Set<Student>().FirstOrDefaultAsync(s =>
                 schoolId == s.Level.Department.SchoolId && registrationId == s.RegistrationId);
         }
 
@@ -58,7 +61,7 @@ namespace Exam.Controllers
             [FromQuery] long? specialityId,
             [FromQuery] string userId)
         {
-            var query = _studentRepository.Set;
+            IQueryable<Student> query = _dbContext.Set<Student>();
             if (levelId != null)
             {
                 query = query.Where(s => s.LevelId == levelId);
@@ -100,34 +103,35 @@ namespace Exam.Controllers
             [FromQuery] long? specialityId,
             [FromQuery] string userId)
         {
+            IQueryable<Student> query = _dbContext.Set<Student>();
             if (levelId != null)
             {
-                return _studentRepository.List(s => s.LevelId == levelId);
+                return query.Where(s => s.LevelId == levelId);
             }
 
             if (levelSpecialityId != null)
             {
-                return _studentRepository.List(s => s.LevelSpecialityId == levelSpecialityId);
+                return query.Where(s => s.LevelSpecialityId == levelSpecialityId);
             }
 
             if (specialityId != null)
             {
-                return _studentRepository.List(s => s.LevelSpecialityId != null && s.LevelSpeciality.SpecialityId == specialityId);
+                return query.Where(s => s.LevelSpecialityId != null && s.LevelSpeciality.SpecialityId == specialityId);
             }
 
             if (departmentId != null)
             {
-                return _studentRepository.List(s => s.Level.DepartmentId == departmentId);
+                return query.Where(s => s.Level.DepartmentId == departmentId);
             }
             
             if (schoolId != null)
             {
-                return _studentRepository.List(s => s.Level.Department.SchoolId == schoolId);
+                return query.Where(s => s.Level.Department.SchoolId == schoolId);
             }
 
             if (!string.IsNullOrWhiteSpace(userId))
             {
-                return _studentRepository.List(s => s.UserId == userId);
+                return query.Where(s => s.UserId == userId);
             }
 
             return new Student[] { };
@@ -140,7 +144,7 @@ namespace Exam.Controllers
         [LoadLevel(Source = ParameterSource.Query, DepartmentItemName = "department")]
         [LoadLevelSpeciality(Source = ParameterSource.Query)]
         [IsPrincipal]
-        public CreatedAtActionResult Add([FromForm] StudentForm form, Level level,
+        public async Task<CreatedAtActionResult> Add([FromForm] StudentForm form, Level level,
             LevelSpeciality levelSpeciality, Principal principal)
         {
             Assert.RequireNonNull(principal, nameof(principal));
@@ -156,8 +160,8 @@ namespace Exam.Controllers
 
             string registrationId = form.RegistrationId.ToUpper();
             
-            if (_studentRepository.Exists(s =>
-                level.Department.SchoolId == s.Level?.Department?.SchoolId && s.RegistrationId == registrationId))
+            if (await _dbContext.Set<Student>().AnyAsync(s =>
+                level.Department.SchoolId == s.Level.Department.SchoolId && s.RegistrationId.ToLower() == registrationId.ToLower()))
             {
                 throw new InvalidValueException("{student.constraints.uniqueRegistrationId}");
             }
@@ -179,11 +183,12 @@ namespace Exam.Controllers
                 Address = form.Address
             };
 
-            student = _studentRepository.Save(student);
+            student = _dbContext.Add(student).Entity;
+            await _dbContext.SaveChangesAsync();
 
             if (form.Image != null)
             {
-                ChangeImage(student, form.Image).ConfigureAwait(false);   
+                ChangeImage(student, form.Image);
             }
 
             _logger.LogInformation($"New Student: {student}");
@@ -194,14 +199,15 @@ namespace Exam.Controllers
         [ValidModel]
         [LoadStudent(DepartmentItemName = "department")]
         [IsPrincipal]
-        public Student Update(Student student, [FromBody] StudentFormInfo form)
+        public async Task<Student> Update(Student student, [FromBody] StudentFormInfo form)
         {
             student.BirthDate = form.BirthDate;
             student.FullName = form.FullName;
             student.Gender = form.Gender;
             student.BirthPlace = form.BirthPlace;
 
-            _studentRepository.Update(student);
+            _dbContext.Update(student);
+            await _dbContext.SaveChangesAsync();
             return student;
         }
 
@@ -212,7 +218,7 @@ namespace Exam.Controllers
         [LoadLevel(Source = ParameterSource.Query)]
         [LoadLevelSpeciality(Source = ParameterSource.Query)]
         [IsPrincipal]
-        public StatusCodeResult ChangeLevel(Student student, Level level, LevelSpeciality levelSpeciality = null)
+        public async Task<StatusCodeResult> ChangeLevel(Student student, Level level, LevelSpeciality levelSpeciality = null)
         {
             Assert.RequireNonNull(student, nameof(student));
             Assert.RequireNonNull(level, nameof(level));
@@ -232,7 +238,8 @@ namespace Exam.Controllers
             student.Level = level;
             student.LevelSpeciality = levelSpeciality;
             
-            _studentRepository.Update(student);
+            _dbContext.Update(student);
+            await _dbContext.SaveChangesAsync();
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -240,7 +247,7 @@ namespace Exam.Controllers
         [LoadStudent(DepartmentItemName = "department")]
         [LoadLevelSpeciality(Source = ParameterSource.Query)]
         [IsPrincipal]
-        public StatusCodeResult RemoveLevelSpeciality(Student student)
+        public async Task<StatusCodeResult> RemoveLevelSpeciality(Student student)
         {
             Assert.RequireNonNull(student, nameof(student));
 
@@ -250,7 +257,8 @@ namespace Exam.Controllers
             }
 
             student.LevelSpeciality = null;
-            _studentRepository.Update(student);
+            _dbContext.Update(student);
+            await _dbContext.SaveChangesAsync();
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -258,14 +266,14 @@ namespace Exam.Controllers
         [HttpPut("{studentId}/registrationId")]
         [LoadStudent(DepartmentItemName = "department")]
         [IsPrincipal]
-        public StatusCodeResult ChangeRegistrationId(Student student, [FromQuery] string registrationId)
+        public async Task<StatusCodeResult> ChangeRegistrationId(Student student, [FromQuery] string registrationId)
         {
             Assert.RequireNonNull(student, nameof(student));
             Assert.RequireNonNull(student.Level, nameof(student.Level));
             Assert.RequireNonNull(student.Level.Department, nameof(student.Level.Department));
             Assert.RequireNonNull(student.Level.Department.School, nameof(student.Level.Department.School));
 
-            if (_studentRepository.Exists(s =>
+            if (await _dbContext.Set<Student>().AnyAsync(s =>
                 student.Level.Department.School.Equals(s.Level.Department.School) &&
                 s.RegistrationId == registrationId))
             {
@@ -273,7 +281,10 @@ namespace Exam.Controllers
             }
 
             student.RegistrationId = registrationId;
-            _studentRepository.Update(student);
+            
+            _dbContext.Update(student);
+            await _dbContext.SaveChangesAsync();
+            
             return StatusCode(StatusCodes.Status202Accepted);
         }
 
@@ -282,7 +293,7 @@ namespace Exam.Controllers
         [RequireQueryParameter("userId")]
         [LoadStudent(DepartmentItemName = "department")]
         [IsPrincipal]
-        public StatusCodeResult ChangeUserId(Student student, [FromQuery] string userId)
+        public async Task<StatusCodeResult> ChangeUserId(Student student, [FromQuery] string userId)
         {
             Assert.RequireNonNull(student, nameof(student));
             if (string.IsNullOrWhiteSpace(userId))
@@ -290,7 +301,7 @@ namespace Exam.Controllers
                 throw new ArgumentNullException(nameof(userId));
             }
 
-            if (_studentRepository.Exists(s =>
+            if (await _dbContext.Set<Student>().AnyAsync(s =>
                 student.Level.Department.School.Equals(s.Level.Department.School) && s.UserId == userId))
             {
                 throw new InvalidValueException("{student.constraints.uniqueUserId}");
@@ -298,7 +309,8 @@ namespace Exam.Controllers
 
             student.UserId = userId;
 
-            _studentRepository.Update(student);
+            _dbContext.Update(student);
+            await _dbContext.SaveChangesAsync();
 
             return StatusCode(StatusCodes.Status202Accepted);
         }
@@ -307,11 +319,12 @@ namespace Exam.Controllers
         [HttpDelete("{studentId}/userId")]
         [LoadStudent(DepartmentItemName = "department")]
         [IsPrincipal]
-        public StatusCodeResult RemoveUserId(Student student)
+        public async Task<StatusCodeResult> RemoveUserId(Student student)
         {
             Assert.RequireNonNull(student, nameof(student));
             student.UserId = null;
-            _studentRepository.Update(student);
+            _dbContext.Update(student);
+            await _dbContext.SaveChangesAsync();
             return StatusCode(StatusCodes.Status202Accepted);
         }
         
@@ -361,7 +374,8 @@ namespace Exam.Controllers
 
             student.HasImage = true;
 
-            _studentRepository.Update(student);
+            _dbContext.Update(student);
+            await _dbContext.SaveChangesAsync();
             return Ok();
         }
 
@@ -369,9 +383,10 @@ namespace Exam.Controllers
         [HttpDelete("{studentId}")]
         [LoadStudent(DepartmentItemName = "department")]
         [IsPrincipal]
-        public NoContentResult Delete(Student student)
+        public async Task<NoContentResult> Delete(Student student)
         {
-            _studentRepository.Delete(student);
+            _dbContext.Remove(student);
+            await _dbContext.SaveChangesAsync();
             return NoContent();
         }
     }
