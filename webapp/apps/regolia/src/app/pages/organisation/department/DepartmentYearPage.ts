@@ -15,7 +15,9 @@ import {YearDepartmentLoader} from "examination/loaders";
                   Aucune année scolaire pour ce départment !
               </div>
           </div>
-          <YearDepartmentList [yearDepartments]="department.yearDepartments"></YearDepartmentList>
+          <YearDepartmentList [yearDepartments]="department.yearDepartments"
+            listStyle="date"
+          ></YearDepartmentList>
       </div>`
 })
 export class DepartmentYearPage {

@@ -1,3 +1,13 @@
-<a YearDepartmentCard *ngFor="let yearDepartment of yearDepartments"
-   class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover"
-   [yearDepartment]="yearDepartment" [routerLink]="yearDepartment.url()"></a>
+<ng-container *ngIf="style === 'card'">
+  <a YearDepartmentCard *ngFor="let yearDepartment of yearDepartments"
+     class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover"
+     [yearDepartment]="yearDepartment" [routerLink]="yearDepartment.url()"></a>
+</ng-container>
+
+<ng-container *ngIf="style === 'date'">
+  <a *ngFor="let yearDepartment of yearDepartments"
+     class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover"
+     year-item [year]="yearDepartment.year" [routerLink]="yearDepartment.url()">
+
+  </a>
+</ng-container>

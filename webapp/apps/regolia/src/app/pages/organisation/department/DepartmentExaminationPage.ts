@@ -1,15 +1,28 @@
-import {Component} from "@angular/core";
-import {Department} from 'examination/entities';
+import {Component, OnInit} from "@angular/core";
+import {Department, ExaminationDepartment} from 'examination/entities';
 import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
+import {ExaminationDepartmentLoader} from "examination/loaders";
 
 @Component({
-  template: `examens`
-})
-export class DepartmentExaminationPage {
-  department: Department;
+  template: `
+    <h4>Examens ({{examinationDepartments?.length}})</h4>
 
-  constructor(items: CurrentItems, public _router: Router) {
+    <div class="mt-3 ms-default-grid"
+         ExaminationDepartmentList [examinationDepartments]="examinationDepartments" listStyle="date"></div>
+  `
+})
+export class DepartmentExaminationPage implements OnInit {
+  department: Department;
+  examinationDepartments: ExaminationDepartment[];
+
+  constructor(items: CurrentItems,
+              private _examinationDepartmentLoader: ExaminationDepartmentLoader,
+              public _router: Router) {
     this.department = items.get('department');
+  }
+
+  async ngOnInit() {
+    this.examinationDepartments = await this._examinationDepartmentLoader.loadByDepartment(this.department);
   }
 }

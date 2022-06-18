@@ -3,7 +3,7 @@ import {Year} from "examination/entities";
 
 @Component({
   templateUrl: 'YearItem.html',
-  selector: 'YearItem, a[YearItem]',
+  selector: 'YearItem, [YearItem], [year-item]',
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'year-item'

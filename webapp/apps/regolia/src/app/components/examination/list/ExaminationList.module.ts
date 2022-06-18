@@ -13,7 +13,7 @@ import {ExaminationList} from "./examination-list";
   imports: [CommonModule, MsTableModule, MsSpinnerModule, RouterModule, ControlModule, MsButtonModule,
     MsBadgeModule, MomentModule, ExaminationCardModule],
   declarations: [ SemesterExaminationList, ExaminationListItem, ExaminationList ],
-  exports: [ SemesterExaminationList, ExaminationList ]
+    exports: [SemesterExaminationList, ExaminationList, ExaminationListItem]
 })
 export class ExaminationListModule {
 
