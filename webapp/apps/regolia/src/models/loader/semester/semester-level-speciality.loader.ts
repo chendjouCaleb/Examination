@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {AuthorizationManager} from 'examination/app/authorization';
 import {Loader} from '../loader';
 import {
-  LevelSpeciality,
+  LevelSpeciality, SemesterDepartment,
   SemesterLevel,
   SemesterLevelSpeciality,
   SemesterSpeciality,
@@ -19,14 +19,14 @@ import {YearLevelSpecialityLoader} from "../year";
 @Injectable({providedIn: 'root'})
 export class SemesterLevelSpecialityLoader extends Loader<SemesterLevelSpeciality, number> {
 
-  constructor( _httpClient: SemesterLevelSpecialityHttpClient,
-               private _userHttClient: UserHttpClient,
-               private _semesterLevelLoader: SemesterLevelLoader,
-               private _semesterSpecialityLoader: SemesterSpecialityLoader,
-               private _levelLoader: LevelLoader,
-               private _specialityLoader: SpecialityLoader,
-               private _yearLevelSpecialityLoader: YearLevelSpecialityLoader,
-               private _authorization: AuthorizationManager) {
+  constructor(_httpClient: SemesterLevelSpecialityHttpClient,
+              private _userHttClient: UserHttpClient,
+              private _semesterLevelLoader: SemesterLevelLoader,
+              private _semesterSpecialityLoader: SemesterSpecialityLoader,
+              private _levelLoader: LevelLoader,
+              private _specialityLoader: SpecialityLoader,
+              private _yearLevelSpecialityLoader: YearLevelSpecialityLoader,
+              private _authorization: AuthorizationManager) {
     super(_httpClient);
   }
 
@@ -61,6 +61,16 @@ export class SemesterLevelSpecialityLoader extends Loader<SemesterLevelSpecialit
       }
       semesterLevel.semesterLevelSpecialities = semesterLevelsSpecialities.toArray();
     }
+  }
+
+  async loadBySemesterDepartment(semesterDepartment: SemesterDepartment): Promise<SemesterLevelSpeciality[]> {
+    const semesterDepartmentsSpecialities = await this._httpClient
+      .listAsync({semesterDepartmentId: semesterDepartment.id});
+
+    for (const item of semesterDepartmentsSpecialities) {
+      await this.load(item);
+    }
+    return semesterDepartmentsSpecialities.toArray();
   }
 
 

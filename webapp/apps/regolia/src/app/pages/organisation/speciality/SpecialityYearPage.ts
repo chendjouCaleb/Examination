@@ -5,11 +5,11 @@ import {Router} from "@angular/router";
 import {YearSpecialityLoader} from "examination/loaders";
 
 @Component({
-  template: `    
+  template: `
           <div class="p-3">
               <h3>Années scolaires</h3>
               <div class="mt-3">
-                  <YearSpecialityList [items]="speciality.yearSpecialities"></YearSpecialityList>
+                  <YearSpecialityList [yearSpecialities]="speciality.yearSpecialities"></YearSpecialityList>
               </div>
           </div>`
 })

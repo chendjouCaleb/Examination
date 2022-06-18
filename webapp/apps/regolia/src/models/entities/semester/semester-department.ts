@@ -26,6 +26,11 @@ export class SemesterDepartment extends Entity<number> {
   semesterLevels: SemesterLevel[];
   semesterSpecialities: SemesterSpeciality[];
 
+  get department(): Department {
+    return this.yearDepartment.department;
+  }
+
+
   url(path?: string): string {
     const url = `${this.semester.url()}/departments/${this.id}`;
     if(path) {

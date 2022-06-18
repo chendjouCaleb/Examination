@@ -1,0 +1,4 @@
+<a *ngFor="let yearLevel of yearLevels"
+   [routerLink]="yearLevel.url()"
+   year-level-card [yearLevel]="yearLevel"
+   class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover p-3"></a>

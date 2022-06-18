@@ -1498,6 +1498,12 @@ namespace Exam.Migrations
                     b.Property<long?>("DepartmentId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("HasImage")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long?>("LevelId")
                         .HasColumnType("bigint");
 

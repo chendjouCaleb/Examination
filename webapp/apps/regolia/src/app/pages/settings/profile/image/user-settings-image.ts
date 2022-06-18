@@ -1,7 +1,7 @@
 ﻿import {Component, ElementRef, Input, ViewChild} from "@angular/core";
 import {User} from "examination/entities";
 import {IdentityManager} from "examination/app/identity";
-import {AlertEmitter, ImageCropper, ImageCropperData, ImageCropperDialog, ImageCropperInfo} from "src/controls";
+import {AlertEmitter, ImageCropperData, ImageCropperDialog, ImageCropperInfo} from "src/controls";
 import {Observable} from "rxjs";
 
 @Component({

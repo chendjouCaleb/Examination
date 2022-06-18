@@ -27,15 +27,26 @@
         <tr ms-tableRow *ms-tableRowDef="let item of data; let i=index" [value]="item" [routerLink]="item.url()"
             [class.ms-new-item]="item.isNew">
           <td ms-tableCell>{{i + start + 1}}</td>
-          <td ms-tableCell class="ms-fontWeight-semibold">
-            {{item.yearLevel?.yearDepartment?.department?.name}}
-          </td>
-          <td ms-tableCell>{{item.yearLevel?.level?.index + 1}}</td>
-          <td ms-tableCell class="ms-fontWeight-semibold">
-            {{item.yearLevelSpeciality?.levelSpeciality?.speciality?.name}}
+          <td ms-tableCell>
+            <a [routerLink]="item.yearLevel?.yearDepartment?.url" class="ms-link-inherit ms-badge ms-badge-department">
+              {{item.yearLevel?.yearDepartment?.department?.name}}</a>
           </td>
           <td ms-tableCell>
-            <a [routerLink]="item.student?.url" class="ms-fontWeight-semibold text-capitalize">{{item.student?.fullName}}</a>
+            <a [routerLink]="item.yearLevel?.url" class="ms-link-inherit ms-badge ms-badge-level">
+              Niveau {{item.yearLevel?.level?.index + 1}}
+            </a>
+          </td>
+
+          <td ms-tableCell>
+            <a [routerLink]="item.yearLevelSpeciality.url" *ngIf="item.yearLevelSpeciality"
+               class="ms-link-inherit ms-badge ms-badge-speciality">
+              {{item.yearLevelSpeciality?.levelSpeciality?.speciality?.name}}
+            </a>
+
+          </td>
+          <td ms-tableCell>
+            <a [routerLink]="item.student?.url"
+               class="ms-fontWeight-semibold text-capitalize">{{item.student?.fullName}}</a>
           </td>
 
           <td ms-tableCell class="ms-fontWeight-semibold ms-fontColor-sharedRed10">

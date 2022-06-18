@@ -1,0 +1,4 @@
+<a *ngFor="let semesterLevel of semesterLevels"
+   [routerLink]="semesterLevel.url()"
+   semester-level-card [semesterLevel]="semesterLevel"
+   class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover p-3"></a>

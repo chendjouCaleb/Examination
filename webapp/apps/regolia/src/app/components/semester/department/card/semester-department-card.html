@@ -1,0 +1,37 @@
+﻿<div class="d-flex align-items-center">
+  <img [src]="semesterDepartment?.department?.imageUrl" alt="Logo image" height="96" width="96" class="m-2">
+  <div class="p-2">
+
+    <div >
+      <div #name class="ms-fontSize-18 ms-fontWeight-semibold "
+           [MsTitle]="semesterDepartment.department?.name + ' (' + semesterDepartment.department?.acronym + ')'"
+      >{{semesterDepartment.department?.name}}  ({{semesterDepartment.department?.acronym | uppercase}})</div>
+    </div>
+
+    <div class="ms-divider my-2"></div>
+
+    <div *ngIf="semesterDepartment.semesterLevels" class="d-flex ms-gap-8 flex-wrap">
+      <a *ngFor="let semesterLevel of semesterDepartment.semesterLevels"
+         [routerLink]="semesterLevel.url()" (click)="$event.stopPropagation()"
+         class="ms-badge ms-link-inherit ms-badge-level">Niveau {{semesterLevel.level.index + 1}}</a>
+    </div>
+
+    <div *ngIf="!semesterDepartment.semesterLevels || semesterDepartment.semesterLevels.length == 0">
+      <span class="ms-badge ms-badge-error">Aucun niveau</span>
+    </div>
+
+    <div class="ms-divider my-2"></div>
+
+    <div *ngIf="semesterDepartment.semesterSpecialities" class="d-flex ms-gap-8 flex-wrap">
+      <a *ngFor="let semesterSpeciality of semesterDepartment.semesterSpecialities"
+         [routerLink]="semesterSpeciality.url" (click)="$event.stopPropagation()"
+         class="ms-badge ms-link-inherit ms-badge-speciality"> {{semesterSpeciality.speciality.name}}</a>
+    </div>
+
+    <div *ngIf="semesterDepartment.semesterSpecialities?.length == 0">
+      <span class="ms-badge ms-badge-error">Aucune spécialité</span>
+    </div>
+
+  </div>
+
+</div>

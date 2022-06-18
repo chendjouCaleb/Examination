@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Loader} from '../loader';
-import {Level, SemesterDepartment, SemesterLevel, YearLevel} from 'examination/entities';
+import {Level, Semester, SemesterDepartment, SemesterLevel, YearLevel} from 'examination/entities';
 import {SemesterLevelHttpClient} from 'examination/models/http';
 import {SemesterDepartmentLoader} from "./semester-department.loader";
 import {YearLevelLoader} from "../year";
@@ -54,7 +54,7 @@ export class SemesterLevelLoader extends Loader<SemesterLevel, number> {
   }
 
 
-  async loadBySemesterDepartment(semesterDepartment: SemesterDepartment): Promise<void> {
+  async loadBySemesterDepartment(semesterDepartment: SemesterDepartment): Promise<SemesterLevel[]> {
     if (!semesterDepartment.semesterLevels) {
       const semesterLevels = await this._httpClient.listAsync({semesterDepartmentId: semesterDepartment.id});
       for (const item of semesterLevels) {
@@ -62,5 +62,15 @@ export class SemesterLevelLoader extends Loader<SemesterLevel, number> {
       }
       semesterDepartment.semesterLevels = semesterLevels.toArray();
     }
+    return semesterDepartment.semesterLevels.slice();
+  }
+
+  async loadBySemester(semester: Semester): Promise<SemesterLevel[]> {
+
+    const semesterLevels = await this._httpClient.listAsync({semesterId: semester.id});
+    for (const item of semesterLevels) {
+      await this.load(item);
+    }
+    return semesterLevels.toArray();
   }
 }

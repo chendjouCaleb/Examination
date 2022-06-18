@@ -7,3 +7,7 @@ export * from './year-department.resolver';
 export * from './year-level.resolver';
 export * from './year-level-speciality.resolver';
 export * from './year-speciality.resolver';
+
+export * from './department'
+export * from './level';
+export * from './speciality';

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
@@ -15,8 +16,7 @@ namespace Exam.Authorizers
         public string SchoolItemName { get; set; } = "school";
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            Authorization authorization = 
-                context.HttpContext.Items["Authorization"] as Authorization;
+            string userId = context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             
             IRepository<Planner, long> repository =
                 context.HttpContext.RequestServices.GetRequiredService<IRepository<Planner, long>>();
@@ -27,14 +27,9 @@ namespace Exam.Authorizers
             {
                 throw new ArgumentNullException(nameof(school));
             }
-
-            if (authorization == null)
-            {
-                throw new ArgumentNullException(nameof(authorization));
-            }
             
             Planner planner =
-                repository.First(p => school.Equals(p.School) && p.UserId == authorization.UserId);
+                repository.First(p => school.Equals(p.School) && p.UserId == userId);
 
             if (planner == null) 
             {

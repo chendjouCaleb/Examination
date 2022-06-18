@@ -35,7 +35,7 @@ export class SemesterLoader extends Loader<Semester, number> {
     }
   }
 
-  async loadBySchool(school: School): Promise<void> {
+  async loadBySchool(school: School): Promise<Semester[]> {
     if (!school.semesters) {
       const semesters = await this._httpClient.listAsync({schoolId: school.id});
       for (const item of semesters) {
@@ -43,5 +43,7 @@ export class SemesterLoader extends Loader<Semester, number> {
       }
       school.semesters = semesters.toArray();
     }
+
+    return school.semesters.slice();
   }
 }

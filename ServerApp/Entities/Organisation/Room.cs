@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Models;
 using Exam.Entities.Courses;
@@ -15,6 +16,12 @@ namespace Exam.Entities
         public string Address { get; set; }
         
         public string RegisterUserId { get; set; }
+        
+        public bool HasImage { get; set; }
+        public string ImageName { get; set; }
+        
+        [NotMapped]
+        public string ImageUrl { get; set; }
         
         [JsonIgnore]
         public virtual School School { get; set; }

@@ -28,6 +28,7 @@ namespace Exam.Controllers.Periods
             [FromQuery] long? semesterLevelId, 
             [FromQuery] long? yearLevelSpecialityId,
             [FromQuery] long? semesterSpecialityId, 
+            [FromQuery] long? semesterDepartmentId, 
             int take = 50, int skip = 0)
         {
             var query = _semesterLevelSpecialityRepository.Set;
@@ -50,6 +51,11 @@ namespace Exam.Controllers.Periods
             if (semesterLevelId != null)
             {
                 query = query.Where(yd => yd.SemesterLevelId == semesterLevelId);
+            }
+            
+            if (semesterDepartmentId != null)
+            {
+                query = query.Where(yd => yd.SemesterLevel.SemesterDepartmentId == semesterDepartmentId);
             }
 
             query = query.Skip(skip).Take(take);

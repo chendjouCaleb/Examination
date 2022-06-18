@@ -3,7 +3,7 @@ import {Semester} from "examination/entities";
 
 @Component({
   templateUrl: 'SemesterList.html',
-  selector: 'SemesterList'
+  selector: 'SemesterList, [SemesterList], [semester-list]'
 })
 export class SemesterList {
   @Input()

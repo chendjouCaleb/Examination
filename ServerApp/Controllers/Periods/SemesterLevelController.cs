@@ -26,23 +26,30 @@ namespace Exam.Controllers.Periods
         [HttpGet]
         public IEnumerable<SemesterLevel> List([FromQuery] long? levelId, 
             [FromQuery] long? yearLevelId,
-            [FromQuery] long? semesterDepartmentId, int take = 50, int skip = 0)
+            [FromQuery] long? semesterDepartmentId, 
+            [FromQuery] long? semesterId, 
+            int take = 50, int skip = 0)
         {
             var query = _semesterLevelRepository.Set;
 
             if (levelId != null)
             {
-                query = query.Where(yd => yd.YearLevel.LevelId == levelId);
+                query = query.Where(yl => yl.YearLevel.LevelId == levelId);
             }
             
             if (yearLevelId != null)
             {
-                query = query.Where(yd => yd.YearLevelId == yearLevelId);
+                query = query.Where(yl => yl.YearLevelId == yearLevelId);
             }
 
             if (semesterDepartmentId != null)
             {
-                query = query.Where(yd => yd.SemesterDepartmentId == semesterDepartmentId);
+                query = query.Where(yl => yl.SemesterDepartmentId == semesterDepartmentId);
+            }
+            
+            if (semesterId != null)
+            {
+                query = query.Where(yl => yl.SemesterDepartment.SemesterId == semesterId);
             }
 
             query = query.Skip(skip).Take(take);

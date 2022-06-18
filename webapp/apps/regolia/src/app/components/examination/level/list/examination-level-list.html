@@ -1,0 +1,4 @@
+<a *ngFor="let examinationLevel of examinationLevels"
+   [routerLink]="examinationLevel.url()"
+   examination-level-card [examinationLevel]="examinationLevel"
+   class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover p-3"></a>

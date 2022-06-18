@@ -4,14 +4,16 @@ import {SemesterExaminationList} from "./SemesterExaminationList";
 import {MsButtonModule, MsSpinnerModule, MsTableModule} from "@ms-fluent/components";
 import {RouterModule} from "@angular/router";
 import {ControlModule, MsBadgeModule} from "src/controls";
-import {ExaminationDepartmentList} from "./ExaminationDepartmentList";
 import {ExaminationListItem} from "./ExaminationListItem";
 import {MomentModule} from "ngx-moment";
+import {ExaminationCardModule} from "../card/examination-card.module";
+import {ExaminationList} from "./examination-list";
 
 @NgModule({
-  imports: [CommonModule, MsTableModule, MsSpinnerModule, RouterModule, ControlModule, MsButtonModule, MsBadgeModule, MomentModule],
-  declarations: [ SemesterExaminationList, ExaminationListItem, ExaminationDepartmentList ],
-  exports: [ SemesterExaminationList ]
+  imports: [CommonModule, MsTableModule, MsSpinnerModule, RouterModule, ControlModule, MsButtonModule,
+    MsBadgeModule, MomentModule, ExaminationCardModule],
+  declarations: [ SemesterExaminationList, ExaminationListItem, ExaminationList ],
+  exports: [ SemesterExaminationList, ExaminationList ]
 })
 export class ExaminationListModule {
 

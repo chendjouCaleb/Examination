@@ -6,13 +6,12 @@ import {MsBadgeModule} from "src/controls";
 import {SemesterItemModule} from "../item";
 import {RouterModule} from "@angular/router";
 import {SemesterDepartmentList} from './SemesterDepartmentList/SemesterDepartmentList';
-import {SemesterLevelList} from "./SemesterLevelList/SemesterLevelList";
 import {SemesterSpecialityList} from "./SemesterSpecialityList/SemesterSpecialityList";
 import {SemesterLevelSpecialityList} from "./SemesterLevelSpecialityList/SemesterLevelSpecialityList";
 
 @NgModule({
-  declarations: [ SemesterList, SemesterDepartmentList, SemesterLevelList, SemesterSpecialityList, SemesterLevelSpecialityList ],
-  exports: [ SemesterList, SemesterDepartmentList, SemesterLevelList, SemesterSpecialityList, SemesterLevelSpecialityList ],
+  declarations: [SemesterList, SemesterDepartmentList, SemesterSpecialityList, SemesterLevelSpecialityList],
+  exports: [SemesterList, SemesterDepartmentList, SemesterSpecialityList, SemesterLevelSpecialityList],
   imports: [CommonModule, MomentModule, MsBadgeModule, SemesterItemModule, RouterModule]
 })
 export class SemesterListModule {

@@ -1,0 +1,38 @@
+﻿<div class="d-flex align-items-center">
+  <img [src]="yearDepartment?.department?.imageUrl" alt="Logo image" height="96" width="96" class="m-2">
+
+  <div class="p-2">
+
+    <div >
+      <div #name class="ms-fontSize-18 ms-fontWeight-semibold "
+           [MsTitle]="yearDepartment.department?.name + ' (' + yearDepartment.department?.acronym + ')'"
+      >{{yearDepartment.department?.name}}  ({{yearDepartment.department?.acronym | uppercase}})</div>
+    </div>
+
+    <div class="ms-divider my-2"></div>
+
+    <div *ngIf="yearDepartment.yearLevels" class="d-flex ms-gap-8 flex-wrap">
+      <a *ngFor="let yearLevel of yearDepartment.yearLevels"
+         [routerLink]="yearLevel.url()" (click)="$event.stopPropagation()"
+         class="ms-badge ms-link-inherit ms-badge-level">Niveau {{yearLevel.level.index + 1}}</a>
+    </div>
+
+    <div *ngIf="!yearDepartment.yearLevels || yearDepartment.yearLevels.length == 0">
+      <span class="ms-badge ms-badge-error">Aucun niveau</span>
+    </div>
+
+    <div class="ms-divider my-2"></div>
+
+    <div *ngIf="yearDepartment.yearSpecialities" class="d-flex ms-gap-8 flex-wrap">
+      <a *ngFor="let yearSpeciality of yearDepartment.yearSpecialities"
+         [routerLink]="yearSpeciality.url" (click)="$event.stopPropagation()"
+         class="ms-badge ms-link-inherit ms-badge-speciality"> {{yearSpeciality.speciality.name}}</a>
+    </div>
+
+    <div *ngIf="yearDepartment.yearSpecialities?.length == 0">
+      <span class="ms-badge ms-badge-error">Aucune spécialité</span>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,38 @@
+﻿<div class="d-flex align-items-center">
+  <img [src]="examinationDepartment?.department?.imageUrl" alt="Logo image" height="96" width="96" class="m-2">
+
+  <div class="p-2">
+
+    <div >
+      <div #name class="ms-fontSize-18 ms-fontWeight-semibold "
+           [MsTitle]="examinationDepartment.department?.name + ' (' + examinationDepartment.department?.acronym + ')'"
+      >{{examinationDepartment.department?.name}}  ({{examinationDepartment.department?.acronym | uppercase}})</div>
+    </div>
+
+    <div class="ms-divider my-2"></div>
+
+    <div *ngIf="examinationDepartment.examinationLevels" class="d-flex ms-gap-8 flex-wrap">
+      <a *ngFor="let examinationLevel of examinationDepartment.examinationLevels"
+         [routerLink]="examinationLevel.url()" (click)="$event.stopPropagation()"
+         class="ms-badge ms-link-inherit ms-badge-level">Niveau {{examinationLevel.level.index + 1}}</a>
+    </div>
+
+    <div *ngIf="!examinationDepartment.examinationLevels || examinationDepartment.examinationLevels.length == 0">
+      <span class="ms-badge ms-badge-error">Aucun niveau</span>
+    </div>
+
+    <div class="ms-divider my-2"></div>
+
+    <div *ngIf="examinationDepartment.examinationSpecialities" class="d-flex ms-gap-8 flex-wrap">
+      <a *ngFor="let examinationSpeciality of examinationDepartment.examinationSpecialities"
+         [routerLink]="examinationSpeciality.url" (click)="$event.stopPropagation()"
+         class="ms-badge ms-link-inherit ms-badge-speciality"> {{examinationSpeciality.speciality.name}}</a>
+    </div>
+
+    <div *ngIf="examinationDepartment.examinationSpecialities?.length == 0">
+      <span class="ms-badge ms-badge-error">Aucune spécialité</span>
+    </div>
+
+  </div>
+
+</div>

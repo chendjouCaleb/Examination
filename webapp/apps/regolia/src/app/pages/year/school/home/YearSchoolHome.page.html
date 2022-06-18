@@ -33,9 +33,5 @@
 
 <div class="mt-4">
   <h4>Départements</h4>
-  <div *ngIf="year.yearDepartments">
-    <a *ngFor="let item of year.yearDepartments" [routerLink]="item.url()">
-      <button msButton class="m-1" >{{item.department?.name}}</button>
-    </a>
-  </div>
+  <div class="ms-default-grid" YearDepartmentList [yearDepartments]="year.yearDepartments"></div>
 </div>

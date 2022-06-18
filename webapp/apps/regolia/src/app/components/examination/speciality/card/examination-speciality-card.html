@@ -1,0 +1,12 @@
+﻿<h5 class="ms-fontWeight-semibold">{{speciality?.name}}</h5>
+
+<div class="ms-divider my-2"></div>
+
+<div *ngIf="examinationSpeciality?.examinationLevelSpecialities">
+  <a style="border-radius: 16px"
+     class="py-1 px-2 mr-2 mb-3 ms-link-inherit ms-bgColor-sharedGreen10 ms-bgColor-sharedGreen20--hover"
+     *ngFor="let examinationLevelSpeciality of examinationSpeciality?.examinationLevelSpecialities"
+     [routerLink]="examinationLevelSpeciality.url()">
+    Niveau {{examinationLevelSpeciality.semesterLevelSpeciality?.yearLevelSpeciality?.levelSpeciality?.level?.index + 1}}
+  </a>
+</div>

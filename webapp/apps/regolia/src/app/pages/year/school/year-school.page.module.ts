@@ -18,7 +18,7 @@ import {
   ExaminationModule,
   SemesterAddModule,
   SemesterCourseListModule,
-  SemesterListModule,
+  SemesterListModule, YearDepartmentModule,
   YearStudentDetailsModule,
   YearStudentListModule,
   YearTeacherDetailsModule,
@@ -57,11 +57,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, SemesterAddModule,
-    SemesterListModule, YearTeacherModule,
-    MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule, YearStudentListModule,
-    YearStudentDetailsModule, MsTableModule, ControlModule, MsPaginatorModule, YearTeacherListModule,
-    YearTeacherDetailsModule, SemesterCourseListModule, ExaminationModule, ExaminationListModule, CourseSessionModule, CourseHourModule],
+  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, SemesterAddModule, SemesterListModule,
+    YearTeacherModule, MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule,
+    YearStudentListModule, YearStudentDetailsModule, MsTableModule, ControlModule, MsPaginatorModule,
+    YearTeacherListModule, YearTeacherDetailsModule, SemesterCourseListModule, ExaminationModule, ExaminationListModule,
+    CourseSessionModule, CourseHourModule, YearDepartmentModule ],
   declarations: [YearSchoolHomePage, YearSchoolStudentPage, YearSchoolStudentDetailsPage, YearSchoolTeacherPage,
     YearSchoolPageLayout, YearSchoolTeacherDetailsPage, YearCoursesPage, YearExaminationsPage, YearCourseHoursPage,
     YearCourseSessionsPage]

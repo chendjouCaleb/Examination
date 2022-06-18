@@ -8,7 +8,7 @@ import {BreadcrumbModule, MsActionMenuModule, MsButtonModule, MsRibbonModule} fr
 import {
   CourseHourModule, CourseSessionModule,
   ExaminationModule,
-  SemesterAddModule, SemesterCourseListModule,
+  SemesterAddModule, SemesterCourseListModule, SemesterDepartmentModule,
   SemesterListModule, SemesterStudentListModule,
   SemesterTeacherListModule,
   SemesterTeacherModule
@@ -22,8 +22,6 @@ import {SemesterExaminationPage} from "./SemesterExaminationPage";
 import {ExaminationListModule} from "../../../components/examination/list";
 import {SemesterSchoolCourseSessionsPage} from "./SemesterSchoolCourseSessions.page";
 import {SemesterSchoolCourseHoursPage} from "./SemesterSchoolCourseHoursPage";
-import {SemesterDepartmentCourseSessionsPage} from "../department/SemesterDepartmentCourseSessions.page";
-import {SemesterDepartmentCourseHoursPage} from "../department/SemesterDepartmentCourseHoursPage";
 
 const routes: Routes = [
   {
@@ -44,9 +42,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, SemesterAddModule,
-    SemesterListModule, SemesterTeacherModule, MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule,
-    MsActionMenuModule, SemesterTeacherListModule, SemesterItemModule, SemesterCourseListModule, SemesterStudentListModule, ExaminationModule, ExaminationListModule, CourseHourModule, CourseSessionModule],
+  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, SemesterAddModule, SemesterListModule,
+    SemesterTeacherModule, MsRibbonModule, BreadcrumbModule, MsButtonModule, MomentModule, MsActionMenuModule,
+    SemesterTeacherListModule, SemesterItemModule, SemesterCourseListModule, SemesterStudentListModule,
+    ExaminationModule, ExaminationListModule, CourseHourModule, CourseSessionModule, SemesterDepartmentModule],
   declarations: [SemesterSchoolHomePage, SemesterSchoolPageLayout, SemesterTeachersPage,
     SemesterCoursePage, SemesterStudentsPage, SemesterExaminationPage, SemesterSchoolCourseSessionsPage,
     SemesterSchoolCourseHoursPage]

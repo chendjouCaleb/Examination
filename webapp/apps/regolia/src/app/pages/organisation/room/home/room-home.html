@@ -1,0 +1,51 @@
+﻿<div *ngIf="room.school.isPlanner || room.department?.isPrincipal" class="p-2 ms-depth-8">
+  <MsActionMenu >
+    <button MsActionMenuButton icon="Edit" (click)="editRoom()">Modifier</button>
+    <button MsActionMenuButton icon="EditPhoto" (click)="changeImage()">Changer l'image</button>
+    <button MsActionMenuButton icon="Delete" theme="error" (click)="delete()">Supprimer</button>
+  </MsActionMenu>
+</div>
+
+<div class="mt-3">
+  <img [src]="room.imageUrl" #imageElement alt="Room image" height="200">
+</div>
+
+<div class="ms-description-list">
+  <dl>
+    <dt>Nom</dt>
+    <dd>{{room.name}}</dd>
+  </dl>
+
+  <dl>
+    <dt>Capacité</dt>
+    <dd>{{room.capacity}} places</dd>
+  </dl>
+
+  <dl>
+    <dt>Adresse</dt>
+    <dd>{{room.address}}</dd>
+  </dl>
+
+  <dl>
+    <dt>Département</dt>
+    <dd>
+      <a class="ms-link-inherit ms-badge ms-badge-department" [routerLink]="room.department.url" *ngIf="room.department">
+        {{room.department.name}}
+      </a>
+      <app-icon *ngIf="!room.department" bgColor="sharedRed10" icon="Cancel"></app-icon>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>Niveau</dt>
+    <dd>
+      <a class="ms-link-inherit ms-badge ms-badge-level" [routerLink]="room.level.url" *ngIf="room.level">
+        Niveau {{room.level.index + 1}}
+      </a>
+      <app-icon *ngIf="!room.department" bgColor="sharedRed10" icon="Cancel"></app-icon>
+
+    </dd>
+  </dl>
+
+
+</div>

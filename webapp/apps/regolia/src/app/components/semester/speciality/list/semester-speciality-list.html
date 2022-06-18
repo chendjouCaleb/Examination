@@ -1,0 +1,5 @@
+<a *ngFor="let item of semesterSpecialities"
+   SemesterSpecialityCard [semesterSpeciality]="item"
+   [routerLink]="item.url()">
+
+</a>

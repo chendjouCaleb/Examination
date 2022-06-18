@@ -1,0 +1,3 @@
+<a YearDepartmentCard *ngFor="let yearDepartment of yearDepartments"
+   class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover"
+   [yearDepartment]="yearDepartment" [routerLink]="yearDepartment.url()"></a>

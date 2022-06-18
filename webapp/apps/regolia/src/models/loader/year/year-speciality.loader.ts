@@ -12,11 +12,11 @@ import {YearDepartmentLoader} from "./year-department.loader";
 @Injectable({providedIn: 'root'})
 export class YearSpecialityLoader extends Loader<YearSpeciality, number> {
 
-  constructor( _httpClient: YearSpecialityHttpClient,
-               private _userHttClient: UserHttpClient,
-               private _yearDepartmentLoader: YearDepartmentLoader,
-               private _specialityLoader: SpecialityLoader,
-               private _authorization: AuthorizationManager) {
+  constructor(_httpClient: YearSpecialityHttpClient,
+              private _userHttClient: UserHttpClient,
+              private _yearDepartmentLoader: YearDepartmentLoader,
+              private _specialityLoader: SpecialityLoader,
+              private _authorization: AuthorizationManager) {
     super(_httpClient);
   }
 
@@ -43,7 +43,7 @@ export class YearSpecialityLoader extends Loader<YearSpeciality, number> {
   }
 
 
-  async loadByYearDepartment(yearDepartment: YearDepartment): Promise<void> {
+  async loadByYearDepartment(yearDepartment: YearDepartment): Promise<YearSpeciality[]> {
     if (!yearDepartment.yearSpecialities) {
       const yearSpecialities = await this._httpClient.listAsync({yearDepartmentId: yearDepartment.id});
       for (const item of yearSpecialities) {
@@ -51,5 +51,16 @@ export class YearSpecialityLoader extends Loader<YearSpeciality, number> {
       }
       yearDepartment.yearSpecialities = yearSpecialities.toArray();
     }
+    return yearDepartment.yearSpecialities.slice();
+  }
+
+
+  async loadByYear(year: Year): Promise<YearSpeciality[]> {
+    const yearSpecialities = await this._httpClient.listAsync({yearId: year.id});
+    for (const item of yearSpecialities) {
+      await this.load(item);
+    }
+
+    return yearSpecialities.toArray();
   }
 }

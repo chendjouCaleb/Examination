@@ -7,21 +7,16 @@
 <div class="ms-fontSize-20">
   <div>
     <span class="ms-fontWeight-light">Du </span>
-    <span > {{semester.expectedStartDate | amDateFormat:'LL' }}</span>
+    <span> {{semester.expectedStartDate | amDateFormat:'LL' }}</span>
   </div>
 
   <div>
     <span class="ms-fontWeight-light">Au </span>
-    <span > {{semester.expectedEndDate | amDateFormat:'LL' }}</span>
+    <span> {{semester.expectedEndDate | amDateFormat:'LL' }}</span>
   </div>
 </div>
 
 
-<h4 class="mt-4">Semestres</h4>
-<div *ngIf="semesterDepartments" class="mt-2">
-  <a SemesterItem *ngFor="let semesterDepartment of semesterDepartments"
-     [routerLink]="semesterDepartment.url()"
-     [semester]="semesterDepartment.semester">
-
-  </a>
-</div>
+<h4 class="mt-4">Départments</h4>
+<div *ngIf="semesterDepartments" class="mt-2 ms-default-grid"
+     SemesterDepartmentList [semesterDepartments]="semesterDepartments"></div>

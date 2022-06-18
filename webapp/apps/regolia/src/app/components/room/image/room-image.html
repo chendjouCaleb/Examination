@@ -1,0 +1,6 @@
+﻿<image-form title="Photo de la salle"   (onchange)="onchange($event)"  [ratio]="16/9">
+  <div>
+    <button msButton theme="primary" [disabled]="!value" (click)="update()">Mettre à jour</button>
+    <button msButton class="ml-2"  msDialogClose> Annuler</button>
+  </div>
+</image-form>

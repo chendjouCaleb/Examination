@@ -8,6 +8,7 @@ using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
 using Everest.AspNetStartup.Persistence;
 using Exam.Authorizers;
+using Exam.Destructors;
 using Exam.Entities;
 using Exam.Infrastructure;
 using Exam.Loaders;
@@ -27,13 +28,16 @@ namespace Exam.Controllers
         private DbContext _dbContext;
         private IConfiguration _configuration;
         private ILogger<StudentController> _logger;
+        private StudentDestructor _studentDestructor;
 
         public StudentController(
             IRepository<Student, long> studentRepository,
+            StudentDestructor studentDestructor,
             DbContext dbContext,
             IConfiguration configuration,
             ILogger<StudentController> logger)
         {
+            _studentDestructor = studentDestructor;
             _dbContext = dbContext;
             _configuration = configuration;
             _logger = logger;
@@ -349,7 +353,7 @@ namespace Exam.Controllers
 
 
         [HttpPut("{studentId}/image")]
-        [LoadStudent]
+        [LoadStudent(DepartmentItemName = "department")]
         [IsPrincipal]
         public async Task<StatusCodeResult> ChangeImage(Student student, IFormFile image)
         {
@@ -385,8 +389,8 @@ namespace Exam.Controllers
         [IsPrincipal]
         public async Task<NoContentResult> Delete(Student student)
         {
-            _dbContext.Remove(student);
-            await _dbContext.SaveChangesAsync();
+           await _studentDestructor.Destroy(student);
+            
             return NoContent();
         }
     }

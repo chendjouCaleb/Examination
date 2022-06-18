@@ -28,7 +28,9 @@ namespace Exam.Controllers.Periods
 
         [HttpGet]
         public IEnumerable<YearSpeciality> List([FromQuery] long? specialityId, 
-            [FromQuery] long? yearDepartmentId, int take = 50, int skip = 0)
+            [FromQuery] long? yearDepartmentId, 
+            [FromQuery] long? yearId,
+            int take = 50, int skip = 0)
         {
             var query = _yearSpecialityRepository.Set;
 
@@ -40,6 +42,11 @@ namespace Exam.Controllers.Periods
             if (yearDepartmentId != null)
             {
                 query = query.Where(yd => yd.YearDepartmentId == yearDepartmentId);
+            }
+            
+            if (yearId != null)
+            {
+                query = query.Where(yd => yd.YearDepartment.YearId == yearId);
             }
 
             query = query.Include(y => y.Speciality).Skip(skip).Take(take);

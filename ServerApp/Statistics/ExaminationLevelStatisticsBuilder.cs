@@ -50,11 +50,11 @@ namespace Exam.Statistics
                 CorrectedPaperCount = papers.Count(p => p.IsCorrected),
                 PresentPaperCount = papers.Count(p => p.IsPresent),
 
-                Means = means,
-                Mean = meanStatistics.Mean,
-                Median = means.Median(),
-                Std = meanStatistics.StandardDeviation,
-                Mode = means.ConvertAll(m => 0 + (int)m).GroupBy(c => c).OrderByDescending(c => c.Count()).Select(c => c.Key).FirstOrDefault(),
+                // Means = means,
+                // Mean = meanStatistics.Mean,
+                // Median = means.Median(),
+                // Std = meanStatistics.StandardDeviation,
+                // Mode = means.ConvertAll(m => 0 + (int)m).GroupBy(c => c).OrderByDescending(c => c.Count()).Select(c => c.Key).FirstOrDefault(),
 
                 StudentCount = examinationStudents.Count,
                 SuccessCount = means.Count(m => m >= 0.5),

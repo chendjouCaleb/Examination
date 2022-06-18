@@ -42,13 +42,15 @@ export class YearDepartmentLoader extends Loader<YearDepartment, number> {
   }
 
 
-  async loadByYear(year: Year): Promise<void> {
+  async loadByYear(year: Year): Promise<YearDepartment[]> {
     if (!year.yearDepartments) {
       const yearDepartments = await this._httpClient.listAsync({yearId: year.id});
       for (const item of yearDepartments) {
         await this.load(item);
       }
       year.yearDepartments = yearDepartments.toArray();
+      return yearDepartments.toArray();
     }
+    return year.yearDepartments.slice();
   }
 }

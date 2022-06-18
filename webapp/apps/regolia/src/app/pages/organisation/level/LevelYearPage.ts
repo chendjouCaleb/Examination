@@ -6,10 +6,10 @@ import {YearLevelLoader} from "examination/loaders";
 
 @Component({
   template: `
-      <h3>Années scolaires</h3>
-      <div class="mt-3">
-        <YearLevelList [items]="level.yearLevels"></YearLevelList>
-      </div>`
+    <h3>Années scolaires</h3>
+    <div class="mt-3">
+      <YearLevelList [yearLevels]="level.yearLevels"></YearLevelList>
+    </div>`
 })
 export class LevelYearPage {
   level: Level;

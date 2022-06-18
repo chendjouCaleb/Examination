@@ -1,0 +1,3 @@
+<a ExaminationDepartmentCard *ngFor="let examinationDepartment of examinationDepartments"
+   class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover"
+   [examinationDepartment]="examinationDepartment" [routerLink]="examinationDepartment.url()"></a>

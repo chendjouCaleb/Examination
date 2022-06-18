@@ -10,7 +10,7 @@ import {YearTeacherDetailsPage} from "./YearTeacherDetails.page";
 import {
   CourseHourModule,
   CourseSessionModule,
-  SemesterCourseListModule,
+  SemesterCourseListModule, YearLevelModule, YearSpecialityModule,
   YearStudentListModule,
   YearTeacherDetailsModule,
   YearTeacherListModule,
@@ -46,7 +46,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, YearTeacherModule,
-    YearTeacherListModule, MsActionMenuModule, YearTeacherDetailsModule, BreadcrumbModule, SemesterItemModule, SemesterCourseListModule, MsButtonModule, YearStudentListModule, CourseHourModule, CourseSessionModule],
+    YearTeacherListModule, MsActionMenuModule, YearTeacherDetailsModule, BreadcrumbModule, SemesterItemModule,
+    SemesterCourseListModule, MsButtonModule, YearStudentListModule, CourseHourModule, CourseSessionModule,
+    YearLevelModule, YearSpecialityModule ],
   declarations: [YearDepartmentHomePage, YearDepartmentPageLayout, YearDepartmentTeacherPage, YearTeacherDetailsPage,
     YearDepartmentCoursesPage, YearDepartmentStudentPage, YearDepartmentCourseHoursPage, YearDepartmentCourseSessionsPage]
 })

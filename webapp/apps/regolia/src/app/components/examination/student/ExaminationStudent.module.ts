@@ -9,7 +9,8 @@ import {MomentModule} from "ngx-moment";
 import {FormsModule} from "@angular/forms";
 
 @NgModule({
-  imports: [CommonModule, MsTableModule, ControlModule, RouterModule, MomentModule, FormsModule, MsSpinnerModule, MsPaginatorModule, MsButtonModule],
+  imports: [ CommonModule, MsTableModule, ControlModule, RouterModule, MomentModule, FormsModule, MsSpinnerModule,
+    MsPaginatorModule, MsButtonModule ],
   declarations: [ ExaminationStudentList, ExaminationStudentDetails ],
   exports: [ ExaminationStudentList, ExaminationStudentDetails ]
 })

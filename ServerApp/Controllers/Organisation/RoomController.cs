@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Everest.AspNetStartup.Binding;
 using Everest.AspNetStartup.Exceptions;
 using Everest.AspNetStartup.Infrastructure;
@@ -12,6 +14,7 @@ using Exam.Loaders;
 using Exam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Exam.Controllers
@@ -22,13 +25,16 @@ namespace Exam.Controllers
         private IRepository<Room, long> _roomRepository;
         private IRepository<School, long> _schoolRepository;
         private ILogger<RoomController> _logger;
+        private IConfiguration _configuration;
 
         public RoomController(IRepository<Room, long> roomRepository,
             IRepository<School, long> schoolRepository,
+            IConfiguration configuration,
             ILogger<RoomController> logger)
         {
             _roomRepository = roomRepository;
             _schoolRepository = schoolRepository;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -168,6 +174,33 @@ namespace Exam.Controllers
 
             return Accepted(room);
         }
+        
+        
+        
+        [HttpPut("{roomId}/image")]
+        [LoadRoom(SchoolItemName = "school")]
+        [IsPlanner]
+        public async Task<OkResult> ChangeImage(Room room, IFormFile image)
+        {
+            Assert.RequireNonNull(room, nameof(room));
+            Assert.RequireNonNull(image, nameof(image));
+
+            string fileName = "or" + room.Id + Path.GetExtension(image.FileName);
+
+            string path = Path.Combine(_configuration["File:Paths:Images"], fileName);
+
+            await using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await image.CopyToAsync(stream).ConfigureAwait(false);
+            }
+
+            room.HasImage = true;
+            room.ImageName = fileName;
+
+            _roomRepository.Update(room);
+            return Ok();
+        }
+        
 
 
         [HttpDelete("{roomId}")]
@@ -175,7 +208,6 @@ namespace Exam.Controllers
         [IsDirector]
         public NoContentResult Delete(Room room)
         {
-            _schoolRepository.Update(room.School);
             _roomRepository.Delete(room);
 
             return NoContent();

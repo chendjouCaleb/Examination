@@ -9,7 +9,7 @@ import {SemesterDepartmentTeacherPage} from "./SemesterDepartmentTeacher.page";
 import {SemesterDepartmentCoursePage} from "./SemesterDepartmentCourse.page";
 import {
   CourseHourModule, CourseSessionModule,
-  SemesterCourseListModule, SemesterStudentListModule,
+  SemesterCourseListModule, SemesterLevelModule, SemesterSpecialityModule, SemesterStudentListModule,
   SemesterTeacherListModule,
   SemesterTeacherModule,
   SemesterTeacherResolver
@@ -40,7 +40,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, SemesterTeacherModule,
-    BreadcrumbModule, MsActionMenuModule, SemesterTeacherListModule, SemesterCourseListModule, SemesterStudentListModule, CourseHourModule, CourseSessionModule],
+    BreadcrumbModule, MsActionMenuModule, SemesterTeacherListModule, SemesterCourseListModule, SemesterStudentListModule, CourseHourModule, CourseSessionModule, SemesterLevelModule, SemesterSpecialityModule],
   declarations: [SemesterDepartmentHomePage, SemesterDepartmentPageLayout, SemesterDepartmentTeacherPage,
     SemesterDepartmentCoursePage, SemesterDepartmentStudentsPage, SemesterDepartmentCourseHoursPage,
     SemesterDepartmentCourseSessionsPage

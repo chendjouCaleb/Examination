@@ -1,0 +1,9 @@
+﻿<div *ngIf="isLoading">
+  <MsSpinner></MsSpinner>
+</div>
+
+<div [class.ms-opacity-0]="isLoading" class="ms-default-grid">
+  <a *ngFor="let examination of examinations" examination-card [examination]="examination"
+     [routerLink]="examination.url()"
+  class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover"></a>
+</div>
