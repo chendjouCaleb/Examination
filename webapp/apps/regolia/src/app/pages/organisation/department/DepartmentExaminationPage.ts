@@ -6,10 +6,13 @@ import {ExaminationDepartmentLoader} from "examination/loaders";
 
 @Component({
   template: `
-    <h4>Examens ({{examinationDepartments?.length}})</h4>
+    <div class="p-2">
+      <h3>Examens ({{examinationDepartments?.length}})</h3>
 
-    <div class="mt-3 ms-default-grid"
-         ExaminationDepartmentList [examinationDepartments]="examinationDepartments" listStyle="date"></div>
+      <div class="mt-2 ms-default-grid"
+           ExaminationDepartmentList [examinationDepartments]="examinationDepartments" listStyle="date">
+      </div>
+    </div>
   `
 })
 export class DepartmentExaminationPage implements OnInit {

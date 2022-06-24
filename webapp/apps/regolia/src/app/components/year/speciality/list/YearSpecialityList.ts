@@ -10,6 +10,9 @@ export class YearSpecialityList implements OnInit {
   @Input()
   yearSpecialities: YearSpeciality[];
 
+  @Input('listStyle')
+  style: 'date' | 'card' = 'card';
+
   constructor() {}
 
   ngOnInit(): void {

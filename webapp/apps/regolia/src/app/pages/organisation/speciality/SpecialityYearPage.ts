@@ -9,7 +9,8 @@ import {YearSpecialityLoader} from "examination/loaders";
           <div class="p-3">
               <h3>Années scolaires</h3>
               <div class="mt-3">
-                  <YearSpecialityList [yearSpecialities]="speciality.yearSpecialities"></YearSpecialityList>
+                  <div YearSpecialityList class="ms-default-grid"
+                       [yearSpecialities]="speciality.yearSpecialities" listStyle="date"></div>
               </div>
           </div>`
 })

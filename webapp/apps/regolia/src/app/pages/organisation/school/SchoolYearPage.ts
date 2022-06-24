@@ -15,7 +15,7 @@ import {YearAddService} from "examination/app/components";
               </div>
           </div>
           <div class="mt-3">
-              <YearList [school]="school"></YearList>
+              <div YearList class="ms-default-grid" [school]="school"></div>
           </div>
       </div>
   `

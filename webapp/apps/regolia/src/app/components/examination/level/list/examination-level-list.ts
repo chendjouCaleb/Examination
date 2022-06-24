@@ -10,6 +10,9 @@ export class ExaminationLevelList implements OnInit {
   @Input()
   examinationLevels: ExaminationLevel[];
 
+  @Input('listStyle')
+  style: 'date' | 'card' = 'card';
+
   constructor() {}
 
   ngOnInit(): void {

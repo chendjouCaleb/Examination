@@ -2,3 +2,19 @@ Niveau:
 <a [routerLink]="yearLevelSpeciality.yearLevel.url()">{{yearLevelSpeciality.yearLevel.level.index + 1}}</a>
 
 Specialité: <a [routerLink]="yearLevelSpeciality.yearSpeciality.url()">{{yearLevelSpeciality.specialityName}}</a>
+
+
+<div class="p-2">
+  <h3>Semestres de l'année scolaire</h3>
+  <div class="mt-2">
+    <div semester-level-speciality-list class="ms-default-grid" listStyle="date" [params]="params"></div>
+  </div>
+</div>
+
+
+<div class="p-2">
+  <h3>Examens de l'année scolaire</h3>
+  <div class="mt-2">
+    <div examination-level-speciality-list class="ms-default-grid" listStyle="date" [params]="params"></div>
+  </div>
+</div>

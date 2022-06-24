@@ -7,7 +7,7 @@ import {YearDepartmentLoader} from "examination/loaders";
 @Component({
   template: `
       <h3>Années scolaires</h3>
-      <div class="mt-3">
+      <div class="mt-2">
           <div class="br-2 p-2 d-flex"
                *ngIf="!department.yearDepartments || department.yearDepartments.length === 0">
               <i class="ms-Icon ms-Icon--Info ms-fontSize-18"></i>
@@ -15,9 +15,9 @@ import {YearDepartmentLoader} from "examination/loaders";
                   Aucune année scolaire pour ce départment !
               </div>
           </div>
-          <YearDepartmentList [yearDepartments]="department.yearDepartments"
+          <div YearDepartmentList class="ms-default-grid" [yearDepartments]="department.yearDepartments"
             listStyle="date"
-          ></YearDepartmentList>
+          ></div>
       </div>`
 })
 export class DepartmentYearPage {

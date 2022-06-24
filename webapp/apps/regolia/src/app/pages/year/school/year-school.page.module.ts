@@ -36,6 +36,7 @@ import {YearExaminationsPage} from "./YearExaminationPage";
 import {ExaminationListModule} from "../../../components/examination/list";
 import {YearCourseHoursPage} from "./YearCourseHoursPage";
 import {YearCourseSessionsPage} from "./YearCourseSessions.page";
+import {YearSemesterPage} from "./YearSemesterPage";
 
 const routes: Routes = [
   {
@@ -49,6 +50,7 @@ const routes: Routes = [
       {path: 'course-sessions', component: YearCourseSessionsPage, data: {label: 'course-sessions'}},
       {path: 'course-hours', component: YearCourseHoursPage, data: {label: 'course-hours'}},
       {path: 'examinations', component: YearExaminationsPage, data: {label: 'examinations'}},
+      {path: 'semesters', component: YearSemesterPage, data: {label: 'semesters'}},
       {path: 'home', redirectTo: '', pathMatch: 'full'},
       {path: 'courseSessions', redirectTo: 'course-sessions', pathMatch: 'full'},
       {path: 'courseHours', redirectTo: 'course-hours', pathMatch: 'full'}
@@ -64,7 +66,7 @@ const routes: Routes = [
     CourseSessionModule, CourseHourModule, YearDepartmentModule ],
   declarations: [YearSchoolHomePage, YearSchoolStudentPage, YearSchoolStudentDetailsPage, YearSchoolTeacherPage,
     YearSchoolPageLayout, YearSchoolTeacherDetailsPage, YearCoursesPage, YearExaminationsPage, YearCourseHoursPage,
-    YearCourseSessionsPage]
+    YearCourseSessionsPage, YearSemesterPage]
 })
 export class YearSchoolPageModule {
 

@@ -8,8 +8,10 @@ import {SemesterDepartmentLoader, SemesterLoader} from "../../../../models/loade
   template: `
       <div class="p-2">
           <h3>Semestres</h3>
-          <div class="mt-3">
-              <SemesterDepartmentList *ngIf="semesters" [items]="department.semesterDepartments"></SemesterDepartmentList>
+          <div class="mt-2">
+              <div semester-department-list
+                   class="ms-default-grid" listStyle="date"
+                   *ngIf="semesters" [semesterDepartments]="department.semesterDepartments"></div>
           </div>
       </div>`
 })

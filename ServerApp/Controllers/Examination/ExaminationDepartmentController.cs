@@ -53,7 +53,7 @@ namespace Exam.Controllers
 
             if (semesterDepartmentId != null)
             {
-                query = query.Where(e => e.SemesterDepartmentId == yearDepartmentId);
+                query = query.Where(e => e.SemesterDepartmentId == semesterDepartmentId);
             }
 
             if (departmentId != null)

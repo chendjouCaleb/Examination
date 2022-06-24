@@ -5,7 +5,7 @@ import {YearLoader} from "examination/loaders";
 
 @Component({
   templateUrl: 'YearList.html',
-  selector: 'YearList'
+  selector: 'YearList, [year-list], [YearList]'
 })
 export class YearList  implements  OnInit{
   @Input()
@@ -16,6 +16,5 @@ export class YearList  implements  OnInit{
 
   async ngOnInit() {
     const years = await this.yearLoader.loadBySchool(this.school);
-
   }
 }

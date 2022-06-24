@@ -34,7 +34,7 @@ export class SemesterSpecialityLoader extends Loader<SemesterSpeciality, number>
     return item;
   }
 
-  async loadByYearSpeciality(yearSpeciality: YearSpeciality): Promise<void> {
+  async loadByYearSpeciality(yearSpeciality: YearSpeciality): Promise<SemesterSpeciality[]> {
     if (!yearSpeciality.semesterSpecialities) {
       const semesterSpecialities = await this._httpClient.listByYearSpeciality(yearSpeciality);
       for (const item of semesterSpecialities) {
@@ -42,9 +42,10 @@ export class SemesterSpecialityLoader extends Loader<SemesterSpeciality, number>
       }
       yearSpeciality.semesterSpecialities = semesterSpecialities.toArray();
     }
+    return yearSpeciality.semesterSpecialities.slice();
   }
 
-  async loadBySpeciality(speciality: Speciality): Promise<void> {
+  async loadBySpeciality(speciality: Speciality): Promise<SemesterSpeciality[]> {
     if (!speciality.semesterSpecialities) {
       const semesterSpecialities = await this._httpClient.listBySpeciality(speciality);
       for (const item of semesterSpecialities) {
@@ -52,6 +53,7 @@ export class SemesterSpecialityLoader extends Loader<SemesterSpeciality, number>
       }
       speciality.semesterSpecialities = semesterSpecialities.toArray();
     }
+    return speciality.semesterSpecialities.slice();
   }
 
 

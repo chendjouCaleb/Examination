@@ -30,7 +30,7 @@ export class SemesterDepartmentLoader extends Loader<SemesterDepartment, number>
     return item;
   }
 
-  async loadByDepartment(department: Department): Promise<void> {
+  async loadByDepartment(department: Department): Promise<SemesterDepartment[]> {
     if (!department.semesterDepartments) {
       const semesterDepartments = await this._httpClient.listByDepartment(department);
       for (const item of semesterDepartments) {
@@ -38,6 +38,8 @@ export class SemesterDepartmentLoader extends Loader<SemesterDepartment, number>
       }
       department.semesterDepartments = semesterDepartments.toArray();
     }
+
+    return department.semesterDepartments.slice();
   }
 
   async loadBySemester(semester: Semester): Promise<SemesterDepartment[]> {
@@ -53,7 +55,7 @@ export class SemesterDepartmentLoader extends Loader<SemesterDepartment, number>
   }
 
 
-  async loadByYearDepartment(yearDepartment: YearDepartment): Promise<void> {
+  async loadByYearDepartment(yearDepartment: YearDepartment): Promise<SemesterDepartment[]> {
     if (!yearDepartment.semesterDepartments) {
       const semesterDepartments = await this._httpClient.listByYearDepartment(yearDepartment);
       for (const item of semesterDepartments) {
@@ -61,5 +63,6 @@ export class SemesterDepartmentLoader extends Loader<SemesterDepartment, number>
       }
       yearDepartment.semesterDepartments = semesterDepartments.toArray();
     }
+    return yearDepartment.semesterDepartments.slice();
   }
 }

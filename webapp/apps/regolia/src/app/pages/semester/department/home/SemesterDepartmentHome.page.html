@@ -1,13 +1,21 @@
-{{semesterDepartment.yearDepartment.department.name}}
+<div class="p-3">
+  <h3>{{semesterDepartment.yearDepartment.department.name}}</h3>
 
-<div class="mt-4">
-  <h4 class="mt-2">Niveaux</h4>
-  <div *ngIf="semesterLevels" semester-level-list [semesterLevels]="semesterLevels" class="ms-default-grid mt-2"></div>
-</div>
+  <div class="mt-4">
+    <h4 class="mt-2">Niveaux</h4>
+    <div *ngIf="semesterLevels" semester-level-list [semesterLevels]="semesterLevels" class="ms-default-grid mt-2"></div>
+  </div>
 
-<div class="mt-4">
-  <h4>Spécialités</h4>
-  <div *ngIf="semesterSpecialities" semester-speciality-list [semesterSpecialities]="semesterSpecialities"
-       class="ms-default-grid mt-2">
+  <div class="mt-4">
+    <h4>Spécialités</h4>
+    <div *ngIf="semesterSpecialities" semester-speciality-list [semesterSpecialities]="semesterSpecialities"
+         class="ms-default-grid mt-2">
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h4>Examens</h4>
+    <div class="mt-2 ms-default-grid"
+         ExaminationDepartmentList [examinationDepartments]="examinationDepartments" listStyle="date"></div>
   </div>
 </div>

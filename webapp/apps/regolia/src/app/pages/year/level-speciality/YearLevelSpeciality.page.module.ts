@@ -11,12 +11,17 @@ import {YearLevelSpecialityCourseSessionsPage} from "./YearLevelSpecialityCourse
 import {YearLevelSpecialityCourseHoursPage} from "./YearLevelSpecialityCourseHoursPage";
 import {CourseHourModule} from "../../../components/course-hour";
 import {CourseSessionModule} from "../../../components/course-session";
+import {YearLevelSpecialityExaminationPage} from "./YearLevelSpecialityExaminationPage";
+import {ExaminationLevelSpecialityModule, SemesterLevelSpecialityModule} from "@examination/components";
+import {YearLevelSpecialitySemesterPage} from "./YearLevelSpecialitySemesterPage";
 
 const routes: Routes = [
   {
     path: '', component: YearLevelSpecialityPageLayout, children: [
       {path: '', component: YearLevelSpecialityHomePage, data: {label: 'home'}},
       {path: 'students', component: YearLevelSpecialityStudentsPage, data: {label: 'students'}},
+      {path: 'examinations', component: YearLevelSpecialityExaminationPage, data: {label: 'examinations'}},
+      {path: 'semesters', component: YearLevelSpecialitySemesterPage, data: {label: 'semesters'}},
 
       {path: 'course-sessions', component: YearLevelSpecialityCourseSessionsPage, data: {label: 'course-sessions'}},
       {path: 'course-hours', component: YearLevelSpecialityCourseHoursPage, data: {label: 'course-hours'}},
@@ -29,9 +34,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, MsActionMenuModule, YearStudentListModule, BreadcrumbModule, MsTooltipModule, CourseHourModule, CourseSessionModule],
+  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, MsActionMenuModule,
+    YearStudentListModule, BreadcrumbModule, MsTooltipModule, CourseHourModule, CourseSessionModule,
+    ExaminationLevelSpecialityModule, SemesterLevelSpecialityModule],
+
   declarations: [YearLevelSpecialityHomePage, YearLevelSpecialityStudentsPage, YearLevelSpecialityPageLayout,
-    YearLevelSpecialityCourseHoursPage, YearLevelSpecialityCourseSessionsPage]
+    YearLevelSpecialityCourseHoursPage, YearLevelSpecialityCourseSessionsPage, YearLevelSpecialityExaminationPage,
+    YearLevelSpecialitySemesterPage]
 })
 export class YearLevelSpecialityPageModule {
 

@@ -1,21 +1,25 @@
 import {Component, ViewChild} from "@angular/core";
-import {Year} from 'examination/entities';
+import {Examination, Year} from 'examination/entities';
 import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
-import {ExaminationService} from "../../../components/examination";
-import {SemesterExaminationList} from "../../../components/examination/list";
+import {ExaminationLoader} from "examination/loaders";
 
 @Component({
   template: `
-      <h4 class="mt-3">Examens de l'année scolaire</h4>
-      <SemesterExaminationList class="mt-3" [params]="{yearId: year.id}"></SemesterExaminationList>`
+      <div class="p-2">
+        <h4 class="mt-1">Examens de l'année scolaire</h4>
+        <div ExaminationList class="mt-3" [params]="{yearId: year.id}"></div>
+      </div>`
 })
 export class YearExaminationsPage {
   year: Year;
-  @ViewChild(SemesterExaminationList)
-  list: SemesterExaminationList;
+  examinations: Examination[];
 
-  constructor(items: CurrentItems, public _router: Router, public service: ExaminationService) {
+  constructor(items: CurrentItems,
+              public _router: Router,
+              public _loader: ExaminationLoader) {
     this.year = items.get('year');
+
+    this._loader.loadByYear(this.year).then(items => this.examinations = items);
   }
 }

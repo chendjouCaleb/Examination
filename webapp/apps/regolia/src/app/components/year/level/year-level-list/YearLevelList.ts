@@ -10,6 +10,9 @@ export class YearLevelList implements OnInit {
   @Input()
   yearLevels: YearLevel[];
 
+  @Input('listStyle')
+  style: 'date' | 'card' = 'card';
+
   constructor() {}
 
   ngOnInit(): void {

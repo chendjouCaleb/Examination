@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 @Component({
   template: `
       <h4 class="mt-3">Examens de l'établissement</h4>
-      <SemesterExaminationList class="mt-3" [params]="{schoolId: school.id}"></SemesterExaminationList>`
+      <div ExaminationList class="mt-3" [params]="{schoolId: school.id}"></div>`
 })
 export class SchoolExaminationPage {
   school: School;

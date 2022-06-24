@@ -9,8 +9,8 @@ import {YearDepartmentTeacherPage} from "./YearDepartmentTeacher.page";
 import {YearTeacherDetailsPage} from "./YearTeacherDetails.page";
 import {
   CourseHourModule,
-  CourseSessionModule,
-  SemesterCourseListModule, YearLevelModule, YearSpecialityModule,
+  CourseSessionModule, ExaminationDepartmentModule,
+  SemesterCourseListModule, SemesterDepartmentModule, YearLevelModule, YearSpecialityModule,
   YearStudentListModule,
   YearTeacherDetailsModule,
   YearTeacherListModule,
@@ -22,11 +22,15 @@ import {SemesterItemModule} from "../../../components/semester/item";
 import {YearDepartmentStudentPage} from "./YearDepartmentStudent.page";
 import {YearDepartmentCourseHoursPage} from "./YearDepartmentCourseHoursPage";
 import {YearDepartmentCourseSessionsPage} from "./YearDepartmentCourseSessions.page";
+import {YearDepartmentSemesterPage} from "./YearDepartmentSemesterPage";
+import {YearDepartmentExaminationPage} from "./YearDepartmentExaminationPage";
 
 const routes: Routes = [
   {
     path: '', component: YearDepartmentPageLayout, children: [
       {path: '', component: YearDepartmentHomePage, data: {label: 'home'}},
+      {path: 'semesters', component: YearDepartmentSemesterPage, data: {label: 'semesters'}},
+      {path: 'examinations', component: YearDepartmentExaminationPage, data: {label: 'examinations'}},
       {path: 'courses', component: YearDepartmentCoursesPage, data: {label: 'courses'}},
       {path: 'students', component: YearDepartmentStudentPage, data: {label: 'students'}},
       {path: 'teachers', component: YearDepartmentTeacherPage, data: {label: 'teachers'}},
@@ -48,9 +52,11 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, YearTeacherModule,
     YearTeacherListModule, MsActionMenuModule, YearTeacherDetailsModule, BreadcrumbModule, SemesterItemModule,
     SemesterCourseListModule, MsButtonModule, YearStudentListModule, CourseHourModule, CourseSessionModule,
-    YearLevelModule, YearSpecialityModule ],
+    YearLevelModule, YearSpecialityModule, SemesterDepartmentModule, ExaminationDepartmentModule],
+
   declarations: [YearDepartmentHomePage, YearDepartmentPageLayout, YearDepartmentTeacherPage, YearTeacherDetailsPage,
-    YearDepartmentCoursesPage, YearDepartmentStudentPage, YearDepartmentCourseHoursPage, YearDepartmentCourseSessionsPage]
+    YearDepartmentCoursesPage, YearDepartmentStudentPage, YearDepartmentCourseHoursPage,
+    YearDepartmentCourseSessionsPage, YearDepartmentSemesterPage, YearDepartmentExaminationPage ]
 })
 export class YearDepartmentPageModule {
 

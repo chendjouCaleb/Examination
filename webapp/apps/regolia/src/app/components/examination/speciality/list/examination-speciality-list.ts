@@ -10,6 +10,9 @@ export class ExaminationSpecialityList implements OnInit {
   @Input()
   examinationSpecialities: ExaminationSpeciality[];
 
+  @Input('listStyle')
+  style: 'date' | 'card' = 'card';
+
   constructor() {}
 
   ngOnInit(): void {

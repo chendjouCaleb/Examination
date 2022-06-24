@@ -1,1 +1,10 @@
-{{semesterSpeciality.yearSpeciality.speciality.name}}
+<h3>{{semesterSpeciality.yearSpeciality.speciality.name}}</h3>
+
+<div class="mt-4">
+  <h4>Examens</h4>
+  <div class="mt-2">
+    <div examination-speciality-list
+         class="ms-default-grid" listStyle="date"
+         *ngIf="examinationSpecialities" [examinationSpecialities]="examinationSpecialities"></div>
+  </div>
+</div>

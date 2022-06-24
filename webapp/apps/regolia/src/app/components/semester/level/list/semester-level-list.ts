@@ -10,6 +10,9 @@ export class SemesterLevelList implements OnInit {
   @Input()
   semesterLevels: SemesterLevel[];
 
+  @Input('listStyle')
+  style: 'date' | 'card' = 'card';
+
   constructor() {}
 
   ngOnInit(): void {

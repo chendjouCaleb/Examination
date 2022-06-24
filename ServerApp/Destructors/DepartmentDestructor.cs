@@ -48,7 +48,9 @@ namespace Exam.Destructors
         {
             Log("Début de la suppréssion des demandes");
 
-            var students = _context.Set<Application>().Where(s => department.Equals(s.Level.Department));
+            var students = _context.Set<Application>()
+                .Where(s => department.Equals(s.Level.Department));
+            
             _context.RemoveRange(students);
             
             Log( "Fin de la suppréssion des demandes");

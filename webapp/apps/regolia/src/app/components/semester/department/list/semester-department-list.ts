@@ -10,6 +10,9 @@ export class SemesterDepartmentList implements OnInit {
   @Input()
   semesterDepartments: SemesterDepartment[];
 
+  @Input('listStyle')
+  style: 'date' | 'card' = 'card';
+
   constructor() {}
 
   ngOnInit(): void {

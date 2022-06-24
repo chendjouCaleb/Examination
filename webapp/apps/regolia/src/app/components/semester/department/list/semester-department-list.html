@@ -1,3 +1,12 @@
-<a SemesterDepartmentCard *ngFor="let semesterDepartment of semesterDepartments"
+<ng-container *ngIf="style === 'card'">
+  <a SemesterDepartmentCard *ngFor="let semesterDepartment of semesterDepartments"
+     [semesterDepartment]="semesterDepartment" [routerLink]="semesterDepartment.url()"></a>
+</ng-container>
 
-   [semesterDepartment]="semesterDepartment" [routerLink]="semesterDepartment.url()"></a>
+<ng-container *ngIf="style === 'date'">
+  <a *ngFor="let semesterDepartment of semesterDepartments"
+     class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover"
+     semester-item [semester]="semesterDepartment.semester" [routerLink]="semesterDepartment.url()">
+
+  </a>
+</ng-container>

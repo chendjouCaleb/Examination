@@ -11,7 +11,7 @@ import {Semester} from "examination/entities";
 
 @Component({
   templateUrl: 'SemesterItem.html',
-  selector: 'SemesterItem, a[SemesterItem]',
+  selector: 'SemesterItem, [SemesterItem], [semester-item]',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

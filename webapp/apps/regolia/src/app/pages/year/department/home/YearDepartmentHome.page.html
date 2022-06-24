@@ -1,22 +1,39 @@
-<a [routerLink]="yearDepartment.department.url">{{yearDepartment.department?.name}}</a>
+<div class="p-3">
+
+  <h3>
+    <a [routerLink]="yearDepartment.department.url">{{yearDepartment.department?.name}}</a>
+  </h3>
 
 
-<h4 class="mt-4">Semestres</h4>
-<div *ngIf="semesterDepartments" class="mt-2">
-  <a SemesterItem *ngFor="let semesterDepartment of semesterDepartments"
-     [routerLink]="semesterDepartment.url()"
-     [semester]="semesterDepartment.semester">
+  <h4 class="mt-4">Semestres</h4>
+  <div *ngIf="semesterDepartments" class="mt-2">
+    <a SemesterItem *ngFor="let semesterDepartment of semesterDepartments"
+       [routerLink]="semesterDepartment.url()"
+       [semester]="semesterDepartment.semester">
 
-  </a>
-</div>
-
-<div class="mt-4">
-  <h4 class="mt-2">Niveaux</h4>
-  <div *ngIf="yearLevels" year-level-list [yearLevels]="yearLevels" class="ms-default-grid mt-2"></div>
-</div>
-
-<div class="mt-4">
-  <h4>Spécialités</h4>
-  <div *ngIf="yearSpecialities" year-speciality-list [yearSpecialities]="yearSpecialities" class="ms-default-grid mt-2">
+    </a>
   </div>
+
+  <div class="mt-4">
+    <h4 class="mt-2">Niveaux</h4>
+    <div *ngIf="yearLevels" year-level-list [yearLevels]="yearLevels" class="ms-default-grid mt-2"></div>
+  </div>
+
+  <div class="mt-4">
+    <h4>Spécialités</h4>
+    <div *ngIf="yearSpecialities" year-speciality-list [yearSpecialities]="yearSpecialities" class="ms-default-grid mt-2">
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h4>Semestres</h4>
+    <div class="mt-2 ms-default-grid" SemesterDepartmentList [semesterDepartments]="semesterDepartments" listStyle="date"></div>
+  </div>
+
+  <div class="mt-4">
+    <h4>Examens</h4>
+    <div class="mt-2 ms-default-grid"
+         ExaminationDepartmentList [examinationDepartments]="examinationDepartments" listStyle="date"></div>
+  </div>
+
 </div>

@@ -9,12 +9,13 @@ import {YearLevelCoursesPage} from "./YearLevelCourses.page";
 import {SemesterCourseListModule} from "../../../components/semester-course/list";
 import {YearLevelStudentsPage} from "./YearLevelStudents.page";
 import {YearStudentListModule} from "../../../components/year-student/List";
-import {YearDepartmentCourseSessionsPage} from "../department/YearDepartmentCourseSessions.page";
-import {YearDepartmentCourseHoursPage} from "../department/YearDepartmentCourseHoursPage";
 import {YearLevelCourseSessionsPage} from "./YearLevelCourseSessions.page";
 import {YearLevelCourseHoursPage} from "./YearLevelCourseHoursPage";
 import {CourseHourModule} from "../../../components/course-hour";
 import {CourseSessionModule} from "../../../components/course-session";
+import {ExaminationLevelModule, SemesterLevelModule} from "@examination/components";
+import {YearLevelSemesterPage} from "./YearLevelSemesterPage";
+import {YearLevelExaminationPage} from "./YearLevelExaminationPage";
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
       },
       {path: 'course-sessions', component: YearLevelCourseSessionsPage, data: {label: 'course-sessions'}},
       {path: 'course-hours', component: YearLevelCourseHoursPage, data: {label: 'course-hours'}},
+
+      {path: 'semesters', component: YearLevelSemesterPage, data: {label: 'semesters'}},
+      {path: 'examinations', component: YearLevelExaminationPage, data: {label: 'examinations'}},
+
       {path: 'home', redirectTo: '', pathMatch: 'full'},
       {path: 'courseSessions', redirectTo: 'course-sessions', pathMatch: 'full'},
       {path: 'courseHours', redirectTo: 'course-hours', pathMatch: 'full'}
@@ -36,9 +41,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, MsActionMenuModule, SemesterCourseListModule, BreadcrumbModule, YearStudentListModule, CourseHourModule, CourseSessionModule],
+  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, MsActionMenuModule, SemesterCourseListModule, BreadcrumbModule, YearStudentListModule, CourseHourModule, CourseSessionModule, SemesterLevelModule, ExaminationLevelModule],
   declarations: [YearLevelHomePage, YearLevelPageLayout, YearLevelCoursesPage, YearLevelStudentsPage,
-    YearLevelCourseSessionsPage, YearLevelCourseHoursPage
+    YearLevelCourseSessionsPage, YearLevelCourseHoursPage, YearLevelSemesterPage, YearLevelExaminationPage
   ]
 })
 export class YearLevelPageModule {

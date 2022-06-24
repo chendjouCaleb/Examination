@@ -10,6 +10,9 @@ export class SemesterSpecialityList implements OnInit {
   @Input()
   semesterSpecialities: SemesterSpeciality[];
 
+  @Input('listStyle')
+  style: 'date' | 'card' = 'card';
+
   constructor() {}
 
   ngOnInit(): void {

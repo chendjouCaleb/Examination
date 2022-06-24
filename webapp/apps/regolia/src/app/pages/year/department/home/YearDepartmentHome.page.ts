@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {CurrentItems} from "examination/app/current-items";
 import {Router} from "@angular/router";
 import {
+  ExaminationDepartment, ExaminationDepartmentLoader,
   SemesterDepartment,
   SemesterDepartmentHttpClient,
   SemesterDepartmentLoader,
@@ -20,12 +21,15 @@ import {
 export class YearDepartmentHomePage implements OnInit {
   yearDepartment: YearDepartment;
   semesterDepartments: SemesterDepartment[];
+  examinationDepartments: ExaminationDepartment[];
+
   yearLevels: YearLevel[];
   yearSpecialities: YearSpeciality[];
   yearLevelSpecialities: YearLevelSpeciality[];
 
   constructor(items: CurrentItems, public _router: Router,
               private semesterLoader: SemesterDepartmentLoader,
+              private _examinationLoader: ExaminationDepartmentLoader,
               private _yearLevelLoader: YearLevelLoader,
               private _yearSpecialityLoader: YearSpecialityLoader,
               private _yearLevelSpecialityLoader: YearLevelSpecialityLoader,
@@ -38,6 +42,7 @@ export class YearDepartmentHomePage implements OnInit {
     await this.semesterLoader.loadAll(semesterDepartments);
 
     this.semesterDepartments = semesterDepartments.toArray();
+    this.examinationDepartments = await this._examinationLoader.loadByYearDepartment(this.yearDepartment);
 
     this.yearLevels = await this._yearLevelLoader.loadByYearDepartment(this.yearDepartment);
     this.yearSpecialities = await this._yearSpecialityLoader.loadByYearDepartment(this.yearDepartment);

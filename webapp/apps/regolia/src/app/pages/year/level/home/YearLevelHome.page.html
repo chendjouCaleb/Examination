@@ -1,1 +1,15 @@
-Niveau: {{yearLevel.level.index + 1}}
+<h3>
+  <a [routerLink]="yearLevel.level.url" >Niveau {{yearLevel.level.index + 1}}</a>
+</h3>
+
+
+<div class="mt-4">
+  <h4>Semestres</h4>
+  <div class="mt-2 ms-default-grid" SemesterLevelList [semesterLevels]="semesterLevels" listStyle="date"></div>
+</div>
+
+<div class="mt-4">
+  <h4>Examens</h4>
+  <div class="mt-2 ms-default-grid"
+       ExaminationLevelList [examinationLevels]="examinationLevels" listStyle="date"></div>
+</div>

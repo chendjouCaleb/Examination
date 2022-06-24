@@ -8,7 +8,7 @@ import {BreadcrumbModule, MsActionMenuModule, MsRibbonModule} from "@ms-fluent/c
 import {SemesterDepartmentTeacherPage} from "./SemesterDepartmentTeacher.page";
 import {SemesterDepartmentCoursePage} from "./SemesterDepartmentCourse.page";
 import {
-  CourseHourModule, CourseSessionModule,
+  CourseHourModule, CourseSessionModule, ExaminationDepartmentModule,
   SemesterCourseListModule, SemesterLevelModule, SemesterSpecialityModule, SemesterStudentListModule,
   SemesterTeacherListModule,
   SemesterTeacherModule,
@@ -17,12 +17,14 @@ import {
 import {SemesterDepartmentStudentsPage} from "./SemesterDepartmentStudents.page";
 import {SemesterDepartmentCourseHoursPage} from "./SemesterDepartmentCourseHoursPage";
 import {SemesterDepartmentCourseSessionsPage} from "./SemesterDepartmentCourseSessions.page";
+import {SemesterDepartmentExaminationPage} from "./SemesterDepartmentExaminationPage";
 
 const routes: Routes = [
   {
     path: '', component: SemesterDepartmentPageLayout, children: [
       {path: '', component: SemesterDepartmentHomePage, data: {label: 'home'}},
       {path: 'courses', component: SemesterDepartmentCoursePage, data: {label: 'courses'}},
+      {path: 'examinations', component: SemesterDepartmentExaminationPage, data: {label: 'examinations'}},
       {path: 'teachers', component: SemesterDepartmentTeacherPage, data: {label: 'teachers'}},
       {path: 'students', component: SemesterDepartmentStudentsPage, data: {label: 'students'}},
       {path: 'course-sessions', component: SemesterDepartmentCourseSessionsPage, data: {label: 'course-sessions'}},
@@ -40,10 +42,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, SemesterTeacherModule,
-    BreadcrumbModule, MsActionMenuModule, SemesterTeacherListModule, SemesterCourseListModule, SemesterStudentListModule, CourseHourModule, CourseSessionModule, SemesterLevelModule, SemesterSpecialityModule],
+    BreadcrumbModule, MsActionMenuModule, SemesterTeacherListModule, SemesterCourseListModule, SemesterStudentListModule, CourseHourModule, CourseSessionModule, SemesterLevelModule, SemesterSpecialityModule, ExaminationDepartmentModule],
   declarations: [SemesterDepartmentHomePage, SemesterDepartmentPageLayout, SemesterDepartmentTeacherPage,
     SemesterDepartmentCoursePage, SemesterDepartmentStudentsPage, SemesterDepartmentCourseHoursPage,
-    SemesterDepartmentCourseSessionsPage
+    SemesterDepartmentCourseSessionsPage, SemesterDepartmentExaminationPage
   ]
 })
 export class SemesterDepartmentPageModule {

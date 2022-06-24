@@ -33,7 +33,7 @@ export class SemesterLevelLoader extends Loader<SemesterLevel, number> {
     return item;
   }
 
-  async loadByYearLevel(yearLevel: YearLevel): Promise<void> {
+  async loadByYearLevel(yearLevel: YearLevel): Promise<SemesterLevel[]> {
     if (!yearLevel.semesterLevels) {
       const semesterLevels = await this._httpClient.listByYearLevel(yearLevel);
       for (const item of semesterLevels) {
@@ -41,9 +41,10 @@ export class SemesterLevelLoader extends Loader<SemesterLevel, number> {
       }
       yearLevel.semesterLevels = semesterLevels.toArray();
     }
+    return yearLevel.semesterLevels.slice();
   }
 
-  async loadByLevel(level: Level): Promise<void> {
+  async loadByLevel(level: Level): Promise<SemesterLevel[]> {
     if (!level.semesterLevels) {
       const semesterLevels = await this._httpClient.listAsync({levelId: level.id});
       for (const item of semesterLevels) {
@@ -51,6 +52,7 @@ export class SemesterLevelLoader extends Loader<SemesterLevel, number> {
       }
       level.semesterLevels = semesterLevels.toArray();
     }
+    return level.semesterLevels.slice();
   }
 
 

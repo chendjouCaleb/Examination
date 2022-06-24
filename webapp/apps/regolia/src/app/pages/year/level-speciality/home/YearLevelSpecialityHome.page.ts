@@ -9,6 +9,8 @@ import {YearLevelSpeciality} from "examination/models";
 export class YearLevelSpecialityHomePage {
   yearLevelSpeciality: YearLevelSpeciality;
 
+  get params():any { return {yearLevelSpecialityId: this.yearLevelSpeciality.id}};
+
   constructor(items: CurrentItems, public _router: Router) {
     this.yearLevelSpeciality = items.get('yearLevelSpeciality');
   }

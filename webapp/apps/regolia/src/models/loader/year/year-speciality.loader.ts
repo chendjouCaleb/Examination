@@ -32,7 +32,7 @@ export class YearSpecialityLoader extends Loader<YearSpeciality, number> {
     return item;
   }
 
-  async loadBySpeciality(speciality: Speciality): Promise<void> {
+  async loadBySpeciality(speciality: Speciality): Promise<YearSpeciality[]> {
     if (!speciality.yearSpecialities) {
       const yearSpecialities = await this._httpClient.listAsync({specialityId: speciality.id});
       for (const item of yearSpecialities) {
@@ -40,6 +40,7 @@ export class YearSpecialityLoader extends Loader<YearSpeciality, number> {
       }
       speciality.yearSpecialities = yearSpecialities.toArray();
     }
+    return speciality.yearSpecialities.slice();
   }
 
 

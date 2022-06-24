@@ -13,12 +13,15 @@ import {SemesterLevelCourseSessionsPage} from "../level/SemesterLevelCourseSessi
 import {SemesterLevelCourseHoursPage} from "../level/SemesterLevelCourseHoursPage";
 import {CourseHourModule} from "../../../components/course-hour";
 import {CourseSessionModule} from "../../../components/course-session";
+import {SemesterLevelSpecialityExaminationPage} from "./SemesterLevelSpecialityExaminationPage";
+import {ExaminationLevelSpecialityModule} from "@examination/components";
 
 const routes: Routes = [
   {
-    path: '', component: SemesterLevelSpecialityPageLayout,  children: [
+    path: '', component: SemesterLevelSpecialityPageLayout, children: [
       {path: '', component: SemesterLevelSpecialityHomePage, data: {label: 'home'}},
-      {path: 'students', component: SemesterLevelSpecialityStudentsPage, data: {label: 'students'} },
+      {path: 'students', component: SemesterLevelSpecialityStudentsPage, data: {label: 'students'}},
+      {path: 'examinations', component: SemesterLevelSpecialityExaminationPage, data: {label: 'examinations'}},
       {path: 'course-sessions', component: SemesterLevelCourseSessionsPage, data: {label: 'course-sessions'}},
       {path: 'course-hours', component: SemesterLevelCourseHoursPage, data: {label: 'course-hours'}},
       {path: 'home', redirectTo: '', pathMatch: 'full'},
@@ -29,9 +32,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, SemesterStudentListModule, MsActionMenuModule, CourseHourModule, CourseSessionModule],
-  declarations: [ SemesterLevelSpecialityHomePage, SemesterLevelSpecialityStudentsPage, SemesterLevelSpecialityPageLayout,
-    SemesterLevelSpecialityCourseHoursPage, SemesterLevelSpecialityCourseSessionsPage]
+  imports: [CommonModule, RouterModule.forChild(routes), LayoutModule, MsRibbonModule, SemesterStudentListModule,
+    MsActionMenuModule, CourseHourModule, CourseSessionModule, ExaminationLevelSpecialityModule],
+  declarations: [SemesterLevelSpecialityHomePage, SemesterLevelSpecialityStudentsPage, SemesterLevelSpecialityPageLayout,
+    SemesterLevelSpecialityCourseHoursPage, SemesterLevelSpecialityCourseSessionsPage,
+    SemesterLevelSpecialityExaminationPage]
 })
 export class SemesterLevelSpecialityPageModule {
 

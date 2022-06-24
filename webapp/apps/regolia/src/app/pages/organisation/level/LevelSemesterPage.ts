@@ -1,26 +1,27 @@
 import {Component} from "@angular/core";
-import {Level} from 'examination/entities';
+import {Level, SemesterLevel} from 'examination/entities';
 import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
 import {SemesterLevelLoader} from "@examination/loaders";
 
 @Component({
   template: `
-      <div class="p-2">
-          <h2>Semestres</h2>
-          <div class="mt-2" *ngIf="level.semesterLevels">
-              <SemesterLevelList [items]="level.semesterLevels"></SemesterLevelList>
-          </div>
-      </div>`
+    <div class="mt-4">
+      <h3>Semestres</h3>
+      <div *ngIf="semesterLevels"
+            class="mt-2 ms-default-grid" SemesterLevelList
+           [semesterLevels]="semesterLevels" listStyle="date"></div>
+    </div>`
 })
 export class LevelSemesterPage {
   level: Level;
+  semesterLevels: SemesterLevel[];
 
   constructor(items: CurrentItems,
               private loader: SemesterLevelLoader,
               public _router: Router ) {
     this.level = items.get('level');
 
-    this.loader.loadByLevel(this.level);
+    this.loader.loadByLevel(this.level).then(items => this.semesterLevels = items);
   }
 }

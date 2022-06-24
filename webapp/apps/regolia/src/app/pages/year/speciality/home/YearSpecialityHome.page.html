@@ -1,4 +1,4 @@
-{{yearSpeciality.speciality.name}}
+<h3>{{yearSpeciality.speciality.name}}</h3>
 
 <div class="mt-4">
   <h4>Niveaux</h4>
@@ -7,4 +7,18 @@
       <button msButton class="m-1">Niveau {{item.yearLevel.level?.index + 1}}</button>
     </a>
   </div>
+</div>
+
+
+<div class="mt-4">
+  <h4>Semestres</h4>
+  <div class="mt-2 ms-default-grid" SemesterSpecialityList [semesterSpecialities]="semesterSpecialities"
+       listStyle="date">
+  </div>
+</div>
+
+<div class="mt-4">
+  <h4>Examens</h4>
+  <div class="mt-2 ms-default-grid"
+       ExaminationSpecialityList [examinationSpecialities]="examinationSpecialities" listStyle="date"></div>
 </div>
