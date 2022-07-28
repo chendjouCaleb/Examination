@@ -12,13 +12,11 @@
 
 <div class="mt-4">
   <h4>Semestres</h4>
-  <div class="mt-2 ms-default-grid" SemesterSpecialityList [semesterSpecialities]="semesterSpecialities"
-       listStyle="date">
+  <div class="mt-2 ms-default-grid" SemesterSpecialityList [params]="params" listStyle="date">
   </div>
 </div>
 
 <div class="mt-4">
   <h4>Examens</h4>
-  <div class="mt-2 ms-default-grid"
-       ExaminationSpecialityList [examinationSpecialities]="examinationSpecialities" listStyle="date"></div>
+  <div class="mt-2 ms-default-grid" ExaminationSpecialityList [params]="params" listStyle="date"></div>
 </div>

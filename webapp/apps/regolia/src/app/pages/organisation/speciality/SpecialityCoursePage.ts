@@ -4,7 +4,7 @@ import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
 
 @Component({
-  template: `<CourseList [speciality]="speciality"></CourseList>`
+  template: `<CourseLevelSpecialityList [params]="{specialityId:speciality.id}"></CourseLevelSpecialityList>`
 })
 export class SpecialityCoursesPage {
   speciality: Speciality;

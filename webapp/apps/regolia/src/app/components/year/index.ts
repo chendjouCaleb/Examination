@@ -11,3 +11,4 @@ export * from './year-speciality.resolver';
 export * from './department'
 export * from './level';
 export * from './speciality';
+export * from './level-speciality';

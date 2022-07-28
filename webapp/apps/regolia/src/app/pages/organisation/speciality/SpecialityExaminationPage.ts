@@ -9,19 +9,15 @@ import {ExaminationSpecialityLoader} from "examination/loaders";
     <div class="mt-4 p-2">
       <h3>Examens</h3>
       <div class="mt-2 ms-default-grid"
-           examination-speciality-list [examinationSpecialities]="examinationSpecialities" listStyle="date"></div>
+           examination-speciality-list [params]="params" listStyle="date"></div>
     </div>
   `
 })
 export class SpecialityExaminationPage {
   speciality: Speciality;
-  examinationSpecialities: ExaminationSpeciality[];
+  get params(): any { return {specialityId: this.speciality.id}; }
 
-  constructor(items: CurrentItems,
-              public _router: Router,
-              private _examinationSpecialityLoader: ExaminationSpecialityLoader) {
+  constructor(items: CurrentItems, public _router: Router) {
     this.speciality = items.get('speciality');
-    this._examinationSpecialityLoader.loadBySpeciality(this.speciality)
-      .then(items => this.examinationSpecialities = items)
   }
 }

@@ -8,20 +8,14 @@ import {SemesterLevelLoader} from "@examination/loaders";
   template: `
     <div class="mt-4">
       <h3>Semestres</h3>
-      <div *ngIf="semesterLevels"
-            class="mt-2 ms-default-grid" SemesterLevelList
-           [semesterLevels]="semesterLevels" listStyle="date"></div>
+      <div class="mt-2 ms-default-grid" SemesterLevelList [params]="params" listStyle="date"></div>
     </div>`
 })
 export class LevelSemesterPage {
   level: Level;
-  semesterLevels: SemesterLevel[];
+  get params(): any { return {levelId: this.level.id}; }
 
-  constructor(items: CurrentItems,
-              private loader: SemesterLevelLoader,
-              public _router: Router ) {
+  constructor(items: CurrentItems, public _router: Router ) {
     this.level = items.get('level');
-
-    this.loader.loadByLevel(this.level).then(items => this.semesterLevels = items);
   }
 }

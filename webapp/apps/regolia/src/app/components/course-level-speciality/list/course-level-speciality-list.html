@@ -1,0 +1,56 @@
+<div class="ms-depth-8 p-2">
+  <MsActionMenu>
+    <!--    <button msActionMenuButton icon="Add" theme="primary" *ngIf="level && level.department.school.isPlanner"-->
+    <!--            (click)="addCourse() ">-->
+    <!--      Ajouter <span class="ms-hiddenSm">un cours</span></button>-->
+  </MsActionMenu>
+</div>
+
+<h4 class="mt-2">Cours</h4>
+
+
+<div *ngIf="isLoading">
+  <MsSpinner></MsSpinner>
+</div>
+
+<div>
+  <ms-table [class.ms-opacity-0]="isLoading" [hiddenColumns]="hiddenColumns" #msTable>
+    <ms-tableHead *msTableHeadDef>
+      <ms-tableHeadCell name="#">#</ms-tableHeadCell>
+      <ms-tableHeadCell name="name" [sortBy]="['name', 'string']">Nom</ms-tableHeadCell>
+      <ms-tableHeadCell name="coefficient" [sortBy]="['coefficient', 'number']">Coeff.</ms-tableHeadCell>
+      <ms-tableHeadCell name="radical" [sortBy]="['radical', 'number']">Radical</ms-tableHeadCell>
+      <ms-tableHeadCell name="multipleScore">Barème</ms-tableHeadCell>
+      <ms-tableHeadCell name="level" [sortBy]="['levelIndex', 'number']">Niveau</ms-tableHeadCell>
+    </ms-tableHead>
+
+    <a ms-tableRow *ms-tableRowDef="let item of courseLevelSpecialities; let i=index" [value]="item" #row
+       [routerLink]="itemUrlFn(item)"
+       class="ms-link-inherit ms-pointer">
+      <ms-tableCell>{{i + 1}}</ms-tableCell>
+      <ms-tableCell>
+        <a [routerLink]="courseUrlFn(item.course)" class="ms-fontWeight-semibold">
+          {{item.course.name | ucFirst}}
+          ({{item.course.code}})
+        </a>
+      </ms-tableCell>
+
+      <ms-tableCell>{{item.course.coefficient}}</ms-tableCell>
+      <ms-tableCell>{{item.course.radical}}</ms-tableCell>
+
+      <ms-tableCell>
+        <app-icon *ngIf="item.course.multipleScore" bgColor="greenLight" icon="CheckMark" size="small"></app-icon>
+        <app-icon *ngIf="!item.course.multipleScore" bgColor="sharedRed10" icon="Cancel" size="small"></app-icon>
+      </ms-tableCell>
+
+
+      <ms-tableCell>
+        <a [routerLink]="item.course.level.url" class="ms-link-inherit ml-1 ms-badge ms-badge-level">
+          Niveau {{item.course.levelIndex}}
+        </a>
+      </ms-tableCell>
+
+    </a>
+  </ms-table>
+
+</div>

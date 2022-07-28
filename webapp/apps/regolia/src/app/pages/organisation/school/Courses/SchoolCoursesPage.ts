@@ -11,7 +11,8 @@ export class SchoolCoursesPage {
 
   courseUrlFn = (course:Course) => `${this.school.url}/courses/${course.id}`;
 
-  constructor(items: CurrentItems, public _router: Router) {
+  constructor(items: CurrentItems,
+              public _router: Router,) {
     this.school = items.get('school');
   }
 }

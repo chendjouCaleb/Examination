@@ -1,1 +1,3 @@
-<CourseList [school]="school" [courseUrlFn]="courseUrlFn"></CourseList>
+<CourseList [params]="{schoolId: school.id}"
+            [addParams]="{school: school, isAuthorized: school.isPlanner}"
+            [courseUrlFn]="courseUrlFn"></CourseList>

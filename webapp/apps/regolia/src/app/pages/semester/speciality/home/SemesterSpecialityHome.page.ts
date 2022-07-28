@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {CurrentItems} from "../../../../current-items";
 import {Router} from "@angular/router";
-import {ExaminationSpeciality, ExaminationSpecialityLoader, SemesterSpeciality} from "examination/models";
+import {SemesterSpeciality} from "examination/models";
 
 @Component({
   templateUrl: 'SemesterSpecialityHome.page.html',
@@ -9,16 +9,11 @@ import {ExaminationSpeciality, ExaminationSpecialityLoader, SemesterSpeciality} 
 export class SemesterSpecialityHomePage implements OnInit {
   semesterSpeciality : SemesterSpeciality;
 
-  examinationSpecialities: ExaminationSpeciality[];
+  get params(): any { return {semesterSpecialityId: this.semesterSpeciality.id}; }
 
-  constructor(items: CurrentItems, public _router: Router,
-              private _loader: ExaminationSpecialityLoader,) {
+  constructor(items: CurrentItems, public _router: Router) {
     this.semesterSpeciality = items.get('semesterSpeciality');
   }
 
-  ngOnInit() {
-    this._loader.loadBySemesterSpeciality(this.semesterSpeciality).then(items => {
-      this.examinationSpecialities = items;
-    });
-  }
+  ngOnInit() { }
 }

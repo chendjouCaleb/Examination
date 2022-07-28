@@ -6,23 +6,22 @@ import {YearSpecialityLoader} from "examination/loaders";
 
 @Component({
   template: `
-          <div class="p-3">
-              <h3>Années scolaires</h3>
-              <div class="mt-3">
-                  <div YearSpecialityList class="ms-default-grid"
-                       [yearSpecialities]="speciality.yearSpecialities" listStyle="date"></div>
-              </div>
-          </div>`
+    <div class="p-3">
+      <h3>Années scolaires</h3>
+      <div class="mt-3">
+        <div YearSpecialityList class="ms-default-grid" [params]="params" listStyle="date"></div>
+      </div>
+    </div>`
 })
 export class SpecialityYearPage {
   speciality: Speciality;
 
-  constructor(items: CurrentItems,
-              public _yearSpecialityLoader: YearSpecialityLoader,
-              public _router: Router ) {
-    this.speciality = items.get('speciality');
+  get params(): any {
+    return {specialityId: this.speciality.id};
+  }
 
-    this._yearSpecialityLoader.loadBySpeciality(this.speciality);
+  constructor(items: CurrentItems, public _router: Router) {
+    this.speciality = items.get('speciality');
   }
 
 

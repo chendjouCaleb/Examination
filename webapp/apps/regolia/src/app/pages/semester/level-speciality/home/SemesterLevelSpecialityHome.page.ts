@@ -9,6 +9,8 @@ import {SemesterLevelSpeciality} from "examination/models";
 export class SemesterLevelSpecialityHomePage {
   semesterLevelSpeciality: SemesterLevelSpeciality;
 
+  get params():any { return {semesterLevelSpecialityId: this.semesterLevelSpeciality.id}}
+
   constructor(items: CurrentItems, public _router: Router) {
     this.semesterLevelSpeciality = items.get('semesterLevelSpeciality');
   }

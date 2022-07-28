@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Everest.AspNetStartup.Infrastructure;
 using Exam.Authorizers;
 using Exam.Entities;
@@ -9,17 +11,18 @@ using Exam.Loaders;
 using Exam.Loaders.Courses;
 using Exam.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Controllers.Courses
 {
     [Route("api/courseLevelSpecialities")]
     public class CourseLevelSpecialityController : Controller
     {
-        private ICourseLevelSpecialityRepository _courseLevelSpecialityRepository;
+        private DbContext _dbContext;
 
-        public CourseLevelSpecialityController(ICourseLevelSpecialityRepository courseLevelSpecialityRepository)
+        public CourseLevelSpecialityController(DbContext dbContext)
         {
-            _courseLevelSpecialityRepository = courseLevelSpecialityRepository;
+            _dbContext = dbContext;
         }
 
         [HttpGet("{courseLevelSpecialityId}")]
@@ -30,14 +33,45 @@ namespace Exam.Controllers.Courses
         }
 
         [HttpGet]
-        public IEnumerable<CourseLevelSpeciality> List([FromQuery] long? courseId, [FromQuery] long levelSpecialityId)
+        public IEnumerable<CourseLevelSpeciality> List([FromQuery] long? schoolId, 
+        [FromQuery] long? departmentId,
+        [FromQuery] long? levelId,
+        [FromQuery] long? specialityId,
+        [FromQuery] long? levelSpecialityId,
+        [FromQuery] long? courseId)
         {
-            if (courseId != null)
+            IQueryable<CourseLevelSpeciality> query = this._dbContext.Set<CourseLevelSpeciality>();
+            if (schoolId != null)
             {
-                return _courseLevelSpecialityRepository.List(cls => cls.CourseId == courseId);
+                query = query.Where(c => c.LevelSpeciality.Level.Department.SchoolId == schoolId);
+            }
+            if (departmentId != null)
+            {
+                query = query.Where(c => c.LevelSpeciality.Level.DepartmentId == departmentId);
+            }
+            
+            if (levelId != null)
+            {
+                query = query.Where(c => c.LevelSpeciality.LevelId == levelId);
+            }
+            
+            if (specialityId != null)
+            {
+                query = query.Where(c => c.LevelSpeciality.SpecialityId == specialityId);
+                Console.WriteLine("Speciality count: " + query.Count());
+            }
+            
+            if (levelSpecialityId != null)
+            {
+                query = query.Where(c => c.LevelSpecialityId == levelSpecialityId);
             }
 
-            return _courseLevelSpecialityRepository.List(cls => cls.LevelSpecialityId == levelSpecialityId);
+            if (courseId != null)
+            {
+                query = query.Where(c => c.CourseId == courseId);
+            }
+
+            return query.ToList();
         }
 
         [HttpPost]
@@ -50,8 +84,8 @@ namespace Exam.Controllers.Courses
             Assert.RequireNonNull(course, nameof(course));
             Assert.RequireNonNull(levelSpeciality, nameof(levelSpeciality));
 
-            CourseLevelSpeciality result = _courseLevelSpecialityRepository
-                .First(cls => course.Equals(cls.Course) && levelSpeciality.Equals(cls.LevelSpeciality));
+            CourseLevelSpeciality result = _dbContext.Set<CourseLevelSpeciality>()
+                .FirstOrDefault(cls => course.Equals(cls.Course) && levelSpeciality.Equals(cls.LevelSpeciality));
 
             if (result != null)
             {
@@ -68,11 +102,14 @@ namespace Exam.Controllers.Courses
                 throw new InvalidOperationException("{courseLevelSpeciality.constraints.isNotGeneralCourse}");
             }
 
-            result = _courseLevelSpecialityRepository.Save(new CourseLevelSpeciality
+            var item = new CourseLevelSpeciality
             {
                 Course = course,
                 LevelSpeciality = levelSpeciality
-            });
+            };
+
+            result = _dbContext.Set<CourseLevelSpeciality>().Add(item).Entity;
+            _dbContext.SaveChanges();
 
             return result;
         }
@@ -81,16 +118,23 @@ namespace Exam.Controllers.Courses
         [HttpDelete("{courseLevelSpecialityId}")]
         [LoadCourseLevelSpeciality(DepartmentItemName = "department")]
         [IsPlanner]
-        public NoContentResult Delete(CourseLevelSpeciality courseLevelSpeciality)
+        public async Task<NoContentResult> Delete(CourseLevelSpeciality courseLevelSpeciality)
         {
-            _courseLevelSpecialityRepository.Delete(courseLevelSpeciality);
+            Assert.RequireNonNull(courseLevelSpeciality, nameof(courseLevelSpeciality));
+            _dbContext.Remove(courseLevelSpeciality);
+            await _dbContext.SaveChangesAsync();
             return NoContent();
         }
 
         [NonAction]
         public void DeleteAll(Course course)
         {
-            _courseLevelSpecialityRepository.DeleteAll(course);
+            Assert.RequireNonNull(course, nameof(course));
+            IQueryable<CourseLevelSpeciality> items = _dbContext.Set<CourseLevelSpeciality>()
+                .Where(c => c.Course.Id == course.Id);
+            
+            _dbContext.RemoveRange(items);
+            _dbContext.SaveChanges();
         }
     }
 }

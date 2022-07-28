@@ -4,7 +4,11 @@ import {CurrentItems} from 'examination/app/current-items';
 import {Router} from "@angular/router";
 
 @Component({
-  template: `<CourseList [level]="level"></CourseList>`
+  template: `
+    <CourseList
+      [params]="{levelId:level.id}"
+      [addParams]="{ level: level, isAuthorized: level.department.school.isPlanner}"
+      [hiddenColumns]="['department', 'level']"></CourseList>`
 })
 export class LevelCoursesPage {
   level: Level;

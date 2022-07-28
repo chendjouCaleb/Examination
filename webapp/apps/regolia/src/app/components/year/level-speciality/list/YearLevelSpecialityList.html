@@ -1,0 +1,6 @@
+<ng-container>
+  <a *ngFor="let item of yearLevelSpecialities"
+     class="ms-link-inherit ms-cardBackgroundColor ms-cardBackgroundColor--hover"
+     year-item [year]="item.yearSpeciality.yearDepartment.year" [routerLink]="item.url()">
+  </a>
+</ng-container>

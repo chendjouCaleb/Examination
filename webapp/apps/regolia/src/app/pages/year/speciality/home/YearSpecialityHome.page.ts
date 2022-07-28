@@ -15,8 +15,9 @@ import {
 export class YearSpecialityHomePage {
   yearSpeciality : YearSpeciality;
 
-  examinationSpecialities: ExaminationSpeciality[];
-  semesterSpecialities: SemesterSpeciality[];
+  get params(): any {
+    return {yearSpecialityId: this.yearSpeciality.id};
+  }
 
 
   constructor(items: CurrentItems, public _router: Router,
@@ -28,8 +29,5 @@ export class YearSpecialityHomePage {
     this.yearLevelSpecialityLoader.loadByYearSpeciality(this.yearSpeciality);
   }
 
-  async ngOnInit() {
-    this.examinationSpecialities = await this._examinationSpecialityLoader.loadByYearSpeciality(this.yearSpeciality);
-    this.semesterSpecialities = await this._semesterSpecialityLoader.loadByYearSpeciality(this.yearSpeciality);
-  }
+  async ngOnInit() {  }
 }
